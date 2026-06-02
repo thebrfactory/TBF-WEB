@@ -7,22 +7,28 @@ import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 import type { SanityImageSource } from '@sanity/image-url/lib/types/types'
 
-// ─── Client Configuration ─────────────────────────────────────────────────────
+// ─── Client Configuration (lazy) ──────────────────────────────────────────────
 
-export const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
-  apiVersion: '2026-05-31',
-  useCdn: process.env.NODE_ENV === 'production',
-  token: process.env.SANITY_API_TOKEN,
-})
+let _client: ReturnType<typeof createClient> | null = null
+
+function getClient() {
+  if (_client) return _client
+  const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
+  if (!projectId) throw new Error('NEXT_PUBLIC_SANITY_PROJECT_ID is not set')
+  _client = createClient({
+    projectId,
+    dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
+    apiVersion: '2026-05-31',
+    useCdn: process.env.NODE_ENV === 'production',
+    token: process.env.SANITY_API_TOKEN,
+  })
+  return _client
+}
 
 // ─── Image URL Builder ────────────────────────────────────────────────────────
 
-const builder = imageUrlBuilder(client)
-
 export function urlFor(source: SanityImageSource) {
-  return builder.image(source)
+  return imageUrlBuilder(getClient()).image(source)
 }
 
 // ─── Fetch Helper ─────────────────────────────────────────────────────────────
@@ -31,7 +37,7 @@ export async function sanityFetch<T>(
   query: string,
   params: Record<string, unknown> = {}
 ): Promise<T> {
-  return client.fetch<T>(query, params, {
+  return getClient().fetch<T>(query, params, {
     next: { revalidate: 3600 },
   })
 }
