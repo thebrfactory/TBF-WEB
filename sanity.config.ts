@@ -10,8 +10,8 @@ export default defineConfig({
   name: 'tbf-web-2026',
   title: '.THE BRAZILIAN FACTORY. — Studio',
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '8iarmh40',
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+  projectId: '8iarmh40',
+  dataset: 'production',
 
   plugins: [
     structureTool({
