@@ -1,0 +1,666 @@
+/* =============================================================================
+   TOKENS.CSS — TBF WEB 2026
+   Design System F05 | 444 tokens | Prefixo --tbf- em 100%
+   Camadas: 1 Primitive → 2 Semantic → 3 Component
+   ============================================================================= */
+
+/* =============================================================================
+   CAMADA 1 — PRIMITIVOS
+   ============================================================================= */
+
+:root {
+  /* ─── 1.1 Color Primitives ─── */
+  --tbf-color-obsidian:       #000000;
+  --tbf-color-parchment:      #F0EDE6;
+  --tbf-color-amber:          #FF6500;
+  --tbf-color-amber-bright:   #FF8C00;
+  --tbf-color-crimson:        #8B1A1A;
+  --tbf-color-editorial-gray: #4A4744;
+  --tbf-color-smoke:          #1E1C1A;
+  --tbf-color-mist:           #2C2A27;
+  --tbf-color-quartz:         #6E6B67;
+  --tbf-color-success:        #3A7A4A;
+  --tbf-color-error:          #B54040;
+  --tbf-color-warning:        #8B6914;
+
+  /* ─── 1.2 Font Family Primitives ─── */
+  --tbf-font-family-display: 'Brother1816', system-ui, sans-serif;
+  --tbf-font-family-body:    'Brother1816', system-ui, sans-serif;
+  --tbf-font-family-ui:      'Brother1816', system-ui, sans-serif;
+  --tbf-font-family-printed: 'Brother1816Printed', 'Brother1816', system-ui, sans-serif;
+
+  /* ─── 1.3 Font Size Primitives (desktop) ─── */
+  --tbf-font-size-raw-120: 7.5rem;
+  --tbf-font-size-raw-80:  5rem;
+  --tbf-font-size-raw-56:  3.5rem;
+  --tbf-font-size-raw-40:  2.5rem;
+  --tbf-font-size-raw-28:  1.75rem;
+  --tbf-font-size-raw-22:  1.375rem;
+  --tbf-font-size-raw-20:  1.25rem;
+  --tbf-font-size-raw-18:  1.125rem;
+  --tbf-font-size-raw-16:  1rem;
+  --tbf-font-size-raw-13:  0.8125rem;
+  --tbf-font-size-raw-11:  0.6875rem;
+  --tbf-font-size-raw-10:  0.625rem;
+
+  /* ─── 1.3 Font Size Primitives (mobile) ─── */
+  --tbf-font-size-raw-48:  3rem;
+  --tbf-font-size-raw-32:  2rem;
+  --tbf-font-size-raw-24:  1.5rem;
+  --tbf-font-size-raw-14:  0.875rem;
+  --tbf-font-size-raw-12:  0.75rem;
+
+  /* ─── 1.3 Font Weights ─── */
+  --tbf-font-weight-raw-300: 300;
+  --tbf-font-weight-raw-400: 400;
+  --tbf-font-weight-raw-500: 500;
+  --tbf-font-weight-raw-600: 600;
+  --tbf-font-weight-raw-700: 700;
+  --tbf-font-weight-raw-800: 800;
+  --tbf-font-weight-raw-900: 900;
+
+  /* ─── 1.3 Line Heights ─── */
+  --tbf-line-height-raw-09:  0.9;
+  --tbf-line-height-raw-095: 0.95;
+  --tbf-line-height-raw-10:  1.0;
+  --tbf-line-height-raw-105: 1.05;
+  --tbf-line-height-raw-11:  1.1;
+  --tbf-line-height-raw-12:  1.2;
+  --tbf-line-height-raw-13:  1.3;
+  --tbf-line-height-raw-14:  1.4;
+  --tbf-line-height-raw-15:  1.5;
+  --tbf-line-height-raw-16:  1.6;
+  --tbf-line-height-raw-17:  1.7;
+
+  /* ─── 1.3 Letter Spacings ─── */
+  --tbf-letter-spacing-raw-tight-4:  -0.04em;
+  --tbf-letter-spacing-raw-tight-35: -0.035em;
+  --tbf-letter-spacing-raw-tight-25: -0.025em;
+  --tbf-letter-spacing-raw-tight-2:  -0.02em;
+  --tbf-letter-spacing-raw-tight-15: -0.015em;
+  --tbf-letter-spacing-raw-tight-1:  -0.01em;
+  --tbf-letter-spacing-raw-none:      0em;
+  --tbf-letter-spacing-raw-wide-5:    0.05em;
+  --tbf-letter-spacing-raw-wide-6:    0.06em;
+  --tbf-letter-spacing-raw-wide-8:    0.08em;
+
+  /* ─── 1.4 Spacing Primitives (base 4px) ─── */
+  --tbf-space-raw-4:   0.25rem;
+  --tbf-space-raw-8:   0.5rem;
+  --tbf-space-raw-12:  0.75rem;
+  --tbf-space-raw-16:  1rem;
+  --tbf-space-raw-20:  1.25rem;
+  --tbf-space-raw-24:  1.5rem;
+  --tbf-space-raw-32:  2rem;
+  --tbf-space-raw-40:  2.5rem;
+  --tbf-space-raw-48:  3rem;
+  --tbf-space-raw-64:  4rem;
+  --tbf-space-raw-80:  5rem;
+  --tbf-space-raw-96:  6rem;
+  --tbf-space-raw-128: 8rem;
+  --tbf-space-raw-160: 10rem;
+  --tbf-space-raw-192: 12rem;
+  --tbf-space-raw-256: 16rem;
+
+  /* ─── 1.5 Motion Duration Primitives ─── */
+  --tbf-duration-raw-100:  100ms;
+  --tbf-duration-raw-150:  150ms;
+  --tbf-duration-raw-200:  200ms;
+  --tbf-duration-raw-250:  250ms;
+  --tbf-duration-raw-280:  280ms;
+  --tbf-duration-raw-300:  300ms;
+  --tbf-duration-raw-350:  350ms;
+  --tbf-duration-raw-400:  400ms;
+  --tbf-duration-raw-500:  500ms;
+  --tbf-duration-raw-600:  600ms;
+  --tbf-duration-raw-700:  700ms;
+  --tbf-duration-raw-800:  800ms;
+  --tbf-duration-raw-900:  900ms;
+  --tbf-duration-raw-1200: 1200ms;
+  --tbf-duration-raw-2000: 2000ms;
+  --tbf-duration-raw-40s:  40s;
+
+  /* ─── 1.5 Easing Primitives ─── */
+  --tbf-easing-raw-ease-out:    ease-out;
+  --tbf-easing-raw-ease-in:     ease-in;
+  --tbf-easing-raw-ease-in-out: ease-in-out;
+  --tbf-easing-raw-linear:      linear;
+  --tbf-easing-raw-drawer:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ─── 1.6 Border Radius Primitives ─── */
+  --tbf-radius-raw-0:    0;
+  --tbf-radius-raw-2:    2px;
+  --tbf-radius-raw-4:    4px;
+  --tbf-radius-raw-full: 9999px;
+
+  /* ─── 1.7 Z-Index Primitives ─── */
+  --tbf-z-raw-below:   -1;
+  --tbf-z-raw-base:     0;
+  --tbf-z-raw-content:  10;
+  --tbf-z-raw-overlay:  20;
+  --tbf-z-raw-sticky:   30;
+  --tbf-z-raw-drawer:   40;
+  --tbf-z-raw-modal:    50;
+  --tbf-z-raw-toast:    60;
+  --tbf-z-raw-cursor:   9999;
+
+  /* ─── 1.8 Breakpoint Primitives (reference only) ─── */
+  --tbf-bp-raw-xs:  0px;
+  --tbf-bp-raw-sm:  390px;
+  --tbf-bp-raw-md:  768px;
+  --tbf-bp-raw-lg:  1024px;
+  --tbf-bp-raw-xl:  1280px;
+  --tbf-bp-raw-2xl: 1920px;
+}
+
+/* =============================================================================
+   CAMADA 2 — SEMÂNTICOS
+   ============================================================================= */
+
+:root {
+  /* ─── 2.1 Color Background ─── */
+  --tbf-bg-primary:               var(--tbf-color-obsidian);
+  --tbf-bg-secondary:             var(--tbf-color-smoke);
+  --tbf-bg-tertiary:              var(--tbf-color-mist);
+  --tbf-bg-inverse:               var(--tbf-color-parchment);
+  --tbf-bg-overlay-grain-opacity: 0.04;
+  --tbf-bg-glow-hero-opacity:     0.08;
+  --tbf-bg-glow-loading-opacity:  0.06;
+
+  /* ─── 2.2 Color Text ─── */
+  --tbf-text-primary:   var(--tbf-color-parchment);
+  --tbf-text-secondary: var(--tbf-color-editorial-gray);
+  --tbf-text-tertiary:  var(--tbf-color-quartz);
+  --tbf-text-inverse:   var(--tbf-color-obsidian);
+
+  /* ─── 2.3 Color Interactive & Accent ─── */
+  --tbf-accent:               var(--tbf-color-amber);
+  --tbf-accent-melfiore:      var(--tbf-color-crimson);
+  --tbf-focus:                var(--tbf-color-amber);
+  --tbf-border:               var(--tbf-color-mist);
+  --tbf-border-active:        var(--tbf-color-amber);
+  --tbf-cta-bg:               var(--tbf-color-parchment);
+  --tbf-cta-text:             var(--tbf-color-obsidian);
+  --tbf-cta-bg-hover:         var(--tbf-color-amber);
+  --tbf-cta-text-hover:       var(--tbf-color-obsidian);
+  --tbf-color-status-success: var(--tbf-color-success);
+  --tbf-color-status-error:   var(--tbf-color-error);
+  --tbf-color-status-warning: var(--tbf-color-warning);
+
+  /* ─── 2.4 Typography Semantic Scale ─── */
+
+  /* Display XL */
+  --tbf-type-display-xl-family:  var(--tbf-font-family-display);
+  --tbf-type-display-xl-size:    var(--tbf-font-size-raw-120);
+  --tbf-type-display-xl-size-sm: var(--tbf-font-size-raw-48);
+  --tbf-type-display-xl-weight:  var(--tbf-font-weight-raw-800);
+  --tbf-type-display-xl-lh:      var(--tbf-line-height-raw-09);
+  --tbf-type-display-xl-lh-sm:   var(--tbf-line-height-raw-10);
+  --tbf-type-display-xl-ls:      var(--tbf-letter-spacing-raw-tight-4);
+  --tbf-type-display-xl-mb:      var(--tbf-space-raw-48);
+
+  /* Display LG */
+  --tbf-type-display-lg-family:  var(--tbf-font-family-display);
+  --tbf-type-display-lg-size:    var(--tbf-font-size-raw-80);
+  --tbf-type-display-lg-size-sm: var(--tbf-font-size-raw-32);
+  --tbf-type-display-lg-weight:  var(--tbf-font-weight-raw-700);
+  --tbf-type-display-lg-lh:      var(--tbf-line-height-raw-095);
+  --tbf-type-display-lg-lh-sm:   var(--tbf-line-height-raw-105);
+  --tbf-type-display-lg-ls:      var(--tbf-letter-spacing-raw-tight-35);
+  --tbf-type-display-lg-mb:      var(--tbf-space-raw-40);
+
+  /* H1 */
+  --tbf-type-h1-family:  var(--tbf-font-family-display);
+  --tbf-type-h1-size:    var(--tbf-font-size-raw-56);
+  --tbf-type-h1-size-sm: var(--tbf-font-size-raw-32);
+  --tbf-type-h1-weight:  var(--tbf-font-weight-raw-700);
+  --tbf-type-h1-lh:      var(--tbf-line-height-raw-10);
+  --tbf-type-h1-ls:      var(--tbf-letter-spacing-raw-tight-25);
+  --tbf-type-h1-mb:      var(--tbf-space-raw-32);
+
+  /* H2 */
+  --tbf-type-h2-family:  var(--tbf-font-family-display);
+  --tbf-type-h2-size:    var(--tbf-font-size-raw-40);
+  --tbf-type-h2-size-sm: var(--tbf-font-size-raw-24);
+  --tbf-type-h2-weight:  var(--tbf-font-weight-raw-600);
+  --tbf-type-h2-lh:      var(--tbf-line-height-raw-105);
+  --tbf-type-h2-ls:      var(--tbf-letter-spacing-raw-tight-2);
+  --tbf-type-h2-mb:      var(--tbf-space-raw-24);
+
+  /* H3 */
+  --tbf-type-h3-family:  var(--tbf-font-family-display);
+  --tbf-type-h3-size:    var(--tbf-font-size-raw-28);
+  --tbf-type-h3-size-sm: var(--tbf-font-size-raw-20);
+  --tbf-type-h3-weight:  var(--tbf-font-weight-raw-600);
+  --tbf-type-h3-lh:      var(--tbf-line-height-raw-11);
+  --tbf-type-h3-ls:      var(--tbf-letter-spacing-raw-tight-15);
+  --tbf-type-h3-mb:      var(--tbf-space-raw-20);
+
+  /* H4 */
+  --tbf-type-h4-family:  var(--tbf-font-family-display);
+  --tbf-type-h4-size:    var(--tbf-font-size-raw-22);
+  --tbf-type-h4-size-sm: var(--tbf-font-size-raw-18);
+  --tbf-type-h4-weight:  var(--tbf-font-weight-raw-500);
+  --tbf-type-h4-lh:      var(--tbf-line-height-raw-12);
+  --tbf-type-h4-ls:      var(--tbf-letter-spacing-raw-tight-1);
+  --tbf-type-h4-mb:      var(--tbf-space-raw-16);
+
+  /* Deck */
+  --tbf-type-deck-family:  var(--tbf-font-family-body);
+  --tbf-type-deck-size:    var(--tbf-font-size-raw-20);
+  --tbf-type-deck-size-sm: var(--tbf-font-size-raw-16);
+  --tbf-type-deck-weight:  var(--tbf-font-weight-raw-300);
+  --tbf-type-deck-lh:      var(--tbf-line-height-raw-14);
+  --tbf-type-deck-ls:      var(--tbf-letter-spacing-raw-none);
+  --tbf-type-deck-mb:      var(--tbf-space-raw-16);
+
+  /* Body */
+  --tbf-type-body-family:    var(--tbf-font-family-body);
+  --tbf-type-body-size:      var(--tbf-font-size-raw-18);
+  --tbf-type-body-size-sm:   var(--tbf-font-size-raw-16);
+  --tbf-type-body-weight:    var(--tbf-font-weight-raw-400);
+  --tbf-type-body-lh:        var(--tbf-line-height-raw-17);
+  --tbf-type-body-lh-sm:     var(--tbf-line-height-raw-16);
+  --tbf-type-body-ls:        var(--tbf-letter-spacing-raw-none);
+  --tbf-type-body-mb:        var(--tbf-space-raw-16);
+  --tbf-type-body-max-width: 65ch;
+
+  /* Body SM */
+  --tbf-type-body-sm-family:  var(--tbf-font-family-body);
+  --tbf-type-body-sm-size:    var(--tbf-font-size-raw-16);
+  --tbf-type-body-sm-size-sm: var(--tbf-font-size-raw-14);
+  --tbf-type-body-sm-weight:  var(--tbf-font-weight-raw-400);
+  --tbf-type-body-sm-lh:      var(--tbf-line-height-raw-16);
+  --tbf-type-body-sm-lh-sm:   var(--tbf-line-height-raw-15);
+
+  /* Caption */
+  --tbf-type-caption-family:  var(--tbf-font-family-body);
+  --tbf-type-caption-size:    var(--tbf-font-size-raw-13);
+  --tbf-type-caption-size-sm: var(--tbf-font-size-raw-12);
+  --tbf-type-caption-weight:  var(--tbf-font-weight-raw-400);
+  --tbf-type-caption-lh:      var(--tbf-line-height-raw-14);
+
+  /* Tag */
+  --tbf-type-tag-family:    var(--tbf-font-family-ui);
+  --tbf-type-tag-size:      var(--tbf-font-size-raw-11);
+  --tbf-type-tag-weight:    var(--tbf-font-weight-raw-400);
+  --tbf-type-tag-lh:        var(--tbf-line-height-raw-13);
+  --tbf-type-tag-ls:        var(--tbf-letter-spacing-raw-wide-8);
+  --tbf-type-tag-transform: uppercase;
+
+  /* Micro */
+  --tbf-type-micro-family: var(--tbf-font-family-ui);
+  --tbf-type-micro-size:   var(--tbf-font-size-raw-10);
+  --tbf-type-micro-weight: var(--tbf-font-weight-raw-400);
+  --tbf-type-micro-lh:     var(--tbf-line-height-raw-13);
+  --tbf-type-micro-ls:     var(--tbf-letter-spacing-raw-wide-6);
+
+  /* Ticker */
+  --tbf-type-ticker-family:    var(--tbf-font-family-ui);
+  --tbf-type-ticker-size:      var(--tbf-font-size-raw-16);
+  --tbf-type-ticker-size-sm:   var(--tbf-font-size-raw-14);
+  --tbf-type-ticker-weight:    var(--tbf-font-weight-raw-500);
+  --tbf-type-ticker-ls:        var(--tbf-letter-spacing-raw-wide-5);
+  --tbf-type-ticker-transform: uppercase;
+
+  /* ─── 2.5 Spacing Semantic ─── */
+  --tbf-space-1:  var(--tbf-space-raw-4);
+  --tbf-space-2:  var(--tbf-space-raw-8);
+  --tbf-space-3:  var(--tbf-space-raw-12);
+  --tbf-space-4:  var(--tbf-space-raw-16);
+  --tbf-space-5:  var(--tbf-space-raw-20);
+  --tbf-space-6:  var(--tbf-space-raw-24);
+  --tbf-space-8:  var(--tbf-space-raw-32);
+  --tbf-space-10: var(--tbf-space-raw-40);
+  --tbf-space-12: var(--tbf-space-raw-48);
+  --tbf-space-16: var(--tbf-space-raw-64);
+  --tbf-space-20: var(--tbf-space-raw-80);
+  --tbf-space-24: var(--tbf-space-raw-96);
+  --tbf-space-32: var(--tbf-space-raw-128);
+  --tbf-space-40: var(--tbf-space-raw-160);
+  --tbf-space-48: var(--tbf-space-raw-192);
+  --tbf-space-64: var(--tbf-space-raw-256);
+
+  /* ─── 2.6 Grid Semantic ─── */
+  --tbf-grid-cols-xs:  4;
+  --tbf-grid-cols-sm:  4;
+  --tbf-grid-cols-md:  8;
+  --tbf-grid-cols-lg:  12;
+  --tbf-grid-cols-xl:  12;
+  --tbf-grid-cols-2xl: 12;
+
+  --tbf-grid-gutter-xs:  var(--tbf-space-raw-12);
+  --tbf-grid-gutter-sm:  var(--tbf-space-raw-16);
+  --tbf-grid-gutter-md:  var(--tbf-space-raw-24);
+  --tbf-grid-gutter-lg:  var(--tbf-space-raw-24);
+  --tbf-grid-gutter-xl:  var(--tbf-space-raw-32);
+  --tbf-grid-gutter-2xl: var(--tbf-space-raw-40);
+
+  --tbf-grid-margin-xs:  var(--tbf-space-raw-16);
+  --tbf-grid-margin-sm:  var(--tbf-space-raw-20);
+  --tbf-grid-margin-md:  var(--tbf-space-raw-32);
+  --tbf-grid-margin-lg:  var(--tbf-space-raw-40);
+  --tbf-grid-margin-xl:  var(--tbf-space-raw-64);
+  --tbf-grid-margin-2xl: auto;
+
+  --tbf-grid-max-xl:  1152px;
+  --tbf-grid-max-2xl: 1440px;
+
+  /* ─── 2.8 Motion Semantic ─── */
+  --tbf-motion-duration-micro:   var(--tbf-duration-raw-150);
+  --tbf-motion-easing-micro:     var(--tbf-easing-raw-ease-out);
+
+  --tbf-motion-duration-element: var(--tbf-duration-raw-200);
+  --tbf-motion-easing-element:   var(--tbf-easing-raw-ease-out);
+
+  --tbf-motion-duration-reveal-headline: var(--tbf-duration-raw-800);
+  --tbf-motion-duration-reveal-deck:     var(--tbf-duration-raw-700);
+  --tbf-motion-duration-reveal-card:     var(--tbf-duration-raw-600);
+  --tbf-motion-duration-reveal-bu:       var(--tbf-duration-raw-700);
+  --tbf-motion-duration-reveal-manifesto:var(--tbf-duration-raw-800);
+  --tbf-motion-duration-reveal-image:    var(--tbf-duration-raw-500);
+  --tbf-motion-duration-reveal-cta:      var(--tbf-duration-raw-500);
+  --tbf-motion-duration-reveal-footer:   var(--tbf-duration-raw-400);
+  --tbf-motion-easing-reveal:            var(--tbf-easing-raw-ease-out);
+  --tbf-motion-translate-reveal:         24px;
+
+  --tbf-motion-stagger-grid: var(--tbf-duration-raw-100);
+  --tbf-motion-stagger-deck: var(--tbf-duration-raw-150);
+  --tbf-motion-stagger-cta:  var(--tbf-duration-raw-300);
+
+  --tbf-motion-duration-page-exit:  var(--tbf-duration-raw-200);
+  --tbf-motion-easing-page-exit:    var(--tbf-easing-raw-ease-in);
+  --tbf-motion-duration-page-enter: var(--tbf-duration-raw-300);
+  --tbf-motion-easing-page-enter:   var(--tbf-easing-raw-ease-out);
+
+  --tbf-motion-duration-header-opaque: var(--tbf-duration-raw-200);
+  --tbf-motion-duration-header-hide:   var(--tbf-duration-raw-300);
+  --tbf-motion-duration-header-reveal: var(--tbf-duration-raw-250);
+  --tbf-motion-easing-header-hide:     var(--tbf-easing-raw-ease-in);
+  --tbf-motion-easing-header-reveal:   var(--tbf-easing-raw-ease-out);
+
+  --tbf-motion-duration-drawer-open:  var(--tbf-duration-raw-350);
+  --tbf-motion-duration-drawer-close: var(--tbf-duration-raw-280);
+  --tbf-motion-easing-drawer-open:    var(--tbf-easing-raw-drawer);
+  --tbf-motion-easing-drawer-close:   var(--tbf-easing-raw-ease-in);
+
+  --tbf-motion-duration-loading-enter: var(--tbf-duration-raw-400);
+  --tbf-motion-duration-loading-pulse: var(--tbf-duration-raw-1200);
+  --tbf-motion-duration-loading-exit:  var(--tbf-duration-raw-300);
+  --tbf-motion-easing-loading-enter:   var(--tbf-easing-raw-ease-out);
+  --tbf-motion-easing-loading-exit:    var(--tbf-easing-raw-ease-in);
+
+  --tbf-motion-duration-ticker: var(--tbf-duration-raw-40s);
+  --tbf-motion-easing-ticker:   var(--tbf-easing-raw-linear);
+
+  --tbf-motion-duration-form-focus:   var(--tbf-duration-raw-200);
+  --tbf-motion-duration-form-error:   var(--tbf-duration-raw-200);
+  --tbf-motion-duration-form-shake:   var(--tbf-duration-raw-400);
+  --tbf-motion-duration-form-success: var(--tbf-duration-raw-300);
+
+  /* ─── 2.9 Border Radius Semantic ─── */
+  --tbf-radius-none:   var(--tbf-radius-raw-0);
+  --tbf-radius-focus:  var(--tbf-radius-raw-2);
+  --tbf-radius-input:  var(--tbf-radius-raw-0);
+  --tbf-radius-button: var(--tbf-radius-raw-full);
+  --tbf-radius-tag:    var(--tbf-radius-raw-0);
+  --tbf-radius-full:   var(--tbf-radius-raw-full);
+
+  /* ─── 2.10 Z-Index Semantic ─── */
+  --tbf-z-below:   var(--tbf-z-raw-below);
+  --tbf-z-base:    var(--tbf-z-raw-base);
+  --tbf-z-content: var(--tbf-z-raw-content);
+  --tbf-z-overlay: var(--tbf-z-raw-overlay);
+  --tbf-z-sticky:  var(--tbf-z-raw-sticky);
+  --tbf-z-drawer:  var(--tbf-z-raw-drawer);
+  --tbf-z-modal:   var(--tbf-z-raw-modal);
+  --tbf-z-toast:   var(--tbf-z-raw-toast);
+  --tbf-z-cursor:  var(--tbf-z-raw-cursor);
+
+  /* ─── 2.11 Focus Ring Semantic ─── */
+  --tbf-focus-ring-width:  2px;
+  --tbf-focus-ring-color:  var(--tbf-focus);
+  --tbf-focus-ring-offset: 3px;
+  --tbf-focus-ring-radius: var(--tbf-radius-focus);
+
+  /* ─── 2.12 Cursor Semantic ─── */
+  --tbf-cursor-size:          5px;
+  --tbf-cursor-color:         var(--tbf-accent);
+  --tbf-cursor-scale-link:    2.5;
+  --tbf-cursor-scale-image:   4;
+  --tbf-cursor-opacity:       0.8;
+  --tbf-cursor-opacity-image: 0.4;
+
+  /* ─── 2.13 Icon Semantic ─── */
+  --tbf-icon-size-interface: 24px;
+  --tbf-icon-size-inline:    16px;
+  --tbf-icon-stroke:         1.5px;
+  --tbf-icon-color:          currentColor;
+  --tbf-icon-radius:         var(--tbf-radius-none);
+}
+
+/* =============================================================================
+   CAMADA 3 — COMPONENTES
+   ============================================================================= */
+
+:root {
+  /* ─── 3.1 Navigation Header ─── */
+  --tbf-nav-height-sm:       var(--tbf-space-raw-48);
+  --tbf-nav-height-xl:       var(--tbf-space-raw-64);
+  --tbf-nav-bg:              transparent;
+  --tbf-nav-bg-scrolled:     var(--tbf-bg-primary);
+  --tbf-nav-border-scrolled: var(--tbf-border);
+  --tbf-nav-text:            var(--tbf-text-primary);
+  --tbf-nav-link-color:      var(--tbf-text-primary);
+  --tbf-nav-link-hover:      var(--tbf-accent);
+  --tbf-nav-transition:      var(--tbf-motion-duration-header-opaque) var(--tbf-motion-easing-micro);
+  --tbf-nav-z:               var(--tbf-z-sticky);
+
+  /* ─── 3.2 Mobile Drawer ─── */
+  --tbf-drawer-bg:              var(--tbf-bg-primary);
+  --tbf-drawer-text:            var(--tbf-text-primary);
+  --tbf-drawer-link-hover:      var(--tbf-accent);
+  --tbf-drawer-duration-open:   var(--tbf-motion-duration-drawer-open);
+  --tbf-drawer-duration-close:  var(--tbf-motion-duration-drawer-close);
+  --tbf-drawer-easing-open:     var(--tbf-motion-easing-drawer-open);
+  --tbf-drawer-easing-close:    var(--tbf-motion-easing-drawer-close);
+  --tbf-drawer-z:               var(--tbf-z-drawer);
+  --tbf-drawer-overlay-opacity: 0.8;
+
+  /* ─── 3.3 Footer ─── */
+  --tbf-footer-bg:         var(--tbf-bg-secondary);
+  --tbf-footer-text:       var(--tbf-text-tertiary);
+  --tbf-footer-link:       var(--tbf-text-primary);
+  --tbf-footer-link-hover: var(--tbf-accent);
+  --tbf-footer-border:     var(--tbf-border);
+  --tbf-footer-padding-sm: var(--tbf-space-raw-64);
+  --tbf-footer-padding-xl: var(--tbf-space-raw-96);
+
+  /* ─── 3.4 Article Card ─── */
+  --tbf-card-bg:              var(--tbf-bg-primary);
+  --tbf-card-border:          var(--tbf-border);
+  --tbf-card-title-color:     var(--tbf-text-primary);
+  --tbf-card-meta-color:      var(--tbf-text-tertiary);
+  --tbf-card-img-scale-hover: 1.02;
+  --tbf-card-title-tx-hover:  4px;
+  --tbf-card-img-duration:    var(--tbf-duration-raw-400);
+  --tbf-card-title-duration:  var(--tbf-motion-duration-element);
+  --tbf-card-gap:             var(--tbf-space-raw-24);
+  --tbf-card-padding-sm:      var(--tbf-space-raw-16);
+  --tbf-card-padding-xl:      var(--tbf-space-raw-32);
+
+  /* ─── 3.5 Hero Section ─── */
+  --tbf-hero-height:      100dvh;
+  --tbf-hero-bg:          var(--tbf-bg-primary);
+  --tbf-hero-text:        var(--tbf-text-primary);
+  --tbf-hero-fade-in:     var(--tbf-duration-raw-400);
+  --tbf-hero-overlay-op:  var(--tbf-bg-overlay-grain-opacity);
+  --tbf-hero-glow-op:     var(--tbf-bg-glow-hero-opacity);
+  --tbf-hero-padding-sm:  var(--tbf-space-raw-64);
+  --tbf-hero-padding-xl:  var(--tbf-space-raw-96);
+
+  /* ─── 3.6 Ticker ─── */
+  --tbf-ticker-bg:        var(--tbf-bg-secondary);
+  --tbf-ticker-text:      var(--tbf-text-primary);
+  --tbf-ticker-height-sm: var(--tbf-space-raw-40);
+  --tbf-ticker-height-xl: var(--tbf-space-raw-48);
+  --tbf-ticker-gap:       var(--tbf-space-raw-64);
+  --tbf-ticker-duration:  var(--tbf-motion-duration-ticker);
+  --tbf-ticker-easing:    var(--tbf-motion-easing-ticker);
+  --tbf-ticker-z:         var(--tbf-z-sticky);
+
+  /* ─── 3.7 Button ─── */
+  --tbf-btn-primary-bg:           var(--tbf-cta-bg);
+  --tbf-btn-primary-text:         var(--tbf-cta-text);
+  --tbf-btn-primary-bg-hover:     var(--tbf-cta-bg-hover);
+  --tbf-btn-primary-text-hover:   var(--tbf-cta-text-hover);
+  --tbf-btn-primary-border:       transparent;
+
+  --tbf-btn-secondary-bg:           transparent;
+  --tbf-btn-secondary-text:         var(--tbf-text-primary);
+  --tbf-btn-secondary-border:       var(--tbf-text-primary);
+  --tbf-btn-secondary-bg-hover:     var(--tbf-accent);
+  --tbf-btn-secondary-text-hover:   var(--tbf-color-obsidian);
+  --tbf-btn-secondary-border-hover: var(--tbf-accent);
+
+  --tbf-btn-ghost-bg:         transparent;
+  --tbf-btn-ghost-text:       var(--tbf-text-primary);
+  --tbf-btn-ghost-border:     transparent;
+  --tbf-btn-ghost-text-hover: var(--tbf-accent);
+
+  --tbf-btn-radius:           var(--tbf-radius-button);
+  --tbf-btn-padding-x:        var(--tbf-space-raw-32);
+  --tbf-btn-padding-y:        var(--tbf-space-raw-16);
+  --tbf-btn-padding-x-sm:     var(--tbf-space-raw-24);
+  --tbf-btn-padding-y-sm:     var(--tbf-space-raw-12);
+  --tbf-btn-hover-ty:         -2px;
+  --tbf-btn-active-scale:     0.98;
+  --tbf-btn-disabled-opacity: 0.4;
+  --tbf-btn-duration:         var(--tbf-motion-duration-micro);
+
+  /* ─── 3.8 Form Input ─── */
+  --tbf-input-bg:               transparent;
+  --tbf-input-text:             var(--tbf-text-primary);
+  --tbf-input-placeholder:      var(--tbf-text-tertiary);
+  --tbf-input-border:           var(--tbf-border);
+  --tbf-input-border-focus:     var(--tbf-border-active);
+  --tbf-input-border-error:     var(--tbf-color-status-error);
+  --tbf-input-border-success:   var(--tbf-color-status-success);
+  --tbf-input-label-color:      var(--tbf-text-secondary);
+  --tbf-input-error-color:      var(--tbf-color-status-error);
+  --tbf-input-disabled-opacity: 0.4;
+  --tbf-input-padding-x:        var(--tbf-space-raw-16);
+  --tbf-input-padding-y:        var(--tbf-space-raw-12);
+  --tbf-input-radius:           var(--tbf-radius-input);
+  --tbf-input-duration:         var(--tbf-motion-duration-form-focus);
+  --tbf-input-shake-duration:   var(--tbf-motion-duration-form-shake);
+
+  /* ─── 3.9 Form Select ─── */
+  --tbf-select-bg:               var(--tbf-bg-secondary);
+  --tbf-select-text:             var(--tbf-text-primary);
+  --tbf-select-border:           var(--tbf-border);
+  --tbf-select-border-focus:     var(--tbf-border-active);
+  --tbf-select-option-hover:     var(--tbf-accent);
+  --tbf-select-option-selected:  var(--tbf-accent);
+  --tbf-select-disabled-opacity: 0.4;
+  --tbf-select-dropdown-bg:      var(--tbf-bg-secondary);
+  --tbf-select-dropdown-border:  var(--tbf-border);
+  --tbf-select-duration:         var(--tbf-motion-duration-element);
+
+  /* ─── 3.10 Tag / Label ─── */
+  --tbf-tag-bg:          transparent;
+  --tbf-tag-text:        var(--tbf-text-tertiary);
+  --tbf-tag-border:      var(--tbf-border);
+  --tbf-tag-bg-hover:    var(--tbf-accent);
+  --tbf-tag-text-hover:  var(--tbf-color-obsidian);
+  --tbf-tag-bg-active:   var(--tbf-accent);
+  --tbf-tag-text-active: var(--tbf-color-obsidian);
+  --tbf-tag-radius:      var(--tbf-radius-tag);
+  --tbf-tag-padding-x:   var(--tbf-space-raw-12);
+  --tbf-tag-padding-y:   var(--tbf-space-raw-4);
+  --tbf-tag-duration:    var(--tbf-motion-duration-micro);
+
+  /* ─── 3.11 Author Byline ─── */
+  --tbf-byline-text:           var(--tbf-text-tertiary);
+  --tbf-byline-link:           var(--tbf-text-tertiary);
+  --tbf-byline-link-hover:     var(--tbf-accent);
+  --tbf-byline-portrait-size:  var(--tbf-space-raw-40);
+  --tbf-byline-gap:            var(--tbf-space-raw-12);
+  --tbf-byline-duration:       var(--tbf-motion-duration-micro);
+
+  /* ─── 3.12 Image + Caption ─── */
+  --tbf-image-radius:        var(--tbf-radius-none);
+  --tbf-image-scale-hover:   1.02;
+  --tbf-image-duration:      var(--tbf-duration-raw-400);
+  --tbf-image-caption-color: var(--tbf-text-tertiary);
+  --tbf-image-caption-pt:    var(--tbf-space-raw-12);
+  --tbf-image-shimmer-bg:    var(--tbf-bg-tertiary);
+
+  /* ─── 3.13 Video Embed ─── */
+  --tbf-video-bg:               var(--tbf-bg-primary);
+  --tbf-video-overlay-bg:       var(--tbf-bg-primary);
+  --tbf-video-overlay-opacity:  0.4;
+  --tbf-video-play-color:       var(--tbf-text-primary);
+  --tbf-video-play-hover-scale: 1.1;
+  --tbf-video-border:           var(--tbf-border);
+  --tbf-video-duration:         var(--tbf-motion-duration-element);
+
+  /* ─── 3.14 Divider / Separator ─── */
+  --tbf-divider-color:     var(--tbf-border);
+  --tbf-divider-thickness: 1px;
+  --tbf-divider-dot-size:  var(--tbf-space-raw-4);
+  --tbf-divider-dot-color: var(--tbf-text-tertiary);
+  --tbf-divider-space-sm:  var(--tbf-space-raw-32);
+  --tbf-divider-space-xl:  var(--tbf-space-raw-64);
+
+  /* ─── 3.15 Page Transition ─── */
+  --tbf-transition-exit-duration:  var(--tbf-motion-duration-page-exit);
+  --tbf-transition-exit-easing:    var(--tbf-motion-easing-page-exit);
+  --tbf-transition-exit-ty:        -20px;
+  --tbf-transition-enter-duration: var(--tbf-motion-duration-page-enter);
+  --tbf-transition-enter-easing:   var(--tbf-motion-easing-page-enter);
+  --tbf-transition-enter-ty:       20px;
+
+  /* ─── 3.16 Loading Screen ─── */
+  --tbf-loading-bg:             var(--tbf-bg-primary);
+  --tbf-loading-text:           var(--tbf-text-primary);
+  --tbf-loading-accent:         var(--tbf-accent);
+  --tbf-loading-glow-opacity:   var(--tbf-bg-glow-loading-opacity);
+  --tbf-loading-enter-duration: var(--tbf-motion-duration-loading-enter);
+  --tbf-loading-pulse-duration: var(--tbf-motion-duration-loading-pulse);
+  --tbf-loading-exit-duration:  var(--tbf-motion-duration-loading-exit);
+  --tbf-loading-z:              var(--tbf-z-modal);
+}
+
+/* =============================================================================
+   TEMA INVERSE — /factory e /tgf
+   Sobrescreve tokens semânticos — sem duplicação de código
+   ============================================================================= */
+
+[data-theme="inverse"] {
+  --tbf-bg-primary:     var(--tbf-color-parchment);
+  --tbf-bg-secondary:   var(--tbf-color-parchment);
+  --tbf-bg-tertiary:    var(--tbf-color-editorial-gray);
+  --tbf-text-primary:   var(--tbf-color-obsidian);
+  --tbf-text-secondary: var(--tbf-color-editorial-gray);
+  --tbf-text-tertiary:  var(--tbf-color-quartz);
+  --tbf-border:         var(--tbf-color-editorial-gray);
+  --tbf-cta-bg:         var(--tbf-color-obsidian);
+  --tbf-cta-text:       var(--tbf-color-parchment);
+  --tbf-cta-bg-hover:   var(--tbf-color-amber);
+  --tbf-cta-text-hover: var(--tbf-color-obsidian);
+  --tbf-nav-bg-scrolled:     var(--tbf-color-parchment);
+  --tbf-nav-text:            var(--tbf-color-obsidian);
+  --tbf-nav-link-color:      var(--tbf-color-obsidian);
+  --tbf-drawer-bg:           var(--tbf-color-parchment);
+  --tbf-drawer-text:         var(--tbf-color-obsidian);
+}
+
+/* Bloco CTA dark dentro do /factory (inversão dentro da inversão) */
+[data-theme="inverse"] .section--cta-dark {
+  --tbf-bg-primary:   var(--tbf-color-obsidian);
+  --tbf-text-primary: var(--tbf-color-parchment);
+  --tbf-border:       var(--tbf-color-mist);
+  background-color: var(--tbf-bg-primary);
+  color: var(--tbf-text-primary);
+}

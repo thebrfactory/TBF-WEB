@@ -1,0 +1,392 @@
+/* =============================================================================
+   GLOBALS.CSS — TBF WEB 2026
+   Ordem de importação imutável: tokens → components → globals
+   ============================================================================= */
+
+@import './tokens.css';
+@import './components.css';
+
+/* =============================================================================
+   @FONT-FACE — BROTHER 1816 (full family)
+   ============================================================================= */
+
+/* ─── Brother1816 ─────────────────────────────────────────────────────────── */
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Thin.woff2') format('woff2'); font-weight:100; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-ThinItalic.woff2') format('woff2'); font-weight:100; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Light.woff2') format('woff2'); font-weight:300; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-LightItalic.woff2') format('woff2'); font-weight:300; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Book.woff2') format('woff2'); font-weight:350; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-BookItalic.woff2') format('woff2'); font-weight:350; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Regulartalic.woff2') format('woff2'); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-MediumItalic.woff2') format('woff2'); font-weight:500; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-BoldItalic.woff2') format('woff2'); font-weight:700; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-ExtraBoldItalic.woff2') format('woff2'); font-weight:800; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-Black.woff2') format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816'; src:url('/fonts/Brother1816-BlackItalic.woff2') format('woff2'); font-weight:900; font-style:italic; font-display:swap; }
+
+/* ─── Brother1816Printed ──────────────────────────────────────────────────── */
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Thin.woff2') format('woff2'); font-weight:100; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-ThinItalic.woff2') format('woff2'); font-weight:100; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Light.woff2') format('woff2'); font-weight:300; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-LightItalic.woff2') format('woff2'); font-weight:300; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Book.woff2') format('woff2'); font-weight:350; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-BookItalic.woff2') format('woff2'); font-weight:350; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Regular.woff2') format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-RegularItali.woff2') format('woff2'); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Medium.woff2') format('woff2'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-MediumItalic.woff2') format('woff2'); font-weight:500; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Bold.woff2') format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-BoldItalic.woff2') format('woff2'); font-weight:700; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-ExtraBoldIta.woff2') format('woff2'); font-weight:800; font-style:italic; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-Black.woff2') format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Brother1816Printed'; src:url('/fonts/Brother1816Printed-BlackItalic.woff2') format('woff2'); font-weight:900; font-style:italic; font-display:swap; }
+
+/* =============================================================================
+   RESET MINIMALISTA
+   ============================================================================= */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============================================================================
+   BASE DOCUMENT
+   ============================================================================= */
+
+html {
+  font-size: 100%;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =============================================================================
+   BODY — TEMA DARK DEFAULT
+   ============================================================================= */
+
+body {
+  background-color: var(--tbf-bg-primary);
+  color: var(--tbf-text-primary);
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-body-size-sm);
+  font-weight: var(--tbf-type-body-weight);
+  line-height: var(--tbf-type-body-lh-sm);
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+@media (min-width: 1280px) {
+  body {
+    font-size: var(--tbf-type-body-size);
+    line-height: var(--tbf-type-body-lh);
+  }
+}
+
+/* =============================================================================
+   SKIP NAV — PRIMEIRO ELEMENTO DO BODY (ACESSIBILIDADE)
+   ============================================================================= */
+
+.skip-nav {
+  position: absolute;
+  top: var(--tbf-space-2);
+  left: var(--tbf-space-2);
+  padding: var(--tbf-space-2) var(--tbf-space-4);
+  background-color: var(--tbf-accent);
+  color: var(--tbf-color-obsidian);
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  font-weight: var(--tbf-type-tag-weight);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: var(--tbf-type-tag-transform);
+  text-decoration: none;
+  z-index: var(--tbf-z-cursor);
+  transform: translateY(calc(-100% - var(--tbf-space-4)));
+  transition: transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.skip-nav:focus {
+  transform: translateY(0);
+}
+
+/* =============================================================================
+   CURSOR CUSTOMIZADO — DESKTOP ONLY
+   ============================================================================= */
+
+@media (min-width: 1024px) and (hover: hover) {
+  body {
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: var(--tbf-cursor-size);
+    height: var(--tbf-cursor-size);
+    background-color: var(--tbf-cursor-color);
+    border-radius: var(--tbf-radius-full);
+    pointer-events: none;
+    opacity: var(--tbf-cursor-opacity);
+    z-index: var(--tbf-z-cursor);
+    transform: translate(-50%, -50%);
+    transition:
+      transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+      opacity var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+    will-change: transform;
+  }
+
+  .cursor--link {
+    transform: translate(-50%, -50%) scale(var(--tbf-cursor-scale-link));
+  }
+
+  .cursor--image {
+    transform: translate(-50%, -50%) scale(var(--tbf-cursor-scale-image));
+    opacity: var(--tbf-cursor-opacity-image);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   FOCUS RING GLOBAL
+   ============================================================================= */
+
+*:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+  border-radius: var(--tbf-focus-ring-radius);
+}
+
+/* =============================================================================
+   ELEMENTOS BASE
+   ============================================================================= */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* =============================================================================
+   LAYOUT PRINCIPAL
+   ============================================================================= */
+
+#main {
+  position: relative;
+  min-height: 100dvh;
+}
+
+/* =============================================================================
+   UTILITÁRIOS DE TIPOGRAFIA
+   ============================================================================= */
+
+.display-xl {
+  font-family: var(--tbf-type-display-xl-family);
+  font-size: var(--tbf-type-display-xl-size-sm);
+  font-weight: var(--tbf-type-display-xl-weight);
+  line-height: var(--tbf-type-display-xl-lh-sm);
+  letter-spacing: var(--tbf-type-display-xl-ls);
+}
+
+@media (min-width: 1280px) {
+  .display-xl {
+    font-size: var(--tbf-type-display-xl-size);
+    line-height: var(--tbf-type-display-xl-lh);
+  }
+}
+
+.display-lg {
+  font-family: var(--tbf-type-display-lg-family);
+  font-size: var(--tbf-type-display-lg-size-sm);
+  font-weight: var(--tbf-type-display-lg-weight);
+  line-height: var(--tbf-type-display-lg-lh-sm);
+  letter-spacing: var(--tbf-type-display-lg-ls);
+}
+
+@media (min-width: 1280px) {
+  .display-lg {
+    font-size: var(--tbf-type-display-lg-size);
+    line-height: var(--tbf-type-display-lg-lh);
+  }
+}
+
+/* =============================================================================
+   TAG GROUP (filtros)
+   ============================================================================= */
+
+.tag-group {
+  display: flex;
+  gap: var(--tbf-space-3);
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* =============================================================================
+   FORMULÁRIO — WRAPPER E ESTADO DE SUCESSO
+   ============================================================================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-8);
+}
+
+.form-success {
+  text-align: center;
+  padding-block: var(--tbf-space-12);
+}
+
+.form-success p {
+  font-family: var(--tbf-type-deck-family);
+  font-size: var(--tbf-type-deck-size-sm);
+  font-weight: var(--tbf-type-deck-weight);
+  line-height: var(--tbf-type-deck-lh);
+  color: var(--tbf-text-primary);
+}
+
+@media (min-width: 1280px) {
+  .form-success p {
+    font-size: var(--tbf-type-deck-size);
+  }
+}
+
+/* =============================================================================
+   RADIO INTENT GROUP (/access)
+   ============================================================================= */
+
+.intent-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-4);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.intent-option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tbf-space-4);
+  padding-block: var(--tbf-space-4);
+  cursor: pointer;
+}
+
+.intent-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intent-option__label {
+  flex: 1;
+  cursor: pointer;
+}
+
+.intent-option__name {
+  font-family: var(--tbf-type-h4-family);
+  font-size: var(--tbf-type-h4-size-sm);
+  font-weight: var(--tbf-type-h4-weight);
+  line-height: var(--tbf-type-h4-lh);
+  color: var(--tbf-text-primary);
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.intent-option__desc {
+  font-family: var(--tbf-type-caption-family);
+  font-size: var(--tbf-type-caption-size-sm);
+  color: var(--tbf-text-tertiary);
+  margin-top: var(--tbf-space-1);
+}
+
+.intent-option:has(input:checked) .intent-option__name {
+  color: var(--tbf-accent);
+}
+
+.intent-option__indicator {
+  width: var(--tbf-space-4);
+  height: var(--tbf-space-4);
+  border-radius: var(--tbf-radius-full);
+  flex-shrink: 0;
+  margin-top: calc(var(--tbf-space-1) * 1.5);
+  transition: border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.intent-option:has(input:checked) .intent-option__indicator {
+  background-color: var(--tbf-accent);
+}
+
+/* =============================================================================
+   STICKY CTA — /factory mobile
+   ============================================================================= */
+
+.sticky-cta {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: var(--tbf-space-4) var(--tbf-grid-margin-sm);
+  background-color: var(--tbf-bg-primary);
+  z-index: var(--tbf-z-sticky);
+  display: flex;
+  justify-content: center;
+}
+
+@media (min-width: 1024px) {
+  .sticky-cta {
+    display: none;
+  }
+}
+
+/* =============================================================================
+   VISUALLY HIDDEN (acessibilidade)
+   ============================================================================= */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}

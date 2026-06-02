@@ -1,0 +1,66 @@
+/* Navigation.module.css — usa classes globais do components.css + overrides */
+
+.nav {
+  composes: nav from global;
+}
+
+.nav--scrolled {
+  composes: nav--scrolled from global;
+}
+
+.nav--hidden {
+  composes: nav--hidden from global;
+}
+
+.nav--revealed {
+  composes: nav--revealed from global;
+}
+
+.nav__logo {
+  composes: nav__logo from global;
+}
+
+.nav__links {
+  composes: nav__links from global;
+}
+
+.nav__link {
+  composes: nav__link from global;
+}
+
+.nav__link--active {
+  color: var(--tbf-accent);
+}
+
+.nav__burger {
+  composes: nav__burger from global;
+}
+
+/* CTA link no nav — .TGF. */
+.nav__cta {
+  display: none;
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  font-weight: var(--tbf-type-tag-weight);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: var(--tbf-type-tag-transform);
+  color: var(--tbf-nav-link-color);
+  text-decoration: none;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+@media (min-width: 1024px) {
+  .nav__cta {
+    display: inline-flex;
+  }
+}
+
+.nav__cta:hover {
+  color: var(--tbf-nav-link-hover);
+}
+
+.nav__cta:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+  border-radius: var(--tbf-focus-ring-radius);
+}
