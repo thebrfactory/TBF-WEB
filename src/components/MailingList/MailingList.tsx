@@ -36,8 +36,6 @@ export function MailingList() {
     <section
       aria-labelledby="mailing-list-heading"
       style={{
-        borderTop: '1px solid var(--tbf-border)',
-        borderBottom: '1px solid var(--tbf-border)',
         paddingBlock: 'var(--tbf-space-16)',
         background: '#000',
       }}
