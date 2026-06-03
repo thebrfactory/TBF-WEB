@@ -1,10 +1,10 @@
 import Image from 'next/image'
 
 const SLIDE1 = [
-  '/images/slide1/01.png', '/images/slide1/02.png', '/images/slide1/03.png',
-  '/images/slide1/04.png', '/images/slide1/05.png', '/images/slide1/06.png',
-  '/images/slide1/07.png', '/images/slide1/08.png', '/images/slide1/09.png',
-  '/images/slide1/10.png',
+  '/images/slide1/01.webp', '/images/slide1/02.webp', '/images/slide1/03.webp',
+  '/images/slide1/04.webp', '/images/slide1/05.webp', '/images/slide1/06.webp',
+  '/images/slide1/07.webp', '/images/slide1/08.webp', '/images/slide1/09.webp',
+  '/images/slide1/10.webp',
 ]
 
 interface Props {

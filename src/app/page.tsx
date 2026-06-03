@@ -71,7 +71,7 @@ export default async function HomePage() {
           style={{ position: 'absolute', inset: 0, zIndex: 0 }}
         >
           <Image
-            src="/images/img-01.jpg"
+            src="/images/img-01.webp"
             alt=""
             fill
             priority
@@ -209,19 +209,19 @@ export default async function HomePage() {
             <>
               {[
                 {
-                  img: '/images/thumb-01.png',
+                  img: '/images/thumb-01.webp',
                   category: 'Editorial',
                   title: 'What about the Brazilian fashion culture?',
                   date: '01 Jun. 2026',
                 },
                 {
-                  img: '/images/thumb-02.png',
+                  img: '/images/thumb-02.webp',
                   category: 'Coolhunting',
                   title: 'AFTERPARTY: the feeling behind Brazilian parties',
                   date: '28 Mai. 2026',
                 },
                 {
-                  img: '/images/thumb-03.png',
+                  img: '/images/thumb-03.webp',
                   category: 'Fashion Film',
                   title: 'ACT I: feeling a Brazilian runway backstage',
                   date: '20 Mai. 2026',
@@ -418,9 +418,9 @@ export default async function HomePage() {
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
       <PhotoCarousel
         photos={[
-          '/images/slide2/01.png','/images/slide2/02.png','/images/slide2/03.png',
-          '/images/slide2/04.png','/images/slide2/05.png','/images/slide2/06.png',
-          '/images/slide2/07.png','/images/slide2/09.png',
+          '/images/slide2/01.webp','/images/slide2/02.webp','/images/slide2/03.webp',
+          '/images/slide2/04.webp','/images/slide2/05.webp','/images/slide2/06.webp',
+          '/images/slide2/07.webp','/images/slide2/09.webp',
         ]}
       />
 

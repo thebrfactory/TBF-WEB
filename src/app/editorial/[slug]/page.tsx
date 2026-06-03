@@ -181,12 +181,12 @@ export default async function ArticlePage({
   // Mock articles para preview sem Sanity
   if (!post) {
     const MOCKS: Record<string, { title: string; deck: string; category: string; img: string; date: string }> = {
-      'lorem-ipsum-1': { title: 'What about the Brazilian fashion culture?', deck: 'São Paulo has always been a city that creates, but rarely gets credit. We change that.', category: 'Editorial', img: '/images/slide1/01.png', date: '2026-06-01' },
-      'lorem-ipsum-2': { title: 'AFTERPARTY: the feeling behind Brazilian parties', deck: 'After the lights go down and the crowd disperses, something lingers. We went looking for it.', category: 'Coolhunting', img: '/images/slide1/03.png', date: '2026-05-28' },
-      'lorem-ipsum-3': { title: 'ACT I: feeling a Brazilian runway backstage', deck: 'Before the first model steps out, a whole universe breathes in the wings. We were there.', category: 'Fashion Film', img: '/images/slide1/05.png', date: '2026-05-20' },
-      'lorem-ipsum-4': { title: 'São Paulo as fashion capital: the city that prints its own rules', deck: 'Paris sets the trends. Milan refines them. London breaks them. São Paulo ignores them and starts over.', category: 'Editorial', img: '/images/slide1/07.png', date: '2026-05-15' },
-      'lorem-ipsum-5': { title: 'When Brazilian music and fashion collide', deck: 'Funk, baile, axé — Brazilian music has always dressed itself in something unmistakable. Here\'s where it meets the runway.', category: 'Colaboração', img: '/images/slide1/09.png', date: '2026-05-08' },
-      'lorem-ipsum-6': { title: 'We are not a trend: why .TBF. refuses to follow', deck: 'Trends are questions. .TBF. is the answer they didn\'t see coming.', category: 'Manifesto', img: '/images/slide1/02.png', date: '2026-05-01' },
+      'lorem-ipsum-1': { title: 'What about the Brazilian fashion culture?', deck: 'São Paulo has always been a city that creates, but rarely gets credit. We change that.', category: 'Editorial', img: '/images/slide1/01.webp', date: '2026-06-01' },
+      'lorem-ipsum-2': { title: 'AFTERPARTY: the feeling behind Brazilian parties', deck: 'After the lights go down and the crowd disperses, something lingers. We went looking for it.', category: 'Coolhunting', img: '/images/slide1/03.webp', date: '2026-05-28' },
+      'lorem-ipsum-3': { title: 'ACT I: feeling a Brazilian runway backstage', deck: 'Before the first model steps out, a whole universe breathes in the wings. We were there.', category: 'Fashion Film', img: '/images/slide1/05.webp', date: '2026-05-20' },
+      'lorem-ipsum-4': { title: 'São Paulo as fashion capital: the city that prints its own rules', deck: 'Paris sets the trends. Milan refines them. London breaks them. São Paulo ignores them and starts over.', category: 'Editorial', img: '/images/slide1/07.webp', date: '2026-05-15' },
+      'lorem-ipsum-5': { title: 'When Brazilian music and fashion collide', deck: 'Funk, baile, axé — Brazilian music has always dressed itself in something unmistakable. Here\'s where it meets the runway.', category: 'Colaboração', img: '/images/slide1/09.webp', date: '2026-05-08' },
+      'lorem-ipsum-6': { title: 'We are not a trend: why .TBF. refuses to follow', deck: 'Trends are questions. .TBF. is the answer they didn\'t see coming.', category: 'Manifesto', img: '/images/slide1/02.webp', date: '2026-05-01' },
     }
     const mock = MOCKS[slug as string]
     if (!mock) notFound()

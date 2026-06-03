@@ -121,7 +121,7 @@ export function PitchClient() {
         {/* BG image */}
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Image
-            src="/images/img-03.jpg"
+            src="/images/img-03.webp"
             alt=""
             fill
             priority
