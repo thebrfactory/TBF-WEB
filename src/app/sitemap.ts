@@ -23,7 +23,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
     priority: 0.9,
   },
   {
-    url: `${BASE_URL}/factory`,
+    url: `${BASE_URL}/labels/factoryofgrowth`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.9,

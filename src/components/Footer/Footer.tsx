@@ -19,7 +19,7 @@ const FOOTER_BUS = [
   { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
   { href: '/melfiore', label: '.TFD. | MELFIORE' },
   { href: '/runway', label: '.RUC. | RUNWAY UNITED COLLECTIVE' },
-  { href: '/factory', label: '.TGF. | THE GROWTH FACTORY' },
+  { href: '/labels/factoryofgrowth', label: '.TGF. | THE GROWTH FACTORY' },
 ] as const
 
 const SOCIAL_HANDLES = [

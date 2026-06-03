@@ -68,8 +68,8 @@ const LABELS = [
     name: 'The Growth Factory',
     subtitle: 'Growth · Strategy · Results',
     subtitlePt: 'Aceleração · Estratégia · Resultados',
-    href: '/factory',
-    cta: '→ Work with .TGF.',
+    href: '/labels/factoryofgrowth',
+    cta: '→ Explore .TGF.',
     isCTAPrimary: true,
     points: [
       { label: 'Categoria', value: 'Consultoria de performance e crescimento de negócios' },

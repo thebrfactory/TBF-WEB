@@ -353,7 +353,7 @@ export default async function HomePage() {
               tag: '.TGF.',
               name: 'The Growth Factory',
               desc: 'Growth · Strategy · Results',
-              href: '/factory',
+              href: '/labels/factoryofgrowth',
             },
           ].map((label, i) => (
             <Link
