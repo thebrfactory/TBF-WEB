@@ -95,13 +95,12 @@ export default function FactoryOfGrowthPage() {
             id="tgf-h1"
             style={{
               fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'clamp(2.8rem, 7vw, 6rem)',
+              fontSize: 'clamp(2rem, 8vw, 6rem)',
               fontWeight: 800,
               lineHeight: 0.95,
               letterSpacing: 'var(--tbf-type-display-xl-ls)',
               color: '#ffffff',
               marginBottom: 'var(--tbf-space-5)',
-              whiteSpace: 'nowrap',
             }}
           >
             .THE GROWTH FACTORY.
@@ -280,14 +279,8 @@ export default function FactoryOfGrowthPage() {
           style={{ position: 'relative', zIndex: 3, paddingBlock: 'var(--tbf-space-20)' }}
         >
           {/* Duas colunas: Position inside the ecosystem | Philosophy */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              gap: 'var(--tbf-space-16)',
-              alignItems: 'start',
-            }}
-          >
+          {/* layout-b → 1 coluna mobile, 2 colunas em ≥1024px */}
+          <div className="layout-b" style={{ alignItems: 'start' }}>
             {/* Coluna esquerda — Why it exists */}
             <div>
               <p style={SUBTITLE}>Position inside the ecosystem</p>
