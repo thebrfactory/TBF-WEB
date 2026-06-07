@@ -341,13 +341,15 @@ export default async function HomePage() {
               tag: '.TFD.',
               name: 'The Fiore Daily',
               desc: 'Intimacy · Wellness · Ritual',
-              href: '/melfiore',
+              href: 'https://instagram.com/thefioredaily',
+              target: '_blank',
             },
             {
               tag: '.RUC.',
               name: 'Runway United Collective',
               desc: 'Fashion Films · Editorial · SPFW',
-              href: '/runway',
+              href: 'https://instagram.com/runwayunited',
+              target: '_blank',
             },
             {
               tag: '.TGF.',
@@ -359,6 +361,7 @@ export default async function HomePage() {
             <Link
               key={label.tag}
               href={label.href}
+              {...(label.target && { target: label.target, rel: 'noopener noreferrer' })}
               style={{
                 paddingTop: 'var(--tbf-space-8)',
                 textDecoration: 'none',
