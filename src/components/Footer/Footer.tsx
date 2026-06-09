@@ -8,8 +8,8 @@ import Image from 'next/image'
 
 const FOOTER_BUS = [
   { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
-  { href: '/melfiore', label: '.TFD. | THE FIORE DAILY' },
-  { href: '/runway', label: '.RUC. | RUNWAY UNITED COLLECTIVE' },
+  { href: '/labels/thefioredaily', label: '.TFD. | THE FIORE DAILY' },
+  { href: '/labels/runwayunited', label: '.RUC. | RUNWAY UNITED COLLECTIVE' },
   { href: '/labels/factoryofgrowth', label: '.TGF. | THE GROWTH FACTORY' },
 ] as const
 

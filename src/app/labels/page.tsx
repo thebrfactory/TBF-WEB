@@ -21,8 +21,8 @@ const LABELS = [
   {
     tag: '.TBF.',
     name: 'The Brazilian Factory',
-    subtitle: 'Editorial · Manifesto · Cultural Curation',
-    subtitlePt: 'Editorial · Manifesto · Curadoria Cultural',
+    subtitle: 'Collective Hotel Casino',
+    subtitlePt: 'Collective Hotel Casino',
     href: '/editorial',
     cta: '→ Enter .TBF. Editorial',
     isCTAPrimary: true,
@@ -36,9 +36,9 @@ const LABELS = [
   {
     tag: '.TFD.',
     name: 'Melfiore',
-    subtitle: 'Intimacy · Wellness · Ritual',
-    subtitlePt: 'Intimidade · Bem-Estar · Ritual',
-    href: '/melfiore',
+    subtitle: 'Intimacy-Wellness Community',
+    subtitlePt: 'Intimacy-Wellness Community',
+    href: '/labels/thefioredaily',
     cta: '→ Enter The Fiore Daily',
     isCTAPrimary: false,
     points: [
@@ -51,9 +51,9 @@ const LABELS = [
   {
     tag: '.RUC.',
     name: 'Runway United Collective',
-    subtitle: 'Fashion Films · Editorial · SPFW',
-    subtitlePt: 'Fashion Films · Editorial · SPFW',
-    href: '/runway',
+    subtitle: 'Fashion Film Magazine',
+    subtitlePt: 'Fashion Film Magazine',
+    href: '/labels/runwayunited',
     cta: '→ Explore the Archive',
     isCTAPrimary: false,
     points: [
@@ -66,8 +66,8 @@ const LABELS = [
   {
     tag: '.TGF.',
     name: 'The Growth Factory',
-    subtitle: 'Growth · Strategy · Results',
-    subtitlePt: 'Aceleração · Estratégia · Resultados',
+    subtitle: 'Worldwide Brazilian Support',
+    subtitlePt: 'Worldwide Brazilian Support',
     href: '/labels/factoryofgrowth',
     cta: '→ Explore .TGF.',
     isCTAPrimary: true,

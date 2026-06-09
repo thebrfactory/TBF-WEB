@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 const SLIDE1 = [
   '/images/slide1/01.webp', '/images/slide1/02.webp', '/images/slide1/03.webp',
@@ -9,25 +10,47 @@ const SLIDE1 = [
 
 interface Props {
   photos?: string[]
+  href?: string
 }
 
-export function PhotoCarousel({ photos = SLIDE1 }: Props) {
+export function PhotoCarousel({ photos = SLIDE1, href = '/editorial' }: Props) {
   const loop = [...photos, ...photos]
+
   return (
-    <section aria-hidden="true" style={{ overflow: 'hidden', background: '#000000' }}>
-      <div className="carousel-track">
-        {loop.map((src, i) => (
-          <div key={i} className="carousel-slide">
+    <section aria-label="Photo gallery" style={{ background: '#000000' }}>
+
+      {/* Mobile: swipeable snap scroll — shown only on mobile */}
+      <div className="carousel-mobile">
+        {photos.map((src, i) => (
+          <Link key={i} href={href} className="carousel-slide">
             <Image
               src={src}
               alt=""
               fill
-              sizes="(min-width:1024px) 25vw, 50vw"
+              sizes="72vw"
               style={{ objectFit: 'cover', filter: 'grayscale(15%)' }}
             />
-          </div>
+          </Link>
         ))}
       </div>
+
+      {/* Desktop: infinite auto-scroll — hidden on mobile */}
+      <div className="carousel-desktop" aria-hidden="true">
+        <div className="carousel-track">
+          {loop.map((src, i) => (
+            <Link key={i} href={href} className="carousel-slide">
+              <Image
+                src={src}
+                alt=""
+                fill
+                sizes="22vw"
+                style={{ objectFit: 'cover', filter: 'grayscale(15%)' }}
+              />
+            </Link>
+          ))}
+        </div>
+      </div>
+
     </section>
   )
 }

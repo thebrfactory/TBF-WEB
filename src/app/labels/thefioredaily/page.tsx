@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '.THE FIORE DAILY. | .TFD.',
     description:
-      'Intimacy · Wellness · Ritual. Part of .THE BRAZILIAN FACTORY.',
+      'Intimacy-Wellness Community. Part of .THE BRAZILIAN FACTORY.',
     images: [{ url: '/og-factory.jpg', width: 1200, height: 630 }],
   },
 }

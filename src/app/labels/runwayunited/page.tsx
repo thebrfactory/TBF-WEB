@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '.RUNWAY UNITED COLLECTIVE. | .RUC.',
     description:
-      'Fashion Films · Editorial · SPFW. Part of .THE BRAZILIAN FACTORY.',
+      'Fashion Film Magazine. Part of .THE BRAZILIAN FACTORY.',
     images: [{ url: '/og-factory.jpg', width: 1200, height: 630 }],
   },
 }

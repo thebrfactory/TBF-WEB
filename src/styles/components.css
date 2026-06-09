@@ -635,32 +635,53 @@
 }
 
 /* =============================================================================
-   COMPONENTE — PHOTO CAROUSEL (infinite scroll)
+   COMPONENTE — PHOTO CAROUSEL
+   Mobile: swipeable snap scroll (Netflix-style)
+   Desktop: infinite auto-scroll
    ============================================================================= */
 
-.carousel-track {
-  display: flex;
-  animation: carouselInfiniteScroll 32s linear infinite;
-  will-change: transform;
-}
-
-@media (max-width: 1023px) {
-  .carousel-track {
-    animation-duration: 18s;
-  }
-}
-
+/* ── Slide base ── */
 .carousel-slide {
-  width: 50vw;
   aspect-ratio: 3 / 4;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
+  display: block;
 }
 
+/* ── Mobile: swipeable (default, overridden on desktop) ── */
+.carousel-mobile {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  gap: 4px;
+  padding-inline: var(--tbf-grid-margin-sm, 20px);
+  padding-block: 0;
+}
+.carousel-mobile::-webkit-scrollbar { display: none; }
+.carousel-mobile .carousel-slide {
+  width: 72vw;
+  scroll-snap-align: start;
+}
+
+.carousel-desktop { display: none; }
+
+/* ── Desktop: auto-scroll, cards slightly smaller ── */
 @media (min-width: 1024px) {
-  .carousel-slide {
-    width: 25vw;
+  .carousel-mobile  { display: none; }
+  .carousel-desktop { display: block; overflow: hidden; }
+
+  .carousel-track {
+    display: flex;
+    animation: carouselInfiniteScroll 36s linear infinite;
+    will-change: transform;
+  }
+
+  .carousel-track .carousel-slide {
+    width: 20vw;
+    scroll-snap-align: unset;
   }
 }
 

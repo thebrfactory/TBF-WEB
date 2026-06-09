@@ -317,27 +317,25 @@ export default async function HomePage() {
             {
               tag: '.TBF.',
               name: 'The Brazilian Factory',
-              desc: 'Editorial · Manifesto · Cultural Curation',
+              desc: 'Collective Hotel Casino',
               href: '/editorial',
             },
             {
               tag: '.TFD.',
               name: 'The Fiore Daily',
-              desc: 'Intimacy · Wellness · Ritual',
-              href: 'https://instagram.com/thefioredaily',
-              target: '_blank',
+              desc: 'Intimacy-Wellness Community',
+              href: '/labels/thefioredaily',
             },
             {
               tag: '.RUC.',
               name: 'Runway United Collective',
-              desc: 'Fashion Films · Editorial · SPFW',
-              href: 'https://instagram.com/runwayunited',
-              target: '_blank',
+              desc: 'Fashion Film Magazine',
+              href: '/labels/runwayunited',
             },
             {
               tag: '.TGF.',
               name: 'The Growth Factory',
-              desc: 'Growth · Strategy · Results',
+              desc: 'Worldwide Brazilian Support',
               href: '/labels/factoryofgrowth',
             },
           ].map((label, i) => (
