@@ -102,23 +102,6 @@ export default async function HomePage() {
             alignItems: 'flex-start',
           }}
         >
-          {/* São Paulo acima da identidade visual */}
-          <p
-            style={{
-              width: '100%',
-              paddingInline: 0,
-              marginBottom: 'var(--tbf-space-3)',
-              fontFamily: 'var(--tbf-font-family-ui)',
-              fontSize: 'clamp(0.85rem, 2.8vw, 1.35rem)',
-              fontWeight: 100,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#fff',
-            }}
-          >
-            São Paulo, Brazil · Est. 2025
-          </p>
-
           {/* Logotype SVG ponta a ponta */}
           <svg
             viewBox="0 397 595.28 47"
@@ -163,7 +146,7 @@ export default async function HomePage() {
               color: '#fff',
             }}
           >
-            Culture™<br />Crafted in São Paulo.<br />Consumed Worldwide.
+            Culture™<br />Crafted in São Paulo, Brazil.<br />Consumed Worldwide.
           </p>
         </div>
 

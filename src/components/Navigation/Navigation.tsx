@@ -11,6 +11,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import styles from './Navigation.module.css'
 
+const SEARCH_PLACEHOLDER = 'Search .TBF.'
+
 const NAV_LINKS = [
   { href: '/editorial', label: 'Magazine' },
   { href: '/labels', label: 'Labels' },
@@ -21,7 +23,10 @@ export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const pathname = usePathname()
+  const searchInputRef = useRef<HTMLInputElement>(null)
 
   const lastScrollY = useRef(0)
   const drawerRef = useRef<HTMLDivElement>(null)
@@ -52,11 +57,31 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // ─── Close drawer on route change ─────────────────────────────────────────
+  // ─── Close drawer + search on route change ────────────────────────────────
 
   useEffect(() => {
     setDrawerOpen(false)
+    setSearchOpen(false)
   }, [pathname])
+
+  // ─── Search overlay — focus input + Escape ────────────────────────────────
+
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50)
+    }
+  }, [searchOpen])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && searchOpen) {
+        setSearchOpen(false)
+        setSearchQuery('')
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [searchOpen])
 
   // ─── Focus trap no drawer ─────────────────────────────────────────────────
 
@@ -134,11 +159,21 @@ export function Navigation() {
   return (
     <>
       <header className={navClasses} role="banner">
-        {/* Logo — MONOGRAM-02 (simpler monogram: brackets + star) */}
+        {/* Left: HOME */}
+        <Link
+          href="/"
+          className={styles.nav__link}
+          aria-current={pathname === '/' ? 'page' : undefined}
+        >
+          Home
+        </Link>
+
+        {/* Center: Logo — absolutamente centralizado */}
         <Link
           href="/"
           className={styles.nav__logo}
           aria-label=".THE BRAZILIAN FACTORY."
+          style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
         >
           <svg
             viewBox="100 336 396 170"
@@ -153,56 +188,75 @@ export function Navigation() {
           </svg>
         </Link>
 
-        {/* Desktop navigation */}
-        <nav aria-label="Navegação principal">
-          <ul className={styles.nav__links} role="list">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
-                  aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {/* Right: Desktop nav + Search + Language + Burger */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--tbf-space-8)' }}>
+          <nav aria-label="Navegação principal">
+            <ul className={styles.nav__links} role="list">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
+                    aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        {/* Burger button — mobile */}
-        <button
-          ref={burgerRef}
-          className={styles.nav__burger}
-          aria-expanded={drawerOpen}
-          aria-controls="mobile-drawer"
-          aria-label={drawerOpen ? 'Fechar menu' : 'Abrir menu'}
-          onClick={() => setDrawerOpen(!drawerOpen)}
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            aria-hidden="true"
+          {/* Search icon — desktop only */}
+          <button
+            className={styles.nav__icon}
+            aria-label="Search"
+            onClick={() => setSearchOpen(true)}
           >
-            {drawerOpen ? (
-              <>
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </>
-            ) : (
-              <>
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </>
-            )}
-          </svg>
-        </button>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </button>
+
+          {/* Language indicator — EN */}
+          <span className={styles.nav__lang} aria-label="Site language: English">
+            EN
+          </span>
+
+          {/* Burger button — mobile */}
+          <button
+            ref={burgerRef}
+            className={styles.nav__burger}
+            aria-expanded={drawerOpen}
+            aria-controls="mobile-drawer"
+            aria-label={drawerOpen ? 'Fechar menu' : 'Abrir menu'}
+            onClick={() => setDrawerOpen(!drawerOpen)}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              {drawerOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </>
+              )}
+            </svg>
+          </button>
+        </div>
       </header>
 
       {/* Overlay */}
@@ -252,6 +306,106 @@ export function Navigation() {
           ))}
         </nav>
       </div>
+
+      {/* Search Overlay */}
+      {searchOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Search"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 'calc(var(--tbf-nav-z) + 1)' as React.CSSProperties['zIndex'],
+            background: 'rgba(0,0,0,0.96)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 'var(--tbf-space-8)',
+          }}
+        >
+          <button
+            aria-label="Close search"
+            onClick={() => { setSearchOpen(false); setSearchQuery('') }}
+            style={{
+              position: 'absolute',
+              top: 'var(--tbf-space-6)',
+              right: 'var(--tbf-space-6)',
+              background: 'none',
+              border: 'none',
+              color: 'rgba(255,255,255,0.5)',
+              cursor: 'pointer',
+              padding: 'var(--tbf-space-2)',
+            }}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+
+          <div style={{ width: '100%', maxWidth: '640px' }}>
+            <p style={{
+              fontFamily: 'var(--tbf-type-micro-family)',
+              fontSize: 'var(--tbf-type-micro-size)',
+              letterSpacing: 'var(--tbf-type-micro-ls)',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.4)',
+              marginBottom: 'var(--tbf-space-4)',
+            }}>
+              Search .TBF.
+            </p>
+            <div style={{ position: 'relative' }}>
+              <svg
+                width="18" height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                style={{ position: 'absolute', left: '1rem', top: '50%', transform: 'translateY(-50%)', color: 'rgba(255,255,255,0.4)' }}
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input
+                ref={searchInputRef}
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={SEARCH_PLACEHOLDER}
+                aria-label="Search query"
+                style={{
+                  width: '100%',
+                  background: 'transparent',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  borderRadius: '999px',
+                  color: '#fff',
+                  fontFamily: 'var(--tbf-type-h2-family)',
+                  fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                  fontWeight: 300,
+                  padding: '1rem 1.5rem 1rem 3rem',
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                }}
+              />
+            </div>
+            <p style={{
+              fontFamily: 'var(--tbf-type-micro-family)',
+              fontSize: 'var(--tbf-type-micro-size)',
+              letterSpacing: 'var(--tbf-type-micro-ls)',
+              color: 'rgba(255,255,255,0.25)',
+              marginTop: 'var(--tbf-space-4)',
+              textTransform: 'uppercase',
+            }}>
+              Press Esc to close
+            </p>
+          </div>
+        </div>
+      )}
     </>
   )
 }

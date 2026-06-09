@@ -74,6 +74,11 @@ const nextConfig: NextConfig = {
         destination: '/factory',
         permanent: true,
       },
+      {
+        source: '/runwayunited',
+        destination: '/labels/runwayunited',
+        permanent: false,
+      },
     ]
   },
 }

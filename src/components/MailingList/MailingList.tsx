@@ -74,7 +74,7 @@ export function MailingList() {
               maxWidth: '18ch',
             }}
           >
-            Get the best stories from the .TBF. community.
+            Get the best stories from <span style={{ fontWeight: 800 }}>.TBF.</span> community.
           </h2>
         </div>
 

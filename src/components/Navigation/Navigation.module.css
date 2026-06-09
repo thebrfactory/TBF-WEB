@@ -64,3 +64,43 @@
   outline-offset: var(--tbf-focus-ring-offset);
   border-radius: var(--tbf-focus-ring-radius);
 }
+
+.nav__icon {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--tbf-nav-link-color);
+  cursor: pointer;
+  padding: var(--tbf-space-1);
+  line-height: 0;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+@media (min-width: 1024px) {
+  .nav__icon {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.nav__icon:hover {
+  color: var(--tbf-nav-link-hover);
+}
+
+.nav__lang {
+  display: none;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tbf-nav-link-color);
+  opacity: 0.6;
+  user-select: none;
+}
+
+@media (min-width: 1024px) {
+  .nav__lang {
+    display: inline;
+  }
+}

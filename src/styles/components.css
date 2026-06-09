@@ -263,7 +263,7 @@
 
 @media (min-width: 1024px) {
   .footer__grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--tbf-space-8);
     align-items: start;
   }
