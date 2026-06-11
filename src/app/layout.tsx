@@ -9,7 +9,6 @@ import { Navigation } from '@/components/Navigation/Navigation'
 import { Footer } from '@/components/Footer/Footer'
 import { MailingList } from '@/components/MailingList/MailingList'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
-import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -134,6 +133,7 @@ export default function RootLayout({
         <Footer />
 
         <CustomCursor />
+
         <Analytics />
         <SpeedInsights />
       </body>

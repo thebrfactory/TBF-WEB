@@ -11,6 +11,7 @@ import type { HomePageProps } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
+import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 
 export const metadata: Metadata = {
   title: '.THE BRAZILIAN FACTORY.',
@@ -46,6 +47,8 @@ export default async function HomePage() {
 
   return (
     <>
+      <LoadingScreen />
+
       {/* ─── HERO — LOGOTYPE CENTRALIZADO ────────────────────────────────────── */}
       <section
         className="hero"

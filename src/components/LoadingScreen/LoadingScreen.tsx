@@ -13,15 +13,13 @@ export function LoadingScreen() {
   const [hidden, setHidden] = useState(false)
 
   useEffect(() => {
-    // Dispara saída após max 2000ms
     const exitTimer = setTimeout(() => {
       setExiting(true)
-    }, 2000)
+    }, 600)
 
-    // Remove do DOM após animação de saída
     const hideTimer = setTimeout(() => {
       setHidden(true)
-    }, 2400)
+    }, 800)
 
     return () => {
       clearTimeout(exitTimer)
