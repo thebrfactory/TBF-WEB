@@ -6,7 +6,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-const SITE_VERSION = 'v1.5.0'
+const SITE_VERSION = '.TBF.SYSTEM VERSION 1.5.0'
 
 const FOOTER_BUS = [
   { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
