@@ -342,7 +342,6 @@ export default async function HomePage() {
             <Link
               key={label.tag}
               href={label.href}
-              {...(label.target && { target: label.target, rel: 'noopener noreferrer' })}
               style={{
                 paddingTop: 'var(--tbf-space-8)',
                 textDecoration: 'none',
