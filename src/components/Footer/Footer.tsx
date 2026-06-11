@@ -1,10 +1,12 @@
 // =============================================================================
 // FOOTER — TBF WEB 2026
-// 3 colunas desktop / vertical mobile
+// 3 colunas desktop / 2 colunas mobile-first
 // =============================================================================
 
 import Link from 'next/link'
 import Image from 'next/image'
+
+const SITE_VERSION = 'v1.1.0'
 
 const FOOTER_BUS = [
   { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
@@ -62,20 +64,16 @@ export function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__inner">
 
-        {/* Grid topo: Logo col | Labels | Instagram — todos alinhados no mesmo nível */}
-        <div className="footer__grid" style={{ alignItems: 'flex-start' }}>
-          <div style={{ minWidth: 0 }}>
-            {/* espaçador invisível — mesma altura do heading LABELS/INSTAGRAM */}
-            <p className="footer__meta" aria-hidden="true" style={{ visibility: 'hidden', padding: 0, textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)' }}>
-              &nbsp;
-            </p>
+        {/* Top: logo full-width | labels + instagram 2-col mobile / 3-col desktop */}
+        <div className="footer__grid--top">
+          <div>
             <Link href="/" aria-label=".THE BRAZILIAN FACTORY." style={{ display: 'block', maxWidth: 220 }}>
               <Image
                 src="/brand/TBF-SAO-PAULO.svg"
                 alt=".TBF. SÃO PAULO"
                 width={220}
                 height={158}
-                style={{ display: 'block', width: '100%', height: 'auto', filter: 'invert(0)' }}
+                style={{ display: 'block', width: '100%', height: 'auto' }}
                 unoptimized
               />
             </Link>
@@ -101,7 +99,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <nav aria-label=".TBF. social media" style={{ textAlign: 'right' }}>
+          <nav aria-label=".TBF. social media">
             <p className="footer__meta" style={{ textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)', padding: 0, opacity: 0.4 }}>
               Instagram
             </p>
@@ -123,53 +121,37 @@ export function Footer() {
           </nav>
         </div>
 
-        {/* Grid nav: 3 colunas semânticas — Pages | Company | Legal */}
-        <div
-          className="footer__grid"
-          style={{ marginTop: 'var(--tbf-space-12)', alignItems: 'start' }}
-        >
-          {NAV_COLUMNS.map((col, i) => {
-            const isLast = i === NAV_COLUMNS.length - 1
-            return (
-              <nav key={col.heading} aria-label={col.heading} style={isLast ? { textAlign: 'right' } : undefined}>
-                <p
-                  className="footer__meta"
-                  style={{
-                    textTransform: 'uppercase',
-                    marginBottom: 'var(--tbf-space-4)',
-                    padding: 0,
-                    opacity: 0.4,
-                  }}
-                >
-                  {col.heading}
-                </p>
-                <ul className="footer__nav-list" role="list" style={isLast ? { opacity: 0.55 } : undefined}>
-                  {col.links.map((link) => (
-                    <li key={link.href}>
-                      <Link href={link.href} className="footer__link">{link.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            )
-          })}
+        {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
+        <div className="footer__grid--nav">
+          {NAV_COLUMNS.map((col) => (
+            <nav key={col.heading} aria-label={col.heading}>
+              <p
+                className="footer__meta"
+                style={{ textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)', padding: 0, opacity: 0.4 }}
+              >
+                {col.heading}
+              </p>
+              <ul className="footer__nav-list" role="list">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="footer__link">{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
-        {/* Copyright */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-end',
-            marginTop: 'var(--tbf-space-10)',
-            gap: 'var(--tbf-space-6)',
-          }}
-        >
+        {/* Copyright + version */}
+        <div className="footer__copyright">
           <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>
             © {currentYear} .TBF. INC · CNPJ 61.360.565/0001-74
           </p>
-          <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0, textAlign: 'right' }}>
-            R. Pamplona, 145 - Jardim Paulista, São Paulo - SP, 01405-100
+          <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>
+            R. Pamplona, 145 — Jardim Paulista, São Paulo — SP, 01405-100
+          </p>
+          <p className="footer__meta" style={{ margin: 0, opacity: 0.4 }}>
+            {SITE_VERSION}
           </p>
         </div>
 
