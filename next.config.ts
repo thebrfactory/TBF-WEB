@@ -94,6 +94,12 @@ const nextConfig: NextConfig = {
         destination: '/labels/runwayunited',
         permanent: false,
       },
+      // Perfil consolidado: founders → creator
+      {
+        source: '/about/founders',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
     ]
   },
 }

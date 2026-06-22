@@ -13,11 +13,13 @@ import styles from './Navigation.module.css'
 
 const SEARCH_PLACEHOLDER = 'Search .TBF.'
 
-const NAV_LINKS = [
+const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
   { href: '/editorial', label: 'Magazine' },
   { href: '/labels', label: 'Labels' },
   { href: '/pitch', label: 'Pitch' },
-] as const
+  // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
+  { href: '/brandsystem/login', label: 'Login', external: true },
+]
 
 export function Navigation() {
   const [scrolled, setScrolled] = useState(false)
@@ -192,17 +194,25 @@ export function Navigation() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--tbf-space-8)' }}>
           <nav aria-label="Navegação principal">
             <ul className={styles.nav__links} role="list">
-              {NAV_LINKS.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
-                    aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {NAV_LINKS.map((link) =>
+                link.external ? (
+                  <li key={link.href}>
+                    <a href={link.href} className={styles.nav__link}>
+                      {link.label}
+                    </a>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
+                      aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                )
+              )}
             </ul>
           </nav>
 
@@ -299,11 +309,17 @@ export function Navigation() {
         </button>
 
         <nav className="drawer__nav" aria-label="Menu mobile">
-          {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className="drawer__link">
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.external ? (
+              <a key={link.href} href={link.href} className="drawer__link">
+                {link.label}
+              </a>
+            ) : (
+              <Link key={link.href} href={link.href} className="drawer__link">
+                {link.label}
+              </Link>
+            )
+          )}
         </nav>
       </div>
 

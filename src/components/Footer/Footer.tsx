@@ -41,7 +41,7 @@ const NAV_COLUMNS = [
       { href: '/about', label: 'About Us' },
       { href: '/about/quick-facts', label: 'Quick Facts' },
       { href: '/press/media', label: 'Media' },
-      { href: '/about/founders', label: 'Founders' },
+      { href: '/creators/tavaristico', label: 'Founders' },
       { href: '/careers', label: 'Careers' },
       { href: '/publishing', label: 'Publishing' },
     ],

@@ -4,6 +4,7 @@
 // =============================================================================
 
 import type { Metadata, Viewport } from 'next'
+import Link from 'next/link'
 import '@/styles/globals.css'
 import { Navigation } from '@/components/Navigation/Navigation'
 import { Footer } from '@/components/Footer/Footer'
@@ -130,6 +131,43 @@ export default function RootLayout({
         </main>
 
         <MailingList />
+
+        {/* Assinatura de fechamento — abaixo da newsletter, em todas as páginas */}
+        <section
+          aria-label="Let's make brave work for your brand"
+          style={{ background: '#000', paddingBottom: 'var(--tbf-space-16)' }}
+        >
+          <div
+            className="container"
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+              gap: 'var(--tbf-space-6)',
+            }}
+          >
+            <p
+              style={{
+                fontFamily: 'var(--tbf-font-family-display)',
+                // Escala com o viewport para caber em UMA linha sem white-space: nowrap
+                fontSize: 'min(2.5rem, 4.6vw)',
+                fontWeight: 700,
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em',
+                color: 'var(--tbf-text-primary)',
+                margin: 0,
+              }}
+            >
+              {"Let's make brave work for your brand"}
+            </p>
+            <Link href="/contact-us" className="btn btn--primary">
+              Contact Us
+              <span className="btn__arrow" aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </section>
+
         <Footer />
 
         <CustomCursor />

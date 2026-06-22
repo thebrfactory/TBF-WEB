@@ -7,6 +7,7 @@
 // =============================================================================
 
 import { useEffect, useState } from 'react'
+import Image from 'next/image'
 
 export function LoadingScreen() {
   const [exiting, setExiting] = useState(false)
@@ -37,9 +38,16 @@ export function LoadingScreen() {
       aria-live="polite"
     >
       <div className="loading-screen__glow" aria-hidden="true" />
-      <span className="loading-screen__mark" aria-hidden="true">
-        .TBF.
-      </span>
+      <Image
+        src="/brand/TBF-SAO-PAULO.svg"
+        alt=".THE BRAZILIAN FACTORY. — São Paulo"
+        width={220}
+        height={158}
+        priority
+        unoptimized
+        className="loading-screen__mark"
+        style={{ width: 'clamp(150px, 42vw, 260px)', height: 'auto' }}
+      />
     </div>
   )
 }

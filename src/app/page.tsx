@@ -12,6 +12,7 @@ import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 
 export const metadata: Metadata = {
   title: '.THE BRAZILIAN FACTORY.',
@@ -51,66 +52,24 @@ export default async function HomePage() {
 
       {/* ─── HERO — LOGOTYPE CENTRALIZADO ────────────────────────────────────── */}
       <section
-        className="hero"
+        className="hero hero--home"
         aria-label="Hero .THE BRAZILIAN FACTORY."
-        style={{
-          position: 'relative',
-          width: '100vw',
-          minHeight: '100dvh',
-          background: '#000000',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          overflow: 'hidden',
-        }}
+        style={{ width: '100vw' }}
       >
         {/* Grain overlay */}
         <div className="hero__overlay-grain" aria-hidden="true" />
 
-        {/* Imagem de fundo */}
-        <div
-          aria-hidden="true"
-          style={{ position: 'absolute', inset: 0, zIndex: 0 }}
-        >
-          <Image
-            src="/images/img-01.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{
-              objectFit: 'cover',
-              objectPosition: 'center 35%',
-              opacity: 0.35,
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, #000000 0%, transparent 25%, transparent 65%, #000000 100%)',
-            }}
-          />
-        </div>
+        {/* Vídeo de fundo (mobile vertical / desktop horizontal) */}
+        <HeroVideo />
 
-        {/* LOGOTYPE + DECK — bloco centralizado */}
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 3,
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-          }}
-        >
-          {/* Logotype SVG ponta a ponta */}
+        {/* LOGOTYPE + DECK — grupo alinhado, junto à base do vídeo */}
+        <div className="hero-home__content">
+          {/* Logotype SVG — mobile: margem a margem · desktop: 65% centralizado */}
           <svg
             viewBox="0 397 595.28 47"
             aria-label=".THE BRAZILIAN FACTORY."
             role="img"
-            style={{ width: '100%', height: 'auto', display: 'block' }}
+            className="hero-home__logo"
           >
             <path d="M5.21,428.52c3.22,0,5.21,1.9,5.21,5.02s-2,5.02-5.21,5.02-5.21-1.9-5.21-5.02,2-5.02,5.21-5.02Z" fill="#fff"/>
             <path d="M36.36,403.16v8.46h-8.84v26.15h-10.09v-26.15h-8.84v-8.46h27.78Z" fill="#fff"/>
@@ -135,21 +94,9 @@ export default async function HomePage() {
             <path d="M590.06,428.52c3.22,0,5.21,1.9,5.21,5.02s-2,5.02-5.21,5.02-5.21-1.9-5.21-5.02,2-5.02,5.21-5.02Z" fill="#fff"/>
           </svg>
 
-          {/* Deck */}
-          <p
-            style={{
-              width: '100%',
-              paddingInline: 0,
-              marginTop: 'var(--tbf-space-4)',
-              fontFamily: 'var(--tbf-font-family-ui)',
-              fontSize: 'clamp(0.85rem, 2.8vw, 1.35rem)',
-              fontWeight: 100,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: '#fff',
-            }}
-          >
-            Culture™<br />Crafted in São Paulo, Brazil.<br />Consumed Worldwide.
+          {/* Deck — alinhado ao início do SVG */}
+          <p className="hero-home__deck">
+            Culture™<br />Crafted in São Paulo, Brazil<br />.Consumed Worldwide.
           </p>
         </div>
 
@@ -406,7 +353,7 @@ export default async function HomePage() {
         photos={[
           '/images/slide2/01.webp','/images/slide2/02.webp','/images/slide2/03.webp',
           '/images/slide2/04.webp','/images/slide2/05.webp','/images/slide2/06.webp',
-          '/images/slide2/07.webp','/images/slide2/09.webp',
+          '/images/slide2/09.webp',
         ]}
       />
 

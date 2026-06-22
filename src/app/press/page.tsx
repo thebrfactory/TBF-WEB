@@ -143,7 +143,7 @@ export default function PressRoomPage() {
             {
               label: 'Founders',
               desc: 'Background on the people who created and lead .THE BRAZILIAN FACTORY.',
-              href: '/about/founders',
+              href: '/creators/tavaristico',
             },
             {
               label: 'About .TBF.',

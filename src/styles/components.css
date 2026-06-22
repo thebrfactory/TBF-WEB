@@ -553,6 +553,45 @@
   }
 }
 
+/* ── Hero da HOME — logo + deck alinhados, junto à base do vídeo ── */
+/* Mobile-first: grupo ocupa toda a largura (logo de margem a margem),
+   ancorado embaixo (.hero já é align-items: flex-end + padding-bottom). */
+.hero-home__content {
+  position: relative;
+  z-index: var(--tbf-z-overlay);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--tbf-hero-text);
+}
+
+.hero-home__logo {
+  width: 100%;     /* mobile: margem a margem */
+  height: auto;
+  display: block;
+}
+
+.hero-home__deck {
+  width: 100%;
+  margin: var(--tbf-space-4) 0 0;
+  font-family: var(--tbf-font-family-ui);
+  font-size: clamp(0.85rem, 2.8vw, 1.35rem);
+  font-weight: 100;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+/* Desktop: grupo a 65% centralizado → logo centralizado e o deck
+   começa exatamente onde o SVG começa (tudo alinhado à esquerda do grupo). */
+@media (min-width: 768px) {
+  .hero-home__content {
+    width: 65%;
+    margin-inline: auto;
+  }
+}
+
 .hero__media {
   position: absolute;
   inset: 0;
@@ -708,6 +747,27 @@
    Desktop: infinite auto-scroll
    ============================================================================= */
 
+/* ── Carrossel ÚNICO (mobile = desktop): auto-scroll contínuo + clicável ── */
+.carousel {
+  overflow: hidden;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: carouselInfiniteScroll 42s linear infinite;
+  will-change: transform;
+}
+
+/* Pausa ao passar o mouse (desktop) para facilitar o clique */
+.carousel:hover .carousel-track {
+  animation-play-state: paused;
+}
+
 /* ── Slide base ── */
 .carousel-slide {
   aspect-ratio: 3 / 4;
@@ -715,42 +775,21 @@
   overflow: hidden;
   flex-shrink: 0;
   display: block;
+  width: 72vw; /* mobile-first: card grande */
 }
 
-/* ── Mobile: swipeable (default, overridden on desktop) ── */
-.carousel-mobile {
-  display: flex;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  gap: 4px;
-  padding-inline: var(--tbf-grid-margin-sm, 20px);
-  padding-block: 0;
-}
-.carousel-mobile::-webkit-scrollbar { display: none; }
-.carousel-mobile .carousel-slide {
-  width: 72vw;
-  scroll-snap-align: start;
+.carousel-slide__link {
+  display: block;
+  position: absolute;
+  inset: 0;
 }
 
-.carousel-desktop { display: none; }
+@media (min-width: 768px) {
+  .carousel-slide { width: 42vw; }
+}
 
-/* ── Desktop: auto-scroll, cards slightly smaller ── */
 @media (min-width: 1024px) {
-  .carousel-mobile  { display: none; }
-  .carousel-desktop { display: block; overflow: hidden; }
-
-  .carousel-track {
-    display: flex;
-    animation: carouselInfiniteScroll 36s linear infinite;
-    will-change: transform;
-  }
-
-  .carousel-track .carousel-slide {
-    width: 20vw;
-    scroll-snap-align: unset;
-  }
+  .carousel-slide { width: 22vw; }
 }
 
 @keyframes carouselInfiniteScroll {
