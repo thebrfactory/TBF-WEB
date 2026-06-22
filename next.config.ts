@@ -1,5 +1,11 @@
 import type { NextConfig } from 'next'
 
+// ─── Multi-Zones ─────────────────────────────────────────────────────────────
+// O .AURA. (brandsystem vivo) é uma zona Next independente, dona do prefixo
+// /brandsystem. Origem definida pela env AURA_ZONE_ORIGIN (sem hardcode).
+// Se ausente, os rewrites ficam vazios (fallback seguro — não quebra o site).
+const AURA_ZONE_ORIGIN = process.env.AURA_ZONE_ORIGIN
+
 const nextConfig: NextConfig = {
   // ─── Experimental Features ─────────────────────────────────────────────────
   experimental: {
@@ -57,6 +63,15 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+    ]
+  },
+
+  // ─── Rewrites (Multi-Zones → .AURA.) ──────────────────────────────────────
+  async rewrites() {
+    if (!AURA_ZONE_ORIGIN) return []
+    return [
+      { source: '/brandsystem', destination: `${AURA_ZONE_ORIGIN}/brandsystem` },
+      { source: '/brandsystem/:path*', destination: `${AURA_ZONE_ORIGIN}/brandsystem/:path*` },
     ]
   },
 
