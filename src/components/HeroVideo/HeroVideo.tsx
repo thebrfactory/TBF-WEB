@@ -7,7 +7,7 @@
 // 2 sources por vídeo: AV1 (moderno, menor) → H.264 (fallback universal).
 // =============================================================================
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const POSTER = '/images/img-01.webp'
 
@@ -29,6 +29,7 @@ const MEDIA_BASE = {
 
 export function HeroVideo() {
   const [variant, setVariant] = useState<Variant | null>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const mql = window.matchMedia('(max-width: 767px)')
@@ -37,6 +38,40 @@ export function HeroVideo() {
     mql.addEventListener('change', apply)
     return () => mql.removeEventListener('change', apply)
   }, [])
+
+  // Recuperação de autoplay. Navegadores móveis bloqueiam o autoplay em alguns
+  // cenários (iOS em Modo de Baixo Consumo, data saver, certas versões de
+  // Android) e mostram o play button nativo. Não dá pra burlar o bloqueio do SO,
+  // mas dá pra retomar no primeiro gesto do usuário (toque/scroll/clique) e
+  // quando a aba volta a ficar visível: o vídeo dispara no instante em que a
+  // pessoa interage, e o play some. Cobre TODOS os casos de autoplay bloqueado.
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+
+    function cleanup() {
+      window.removeEventListener('pointerdown', onGesture)
+      window.removeEventListener('touchstart', onGesture)
+      window.removeEventListener('scroll', onGesture)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+    const tryPlay = () => {
+      const p = v.play()
+      if (p && typeof p.then === 'function') p.then(cleanup).catch(() => {})
+    }
+    const onGesture = () => tryPlay()
+    const onVisible = () => {
+      if (document.visibilityState === 'visible') tryPlay()
+    }
+
+    tryPlay() // tentativa imediata: cobre os casos em que autoplay é permitido
+    window.addEventListener('pointerdown', onGesture, { passive: true })
+    window.addEventListener('touchstart', onGesture, { passive: true })
+    window.addEventListener('scroll', onGesture, { passive: true })
+    document.addEventListener('visibilitychange', onVisible)
+
+    return cleanup
+  }, [variant])
 
   const src = variant ? SOURCES[variant] : null
 
@@ -56,6 +91,7 @@ export function HeroVideo() {
       {src && (
         <video
           key={variant}
+          ref={videoRef}
           autoPlay
           muted
           loop
