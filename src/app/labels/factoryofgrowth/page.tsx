@@ -247,11 +247,11 @@ export default function FactoryOfGrowthPage() {
 
       {/* ─── WHY IT EXISTS — full-section com tgf-momentum como fundo ────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="tgf-why"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',
@@ -482,11 +482,11 @@ export default function FactoryOfGrowthPage() {
 
       {/* ─── FOOTER BLOCK — tgf-global como fundo + texto sobreposto ──────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="tgf-footer-block"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',

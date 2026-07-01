@@ -237,11 +237,11 @@ export default function TheFioreDailyPage() {
 
       {/* ─── WHY IT EXISTS — full-section com imagem de fundo ─────────────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="tfd-why"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',
@@ -468,11 +468,11 @@ export default function TheFioreDailyPage() {
 
       {/* ─── FOOTER BLOCK ──────────────────────────────────────────────────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="tfd-footer-block"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',

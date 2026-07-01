@@ -238,11 +238,11 @@ export default function RunwayUnitedPage() {
 
       {/* ─── WHY IT EXISTS — full-section com imagem de fundo ─────────────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="ruc-why"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',
@@ -469,11 +469,11 @@ export default function RunwayUnitedPage() {
 
       {/* ─── FOOTER BLOCK ──────────────────────────────────────────────────── */}
       <section
+        className="label-fullbleed"
         aria-labelledby="ruc-footer-block"
         style={{
           position: 'relative',
           width: '100vw',
-          minHeight: '80vh',
           display: 'flex',
           alignItems: 'center',
           overflow: 'hidden',
