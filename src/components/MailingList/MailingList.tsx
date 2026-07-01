@@ -1,36 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 export function MailingList() {
-  const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [errorMsg, setErrorMsg] = useState('')
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setStatus('loading')
-    setErrorMsg('')
-
-    try {
-      const res = await fetch('/api/newsletter', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      })
-      const data = await res.json()
-      if (data.success) {
-        setStatus('success')
-        setEmail('')
-      } else {
-        setStatus('error')
-        setErrorMsg(data.error ?? 'Erro. Tente novamente.')
-      }
-    } catch {
-      setStatus('error')
-      setErrorMsg('Erro. Tente novamente.')
-    }
-  }
+  const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
 
   return (
     <section
@@ -92,7 +65,7 @@ export function MailingList() {
           </p>
         ) : (
           <form
-            onSubmit={handleSubmit}
+            onSubmit={submit}
             style={{
               display: 'flex',
               gap: 'var(--tbf-space-3)',

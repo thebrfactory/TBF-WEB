@@ -9,6 +9,7 @@ import '@/styles/globals.css'
 import { Navigation } from '@/components/Navigation/Navigation'
 import { Footer } from '@/components/Footer/Footer'
 import { MailingList } from '@/components/MailingList/MailingList'
+import { NewsletterPopup } from '@/components/NewsletterPopup/NewsletterPopup'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -131,6 +132,9 @@ export default function RootLayout({
         </main>
 
         <MailingList />
+
+        {/* Popup sitewide de captura de e-mail — uma vez por sessão */}
+        <NewsletterPopup />
 
         {/* Assinatura de fechamento — abaixo da newsletter, em todas as páginas */}
         <section

@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Env vars necessárias para o Brevo (contato entra na lista "TBF.COM Newsletter", id 6):
+//   BREVO_API_KEY  — Brevo → SMTP & API → API Keys
+//   BREVO_LIST_ID  — 6 (já criada via MCP)
+// Sem BREVO_API_KEY, o contato só fica logado no console (dev mode) — o welcome
+// e-mail via Resend continua funcionando normalmente de qualquer forma.
+
 const WELCOME_HTML = `
 <div style="background:#000;color:#fff;font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:48px 32px;">
   <p style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#888;margin-bottom:32px;">
@@ -18,6 +24,30 @@ const WELCOME_HTML = `
   </p>
 </div>
 `
+
+async function addBrevoContact(email: string): Promise<void> {
+  const res = await fetch('https://api.brevo.com/v3/contacts', {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      'api-key': process.env.BREVO_API_KEY!,
+    },
+    body: JSON.stringify({
+      email: email.trim().toLowerCase(),
+      listIds: [Number(process.env.BREVO_LIST_ID)],
+      updateEnabled: false, // silently ignora duplicados
+    }),
+  })
+
+  // 204 = criado, 400 com code "duplicate_parameter" = já existe — ambos são sucesso
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    if (body?.code !== 'duplicate_parameter') {
+      console.error('[newsletter] Brevo contact error:', res.status, body)
+    }
+  }
+}
 
 async function sendEmail(apiKey: string, to: string, subject: string, html: string, text: string) {
   const res = await fetch('https://api.resend.com/emails', {
@@ -52,8 +82,10 @@ export async function POST(request: NextRequest) {
     const resendApiKey = process.env.RESEND_API_KEY
     const ownerEmail = process.env.CONTACT_EMAIL ?? 'thebrazilianfactory@gmail.com'
 
+    const tasks: Promise<void>[] = []
+
     if (resendApiKey) {
-      await Promise.all([
+      tasks.push(
         // Welcome ao subscriber
         sendEmail(
           resendApiKey,
@@ -69,11 +101,19 @@ export async function POST(request: NextRequest) {
           `[Mailing List] Nova inscrição: ${email}`,
           `<p>Nova inscrição na mailing list: <strong>${email}</strong></p>`,
           `Nova inscrição na mailing list: ${email}`
-        ),
-      ])
+        )
+      )
     } else {
       console.info('[newsletter] New subscriber:', email)
     }
+
+    if (process.env.BREVO_API_KEY) {
+      tasks.push(addBrevoContact(email))
+    } else {
+      console.info('[newsletter] Brevo dev mode — contato não sincronizado:', email)
+    }
+
+    await Promise.all(tasks)
 
     return NextResponse.json({ success: true })
   } catch {

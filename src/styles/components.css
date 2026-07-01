@@ -234,6 +234,74 @@
 }
 
 /* =============================================================================
+   COMPONENTE 01C — NEWSLETTER POPUP (sitewide)
+   ============================================================================= */
+
+.newsletter-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--tbf-bg-primary);
+  opacity: 0;
+  pointer-events: none;
+  z-index: calc(var(--tbf-z-modal) - 1);
+  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+}
+
+.newsletter-popup-overlay--open {
+  opacity: var(--tbf-drawer-overlay-opacity);
+  pointer-events: auto;
+}
+
+.newsletter-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(420px, calc(100vw - var(--tbf-space-8)));
+  background-color: var(--tbf-bg-secondary);
+  border: 1px solid var(--tbf-border);
+  z-index: var(--tbf-z-modal);
+  padding: var(--tbf-space-8) var(--tbf-space-6);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.96);
+  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
+              transform var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+}
+
+.newsletter-popup--open {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.newsletter-popup__close {
+  position: absolute;
+  top: var(--tbf-space-4);
+  right: var(--tbf-space-4);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--tbf-text-tertiary);
+  cursor: pointer;
+  padding: var(--tbf-space-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.newsletter-popup__close:hover {
+  color: var(--tbf-text-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .newsletter-popup,
+  .newsletter-popup-overlay {
+    transition: none;
+  }
+}
+
+/* =============================================================================
    COMPONENTE 02 — FOOTER
    ============================================================================= */
 
@@ -805,6 +873,81 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ticker__track {
+    animation-play-state: paused;
+  }
+}
+
+/* =============================================================================
+   COMPONENTE 05B — PRESS LOGOS CAROUSEL (/pitch)
+   Carrossel infinito de wordmarks de imprensa, com sombreado nas bordas
+   simulando o fim de um trilho (na verdade é um loop contínuo) + camada de
+   assets .TBF. sobreposta.
+   ============================================================================= */
+
+.press-carousel {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.press-carousel::before,
+.press-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(3rem, 12vw, 8rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.press-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, #000000 0%, transparent 100%);
+}
+
+.press-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, #000000 0%, transparent 100%);
+}
+
+.press-carousel-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  width: max-content;
+  margin: 0;
+  padding-inline: clamp(1.5rem, 5vw, 4rem);
+  list-style: none;
+  animation: carouselInfiniteScroll 30s linear infinite;
+  will-change: transform;
+}
+
+.press-carousel:hover .press-carousel-track {
+  animation-play-state: paused;
+}
+
+.press-carousel-slide {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(90px, 14vw, 140px);
+  height: clamp(36px, 5vw, 56px);
+}
+
+.press-carousel__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .press-carousel-track {
     animation-play-state: paused;
   }
 }
@@ -1799,4 +1942,93 @@ button.tag:focus-visible {
   margin-block: var(--tbf-space-8);
   font-style: italic;
   color: var(--tbf-text-secondary);
+}
+
+/* =============================================================================
+   COMPONENTE 09 — LABEL PAGES: FULL-BLEED SECTIONS ("Why it exists" / footer)
+   Mobile-first: em retrato, min-height:80vh fixo empurrava o conteúdo pra uma
+   faixa alta com muito espaço vazio/foto cropada de forma estranha. Em mobile
+   a seção agora se ajusta ao conteúdo (min-height:auto + padding generoso);
+   volta a 80vh só a partir do breakpoint onde o layout-b vira 2 colunas.
+   ============================================================================= */
+
+.label-fullbleed {
+  min-height: auto;
+  padding-block: var(--tbf-space-16);
+}
+
+@media (min-width: 1024px) {
+  .label-fullbleed {
+    min-height: 80vh;
+    padding-block: 0;
+  }
+}
+
+/* =============================================================================
+   COMPONENTE 10 — CATEGORY GRID (/editorial)
+   Cards de categoria estilo revista: foto de fundo + overlay + nome + botão.
+   ============================================================================= */
+
+.category-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.category-card__image {
+  object-fit: cover;
+  transition: transform var(--tbf-card-img-duration) var(--tbf-motion-easing-element);
+}
+
+.category-card:hover .category-card__image {
+  transform: scale(var(--tbf-card-img-scale-hover));
+}
+
+.category-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.15) 100%);
+}
+
+.category-card__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--tbf-space-5);
+}
+
+.category-card__label {
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: var(--tbf-space-3);
+}
+
+.category-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  font-family: var(--tbf-font-family-ui);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.category-card:hover .category-card__cta {
+  color: var(--tbf-accent);
 }
