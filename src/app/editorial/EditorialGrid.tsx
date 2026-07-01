@@ -8,6 +8,7 @@
 import { useState } from 'react'
 import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { CategoryGrid } from './CategoryGrid'
 
 const CATEGORIES: { value: ArticleCategory | 'all'; label: string }[] = [
   { value: 'all', label: 'Tudo' },
@@ -54,6 +55,9 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
 
   return (
     <section aria-label="Arquivo editorial">
+      {/* ─── GRID DE CATEGORIAS — estilo revista, foto + overlay + botão ─── */}
+      <CategoryGrid onSelect={handleCategoryChange} />
+
       {/* ─── FILTROS — só quando há conteúdo real ─── */}
       {hasPosts && (
         <div
