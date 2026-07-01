@@ -1,154 +1,114 @@
-import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { IDENTITY, DISCIPLINES, WORKS, selectedWorks, isProv } from './_data'
+import { DisciplineGrid } from './DisciplineGrid'
+import styles from './tavaristico.module.css'
 
 export const metadata: Metadata = {
-  title: 'Felipe Tavares (Tavarístico)',
+  title: 'Felipe Tavares (Tavarístico) — Portfolio',
   description:
-    'Felipe Tavares — aka Tavarístico. Associate Creative Director / Art Director. Represented by .TBF. inc.',
-}
-
-const TAG: CSSProperties = {
-  display: 'block',
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 600,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.45)',
-  marginBottom: 'var(--tbf-space-4)',
-}
-
-const SECTION_LABEL: CSSProperties = {
-  display: 'block',
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 600,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.4)',
-  marginBottom: 'var(--tbf-space-4)',
-}
-
-const BODY: CSSProperties = {
-  fontFamily: 'var(--tbf-type-body-family)',
-  fontSize: 'var(--tbf-type-body-size-sm)',
-  lineHeight: 'var(--tbf-type-body-lh)' as CSSProperties['lineHeight'],
-  color: 'rgba(255,255,255,0.7)',
+    'Felipe Tavares — aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
 }
 
 export default function TavaristicoPage() {
-  return (
-    <div style={{ background: '#000', color: '#fff', minHeight: '100dvh' }}>
+  const selected = selectedWorks()
 
-      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-20))',
-          paddingBottom: 'var(--tbf-space-12)',
-        }}
-      >
-        <div className="container">
-          <span style={TAG}>Creators</span>
-          <h1
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'clamp(2.5rem, 8vw, 7rem)',
-              fontWeight: 800,
-              lineHeight: 0.95,
-              letterSpacing: 'var(--tbf-type-display-xl-ls)',
-              color: '#fff',
-              marginBottom: 'var(--tbf-space-3)',
-            }}
-          >
-            Felipe Tavares
-          </h1>
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-micro-family)',
-              fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
-              fontWeight: 700,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.5)',
-              marginBottom: 'var(--tbf-space-8)',
-            }}
-          >
-            aka Tavarístico
+  return (
+    <main className={styles.page}>
+      {/* ─── HERO ─────────────────────────────────────────────────────── */}
+      <header className={`${styles.hero} container`}>
+        <span className={styles.label}>Creators — Portfolio</span>
+        <h1 className={styles.heroName}>{IDENTITY.name}</h1>
+        <p className={styles.heroAlias}>
+          aka <b>{IDENTITY.alias}</b>
+        </p>
+        <p className={styles.heroRole}>
+          {IDENTITY.role} · represented by{' '}
+          <span className={styles.heroRepresented}>{IDENTITY.representedBy}</span>
+        </p>
+      </header>
+
+      {/* ─── IDENTIDADE / BIO ─────────────────────────────────────────── */}
+      <section className={`${styles.identity} container layout-b`}>
+        <div>
+          <span className={styles.label}>About</span>
+          <p className={styles.bio}>{IDENTITY.bioEN}</p>
+        </div>
+        <div>
+          <p className={`${styles.bioSub} ${IDENTITY.bioPTProvisional ? styles.prov : ''}`}>
+            {IDENTITY.bioPT}
+          </p>
+          <p className={`${styles.metaMono} ${styles.origin}`}>
+            <b>Origin</b> — {IDENTITY.origin}
           </p>
         </div>
       </section>
 
-      {/* ─── IDENTITY ─────────────────────────────────────────────────────── */}
-      <section className="section container">
-        <div className="layout-b" style={{ alignItems: 'start' }}>
-          {/* Left: role */}
-          <div>
-            <span style={SECTION_LABEL}>Role</span>
-            <p
-              style={{
-                fontFamily: 'var(--tbf-type-display-xl-family)',
-                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                fontWeight: 800,
-                lineHeight: 1.05,
-                letterSpacing: 'var(--tbf-type-display-xl-ls)',
-                color: '#fff',
-                marginBottom: 'var(--tbf-space-6)',
-              }}
-            >
-              Associate Creative Director
-              <br />
-              <span style={{ color: 'rgba(255,255,255,0.6)' }}>Art Director</span>
-            </p>
-
-            <p
-              style={{
-                fontFamily: 'var(--tbf-type-micro-family)',
-                fontSize: 'var(--tbf-type-micro-size)',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.45)',
-                marginBottom: 'var(--tbf-space-8)',
-              }}
-            >
-              Represented by{' '}
-              <strong style={{ fontWeight: 800, color: 'rgba(255,255,255,0.7)' }}>.TBF. inc</strong>
-            </p>
-
-            <a
-              href="https://instagram.com/thebrfactory"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontFamily: 'var(--tbf-type-micro-family)',
-                fontSize: 'var(--tbf-type-micro-size)',
-                fontWeight: 700,
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
-                textDecoration: 'none',
-              }}
-            >
-              @thebrfactory →
-            </a>
-          </div>
-
-          {/* Right: bio */}
-          <div>
-            <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
-              Felipe Tavares — known creatively as{' '}
-              <strong style={{ fontWeight: 800 }}>Tavarístico</strong> — is an Associate Creative
-              Director and Art Director based in São Paulo, Brazil.
-            </p>
-            <p style={BODY}>
-              His work moves between creative direction, art direction and brand building —
-              translating Brazilian culture into work that travels.{' '}
-              <strong style={{ fontWeight: 800 }}>Represented by .TBF. inc.</strong>
-            </p>
-          </div>
+      {/* ─── SELECTED WORK ────────────────────────────────────────────── */}
+      <section className={`${styles.selected} container`}>
+        <div className={styles.sectionHead}>
+          <span className={styles.label}>Selected Work</span>
+          <span className={styles.count}>{String(selected.length).padStart(2, '0')}</span>
+        </div>
+        <div className={styles.selList}>
+          {selected.map((w) => (
+            <Link key={w.slug} href={`/creators/tavaristico/works/${w.slug}`} className={styles.selItem}>
+              <div className={styles.selTop}>
+                <span className={styles.index}>{w.index}</span>
+                <span className={styles.selTitle}>{w.title}</span>
+              </div>
+              <div className={styles.selMedia}>
+                <Image
+                  src={w.media.cover}
+                  alt={w.title}
+                  fill
+                  sizes="(min-width: 768px) 80vw, 100vw"
+                />
+              </div>
+              <div className={styles.selFoot}>
+                <span className={`${styles.selSummary} ${isProv(w, 'summary') ? styles.prov : ''}`}>
+                  {w.summary}
+                </span>
+                <span className={styles.metaMono}>
+                  <b className={isProv(w, 'role') ? styles.prov : ''}>{w.role}</b>
+                  {w.client ? <> · <span className={isProv(w, 'client') ? styles.prov : ''}>{w.client}</span></> : null}
+                  {w.year ? <> · {w.year}</> : null}
+                </span>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
 
-    </div>
+      {/* ─── GRADE POR DISCIPLINA ─────────────────────────────────────── */}
+      <section className={`${styles.ledger} container`} id="work">
+        <div className={styles.sectionHead}>
+          <span className={styles.label}>All Work — by discipline</span>
+          <span className={styles.count}>{String(WORKS.length).padStart(2, '0')}</span>
+        </div>
+        <DisciplineGrid works={WORKS} disciplines={DISCIPLINES} />
+      </section>
+
+      {/* ─── CONTATO ──────────────────────────────────────────────────── */}
+      <section className={`${styles.contact} container`}>
+        <span className={styles.label}>Contact</span>
+        <p className={styles.contactName}>Let&apos;s make brave work.</p>
+        <div className={styles.links}>
+          <a className={styles.link} href={IDENTITY.socials.instagram} target="_blank" rel="noopener noreferrer">
+            Instagram ↗
+          </a>
+          <a
+            className={`${styles.link} ${IDENTITY.socials.linkedinProvisional ? styles.prov : ''}`}
+            href={IDENTITY.socials.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            LinkedIn ↗
+          </a>
+          <span className={styles.link}>Represented by {IDENTITY.representedBy}</span>
+        </div>
+      </section>
+    </main>
   )
 }
