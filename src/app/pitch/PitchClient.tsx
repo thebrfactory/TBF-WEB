@@ -7,6 +7,7 @@
 import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { PressLogosCarousel } from './PressLogosCarousel'
 
 const ACCENT = '#FF6500'
 
@@ -205,6 +206,24 @@ export function PitchClient() {
         `}</style>
       </section>
 
+      {/* ── AS SEEN IN — carrossel infinito de logos de imprensa ──────────── */}
+      <section style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem) 0', background: '#000000' }} aria-label="As seen in">
+        <p
+          style={{
+            fontFamily: 'var(--tbf-font-family-ui)',
+            fontSize: '0.65rem',
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'rgba(240,237,230,0.35)',
+            textAlign: 'center',
+            marginBottom: '1.5rem',
+          }}
+        >
+          As seen in
+        </p>
+        <PressLogosCarousel />
+      </section>
+
       {/* ── SLIDE 02: THE PROBLEM ────────────────────────────────────────── */}
       <section style={{ ...S }} aria-label="The problem">
         <PitchReveal delay={0}>
@@ -280,26 +299,51 @@ export function PitchClient() {
           </p>
         </PitchReveal>
 
+        {/* One organism. Four labels. — movido da home (labels só aparecem pra quem está dentro) */}
+        <PitchReveal delay={250}>
+          <p style={{ fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.65rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(240,237,230,0.4)', marginBottom: '0.75rem' }}>
+            Labels / Divisões
+          </p>
+          <h3 style={{ fontFamily: 'var(--tbf-font-family-display)', fontSize: 'clamp(1.25rem, 4vw, 2rem)', fontWeight: 700, lineHeight: 1.1, letterSpacing: '-0.02em', color: '#F0EDE6', marginBottom: '2rem' }}>
+            &ldquo;One organism. Four labels.&rdquo;
+          </h3>
+        </PitchReveal>
+
         {/* The 4 labels */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1px', background: 'rgba(255,255,255,0.07)' }}>
           {[
-            { tag: '.TBF.', name: 'Editorial Arm', color: '#F0EDE6' },
-            { tag: '.MELFIORE.', name: 'Intimacy Label', color: '#C8A96A' },
-            { tag: '.RUC.', name: 'Fashion Label', color: '#F0EDE6' },
-            { tag: '.TGF.', name: 'Growth Division', color: ACCENT },
+            { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/editorial', color: '#F0EDE6' },
+            { tag: '.TFD.', name: 'The Fiore Daily', desc: 'Intimacy-Wellness Community', href: '/labels/thefioredaily', color: '#C8A96A' },
+            { tag: '.RUC.', name: 'Runway United Collective', desc: 'Fashion Film Magazine', href: '/labels/runwayunited', color: '#F0EDE6' },
+            { tag: '.TGF.', name: 'The Growth Factory', desc: 'Worldwide Brazilian Support', href: '/labels/factoryofgrowth', color: ACCENT },
           ].map((item, i) => (
             <PitchReveal key={item.tag} delay={300 + i * 80}>
-              <div style={{ background: '#111110', padding: 'clamp(1rem, 3vw, 2rem)', borderTop: `2px solid ${item.color}` }}>
+              <Link
+                href={item.href}
+                style={{ display: 'block', background: '#111110', padding: 'clamp(1rem, 3vw, 2rem)', borderTop: `2px solid ${item.color}`, textDecoration: 'none' }}
+              >
                 <p style={{ fontFamily: 'var(--tbf-font-family-display)', fontSize: 'clamp(1rem, 3vw, 1.75rem)', fontWeight: 900, color: item.color, letterSpacing: '-0.03em', marginBottom: '0.25rem' }}>
                   {item.tag}
                 </p>
-                <p style={{ fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(240,237,230,0.4)' }}>
+                <p style={{ fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(240,237,230,0.6)', marginBottom: '0.35rem' }}>
                   {item.name}
                 </p>
-              </div>
+                <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: '0.65rem', color: 'rgba(240,237,230,0.4)', textTransform: 'uppercase' }}>
+                  {item.desc}
+                </p>
+              </Link>
             </PitchReveal>
           ))}
         </div>
+
+        <PitchReveal delay={700}>
+          <div style={{ marginTop: '2rem' }}>
+            <Link href="/labels" className="btn btn--ghost">
+              Explore the Labels
+              <span className="btn__arrow" aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </PitchReveal>
       </section>
 
       {/* ── SLIDE 04: TRACTION / NUMBERS ────────────────────────────────── */}

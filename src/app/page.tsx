@@ -223,129 +223,40 @@ export default async function HomePage() {
         </svg>
       </div>
 
-      {/* ─── LABELS PREVIEW ──────────────────────────────────────────────────── */}
+      {/* ─── SÃO PAULO MANIFESTO QUOTE ──────────────────────────────────────── */}
       <section
-        className="container"
-        aria-labelledby="labels-heading"
-        style={{ position: 'relative', overflow: 'hidden', paddingBlock: 'var(--tbf-space-12)' }}
+        className="section container"
+        aria-labelledby="sp-quote-heading"
+        style={{ paddingBlock: 'var(--tbf-space-16)' }}
       >
-        <div style={{ marginBottom: 'var(--tbf-space-12)' }}>
-          <p
-            style={{
-              fontFamily: 'var(--tbf-font-family-ui)',
-              fontSize: 'var(--tbf-type-micro-size)',
-              letterSpacing: 'var(--tbf-type-micro-ls)',
-              color: 'var(--tbf-text-tertiary)',
-              textTransform: 'uppercase',
-              marginBottom: 'var(--tbf-space-3)',
-            }}
-          >
-            Labels / Divisões
-          </p>
-          <h2
-            id="labels-heading"
-            style={{
-              fontFamily: 'var(--tbf-font-family-display)',
-              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
-              fontWeight: 700,
-              lineHeight: 1.05,
-              letterSpacing: '-0.02em',
-              color: 'var(--tbf-text-primary)',
-              maxWidth: '22ch',
-            }}
-          >
-            One organism. Four labels.
-            <br />
-            <span style={{ color: 'var(--tbf-text-tertiary)', fontWeight: 400, fontSize: '0.7em' }}>
-              Um organismo. Quatro divisões.
-            </span>
-          </h2>
-        </div>
-
-        <div className="layout-c" style={{ marginBottom: 'var(--tbf-space-12)' }}>
-          {[
-            {
-              tag: '.TBF.',
-              name: 'The Brazilian Factory',
-              desc: 'Collective Hotel Casino',
-              href: '/editorial',
-            },
-            {
-              tag: '.TFD.',
-              name: 'The Fiore Daily',
-              desc: 'Intimacy-Wellness Community',
-              href: '/labels/thefioredaily',
-            },
-            {
-              tag: '.RUC.',
-              name: 'Runway United Collective',
-              desc: 'Fashion Film Magazine',
-              href: '/labels/runwayunited',
-            },
-            {
-              tag: '.TGF.',
-              name: 'The Growth Factory',
-              desc: 'Worldwide Brazilian Support',
-              href: '/labels/factoryofgrowth',
-            },
-          ].map((label, i) => (
-            <Link
-              key={label.tag}
-              href={label.href}
-              style={{
-                paddingTop: 'var(--tbf-space-8)',
-                textDecoration: 'none',
-                display: 'block',
-                transitionDelay: `${i * 100}ms`,
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: 'var(--tbf-font-family-ui)',
-                  fontSize: 'var(--tbf-type-tag-size)',
-                  letterSpacing: 'var(--tbf-type-tag-ls)',
-                  color: 'var(--tbf-accent)',
-                  textTransform: 'uppercase',
-                  marginBottom: 'var(--tbf-space-2)',
-                }}
-              >
-                {label.tag}
-              </p>
-              <h3
-                style={{
-                  fontFamily: 'var(--tbf-font-family-display)',
-                  fontSize: 'clamp(0.85rem, 2.2vw, 1.35rem)',
-                  fontWeight: 800,
-                  color: '#fff',
-                  marginBottom: 'var(--tbf-space-2)',
-                  lineHeight: 1.1,
-                  textTransform: 'uppercase',
-                }}
-              >
-                {label.name.split(' ').map((word, wi) => (
-                  <span key={wi} style={{ display: 'block' }}>{word}</span>
-                ))}
-              </h3>
-              <p
-                style={{
-                  fontFamily: 'var(--tbf-font-family-body)',
-                  fontSize: 'var(--tbf-type-caption-size-sm)',
-                  color: 'var(--tbf-text-tertiary)',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {label.desc}
-              </p>
-            </Link>
-          ))}
-        </div>
-
-        <div>
-          <Link href="/labels" className="btn btn--ghost">
-            Explore the Labels
-            <span className="btn__arrow" aria-hidden="true">→</span>
-          </Link>
-        </div>
+        <blockquote
+          className="manifesto-fragment"
+          style={{
+            fontFamily: 'var(--tbf-font-family-display)',
+            fontSize: 'clamp(1.25rem, 4vw, 2rem)',
+            fontWeight: 700,
+            lineHeight: 1.25,
+            letterSpacing: '-0.01em',
+            color: 'var(--tbf-text-primary)',
+            maxWidth: '38ch',
+            marginBottom: 'var(--tbf-space-4)',
+          }}
+        >
+          <span id="sp-quote-heading" style={{ display: 'none' }}>São Paulo, cidade-manifesto</span>
+          &ldquo;São Paulo é já a cidade que pede romancistas e poetas. Que impõe pasmosos problemas humanos e agita, no seu tumulto discreto, egoísta e inteligente, as profundas revoluções criadoras de imortalidades.&rdquo;
+        </blockquote>
+        <cite
+          style={{
+            fontFamily: 'var(--tbf-font-family-ui)',
+            fontSize: 'var(--tbf-type-micro-size)',
+            letterSpacing: 'var(--tbf-type-micro-ls)',
+            color: 'var(--tbf-text-tertiary)',
+            textTransform: 'uppercase',
+            fontStyle: 'normal',
+          }}
+        >
+          — Oswald de Andrade, do grupo modernista, 1922, São Paulo, SP.
+        </cite>
       </section>
 
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
