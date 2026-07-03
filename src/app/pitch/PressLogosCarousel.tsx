@@ -14,10 +14,12 @@ const PRESS_LOGOS = [
   '/brand/press/msch.svg',
 ]
 
+// Ordem visual: chevron esquerdo (❮) na borda esquerda · burst (✦) no centro ·
+// chevron direito (❯) na borda direita — igual ao exemplo-master do pitch.
 const TBF_OVERLAY_ASSETS = [
-  '/brand/press/tbf-overlay-01.svg',
-  '/brand/press/tbf-overlay-02.svg',
-  '/brand/press/tbf-overlay-03.svg',
+  '/brand/press/tbf-overlay-01.svg', // ❮ chevron esquerdo
+  '/brand/press/tbf-overlay-03.svg', // ✦ burst central
+  '/brand/press/tbf-overlay-02.svg', // ❯ chevron direito
 ]
 
 export function PressLogosCarousel() {

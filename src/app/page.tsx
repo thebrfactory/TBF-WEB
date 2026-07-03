@@ -27,6 +27,14 @@ export const metadata: Metadata = {
 
 export const revalidate = 3600
 
+// Pool de matérias exibido no hover dos carrosséis quando o CMS ainda está vazio
+// (mesmos títulos/placeholder do preview editorial do site).
+const FALLBACK_CAROUSEL_ARTICLES = [
+  { title: 'What about the Brazilian fashion culture?', href: '/editorial/lorem-ipsum-1' },
+  { title: 'AFTERPARTY: the feeling behind Brazilian parties', href: '/editorial/lorem-ipsum-2' },
+  { title: 'ACT I: feeling a Brazilian runway backstage', href: '/editorial/lorem-ipsum-3' },
+]
+
 export default async function HomePage() {
   let data: HomePageProps = {
     featuredPost: undefined,
@@ -45,6 +53,20 @@ export default async function HomePage() {
   } catch {
     // Static fallback — non-blocking
   }
+
+  // Matérias reais (featured + latest) para o hover dos carrosséis; fallback
+  // para o placeholder editorial quando o CMS ainda não tem posts publicados.
+  const articlePool = [
+    ...(data.featuredPost
+      ? [{ title: data.featuredPost.title, href: `/editorial/${data.featuredPost.slug.current}` }]
+      : []),
+    ...data.latestPosts.map((p) => ({
+      title: p.title,
+      href: `/editorial/${p.slug.current}`,
+    })),
+  ]
+  const carouselArticles =
+    articlePool.length > 0 ? articlePool : FALLBACK_CAROUSEL_ARTICLES
 
   return (
     <>
@@ -106,7 +128,7 @@ export default async function HomePage() {
       <Ticker />
 
       {/* ─── PHOTO CAROUSEL ──────────────────────────────────────────────────── */}
-      <PhotoCarousel />
+      <PhotoCarousel articles={carouselArticles} />
 
       {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────── */}
       <section
@@ -229,33 +251,33 @@ export default async function HomePage() {
         aria-labelledby="sp-quote-heading"
         style={{ paddingBlock: 'var(--tbf-space-16)' }}
       >
-        <div style={{ maxWidth: '44ch', marginInline: 'auto', textAlign: 'center' }}>
+        <div style={{ maxWidth: 'min(92vw, 800px)', marginInline: 'auto', textAlign: 'center' }}>
           <blockquote
             className="manifesto-fragment"
             style={{
               fontFamily: 'var(--tbf-font-family-display)',
-              fontSize: 'clamp(1.25rem, 4vw, 2rem)',
+              fontSize: 'clamp(1.05rem, 3.2vw, 1.7rem)',
               fontWeight: 300,
-              lineHeight: 1.3,
+              lineHeight: 1.35,
               letterSpacing: '-0.01em',
               color: 'var(--tbf-text-primary)',
               marginBottom: 'var(--tbf-space-6)',
             }}
           >
             <span id="sp-quote-heading" style={{ display: 'none' }}>São Paulo, cidade-manifesto</span>
-            &ldquo;São Paulo é já a cidade que pede romancistas e poetas. Que impõe pasmosos problemas humanos e agita, no seu tumulto discreto, egoísta e inteligente, as profundas revoluções criadoras de imortalidades.&rdquo;
+            &ldquo;São Paulo é já a cidade{' '}<br className="br-mobile-only" />que pede romancistas e poetas.{' '}<br />Que impõe pasmosos problemas humanos{' '}<br className="br-mobile-only" />e agita,{' '}<br className="br-desktop-only" />no seu tumulto discreto,{' '}<br className="br-mobile-only" />egoísta e inteligente,{' '}<br />as profundas revoluções{' '}<br className="br-mobile-only" />criadoras de imortalidades.&rdquo;
           </blockquote>
 
           <p
             className="manifesto-fragment"
             style={{
               fontFamily: 'var(--tbf-font-family-body)',
-              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              fontSize: 'clamp(1rem, 2.6vw, 1.3rem)',
               fontWeight: 300,
               fontStyle: 'italic',
               lineHeight: 1.6,
-              color: 'var(--tbf-text-tertiary)',
-              marginBottom: 'var(--tbf-space-6)',
+              color: 'rgba(240, 237, 230, 0.72)',
+              marginBottom: 'var(--tbf-space-8)',
             }}
           >
             &ldquo;São Paulo is already the city that calls for novelists and poets. That imposes astonishing human problems and stirs, in its discreet, selfish and intelligent tumult, the profound revolutions that breed immortality.&rdquo;
@@ -264,20 +286,22 @@ export default async function HomePage() {
           <cite
             style={{
               fontFamily: 'var(--tbf-font-family-ui)',
-              fontSize: 'clamp(0.75rem, 1.6vw, 0.9rem)',
+              fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
               letterSpacing: '0.1em',
-              color: 'var(--tbf-text-secondary)',
+              lineHeight: 1.5,
+              color: '#ffffff',
               textTransform: 'uppercase',
               fontStyle: 'normal',
             }}
           >
-            — Oswald de Andrade, do grupo modernista, 1922, São Paulo, SP.
+            — Oswald de Andrade,{' '}<br className="br-mobile-only" />do grupo modernista,{' '}<br className="br-mobile-only" />1922,{' '}<br className="br-mobile-only" />São Paulo, SP.
           </cite>
         </div>
       </section>
 
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
       <PhotoCarousel
+        articles={carouselArticles}
         photos={[
           '/images/slide2/01.webp','/images/slide2/02.webp','/images/slide2/03.webp',
           '/images/slide2/04.webp','/images/slide2/05.webp','/images/slide2/06.webp',

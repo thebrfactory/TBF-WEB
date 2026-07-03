@@ -261,7 +261,7 @@
   border: 1px solid var(--tbf-border);
   border-radius: 18px;
   z-index: var(--tbf-z-modal);
-  padding: var(--tbf-space-8) var(--tbf-space-6);
+  padding: var(--tbf-space-10) var(--tbf-space-6) var(--tbf-space-8);
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.96);
@@ -832,10 +832,7 @@
   will-change: transform;
 }
 
-/* Pausa ao passar o mouse (desktop) para facilitar o clique */
-.carousel:hover .carousel-track {
-  animation-play-state: paused;
-}
+/* Movimento contínuo — NÃO pausa com o cursor sobre o trilho (por pedido). */
 
 /* ── Slide base ── */
 .carousel-slide {
@@ -851,6 +848,56 @@
   display: block;
   position: absolute;
   inset: 0;
+}
+
+/* Overlay de hover/toque — escurece a imagem e revela o título da matéria,
+   centralizado (Brother bold). Dispara em hover, foco e :active (toque mobile). */
+.carousel-slide__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--tbf-space-4);
+  background-color: rgba(0, 0, 0, 0);
+  transition: background-color var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
+  pointer-events: none;
+}
+
+.carousel-slide__link:hover .carousel-slide__overlay,
+.carousel-slide__link:focus-visible .carousel-slide__overlay,
+.carousel-slide__link:active .carousel-slide__overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-slide__title {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.7vw, 1.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #ffffff;
+  opacity: 0;
+  transform: translateY(8px);
+  transition:
+    opacity var(--tbf-motion-duration-element) var(--tbf-motion-easing-element),
+    transform var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
+}
+
+.carousel-slide__link:hover .carousel-slide__title,
+.carousel-slide__link:focus-visible .carousel-slide__title,
+.carousel-slide__link:active .carousel-slide__title {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slide__overlay,
+  .carousel-slide__title {
+    transition: none;
+  }
 }
 
 @media (min-width: 768px) {
@@ -885,18 +932,20 @@
    assets .TBF. sobreposta.
    ============================================================================= */
 
-/* Título da capa do /pitch — mesma proporção do hero da home (65% centralizado
-   no desktop, margem a margem no mobile). Descrições permanecem à esquerda. */
+/* Título da capa do /pitch — mesma proporção do hero da home (65% no desktop,
+   margem a margem no mobile). Alinhado à ESQUERDA para que o título e todas as
+   descrições comecem no mesmo ponto (mesmo alinhamento da home). */
 .pitch-cover-title {
   width: 100%;
   height: auto;
   display: block;
-  margin: 0 auto var(--tbf-space-8);
+  margin: 0 0 var(--tbf-space-8);
 }
 
 @media (min-width: 768px) {
   .pitch-cover-title {
     width: 65%;
+    margin-inline: 0;
   }
 }
 
@@ -956,7 +1005,8 @@
   z-index: 3;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding-inline: clamp(1rem, 4vw, 3rem);
   pointer-events: none;
 }
 
@@ -997,11 +1047,11 @@
 }
 
 .btn:hover {
-  transform: translateY(var(--tbf-btn-hover-ty));
+  transform: translateY(var(--tbf-btn-hover-ty)) scale(1.02);
 }
 
 .btn:active {
-  transform: scale(var(--tbf-btn-active-scale));
+  transform: translateY(0) scale(var(--tbf-btn-active-scale));
 }
 
 .btn:focus-visible {
@@ -1911,85 +1961,6 @@ button.tag:focus-visible {
   grid-column: span 1;
 }
 
-/* Destaque editorial — full-bleed no estilo das páginas de label:
-   imagem de fundo + overlay + título/categoria/CTA sobrepostos. */
-.editorial-feature {
-  position: relative;
-  display: block;
-  width: 100%;
-  min-height: 70vh;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  margin-bottom: 2px;
-}
-
-.editorial-feature__img {
-  object-fit: cover;
-  transition: transform 0.6s var(--tbf-motion-easing-element);
-}
-
-.editorial-feature:hover .editorial-feature__img {
-  transform: scale(1.03);
-}
-
-.editorial-feature__overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%, rgba(0,0,0,0.35) 100%);
-}
-
-.editorial-feature__content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-end;
-  gap: var(--tbf-space-4);
-  padding: var(--tbf-grid-margin-sm);
-  padding-bottom: var(--tbf-space-12);
-}
-
-@media (min-width: 1280px) {
-  .editorial-feature__content {
-    padding: var(--tbf-grid-margin-xl);
-    padding-bottom: var(--tbf-space-16);
-  }
-}
-
-.editorial-feature__title {
-  font-family: var(--tbf-font-family-display);
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  font-weight: 800;
-  line-height: 0.98;
-  letter-spacing: var(--tbf-type-display-xl-ls);
-  color: #ffffff;
-  max-width: 20ch;
-}
-
-.editorial-feature__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--tbf-space-2);
-  font-family: var(--tbf-font-family-ui);
-  font-size: var(--tbf-type-micro-size);
-  letter-spacing: var(--tbf-type-micro-ls);
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
-  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
-}
-
-.editorial-feature:hover .editorial-feature__cta {
-  color: var(--tbf-accent);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .editorial-feature:hover .editorial-feature__img {
-    transform: none;
-  }
-}
-
 /* =============================================================================
    ARTICLE BODY TYPOGRAPHY
    ============================================================================= */
@@ -2117,7 +2088,12 @@ button.tag:focus-visible {
 .category-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.15) 100%);
+  /* Sombreamento leve: escurece a imagem só o suficiente para ela recuar ao
+     segundo plano e a nomenclatura (centralizada) ganhar hierarquia.
+     Vinheta sutil — centro mais claro, bordas um pouco mais escuras. */
+  background:
+    linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.30)),
+    radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
 }
 
 .category-card__content {
@@ -2125,7 +2101,9 @@ button.tag:focus-visible {
   inset: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   padding: var(--tbf-space-3);
 }
 
@@ -2136,7 +2114,8 @@ button.tag:focus-visible {
   line-height: 1.05;
   color: #ffffff;
   text-transform: uppercase;
-  margin-bottom: var(--tbf-space-2);
+  margin-bottom: 0;
+  text-shadow: 0 2px 14px rgba(0,0,0,0.55);
 }
 
 .category-card__cta {
@@ -2157,4 +2136,100 @@ button.tag:focus-visible {
 /* Cards compactos (linha única) — o card inteiro é clicável; some com o CTA. */
 .category-row .category-card__cta {
   display: none;
+}
+
+/* =============================================================================
+   MICROINTERAÇÕES GLOBAIS — todos os controles clicáveis do site
+   Feedback consistente de hover/press em links de nav, drawer e botões-ícone.
+   (.btn já tem lift + scale; cards já têm zoom de imagem.)
+   ============================================================================= */
+
+/* Nav links — underline animado que cresce da esquerda no hover */
+.nav__link {
+  position: relative;
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
+}
+
+.nav__link:hover::after,
+.nav__link--active::after {
+  transform: scaleX(1);
+}
+
+/* Drawer links (menu mobile) — deslize sutil no hover/toque */
+.drawer__link {
+  transition:
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    transform var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
+}
+
+.drawer__link:hover,
+.drawer__link:active {
+  transform: translateX(var(--tbf-space-2));
+}
+
+/* Botões-ícone (busca, hambúrguer, fechar) — escala tátil no hover/press */
+.nav__burger,
+.drawer__close,
+.newsletter-popup__close {
+  transition:
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.nav__burger:hover,
+.drawer__close:hover,
+.newsletter-popup__close:hover {
+  transform: scale(1.12);
+}
+
+.nav__burger:active,
+.drawer__close:active,
+.newsletter-popup__close:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__link::after {
+    transition: none;
+  }
+  .drawer__link,
+  .nav__burger,
+  .drawer__close,
+  .newsletter-popup__close {
+    transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  }
+  .drawer__link:hover,
+  .drawer__link:active,
+  .nav__burger:hover,
+  .nav__burger:active,
+  .drawer__close:hover,
+  .drawer__close:active,
+  .newsletter-popup__close:hover,
+  .newsletter-popup__close:active {
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   UTILITÁRIOS — quebras de linha responsivas (<br>)
+   Permitem quebras diferentes no mobile e no desktop no mesmo texto.
+   ============================================================================= */
+.br-mobile-only { display: inline; }
+.br-desktop-only { display: none; }
+
+@media (min-width: 768px) {
+  .br-mobile-only { display: none; }
+  .br-desktop-only { display: inline; }
 }

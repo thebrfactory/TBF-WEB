@@ -68,10 +68,10 @@ export function MailingList() {
             onSubmit={submit}
             style={{
               display: 'flex',
-              gap: 'var(--tbf-space-3)',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 'var(--tbf-space-5)',
               width: '100%',
-              maxWidth: '560px',
-              flexWrap: 'wrap',
             }}
             noValidate
           >
@@ -84,25 +84,32 @@ export function MailingList() {
               aria-label="Email address"
               disabled={status === 'loading'}
               style={{
-                flex: 1,
-                minWidth: '200px',
+                width: '100%',
                 background: 'transparent',
                 border: '1px solid var(--tbf-border)',
                 color: 'var(--tbf-text-primary)',
                 fontFamily: 'var(--tbf-font-family-body)',
-                fontSize: '0.9rem',
-                padding: '0.75rem 1.25rem',
+                fontSize: '1rem',
+                padding: '1rem 1.5rem',
                 outline: 'none',
                 borderRadius: '999px',
+                boxSizing: 'border-box',
               }}
             />
             <button
               type="submit"
               disabled={status === 'loading'}
               className="btn btn--primary"
-              style={{ borderRadius: '999px', whiteSpace: 'nowrap' }}
+              style={{ borderRadius: '999px' }}
             >
-              {status === 'loading' ? '...' : 'Subscribe'}
+              {status === 'loading' ? (
+                '...'
+              ) : (
+                <>
+                  Subscribe
+                  <span className="btn__arrow" aria-hidden="true">→</span>
+                </>
+              )}
             </button>
             {status === 'error' && (
               <p

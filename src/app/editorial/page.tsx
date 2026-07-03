@@ -5,6 +5,7 @@
 // =============================================================================
 
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { sanityFetch, EDITORIAL_LIST_QUERY } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
 import { EditorialGrid } from './EditorialGrid'
@@ -34,33 +35,58 @@ export default async function EditorialPage() {
 
   return (
     <>
-      {/* ─── HERO / SECTION HEADER ─────────────────────────────────────────── */}
+      {/* ─── HERO / SECTION HEADER — capa editorial como fundo (estilo /labels) ─── */}
       <section
         style={{
+          position: 'relative',
+          overflow: 'hidden',
+          minHeight: '56vh',
+          display: 'flex',
+          alignItems: 'flex-end',
           paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-20))',
-          paddingBottom: 'var(--tbf-space-12)',
+          paddingBottom: 'var(--tbf-space-16)',
           paddingInline: 'var(--tbf-grid-margin-sm)',
         }}
         aria-labelledby="editorial-heading"
       >
+        {/* Fundo — imagem de capa esmaecida + gradiente para blend com a página */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Image
+            src="/images/editorial-feature.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center 35%', opacity: 0.4 }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(to bottom, var(--tbf-bg-primary) 0%, transparent 45%, transparent 58%, var(--tbf-bg-primary) 100%)',
+            }}
+          />
+        </div>
+
         <div
           style={{
+            position: 'relative',
+            zIndex: 1,
+            width: '100%',
             maxWidth: 'var(--tbf-grid-max-xl)',
             marginInline: 'auto',
           }}
         >
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-micro-family)',
-              fontSize: 'var(--tbf-type-micro-size)',
-              letterSpacing: 'var(--tbf-type-micro-ls)',
-              color: 'var(--tbf-text-tertiary)',
-              textTransform: 'uppercase',
-              marginBottom: 'var(--tbf-space-4)',
-            }}
-          >
-            .THE BRAZILIAN FACTORY.
-          </p>
+          <Image
+            src="/brand/TBF-SAO-PAULO.svg"
+            alt=".TBF. SÃO PAULO"
+            width={237}
+            height={126}
+            unoptimized
+            priority
+            style={{ width: 'auto', height: 38, marginBottom: 'var(--tbf-space-5)' }}
+          />
           <h1
             id="editorial-heading"
             style={{

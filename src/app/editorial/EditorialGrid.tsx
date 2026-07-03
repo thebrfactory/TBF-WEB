@@ -120,33 +120,10 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
           )}
         </>
       ) : (
-        /* Mock articles — preview visual enquanto Sanity está vazio */
+        /* Mock articles — preview visual enquanto Sanity está vazio.
+           O destaque saiu daqui: a imagem de capa agora é o fundo do header
+           da página (ver app/editorial/page.tsx). */
         <>
-          {/* Destaque — estilo página de label: full-bleed com imagem + overlay */}
-          <a
-            href="/editorial/lorem-ipsum-1"
-            className="editorial-feature"
-            aria-label={MOCK_ARTICLES[0].title}
-          >
-            <Image
-              src={MOCK_ARTICLES[0].img}
-              alt=""
-              fill
-              priority
-              sizes="100vw"
-              className="editorial-feature__img"
-            />
-            <span className="editorial-feature__overlay" aria-hidden="true" />
-            <span className="editorial-feature__content">
-              <span className="tag tag--category">{MOCK_ARTICLES[0].category}</span>
-              <span className="editorial-feature__title">{MOCK_ARTICLES[0].title}</span>
-              <span className="editorial-feature__cta">
-                Read the piece
-                <span aria-hidden="true">→</span>
-              </span>
-            </span>
-          </a>
-
           <div className="editorial-grid" role="feed" aria-label="Prévia do arquivo editorial">
             {MOCK_ARTICLES.slice(1).map((mock, idx) => {
               const i = idx + 1

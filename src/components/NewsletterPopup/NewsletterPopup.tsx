@@ -84,7 +84,7 @@ export function NewsletterPopup() {
           width={140}
           height={100}
           unoptimized
-          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-5)' }}
+          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-8)' }}
         />
 
         <h2
@@ -95,7 +95,7 @@ export function NewsletterPopup() {
             fontWeight: 800,
             lineHeight: 1.15,
             color: 'var(--tbf-text-primary)',
-            marginBottom: 'var(--tbf-space-4)',
+            marginBottom: 'var(--tbf-space-6)',
             maxWidth: '20ch',
           }}
         >
@@ -106,12 +106,12 @@ export function NewsletterPopup() {
           style={{
             fontFamily: 'var(--tbf-font-family-ui)',
             fontSize: '0.8rem',
-            fontWeight: 100,
+            fontWeight: 300,
             letterSpacing: '0.06em',
             lineHeight: 1.5,
             textTransform: 'uppercase',
-            color: 'var(--tbf-text-tertiary)',
-            marginBottom: 'var(--tbf-space-6)',
+            color: '#ffffff',
+            marginBottom: 'var(--tbf-space-8)',
           }}
         >
           Culture™<br />Crafted in São Paulo, Brazil.<br />Consumed Worldwide.

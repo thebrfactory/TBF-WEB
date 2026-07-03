@@ -13,9 +13,10 @@ import styles from './Navigation.module.css'
 
 const SEARCH_PLACEHOLDER = 'Search .TBF.'
 
+// Labels saiu da navegação principal (por pedido): a entrada para as divisões
+// vive agora só no final da página /pitch — "labels só aparecem pra quem está dentro".
 const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
   { href: '/editorial', label: 'Magazine' },
-  { href: '/labels', label: 'Labels' },
   { href: '/pitch', label: 'Pitch' },
   // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
   { href: '/brandsystem/login', label: 'Login', external: true },

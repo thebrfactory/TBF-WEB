@@ -73,7 +73,9 @@
   cursor: pointer;
   padding: var(--tbf-space-1);
   line-height: 0;
-  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  transition:
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
 @media (min-width: 1024px) {
@@ -85,6 +87,21 @@
 
 .nav__icon:hover {
   color: var(--tbf-nav-link-hover);
+  transform: scale(1.12);
+}
+
+.nav__icon:active {
+  transform: scale(0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav__icon {
+    transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  }
+  .nav__icon:hover,
+  .nav__icon:active {
+    transform: none;
+  }
 }
 
 .nav__lang {
