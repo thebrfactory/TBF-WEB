@@ -43,11 +43,11 @@ export function MailingList() {
               fontSize: 'clamp(1.75rem, 5vw, 3rem)',
               fontWeight: 700,
               lineHeight: 1.1,
+              letterSpacing: '-0.02em',
               color: 'var(--tbf-text-primary)',
-              maxWidth: '18ch',
             }}
           >
-            Get the best stories from <span style={{ fontWeight: 800 }}>.TBF.</span> community.
+            Get the best stories<br />from <span style={{ fontWeight: 800 }}>.TBF.</span> community.
           </h2>
         </div>
 

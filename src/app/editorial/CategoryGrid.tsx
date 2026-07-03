@@ -21,11 +21,11 @@ export function CategoryGrid({ onSelect }: CategoryGridProps) {
     <div
       style={{
         paddingInline: 'var(--tbf-grid-margin-sm)',
-        paddingBottom: 'var(--tbf-space-16)',
+        paddingBottom: 'var(--tbf-space-10)',
       }}
     >
       <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
-        <div className="layout-c">
+        <div className="category-row">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.value}

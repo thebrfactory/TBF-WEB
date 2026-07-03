@@ -229,34 +229,51 @@ export default async function HomePage() {
         aria-labelledby="sp-quote-heading"
         style={{ paddingBlock: 'var(--tbf-space-16)' }}
       >
-        <blockquote
-          className="manifesto-fragment"
-          style={{
-            fontFamily: 'var(--tbf-font-family-display)',
-            fontSize: 'clamp(1.25rem, 4vw, 2rem)',
-            fontWeight: 700,
-            lineHeight: 1.25,
-            letterSpacing: '-0.01em',
-            color: 'var(--tbf-text-primary)',
-            maxWidth: '38ch',
-            marginBottom: 'var(--tbf-space-4)',
-          }}
-        >
-          <span id="sp-quote-heading" style={{ display: 'none' }}>São Paulo, cidade-manifesto</span>
-          &ldquo;São Paulo é já a cidade que pede romancistas e poetas. Que impõe pasmosos problemas humanos e agita, no seu tumulto discreto, egoísta e inteligente, as profundas revoluções criadoras de imortalidades.&rdquo;
-        </blockquote>
-        <cite
-          style={{
-            fontFamily: 'var(--tbf-font-family-ui)',
-            fontSize: 'var(--tbf-type-micro-size)',
-            letterSpacing: 'var(--tbf-type-micro-ls)',
-            color: 'var(--tbf-text-tertiary)',
-            textTransform: 'uppercase',
-            fontStyle: 'normal',
-          }}
-        >
-          — Oswald de Andrade, do grupo modernista, 1922, São Paulo, SP.
-        </cite>
+        <div style={{ maxWidth: '44ch', marginInline: 'auto', textAlign: 'center' }}>
+          <blockquote
+            className="manifesto-fragment"
+            style={{
+              fontFamily: 'var(--tbf-font-family-display)',
+              fontSize: 'clamp(1.25rem, 4vw, 2rem)',
+              fontWeight: 300,
+              lineHeight: 1.3,
+              letterSpacing: '-0.01em',
+              color: 'var(--tbf-text-primary)',
+              marginBottom: 'var(--tbf-space-6)',
+            }}
+          >
+            <span id="sp-quote-heading" style={{ display: 'none' }}>São Paulo, cidade-manifesto</span>
+            &ldquo;São Paulo é já a cidade que pede romancistas e poetas. Que impõe pasmosos problemas humanos e agita, no seu tumulto discreto, egoísta e inteligente, as profundas revoluções criadoras de imortalidades.&rdquo;
+          </blockquote>
+
+          <p
+            className="manifesto-fragment"
+            style={{
+              fontFamily: 'var(--tbf-font-family-body)',
+              fontSize: 'clamp(0.85rem, 2vw, 1.05rem)',
+              fontWeight: 300,
+              fontStyle: 'italic',
+              lineHeight: 1.6,
+              color: 'var(--tbf-text-tertiary)',
+              marginBottom: 'var(--tbf-space-6)',
+            }}
+          >
+            &ldquo;São Paulo is already the city that calls for novelists and poets. That imposes astonishing human problems and stirs, in its discreet, selfish and intelligent tumult, the profound revolutions that breed immortality.&rdquo;
+          </p>
+
+          <cite
+            style={{
+              fontFamily: 'var(--tbf-font-family-ui)',
+              fontSize: 'clamp(0.75rem, 1.6vw, 0.9rem)',
+              letterSpacing: '0.1em',
+              color: 'var(--tbf-text-secondary)',
+              textTransform: 'uppercase',
+              fontStyle: 'normal',
+            }}
+          >
+            — Oswald de Andrade, do grupo modernista, 1922, São Paulo, SP.
+          </cite>
+        </div>
       </section>
 
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
@@ -303,7 +320,7 @@ export default async function HomePage() {
                 maxWidth: '22ch',
               }}
             >
-              "What about this Brazilian label called .TBF.? It's a brand?"
+              &ldquo;What about<br />this Brazilian label<br />called .TBF.?<br />It&apos;s a brand?&rdquo;
             </blockquote>
 
             <p

@@ -51,8 +51,9 @@ export function PressLogosCarousel() {
             style={{
               height: 'clamp(56px, 9vw, 96px)',
               width: 'auto',
-              filter: 'invert(1)',
-              opacity: 0.14,
+              // 100% branco, sobreposto a todos os elementos, com sombra sutil
+              filter: 'invert(1) drop-shadow(0 2px 8px rgba(0,0,0,0.35))',
+              opacity: 1,
               marginInline: 'clamp(0.5rem, 2vw, 1.5rem)',
               transform: i === 1 ? 'scale(1.15)' : 'none',
             }}

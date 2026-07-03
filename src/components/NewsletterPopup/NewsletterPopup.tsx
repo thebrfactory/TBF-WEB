@@ -7,6 +7,7 @@
 // =============================================================================
 
 import { useEffect, useState, useCallback } from 'react'
+import Image from 'next/image'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
@@ -77,18 +78,14 @@ export function NewsletterPopup() {
           </svg>
         </button>
 
-        <p
-          style={{
-            fontFamily: 'var(--tbf-font-family-ui)',
-            fontSize: 'var(--tbf-type-micro-size)',
-            letterSpacing: 'var(--tbf-type-micro-ls)',
-            color: 'var(--tbf-text-tertiary)',
-            textTransform: 'uppercase',
-            marginBottom: 'var(--tbf-space-3)',
-          }}
-        >
-          .THE BRAZILIAN FACTORY.
-        </p>
+        <Image
+          src="/brand/TBF-SAO-PAULO.svg"
+          alt=".TBF. SÃO PAULO"
+          width={140}
+          height={100}
+          unoptimized
+          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-5)' }}
+        />
 
         <h2
           id="newsletter-popup-heading"
@@ -98,12 +95,27 @@ export function NewsletterPopup() {
             fontWeight: 800,
             lineHeight: 1.15,
             color: 'var(--tbf-text-primary)',
-            marginBottom: 'var(--tbf-space-6)',
+            marginBottom: 'var(--tbf-space-4)',
             maxWidth: '20ch',
           }}
         >
-          Get the best stories from <span style={{ color: 'var(--tbf-accent)' }}>.TBF.</span> community.
+          Get the best stories<br />from <span style={{ color: 'var(--tbf-accent)' }}>.TBF.</span> community.
         </h2>
+
+        <p
+          style={{
+            fontFamily: 'var(--tbf-font-family-ui)',
+            fontSize: '0.8rem',
+            fontWeight: 100,
+            letterSpacing: '0.06em',
+            lineHeight: 1.5,
+            textTransform: 'uppercase',
+            color: 'var(--tbf-text-tertiary)',
+            marginBottom: 'var(--tbf-space-6)',
+          }}
+        >
+          Culture™<br />Crafted in São Paulo, Brazil.<br />Consumed Worldwide.
+        </p>
 
         {status === 'success' ? (
           <p

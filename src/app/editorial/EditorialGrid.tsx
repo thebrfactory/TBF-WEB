@@ -6,6 +6,7 @@
 // =============================================================================
 
 import { useState } from 'react'
+import Image from 'next/image'
 import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { CategoryGrid } from './CategoryGrid'
@@ -20,12 +21,12 @@ const CATEGORIES: { value: ArticleCategory | 'all'; label: string }[] = [
 ]
 
 const MOCK_ARTICLES = [
-  { category: 'Editorial',    title: 'What about the Brazilian fashion culture?',         date: '01 Jun. 2026' },
-  { category: 'Coolhunting',  title: 'AFTERPARTY: the feeling behind Brazilian parties',  date: '28 Mai. 2026' },
-  { category: 'Fashion Film', title: 'ACT I: feeling a Brazilian runway backstage',        date: '20 Mai. 2026' },
-  { category: 'Editorial',    title: 'São Paulo as fashion capital: the city that prints its own rules', date: '15 Mai. 2026' },
-  { category: 'Colaboração',  title: 'When Brazilian music and fashion collide',            date: '08 Mai. 2026' },
-  { category: 'Manifesto',    title: 'We are not a trend: why .TBF. refuses to follow',    date: '01 Mai. 2026' },
+  { category: 'Editorial',    title: 'What about the Brazilian fashion culture?',         date: '01 Jun. 2026', img: '/images/editorial-feature.webp' },
+  { category: 'Coolhunting',  title: 'AFTERPARTY: the feeling behind Brazilian parties',  date: '28 Mai. 2026', img: '/images/thumb-02.webp' },
+  { category: 'Fashion Film', title: 'ACT I: feeling a Brazilian runway backstage',        date: '20 Mai. 2026', img: '/images/thumb-03.webp' },
+  { category: 'Editorial',    title: 'São Paulo as fashion capital: the city that prints its own rules', date: '15 Mai. 2026', img: '/images/thumb-01.webp' },
+  { category: 'Colaboração',  title: 'When Brazilian music and fashion collide',            date: '08 Mai. 2026', img: '/images/img-04.webp' },
+  { category: 'Manifesto',    title: 'We are not a trend: why .TBF. refuses to follow',    date: '01 Mai. 2026', img: '/images/img-06.webp' },
 ]
 
 const PAGE_SIZE = 9
@@ -120,37 +121,63 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
         </>
       ) : (
         /* Mock articles — preview visual enquanto Sanity está vazio */
-        <div className="editorial-grid" role="feed" aria-label="Prévia do arquivo editorial">
-          {MOCK_ARTICLES.map((mock, i) => (
-            <a key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className={`card ${i === 0 ? 'card--featured' : 'card--standard'}`} style={{ textDecoration: 'none' }}>
-              <div className="card__image-wrapper" style={{ background: '#060d18', position: 'relative' }}>
-                <span style={{
-                  position: 'absolute',
-                  top: '10px',
-                  left: '12px',
-                  fontFamily: 'var(--tbf-font-family-ui)',
-                  fontSize: '0.55rem',
-                  letterSpacing: '0.14em',
-                  color: 'rgba(255,255,255,0.2)',
-                  textTransform: 'uppercase',
-                }}>
-                  ADD-PREVIEW-MATERIAL
-                </span>
-              </div>
-              <div className="card__content">
-                <div className="card__tags">
-                  <span className="tag tag--category">{mock.category}</span>
-                </div>
-                <h3 className="card__title">{mock.title}</h3>
-                <div className="byline">
-                  <span className="byline__text">
-                    <span className="card__meta">{mock.date}</span>
-                  </span>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
+        <>
+          {/* Destaque — estilo página de label: full-bleed com imagem + overlay */}
+          <a
+            href="/editorial/lorem-ipsum-1"
+            className="editorial-feature"
+            aria-label={MOCK_ARTICLES[0].title}
+          >
+            <Image
+              src={MOCK_ARTICLES[0].img}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              className="editorial-feature__img"
+            />
+            <span className="editorial-feature__overlay" aria-hidden="true" />
+            <span className="editorial-feature__content">
+              <span className="tag tag--category">{MOCK_ARTICLES[0].category}</span>
+              <span className="editorial-feature__title">{MOCK_ARTICLES[0].title}</span>
+              <span className="editorial-feature__cta">
+                Read the piece
+                <span aria-hidden="true">→</span>
+              </span>
+            </span>
+          </a>
+
+          <div className="editorial-grid" role="feed" aria-label="Prévia do arquivo editorial">
+            {MOCK_ARTICLES.slice(1).map((mock, idx) => {
+              const i = idx + 1
+              return (
+                <a key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
+                  <div className="card__image-wrapper">
+                    <Image
+                      className="card__image"
+                      src={mock.img}
+                      alt=""
+                      width={955}
+                      height={640}
+                      sizes="(min-width:768px) 50vw, 100vw"
+                    />
+                  </div>
+                  <div className="card__content">
+                    <div className="card__tags">
+                      <span className="tag tag--category">{mock.category}</span>
+                    </div>
+                    <h3 className="card__title">{mock.title}</h3>
+                    <div className="byline">
+                      <span className="byline__text">
+                        <span className="card__meta">{mock.date}</span>
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+        </>
       )}
     </section>
   )

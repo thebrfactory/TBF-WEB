@@ -154,8 +154,8 @@ export default function RootLayout({
             <p
               style={{
                 fontFamily: 'var(--tbf-font-family-display)',
-                // Escala com o viewport para caber em UMA linha sem white-space: nowrap
-                fontSize: 'min(2.5rem, 4.6vw)',
+                // Mesma hierarquia visual do headline da mailing list (MailingList.tsx)
+                fontSize: 'clamp(1.75rem, 5vw, 3rem)',
                 fontWeight: 700,
                 lineHeight: 1.1,
                 letterSpacing: '-0.02em',
@@ -163,7 +163,7 @@ export default function RootLayout({
                 margin: 0,
               }}
             >
-              {"Let's make brave work for your brand"}
+              {"Let's make brave work"}<br />{"for your brand"}
             </p>
             <Link href="/contact-us" className="btn btn--primary">
               Contact Us

@@ -6,8 +6,10 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 .page {
-  --serif: var(--tav-serif), Georgia, serif;
-  --mono: var(--tav-mono), ui-monospace, monospace;
+  /* Somente a família Brother em toda a página (por pedido) — serif/mono
+     apontam para o display global; a triple-voz vira uma voz só. */
+  --serif: var(--tbf-font-family-display);
+  --mono: var(--tbf-font-family-display);
   background: var(--tbf-bg-primary);
   color: var(--tbf-text-primary);
   min-height: 100dvh;
@@ -52,6 +54,7 @@
   font-weight: 800;
   line-height: 0.92;
   letter-spacing: var(--tbf-type-display-xl-ls);
+  text-transform: uppercase;
   margin: var(--tbf-space-3) 0 var(--tbf-space-4);
 }
 .heroAlias {
@@ -150,6 +153,73 @@
   color: var(--tbf-text-tertiary);
 }
 .metaMono b { color: var(--tbf-text-secondary); font-weight: 500; }
+
+/* ─── SELECTED WORK — carrossel dinâmico (mesmo espírito da home) ───────────
+   Auto-scroll contínuo; pausa ao passar o mouse para selecionar/clicar a obra. */
+.selCarousel {
+  overflow: hidden;
+  width: 100vw;
+  margin-left: calc(-1 * var(--tbf-grid-margin-sm));
+}
+@media (min-width: 1280px) {
+  .selCarousel { margin-left: calc(-1 * var(--tbf-grid-margin-xl)); }
+}
+.selTrack {
+  display: flex;
+  gap: var(--tbf-space-4);
+  width: max-content;
+  margin: 0;
+  padding: 0 var(--tbf-space-4);
+  list-style: none;
+  animation: tavCarousel 38s linear infinite;
+  will-change: transform;
+}
+.selCarousel:hover .selTrack { animation-play-state: paused; }
+.selSlide {
+  position: relative;
+  flex-shrink: 0;
+  width: 80vw;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+@media (min-width: 768px)  { .selSlide { width: 52vw; } }
+@media (min-width: 1024px) { .selSlide { width: 40vw; } }
+.selSlide img { object-fit: cover; transition: transform 0.5s ease; }
+.selSlide:hover img { transform: scale(1.04); }
+.selSlideOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0) 100%);
+}
+.selSlideBody {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: var(--tbf-space-5);
+  display: flex;
+  align-items: baseline;
+  gap: var(--tbf-space-3);
+}
+.selSlideTitle {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 2.6vw, 1.7rem);
+  line-height: 1;
+  color: #fff;
+  transition: color 0.25s ease;
+}
+.selSlide:hover .selSlideTitle { color: var(--tbf-accent); }
+@keyframes tavCarousel {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .selTrack { animation-play-state: paused; }
+}
 
 /* ─── GRADE POR DISCIPLINA (ledger, baixa densidade) ───────────────────── */
 .ledger { padding-block: var(--tbf-space-12) var(--tbf-space-20); }

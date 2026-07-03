@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { IDENTITY, DISCIPLINES, WORKS, selectedWorks, isProv } from './_data'
+import { IDENTITY, DISCIPLINES, WORKS, selectedWorks } from './_data'
 import { DisciplineGrid } from './DisciplineGrid'
 import styles from './tavaristico.module.css'
 
@@ -45,39 +45,37 @@ export default function TavaristicoPage() {
         </div>
       </section>
 
-      {/* ─── SELECTED WORK ────────────────────────────────────────────── */}
-      <section className={`${styles.selected} container`}>
-        <div className={styles.sectionHead}>
+      {/* ─── SELECTED WORK — carrossel dinâmico ───────────────────────── */}
+      <section className={styles.selected}>
+        <div className={`${styles.sectionHead} container`}>
           <span className={styles.label}>Selected Work</span>
           <span className={styles.count}>{String(selected.length).padStart(2, '0')}</span>
         </div>
-        <div className={styles.selList}>
-          {selected.map((w) => (
-            <Link key={w.slug} href={`/creators/tavaristico/works/${w.slug}`} className={styles.selItem}>
-              <div className={styles.selTop}>
-                <span className={styles.index}>{w.index}</span>
-                <span className={styles.selTitle}>{w.title}</span>
-              </div>
-              <div className={styles.selMedia}>
-                <Image
-                  src={w.media.cover}
-                  alt={w.title}
-                  fill
-                  sizes="(min-width: 768px) 80vw, 100vw"
-                />
-              </div>
-              <div className={styles.selFoot}>
-                <span className={`${styles.selSummary} ${isProv(w, 'summary') ? styles.prov : ''}`}>
-                  {w.summary}
-                </span>
-                <span className={styles.metaMono}>
-                  <b className={isProv(w, 'role') ? styles.prov : ''}>{w.role}</b>
-                  {w.client ? <> · <span className={isProv(w, 'client') ? styles.prov : ''}>{w.client}</span></> : null}
-                  {w.year ? <> · {w.year}</> : null}
-                </span>
-              </div>
-            </Link>
-          ))}
+        <div className={styles.selCarousel}>
+          <ul className={styles.selTrack} role="list">
+            {[...selected, ...selected].map((w, i) => (
+              <li key={`${w.slug}-${i}`}>
+                <Link
+                  href={`/creators/tavaristico/works/${w.slug}`}
+                  className={styles.selSlide}
+                  aria-hidden={i >= selected.length}
+                  tabIndex={i >= selected.length ? -1 : undefined}
+                >
+                  <Image
+                    src={w.media.cover}
+                    alt={w.title}
+                    fill
+                    sizes="(min-width: 1024px) 40vw, (min-width: 768px) 52vw, 80vw"
+                  />
+                  <span className={styles.selSlideOverlay} aria-hidden="true" />
+                  <span className={styles.selSlideBody}>
+                    <span className={styles.index}>{w.index}</span>
+                    <span className={styles.selSlideTitle}>{w.title}</span>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

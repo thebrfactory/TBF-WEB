@@ -119,19 +119,7 @@ export function PitchClient() {
         }}
         aria-label="Cover"
       >
-        {/* BG image */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/img-03.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', opacity: 0.18 }}
-          />
-          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 0%, #000000 80%)' }} />
-        </div>
-
+        {/* Fundo — mesmo tratamento da página /editorial: preto sólido, sem imagem */}
         <div style={{ position: 'relative', zIndex: 1, padding: 'clamp(2rem, 6vw, 5rem)', paddingBottom: 'clamp(3rem, 8vw, 7rem)' }}>
           <PitchReveal delay={100}>
             <p style={{ fontFamily: 'var(--tbf-font-family-ui)', fontSize: 'clamp(0.625rem, 2vw, 0.75rem)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--tbf-text-tertiary)', marginBottom: '1.5rem' }}>
@@ -140,7 +128,7 @@ export function PitchClient() {
           </PitchReveal>
 
           <PitchReveal delay={200}>
-            <svg viewBox="0 397 595.28 47" aria-label=".THE BRAZILIAN FACTORY." role="img" style={{ width: '100%', maxWidth: '900px', height: 'auto', display: 'block', marginBottom: '2rem' }}>
+            <svg viewBox="0 397 595.28 47" aria-label=".THE BRAZILIAN FACTORY." role="img" className="pitch-cover-title">
               <path d="M5.21,428.52c3.22,0,5.21,1.9,5.21,5.02s-2,5.02-5.21,5.02-5.21-1.9-5.21-5.02,2-5.02,5.21-5.02Z" fill="#fff"/>
               <path d="M36.36,403.16v8.46h-8.84v26.15h-10.09v-26.15h-8.84v-8.46h27.78Z" fill="#fff"/>
               <path d="M60.39,437.77v-13.36h-11.49v13.36h-10.05v-34.61h10.05v12.83h11.49v-12.83h10.09v34.61h-10.09Z" fill="#fff"/>

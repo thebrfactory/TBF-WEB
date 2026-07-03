@@ -257,8 +257,9 @@
   top: 50%;
   left: 50%;
   width: min(420px, calc(100vw - var(--tbf-space-8)));
-  background-color: var(--tbf-bg-secondary);
+  background-color: var(--tbf-bg-primary);
   border: 1px solid var(--tbf-border);
+  border-radius: 18px;
   z-index: var(--tbf-z-modal);
   padding: var(--tbf-space-8) var(--tbf-space-6);
   opacity: 0;
@@ -884,6 +885,21 @@
    assets .TBF. sobreposta.
    ============================================================================= */
 
+/* Título da capa do /pitch — mesma proporção do hero da home (65% centralizado
+   no desktop, margem a margem no mobile). Descrições permanecem à esquerda. */
+.pitch-cover-title {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto var(--tbf-space-8);
+}
+
+@media (min-width: 768px) {
+  .pitch-cover-title {
+    width: 65%;
+  }
+}
+
 .press-carousel {
   position: relative;
   overflow: hidden;
@@ -923,9 +939,7 @@
   will-change: transform;
 }
 
-.press-carousel:hover .press-carousel-track {
-  animation-play-state: paused;
-}
+/* Movimento contínuo — não pausa com o cursor sobre o trilho (por pedido). */
 
 .press-carousel-slide {
   flex-shrink: 0;
@@ -1897,6 +1911,85 @@ button.tag:focus-visible {
   grid-column: span 1;
 }
 
+/* Destaque editorial — full-bleed no estilo das páginas de label:
+   imagem de fundo + overlay + título/categoria/CTA sobrepostos. */
+.editorial-feature {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 70vh;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 2px;
+}
+
+.editorial-feature__img {
+  object-fit: cover;
+  transition: transform 0.6s var(--tbf-motion-easing-element);
+}
+
+.editorial-feature:hover .editorial-feature__img {
+  transform: scale(1.03);
+}
+
+.editorial-feature__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 55%, rgba(0,0,0,0.35) 100%);
+}
+
+.editorial-feature__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: var(--tbf-space-4);
+  padding: var(--tbf-grid-margin-sm);
+  padding-bottom: var(--tbf-space-12);
+}
+
+@media (min-width: 1280px) {
+  .editorial-feature__content {
+    padding: var(--tbf-grid-margin-xl);
+    padding-bottom: var(--tbf-space-16);
+  }
+}
+
+.editorial-feature__title {
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  color: #ffffff;
+  max-width: 20ch;
+}
+
+.editorial-feature__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  font-family: var(--tbf-font-family-ui);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.editorial-feature:hover .editorial-feature__cta {
+  color: var(--tbf-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .editorial-feature:hover .editorial-feature__img {
+    transform: none;
+  }
+}
+
 /* =============================================================================
    ARTICLE BODY TYPOGRAPHY
    ============================================================================= */
@@ -1969,14 +2062,42 @@ button.tag:focus-visible {
    Cards de categoria estilo revista: foto de fundo + overlay + nome + botão.
    ============================================================================= */
 
+/* Linha de categorias — todas na mesma linha, menores, cantos arredondados e
+   espaçamento reduzido. Mobile: rola horizontalmente (mantém "uma linha"). */
+.category-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 46%;
+  gap: var(--tbf-space-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--tbf-space-2);
+  -webkit-overflow-scrolling: touch;
+}
+
+.category-row > * {
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .category-row {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-columns: auto;
+    overflow: visible;
+    gap: var(--tbf-space-2);
+  }
+}
+
 .category-card {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 3 / 4;
   overflow: hidden;
   background: var(--tbf-bg-secondary);
   border: none;
+  border-radius: 12px;
   padding: 0;
   cursor: pointer;
   text-align: left;
@@ -2005,17 +2126,17 @@ button.tag:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--tbf-space-5);
+  padding: var(--tbf-space-3);
 }
 
 .category-card__label {
   font-family: var(--tbf-font-family-display);
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.05;
   color: #ffffff;
   text-transform: uppercase;
-  margin-bottom: var(--tbf-space-3);
+  margin-bottom: var(--tbf-space-2);
 }
 
 .category-card__cta {
@@ -2031,4 +2152,9 @@ button.tag:focus-visible {
 
 .category-card:hover .category-card__cta {
   color: var(--tbf-accent);
+}
+
+/* Cards compactos (linha única) — o card inteiro é clicável; some com o CTA. */
+.category-row .category-card__cta {
+  display: none;
 }
