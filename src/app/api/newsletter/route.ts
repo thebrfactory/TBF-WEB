@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // Env vars necessárias (padronizado com o LP-TFD/Melfiore — welcome via Brevo Transacional, não Resend):
 //   BREVO_API_KEY      — conta Brevo .TBF. inc. (login thebrazilianfactory@gmail.com) → SMTP & API → API Keys
 //   BREVO_LIST_ID      — 3 (conta .TBF.)
-//   BREVO_TEMPLATE_ID  — template "TBF.COM — Welcome" criado na conta .TBF. (ver newsletter-brevo-template no scratchpad/memória)
+//   BREVO_TEMPLATE_ID  — id do template ativo no Brevo (editor visual, conta .TBF. → Modelos). Editar design lá, não aqui.
 //   BREVO_SENDER_EMAIL — community@thebrfactory.com (precisa estar "active" nos Senders do Brevo antes de enviar)
 //   BREVO_SENDER_NAME  — .TBF. inc.
 // ATENÇÃO: existem DUAS contas Brevo — .TBF. inc. (thebrazilianfactory@gmail.com, usada aqui)
