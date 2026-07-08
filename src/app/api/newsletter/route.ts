@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Env vars necessárias para o Brevo (contato entra na lista "TBF.COM Newsletter", id 6):
-//   BREVO_API_KEY  — Brevo → SMTP & API → API Keys
-//   BREVO_LIST_ID  — 6 (já criada via MCP)
+// Env vars necessárias para o Brevo (contato entra na lista "TBF.COM Newsletter", id 3):
+//   BREVO_API_KEY  — conta Brevo .TBF. inc. (login thebrazilianfactory@gmail.com) → SMTP & API → API Keys
+//   BREVO_LIST_ID  — 3 (conta .TBF.)
+// ATENÇÃO: existem DUAS contas Brevo — .TBF. inc. (thebrazilianfactory@gmail.com, usada aqui)
+// e MELFIORE (thefioredaily@gmail.com, waitlist Melfiore + MCP). Não misturar.
 // Sem BREVO_API_KEY, o contato só fica logado no console (dev mode) — o welcome
 // e-mail via Resend continua funcionando normalmente de qualquer forma.
 
@@ -36,7 +38,7 @@ async function addBrevoContact(email: string): Promise<void> {
     body: JSON.stringify({
       email: email.trim().toLowerCase(),
       listIds: [Number(process.env.BREVO_LIST_ID)],
-      updateEnabled: false, // silently ignora duplicados
+      updateEnabled: true, // contato existente é atualizado e ANEXADO à lista (false ignoraria o listIds)
     }),
   })
 
@@ -57,7 +59,7 @@ async function sendEmail(apiKey: string, to: string, subject: string, html: stri
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from: '.TBF. <noreply@thebrfactory.com>',
+      from: '.TBF. <community@thebrfactory.com>',
       to,
       subject,
       html,
