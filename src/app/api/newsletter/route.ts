@@ -1,31 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Env vars necessárias para o Brevo (contato entra na lista "TBF.COM Newsletter", id 3):
-//   BREVO_API_KEY  — conta Brevo .TBF. inc. (login thebrazilianfactory@gmail.com) → SMTP & API → API Keys
-//   BREVO_LIST_ID  — 3 (conta .TBF.)
+// Env vars necessárias (padronizado com o LP-TFD/Melfiore — welcome via Brevo Transacional, não Resend):
+//   BREVO_API_KEY      — conta Brevo .TBF. inc. (login thebrazilianfactory@gmail.com) → SMTP & API → API Keys
+//   BREVO_LIST_ID      — 3 (conta .TBF.)
+//   BREVO_TEMPLATE_ID  — template "TBF.COM — Welcome" criado na conta .TBF. (ver newsletter-brevo-template no scratchpad/memória)
+//   BREVO_SENDER_EMAIL — community@thebrfactory.com (precisa estar "active" nos Senders do Brevo antes de enviar)
+//   BREVO_SENDER_NAME  — .TBF. inc.
 // ATENÇÃO: existem DUAS contas Brevo — .TBF. inc. (thebrazilianfactory@gmail.com, usada aqui)
 // e MELFIORE (thefioredaily@gmail.com, waitlist Melfiore + MCP). Não misturar.
-// Sem BREVO_API_KEY, o contato só fica logado no console (dev mode) — o welcome
-// e-mail via Resend continua funcionando normalmente de qualquer forma.
-
-const WELCOME_HTML = `
-<div style="background:#000;color:#fff;font-family:Georgia,serif;max-width:560px;margin:0 auto;padding:48px 32px;">
-  <p style="font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#888;margin-bottom:32px;">
-    .THE BRAZILIAN FACTORY.
-  </p>
-  <h1 style="font-size:2rem;font-weight:700;line-height:1.1;margin-bottom:24px;">
-    Welcome to the factory.
-  </h1>
-  <p style="font-size:1rem;line-height:1.7;color:#ccc;margin-bottom:24px;">
-    You're now part of something being built from São Paulo outward.<br/>
-    Expect editorials, drops, and dispatches from the .TBF. universe — when they matter, not when they don't.
-  </p>
-  <p style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:#555;margin-top:48px;">
-    Culture™ Crafted in São Paulo. Consumed Worldwide.<br/>
-    .TBF. INC — thebrfactory.com
-  </p>
-</div>
-`
+// Sem BREVO_API_KEY, o contato só fica logado no console (dev mode) — nenhum e-mail é enviado.
+// A notificação interna (owner) continua via Resend (RESEND_API_KEY) — é operacional, não brand-facing.
 
 async function addBrevoContact(email: string): Promise<void> {
   const res = await fetch('https://api.brevo.com/v3/contacts', {
@@ -49,6 +33,26 @@ async function addBrevoContact(email: string): Promise<void> {
       console.error('[newsletter] Brevo contact error:', res.status, body)
     }
   }
+}
+
+async function sendBrevoWelcomeEmail(email: string): Promise<void> {
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+      'api-key': process.env.BREVO_API_KEY!,
+    },
+    body: JSON.stringify({
+      to: [{ email: email.trim().toLowerCase() }],
+      templateId: Number(process.env.BREVO_TEMPLATE_ID),
+      sender: {
+        email: process.env.BREVO_SENDER_EMAIL,
+        name: process.env.BREVO_SENDER_NAME ?? '.TBF. inc.',
+      },
+    }),
+  })
+  if (!res.ok) console.error('[newsletter] Brevo welcome email error:', await res.text())
 }
 
 async function sendEmail(apiKey: string, to: string, subject: string, html: string, text: string) {
@@ -86,17 +90,9 @@ export async function POST(request: NextRequest) {
 
     const tasks: Promise<void>[] = []
 
+    // Notificação interna (operacional, não brand-facing) — segue via Resend
     if (resendApiKey) {
       tasks.push(
-        // Welcome ao subscriber
-        sendEmail(
-          resendApiKey,
-          email,
-          'Welcome to the factory.',
-          WELCOME_HTML,
-          'Welcome to the factory.\n\nYou\'re now part of something being built from São Paulo outward.\n\nCulture™ Crafted in São Paulo. Consumed Worldwide.\n.TBF. INC — thebrfactory.com'
-        ),
-        // Notificação interna
         sendEmail(
           resendApiKey,
           ownerEmail,
@@ -105,12 +101,16 @@ export async function POST(request: NextRequest) {
           `Nova inscrição na mailing list: ${email}`
         )
       )
-    } else {
-      console.info('[newsletter] New subscriber:', email)
     }
 
+    // Contato + welcome — padronizado com o LP-TFD/Melfiore: tudo via Brevo Transacional
     if (process.env.BREVO_API_KEY) {
       tasks.push(addBrevoContact(email))
+      if (process.env.BREVO_TEMPLATE_ID) {
+        tasks.push(sendBrevoWelcomeEmail(email))
+      } else {
+        console.info('[newsletter] BREVO_TEMPLATE_ID ausente — welcome não enviado:', email)
+      }
     } else {
       console.info('[newsletter] Brevo dev mode — contato não sincronizado:', email)
     }
