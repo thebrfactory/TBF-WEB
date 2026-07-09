@@ -10,6 +10,7 @@ import { Navigation } from '@/components/Navigation/Navigation'
 import { Footer } from '@/components/Footer/Footer'
 import { MailingList } from '@/components/MailingList/MailingList'
 import { NewsletterPopup } from '@/components/NewsletterPopup/NewsletterPopup'
+import { CookieBanner } from '@/components/CookieBanner/CookieBanner'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -151,20 +152,34 @@ export default function RootLayout({
               gap: 'var(--tbf-space-6)',
             }}
           >
-            <p
-              style={{
-                fontFamily: 'var(--tbf-font-family-display)',
-                // Mesma hierarquia visual do headline da mailing list (MailingList.tsx)
-                fontSize: 'clamp(1.75rem, 5vw, 3rem)',
-                fontWeight: 700,
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-                color: 'var(--tbf-text-primary)',
-                margin: 0,
-              }}
-            >
-              {"Let's make brave work"}<br />{"for your brand"}
-            </p>
+            <div>
+              <p
+                style={{
+                  fontFamily: 'var(--tbf-font-family-ui)',
+                  fontSize: 'var(--tbf-type-micro-size)',
+                  letterSpacing: 'var(--tbf-type-micro-ls)',
+                  color: 'var(--tbf-text-tertiary)',
+                  textTransform: 'uppercase',
+                  margin: '0 0 var(--tbf-space-4)',
+                }}
+              >
+                We are here to make an impact
+              </p>
+              <p
+                style={{
+                  fontFamily: 'var(--tbf-font-family-display)',
+                  // Mesma hierarquia visual do headline da mailing list (MailingList.tsx)
+                  fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+                  fontWeight: 700,
+                  lineHeight: 1.1,
+                  letterSpacing: '-0.02em',
+                  color: 'var(--tbf-text-primary)',
+                  margin: 0,
+                }}
+              >
+                {"Let's make brave work"}<br />{"for your brand."}
+              </p>
+            </div>
             <Link href="/contact-us" className="btn btn--primary">
               Contact Us
               <span className="btn__arrow" aria-hidden="true">→</span>
@@ -173,6 +188,9 @@ export default function RootLayout({
         </section>
 
         <Footer />
+
+        {/* Aviso de cookies LGPD — primeira visita, persiste a escolha */}
+        <CookieBanner />
 
         <CustomCursor />
 

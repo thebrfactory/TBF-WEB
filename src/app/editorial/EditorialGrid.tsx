@@ -56,9 +56,6 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
 
   return (
     <section aria-label="Arquivo editorial">
-      {/* ─── GRID DE CATEGORIAS — estilo revista, foto + overlay + botão ─── */}
-      <CategoryGrid onSelect={handleCategoryChange} />
-
       {/* ─── FILTROS — só quando há conteúdo real ─── */}
       {hasPosts && (
         <div
@@ -156,6 +153,11 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
           </div>
         </>
       )}
+
+      {/* ─── MINI CARROSSEL DE CATEGORIAS — no final, depois do último artigo ─── */}
+      <div style={{ paddingTop: 'var(--tbf-space-16)' }}>
+        <CategoryGrid onSelect={handleCategoryChange} />
+      </div>
     </section>
   )
 }

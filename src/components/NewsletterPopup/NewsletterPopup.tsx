@@ -8,6 +8,7 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
@@ -16,17 +17,55 @@ const SHOW_DELAY_MS = 1500
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false)
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
+
+  // Consentimento LGPD obrigatório antes do envio.
+  function handleSubmit(e: React.FormEvent) {
+    if (!consent) {
+      e.preventDefault()
+      setConsentError(true)
+      return
+    }
+    setConsentError(false)
+    submit(e, { consent: true })
+  }
 
   const close = useCallback(() => {
     setOpen(false)
     sessionStorage.setItem(SESSION_KEY, 'true')
   }, [])
 
-  // Trigger — uma vez por sessão, com pequeno delay
+  // Trigger — uma vez por sessão, com pequeno delay. Só aparece DEPOIS que a
+  // escolha de cookies foi feita (senão popup e cookie banner se sobrepõem na
+  // primeira visita, sobretudo no mobile).
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return
-    const timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS)
-    return () => clearTimeout(timer)
+
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const start = () => {
+      timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS)
+    }
+
+    let hasCookieChoice = true
+    try {
+      hasCookieChoice = !!localStorage.getItem('tbf-cookie-consent')
+    } catch {
+      hasCookieChoice = true // storage bloqueado → não trava o popup
+    }
+
+    if (hasCookieChoice) {
+      start()
+      return () => { if (timer) clearTimeout(timer) }
+    }
+
+    // Ainda sem escolha de cookies → espera o evento do CookieBanner.
+    const onCookieChoice = () => start()
+    window.addEventListener('tbf-cookie-choice', onCookieChoice, { once: true })
+    return () => {
+      window.removeEventListener('tbf-cookie-choice', onCookieChoice)
+      if (timer) clearTimeout(timer)
+    }
   }, [])
 
   // Fecha automaticamente após inscrição confirmada
@@ -37,7 +76,8 @@ export function NewsletterPopup() {
     }
   }, [status, close])
 
-  // ESC + lock de scroll do body
+  // ESC fecha. NÃO trava o scroll do body — a home continua rolável com o popup
+  // aberto (pedido). O overlay é só visual (grayscale) e não captura cliques.
   useEffect(() => {
     if (!open) return
 
@@ -46,12 +86,7 @@ export function NewsletterPopup() {
     }
 
     document.addEventListener('keydown', handleKeyDown)
-    document.body.style.overflow = 'hidden'
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = ''
-    }
+    return () => document.removeEventListener('keydown', handleKeyDown)
   }, [open, close])
 
   return (
@@ -130,7 +165,7 @@ export function NewsletterPopup() {
             You&apos;re in. Welcome to the factory.
           </p>
         ) : (
-          <form onSubmit={submit} noValidate>
+          <form onSubmit={handleSubmit} noValidate>
             <div style={{ display: 'flex', gap: 'var(--tbf-space-3)', flexWrap: 'wrap' }}>
               <input
                 type="email"
@@ -162,6 +197,26 @@ export function NewsletterPopup() {
                 {status === 'loading' ? '...' : 'Subscribe'}
               </button>
             </div>
+
+            {/* Consentimento LGPD */}
+            <label className="consent-check" style={{ marginTop: 'var(--tbf-space-4)' }}>
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => { setConsent(e.target.checked); if (e.target.checked) setConsentError(false) }}
+                aria-invalid={consentError}
+              />
+              <span>
+                Você concorda em receber nossas comunicações.{' '}
+                <Link href="/legal/privacy">Saiba mais em nossa política de privacidade.</Link>
+              </span>
+            </label>
+            {consentError && (
+              <p role="alert" className="consent-check__error">
+                Confirme o consentimento para continuar.
+              </p>
+            )}
+
             {status === 'error' && (
               <p
                 role="alert"

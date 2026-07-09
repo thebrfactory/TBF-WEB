@@ -256,8 +256,8 @@ export default async function HomePage() {
             className="manifesto-fragment"
             style={{
               fontFamily: 'var(--tbf-font-family-display)',
-              fontSize: 'clamp(1.05rem, 3.2vw, 1.7rem)',
-              fontWeight: 300,
+              fontSize: 'clamp(1.3rem, 3.9vw, 2.1rem)',
+              fontWeight: 400,
               lineHeight: 1.35,
               letterSpacing: '-0.01em',
               color: 'var(--tbf-text-primary)',

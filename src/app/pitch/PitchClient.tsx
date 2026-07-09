@@ -8,8 +8,15 @@ import { useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PressLogosCarousel } from './PressLogosCarousel'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 
 const ACCENT = '#FF6500'
+
+// Mesmo vídeo de fundo do hero editorial (loop mudo), aplicado à capa do pitch.
+const EDITORIAL_VIDEO = {
+  desktop: { av1: '/videos/editorial-desktop.av1.mp4', h264: '/videos/editorial-desktop.mp4' },
+  mobile: { av1: '/videos/editorial-mobile.av1.mp4', h264: '/videos/editorial-mobile.mp4' },
+}
 
 function useReveal() {
   useEffect(() => {
@@ -119,7 +126,24 @@ export function PitchClient() {
         }}
         aria-label="Cover"
       >
-        {/* Fundo — mesmo tratamento da página /editorial: preto sólido, sem imagem */}
+        {/* Fundo — vídeo em loop esmaecido (mesmo do /editorial) + blend p/ preto */}
+        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <HeroVideo
+            sources={EDITORIAL_VIDEO}
+            poster="/images/editorial-feature.webp"
+            opacity={0.35}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background:
+                'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 40%, transparent 55%, #000000 100%)',
+            }}
+          />
+        </div>
+
+        {/* Fundo — mesmo tratamento da página /editorial */}
         <div style={{ position: 'relative', zIndex: 1, padding: 'clamp(2rem, 6vw, 5rem)', paddingBottom: 'clamp(3rem, 8vw, 7rem)' }}>
           <PitchReveal delay={100}>
             <p style={{ fontFamily: 'var(--tbf-font-family-ui)', fontSize: 'clamp(0.625rem, 2vw, 0.75rem)', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--tbf-text-tertiary)', marginBottom: '1.5rem' }}>

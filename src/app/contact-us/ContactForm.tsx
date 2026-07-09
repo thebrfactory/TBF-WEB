@@ -110,7 +110,7 @@ export function ContactForm() {
 
   return (
     <form
-      className="form"
+      className="form contact-form"
       onSubmit={handleSubmit}
       noValidate
       aria-label="Formulário de contato"

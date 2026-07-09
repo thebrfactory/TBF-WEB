@@ -9,27 +9,45 @@
 
 import { useEffect, useRef, useState } from 'react'
 
-const POSTER = '/images/img-01.webp'
+type SourcePair = { av1: string; h264: string }
+type SourceSet = { desktop: SourcePair; mobile: SourcePair }
+type Variant = keyof SourceSet
 
-const SOURCES = {
+const HERO_POSTER = '/images/img-01.webp'
+
+const HERO_SOURCES: SourceSet = {
   desktop: { av1: '/videos/hero-desktop.av1.mp4', h264: '/videos/hero-desktop.mp4' },
   mobile: { av1: '/videos/hero-mobile.av1.mp4', h264: '/videos/hero-mobile.mp4' },
-} as const
+}
 
-type Variant = keyof typeof SOURCES
+interface HeroVideoProps {
+  /** Par de vídeos (desktop/mobile). Default = vídeo do hero da home. */
+  sources?: SourceSet
+  /** Poster estático (evita flash preto no load). */
+  poster?: string
+  /** Opacidade do vídeo (0–1). Default 0.35 — igual à imagem original. */
+  opacity?: number
+}
 
-const MEDIA_BASE = {
-  position: 'absolute',
-  inset: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  opacity: 0.35,
-} as const
-
-export function HeroVideo() {
+// Reaproveitado no hero da home, no /editorial e no /pitch. Mesmo tratamento:
+// escolhe o vídeo vertical/horizontal via matchMedia (baixa UM só) + recuperação
+// de autoplay bloqueado, e roda em loop mudo.
+export function HeroVideo({
+  sources = HERO_SOURCES,
+  poster = HERO_POSTER,
+  opacity = 0.35,
+}: HeroVideoProps = {}) {
   const [variant, setVariant] = useState<Variant | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
+
+  const MEDIA_BASE = {
+    position: 'absolute',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    opacity,
+  } as const
 
   useEffect(() => {
     const mql = window.matchMedia('(max-width: 767px)')
@@ -73,7 +91,7 @@ export function HeroVideo() {
     return cleanup
   }, [variant])
 
-  const src = variant ? SOURCES[variant] : null
+  const src = variant ? sources[variant] : null
 
   return (
     <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
@@ -81,7 +99,7 @@ export function HeroVideo() {
       {!src && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={POSTER}
+          src={poster}
           alt=""
           style={{ ...MEDIA_BASE, objectPosition: 'center 35%' }}
         />
@@ -97,7 +115,7 @@ export function HeroVideo() {
           loop
           playsInline
           preload="auto"
-          poster={POSTER}
+          poster={poster}
           style={{ ...MEDIA_BASE, objectPosition: 'center' }}
         >
           <source src={src.av1} type='video/mp4; codecs="av01.0.05M.08"' />

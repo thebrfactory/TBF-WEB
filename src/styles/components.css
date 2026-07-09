@@ -237,24 +237,35 @@
    COMPONENTE 01C — NEWSLETTER POPUP (sitewide)
    ============================================================================= */
 
+/* Overlay do popup — NÃO bloqueia a página (pointer-events: none): dá pra rolar
+   a home com o popup aberto (pedido). Deixa o site levemente em grayscale via
+   backdrop-filter, que dessatura só o que está ATRÁS do overlay — o popup, acima
+   no z-index, mantém a cor. */
 .newsletter-popup-overlay {
   position: fixed;
   inset: 0;
-  background-color: var(--tbf-bg-primary);
+  background-color: transparent;
   opacity: 0;
   pointer-events: none;
   z-index: calc(var(--tbf-z-modal) - 1);
-  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+  -webkit-backdrop-filter: grayscale(0);
+  backdrop-filter: grayscale(0);
+  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
+              backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
+              -webkit-backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
 }
 
 .newsletter-popup-overlay--open {
-  opacity: var(--tbf-drawer-overlay-opacity);
-  pointer-events: auto;
+  opacity: 1;
+  -webkit-backdrop-filter: grayscale(0.6);
+  backdrop-filter: grayscale(0.6);
 }
 
+/* Popup colado rente à margem superior do layout (desktop + mobile). Sombra
+   forte e extensa (pedido). Fica position: fixed → não trava o scroll da página. */
 .newsletter-popup {
   position: fixed;
-  top: 50%;
+  top: var(--tbf-space-4);
   left: 50%;
   width: min(420px, calc(100vw - var(--tbf-space-8)));
   background-color: var(--tbf-bg-primary);
@@ -262,9 +273,13 @@
   border-radius: 18px;
   z-index: var(--tbf-z-modal);
   padding: var(--tbf-space-10) var(--tbf-space-6) var(--tbf-space-8);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.85),
+    0 12px 32px rgba(0, 0, 0, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.6);
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(0.96);
+  transform: translate(-50%, -12px) scale(0.96);
   transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
               transform var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
 }
@@ -272,7 +287,7 @@
 .newsletter-popup--open {
   opacity: 1;
   pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, 0) scale(1);
 }
 
 .newsletter-popup__close {
@@ -389,12 +404,47 @@
   }
 }
 
+/* Cidades sob gestão — bloco acima do copyright, em todas as páginas */
+.footer__cities {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+  margin-top: var(--tbf-space-10);
+  padding-bottom: var(--tbf-space-6);
+}
+
+.footer__cities-label {
+  margin: 0;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  opacity: 0.4;
+}
+
+.footer__cities-list {
+  margin: 0;
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+}
+
+.footer__cities-list span {
+  color: var(--tbf-text-tertiary);
+  margin-inline: var(--tbf-space-2);
+  font-weight: 400;
+}
+
 /* Copyright row */
 .footer__copyright {
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-2);
-  margin-top: var(--tbf-space-10);
+  margin-top: var(--tbf-space-6);
 }
 
 @media (min-width: 1024px) {
@@ -867,12 +917,12 @@
 .carousel-slide__link:hover .carousel-slide__overlay,
 .carousel-slide__link:focus-visible .carousel-slide__overlay,
 .carousel-slide__link:active .carousel-slide__overlay {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.74);
 }
 
 .carousel-slide__title {
   font-family: var(--tbf-font-family-display);
-  font-weight: 700;
+  font-weight: 900; /* Brother1816 Black — o mais bold da família (pedido) */
   font-size: clamp(1rem, 1.7vw, 1.4rem);
   line-height: 1.15;
   letter-spacing: -0.01em;
@@ -1194,6 +1244,232 @@
 textarea.field__input {
   resize: vertical;
   min-height: var(--tbf-space-raw-128);
+}
+
+/* =============================================================================
+   CONTACT FORM — variante minimalista tipo Typeform (só na página /contact-us)
+   Campos sem caixa: underline que acende no accent · tipografia grande · ar.
+   ============================================================================= */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-10);
+  width: 100%;
+}
+
+.contact-form .field {
+  gap: var(--tbf-space-3);
+}
+
+.contact-form .field__label {
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+.contact-form .field__input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tbf-border);
+  border-radius: 0;
+  padding: var(--tbf-space-3) 0;
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(1.35rem, 4.5vw, 1.9rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--tbf-text-primary);
+  transition: border-color var(--tbf-input-duration) var(--tbf-motion-easing-element);
+}
+
+.contact-form .field__input::placeholder {
+  color: var(--tbf-text-tertiary);
+  font-weight: 300;
+  opacity: 0.55;
+}
+
+.contact-form .field__input:focus {
+  outline: none;
+  border-bottom-color: var(--tbf-accent);
+}
+
+.contact-form .field--error .field__input {
+  border-bottom-color: var(--tbf-color-status-error);
+}
+
+.contact-form textarea.field__input {
+  min-height: var(--tbf-space-raw-96, 6rem);
+  resize: vertical;
+}
+
+.contact-form .btn {
+  align-self: flex-start;
+  margin-top: var(--tbf-space-2);
+}
+
+/* =============================================================================
+   CONSENTIMENTO LGPD — checkbox de opt-in nas capturas de e-mail
+   ============================================================================= */
+.consent-check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tbf-space-3);
+  max-width: 46ch;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--tbf-type-caption-family);
+  font-size: var(--tbf-type-caption-size-sm);
+  line-height: 1.5;
+  color: var(--tbf-text-secondary);
+}
+
+.consent-check input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  accent-color: var(--tbf-accent);
+  cursor: pointer;
+}
+
+.consent-check a {
+  color: var(--tbf-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.consent-check__error {
+  margin: 0;
+  font-family: var(--tbf-type-caption-family);
+  font-size: var(--tbf-type-caption-size-sm);
+  color: var(--tbf-color-status-error);
+}
+
+/* =============================================================================
+   COOKIE BANNER — consentimento LGPD (rodapé fixo)
+   ============================================================================= */
+.cookie-banner {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--tbf-z-toast);
+  background-color: var(--tbf-bg-primary);
+  border-top: 1px solid var(--tbf-border);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.55);
+  padding: var(--tbf-space-5) var(--tbf-grid-margin-sm) calc(var(--tbf-space-5) + env(safe-area-inset-bottom));
+}
+
+.cookie-banner__inner {
+  max-width: var(--tbf-grid-max-xl);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-5);
+}
+
+.cookie-banner__text {
+  margin: 0;
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-caption-size-sm);
+  line-height: 1.6;
+  color: var(--tbf-text-secondary);
+  max-width: 68ch;
+}
+
+.cookie-banner__link {
+  color: var(--tbf-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.cookie-banner__prefs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-3);
+  margin-top: var(--tbf-space-4);
+}
+
+.cookie-pref {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--tbf-space-3);
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-caption-size-sm);
+  line-height: 1.5;
+  color: var(--tbf-text-secondary);
+  cursor: pointer;
+}
+
+.cookie-pref strong {
+  color: var(--tbf-text-primary);
+  font-weight: 700;
+}
+
+.cookie-pref input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.1rem;
+  accent-color: var(--tbf-accent);
+  cursor: pointer;
+}
+
+.cookie-pref--locked {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.cookie-pref--locked input {
+  cursor: not-allowed;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-3);
+  align-items: stretch;
+}
+
+.cookie-banner__btn {
+  width: 100%;
+  justify-content: center;
+}
+
+.cookie-banner__prefs-toggle {
+  background: none;
+  border: none;
+  padding: var(--tbf-space-2);
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: var(--tbf-type-tag-transform);
+  color: var(--tbf-text-tertiary);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cookie-banner__prefs-toggle:hover {
+  color: var(--tbf-text-primary);
+}
+
+@media (min-width: 768px) {
+  .cookie-banner__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--tbf-space-8);
+  }
+  .cookie-banner__actions {
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .cookie-banner__btn {
+    width: auto;
+  }
 }
 
 @keyframes field-shake {
@@ -2153,10 +2429,11 @@ button.tag:focus-visible {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -3px;
+  bottom: -4px;
   width: 100%;
-  height: 1px;
-  background-color: currentColor;
+  height: 0;
+  /* Pontilhado (pedido) — em vez de traço contínuo. Pontos = currentColor. */
+  border-bottom: 2px dotted currentColor;
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);

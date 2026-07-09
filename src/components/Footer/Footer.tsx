@@ -142,6 +142,15 @@ export function Footer() {
           ))}
         </div>
 
+        {/* Cidades sob gestão .TBF. — logo acima da barra de copyright, em todas
+            as páginas (pedido). Evidencia onde a .TBF. faz gestão. */}
+        <div className="footer__cities">
+          <p className="footer__cities-label">Gestão .TBF.</p>
+          <p className="footer__cities-list">
+            São Paulo, SP. <span aria-hidden="true">|</span> Goiânia, GO. <span aria-hidden="true">|</span> Salvador, BA.
+          </p>
+        </div>
+
         {/* Copyright + version */}
         <div className="footer__copyright">
           <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>

@@ -1,9 +1,24 @@
 'use client'
 
+import { useState } from 'react'
+import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 export function MailingList() {
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
+  const [consent, setConsent] = useState(false)
+  const [consentError, setConsentError] = useState(false)
+
+  // Consentimento LGPD obrigatório antes do envio.
+  function handleSubmit(e: React.FormEvent) {
+    if (!consent) {
+      e.preventDefault()
+      setConsentError(true)
+      return
+    }
+    setConsentError(false)
+    submit(e, { consent: true })
+  }
 
   return (
     <section
@@ -65,7 +80,7 @@ export function MailingList() {
           </p>
         ) : (
           <form
-            onSubmit={submit}
+            onSubmit={handleSubmit}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -96,6 +111,25 @@ export function MailingList() {
                 boxSizing: 'border-box',
               }}
             />
+
+            {/* Consentimento LGPD */}
+            <label className="consent-check">
+              <input
+                type="checkbox"
+                checked={consent}
+                onChange={(e) => { setConsent(e.target.checked); if (e.target.checked) setConsentError(false) }}
+                aria-invalid={consentError}
+              />
+              <span>
+                Você concorda em receber nossas comunicações.{' '}
+                <Link href="/legal/privacy">Saiba mais em nossa política de privacidade.</Link>
+              </span>
+            </label>
+            {consentError && (
+              <p role="alert" className="consent-check__error">
+                Confirme o consentimento para continuar.
+              </p>
+            )}
             <button
               type="submit"
               disabled={status === 'loading'}

@@ -62,35 +62,20 @@ export default function ContactUsPage() {
         </div>
       </section>
 
-      {/* ─── FORM ─────────────────────────────────────────────────────────── */}
+      {/* ─── FORM — coluna única, enxuta e fluída (estilo Typeform) ────────── */}
       <section className="section container" style={{ paddingBottom: 'var(--tbf-space-24)' }}>
-        <div className="layout-b" style={{ alignItems: 'start' }}>
-          <div>
-            <span
-              style={{
-                display: 'block',
-                fontFamily: 'var(--tbf-type-micro-family)',
-                fontSize: 'var(--tbf-type-micro-size)',
-                fontWeight: 600,
-                letterSpacing: '0.12em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)',
-                marginBottom: 'var(--tbf-space-4)',
-              }}
-            >
-              The transmission
-            </span>
-            <p
-              style={{
-                fontFamily: 'var(--tbf-type-body-family)',
-                fontSize: 'var(--tbf-type-body-size-sm)',
-                lineHeight: 'var(--tbf-type-body-lh)',
-                color: 'rgba(255,255,255,0.7)',
-              }}
-            >
-              No filter. Write what matters — we read everything and reply when it makes sense.
-            </p>
-          </div>
+        <div style={{ maxWidth: '640px' }}>
+          <p
+            style={{
+              fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'rgba(255,255,255,0.7)',
+              marginBottom: 'var(--tbf-space-10)',
+            }}
+          >
+            No filter. Write what matters — we read everything and reply when it makes sense.
+          </p>
 
           <ContactForm />
         </div>

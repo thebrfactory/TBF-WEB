@@ -12,7 +12,7 @@ export function useNewsletterSubmit() {
   const [status, setStatus] = useState<NewsletterStatus>('idle')
   const [errorMsg, setErrorMsg] = useState('')
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: React.FormEvent, extra?: Record<string, unknown>) {
     e.preventDefault()
     setStatus('loading')
     setErrorMsg('')
@@ -21,7 +21,7 @@ export function useNewsletterSubmit() {
       const res = await fetch('/api/newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, ...extra }),
       })
       const data = await res.json()
       if (data.success) {

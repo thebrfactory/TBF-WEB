@@ -9,6 +9,13 @@ import Image from 'next/image'
 import { sanityFetch, EDITORIAL_LIST_QUERY } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
 import { EditorialGrid } from './EditorialGrid'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+
+// Vídeo de fundo do hero editorial — mesmo tratamento do hero da home.
+const EDITORIAL_VIDEO = {
+  desktop: { av1: '/videos/editorial-desktop.av1.mp4', h264: '/videos/editorial-desktop.mp4' },
+  mobile: { av1: '/videos/editorial-mobile.av1.mp4', h264: '/videos/editorial-mobile.mp4' },
+}
 
 export const metadata: Metadata = {
   title: 'Editorial',
@@ -35,73 +42,58 @@ export default async function EditorialPage() {
 
   return (
     <>
-      {/* ─── HERO / SECTION HEADER — capa editorial como fundo (estilo /labels) ─── */}
+      {/* ─── HERO / SECTION HEADER — vídeo de fundo em loop (igual à home) +
+          .TBF. SÃO PAULO ampliado e centralizado como o próprio título ─── */}
       <section
         style={{
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '56vh',
+          minHeight: '72vh',
           display: 'flex',
-          alignItems: 'flex-end',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
           paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-20))',
           paddingBottom: 'var(--tbf-space-16)',
           paddingInline: 'var(--tbf-grid-margin-sm)',
         }}
         aria-labelledby="editorial-heading"
       >
-        {/* Fundo — imagem de capa esmaecida + gradiente para blend com a página */}
+        {/* Fundo — vídeo em loop esmaecido + gradiente para blend com a página */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/editorial-feature.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 35%', opacity: 0.4 }}
+          <HeroVideo
+            sources={EDITORIAL_VIDEO}
+            poster="/images/editorial-feature.webp"
+            opacity={0.4}
           />
           <div
             style={{
               position: 'absolute',
               inset: 0,
               background:
-                'linear-gradient(to bottom, var(--tbf-bg-primary) 0%, transparent 45%, transparent 58%, var(--tbf-bg-primary) 100%)',
+                'linear-gradient(to bottom, var(--tbf-bg-primary) 0%, transparent 45%, transparent 62%, var(--tbf-bg-primary) 100%)',
             }}
           />
         </div>
 
-        <div
+        <h1
+          id="editorial-heading"
           style={{
             position: 'relative',
             zIndex: 1,
-            width: '100%',
-            maxWidth: 'var(--tbf-grid-max-xl)',
-            marginInline: 'auto',
+            margin: 0,
           }}
         >
           <Image
             src="/brand/TBF-SAO-PAULO.svg"
-            alt=".TBF. SÃO PAULO"
+            alt=".TBF. SÃO PAULO — Magazine"
             width={237}
             height={126}
             unoptimized
             priority
-            style={{ width: 'auto', height: 38, marginBottom: 'var(--tbf-space-5)' }}
+            style={{ width: 'min(78vw, 520px)', height: 'auto' }}
           />
-          <h1
-            id="editorial-heading"
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'var(--tbf-type-display-xl-size-sm)',
-              fontWeight: 'var(--tbf-type-display-xl-weight)',
-              lineHeight: 'var(--tbf-type-display-xl-lh-sm)',
-              letterSpacing: 'var(--tbf-type-display-xl-ls)',
-              color: 'var(--tbf-text-primary)',
-              textTransform: 'uppercase',
-            }}
-          >
-            Magazine
-          </h1>
-        </div>
+        </h1>
       </section>
 
       {/* ─── GRID + FILTROS (client component) ────────────────────────────── */}
