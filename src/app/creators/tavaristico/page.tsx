@@ -1,8 +1,6 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
-import { IDENTITY, DISCIPLINES, WORKS, selectedWorks } from './_data'
-import { DisciplineGrid } from './DisciplineGrid'
+import { IDENTITY, DISCIPLINES, WORKS } from './_data'
+import { MasonryGallery } from './MasonryGallery'
 import styles from './tavaristico.module.css'
 
 export const metadata: Metadata = {
@@ -12,80 +10,21 @@ export const metadata: Metadata = {
 }
 
 export default function TavaristicoPage() {
-  const selected = selectedWorks()
-
   return (
     <main className={styles.page}>
-      {/* ─── HERO ─────────────────────────────────────────────────────── */}
+      {/* ─── HEADLINE + TEXTO ─────────────────────────────────────────── */}
       <header className={`${styles.hero} container`}>
         <span className={styles.label}>Creators — Portfolio</span>
         <h1 className={styles.heroName}>{IDENTITY.name}</h1>
         <p className={styles.heroAlias}>
-          aka <b>{IDENTITY.alias}</b>
+          aka <b>{IDENTITY.alias}</b> · {IDENTITY.role}
         </p>
-        <p className={styles.heroRole}>
-          {IDENTITY.role} · represented by{' '}
-          <span className={styles.heroRepresented}>{IDENTITY.representedBy}</span>
-        </p>
+        <p className={styles.heroText}>{IDENTITY.bioEN}</p>
       </header>
 
-      {/* ─── IDENTIDADE / BIO ─────────────────────────────────────────── */}
-      <section className={`${styles.identity} container layout-b`}>
-        <div>
-          <span className={styles.label}>About</span>
-          <p className={styles.bio}>{IDENTITY.bioEN}</p>
-        </div>
-        <div>
-          <p className={`${styles.bioSub} ${IDENTITY.bioPTProvisional ? styles.prov : ''}`}>
-            {IDENTITY.bioPT}
-          </p>
-          <p className={`${styles.metaMono} ${styles.origin}`}>
-            <b>Origin</b> — {IDENTITY.origin}
-          </p>
-        </div>
-      </section>
-
-      {/* ─── SELECTED WORK — carrossel dinâmico ───────────────────────── */}
-      <section className={styles.selected}>
-        <div className={`${styles.sectionHead} container`}>
-          <span className={styles.label}>Selected Work</span>
-          <span className={styles.count}>{String(selected.length).padStart(2, '0')}</span>
-        </div>
-        <div className={styles.selCarousel}>
-          <ul className={styles.selTrack} role="list">
-            {[...selected, ...selected].map((w, i) => (
-              <li key={`${w.slug}-${i}`}>
-                <Link
-                  href={`/creators/tavaristico/works/${w.slug}`}
-                  className={styles.selSlide}
-                  aria-hidden={i >= selected.length}
-                  tabIndex={i >= selected.length ? -1 : undefined}
-                >
-                  <Image
-                    src={w.media.cover}
-                    alt={w.title}
-                    fill
-                    sizes="(min-width: 1024px) 40vw, (min-width: 768px) 52vw, 80vw"
-                  />
-                  <span className={styles.selSlideOverlay} aria-hidden="true" />
-                  <span className={styles.selSlideBody}>
-                    <span className={styles.index}>{w.index}</span>
-                    <span className={styles.selSlideTitle}>{w.title}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ─── GRADE POR DISCIPLINA ─────────────────────────────────────── */}
-      <section className={`${styles.ledger} container`} id="work">
-        <div className={styles.sectionHead}>
-          <span className={styles.label}>All Work — by discipline</span>
-          <span className={styles.count}>{String(WORKS.length).padStart(2, '0')}</span>
-        </div>
-        <DisciplineGrid works={WORKS} disciplines={DISCIPLINES} />
+      {/* ─── GALERIA PINTEREST ────────────────────────────────────────── */}
+      <section className={`${styles.worksSection} container`} id="work">
+        <MasonryGallery works={WORKS} disciplines={DISCIPLINES} />
       </section>
 
       {/* ─── CONTATO ──────────────────────────────────────────────────── */}

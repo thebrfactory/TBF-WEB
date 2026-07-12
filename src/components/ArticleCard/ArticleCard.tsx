@@ -25,9 +25,22 @@ function formatDate(dateString: string): string {
   }).format(new Date(dateString))
 }
 
+// Dimensões-fonte por proporção do card — a imagem já é pedida ao Sanity no
+// formato final (respeita o hotspot, sem crop no chute). Base ~1200px de lado
+// maior → nitidez retina no masonry (~330–430px renderizados).
+const RATIO_DIMENSIONS: Record<string, { w: number; h: number }> = {
+  '3/4': { w: 900, h: 1200 },
+  '2/3': { w: 900, h: 1350 },
+  '1/1': { w: 1100, h: 1100 },
+  '4/3': { w: 1200, h: 900 },
+  '3/2': { w: 1200, h: 800 },
+}
+
 export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
   const isFeatured = variant === 'featured'
   const cardClass = `card ${isFeatured ? 'card--featured' : 'card--standard'}`
+  const ratio = post.cardRatio ?? '3/2'
+  const dims = RATIO_DIMENSIONS[ratio] ?? RATIO_DIMENSIONS['3/2']
 
   return (
     <Link
@@ -35,26 +48,22 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
       className={cardClass}
       aria-label={post.title}
     >
-      {/* Image */}
-      <div className="card__image-wrapper">
+      {/* Image — proporção vinda do CMS (cardRatio) */}
+      <div className="card__image-wrapper" style={{ aspectRatio: ratio }}>
         {post.heroImage && (
           <Image
             className="card__image"
             src={urlFor(post.heroImage)
-              .width(isFeatured ? 1200 : 955)
-              .height(isFeatured ? 800 : 640)
+              .width(dims.w)
+              .height(dims.h)
               .fit('crop')
               .auto('format')
               .url()}
             alt={post.heroImage.alt ?? post.title}
-            width={isFeatured ? 1200 : 955}
-            height={isFeatured ? 800 : 640}
+            width={dims.w}
+            height={dims.h}
             loading="lazy"
-            sizes={
-              isFeatured
-                ? '(min-width: 1280px) 66vw, 100vw'
-                : '(min-width: 1280px) 33vw, 100vw'
-            }
+            sizes="(min-width: 768px) 33vw, 50vw"
           />
         )}
       </div>

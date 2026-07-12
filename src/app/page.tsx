@@ -152,7 +152,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="editorial-grid">
+        <div className="editorial-grid container">
           {data.featuredPost && (
             <ArticleCard post={data.featuredPost} variant="featured" />
           )}
@@ -168,22 +168,25 @@ export default async function HomePage() {
                   category: 'Editorial',
                   title: 'What about the Brazilian fashion culture?',
                   date: '01 Jun. 2026',
+                  ratio: '3/4',
                 },
                 {
                   img: '/images/thumb-02.webp',
                   category: 'Coolhunting',
                   title: 'AFTERPARTY: the feeling behind Brazilian parties',
                   date: '28 Mai. 2026',
+                  ratio: '1/1',
                 },
                 {
                   img: '/images/thumb-03.webp',
                   category: 'Fashion Film',
                   title: 'ACT I: feeling a Brazilian runway backstage',
                   date: '20 Mai. 2026',
+                  ratio: '4/3',
                 },
               ].map((mock, i) => (
                 <Link key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
-                  <div className="card__image-wrapper">
+                  <div className="card__image-wrapper" style={{ aspectRatio: mock.ratio }}>
                     <Image
                       className="card__image"
                       src={mock.img}

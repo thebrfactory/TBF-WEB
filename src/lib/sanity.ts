@@ -64,6 +64,7 @@ const POST_CARD_FIELDS = `
   category,
   bu,
   heroImage { ${IMAGE_FIELDS} },
+  cardRatio,
   publishedAt,
   featured,
   author-> {

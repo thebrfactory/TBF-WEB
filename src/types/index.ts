@@ -98,6 +98,9 @@ export interface ArticleCredit {
   handle?: string
 }
 
+// Proporção da capa na galeria masonry (home). Fonte: campo cardRatio do CMS.
+export type CardRatio = '3/4' | '2/3' | '1/1' | '4/3' | '3/2'
+
 export interface EditorialPost {
   _id: string
   _type: 'editorialPost'
@@ -109,6 +112,7 @@ export interface EditorialPost {
   category: ArticleCategory
   bu: 'tbf' | 'melfiore' | 'ruc' | 'tgf'
   heroImage: SanityImage
+  cardRatio?: CardRatio
   heroVideo?: string // Cloudflare Stream ID
   body: SanityPortableText
   bodyEn?: SanityPortableText
@@ -238,7 +242,7 @@ export interface CollectivePageProps {
 // ─── Component Props Types ───────────────────────────────────────────────────
 
 export interface ArticleCardProps {
-  post: Pick<EditorialPost, '_id' | 'title' | 'slug' | 'deck' | 'category' | 'heroImage' | 'publishedAt' | 'author' | 'tags'>
+  post: Pick<EditorialPost, '_id' | 'title' | 'slug' | 'deck' | 'category' | 'heroImage' | 'cardRatio' | 'publishedAt' | 'author' | 'tags'>
   variant?: 'featured' | 'standard'
 }
 

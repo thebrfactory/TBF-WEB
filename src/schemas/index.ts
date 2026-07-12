@@ -232,6 +232,24 @@ export const editorialPostSchema = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'cardRatio',
+      title: 'Formato do card (galeria)',
+      type: 'string',
+      description:
+        'Proporção da capa na galeria masonry (home). Escolha o formato que melhor enquadra a foto — evita corte no chute. Padrão: Paisagem (3:2).',
+      options: {
+        list: [
+          { title: 'Retrato (3:4)', value: '3/4' },
+          { title: 'Retrato alto (2:3)', value: '2/3' },
+          { title: 'Quadrado (1:1)', value: '1/1' },
+          { title: 'Paisagem (4:3)', value: '4/3' },
+          { title: 'Paisagem larga (3:2)', value: '3/2' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: '3/2',
+    }),
+    defineField({
       name: 'heroVideo',
       title: 'Cloudflare Stream ID (vídeo hero)',
       type: 'string',
