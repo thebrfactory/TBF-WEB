@@ -102,7 +102,7 @@ export function ContactForm() {
             textTransform: 'uppercase',
           }}
         >
-          — .TBF.
+          .TBF.
         </p>
       </div>
     )

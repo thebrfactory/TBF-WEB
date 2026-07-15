@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Quick Facts | .THE BRAZILIAN FACTORY.',
   description:
-    'Key facts and figures about .THE BRAZILIAN FACTORY. — founding date, labels, location and company data.',
+    'Key facts and figures about .THE BRAZILIAN FACTORY. Founding date, labels, location and company data.',
 }
 
 const TAG: CSSProperties = {
@@ -79,7 +79,7 @@ const FACTS_OVERVIEW = [
   { label: 'Founded', value: '2025' },
   { label: 'Headquartered', value: 'São Paulo, Brazil' },
   { label: 'Active Labels', value: '4' },
-  { label: 'Status', value: 'Active — Growing' },
+  { label: 'Status', value: 'Active · Growing' },
 ]
 
 const FACTS_LABELS = [
@@ -92,7 +92,7 @@ const FACTS_LABELS = [
 const FACTS_COMPANY = [
   { label: 'Legal Name', value: '.TBF. INC' },
   { label: 'CNPJ', value: '61.360.565/0001-74' },
-  { label: 'Address', value: 'R. Pamplona, 145 — Jardim Paulista\nSão Paulo — SP, 01405-100\nBrasil' },
+  { label: 'Address', value: 'R. Pamplona, 145. Jardim Paulista\nSão Paulo, SP. 01405-100\nBrasil' },
   { label: 'Website', value: 'thebrfactory.com' },
   { label: 'Main Instagram', value: '@thebrfactory' },
 ]

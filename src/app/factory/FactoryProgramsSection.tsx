@@ -208,7 +208,7 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
                             gap: 'var(--tbf-space-3)',
                           }}
                         >
-                          <span style={{ color: 'var(--tbf-accent)' }}>—</span>
+                          <span style={{ color: 'var(--tbf-accent)' }} aria-hidden="true">·</span>
                           {item}
                         </li>
                       ))}

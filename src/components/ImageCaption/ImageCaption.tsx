@@ -44,7 +44,7 @@ export function ImageCaption({
       {(image.caption || image.credit) && (
         <figcaption className="figure__caption">
           {image.caption}
-          {image.caption && image.credit && ' — '}
+          {image.caption && image.credit && ' · '}
           {image.credit}
         </figcaption>
       )}

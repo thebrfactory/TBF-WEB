@@ -110,7 +110,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             textTransform: 'uppercase',
           }}
         >
-          — .TBF.
+          .TBF.
         </p>
       </div>
     )
@@ -154,7 +154,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
                   value={ep.value}
                   checked={intent === ep.value}
                   onChange={() => setIntent(ep.value)}
-                  aria-label={`${ep.tag} — ${ep.name}`}
+                  aria-label={`${ep.tag}, ${ep.name}`}
                 />
                 <span className="intent-option__indicator" aria-hidden="true" />
                 <span className="intent-option__label">

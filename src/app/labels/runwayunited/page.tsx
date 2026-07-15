@@ -229,7 +229,7 @@ export default function RunwayUnitedPage() {
                 color: 'rgba(255,255,255,0.75)',
               }}
             >
-              Criada para documentar, produzir e amplificar a cena criativa brasileira —
+              Criada para documentar, produzir e amplificar a cena criativa brasileira,
               unindo runway, cinema e identidade cultural em uma única linguagem.
             </p>
           </div>

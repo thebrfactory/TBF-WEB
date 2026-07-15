@@ -228,7 +228,7 @@ export default function TheFioreDailyPage() {
                 color: 'rgba(255,255,255,0.75)',
               }}
             >
-              Criada para explorar a relação entre presença, corpo e intenção —
+              Criada para explorar a relação entre presença, corpo e intenção,
               transformando o cotidiano em prática consciente e cultura de cuidado.
             </p>
           </div>

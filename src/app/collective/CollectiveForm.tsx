@@ -109,7 +109,7 @@ export function CollectiveForm() {
             textTransform: 'uppercase',
           }}
         >
-          — .TBF. Collective Hotel Casino
+          .TBF. Collective Hotel Casino
         </p>
       </div>
     )

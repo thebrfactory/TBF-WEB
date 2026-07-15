@@ -105,8 +105,8 @@ export default function MediaPage() {
           </div>
           <div>
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-6)' }}>
-              All content downloaded from this page — including photography, video, brand marks
-              and typographic assets — may only be used for{' '}
+              All content downloaded from this page, including photography, video, brand marks
+              and typographic assets, may only be used for{' '}
               <strong style={{ fontWeight: 700, color: '#fff' }}>editorial purposes</strong>.
               Any other use is strictly prohibited without prior written approval from our
               communications team.

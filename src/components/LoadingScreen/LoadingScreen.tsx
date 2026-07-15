@@ -40,7 +40,7 @@ export function LoadingScreen() {
       <div className="loading-screen__glow" aria-hidden="true" />
       <Image
         src="/brand/TBF-SAO-PAULO.svg"
-        alt=".THE BRAZILIAN FACTORY. — São Paulo"
+        alt=".THE BRAZILIAN FACTORY. São Paulo"
         width={220}
         height={158}
         priority

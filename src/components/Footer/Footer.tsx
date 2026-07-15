@@ -157,7 +157,7 @@ export function Footer() {
             © {currentYear} .TBF. INC · CNPJ 61.360.565/0001-74
           </p>
           <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>
-            R. Pamplona, 145 — Jardim Paulista, São Paulo — SP, 01405-100
+            R. Pamplona, 145. Jardim Paulista, São Paulo, SP. 01405-100
           </p>
           <p className="footer__meta" style={{ margin: 0, opacity: 0.4 }}>
             {SITE_VERSION}

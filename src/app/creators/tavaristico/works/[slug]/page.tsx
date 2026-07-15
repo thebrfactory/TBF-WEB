@@ -16,9 +16,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const w = findWork(slug)
-  if (!w) return { title: 'Work — Tavarístico' }
+  if (!w) return { title: 'Work · Tavarístico' }
   return {
-    title: `${w.title} — Tavarístico`,
+    title: `${w.title} · Tavarístico`,
     description: w.summary,
   }
 }
@@ -37,7 +37,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
     <main className={styles.page}>
       <article className={`${styles.work} container`}>
         <Link href="/creators/tavaristico#work" className={styles.crumb}>
-          ← Tavarístico — Work
+          ← Tavarístico · Work
         </Link>
 
         <div className={styles.workHead}>
@@ -80,7 +80,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
           <Image src={w.media.cover} alt={w.title} fill sizes="100vw" priority />
         </div>
         {w.lowRes && (
-          <span className={styles.lowResTag}>capa preliminar — aguardando arquivo-fonte</span>
+          <span className={styles.lowResTag}>capa preliminar, aguardando arquivo-fonte</span>
         )}
 
         {gallery.length > 0 && (
@@ -89,7 +89,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               <div key={src} className={styles.galleryItem}>
                 <Image
                   src={src}
-                  alt={`${w.title} — ${idx + 1}`}
+                  alt={`${w.title} ${idx + 1}`}
                   width={1600}
                   height={1000}
                   sizes="(min-width: 768px) 50vw, 100vw"

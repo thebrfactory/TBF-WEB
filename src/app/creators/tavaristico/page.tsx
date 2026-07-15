@@ -4,9 +4,9 @@ import { MasonryGallery } from './MasonryGallery'
 import styles from './tavaristico.module.css'
 
 export const metadata: Metadata = {
-  title: 'Felipe Tavares (Tavarístico) — Portfolio',
+  title: 'Felipe Tavares (Tavarístico) · Portfolio',
   description:
-    'Felipe Tavares — aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
+    'Felipe Tavares, aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
 }
 
 export default function TavaristicoPage() {
@@ -14,7 +14,7 @@ export default function TavaristicoPage() {
     <main className={styles.page}>
       {/* ─── HEADLINE + TEXTO ─────────────────────────────────────────── */}
       <header className={`${styles.hero} container`}>
-        <span className={styles.label}>Creators — Portfolio</span>
+        <span className={styles.label}>Creators · Portfolio</span>
         <h1 className={styles.heroName}>{IDENTITY.name}</h1>
         <p className={styles.heroAlias}>
           aka <b>{IDENTITY.alias}</b> · {IDENTITY.role}

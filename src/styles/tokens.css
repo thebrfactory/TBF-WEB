@@ -121,9 +121,9 @@
   --tbf-duration-raw-40s:  40s;
 
   /* ─── 1.5 Easing Primitives ─── */
-  --tbf-easing-raw-ease-out:    ease-out;
-  --tbf-easing-raw-ease-in:     ease-in;
-  --tbf-easing-raw-ease-in-out: ease-in-out;
+  --tbf-easing-raw-ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --tbf-easing-raw-ease-in:     ease-in;  /* nativo de propósito: só alimenta SAÍDAS */
+  --tbf-easing-raw-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --tbf-easing-raw-linear:      linear;
   --tbf-easing-raw-drawer:      cubic-bezier(0.25, 0.46, 0.45, 0.94);
 

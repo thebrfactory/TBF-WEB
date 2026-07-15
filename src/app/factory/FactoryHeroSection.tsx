@@ -50,7 +50,7 @@ export function FactoryHeroSection() {
             marginBottom: 'var(--tbf-space-6)',
           }}
         >
-          .TGF. — The Growth Factory
+          .TGF. · The Growth Factory
         </p>
 
         <h1

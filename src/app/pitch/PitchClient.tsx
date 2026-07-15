@@ -252,13 +252,13 @@ export function PitchClient() {
 
         <PitchReveal delay={200}>
           <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.65)', maxWidth: '55ch', marginBottom: '1.5rem' }}>
-            Brazil is the 6th largest country by population, top 10 economy worldwide, and one of the most creative nations on earth. But Brazilian culture exports through algorithms — not institutions.
+            Brazil is the 6th largest country by population, top 10 economy worldwide, and one of the most creative nations on earth. But Brazilian culture exports through algorithms, not institutions.
           </p>
         </PitchReveal>
 
         <PitchReveal delay={300}>
           <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.45)', maxWidth: '55ch', fontStyle: 'italic' }}>
-            O Brasil é o 6º país em população, top 10 em economia, e uma das nações mais criativas do planeta. Mas a cultura brasileira se exporta pelo algoritmo — não pelas instituições.
+            O Brasil é o 6º país em população, top 10 em economia, e uma das nações mais criativas do planeta. Mas a cultura brasileira se exporta pelo algoritmo, não pelas instituições.
           </p>
         </PitchReveal>
 
@@ -307,7 +307,7 @@ export function PitchClient() {
 
         <PitchReveal delay={200}>
           <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.65)', maxWidth: '60ch', marginBottom: '3rem' }}>
-            .TBF. is not a magazine. Not an agency. Not an app. It's a cultural infrastructure — an editorial system, a prestige engine, a growth machine — all operating under one identity, one aesthetic, one frequency.
+            .TBF. is not a magazine. Not an agency. Not an app. It's a cultural infrastructure: an editorial system, a prestige engine, a growth machine, all operating under one identity, one aesthetic, one frequency.
           </p>
         </PitchReveal>
 
@@ -444,12 +444,12 @@ export function PitchClient() {
             {
               stat: '215M+',
               label: 'Brazilians globally',
-              sub: 'Brazil + diaspora — one of the most culturally influential populations on earth',
+              sub: 'Brazil + diaspora. One of the most culturally influential populations on earth',
             },
             {
               stat: '$180B+',
               label: 'Brazilian creative economy',
-              sub: 'Fashion, music, design, content — growing 8% YoY',
+              sub: 'Fashion, music, design, content. Growing 8% YoY',
             },
             {
               stat: '1st',
@@ -498,17 +498,17 @@ export function PitchClient() {
               stage: 'Building',
             },
             {
-              label: '.MELFIORE. — Wellness',
+              label: '.MELFIORE. · Wellness',
               model: 'Products · Retreats · Digital rituals',
               stage: 'Building',
             },
             {
-              label: '.RUC. — Fashion',
+              label: '.RUC. · Fashion',
               model: 'Event production · Film commissions · SPFW',
               stage: 'Active',
             },
             {
-              label: '.TGF. — Growth',
+              label: '.TGF. · Growth',
               model: 'Consulting retainers · Courses · B2B',
               stage: 'Revenue',
               highlight: true,
@@ -581,13 +581,13 @@ export function PitchClient() {
 
           <PitchReveal delay={250}>
             <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.6)', maxWidth: '50ch', margin: '0 auto 1.5rem' }}>
-              In 5 years, .THE BRAZILIAN FACTORY. is the reference point for Brazilian culture globally — a multi-label infrastructure with editorial authority, brand equity, and cultural IP.
+              In 5 years, .THE BRAZILIAN FACTORY. is the reference point for Brazilian culture globally: a multi-label infrastructure with editorial authority, brand equity, and cultural IP.
             </p>
           </PitchReveal>
 
           <PitchReveal delay={350}>
             <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.75rem, 2vw, 0.9rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.35)', maxWidth: '50ch', margin: '0 auto', fontStyle: 'italic' }}>
-              Em 5 anos, a .TBF. é o ponto de referência para a cultura brasileira no mundo — uma infraestrutura multi-label com autoridade editorial, brand equity e IP cultural.
+              Em 5 anos, a .TBF. é o ponto de referência para a cultura brasileira no mundo: uma infraestrutura multi-label com autoridade editorial, brand equity e IP cultural.
             </p>
           </PitchReveal>
         </div>
@@ -636,7 +636,7 @@ export function PitchClient() {
                 Tavarístico
               </p>
               <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', lineHeight: 1.7, color: 'rgba(240,237,230,0.6)', maxWidth: '50ch' }}>
-                Creative director, entrepreneur, and cultural operator based in São Paulo. Founder of the TBF universe — building the infrastructure Brazilian culture always deserved.
+                Creative director, entrepreneur, and cultural operator based in São Paulo. Founder of the .TBF. universe, building the infrastructure Brazilian culture always deserved.
               </p>
             </div>
           </div>

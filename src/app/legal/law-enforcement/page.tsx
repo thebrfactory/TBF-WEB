@@ -161,7 +161,7 @@ export default function LawEnforcementPage() {
           <a href="mailto:legal@thebrfactory.com" style={{ color: '#fff', fontWeight: 700 }}>
             legal@thebrfactory.com
           </a>{' '}
-          with the subject line <span style={B}>"EMERGENCY — IMMINENTE RISCO DE VIDA"</span>.
+          with the subject line <span style={B}>"EMERGENCY: IMMINENTE RISCO DE VIDA"</span>.
           Include the requesting officer's name, badge number, agency and direct contact.
           We cannot guarantee a response time for emergency requests but will review them
           as expeditiously as possible.
@@ -194,9 +194,9 @@ export default function LawEnforcementPage() {
           </a>
         </p>
         <p style={BODY}>
-          .TBF. INC — CNPJ 61.360.565/0001-74<br />
-          R. Pamplona, 145 — Jardim Paulista<br />
-          São Paulo — SP, 01405-100 · Brasil
+          .TBF. INC · CNPJ 61.360.565/0001-74<br />
+          R. Pamplona, 145. Jardim Paulista<br />
+          São Paulo, SP. 01405-100 · Brasil
         </p>
       </div>
     </div>

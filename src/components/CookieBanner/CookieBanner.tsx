@@ -84,7 +84,7 @@ export function CookieBanner() {
               <label className="cookie-pref cookie-pref--locked">
                 <input type="checkbox" checked disabled aria-label="Cookies necessários (sempre ativos)" />
                 <span>
-                  <strong>Necessários</strong> — essenciais para o funcionamento do site. Sempre ativos.
+                  <strong>Necessários</strong>: essenciais para o funcionamento do site. Sempre ativos.
                 </span>
               </label>
               <label className="cookie-pref">
@@ -94,7 +94,7 @@ export function CookieBanner() {
                   onChange={(e) => setAnalytics(e.target.checked)}
                 />
                 <span>
-                  <strong>Analytics</strong> — nos ajudam a entender como o site é usado.
+                  <strong>Analytics</strong>: nos ajudam a entender como o site é usado.
                 </span>
               </label>
               <label className="cookie-pref">
@@ -104,7 +104,7 @@ export function CookieBanner() {
                   onChange={(e) => setMarketing(e.target.checked)}
                 />
                 <span>
-                  <strong>Marketing</strong> — personalizam conteúdo e comunicações.
+                  <strong>Marketing</strong>: personalizam conteúdo e comunicações.
                 </span>
               </label>
             </div>

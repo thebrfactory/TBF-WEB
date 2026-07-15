@@ -101,7 +101,7 @@ export default function PressRoomPage() {
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
               <span style={B800}>.THE BRAZILIAN FACTORY.</span> is a multi-label creative company
               born in São Paulo. We operate at the intersection of editorial, fashion, wellness,
-              lifestyle and growth — producing content, communities and creative work that reflects
+              lifestyle and growth, producing content, communities and creative work that reflects
               the depth and ambition of Brazilian culture.
             </p>
             <p style={BODY}>

@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Careers | .THE BRAZILIAN FACTORY.',
   description:
-    'Join the team building .THE BRAZILIAN FACTORY. — a creative company at the intersection of culture, fashion, wellness and growth.',
+    'Join the team building .THE BRAZILIAN FACTORY. A creative company at the intersection of culture, fashion, wellness and growth.',
 }
 
 const TAG: CSSProperties = {
@@ -76,7 +76,7 @@ const WHAT_WE_LOOK_FOR = [
   },
   {
     trait: 'Deep craft',
-    desc: 'Whatever your discipline — writing, design, strategy, code — we expect mastery.',
+    desc: 'Whatever your discipline: writing, design, strategy, code. We expect mastery.',
   },
   {
     trait: 'Cultural sensitivity',
@@ -100,7 +100,7 @@ export default function CareersPage() {
           <h1 style={TITLE}>Build With Us.</h1>
           <p style={DECK}>
             <strong style={{ fontWeight: 800 }}>.THE BRAZILIAN FACTORY.</strong> is looking for
-            people who believe culture is the most powerful business — and are ready to prove it.
+            people who believe culture is the most powerful business, and are ready to prove it.
           </p>
         </div>
       </section>
@@ -117,7 +117,7 @@ export default function CareersPage() {
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
               We are a lean team building something with genuine cultural ambition. There is no
               bureaucracy, no committee approval for every small decision. If you join, you will
-              have real ownership and real impact — from day one.
+              have real ownership and real impact, from day one.
             </p>
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
               We are São Paulo-based and remote-friendly. We work across editorial, fashion,
@@ -176,7 +176,7 @@ export default function CareersPage() {
           </div>
           <div>
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-6)' }}>
-              We do not always have a formal listing open — but we are always looking for
+              We do not always have a formal listing open, but we are always looking for
               exceptional people. If you have a perspective on what you would build here and
               why it would matter, send us a message.
             </p>

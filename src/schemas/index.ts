@@ -236,7 +236,7 @@ export const editorialPostSchema = defineType({
       title: 'Formato do card (galeria)',
       type: 'string',
       description:
-        'Proporção da capa na galeria masonry (home). Escolha o formato que melhor enquadra a foto — evita corte no chute. Padrão: Paisagem (3:2).',
+        'Proporção da capa na galeria masonry (home). Escolha o formato que melhor enquadra a foto, evita corte no chute. Padrão: Paisagem (3:2).',
       options: {
         list: [
           { title: 'Retrato (3:4)', value: '3/4' },
@@ -253,7 +253,7 @@ export const editorialPostSchema = defineType({
       name: 'heroVideo',
       title: 'Cloudflare Stream ID (vídeo hero)',
       type: 'string',
-      description: 'ID do Cloudflare Stream — nunca URL YouTube',
+      description: 'ID do Cloudflare Stream. Nunca URL YouTube',
     }),
     defineField({
       name: 'body',
@@ -504,7 +504,7 @@ export const fashionFilmSchema = defineType({
       name: 'cloudflareStreamId',
       title: 'Cloudflare Stream ID',
       type: 'string',
-      description: 'ID do Cloudflare Stream — NUNCA YouTube',
+      description: 'ID do Cloudflare Stream. NUNCA YouTube',
     }),
     defineField({
       name: 'thumbnailImage',

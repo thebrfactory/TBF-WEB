@@ -20,7 +20,7 @@ const EDITORIAL_VIDEO = {
 export const metadata: Metadata = {
   title: 'Editorial',
   description:
-    'Arquivo editorial da .THE BRAZILIAN FACTORY. — Moda, cultura, manifesto e coolhunting de São Paulo para o mundo.',
+    'Arquivo editorial da .THE BRAZILIAN FACTORY. Moda, cultura, manifesto e coolhunting de São Paulo para o mundo.',
   openGraph: {
     title: 'Editorial | .THE BRAZILIAN FACTORY.',
     description:
@@ -86,7 +86,7 @@ export default async function EditorialPage() {
         >
           <Image
             src="/brand/TBF-SAO-PAULO.svg"
-            alt=".TBF. SÃO PAULO — Magazine"
+            alt=".TBF. SÃO PAULO · Magazine"
             width={237}
             height={126}
             unoptimized

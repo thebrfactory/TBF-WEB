@@ -29,12 +29,12 @@ const FRAGMENTS_PT = [
   },
   {
     key: 'f02',
-    text: 'É uma sede digital de uma infraestrutura cultural. Um ponto de gravidade. Um sistema de prestígio operando como publicação, manifesto, plataforma de autoridade e ponto de encontro para agentes criativos que já sabem quem são — e estão procurando onde pertencer.',
+    text: 'É uma sede digital de uma infraestrutura cultural. Um ponto de gravidade. Um sistema de prestígio operando como publicação, manifesto, plataforma de autoridade e ponto de encontro para agentes criativos que já sabem quem são, e estão procurando onde pertencer.',
     emphasis: false,
   },
   {
     key: 'f03',
-    text: 'A gente não copia Paris — imprime por cima.',
+    text: 'A gente não copia Paris, imprime por cima.',
     emphasis: true,
   },
   {
@@ -54,12 +54,12 @@ const FRAGMENTS_PT = [
   },
   {
     key: 'f07',
-    text: 'Mais silêncio que explicação — o espaço em branco fala.',
+    text: 'Mais silêncio que explicação. O espaço em branco fala.',
     emphasis: true,
   },
   {
     key: 'f08',
-    text: 'AESTHETIKA (n.) — A coded system of perception. The invisible syntax of presence, form and resonance. A field where frequency becomes identity, and beauty is a consequence, not the goal.',
+    text: 'AESTHETIKA (n.): A coded system of perception. The invisible syntax of presence, form and resonance. A field where frequency becomes identity, and beauty is a consequence, not the goal.',
     emphasis: false,
     isAesthetika: true,
   },
@@ -70,7 +70,7 @@ const FRAGMENTS_PT = [
   },
   {
     key: 'f10',
-    text: 'Quando alguém chegar em thebrfactory.com e sentir que está entrando em algum lugar — não apenas navegando — o trabalho estará feito.',
+    text: 'Quando alguém chegar em thebrfactory.com e sentir que está entrando em algum lugar, não apenas navegando, o trabalho estará feito.',
     emphasis: false,
   },
   {
@@ -89,12 +89,12 @@ const FRAGMENTS_EN = [
   },
   {
     key: 'en02',
-    text: 'It is the digital headquarters of a cultural infrastructure. A center of gravity. A prestige system operating as publication, manifesto, authority platform and meeting point for creative agents who already know who they are — and are looking for where to belong.',
+    text: 'It is the digital headquarters of a cultural infrastructure. A center of gravity. A prestige system operating as publication, manifesto, authority platform and meeting point for creative agents who already know who they are, and are looking for where to belong.',
     emphasis: false,
   },
   {
     key: 'en03',
-    text: "We don't copy Paris — we print on top.",
+    text: "We don't copy Paris, we print on top.",
     emphasis: true,
   },
   {
@@ -114,7 +114,7 @@ const FRAGMENTS_EN = [
   },
   {
     key: 'en07',
-    text: 'More silence than explanation — the white space speaks.',
+    text: 'More silence than explanation. The white space speaks.',
     emphasis: true,
   },
   {
@@ -154,7 +154,7 @@ export default function ManifestoPage() {
               marginBottom: 'var(--tbf-space-6)',
             }}
           >
-            .TBF. inc — Documento Fundador
+            .TBF. inc · Documento Fundador
           </p>
           <h1
             style={{
@@ -347,7 +347,7 @@ export default function ManifestoPage() {
                   marginBottom: 'var(--tbf-space-32)',
                 }}
               >
-                — .TBF. inc · São Paulo, 2025
+                .TBF. inc · São Paulo, 2025
               </p>
             </div>
           </div>

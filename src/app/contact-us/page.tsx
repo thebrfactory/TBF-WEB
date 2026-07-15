@@ -4,7 +4,7 @@ import { ContactForm } from './ContactForm'
 export const metadata: Metadata = {
   title: 'Contact Us',
   description:
-    "Let's make brave work for your brand. Open a channel with .THE BRAZILIAN FACTORY. — São Paulo, Brazil.",
+    "Let's make brave work for your brand. Open a channel with .THE BRAZILIAN FACTORY. São Paulo, Brazil.",
 }
 
 export default function ContactUsPage() {
@@ -56,7 +56,7 @@ export default function ContactUsPage() {
             }}
           >
             Tell us what you&apos;re building. Brands, press, collaborations and the
-            unexpected — <strong style={{ fontWeight: 800 }}>.TBF.</strong> opens the channel
+            unexpected. <strong style={{ fontWeight: 800 }}>.TBF.</strong> opens the channel
             from São Paulo to the world.
           </p>
         </div>
@@ -74,7 +74,7 @@ export default function ContactUsPage() {
               marginBottom: 'var(--tbf-space-10)',
             }}
           >
-            No filter. Write what matters — we read everything and reply when it makes sense.
+            No filter. Write what matters. We read everything and reply when it makes sense.
           </p>
 
           <ContactForm />

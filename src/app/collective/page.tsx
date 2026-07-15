@@ -13,7 +13,7 @@ import { CollectiveForm } from './CollectiveForm'
 export const metadata: Metadata = {
   title: 'Collective Hotel Casino',
   description:
-    'Collective Hotel Casino — somente para artistas e agentes de mudança. Candidature-se ao coletivo da .THE BRAZILIAN FACTORY.',
+    'Collective Hotel Casino. Somente para artistas e agentes de mudança. Candidature-se ao coletivo da .THE BRAZILIAN FACTORY.',
   openGraph: {
     title: 'Collective Hotel Casino | .THE BRAZILIAN FACTORY.',
     description: 'Only for artists & changemakers.',

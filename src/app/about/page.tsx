@@ -147,17 +147,17 @@ export default function AboutPage() {
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
               <span style={B800}>.THE BRAZILIAN FACTORY.</span> is a multi-label creative company
               founded in 2025 in São Paulo, Brazil. We operate at the intersection of editorial,
-              fashion, wellness, lifestyle and business growth — creating content, communities
+              fashion, wellness, lifestyle and business growth, creating content, communities
               and brands that carry cultural weight.
             </p>
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
-              We are not a media company. We are not an agency. We are a creative ecosystem —
+              We are not a media company. We are not an agency. We are a creative ecosystem:
               a collection of labels, each with its own identity, audience and purpose,
               united by a shared commitment to craft and culture.
             </p>
             <p style={BODY}>
               Everything we build is intentional. Every label, every story, every collaboration
-              exists because it adds something real to the culture — not because it was convenient
+              exists because it adds something real to the culture, not because it was convenient
               or commercially safe.
             </p>
           </div>

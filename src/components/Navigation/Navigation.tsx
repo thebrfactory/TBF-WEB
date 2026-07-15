@@ -162,10 +162,20 @@ export function Navigation() {
   return (
     <>
       <header className={navClasses} role="banner">
-        {/* Left: HOME */}
+        {/* Left: abaixo de 1024px o nav de desktop (com Magazine) some, então o
+            slot vira MAG → /editorial; a partir de 1024px volta a ser Home,
+            porque o Magazine já está na lista de links. Duas classes CSS
+            alternam por breakpoint (sem JS/matchMedia, evita hydration mismatch). */}
+        <Link
+          href="/editorial"
+          className={`${styles.nav__link} ${styles['nav__left--mobile']}`}
+          aria-current={pathname === '/editorial' ? 'page' : undefined}
+        >
+          MAG
+        </Link>
         <Link
           href="/"
-          className={styles.nav__link}
+          className={`${styles.nav__link} ${styles['nav__left--desktop']}`}
           aria-current={pathname === '/' ? 'page' : undefined}
         >
           Home

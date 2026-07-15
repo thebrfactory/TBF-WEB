@@ -1351,37 +1351,53 @@ textarea.field__input {
    ============================================================================= */
 .cookie-banner {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  bottom: calc(var(--tbf-space-4) + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(420px, calc(100vw - var(--tbf-space-8)));
   z-index: var(--tbf-z-toast);
   background-color: var(--tbf-bg-primary);
-  border-top: 1px solid var(--tbf-border);
-  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.55);
-  padding: var(--tbf-space-5) var(--tbf-grid-margin-sm) calc(var(--tbf-space-5) + env(safe-area-inset-bottom));
+  border: 1px solid var(--tbf-border);
+  border-radius: 18px;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.85),
+    0 12px 32px rgba(0, 0, 0, 0.7),
+    0 2px 8px rgba(0, 0, 0, 0.6);
+  padding: var(--tbf-space-6);
+}
+
+/* Desktop: ancora o card no canto inferior esquerdo. Centralizado ele cai em cima
+   do logotipo do hero da home (que é centralizado) e parte a marca no meio.
+   No mobile o card é quase da largura da tela, então centralizado não colide. */
+@media (min-width: 768px) {
+  .cookie-banner {
+    left: var(--tbf-space-6);
+    transform: none;
+  }
 }
 
 .cookie-banner__inner {
-  max-width: var(--tbf-grid-max-xl);
-  margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--tbf-space-5);
+  gap: var(--tbf-space-4);
 }
 
 .cookie-banner__text {
   margin: 0;
   font-family: var(--tbf-type-body-family);
-  font-size: var(--tbf-type-caption-size-sm);
-  line-height: 1.6;
+  font-size: var(--tbf-type-micro-size);
+  line-height: 1.55;
   color: var(--tbf-text-secondary);
-  max-width: 68ch;
 }
 
 .cookie-banner__link {
-  color: var(--tbf-accent);
+  color: var(--tbf-text-secondary);
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+.cookie-banner__link:hover {
+  color: var(--tbf-text-primary);
 }
 
 .cookie-banner__prefs {
@@ -1455,22 +1471,8 @@ textarea.field__input {
   color: var(--tbf-text-primary);
 }
 
-@media (min-width: 768px) {
-  .cookie-banner__inner {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--tbf-space-8);
-  }
-  .cookie-banner__actions {
-    flex-direction: row;
-    align-items: center;
-    flex-shrink: 0;
-  }
-  .cookie-banner__btn {
-    width: auto;
-  }
-}
+/* Card flutuante de 420px em todos os viewports: botões sempre empilhados
+   (a row do desktop antigo era pensada pra barra full-width, aqui espremeria). */
 
 @keyframes field-shake {
   0%   { transform: translateX(0); }
@@ -2216,9 +2218,10 @@ button.tag:focus-visible {
    EDITORIAL GRID
    ============================================================================= */
 
-/* Homepage "Magazine" — galeria masonry estilo Pinterest (escopada à home;
-   o /editorial mantém sua própria grade). Cantos arredondados escopados aqui
-   via --home-card-radius, sem alterar o design system global (cantos retos). */
+/* Galeria masonry estilo Pinterest. Classe compartilhada pela home ("Magazine")
+   e por /editorial (arquivo completo) — as duas usam .editorial-grid, não são
+   grades separadas. Cantos arredondados escopados aqui via --home-card-radius,
+   sem alterar o design system global (cantos retos). */
 .editorial-grid {
   --home-card-radius: 20px;
   column-count: 2;

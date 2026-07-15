@@ -32,6 +32,28 @@
   color: var(--tbf-accent);
 }
 
+/* Slot esquerdo do header: abaixo de 1024px mostra MAG (/editorial), pois o
+   .nav__links de desktop (com Magazine) só existe a partir de 1024px; acima
+   disso volta a ser Home. Breakpoint 1024px, não 768px (.br-mobile-only /
+   .br-desktop-only não servem aqui: deixariam 768-1023px sem acesso ao Magazine). */
+.nav__left--mobile {
+  display: inline;
+}
+
+.nav__left--desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav__left--mobile {
+    display: none;
+  }
+
+  .nav__left--desktop {
+    display: inline;
+  }
+}
+
 .nav__burger {
   composes: nav__burger from global;
 }

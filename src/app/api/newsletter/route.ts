@@ -109,10 +109,10 @@ export async function POST(request: NextRequest) {
       if (process.env.BREVO_TEMPLATE_ID) {
         tasks.push(sendBrevoWelcomeEmail(email))
       } else {
-        console.info('[newsletter] BREVO_TEMPLATE_ID ausente — welcome não enviado:', email)
+        console.info('[newsletter] BREVO_TEMPLATE_ID ausente, welcome não enviado:', email)
       }
     } else {
-      console.info('[newsletter] Brevo dev mode — contato não sincronizado:', email)
+      console.info('[newsletter] Brevo dev mode, contato não sincronizado:', email)
     }
 
     await Promise.all(tasks)

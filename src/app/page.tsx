@@ -4,7 +4,6 @@
 // =============================================================================
 
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { sanityFetch, HOMEPAGE_QUERY } from '@/lib/sanity'
 import type { HomePageProps } from '@/types'
@@ -164,21 +163,18 @@ export default async function HomePage() {
             <>
               {[
                 {
-                  img: '/images/thumb-01.webp',
                   category: 'Editorial',
                   title: 'What about the Brazilian fashion culture?',
                   date: '01 Jun. 2026',
                   ratio: '3/4',
                 },
                 {
-                  img: '/images/thumb-02.webp',
                   category: 'Coolhunting',
                   title: 'AFTERPARTY: the feeling behind Brazilian parties',
                   date: '28 Mai. 2026',
                   ratio: '1/1',
                 },
                 {
-                  img: '/images/thumb-03.webp',
                   category: 'Fashion Film',
                   title: 'ACT I: feeling a Brazilian runway backstage',
                   date: '20 Mai. 2026',
@@ -186,16 +182,14 @@ export default async function HomePage() {
                 },
               ].map((mock, i) => (
                 <Link key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
-                  <div className="card__image-wrapper" style={{ aspectRatio: mock.ratio }}>
-                    <Image
-                      className="card__image"
-                      src={mock.img}
-                      alt=""
-                      width={955}
-                      height={640}
-                      sizes="(min-width:768px) 50vw, 100vw"
-                    />
-                  </div>
+                  {/* Placeholder/mock: sem imagem real (não existe matéria de
+                      verdade por trás do link). Bloco chapado em parchment;
+                      post real do CMS passa pelo ArticleCard, que mostra a
+                      imagem de verdade (ver spec). */}
+                  <div
+                    className="card__image-wrapper"
+                    style={{ aspectRatio: mock.ratio, backgroundColor: 'var(--tbf-color-parchment)' }}
+                  />
                   <div className="card__content">
                     <div className="card__tags">
                       <span className="tag tag--category">{mock.category}</span>
@@ -279,7 +273,7 @@ export default async function HomePage() {
               fontWeight: 300,
               fontStyle: 'italic',
               lineHeight: 1.6,
-              color: 'rgba(240, 237, 230, 0.72)',
+              color: 'color-mix(in srgb, var(--tbf-color-parchment) 72%, transparent)',
               marginBottom: 'var(--tbf-space-8)',
             }}
           >
@@ -292,12 +286,12 @@ export default async function HomePage() {
               fontSize: 'clamp(0.8rem, 1.8vw, 1rem)',
               letterSpacing: '0.1em',
               lineHeight: 1.5,
-              color: '#ffffff',
+              color: 'var(--tbf-text-primary)',
               textTransform: 'uppercase',
               fontStyle: 'normal',
             }}
           >
-            — Oswald de Andrade,{' '}<br className="br-mobile-only" />do grupo modernista,{' '}<br className="br-mobile-only" />1922,{' '}<br className="br-mobile-only" />São Paulo, SP.
+            Oswald de Andrade,{' '}<br className="br-mobile-only" />do grupo modernista,{' '}<br className="br-mobile-only" />1922,{' '}<br className="br-mobile-only" />São Paulo, SP.
           </cite>
         </div>
       </section>
@@ -362,7 +356,7 @@ export default async function HomePage() {
                 fontStyle: 'italic',
               }}
             >
-              We don't copy Paris — we print over it. / A gente não copia Paris — imprime por cima.
+              We don't copy Paris, we print over it. / A gente não copia Paris, imprime por cima.
             </p>
 
             <Link

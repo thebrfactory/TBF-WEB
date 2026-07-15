@@ -11,7 +11,7 @@ import { PitchClient } from './PitchClient'
 export const metadata: Metadata = {
   title: 'Pitch',
   description:
-    '.THE BRAZILIAN FACTORY. — The Brazilian Cultural Infrastructure. Pitch deck for investors & partners.',
+    '.THE BRAZILIAN FACTORY. The Brazilian Cultural Infrastructure. Pitch deck for investors & partners.',
   robots: { index: false, follow: false },
 }
 

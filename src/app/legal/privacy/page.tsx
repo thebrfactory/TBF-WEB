@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Privacy Policy | .THE BRAZILIAN FACTORY.',
   description:
-    'Privacy Policy for .THE BRAZILIAN FACTORY. digital properties. Compliant with Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018).',
+    'Privacy Policy for .THE BRAZILIAN FACTORY. digital properties. Compliant with Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018).',
 }
 
 const LEGAL_TAG: CSSProperties = {
@@ -79,16 +79,16 @@ export default function PrivacyPage() {
         </p>
         <p style={BODY}>
           We are committed to protecting your privacy in accordance with the{' '}
-          <span style={B}>Lei Geral de Proteção de Dados (LGPD — Lei 13.709/2018)</span> and
+          <span style={B}>Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018)</span> and
           other applicable data protection laws.
         </p>
 
         <h2 style={H2}>1. Data We Collect</h2>
         <p style={BODY}>
-          We may collect the following categories of personal data: (a) <span style={B}>Identity data</span> —
+          We may collect the following categories of personal data: (a) <span style={B}>Identity data</span>:
           name, email address, when voluntarily provided via contact forms or newsletter subscriptions;
-          (b) <span style={B}>Usage data</span> — IP address, browser type, pages visited, time on page,
-          referring URLs, collected automatically through analytics tools; (c) <span style={B}>Communications</span> —
+          (b) <span style={B}>Usage data</span>: IP address, browser type, pages visited, time on page,
+          referring URLs, collected automatically through analytics tools; (c) <span style={B}>Communications</span>:
           content of messages you send us via email or contact forms.
         </p>
         <p style={BODY}>
@@ -98,9 +98,9 @@ export default function PrivacyPage() {
 
         <h2 style={H2}>2. Legal Basis for Processing (LGPD art. 7)</h2>
         <p style={BODY}>
-          We process your personal data on the following legal bases: (a) <span style={B}>Consent</span> —
-          when you subscribe to our newsletter or submit a contact form; (b) <span style={B}>Legitimate interest</span> —
-          for analytics, site performance and fraud prevention; (c) <span style={B}>Legal obligation</span> —
+          We process your personal data on the following legal bases: (a) <span style={B}>Consent</span>:
+          when you subscribe to our newsletter or submit a contact form; (b) <span style={B}>Legitimate interest</span>:
+          for analytics, site performance and fraud prevention; (c) <span style={B}>Legal obligation</span>:
           when required by applicable Brazilian law.
         </p>
 
@@ -185,9 +185,9 @@ export default function PrivacyPage() {
           </a>
         </p>
         <p style={{ ...BODY }}>
-          .TBF. INC — CNPJ 61.360.565/0001-74<br />
-          R. Pamplona, 145 — Jardim Paulista<br />
-          São Paulo — SP, 01405-100 · Brasil
+          .TBF. INC · CNPJ 61.360.565/0001-74<br />
+          R. Pamplona, 145. Jardim Paulista<br />
+          São Paulo, SP. 01405-100 · Brasil
         </p>
       </div>
     </div>

@@ -5,7 +5,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Publishing | .THE BRAZILIAN FACTORY.',
   description:
-    '.THE BRAZILIAN FACTORY. Publishing — editorial content, creative contributions and brand storytelling from inside the .TBF. ecosystem.',
+    '.THE BRAZILIAN FACTORY. Publishing: editorial content, creative contributions and brand storytelling from inside the .TBF. ecosystem.',
 }
 
 const TAG: CSSProperties = {
@@ -70,7 +70,7 @@ const FORMATS = [
   { format: 'Editorial', desc: 'Long-form essays, cultural criticism, profiles and opinion pieces. Grounded in culture, written with depth.' },
   { format: 'Photography', desc: 'Visual storytelling from inside the São Paulo creative scene and beyond. Documentary, fashion, lifestyle.' },
   { format: 'Interviews', desc: 'Conversations with creators, founders, artists and thinkers working at the intersection of culture and craft.' },
-  { format: 'Label Content', desc: 'Original content from .TFD., .RUC. and .TGF. — each label with its own editorial voice and focus.' },
+  { format: 'Label Content', desc: 'Original content from .TFD., .RUC. and .TGF. Each label with its own editorial voice and focus.' },
 ]
 
 export default function PublishingPage() {
@@ -107,7 +107,7 @@ export default function PublishingPage() {
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
               <strong style={{ fontWeight: 800 }}>.TBF. Magazine</strong> is the editorial arm
               of <strong style={{ fontWeight: 800 }}>.THE BRAZILIAN FACTORY.</strong> We publish
-              long-form editorial content, photography, interviews and cultural essays — all
+              long-form editorial content, photography, interviews and cultural essays, all
               rooted in the São Paulo creative scene and connected to a broader global conversation.
             </p>
             <p style={BODY}>

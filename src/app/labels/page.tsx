@@ -9,7 +9,7 @@ import Link from 'next/link'
 export const metadata: Metadata = {
   title: 'Labels',
   description:
-    'The labels of .THE BRAZILIAN FACTORY. — four divisions of one cultural organism: .TBF. · .MELFIORE. · .RUC. · .TGF.',
+    'The labels of .THE BRAZILIAN FACTORY. Four divisions of one cultural organism: .TBF. · .MELFIORE. · .RUC. · .TGF.',
   openGraph: {
     title: 'Labels | .THE BRAZILIAN FACTORY.',
     description: 'One organism. Four labels. One frequency.',
@@ -27,7 +27,7 @@ const LABELS = [
     cta: '→ Enter .TBF. Editorial',
     isCTAPrimary: true,
     points: [
-      { label: 'Categoria', value: 'Label editorial cultural — identidade central do organismo .TBF. inc' },
+      { label: 'Categoria', value: 'Label editorial cultural. Identidade central do organismo .TBF. inc' },
       { label: 'Propósito', value: 'Produz narrativas, manifesto e curadoria para quem já entende o código cultural' },
       { label: 'Para quem', value: 'Criadores, consumidores culturais, investidores e parceiros estratégicos' },
       { label: 'Entregas', value: 'Artigos editoriais · Manifesto · Entrevistas · Curadoria de referências' },
@@ -142,7 +142,7 @@ export default function LabelsPage() {
 
       {/* ─── 4 LABELS ──────────────────────────────────────────────────── */}
       <section
-        aria-label="Labels — divisions of .TBF. inc"
+        aria-label="Labels, divisions of .TBF. inc"
         style={{
           paddingInline: 'var(--tbf-grid-margin-sm)',
           paddingBottom: 'var(--tbf-space-20)',

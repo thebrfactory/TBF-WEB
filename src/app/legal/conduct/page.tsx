@@ -88,7 +88,7 @@ export default function ConductPage() {
         <h2 style={H2}>1. Our Commitment</h2>
         <p style={BODY}>
           <span style={B}>.THE BRAZILIAN FACTORY.</span> is committed to providing a safe,
-          respectful and inclusive environment for everyone — regardless of age, body size,
+          respectful and inclusive environment for everyone, regardless of age, body size,
           disability, ethnicity, gender identity and expression, nationality, personal appearance,
           race, religion, sexual orientation or socioeconomic status.
         </p>
@@ -167,9 +167,9 @@ export default function ConductPage() {
           </a>.
         </p>
         <p style={BODY}>
-          .TBF. INC — CNPJ 61.360.565/0001-74<br />
-          R. Pamplona, 145 — Jardim Paulista<br />
-          São Paulo — SP, 01405-100 · Brasil
+          .TBF. INC · CNPJ 61.360.565/0001-74<br />
+          R. Pamplona, 145. Jardim Paulista<br />
+          São Paulo, SP. 01405-100 · Brasil
         </p>
       </div>
     </div>

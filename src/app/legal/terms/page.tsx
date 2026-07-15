@@ -72,12 +72,12 @@ export default function TermsPage() {
           These Terms of Service ("Terms") govern your access to and use of the websites,
           digital properties and services operated by{' '}
           <span style={B}>.TBF. INC</span> (CNPJ 61.360.565/0001-74), headquartered at
-          R. Pamplona, 145 — Jardim Paulista, São Paulo — SP, 01405-100, Brazil
+          R. Pamplona, 145. Jardim Paulista, São Paulo, SP. 01405-100, Brazil
           (collectively, "we," "us," or ".TBF.").
         </p>
         <p style={BODY}>
-          By accessing or using any of our digital properties — including thebrfactory.com and
-          all associated label domains — you agree to be bound by these Terms. If you do not
+          By accessing or using any of our digital properties, including thebrfactory.com and
+          all associated label domains, you agree to be bound by these Terms. If you do not
           agree, do not use our services.
         </p>
 
@@ -99,8 +99,8 @@ export default function TermsPage() {
 
         <h2 style={H2}>3. Intellectual Property</h2>
         <p style={BODY}>
-          All content published on .TBF. digital properties — including but not limited to text,
-          photography, video, brand marks, logotypes, design and code — is the exclusive property
+          All content published on .TBF. digital properties, including but not limited to text,
+          photography, video, brand marks, logotypes, design and code, is the exclusive property
           of <span style={B}>.TBF. INC</span> or its respective rights holders. All rights reserved.
         </p>
         <p style={BODY}>
@@ -170,9 +170,9 @@ export default function TermsPage() {
           {' '}or by mail at:
         </p>
         <p style={{ ...BODY, fontStyle: 'normal' }}>
-          .TBF. INC — CNPJ 61.360.565/0001-74<br />
-          R. Pamplona, 145 — Jardim Paulista<br />
-          São Paulo — SP, 01405-100 · Brasil
+          .TBF. INC · CNPJ 61.360.565/0001-74<br />
+          R. Pamplona, 145. Jardim Paulista<br />
+          São Paulo, SP. 01405-100 · Brasil
         </p>
       </div>
     </div>

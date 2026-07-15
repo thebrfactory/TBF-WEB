@@ -51,7 +51,7 @@ export const IDENTITY = {
     'Advertising, Graphic Design & Branded Content. I came from sacred and profane soil, the capital of axé: Salvador, Bahia. My essence is my enthusiasm in collaborating with causes that I truly believe in, the curiosity to discover the new and the versatility to adapt to new environments.',
   // PT provisório — redator/ECD confirma.
   bioPT:
-    'Felipe Tavares — conhecido como Tavarístico — é Associate Creative Director e Art Director. Vindo do solo sagrado e profano de Salvador, Bahia, traduz cultura brasileira em trabalho que viaja. Representado pela .TBF. inc.',
+    'Felipe Tavares, conhecido como Tavarístico, é Associate Creative Director e Art Director. Vindo do solo sagrado e profano de Salvador, Bahia, traduz cultura brasileira em trabalho que viaja. Representado pela .TBF. inc.',
   bioPTProvisional: true,
   socials: {
     instagram: 'https://instagram.com/thebrfactory',
@@ -72,13 +72,13 @@ export const WORKS: Work[] = [
   {
     slug: 'spfw-the-paradise',
     index: '01',
-    title: 'SPFW — The Paradise',
+    title: 'SPFW · The Paradise',
     disciplines: ['Art Direction', 'Fashion'],
     role: 'Art Director',
     client: 'São Paulo Fashion Week',
     summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
     description:
-      'Direção de arte para a São Paulo Fashion Week — construção de um universo visual que traduz a passarela em narrativa de marca. (Mesmo corpo de trabalho de Runway United Collective.)',
+      'Direção de arte para a São Paulo Fashion Week. Construção de um universo visual que traduz a passarela em narrativa de marca. (Mesmo corpo de trabalho de Runway United Collective.)',
     selected: true,
     media: {
       cover: `${base}/spfw-the-paradise/cover.webp`,
@@ -95,7 +95,7 @@ export const WORKS: Work[] = [
     client: 'Projeto autoral',
     summary: 'Uma cápsula que traduz brasilidade em conceito, produto e identidade.',
     description:
-      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade — do folder ao produto, uma leitura contemporânea de repertório brasileiro.',
+      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade: do folder ao produto, uma leitura contemporânea de repertório brasileiro.',
     media: {
       cover: `${base}/capsula-brasilidade/cover.webp`,
       gallery: [`${base}/capsula-brasilidade/g1.webp`, `${base}/capsula-brasilidade/g2.webp`, `${base}/capsula-brasilidade/g3.webp`],
@@ -111,7 +111,7 @@ export const WORKS: Work[] = [
     client: '@odecasahostel',
     summary: '18 anos do hostel brasileiro mais premiado.',
     description:
-      'Campaign & Content Production. 18 years of the most awarded Brazilian hostel — a campaign showing all the gen Z lifestyle of a place that is a meeting point for many cultures around the globe. / 18 anos do hostel brasileiro mais premiado: uma campanha que mostra todo o estilo de vida da geração Z em um lugar que é ponto de encontro de diversas culturas ao redor do mundo.',
+      'Campaign & Content Production. 18 years of the most awarded Brazilian hostel. A campaign showing all the gen Z lifestyle of a place that is a meeting point for many cultures around the globe. / 18 anos do hostel brasileiro mais premiado: uma campanha que mostra todo o estilo de vida da geração Z em um lugar que é ponto de encontro de diversas culturas ao redor do mundo.',
     selected: true,
     media: {
       cover: `${base}/o-18-years/cover.webp`,
@@ -159,7 +159,7 @@ export const WORKS: Work[] = [
     year: '2023',
     summary: 'A magia do Farol da Barra traduzida em sistema visual.',
     description:
-      'Direção de arte e sistema gráfico de Arquiloucura — uma celebração visual da magia do Farol da Barra, em Salvador.',
+      'Direção de arte e sistema gráfico de Arquiloucura. Uma celebração visual da magia do Farol da Barra, em Salvador.',
     media: {
       cover: `${base}/arquiloucura/cover.webp`,
       gallery: [`${base}/arquiloucura/g1.webp`, `${base}/arquiloucura/g2.webp`, `${base}/arquiloucura/g3.webp`],
@@ -173,8 +173,8 @@ export const WORKS: Work[] = [
     disciplines: ['Graphic & Motion', 'Art Direction'],
     role: 'Art Director',
     client: 'Crush Coins',
-    summary: 'Direção de arte e identidade — cultura pop e meme em linguagem visual.',
-    description: 'Direção de arte de Crush Coins — colisão de cultura pop, retrato e tipografia.',
+    summary: 'Direção de arte e identidade: cultura pop e meme em linguagem visual.',
+    description: 'Direção de arte de Crush Coins: colisão de cultura pop, retrato e tipografia.',
     media: { cover: `${base}/crush-coins/cover.webp` },
     provisional: ['role', 'client', 'summary', 'description'],
     lowRes: true,
@@ -186,7 +186,7 @@ export const WORKS: Work[] = [
     disciplines: ['Branding'],
     role: 'Art Director / Designer',
     client: 'Charlotte',
-    summary: 'Identidade e logotipo — branding de assinatura.',
+    summary: 'Identidade e logotipo: branding de assinatura.',
     description: 'Branding e construção de logotipo para Charlotte.',
     media: { cover: `${base}/charlotte/cover.webp` },
     provisional: ['role', 'client', 'summary', 'description'],
