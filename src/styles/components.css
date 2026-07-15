@@ -272,7 +272,7 @@
   border: 1px solid var(--tbf-border);
   border-radius: 18px;
   z-index: var(--tbf-z-modal);
-  padding: var(--tbf-space-10) var(--tbf-space-6) var(--tbf-space-8);
+  padding: var(--tbf-space-5) var(--tbf-space-6) var(--tbf-space-4);
   box-shadow:
     0 32px 80px rgba(0, 0, 0, 0.85),
     0 12px 32px rgba(0, 0, 0, 0.7),
@@ -878,7 +878,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: carouselInfiniteScroll 42s linear infinite;
+  animation: carouselInfiniteScroll 34s linear infinite;
   will-change: transform;
 }
 
@@ -917,7 +917,7 @@
 .carousel-slide__link:hover .carousel-slide__overlay,
 .carousel-slide__link:focus-visible .carousel-slide__overlay,
 .carousel-slide__link:active .carousel-slide__overlay {
-  background-color: rgba(0, 0, 0, 0.74);
+  background-color: rgba(0, 0, 0, 0.82);
 }
 
 .carousel-slide__title {

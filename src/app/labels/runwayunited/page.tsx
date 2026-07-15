@@ -6,6 +6,8 @@
 import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { Ticker } from '@/components/Ticker/Ticker'
 
 export const metadata: Metadata = {
   title: '.RUNWAY UNITED COLLECTIVE. | .RUC. | .THE BRAZILIAN FACTORY.',
@@ -21,9 +23,9 @@ export const metadata: Metadata = {
 
 const FOCUS_AREAS = [
   'Fashion Films',
-  'Editorial',
-  'SPFW',
-  'Runway',
+  'Editorial Stories',
+  'Runway Culture',
+  'Fashion Weeks',
   'Creative Direction',
   'Fashion Photography',
   'Casting',
@@ -60,14 +62,7 @@ export default function RunwayUnitedPage() {
         }}
       >
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/ruc/ruc-hero.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 30%', opacity: 0.45 }}
-          />
+          <HeroVideo />
           <div
             style={{
               position: 'absolute',
@@ -102,7 +97,7 @@ export default function RunwayUnitedPage() {
           </h1>
 
           <p style={{ ...SUBTITLE, marginBottom: 'var(--tbf-space-10)' }}>
-            <span style={B800}>.RUC.</span> | Fashion Films &amp; Editorial Label of{' '}
+            <span style={B800}>.RUC.</span> | An Editorial Fashion Label by{' '}
             <span style={B800}>.THE BRAZILIAN FACTORY.</span>
           </p>
 
@@ -157,8 +152,22 @@ export default function RunwayUnitedPage() {
               marginBottom: 'var(--tbf-space-4)',
             }}
           >
-            A creative collective focused on fashion films, editorial
-            and runway culture.
+            A platform dedicated to fashion films, visual essays and
+            contemporary runway culture.
+          </p>
+          <p
+            style={{
+              fontFamily: 'var(--tbf-type-deck-family)',
+              fontSize: 'var(--tbf-type-deck-size-sm)',
+              fontWeight: 'var(--tbf-type-deck-weight)',
+              lineHeight: 'var(--tbf-type-deck-lh)',
+              color: 'rgba(255,255,255,0.7)',
+              maxWidth: '48ch',
+              marginBottom: 'var(--tbf-space-4)',
+            }}
+          >
+            Documenting the people, movements and stories shaping the
+            next generation of fashion.
           </p>
           <p
             style={{
@@ -171,7 +180,7 @@ export default function RunwayUnitedPage() {
               marginBottom: 'var(--tbf-space-10)',
             }}
           >
-            Part of the <span style={B800}>.THE BRAZILIAN FACTORY.</span> ecosystem.
+            Part of <span style={B800}>.THE BRAZILIAN FACTORY.</span>
           </p>
 
           <a
@@ -185,6 +194,9 @@ export default function RunwayUnitedPage() {
           </a>
         </div>
       </section>
+
+      {/* ─── TICKER ──────────────────────────────────────────────────────────── */}
+      <Ticker />
 
       {/* ─── OVERVIEW ──────────────────────────────────────────────────────── */}
       <section className="section container" aria-labelledby="ruc-overview">
@@ -217,9 +229,22 @@ export default function RunwayUnitedPage() {
                 marginBottom: 'var(--tbf-space-6)',
               }}
             >
-              <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> é a vertical de moda,
-              filmes e direção criativa da{' '}
+              <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> is the fashion, film
+              and cultural storytelling label of{' '}
               <span style={B800}>.THE BRAZILIAN FACTORY.</span>
+            </p>
+            <p
+              style={{
+                fontFamily: 'var(--tbf-type-body-family)',
+                fontSize: 'var(--tbf-type-body-size-sm)',
+                lineHeight: 'var(--tbf-type-body-lh)',
+                color: 'rgba(255,255,255,0.75)',
+                marginBottom: 'var(--tbf-space-6)',
+              }}
+            >
+              Created to document, produce and amplify Brazil&apos;s emerging creative
+              scene, <span style={B800}>.RUC.</span> brings together runway culture,
+              cinema and visual identity into one editorial language.
             </p>
             <p
               style={{
@@ -229,8 +254,7 @@ export default function RunwayUnitedPage() {
                 color: 'rgba(255,255,255,0.75)',
               }}
             >
-              Criada para documentar, produzir e amplificar a cena criativa brasileira,
-              unindo runway, cinema e identidade cultural em uma única linguagem.
+              Part media platform, part creative studio, part cultural archive.
             </p>
           </div>
         </div>
@@ -298,7 +322,7 @@ export default function RunwayUnitedPage() {
                   marginBottom: 'var(--tbf-space-2)',
                 }}
               >
-                Todo desfile conta uma história.
+                Every runway tells a story.
               </p>
               <p
                 style={{
@@ -310,7 +334,7 @@ export default function RunwayUnitedPage() {
                   marginBottom: 'var(--tbf-space-2)',
                 }}
               >
-                Toda coleção carrega uma visão.
+                Every collection carries a vision.
               </p>
               <p
                 style={{
@@ -322,7 +346,7 @@ export default function RunwayUnitedPage() {
                   marginBottom: 'var(--tbf-space-10)',
                 }}
               >
-                Todo criador merece uma plataforma.
+                Every creator deserves a platform.
               </p>
               <p
                 style={{
@@ -332,9 +356,11 @@ export default function RunwayUnitedPage() {
                   color: 'rgba(255,255,255,0.75)',
                 }}
               >
-                <span style={B800}>.RUC.</span> existe para documentar a camada
-                criativa do ecossistema <span style={B800}>.TBF.</span>,
-                transformando moda em narrativa e runway em cultura.
+                <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> exists to
+                document the creative layer of the{' '}
+                <span style={B800}>.THE BRAZILIAN FACTORY.</span> ecosystem,
+                transforming fashion into narrative and the runway into
+                cultural memory.
               </p>
             </div>
 
@@ -363,9 +389,9 @@ export default function RunwayUnitedPage() {
                   color: 'rgba(255,255,255,0.75)',
                 }}
               >
-                Acreditamos que os criadores mais relevantes da próxima geração
-                serão aqueles capazes de unir estética, narrativa e impacto
-                cultural em uma única visão.
+                The next generation of creators will not be defined by what
+                they make, but by the worlds they build through aesthetics,
+                storytelling and cultural influence.
               </p>
             </div>
           </div>
@@ -387,7 +413,7 @@ export default function RunwayUnitedPage() {
             marginBottom: 'var(--tbf-space-10)',
           }}
         >
-          Core Domains
+          What We Document
         </h2>
 
         <ul
@@ -449,9 +475,9 @@ export default function RunwayUnitedPage() {
               color: 'rgba(255,255,255,0.75)',
             }}
           >
-            <span style={B800}>.RUC.</span> trabalha em colaboração com outras
-            iniciativas do ecossistema <span style={B800}>.TBF.</span>, conectando
-            moda com cultura, editorial e comunidade criativa.
+            <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> is the fashion
+            and cultural storytelling label of{' '}
+            <span style={B800}>.THE BRAZILIAN FACTORY.</span>
           </p>
           <p
             style={{
@@ -461,10 +487,36 @@ export default function RunwayUnitedPage() {
               color: 'rgba(255,255,255,0.75)',
             }}
           >
-            Sua atuação complementa as demais labels através de uma perspectiva
-            orientada para estética, narrativa visual e direção criativa.
+            It exists to document the creative pulse of the ecosystem,
+            connecting runway, editorial and community through a shared
+            visual language.
           </p>
         </div>
+
+        <p
+          style={{
+            fontFamily: 'var(--tbf-type-deck-family)',
+            fontSize: 'var(--tbf-type-deck-size-sm)',
+            fontWeight: 'var(--tbf-type-deck-weight)',
+            lineHeight: 'var(--tbf-type-deck-lh)',
+            color: '#ffffff',
+            marginTop: 'var(--tbf-space-8)',
+            marginBottom: 'var(--tbf-space-2)',
+          }}
+        >
+          Fashion as narrative.
+        </p>
+        <p
+          style={{
+            fontFamily: 'var(--tbf-type-deck-family)',
+            fontSize: 'var(--tbf-type-deck-size-sm)',
+            fontWeight: 'var(--tbf-type-deck-weight)',
+            lineHeight: 'var(--tbf-type-deck-lh)',
+            color: '#ffffff',
+          }}
+        >
+          Culture as archive.
+        </p>
       </section>
 
       {/* ─── FOOTER BLOCK ──────────────────────────────────────────────────── */}
@@ -515,9 +567,9 @@ export default function RunwayUnitedPage() {
             >
               Fashion creates culture.
               <br />
-              Film creates memory.
+              Film preserves memory.
               <br />
-              Together they create legacy.
+              Together, they become legacy.
             </p>
 
             <p
@@ -531,7 +583,9 @@ export default function RunwayUnitedPage() {
                 marginBottom: 'var(--tbf-space-8)',
               }}
             >
-              Founded in São Paulo. Built for global ambition.
+              Founded in São Paulo.
+              <br />
+              Made for the world.
               <br />
               Part of <span style={B800}>.THE BRAZILIAN FACTORY.</span>
             </p>

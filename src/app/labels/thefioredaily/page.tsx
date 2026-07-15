@@ -6,6 +6,8 @@
 import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { Ticker } from '@/components/Ticker/Ticker'
 
 export const metadata: Metadata = {
   title: '.THE FIORE DAILY. | .TFD. | .THE BRAZILIAN FACTORY.',
@@ -60,14 +62,7 @@ export default function TheFioreDailyPage() {
         }}
       >
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/tfd/tfd-hero.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 30%', opacity: 0.45 }}
-          />
+          <HeroVideo />
           <div
             style={{
               position: 'absolute',
@@ -184,6 +179,9 @@ export default function TheFioreDailyPage() {
           </a>
         </div>
       </section>
+
+      {/* ─── TICKER ──────────────────────────────────────────────────────────── */}
+      <Ticker />
 
       {/* ─── OVERVIEW ──────────────────────────────────────────────────────── */}
       <section className="section container" aria-labelledby="tfd-overview">

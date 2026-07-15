@@ -12,7 +12,7 @@ import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
-const SHOW_DELAY_MS = 1500
+const SHOW_DELAY_MS = 10000
 
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false)
@@ -36,7 +36,7 @@ export function NewsletterPopup() {
     sessionStorage.setItem(SESSION_KEY, 'true')
   }, [])
 
-  // Trigger — uma vez por sessão, com pequeno delay. Só aparece DEPOIS que a
+  // Trigger — uma vez por sessão, após 10s no site. Só aparece DEPOIS que a
   // escolha de cookies foi feita (senão popup e cookie banner se sobrepõem na
   // primeira visita, sobretudo no mobile).
   useEffect(() => {
@@ -119,7 +119,7 @@ export function NewsletterPopup() {
           width={140}
           height={100}
           unoptimized
-          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-8)' }}
+          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-2)' }}
         />
 
         <h2
@@ -130,27 +130,12 @@ export function NewsletterPopup() {
             fontWeight: 800,
             lineHeight: 1.15,
             color: 'var(--tbf-text-primary)',
-            marginBottom: 'var(--tbf-space-6)',
+            marginBottom: 'var(--tbf-space-2)',
             maxWidth: '20ch',
           }}
         >
           Get the best stories<br />from <span style={{ color: 'var(--tbf-accent)' }}>.TBF.</span> community.
         </h2>
-
-        <p
-          style={{
-            fontFamily: 'var(--tbf-font-family-ui)',
-            fontSize: '0.8rem',
-            fontWeight: 300,
-            letterSpacing: '0.06em',
-            lineHeight: 1.5,
-            textTransform: 'uppercase',
-            color: '#ffffff',
-            marginBottom: 'var(--tbf-space-8)',
-          }}
-        >
-          Culture™<br />Crafted in São Paulo, Brazil.<br />Consumed Worldwide.
-        </p>
 
         {status === 'success' ? (
           <p
@@ -183,7 +168,7 @@ export function NewsletterPopup() {
                   color: 'var(--tbf-text-primary)',
                   fontFamily: 'var(--tbf-font-family-body)',
                   fontSize: '0.9rem',
-                  padding: '0.7rem 1.1rem',
+                  padding: '0.5rem 1.1rem',
                   outline: 'none',
                   borderRadius: '999px',
                 }}
@@ -199,7 +184,7 @@ export function NewsletterPopup() {
             </div>
 
             {/* Consentimento LGPD */}
-            <label className="consent-check" style={{ marginTop: 'var(--tbf-space-4)' }}>
+            <label className="consent-check" style={{ marginTop: 'var(--tbf-space-2)' }}>
               <input
                 type="checkbox"
                 checked={consent}

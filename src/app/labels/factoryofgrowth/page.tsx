@@ -6,6 +6,8 @@
 import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { Ticker } from '@/components/Ticker/Ticker'
 
 export const metadata: Metadata = {
   title: '.THE GROWTH FACTORY. | .TGF. | .THE BRAZILIAN FACTORY.',
@@ -61,16 +63,9 @@ export default function FactoryOfGrowthPage() {
           overflow: 'hidden',
         }}
       >
-        {/* Imagem de fundo */}
+        {/* Vídeo de fundo (igual à home) */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/tgf/tgf-ambition.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 30%', opacity: 0.45 }}
-          />
+          <HeroVideo />
           <div
             style={{
               position: 'absolute',
@@ -193,6 +188,9 @@ export default function FactoryOfGrowthPage() {
           </a>
         </div>
       </section>
+
+      {/* ─── TICKER ──────────────────────────────────────────────────────────── */}
+      <Ticker />
 
       {/* ─── OVERVIEW ──────────────────────────────────────────────────────── */}
       <section className="section container" aria-labelledby="tgf-overview">
