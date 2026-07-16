@@ -2,8 +2,9 @@
 
 // =============================================================================
 // NEWSLETTER POPUP — captura de e-mail sitewide
-// Aparece uma vez por sessão, ~1.5s após o primeiro load. Reaproveita a mesma
-// lógica de submit do MailingList (rodapé) via useNewsletterSubmit.
+// Aparece uma vez por sessão, por ENGAJAMENTO: metade da página rolada ou 30s
+// no site, o que vier primeiro. Nunca aborda quem acabou de chegar.
+// Reaproveita a mesma lógica de submit do MailingList (rodapé) via useNewsletterSubmit.
 // =============================================================================
 
 import { useEffect, useState, useCallback } from 'react'
@@ -12,39 +13,44 @@ import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
-const SHOW_DELAY_MS = 10000
+const SHOW_DELAY_MS = 30000
+const SCROLL_RATIO = 0.5
 
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false)
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
-  const [consent, setConsent] = useState(false)
-  const [consentError, setConsentError] = useState(false)
-
-  // Consentimento LGPD obrigatório antes do envio.
-  function handleSubmit(e: React.FormEvent) {
-    if (!consent) {
-      e.preventDefault()
-      setConsentError(true)
-      return
-    }
-    setConsentError(false)
-    submit(e, { consent: true })
-  }
 
   const close = useCallback(() => {
     setOpen(false)
     sessionStorage.setItem(SESSION_KEY, 'true')
   }, [])
 
-  // Trigger — uma vez por sessão, após 10s no site. Só aparece DEPOIS que a
-  // escolha de cookies foi feita (senão popup e cookie banner se sobrepõem na
-  // primeira visita, sobretudo no mobile).
+  // Trigger — uma vez por sessão. Só aparece DEPOIS que a escolha de cookies foi
+  // feita (senão popup e cookie banner se sobrepõem na primeira visita, sobretudo
+  // no mobile) e DEPOIS que a pessoa demonstrou interesse.
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return
 
-    let timer: ReturnType<typeof setTimeout> | undefined
+    let stop = () => {}
+
+    // Metade da página rolada OU 30s — o que vier primeiro. Em página curta
+    // (sem scroll possível) só o tempo dispara.
     const start = () => {
-      timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS)
+      const fire = () => {
+        setOpen(true)
+        stop()
+      }
+      const onScroll = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        if (max > 0 && window.scrollY / max >= SCROLL_RATIO) fire()
+      }
+
+      const timer = setTimeout(fire, SHOW_DELAY_MS)
+      window.addEventListener('scroll', onScroll, { passive: true })
+      stop = () => {
+        clearTimeout(timer)
+        window.removeEventListener('scroll', onScroll)
+      }
     }
 
     let hasCookieChoice = true
@@ -56,7 +62,7 @@ export function NewsletterPopup() {
 
     if (hasCookieChoice) {
       start()
-      return () => { if (timer) clearTimeout(timer) }
+      return () => stop()
     }
 
     // Ainda sem escolha de cookies → espera o evento do CookieBanner.
@@ -64,7 +70,7 @@ export function NewsletterPopup() {
     window.addEventListener('tbf-cookie-choice', onCookieChoice, { once: true })
     return () => {
       window.removeEventListener('tbf-cookie-choice', onCookieChoice)
-      if (timer) clearTimeout(timer)
+      stop()
     }
   }, [])
 
@@ -106,7 +112,7 @@ export function NewsletterPopup() {
           type="button"
           className="newsletter-popup__close"
           onClick={close}
-          aria-label="Fechar"
+          aria-label="Close"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" strokeWidth="1.5" />
@@ -119,7 +125,7 @@ export function NewsletterPopup() {
           width={140}
           height={100}
           unoptimized
-          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-2)' }}
+          style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-6)' }}
         />
 
         <h2
@@ -130,11 +136,11 @@ export function NewsletterPopup() {
             fontWeight: 800,
             lineHeight: 1.15,
             color: 'var(--tbf-text-primary)',
-            marginBottom: 'var(--tbf-space-2)',
+            marginBottom: 'var(--tbf-space-4)',
             maxWidth: '20ch',
           }}
         >
-          Get the best stories<br />from <span style={{ color: 'var(--tbf-accent)' }}>.TBF.</span> community.
+          Get the best stories<br />from .TBF. community.
         </h2>
 
         {status === 'success' ? (
@@ -143,14 +149,14 @@ export function NewsletterPopup() {
               fontFamily: 'var(--tbf-font-family-ui)',
               fontSize: 'var(--tbf-type-micro-size)',
               letterSpacing: 'var(--tbf-type-micro-ls)',
-              color: 'var(--tbf-accent)',
+              color: 'var(--tbf-text-primary)',
               textTransform: 'uppercase',
             }}
           >
             You&apos;re in. Welcome to the factory.
           </p>
         ) : (
-          <form onSubmit={handleSubmit} noValidate>
+          <form onSubmit={submit} noValidate>
             <div style={{ display: 'flex', gap: 'var(--tbf-space-3)', flexWrap: 'wrap' }}>
               <input
                 type="email"
@@ -177,30 +183,41 @@ export function NewsletterPopup() {
                 type="submit"
                 disabled={status === 'loading'}
                 className="btn btn--primary"
-                style={{ borderRadius: '999px', whiteSpace: 'nowrap' }}
+                style={{
+                  borderRadius: '999px',
+                  whiteSpace: 'nowrap',
+                  fontSize: '0.6rem',
+                  padding: '0.45rem 1.05rem',
+                }}
               >
                 {status === 'loading' ? '...' : 'Subscribe'}
               </button>
             </div>
 
-            {/* Consentimento LGPD */}
-            <label className="consent-check" style={{ marginTop: 'var(--tbf-space-2)' }}>
-              <input
-                type="checkbox"
-                checked={consent}
-                onChange={(e) => { setConsent(e.target.checked); if (e.target.checked) setConsentError(false) }}
-                aria-invalid={consentError}
-              />
-              <span>
-                Você concorda em receber nossas comunicações.{' '}
-                <Link href="/legal/privacy">Saiba mais em nossa política de privacidade.</Link>
-              </span>
-            </label>
-            {consentError && (
-              <p role="alert" className="consent-check__error">
-                Confirme o consentimento para continuar.
-              </p>
-            )}
+            {/* Aviso LGPD — o envio do form é o ato de consentimento. */}
+            <p
+              style={{
+                marginTop: 'var(--tbf-space-4)',
+                maxWidth: '46ch',
+                fontFamily: 'var(--tbf-type-caption-family)',
+                fontSize: 'var(--tbf-type-caption-size-sm)',
+                lineHeight: 1.5,
+                color: 'var(--tbf-text-tertiary)',
+              }}
+            >
+              By subscribing, you agree to our{' '}
+              <Link
+                href="/legal/privacy"
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: '2px',
+                }}
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
 
             {status === 'error' && (
               <p
@@ -209,7 +226,7 @@ export function NewsletterPopup() {
                   marginTop: 'var(--tbf-space-3)',
                   fontFamily: 'var(--tbf-font-family-ui)',
                   fontSize: 'var(--tbf-type-micro-size)',
-                  color: '#ff4444',
+                  color: 'var(--tbf-color-status-error)',
                 }}
               >
                 {errorMsg}

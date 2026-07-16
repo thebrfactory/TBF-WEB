@@ -29,11 +29,11 @@ export function useNewsletterSubmit() {
         setEmail('')
       } else {
         setStatus('error')
-        setErrorMsg(data.error ?? 'Erro. Tente novamente.')
+        setErrorMsg(data.error ?? 'Something went wrong. Please try again.')
       }
     } catch {
       setStatus('error')
-      setErrorMsg('Erro. Tente novamente.')
+      setErrorMsg('Something went wrong. Please try again.')
     }
   }
 

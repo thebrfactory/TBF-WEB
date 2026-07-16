@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!email || !emailRegex.test(email)) {
       return NextResponse.json(
-        { success: false, error: 'E-mail inválido.' },
+        { success: false, error: 'Invalid email address.' },
         { status: 400 }
       )
     }
@@ -120,7 +120,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json(
-      { success: false, error: 'Erro interno. Tente novamente.' },
+      { success: false, error: 'Something went wrong. Please try again.' },
       { status: 500 }
     )
   }

@@ -45,143 +45,124 @@ const SUBTITLE: CSSProperties = {
 
 const B800: CSSProperties = { fontWeight: 800 }
 
+// Marca dentro do lockup do herói — peso mais forte da Brother1816 (Black).
+const B900: CSSProperties = { fontWeight: 900 }
+
+// Lockup do herói: "a.k.a. .X." / descritor / "of .THE BRAZILIAN FACTORY."
+// Corpo próprio (não o SUBTITLE das seções): calibrado para as três linhas
+// caberem sem quebrar no mobile, inclusive no descritor mais longo (.TGF.).
+const HERO_LOCKUP: CSSProperties = {
+  fontFamily: 'var(--tbf-type-micro-family)',
+  fontSize: 'clamp(0.75rem, 3.2vw, 1rem)',
+  fontWeight: 500,
+  letterSpacing: '0.1em',
+  textTransform: 'uppercase',
+  color: '#ffffff',
+  lineHeight: 1.6,
+  marginBottom: 'var(--tbf-space-10)',
+}
+
+// Tagline do herói — duas linhas, fechando em "In Brazilian Bass."
+const HERO_TAGLINE: CSSProperties = {
+  fontFamily: 'var(--tbf-type-display-xl-family)',
+  fontSize: '1.25rem',
+  fontWeight: 300,
+  letterSpacing: '-0.01em',
+  color: 'rgba(255,255,255,0.6)',
+  lineHeight: 1.3,
+  marginBottom: 'var(--tbf-space-10)',
+}
+
 export default function TheFioreDailyPage() {
   return (
     <div data-theme="inverse" style={{ background: '#000', color: '#fff' }}>
 
-      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
+      {/* ─── HERO — vídeo de abertura limpo ───────────────────────────────
+          Sem sombreado e sem texto por cima: todo o conteúdo vive abaixo do
+          letreiro (Ticker). Por isso o vídeo roda em opacidade cheia. */}
       <section
-        aria-labelledby="tfd-h1"
+        aria-hidden="true"
         style={{
           position: 'relative',
           width: '100vw',
           minHeight: '100dvh',
-          display: 'flex',
-          alignItems: 'flex-end',
           overflow: 'hidden',
         }}
       >
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <HeroVideo />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, #000000 0%, transparent 30%, transparent 55%, #000000 100%)',
-            }}
-          />
-        </div>
-
-        <div
-          className="container"
-          style={{
-            position: 'relative',
-            zIndex: 3,
-            paddingBottom: 'var(--tbf-space-20)',
-            paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-20))',
-          }}
-        >
-          <h1
-            id="tfd-h1"
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'clamp(2rem, 8vw, 6rem)',
-              fontWeight: 800,
-              lineHeight: 0.95,
-              letterSpacing: 'var(--tbf-type-display-xl-ls)',
-              color: '#ffffff',
-              marginBottom: 'var(--tbf-space-5)',
-            }}
-          >
-            .THE FIORE DAILY.
-          </h1>
-
-          <p style={{ ...SUBTITLE, marginBottom: 'var(--tbf-space-10)' }}>
-            <span style={B800}>.TFD.</span> | Intimacy &amp; Wellness Label of{' '}
-            <span style={B800}>.THE BRAZILIAN FACTORY.</span>
-          </p>
-
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'var(--tbf-type-h2-size-sm)',
-              fontWeight: 300,
-              letterSpacing: '-0.01em',
-              color: 'rgba(255,255,255,0.6)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--tbf-space-3)',
-            }}
-          >
-            Intimacy.
-          </p>
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'var(--tbf-type-h2-size-sm)',
-              fontWeight: 300,
-              letterSpacing: '-0.01em',
-              color: 'rgba(255,255,255,0.6)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--tbf-space-3)',
-            }}
-          >
-            Wellness.
-          </p>
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-display-xl-family)',
-              fontSize: 'var(--tbf-type-h2-size-sm)',
-              fontWeight: 300,
-              letterSpacing: '-0.01em',
-              color: 'rgba(255,255,255,0.6)',
-              lineHeight: 1.1,
-              marginBottom: 'var(--tbf-space-10)',
-            }}
-          >
-            Ritual.
-          </p>
-
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-deck-family)',
-              fontSize: 'var(--tbf-type-deck-size-sm)',
-              fontWeight: 'var(--tbf-type-deck-weight)',
-              lineHeight: 'var(--tbf-type-deck-lh)',
-              color: 'rgba(255,255,255,0.7)',
-              maxWidth: '48ch',
-              marginBottom: 'var(--tbf-space-4)',
-            }}
-          >
-            A daily practice of presence, care and intention.
-          </p>
-          <p
-            style={{
-              fontFamily: 'var(--tbf-type-deck-family)',
-              fontSize: 'var(--tbf-type-deck-size-sm)',
-              fontWeight: 'var(--tbf-type-deck-weight)',
-              lineHeight: 'var(--tbf-type-deck-lh)',
-              color: 'rgba(255,255,255,0.7)',
-              maxWidth: '48ch',
-              marginBottom: 'var(--tbf-space-10)',
-            }}
-          >
-            Part of the <span style={B800}>.THE BRAZILIAN FACTORY.</span> ecosystem.
-          </p>
-
-          <a
-            href="https://instagram.com/thefioredaily"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn--primary"
-          >
-            @thefioredaily
-            <span className="btn__arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
+        <HeroVideo opacity={1} />
       </section>
 
-      {/* ─── TICKER ──────────────────────────────────────────────────────────── */}
+      {/* ─── TICKER ──────────────────────────────────────────────────────── */}
       <Ticker />
+
+      {/* ─── INTRO — título, lockup, tagline e decks ──────────────────────── */}
+      <section className="section container" aria-labelledby="tfd-h1">
+        <h1
+          id="tfd-h1"
+          style={{
+            fontFamily: 'var(--tbf-type-display-xl-family)',
+            fontSize: 'clamp(1.15rem, 5.7vw, 4.2rem)',
+            fontWeight: 800,
+            lineHeight: 0.95,
+            letterSpacing: 'var(--tbf-type-display-xl-ls)',
+            color: '#ffffff',
+            marginBottom: 'var(--tbf-space-5)',
+          }}
+        >
+          .THE FIORE DAILY.
+        </h1>
+
+        <p style={HERO_LOCKUP}>
+          a.k.a. <span style={B900}>.TFD.</span>
+          <br />
+          Intimacy &amp; Wellness Label
+          <br />
+          of <span style={B900}>.THE BRAZILIAN FACTORY.</span>
+        </p>
+
+        <p style={HERO_TAGLINE}>
+          Intimacy. Wellness. Ritual.
+          <br />
+          In Brazilian Bass.
+        </p>
+
+        <p
+          style={{
+            fontFamily: 'var(--tbf-type-deck-family)',
+            fontSize: 'var(--tbf-type-deck-size-sm)',
+            fontWeight: 'var(--tbf-type-deck-weight)',
+            lineHeight: 'var(--tbf-type-deck-lh)',
+            color: 'rgba(255,255,255,0.7)',
+            maxWidth: '48ch',
+            marginBottom: 'var(--tbf-space-4)',
+          }}
+        >
+          A daily practice of presence, care and intention.
+        </p>
+        <p
+          style={{
+            fontFamily: 'var(--tbf-type-deck-family)',
+            fontSize: 'var(--tbf-type-deck-size-sm)',
+            fontWeight: 'var(--tbf-type-deck-weight)',
+            lineHeight: 'var(--tbf-type-deck-lh)',
+            color: 'rgba(255,255,255,0.7)',
+            maxWidth: '48ch',
+            marginBottom: 'var(--tbf-space-10)',
+          }}
+        >
+          Part of the <span style={B800}>.THE BRAZILIAN FACTORY.</span> ecosystem.
+        </p>
+
+        <a
+          href="https://instagram.com/thefioredaily"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn--primary"
+        >
+          @thefioredaily
+          <span className="btn__arrow" aria-hidden="true">→</span>
+        </a>
+      </section>
 
       {/* ─── OVERVIEW ──────────────────────────────────────────────────────── */}
       <section className="section container" aria-labelledby="tfd-overview">
