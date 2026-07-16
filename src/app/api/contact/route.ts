@@ -11,7 +11,7 @@ import type { ContactFormData } from '@/types'
 const INTENT_LABELS: Record<string, string> = {
   tbf: '.TBF. Editorial',
   melfiore: '.MELFIORE.',
-  ruc: '.RUC. Runway United Collective',
+  ruc: '.RUC. Runway Untd Collective',
   tgf: '.TGF. The Growth Factory',
   collective: 'Collective Hotel Casino',
 }

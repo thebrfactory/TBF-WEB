@@ -102,7 +102,7 @@ const LABELS = [
   },
   {
     code: '.RUC.',
-    name: '.RUNWAY UNITED COLLECTIVE.',
+    name: '.RUNWAY UNTD COLLECTIVE.',
     desc: 'Fashion film, editorial, SPFW, creative direction. Fashion as cultural memory.',
     href: '/labels/runwayunited',
   },

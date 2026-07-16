@@ -85,7 +85,7 @@ const FACTS_OVERVIEW = [
 const FACTS_LABELS = [
   { code: '.TBF.', name: '.THE BRAZILIAN FACTORY.', focus: 'Editorial · Culture · Community' },
   { code: '.TFD.', name: '.THE FIORE DAILY.', focus: 'Wellness · Ritual · Feminine Expression' },
-  { code: '.RUC.', name: '.RUNWAY UNITED COLLECTIVE.', focus: 'Fashion Film · Editorial · SPFW' },
+  { code: '.RUC.', name: '.RUNWAY UNTD COLLECTIVE.', focus: 'Fashion Film · Editorial · SPFW' },
   { code: '.TGF.', name: '.THE GROWTH FACTORY.', focus: 'Growth · Strategy · Business Development' },
 ]
 

@@ -50,7 +50,7 @@ const LABELS = [
   },
   {
     tag: '.RUC.',
-    name: 'Runway United Collective',
+    name: 'Runway Untd Collective',
     subtitle: 'Fashion Film Magazine',
     subtitlePt: 'Fashion Film Magazine',
     href: '/labels/runwayunited',

@@ -50,6 +50,12 @@ const B800: CSSProperties = { fontWeight: 800 }
 // Marca dentro do lockup do herói — peso mais forte da Brother1816 (Black).
 const B900: CSSProperties = { fontWeight: 900 }
 
+// Largura de ".THE GROWTH FACTORY." em ems (medida: 11.842), na Brother1816
+// ExtraBold com ls -0.04em, + 1% de folga contra arredondamento. Divide a
+// largura do grupo do herói para achar o corpo do título — o nome preenche a
+// linha e nunca quebra. Mudou o nome? Meça de novo, não estime.
+const TITLE_FIT = '11.96'
+
 // Lockup do herói: "a.k.a. .X." / descritor / "of .THE BRAZILIAN FACTORY."
 // Corpo próprio (não o SUBTITLE das seções): calibrado para as três linhas
 // caberem sem quebrar no mobile, inclusive no descritor mais longo (.TGF.).
@@ -61,10 +67,11 @@ const HERO_LOCKUP: CSSProperties = {
   textTransform: 'uppercase',
   color: '#ffffff',
   lineHeight: 1.6,
-  marginBottom: 'var(--tbf-space-10)',
+  margin: '0 0 var(--tbf-space-6)',
 }
 
 // Tagline do herói — duas linhas, fechando em "In Brazilian Bass."
+// Fecha o grupo: a base é o padding-bottom do próprio .hero.
 const HERO_TAGLINE: CSSProperties = {
   fontFamily: 'var(--tbf-type-display-xl-family)',
   fontSize: '1.25rem',
@@ -72,62 +79,54 @@ const HERO_TAGLINE: CSSProperties = {
   letterSpacing: '-0.01em',
   color: 'rgba(255,255,255,0.6)',
   lineHeight: 1.3,
-  marginBottom: 'var(--tbf-space-10)',
+  margin: 0,
 }
 
 export default function FactoryOfGrowthPage() {
   return (
     <div data-theme="inverse" style={{ background: '#000', color: '#fff' }}>
 
-      {/* ─── HERO — vídeo de abertura limpo ───────────────────────────────
-          Sem sombreado e sem texto por cima: todo o conteúdo vive abaixo do
-          letreiro (Ticker). Por isso o vídeo roda em opacidade cheia. */}
-      <section
-        aria-hidden="true"
-        style={{
-          position: 'relative',
-          width: '100vw',
-          minHeight: '100dvh',
-          overflow: 'hidden',
-        }}
-      >
-        <HeroVideo opacity={1} />
+      {/* ─── HERO — nome da label sobre o vídeo, junto à base ──────────────
+          Espelha o herói da home: grupo (nome + lockup + tagline) ancorado na
+          base do vídeo. Voltou a existir texto por cima, então o vídeo volta à
+          opacidade padrão do <HeroVideo /> — é ela, com o grain, que legibiliza.
+          `--tbf-label-title-fit` = largura do nome em ems na Brother1816
+          ExtraBold com ls -0.04em, medida no browser: é o divisor que faz o
+          título preencher a linha do grupo sem quebrar (ver .hero-label__title). */}
+      <section className="hero hero--label" aria-labelledby="tgf-h1" style={{ width: '100vw' }}>
+        <div className="hero__overlay-grain" aria-hidden="true" />
+
+        <HeroVideo />
+
+        <div
+          className="hero-label__content"
+          style={{ '--tbf-label-title-fit': TITLE_FIT } as CSSProperties}
+        >
+          <h1 id="tgf-h1" className="hero-label__title">
+            .THE GROWTH FACTORY.
+          </h1>
+
+          <p style={HERO_LOCKUP}>
+            a.k.a. <span style={B900}>.TGF.</span>
+            <br />
+            Growth &amp; Business Development Label
+            <br />
+            of <span style={B900}>.THE BRAZILIAN FACTORY.</span>
+          </p>
+
+          <p style={HERO_TAGLINE}>
+            Growth. Strategy. Expansion.
+            <br />
+            In Brazilian Bass.
+          </p>
+        </div>
       </section>
 
       {/* ─── TICKER ──────────────────────────────────────────────────────── */}
       <Ticker />
 
-      {/* ─── INTRO — título, lockup, tagline e decks ──────────────────────── */}
-      <section className="section container" aria-labelledby="tgf-h1">
-        <h1
-          id="tgf-h1"
-          style={{
-            fontFamily: 'var(--tbf-type-display-xl-family)',
-            fontSize: 'clamp(1.15rem, 5.7vw, 4.2rem)',
-            fontWeight: 800,
-            lineHeight: 0.95,
-            letterSpacing: 'var(--tbf-type-display-xl-ls)',
-            color: '#ffffff',
-            marginBottom: 'var(--tbf-space-5)',
-          }}
-        >
-          .THE GROWTH FACTORY.
-        </h1>
-
-        <p style={HERO_LOCKUP}>
-          a.k.a. <span style={B900}>.TGF.</span>
-          <br />
-          Growth &amp; Business Development Label
-          <br />
-          of <span style={B900}>.THE BRAZILIAN FACTORY.</span>
-        </p>
-
-        <p style={HERO_TAGLINE}>
-          Growth. Strategy. Expansion.
-          <br />
-          In Brazilian Bass.
-        </p>
-
+      {/* ─── INTRO — decks e CTA ─────────────────────────────────────────── */}
+      <section className="section container">
         <p
           style={{
             fontFamily: 'var(--tbf-type-deck-family)',

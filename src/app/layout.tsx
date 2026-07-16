@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     'cultura',
     'moda brasileira',
     'Mel Fiore',
-    'Runway United Collective',
+    'Runway Untd Collective',
     'The Growth Factory',
     'Brazilian label',
     'cultura brasileira',

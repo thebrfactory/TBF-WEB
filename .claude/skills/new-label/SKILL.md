@@ -27,28 +27,28 @@ Creates a new label institutional page at `src/app/labels/<label-slug>/page.tsx`
 
 ## Page structure (fixed order)
 
-> Herói reestruturado em 15/07/2026 a pedido do fundador: **nada de texto sobre o vídeo de
-> abertura, e tudo abaixo do letreiro**. Copie o herói de `labels/runwayunited/page.tsx`, que é
-> a referência canônica das três páginas.
+> Herói reestruturado em 16/07/2026 a pedido do fundador: **a página de label abre igual à
+> home** — nome + lockup + tagline sobre o vídeo, ancorados na base. Copie o herói de
+> `labels/runwayunited/page.tsx`, que é a referência canônica das três páginas.
 
-1. **HERO** — fullscreen, `minHeight: 100dvh`, `aria-hidden="true"`, contendo APENAS
-   `<HeroVideo opacity={1} />`. Sem sombreado, sem gradiente, sem texto: o vídeo roda limpo e
-   em opacidade cheia justamente porque não há nada por cima para legibilizar.
-2. **TICKER** — `<Ticker />` logo depois do herói. Tudo que é texto vive daqui para baixo.
-3. **INTRO** — `<section className="section container">` com, nesta ordem:
-   - H1 do nome completo da label
+1. **HERO** — `<section className="hero hero--label" style={{ width: '100vw' }}>` com
+   `<div className="hero__overlay-grain" />`, `<HeroVideo />` (opacidade **padrão**: é ela,
+   com o grain, que legibiliza o texto por cima) e o grupo `.hero-label__content`, nesta ordem:
+   - H1 `className="hero-label__title"` com o nome completo da label
    - lockup de 3 linhas (`HERO_LOCKUP`): `a.k.a. .X.` / `<Descritor> Label` / `of .THE BRAZILIAN FACTORY.`,
      com as marcas em `B900` (Black — peso mais forte da Brother1816)
    - tagline de 2 linhas (`HERO_TAGLINE`): as 3 palavras da label numa linha + `In Brazilian Bass.`
-   - decks + CTA
+2. **TICKER** — `<Ticker />` logo depois do herói.
+3. **INTRO** — `<section className="section container">` com decks + CTA (sem título: o H1 da
+   página é o do herói).
 4. **OVERVIEW** — `layout-b`, "What is .X.?" — two paragraphs in Portuguese
 5. **WHY IT EXISTS** — full-bleed section with middle image at 45% opacity, two columns: left = manifestos (3 lines) + explanation; right = philosophy headline + body
 6. **FOCUS AREAS** — tag cloud of 6–8 focus areas, `border: 1px solid rgba(255,255,255,0.3)`
 7. **INSIDE THE COLLECTIVE** — `layout-b`, relationship with .TBF., two paragraphs
 8. **FOOTER BLOCK** — full-bleed with closing image at 55% opacity, 3-line manifesto statement + provenance line + CTA
 
-> O sombreado sai só do herói (que não tem texto). As sections de fundo cheio (5 e 8) **mantêm**
-> o gradiente: ali existe texto por cima da imagem, e a regra de legibilidade continua valendo.
+> As sections de fundo cheio (5 e 8) mantêm o gradiente: ali existe texto por cima da imagem,
+> e a regra de legibilidade vale igual à do herói.
 
 ## CTA button
 
@@ -65,18 +65,27 @@ Creates a new label institutional page at `src/app/labels/<label-slug>/page.tsx`
 - All brand marks in `fontWeight: 800` — exceto as do lockup do herói, que vão em `900` (Black)
 - No dividers, no `<hr>`, no `nowrap`
 - `layout-b` for two-column sections
-- Typography tokens throughout — no hardcoded font sizes except `clamp(1.15rem, 5.7vw, 4.2rem)` for H1 and `0.9rem` for subtitle micro
+- Typography tokens throughout — no hardcoded font sizes except `TITLE_FIT` do H1 (abaixo) e `0.9rem` for subtitle micro
 
-### Por que o H1 é `clamp(1.15rem, 5.7vw, 4.2rem)`
+### O H1 do herói: por que é `100cqw ÷ TITLE_FIT`, e não um `clamp`
 
-Não é gosto, é medida: o fundador exige o nome da label **sem quebra de linha no mobile**
-(CLAUDE.md regra 1, mobile-first). O nome mais longo hoje (`.RUNWAY UNITED COLLECTIVE.`, 26
-caracteres) ocupa ~14,9 × o tamanho da fonte, na Brother1816 ExtraBold com `ls -0.04em`. A 390px
-sobram 350px de container ⇒ teto de ~23px. O `4.2rem` no topo respeita o `.section .container`,
-que tem `max-width: 1152px` (⇒ 1024px úteis), não os 1440px do herói antigo.
+A home preenche a linha com o **SVG** do logotype, que escala sozinho. Aqui o nome é **texto**,
+e texto não escala para caber. Então `.hero-label__content` é um container e o corpo do título
+sai de `calc(100cqw / var(--tbf-label-title-fit))`: o nome preenche a linha do grupo em
+qualquer viewport, sem quebrar (CLAUDE.md regra 1, mobile-first, e `nowrap` é proibido).
 
-**Ao criar uma label com nome mais longo que `.RUNWAY UNITED COLLECTIVE.`, refaça a conta** —
-o clamp não é universal, é calibrado para o pior caso atual.
+`TITLE_FIT` é a **largura do nome em ems**, medida no browser na Brother1816 ExtraBold com
+`ls -0.04em`, mais 1% de folga contra arredondamento. Medidos em 16/07/2026:
+
+| Nome | Medida (em) | `TITLE_FIT` |
+|---|---|---|
+| `.RUNWAY UNTD COLLECTIVE.` | 13.982 | `14.12` |
+| `.THE GROWTH FACTORY.` | 11.842 | `11.96` |
+| `.THE FIORE DAILY.` | 8.565 | `8.65` |
+
+**Label nova: meça, não estime.** Renderize o nome a `font-size: 100px` com `letter-spacing:
+-0.04em` na ExtraBold, divida a largura por 100, some 1%. Não há valor universal — cada nome
+tem o seu, e é isso que faz o título caber sozinho da home ao iPhone.
 
 ## After creating the page
 

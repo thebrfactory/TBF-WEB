@@ -1,5 +1,5 @@
 // =============================================================================
-// /labels/runwayunited — RUNWAY UNITED COLLECTIVE
+// /labels/runwayunited — RUNWAY UNTD COLLECTIVE
 // Institutional label page — part of .TBF. ecosystem
 // =============================================================================
 
@@ -10,11 +10,11 @@ import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { Ticker } from '@/components/Ticker/Ticker'
 
 export const metadata: Metadata = {
-  title: '.RUNWAY UNITED COLLECTIVE. | .RUC. | .THE BRAZILIAN FACTORY.',
+  title: '.RUNWAY UNTD COLLECTIVE. | .RUC. | .THE BRAZILIAN FACTORY.',
   description:
     'A fashion films and editorial label inside the .THE BRAZILIAN FACTORY. ecosystem. Where runway meets culture, film and creative direction.',
   openGraph: {
-    title: '.RUNWAY UNITED COLLECTIVE. | .RUC.',
+    title: '.RUNWAY UNTD COLLECTIVE. | .RUC.',
     description:
       'Fashion Film Magazine. Part of .THE BRAZILIAN FACTORY.',
     images: [{ url: '/og-factory.jpg', width: 1200, height: 630 }],
@@ -48,6 +48,12 @@ const B800: CSSProperties = { fontWeight: 800 }
 // Marca dentro do lockup do herói — peso mais forte da Brother1816 (Black).
 const B900: CSSProperties = { fontWeight: 900 }
 
+// Largura de ".RUNWAY UNTD COLLECTIVE." em ems (medida: 13.982), na Brother1816
+// ExtraBold com ls -0.04em, + 1% de folga contra arredondamento. Divide a
+// largura do grupo do herói para achar o corpo do título — o nome preenche a
+// linha e nunca quebra. Mudou o nome? Meça de novo, não estime.
+const TITLE_FIT = '14.12'
+
 // Lockup do herói: "a.k.a. .X." / descritor / "of .THE BRAZILIAN FACTORY."
 // Corpo próprio (não o SUBTITLE das seções): calibrado para as três linhas
 // caberem sem quebrar no mobile, inclusive no descritor mais longo (.TGF.).
@@ -59,10 +65,11 @@ const HERO_LOCKUP: CSSProperties = {
   textTransform: 'uppercase',
   color: '#ffffff',
   lineHeight: 1.6,
-  marginBottom: 'var(--tbf-space-10)',
+  margin: '0 0 var(--tbf-space-6)',
 }
 
 // Tagline do herói — duas linhas, fechando em "In Brazilian Bass."
+// Fecha o grupo: a base é o padding-bottom do próprio .hero.
 const HERO_TAGLINE: CSSProperties = {
   fontFamily: 'var(--tbf-type-display-xl-family)',
   fontSize: '1.25rem',
@@ -70,62 +77,54 @@ const HERO_TAGLINE: CSSProperties = {
   letterSpacing: '-0.01em',
   color: 'rgba(255,255,255,0.6)',
   lineHeight: 1.3,
-  marginBottom: 'var(--tbf-space-10)',
+  margin: 0,
 }
 
 export default function RunwayUnitedPage() {
   return (
     <div data-theme="inverse" style={{ background: '#000', color: '#fff' }}>
 
-      {/* ─── HERO — vídeo de abertura limpo ───────────────────────────────
-          Sem sombreado e sem texto por cima: todo o conteúdo vive abaixo do
-          letreiro (Ticker). Por isso o vídeo roda em opacidade cheia. */}
-      <section
-        aria-hidden="true"
-        style={{
-          position: 'relative',
-          width: '100vw',
-          minHeight: '100dvh',
-          overflow: 'hidden',
-        }}
-      >
-        <HeroVideo opacity={1} />
+      {/* ─── HERO — nome da label sobre o vídeo, junto à base ──────────────
+          Espelha o herói da home: grupo (nome + lockup + tagline) ancorado na
+          base do vídeo. Voltou a existir texto por cima, então o vídeo volta à
+          opacidade padrão do <HeroVideo /> — é ela, com o grain, que legibiliza.
+          `--tbf-label-title-fit` = largura do nome em ems na Brother1816
+          ExtraBold com ls -0.04em, medida no browser: é o divisor que faz o
+          título preencher a linha do grupo sem quebrar (ver .hero-label__title). */}
+      <section className="hero hero--label" aria-labelledby="ruc-h1" style={{ width: '100vw' }}>
+        <div className="hero__overlay-grain" aria-hidden="true" />
+
+        <HeroVideo />
+
+        <div
+          className="hero-label__content"
+          style={{ '--tbf-label-title-fit': TITLE_FIT } as CSSProperties}
+        >
+          <h1 id="ruc-h1" className="hero-label__title">
+            .RUNWAY UNTD COLLECTIVE.
+          </h1>
+
+          <p style={HERO_LOCKUP}>
+            a.k.a. <span style={B900}>.RUC.</span>
+            <br />
+            Editorial Fashion Label
+            <br />
+            of <span style={B900}>.THE BRAZILIAN FACTORY.</span>
+          </p>
+
+          <p style={HERO_TAGLINE}>
+            Music. Fashion. Film.
+            <br />
+            In Brazilian Bass.
+          </p>
+        </div>
       </section>
 
       {/* ─── TICKER ──────────────────────────────────────────────────────── */}
       <Ticker />
 
-      {/* ─── INTRO — título, lockup, tagline e decks ──────────────────────── */}
-      <section className="section container" aria-labelledby="ruc-h1">
-        <h1
-          id="ruc-h1"
-          style={{
-            fontFamily: 'var(--tbf-type-display-xl-family)',
-            fontSize: 'clamp(1.15rem, 5.7vw, 4.2rem)',
-            fontWeight: 800,
-            lineHeight: 0.95,
-            letterSpacing: 'var(--tbf-type-display-xl-ls)',
-            color: '#ffffff',
-            marginBottom: 'var(--tbf-space-5)',
-          }}
-        >
-          .RUNWAY UNITED COLLECTIVE.
-        </h1>
-
-        <p style={HERO_LOCKUP}>
-          a.k.a. <span style={B900}>.RUC.</span>
-          <br />
-          Editorial Fashion Label
-          <br />
-          of <span style={B900}>.THE BRAZILIAN FACTORY.</span>
-        </p>
-
-        <p style={HERO_TAGLINE}>
-          Music. Fashion. Film.
-          <br />
-          In Brazilian Bass.
-        </p>
-
+      {/* ─── INTRO — decks e CTA ─────────────────────────────────────────── */}
+      <section className="section container">
         <p
           style={{
             fontFamily: 'var(--tbf-type-deck-family)',
@@ -210,7 +209,7 @@ export default function RunwayUnitedPage() {
                 marginBottom: 'var(--tbf-space-6)',
               }}
             >
-              <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> is the fashion, film
+              <span style={B800}>.RUNWAY UNTD COLLECTIVE.</span> is the fashion, film
               and cultural storytelling label of{' '}
               <span style={B800}>.THE BRAZILIAN FACTORY.</span>
             </p>
@@ -337,7 +336,7 @@ export default function RunwayUnitedPage() {
                   color: 'rgba(255,255,255,0.75)',
                 }}
               >
-                <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> exists to
+                <span style={B800}>.RUNWAY UNTD COLLECTIVE.</span> exists to
                 document the creative layer of the{' '}
                 <span style={B800}>.THE BRAZILIAN FACTORY.</span> ecosystem,
                 transforming fashion into narrative and the runway into
@@ -456,7 +455,7 @@ export default function RunwayUnitedPage() {
               color: 'rgba(255,255,255,0.75)',
             }}
           >
-            <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> is the fashion
+            <span style={B800}>.RUNWAY UNTD COLLECTIVE.</span> is the fashion
             and cultural storytelling label of{' '}
             <span style={B800}>.THE BRAZILIAN FACTORY.</span>
           </p>

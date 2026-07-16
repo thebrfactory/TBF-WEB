@@ -78,7 +78,7 @@ export const WORKS: Work[] = [
     client: 'São Paulo Fashion Week',
     summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
     description:
-      'Direção de arte para a São Paulo Fashion Week. Construção de um universo visual que traduz a passarela em narrativa de marca. (Mesmo corpo de trabalho de Runway United Collective.)',
+      'Direção de arte para a São Paulo Fashion Week. Construção de um universo visual que traduz a passarela em narrativa de marca. (Mesmo corpo de trabalho de Runway Untd Collective.)',
     selected: true,
     media: {
       cover: `${base}/spfw-the-paradise/cover.webp`,

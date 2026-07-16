@@ -153,7 +153,7 @@ export default function MediaPage() {
               category: 'Labels',
               items: [
                 '.TFD. | THE FIORE DAILY mark',
-                '.RUC. | RUNWAY UNITED COLLECTIVE mark',
+                '.RUC. | RUNWAY UNTD COLLECTIVE mark',
                 '.TGF. | THE GROWTH FACTORY mark',
                 'Label color systems',
               ],

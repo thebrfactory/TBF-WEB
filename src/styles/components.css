@@ -711,6 +711,42 @@
   }
 }
 
+/* ── Hero das LABELS — nome + lockup + tagline junto à base do vídeo ──
+   Mesmo grupo do hero da home (margem a margem no mobile, 65% centralizado no
+   desktop), com uma diferença: aqui o nome é TEXTO, não o SVG do logotype.
+   Um SVG escala sozinho até a largura do grupo; texto não. Por isso o grupo é
+   um container e o corpo do título sai de `100cqw ÷ --tbf-label-title-fit`,
+   onde o `fit` é a largura do nome medida em ems (ver comentário na página).
+   Assim o nome preenche a linha e nunca quebra, em qualquer viewport. */
+.hero-label__content {
+  container-type: inline-size;
+  position: relative;
+  z-index: var(--tbf-z-overlay);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: var(--tbf-hero-text);
+}
+
+.hero-label__title {
+  width: 100%;
+  margin: 0 0 var(--tbf-space-4);
+  font-family: var(--tbf-type-display-xl-family);
+  font-size: calc(100cqw / var(--tbf-label-title-fit));
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .hero-label__content {
+    width: 65%;
+    margin-inline: auto;
+  }
+}
+
 .hero__media {
   position: absolute;
   inset: 0;

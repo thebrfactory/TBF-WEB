@@ -326,7 +326,7 @@ export function PitchClient() {
           {[
             { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/editorial', color: '#F0EDE6' },
             { tag: '.TFD.', name: 'The Fiore Daily', desc: 'Intimacy-Wellness Community', href: '/labels/thefioredaily', color: '#C8A96A' },
-            { tag: '.RUC.', name: 'Runway United Collective', desc: 'Fashion Film Magazine', href: '/labels/runwayunited', color: '#F0EDE6' },
+            { tag: '.RUC.', name: 'Runway Untd Collective', desc: 'Fashion Film Magazine', href: '/labels/runwayunited', color: '#F0EDE6' },
             { tag: '.TGF.', name: 'The Growth Factory', desc: 'Worldwide Brazilian Support', href: '/labels/factoryofgrowth', color: ACCENT },
           ].map((item, i) => (
             <PitchReveal key={item.tag} delay={300 + i * 80}>

@@ -44,7 +44,7 @@ const ENTRY_POINTS: {
   {
     value: 'ruc',
     tag: '.RUC.',
-    name: 'Runway United Collective',
+    name: 'Runway Untd Collective',
     desc: 'Fashion films, editorial de moda, colaboração SPFW e backstage.',
   },
   {

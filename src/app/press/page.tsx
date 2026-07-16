@@ -108,7 +108,7 @@ export default function PressRoomPage() {
               Our work is built across four active labels:{' '}
               <span style={B800}>.TBF.</span>,{' '}
               <span style={B800}>.THE FIORE DAILY.</span>,{' '}
-              <span style={B800}>.RUNWAY UNITED COLLECTIVE.</span> and{' '}
+              <span style={B800}>.RUNWAY UNTD COLLECTIVE.</span> and{' '}
               <span style={B800}>.THE GROWTH FACTORY.</span>
             </p>
           </div>

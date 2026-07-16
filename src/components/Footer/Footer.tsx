@@ -11,7 +11,7 @@ const SITE_VERSION = '.TBF.SYSTEM VERSION 1.5.0'
 const FOOTER_BUS = [
   { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
   { href: '/labels/thefioredaily', label: '.TFD. | THE FIORE DAILY' },
-  { href: '/labels/runwayunited', label: '.RUC. | RUNWAY UNITED COLLECTIVE' },
+  { href: '/labels/runwayunited', label: '.RUC. | RUNWAY UNTD COLLECTIVE' },
   { href: '/labels/factoryofgrowth', label: '.TGF. | THE GROWTH FACTORY' },
 ] as const
 
