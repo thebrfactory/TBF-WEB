@@ -1100,6 +1100,10 @@
   text-decoration: none;
   padding: var(--tbf-btn-padding-y-sm) var(--tbf-btn-padding-x-sm);
   border-radius: var(--tbf-btn-radius);
+  /* Flat design em todo o site: zera o bisel `outset` que o <button> herda do
+     user-agent (deixava os botões-submit com cara 3D/brega). Borda transparente
+     = sem mudança visual nos .btn que já eram chapados (<a>/Link). */
+  border: 1px solid transparent;
   cursor: pointer;
   transition:
     background-color var(--tbf-btn-duration) var(--tbf-motion-easing-micro),
@@ -1469,11 +1473,9 @@ textarea.field__input {
 .cookie-banner__btn {
   width: 100%;
   justify-content: center;
-  /* Flat design (pedido — igual ao popup): remove o bisel `outset` que o
-     <button> herda do user-agent e deixava os botões com cara 3D/brega. */
-  border: 1px solid transparent;
 }
 
+/* Reject ganha contorno fino e flat (o .btn base já zerou o bisel `outset`). */
 .cookie-banner__btn.btn--secondary {
   border-color: var(--tbf-border);
 }
