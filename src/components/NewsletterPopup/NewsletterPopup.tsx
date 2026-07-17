@@ -2,8 +2,8 @@
 
 // =============================================================================
 // NEWSLETTER POPUP — captura de e-mail sitewide
-// Aparece uma vez por sessão, por ENGAJAMENTO: metade da página rolada ou 30s
-// no site, o que vier primeiro. Nunca aborda quem acabou de chegar.
+// Aparece uma vez por sessão, SOMENTE por tempo: 20s no site (pedido do fundador).
+// Sem gatilho de scroll — nunca aborda quem acabou de chegar.
 // Reaproveita a mesma lógica de submit do MailingList (rodapé) via useNewsletterSubmit.
 // =============================================================================
 
@@ -13,8 +13,7 @@ import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
-const SHOW_DELAY_MS = 30000
-const SCROLL_RATIO = 0.5
+const SHOW_DELAY_MS = 20000
 
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false)
@@ -27,30 +26,16 @@ export function NewsletterPopup() {
 
   // Trigger — uma vez por sessão. Só aparece DEPOIS que a escolha de cookies foi
   // feita (senão popup e cookie banner se sobrepõem na primeira visita, sobretudo
-  // no mobile) e DEPOIS que a pessoa demonstrou interesse.
+  // no mobile) e SOMENTE após 20s no site (pedido do fundador — sem gatilho de scroll).
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return
 
     let stop = () => {}
 
-    // Metade da página rolada OU 30s — o que vier primeiro. Em página curta
-    // (sem scroll possível) só o tempo dispara.
+    // Único gatilho: 20s no site.
     const start = () => {
-      const fire = () => {
-        setOpen(true)
-        stop()
-      }
-      const onScroll = () => {
-        const max = document.documentElement.scrollHeight - window.innerHeight
-        if (max > 0 && window.scrollY / max >= SCROLL_RATIO) fire()
-      }
-
-      const timer = setTimeout(fire, SHOW_DELAY_MS)
-      window.addEventListener('scroll', onScroll, { passive: true })
-      stop = () => {
-        clearTimeout(timer)
-        window.removeEventListener('scroll', onScroll)
-      }
+      const timer = setTimeout(() => setOpen(true), SHOW_DELAY_MS)
+      stop = () => clearTimeout(timer)
     }
 
     let hasCookieChoice = true

@@ -1,24 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+// =============================================================================
+// MAILING LIST — captura de e-mail no rodapé
+// Mesma lógica/idioma visual do NewsletterPopup (pedido do fundador): sem
+// checkbox de consentimento — o envio do form É o ato de consentimento (a API já
+// ignora o campo `consent`), aviso de privacidade em inglês, cores alinhadas.
+// =============================================================================
+
 import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 
 export function MailingList() {
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
-  const [consent, setConsent] = useState(false)
-  const [consentError, setConsentError] = useState(false)
-
-  // Consentimento LGPD obrigatório antes do envio.
-  function handleSubmit(e: React.FormEvent) {
-    if (!consent) {
-      e.preventDefault()
-      setConsentError(true)
-      return
-    }
-    setConsentError(false)
-    submit(e, { consent: true })
-  }
 
   return (
     <section
@@ -72,7 +65,7 @@ export function MailingList() {
               fontFamily: 'var(--tbf-font-family-ui)',
               fontSize: 'var(--tbf-type-micro-size)',
               letterSpacing: 'var(--tbf-type-micro-ls)',
-              color: 'var(--tbf-accent)',
+              color: 'var(--tbf-text-primary)',
               textTransform: 'uppercase',
             }}
           >
@@ -80,7 +73,7 @@ export function MailingList() {
           </p>
         ) : (
           <form
-            onSubmit={handleSubmit}
+            onSubmit={submit}
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -112,24 +105,6 @@ export function MailingList() {
               }}
             />
 
-            {/* Consentimento LGPD */}
-            <label className="consent-check">
-              <input
-                type="checkbox"
-                checked={consent}
-                onChange={(e) => { setConsent(e.target.checked); if (e.target.checked) setConsentError(false) }}
-                aria-invalid={consentError}
-              />
-              <span>
-                Você concorda em receber nossas comunicações.{' '}
-                <Link href="/legal/privacy">Saiba mais em nossa política de privacidade.</Link>
-              </span>
-            </label>
-            {consentError && (
-              <p role="alert" className="consent-check__error">
-                Confirme o consentimento para continuar.
-              </p>
-            )}
             <button
               type="submit"
               disabled={status === 'loading'}
@@ -145,6 +120,31 @@ export function MailingList() {
                 </>
               )}
             </button>
+
+            {/* Aviso LGPD — o envio do form é o ato de consentimento (igual ao popup). */}
+            <p
+              style={{
+                maxWidth: '46ch',
+                fontFamily: 'var(--tbf-type-caption-family)',
+                fontSize: 'var(--tbf-type-caption-size-sm)',
+                lineHeight: 1.5,
+                color: 'var(--tbf-text-tertiary)',
+              }}
+            >
+              By subscribing, you agree to our{' '}
+              <Link
+                href="/legal/privacy"
+                style={{
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                  textUnderlineOffset: '2px',
+                }}
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
+
             {status === 'error' && (
               <p
                 role="alert"
@@ -152,7 +152,7 @@ export function MailingList() {
                   width: '100%',
                   fontFamily: 'var(--tbf-font-family-ui)',
                   fontSize: 'var(--tbf-type-micro-size)',
-                  color: '#ff4444',
+                  color: 'var(--tbf-color-status-error)',
                   textAlign: 'center',
                 }}
               >

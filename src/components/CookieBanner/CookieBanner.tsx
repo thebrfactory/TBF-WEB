@@ -68,48 +68,36 @@ export function CookieBanner() {
       aria-label="Aviso de cookies"
     >
       <div className="cookie-banner__inner">
-        <div className="cookie-banner__body">
-          <p className="cookie-banner__text">
-            Nós utilizamos cookies e outras tecnologias semelhantes para melhorar a
-            sua experiência em nosso site. Ao continuar navegando, você concorda com
-            a nossa{' '}
-            <Link href="/legal/privacy" className="cookie-banner__link">
-              Política de Privacidade
-            </Link>
-            .
-          </p>
-
-          {showPrefs && (
-            <div className="cookie-banner__prefs">
-              <label className="cookie-pref cookie-pref--locked">
-                <input type="checkbox" checked disabled aria-label="Cookies necessários (sempre ativos)" />
-                <span>
-                  <strong>Necessários</strong>: essenciais para o funcionamento do site. Sempre ativos.
-                </span>
-              </label>
-              <label className="cookie-pref">
-                <input
-                  type="checkbox"
-                  checked={analytics}
-                  onChange={(e) => setAnalytics(e.target.checked)}
-                />
-                <span>
-                  <strong>Analytics</strong>: nos ajudam a entender como o site é usado.
-                </span>
-              </label>
-              <label className="cookie-pref">
-                <input
-                  type="checkbox"
-                  checked={marketing}
-                  onChange={(e) => setMarketing(e.target.checked)}
-                />
-                <span>
-                  <strong>Marketing</strong>: personalizam conteúdo e comunicações.
-                </span>
-              </label>
-            </div>
-          )}
-        </div>
+        {showPrefs && (
+          <div className="cookie-banner__prefs">
+            <label className="cookie-pref cookie-pref--locked">
+              <input type="checkbox" checked disabled aria-label="Cookies necessários (sempre ativos)" />
+              <span>
+                <strong>Necessários</strong>: essenciais para o funcionamento do site. Sempre ativos.
+              </span>
+            </label>
+            <label className="cookie-pref">
+              <input
+                type="checkbox"
+                checked={analytics}
+                onChange={(e) => setAnalytics(e.target.checked)}
+              />
+              <span>
+                <strong>Analytics</strong>: nos ajudam a entender como o site é usado.
+              </span>
+            </label>
+            <label className="cookie-pref">
+              <input
+                type="checkbox"
+                checked={marketing}
+                onChange={(e) => setMarketing(e.target.checked)}
+              />
+              <span>
+                <strong>Marketing</strong>: personalizam conteúdo e comunicações.
+              </span>
+            </label>
+          </div>
+        )}
 
         <div className="cookie-banner__actions">
           {showPrefs ? (
@@ -124,16 +112,26 @@ export function CookieBanner() {
           <button type="button" className="btn btn--secondary cookie-banner__btn" onClick={rejectOptional}>
             Rejeitar cookies opcionais
           </button>
-          {!showPrefs && (
-            <button
-              type="button"
-              className="cookie-banner__prefs-toggle"
-              onClick={() => setShowPrefs(true)}
-            >
-              Preferências de cookies
-            </button>
-          )}
         </div>
+
+        {/* Texto abaixo dos botões (pedido), enxuto. */}
+        <p className="cookie-banner__text">
+          Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com a{' '}
+          <Link href="/legal/privacy" className="cookie-banner__link">
+            Política de Privacidade
+          </Link>
+          .
+        </p>
+
+        {!showPrefs && (
+          <button
+            type="button"
+            className="cookie-banner__prefs-toggle"
+            onClick={() => setShowPrefs(true)}
+          >
+            Preferências de cookies
+          </button>
+        )}
       </div>
     </div>
   )

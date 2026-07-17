@@ -91,7 +91,7 @@ export default async function EditorialPage() {
             height={126}
             unoptimized
             priority
-            style={{ width: 'min(78vw, 520px)', height: 'auto' }}
+            style={{ width: 'min(39vw, 260px)', height: 'auto' }}
           />
         </h1>
       </section>

@@ -340,32 +340,11 @@
 }
 
 /* Top section: logo full-width, then labels + instagram side-by-side */
+/* Topo do rodapé — apenas o selo da marca (.TBF. SÃO PAULO). Alinhado à
+   esquerda em qualquer viewport. */
 .footer__grid--top {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--tbf-space-10) var(--tbf-space-6);
-  align-items: start;
-}
-
-.footer__grid--top > :first-child {
-  grid-column: 1 / -1;
-}
-
-.footer__grid--top > :last-child {
+  display: block;
   text-align: left;
-}
-
-@media (min-width: 1024px) {
-  .footer__grid--top {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--tbf-space-8);
-  }
-  .footer__grid--top > :first-child {
-    grid-column: auto;
-  }
-  .footer__grid--top > :last-child {
-    text-align: right;
-  }
 }
 
 /* Nav section: pages + company side-by-side, legal full-width below */
@@ -859,6 +838,9 @@
   position: sticky;
   top: var(--tbf-nav-height-sm);
   z-index: var(--tbf-ticker-z);
+  /* Listra pontilhada fina nas extremidades (pedido) — branca. */
+  border-top: 2px dotted var(--tbf-text-primary);
+  border-bottom: 2px dotted var(--tbf-text-primary);
 }
 
 @media (min-width: 1280px) {
@@ -914,7 +896,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: carouselInfiniteScroll 34s linear infinite;
+  animation: carouselInfiniteScroll 28s linear infinite;
   will-change: transform;
 }
 
@@ -1399,7 +1381,7 @@ textarea.field__input {
     0 32px 80px rgba(0, 0, 0, 0.85),
     0 12px 32px rgba(0, 0, 0, 0.7),
     0 2px 8px rgba(0, 0, 0, 0.6);
-  padding: var(--tbf-space-6);
+  padding: var(--tbf-space-5);
 }
 
 /* Desktop: ancora o card no canto inferior esquerdo. Centralizado ele cai em cima
@@ -1415,7 +1397,7 @@ textarea.field__input {
 .cookie-banner__inner {
   display: flex;
   flex-direction: column;
-  gap: var(--tbf-space-4);
+  gap: var(--tbf-space-3);
 }
 
 .cookie-banner__text {
@@ -1487,14 +1469,26 @@ textarea.field__input {
 .cookie-banner__btn {
   width: 100%;
   justify-content: center;
+  /* Flat design (pedido — igual ao popup): remove o bisel `outset` que o
+     <button> herda do user-agent e deixava os botões com cara 3D/brega. */
+  border: 1px solid transparent;
+}
+
+.cookie-banner__btn.btn--secondary {
+  border-color: var(--tbf-border);
+}
+
+.cookie-banner__btn.btn--secondary:hover {
+  border-color: var(--tbf-accent);
 }
 
 .cookie-banner__prefs-toggle {
+  align-self: center;
   background: none;
   border: none;
-  padding: var(--tbf-space-2);
+  padding: var(--tbf-space-1) var(--tbf-space-2);
   font-family: var(--tbf-type-tag-family);
-  font-size: var(--tbf-type-tag-size);
+  font-size: 0.625rem;
   letter-spacing: var(--tbf-type-tag-ls);
   text-transform: var(--tbf-type-tag-transform);
   color: var(--tbf-text-tertiary);
@@ -2214,7 +2208,10 @@ button.tag:focus-visible {
    MANIFESTO SCROLLYTELLING
    ============================================================================= */
 
-@supports (animation-timeline: scroll()) {
+/* Testa view() (não scroll()): o Safari/WebKit mobile chegou a reportar suporte a
+   scroll() sem animar view() corretamente, deixando o texto preso em opacity:0
+   ("cadê o texto?"). Testando view() diretamente, quem não anima cai no fallback. */
+@supports (animation-timeline: view()) {
   .manifesto-fragment {
     opacity: 0;
     transform: translateY(var(--tbf-motion-translate-reveal));
@@ -2235,7 +2232,7 @@ button.tag:focus-visible {
   }
 }
 
-@supports not (animation-timeline: scroll()) {
+@supports not (animation-timeline: view()) {
   .manifesto-fragment {
     opacity: 1;
     transform: none;

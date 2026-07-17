@@ -8,20 +8,6 @@ import Image from 'next/image'
 
 const SITE_VERSION = '.TBF.SYSTEM VERSION 1.5.0'
 
-const FOOTER_BUS = [
-  { href: '/editorial', label: '.TBF. | THE BRAZILIAN FACTORY' },
-  { href: '/labels/thefioredaily', label: '.TFD. | THE FIORE DAILY' },
-  { href: '/labels/runwayunited', label: '.RUC. | RUNWAY UNTD COLLECTIVE' },
-  { href: '/labels/factoryofgrowth', label: '.TGF. | THE GROWTH FACTORY' },
-] as const
-
-const SOCIAL_HANDLES = [
-  { href: 'https://instagram.com/thebrfactory', label: '@thebrfactory' },
-  { href: 'https://instagram.com/thefioredaily', label: '@thefioredaily' },
-  { href: 'https://instagram.com/runwayunited', label: '@runwayunited' },
-  { href: 'https://instagram.com/factoryofgrowth', label: '@factoryofgrowth' },
-] as const
-
 const NAV_COLUMNS = [
   {
     heading: 'Pages',
@@ -30,8 +16,8 @@ const NAV_COLUMNS = [
       { href: '/labels', label: 'Labels' },
       { href: '/manifesto', label: 'Manifesto' },
       { href: '/collective', label: 'Collective' },
-      { href: '/pitch', label: 'Pitch' },
       { href: '/access', label: 'Access' },
+      { href: '/pitch', label: 'Pitch' },
     ],
   },
   {
@@ -64,15 +50,16 @@ export function Footer() {
     <footer className="footer" role="contentinfo">
       <div className="footer__inner">
 
-        {/* Top: logo full-width | labels + instagram 2-col mobile / 3-col desktop */}
+        {/* Top: selo da marca (.TBF. SÃO PAULO) — reduzido a um selo, no mesmo
+            lugar. Blocos Labels + Instagram removidos (pedido). */}
         <div className="footer__grid--top">
           <div>
-            <Link href="/" aria-label=".THE BRAZILIAN FACTORY." style={{ display: 'block', maxWidth: 220 }}>
+            <Link href="/" aria-label=".THE BRAZILIAN FACTORY." style={{ display: 'block', maxWidth: 110 }}>
               <Image
                 src="/brand/TBF-SAO-PAULO.svg"
                 alt=".TBF. SÃO PAULO"
-                width={220}
-                height={158}
+                width={110}
+                height={79}
                 style={{ display: 'block', width: '100%', height: 'auto' }}
                 unoptimized
               />
@@ -85,40 +72,6 @@ export function Footer() {
               Consumed Worldwide.
             </p>
           </div>
-
-          <nav aria-label=".TBF. labels">
-            <p className="footer__meta" style={{ textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)', padding: 0, opacity: 0.4 }}>
-              Labels
-            </p>
-            <ul className="footer__nav-list" role="list">
-              {FOOTER_BUS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="footer__link">{link.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label=".TBF. social media">
-            <p className="footer__meta" style={{ textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)', padding: 0, opacity: 0.4 }}>
-              Instagram
-            </p>
-            <ul className="footer__nav-list" role="list" style={{ opacity: 0.55 }}>
-              {SOCIAL_HANDLES.map((handle) => (
-                <li key={handle.href}>
-                  <a
-                    href={handle.href}
-                    className="footer__link"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${handle.label} on Instagram (opens in new tab)`}
-                  >
-                    {handle.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
         </div>
 
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
@@ -142,10 +95,9 @@ export function Footer() {
           ))}
         </div>
 
-        {/* Cidades sob gestão .TBF. — logo acima da barra de copyright, em todas
-            as páginas (pedido). Evidencia onde a .TBF. faz gestão. */}
+        {/* Cidades .TBF. — logo acima da barra de copyright, em todas as páginas
+            (pedido). O label "Gestão .TBF." foi removido (pedido). */}
         <div className="footer__cities">
-          <p className="footer__cities-label">Gestão .TBF.</p>
           <p className="footer__cities-list">
             São Paulo, SP. <span aria-hidden="true">|</span> Goiânia, GO. <span aria-hidden="true">|</span> Salvador, BA.
           </p>
