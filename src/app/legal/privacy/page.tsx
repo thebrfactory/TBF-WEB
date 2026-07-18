@@ -68,7 +68,7 @@ export default function PrivacyPage() {
         <span style={LEGAL_TAG}>Legal</span>
         <h1 style={TITLE}>Privacy Policy</h1>
         <p style={META}>
-          Last updated: June 2026 · Compliant with Lei 13.709/2018 (LGPD)
+          Last updated: July 2026 · Compliant with Lei 13.709/2018 (LGPD)
         </p>
 
         <p style={{ ...BODY, marginTop: 'var(--tbf-space-10)' }}>
@@ -87,8 +87,9 @@ export default function PrivacyPage() {
         <p style={BODY}>
           We may collect the following categories of personal data: (a) <span style={B}>Identity data</span>:
           name, email address, when voluntarily provided via contact forms or newsletter subscriptions;
-          (b) <span style={B}>Usage data</span>: IP address, browser type, pages visited, time on page,
-          referring URLs, collected automatically through analytics tools; (c) <span style={B}>Communications</span>:
+          (b) <span style={B}>Usage data</span>: browser type, pages visited, time on page and
+          referring URLs, collected through privacy-first analytics only where you have consented;
+          (c) <span style={B}>Communications</span>:
           content of messages you send us via email or contact forms.
         </p>
         <p style={BODY}>
@@ -99,9 +100,9 @@ export default function PrivacyPage() {
         <h2 style={H2}>2. Legal Basis for Processing (LGPD art. 7)</h2>
         <p style={BODY}>
           We process your personal data on the following legal bases: (a) <span style={B}>Consent</span>:
-          when you subscribe to our newsletter or submit a contact form; (b) <span style={B}>Legitimate interest</span>:
-          for analytics, site performance and fraud prevention; (c) <span style={B}>Legal obligation</span>:
-          when required by applicable Brazilian law.
+          when you subscribe to our newsletter, submit a contact form, or enable analytics cookies;
+          (b) <span style={B}>Legitimate interest</span>: for site performance, security and fraud
+          prevention; (c) <span style={B}>Legal obligation</span>: when required by applicable Brazilian law.
         </p>
 
         <h2 style={H2}>3. How We Use Your Data</h2>
@@ -119,7 +120,8 @@ export default function PrivacyPage() {
         <p style={BODY}>
           We retain your personal data only for as long as necessary to fulfill the purposes
           described in this policy, or as required by applicable law. Newsletter subscriber
-          data is retained until you unsubscribe. Analytics data is retained for up to 26 months.
+          data is retained until you unsubscribe. Aggregated analytics data is retained for a
+          limited period, in line with our analytics provider&apos;s retention policy.
         </p>
 
         <h2 style={H2}>5. Your Rights Under LGPD</h2>
@@ -139,18 +141,22 @@ export default function PrivacyPage() {
 
         <h2 style={H2}>6. Cookies</h2>
         <p style={BODY}>
-          We use cookies and similar technologies to improve your experience, analyze site usage
-          and support our analytics. Essential cookies are required for site functionality.
-          Analytics cookies require your consent. You may adjust your browser settings to refuse
-          cookies, though this may affect site functionality.
+          We use two categories of cookies and similar technologies. <span style={B}>Essential</span>{' '}
+          cookies are required for site functionality and are always active. <span style={B}>Analytics</span>{' '}
+          cookies, provided by Vercel, are privacy-first and load only after you consent; they help
+          us understand aggregate site usage without profiling you or tracking you across other sites.
+          We do not use advertising or marketing cookies. You can accept, reject or change your
+          choice at any time via the <span style={B}>Cookie Preferences</span> link in the footer, or
+          by adjusting your browser settings.
         </p>
 
         <h2 style={H2}>7. Third-Party Services</h2>
         <p style={BODY}>
           We use the following third-party services which may process your data:
-          Google Analytics (site analytics), Vercel (hosting and CDN), Resend (transactional email),
-          and Sanity (content management). Each service operates under its own privacy policy.
-          We ensure that all data processors provide adequate levels of data protection.
+          Vercel (hosting, CDN and privacy-first, cookieless analytics via Vercel Analytics and
+          Speed Insights), Resend (transactional email), Brevo (newsletter delivery and mailing-list
+          management), and Sanity (content management). Each service operates under its own privacy
+          policy. We ensure that all data processors provide adequate levels of data protection.
         </p>
 
         <h2 style={H2}>8. Data Security</h2>

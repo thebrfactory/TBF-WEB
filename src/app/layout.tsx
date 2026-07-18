@@ -12,8 +12,7 @@ import { MailingList } from '@/components/MailingList/MailingList'
 import { NewsletterPopup } from '@/components/NewsletterPopup/NewsletterPopup'
 import { CookieBanner } from '@/components/CookieBanner/CookieBanner'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
+import { ConsentedAnalytics } from '@/components/Analytics/ConsentedAnalytics'
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -194,8 +193,8 @@ export default function RootLayout({
 
         <CustomCursor />
 
-        <Analytics />
-        <SpeedInsights />
+        {/* Analytics carrega SÓ com consentimento (gateado pelo CookieBanner). */}
+        <ConsentedAnalytics />
       </body>
     </html>
   )

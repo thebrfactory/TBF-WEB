@@ -5,6 +5,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
 
 const SITE_VERSION = '.TBF.SYSTEM VERSION 1.5.0'
 
@@ -90,6 +91,11 @@ export function Footer() {
                     <Link href={link.href} className="footer__link">{link.label}</Link>
                   </li>
                 ))}
+                {col.heading === 'Legal' && (
+                  <li>
+                    <CookiePrefsButton />
+                  </li>
+                )}
               </ul>
             </nav>
           ))}

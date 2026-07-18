@@ -2,8 +2,11 @@
 
 // =============================================================================
 // COOKIE BANNER — consentimento LGPD sitewide
-// Aparece na primeira visita (sem escolha salva). 3 ações: aceitar todos ·
-// rejeitar opcionais · preferências. Persiste em localStorage. Zero rede.
+// Aparece na primeira visita (sem escolha salva). Duas categorias REAIS: cookies
+// necessários (sempre) + analytics (Vercel — gateado de verdade pelo
+// ConsentedAnalytics). Sem categoria de marketing: o site não seta esse cookie.
+// A escolha persiste em localStorage e pode ser reaberta a qualquer momento pelo
+// link "Cookie Preferences" do rodapé (evento tbf-open-cookie-prefs). Zero rede.
 // =============================================================================
 
 import { useEffect, useState } from 'react'
@@ -14,7 +17,6 @@ const STORAGE_KEY = 'tbf-cookie-consent'
 type Consent = {
   necessary: true
   analytics: boolean
-  marketing: boolean
   ts: number
 }
 
@@ -22,15 +24,35 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false)
   const [showPrefs, setShowPrefs] = useState(false)
   const [analytics, setAnalytics] = useState(true)
-  const [marketing, setMarketing] = useState(true)
 
-  // Só aparece se ainda não houver escolha registrada.
+  // Primeira visita → aparece. Reabertura (rodapé) → aparece já em modo
+  // preferências, refletindo a escolha salva (revogabilidade, LGPD art. 18).
   useEffect(() => {
     try {
-      if (!localStorage.getItem(STORAGE_KEY)) setVisible(true)
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (!raw) {
+        setVisible(true)
+      } else {
+        const saved = JSON.parse(raw) as Partial<Consent>
+        setAnalytics(saved.analytics ?? true)
+      }
     } catch {
       setVisible(true)
     }
+
+    // Reabridor: qualquer lugar do site pode reabrir o painel de preferências.
+    const onReopen = () => {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY)
+        if (raw) setAnalytics((JSON.parse(raw) as Partial<Consent>).analytics ?? true)
+      } catch {
+        /* storage bloqueado — mantém o estado atual */
+      }
+      setShowPrefs(true)
+      setVisible(true)
+    }
+    window.addEventListener('tbf-open-cookie-prefs', onReopen)
+    return () => window.removeEventListener('tbf-open-cookie-prefs', onReopen)
   }, [])
 
   function persist(consent: Consent) {
@@ -40,8 +62,9 @@ export function CookieBanner() {
       /* modo privado / storage bloqueado — segue sem persistir */
     }
     setVisible(false)
-    // Avisa o NewsletterPopup que a escolha de cookies foi feita — ele só aparece
-    // depois disso, para os dois nunca se sobreporem na primeira visita.
+    setShowPrefs(false)
+    // Avisa (1) o NewsletterPopup, que só aparece depois da escolha de cookies, e
+    // (2) o ConsentedAnalytics, que liga/desliga o Vercel Analytics na hora.
     try {
       window.dispatchEvent(new Event('tbf-cookie-choice'))
     } catch {
@@ -50,13 +73,13 @@ export function CookieBanner() {
   }
 
   const acceptAll = () =>
-    persist({ necessary: true, analytics: true, marketing: true, ts: Date.now() })
+    persist({ necessary: true, analytics: true, ts: Date.now() })
 
   const rejectOptional = () =>
-    persist({ necessary: true, analytics: false, marketing: false, ts: Date.now() })
+    persist({ necessary: true, analytics: false, ts: Date.now() })
 
   const savePrefs = () =>
-    persist({ necessary: true, analytics, marketing, ts: Date.now() })
+    persist({ necessary: true, analytics, ts: Date.now() })
 
   if (!visible) return null
 
@@ -83,17 +106,7 @@ export function CookieBanner() {
                 onChange={(e) => setAnalytics(e.target.checked)}
               />
               <span>
-                <strong>Analytics</strong>: nos ajudam a entender como o site é usado.
-              </span>
-            </label>
-            <label className="cookie-pref">
-              <input
-                type="checkbox"
-                checked={marketing}
-                onChange={(e) => setMarketing(e.target.checked)}
-              />
-              <span>
-                <strong>Marketing</strong>: personalizam conteúdo e comunicações.
+                <strong>Analytics</strong>: nos ajudam a entender como o site é usado (Vercel, sem perfilamento).
               </span>
             </label>
           </div>
