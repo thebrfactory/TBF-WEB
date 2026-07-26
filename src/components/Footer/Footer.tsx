@@ -75,6 +75,17 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Cidades .TBF.: logo abaixo de "Consumed Worldwide." e ACIMA das colunas
+            Pages/Company/Legal (pedido). Espalhadas de ponta a ponta da largura,
+            sem separador. */}
+        <div className="footer__cities">
+          <p className="footer__cities-list">
+            <span>São Paulo, SP.</span>
+            <span>Goiânia, GO.</span>
+            <span>Salvador, BA.</span>
+          </p>
+        </div>
+
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
         <div className="footer__grid--nav">
           {NAV_COLUMNS.map((col) => (
@@ -99,14 +110,6 @@ export function Footer() {
               </ul>
             </nav>
           ))}
-        </div>
-
-        {/* Cidades .TBF. — logo acima da barra de copyright, em todas as páginas
-            (pedido). O label "Gestão .TBF." foi removido (pedido). */}
-        <div className="footer__cities">
-          <p className="footer__cities-list">
-            São Paulo, SP. <span aria-hidden="true">|</span> Goiânia, GO. <span aria-hidden="true">|</span> Salvador, BA.
-          </p>
         </div>
 
         {/* Copyright + version */}

@@ -58,7 +58,9 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
   }
 
   return (
-    <section aria-label="Arquivo editorial">
+    /* Respiro entre o letreiro em motion e os cards estilo pinterest (pedido):
+       colados, o olho não separava as duas áreas. */
+    <section aria-label="Arquivo editorial" style={{ paddingTop: 'var(--tbf-space-12)' }}>
       {/* ─── FILTROS — só quando há conteúdo real ─── */}
       {hasPosts && (
         <div

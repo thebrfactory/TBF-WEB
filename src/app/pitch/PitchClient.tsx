@@ -195,19 +195,9 @@ export function PitchClient() {
           </PitchReveal>
         </div>
 
-        {/* Scroll cue */}
-        <div style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', zIndex: 1, animation: 'pitchBounce 2s ease-in-out infinite' }}>
-          <svg width="20" height="32" viewBox="0 0 20 32" fill="none" stroke={ACCENT} strokeWidth="1.5">
-            <line x1="10" y1="0" x2="10" y2="26" />
-            <polyline points="4,20 10,28 16,20" />
-          </svg>
-        </div>
+        {/* Sem seta de "role a página": informação inútil (pedido). */}
 
         <style>{`
-          @keyframes pitchBounce {
-            0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(8px); }
-          }
           @keyframes pitchPulse {
             0%,100% { opacity: 1; }
             50% { opacity: 0.4; }
@@ -229,7 +219,18 @@ export function PitchClient() {
 
       {/* ── LOGOS DE IMPRENSA: carrossel infinito.
              O rótulo "As seen in" foi removido (pedido). ─────────────────── */}
-      <section style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem) 0', background: '#000000' }} aria-label="Featured in">
+      {/* O trilho fica CENTRADO na faixa preta, não colado no letreiro (pedido):
+          a faixa ganha altura própria e o carrossel se alinha ao meio dela. */}
+      <section
+        style={{
+          minHeight: 'clamp(22rem, 64vh, 40rem)',
+          display: 'flex',
+          alignItems: 'center',
+          padding: 'clamp(2.5rem, 6vw, 4.5rem) 0',
+          background: '#000000',
+        }}
+        aria-label="Featured in"
+      >
         <PressLogosCarousel />
       </section>
 

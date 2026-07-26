@@ -533,10 +533,10 @@
      percorre 50% dele no mesmo tempo. Então as durações são proporcionais ao
      comprimento, calibradas para ~134 px/s em 1440px:
        · fotos: 10 slides de 22vw + 4px de gap = ~3208px de percurso / 24s
-       · press: 8 logos de 140px + 64px de gap = ~1632px de percurso / 12s
+       · press: 8 logos de 112px + 64px de gap = ~1408px de percurso / 10.5s
      Mudou a quantidade de slides ou a largura? Recalcule, não estime. */
   --tbf-carousel-duration:       24s;
-  --tbf-carousel-duration-press: 12s;
+  --tbf-carousel-duration-press: 10.5s;
 
   /* ─── 3.7 Button ─── */
   --tbf-btn-primary-bg:           var(--tbf-cta-bg);

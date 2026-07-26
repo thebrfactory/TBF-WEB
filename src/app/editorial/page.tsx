@@ -49,7 +49,9 @@ export default async function EditorialPage() {
         style={{
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '72vh',
+          /* Tela toda, igual ao herói da home (--tbf-hero-height). Em 72vh o
+             vídeo, que foi montado no tamanho exato da tela, chegava cortado. */
+          minHeight: '100dvh',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

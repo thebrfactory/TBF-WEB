@@ -383,13 +383,13 @@
   }
 }
 
-/* Cidades sob gestão — bloco acima do copyright, em todas as páginas */
+/* Cidades sob gestão. Bloco entre "Consumed Worldwide." e as colunas de
+   navegação, em todas as páginas. */
 .footer__cities {
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-2);
   margin-top: var(--tbf-space-10);
-  padding-bottom: var(--tbf-space-6);
 }
 
 .footer__cities-label {
@@ -402,20 +402,20 @@
   opacity: 0.4;
 }
 
+/* Espalhadas de ponta a ponta da largura do rodapé, sem separador (pedido). O
+   corpo desce um pouco no mobile porque as três cidades precisam caber na mesma
+   linha em 390px: é o alinhamento que carrega a informação aqui, não o tamanho. */
 .footer__cities-list {
   margin: 0;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--tbf-space-2);
   font-family: var(--tbf-font-family-display);
-  font-size: clamp(1rem, 2.4vw, 1.35rem);
+  font-size: clamp(0.8rem, 2.4vw, 1.35rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   text-transform: uppercase;
   color: var(--tbf-text-primary);
-}
-
-.footer__cities-list span {
-  color: var(--tbf-text-tertiary);
-  margin-inline: var(--tbf-space-2);
-  font-weight: 400;
 }
 
 /* Copyright row */
@@ -1087,13 +1087,16 @@
 
 /* Movimento contínuo — não pausa com o cursor sobre o trilho (por pedido). */
 
+/* Wordmarks de imprensa 20% menores que o desenho original (pedido): eles são o
+   fundo, os assets .TBF. por cima são o assunto. Mexeu aqui? A duração do trilho
+   em tokens.css sai do comprimento dele, recalcule. */
 .press-carousel-slide {
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: clamp(90px, 14vw, 140px);
-  height: clamp(36px, 5vw, 56px);
+  width: clamp(72px, 11.2vw, 112px);
+  height: clamp(29px, 4vw, 45px);
 }
 
 .press-carousel__overlay {
@@ -1115,7 +1118,10 @@
   width: auto;
   display: block;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
+  /* Sombra um pouco mais expressiva, ainda discreta (pedido). Ela só aparece
+     onde o marcador cruza um wordmark claro: sobre o preto do trilho não há
+     nada para sombrear, e é justamente ali que o recorte precisa ficar nítido. */
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.85));
 }
 
 @media (prefers-reduced-motion: reduce) {
