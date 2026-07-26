@@ -252,15 +252,18 @@ export default function RunwayUnitedPage() {
           overflow: 'hidden',
         }}
       >
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        {/* Foto de fundo. `.label-bg-photo` resolve o mobile: ver components.css.
+            Opacidade 0.45 → 0.28 (pedido) para o texto da frente ganhar peso. */}
+        <div aria-hidden="true" className="label-bg-photo">
           <Image
             src="/images/ruc/ruc-backstage.webp"
             alt=""
             fill
             sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.45 }}
+            style={{ objectFit: 'cover', objectPosition: 'center', opacity: 0.28 }}
           />
           <div
+            className="label-bg-photo__fade"
             style={{
               position: 'absolute',
               inset: 0,
@@ -417,6 +420,7 @@ export default function RunwayUnitedPage() {
                   textTransform: 'uppercase',
                   color: '#ffffff',
                   border: '1px solid rgba(255,255,255,0.3)',
+                  borderRadius: 'var(--tbf-radius-chip)',
                   paddingBlock: 'var(--tbf-space-2)',
                   paddingInline: 'var(--tbf-space-4)',
                 }}
@@ -511,22 +515,8 @@ export default function RunwayUnitedPage() {
           overflow: 'hidden',
         }}
       >
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <Image
-            src="/images/ruc/ruc-closing.webp"
-            alt=""
-            fill
-            sizes="100vw"
-            style={{ objectFit: 'cover', objectPosition: 'center 20%', opacity: 0.55 }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, #000000 0%, transparent 30%, transparent 65%, #000000 100%)',
-            }}
-          />
-        </div>
+        {/* Sem imagem de fundo (pedido: "pode remover essa imagem de fundo").
+            O bloco de fechamento fica no preto chapado da página. */}
 
         <div
           className="container"

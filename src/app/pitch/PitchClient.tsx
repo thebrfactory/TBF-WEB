@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PressLogosCarousel } from './PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { Ticker } from '@/components/Ticker/Ticker'
 
 const ACCENT = '#FF6500'
 
@@ -137,8 +138,12 @@ export function PitchClient() {
             style={{
               position: 'absolute',
               inset: 0,
+              /* Sombreado enxuto (pedido: "remova esse sombreado exagerado,
+                 pode deixar um pouquinho só"). Mesma leitura do herói de
+                 /labels/runwayunited: o vídeo aparece, e o escurecido é só o
+                 mínimo na base para o lockup de texto ter chão. */
               background:
-                'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 40%, transparent 55%, #000000 100%)',
+                'linear-gradient(to bottom, transparent 0%, transparent 58%, rgba(0,0,0,0.72) 100%)',
             }}
           />
         </div>
@@ -218,21 +223,13 @@ export function PitchClient() {
         `}</style>
       </section>
 
-      {/* ── AS SEEN IN — carrossel infinito de logos de imprensa ──────────── */}
-      <section style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem) 0', background: '#000000' }} aria-label="As seen in">
-        <p
-          style={{
-            fontFamily: 'var(--tbf-font-family-ui)',
-            fontSize: '0.65rem',
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'rgba(240,237,230,0.35)',
-            textAlign: 'center',
-            marginBottom: '1.5rem',
-          }}
-        >
-          As seen in
-        </p>
+      {/* ── TICKER: letreiro em motion dividindo a capa do resto do pitch,
+             igual a /labels/runwayunited (pedido) ─────────────────────────── */}
+      <Ticker />
+
+      {/* ── LOGOS DE IMPRENSA: carrossel infinito.
+             O rótulo "As seen in" foi removido (pedido). ─────────────────── */}
+      <section style={{ padding: 'clamp(2.5rem, 6vw, 4.5rem) 0', background: '#000000' }} aria-label="Featured in">
         <PressLogosCarousel />
       </section>
 
@@ -271,6 +268,7 @@ export function PitchClient() {
                 style={{
                   padding: '0.5rem 1rem',
                   border: `1px solid ${ACCENT}`,
+                  borderRadius: 'var(--tbf-radius-chip)',
                   fontFamily: 'var(--tbf-font-family-ui)',
                   fontSize: '0.7rem',
                   letterSpacing: '0.08em',
@@ -617,6 +615,7 @@ export function PitchClient() {
                 height: 'clamp(80px, 20vw, 120px)',
                 background: 'rgba(255,101,0,0.1)',
                 border: `1px solid ${ACCENT}`,
+                borderRadius: 'var(--tbf-radius-tile)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -694,17 +693,17 @@ export function PitchClient() {
 
         <PitchReveal delay={400}>
           <p style={{ fontFamily: 'var(--tbf-font-family-body)', fontSize: 'clamp(0.875rem, 2.5vw, 1rem)', color: 'rgba(240,237,230,0.5)', marginBottom: '3rem' }}>
-            thebrazilianfactory@gmail.com
+            tavaristico@thebrfactory.com
           </p>
         </PitchReveal>
 
         <PitchReveal delay={500}>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Link href="/manifesto" className="btn btn--primary">
-              Read the Manifesto →
+              Manifesto →
             </Link>
             <Link href="/labels" className="btn btn--secondary">
-              Explore Labels →
+              Labels →
             </Link>
             <a href="https://instagram.com/thebrfactory" target="_blank" rel="noopener noreferrer" className="btn btn--ghost">
               @thebrfactory →
@@ -713,7 +712,9 @@ export function PitchClient() {
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p style={{ marginTop: '5rem', fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.6rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(240,237,230,0.2)' }}>
+          {/* Linha legal: um pouco maior e mais visível (pedido): 0.6 para 0.72rem,
+              opacidade 0.2→0.45. */}
+          <p style={{ marginTop: '5rem', fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.72rem', letterSpacing: '0.1em', lineHeight: 1.6, textTransform: 'uppercase', color: 'rgba(240,237,230,0.45)' }}>
             .TBF. inc · CNPJ 61.360.565/0001-74 · Rua Pamplona 145, Jardim Paulista, São Paulo, SP, 01405-900
           </p>
         </PitchReveal>

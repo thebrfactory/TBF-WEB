@@ -12,6 +12,7 @@ import { Ticker } from '@/components/Ticker/Ticker'
 import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 
 export const metadata: Metadata = {
   title: '.THE BRAZILIAN FACTORY.',
@@ -183,13 +184,15 @@ export default async function HomePage() {
               ].map((mock, i) => (
                 <Link key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
-                      verdade por trás do link). Bloco chapado em parchment;
-                      post real do CMS passa pelo ArticleCard, que mostra a
-                      imagem de verdade (ver spec). */}
+                      verdade por trás do link). Bloco chapado em parchment com o
+                      selo da dimensão que a capa precisa ter; post real do CMS
+                      passa pelo ArticleCard, que mostra a imagem de verdade. */}
                   <div
-                    className="card__image-wrapper"
-                    style={{ aspectRatio: mock.ratio, backgroundColor: 'var(--tbf-color-parchment)' }}
-                  />
+                    className="card__image-wrapper card__image-wrapper--empty"
+                    style={{ aspectRatio: mock.ratio }}
+                  >
+                    <ThumbSpec ratio={mock.ratio} />
+                  </div>
                   <div className="card__content">
                     <div className="card__tags">
                       <span className="tag tag--category">{mock.category}</span>

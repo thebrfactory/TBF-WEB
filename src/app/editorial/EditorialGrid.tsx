@@ -8,6 +8,7 @@
 import { useState } from 'react'
 import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 import { CategoryGrid } from './CategoryGrid'
 
 const CATEGORIES: { value: ArticleCategory | 'all'; label: string }[] = [
@@ -129,13 +130,15 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
               return (
                 <a key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
-                      verdade por trás do link). Bloco chapado em parchment;
-                      quando virar post real do CMS, ArticleCard mostra a
-                      imagem de verdade (ver spec). */}
+                      verdade por trás do link). Bloco chapado em parchment com o
+                      selo da dimensão que a capa precisa ter; quando virar post
+                      real do CMS, ArticleCard mostra a imagem de verdade. */}
                   <div
-                    className="card__image-wrapper"
-                    style={{ aspectRatio: mock.ratio, backgroundColor: 'var(--tbf-color-parchment)' }}
-                  />
+                    className="card__image-wrapper card__image-wrapper--empty"
+                    style={{ aspectRatio: mock.ratio }}
+                  >
+                    <ThumbSpec ratio={mock.ratio} />
+                  </div>
                   <div className="card__content">
                     <div className="card__tags">
                       <span className="tag tag--category">{mock.category}</span>

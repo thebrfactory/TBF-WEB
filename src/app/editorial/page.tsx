@@ -10,6 +10,7 @@ import { sanityFetch, EDITORIAL_LIST_QUERY } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
 import { EditorialGrid } from './EditorialGrid'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { Ticker } from '@/components/Ticker/Ticker'
 
 // Vídeo de fundo do hero editorial — mesmo tratamento do hero da home.
 const EDITORIAL_VIDEO = {
@@ -59,20 +60,15 @@ export default async function EditorialPage() {
         }}
         aria-labelledby="editorial-heading"
       >
-        {/* Fundo — vídeo em loop esmaecido + gradiente para blend com a página */}
+        {/* Fundo: só o vídeo em loop, SEM gradiente de sombra (pedido: "fundo
+            sem sombras"). Mesma construção do herói de /labels/runwayunited: o
+            vídeo vai de ponta a ponta e quem divide as áreas é o letreiro
+            (<Ticker />) logo abaixo, não um esmaecido. */}
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <HeroVideo
             sources={EDITORIAL_VIDEO}
             poster="/images/editorial-feature.webp"
             opacity={0.4}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(to bottom, var(--tbf-bg-primary) 0%, transparent 45%, transparent 62%, var(--tbf-bg-primary) 100%)',
-            }}
           />
         </div>
 
@@ -91,10 +87,19 @@ export default async function EditorialPage() {
             height={126}
             unoptimized
             priority
-            style={{ width: 'min(39vw, 260px)', height: 'auto' }}
+            /* -25% sobre min(39vw, 260px) (pedido) + sombra preta discreta para
+               dar profundidade sobre o vídeo, agora que não há mais gradiente. */
+            style={{
+              width: 'min(29.25vw, 195px)',
+              height: 'auto',
+              filter: 'drop-shadow(0 2px 12px rgba(0, 0, 0, 0.55))',
+            }}
           />
         </h1>
       </section>
+
+      {/* ─── TICKER: divisor entre o herói e o grid (pedido) ──────────────── */}
+      <Ticker />
 
       {/* ─── GRID + FILTROS (client component) ────────────────────────────── */}
       <EditorialGrid posts={posts} />

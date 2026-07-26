@@ -8,6 +8,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import type { ArticleCardProps } from '@/types'
 import { urlFor } from '@/lib/sanity'
+import { ThumbSpec, thumbDimensions, THUMB_RATIO_FALLBACK } from '@/components/ThumbSpec/ThumbSpec'
 
 const CATEGORY_LABELS: Record<string, string> = {
   'fashion-film': 'Fashion Film',
@@ -25,22 +26,14 @@ function formatDate(dateString: string): string {
   }).format(new Date(dateString))
 }
 
-// Dimensões-fonte por proporção do card — a imagem já é pedida ao Sanity no
-// formato final (respeita o hotspot, sem crop no chute). Base ~1200px de lado
-// maior → nitidez retina no masonry (~330–430px renderizados).
-const RATIO_DIMENSIONS: Record<string, { w: number; h: number }> = {
-  '3/4': { w: 900, h: 1200 },
-  '2/3': { w: 900, h: 1350 },
-  '1/1': { w: 1100, h: 1100 },
-  '4/3': { w: 1200, h: 900 },
-  '3/2': { w: 1200, h: 800 },
-}
-
 export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
   const isFeatured = variant === 'featured'
   const cardClass = `card ${isFeatured ? 'card--featured' : 'card--standard'}`
-  const ratio = post.cardRatio ?? '3/2'
-  const dims = RATIO_DIMENSIONS[ratio] ?? RATIO_DIMENSIONS['3/2']
+  const ratio = post.cardRatio ?? THUMB_RATIO_FALLBACK
+  // A imagem é pedida ao Sanity já no formato final (respeita o hotspot, sem
+  // crop no chute), e são os MESMOS números que o selo de dimensão anuncia
+  // enquanto a capa não existe.
+  const dims = thumbDimensions(ratio)
 
   return (
     <Link
@@ -48,9 +41,13 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
       className={cardClass}
       aria-label={post.title}
     >
-      {/* Image — proporção vinda do CMS (cardRatio) */}
-      <div className="card__image-wrapper" style={{ aspectRatio: ratio }}>
-        {post.heroImage && (
+      {/* Image: proporção vinda do CMS (cardRatio). Sem capa, o bloco vira
+          parchment com o selo de dimensão (pedido). */}
+      <div
+        className={`card__image-wrapper${post.heroImage ? '' : ' card__image-wrapper--empty'}`}
+        style={{ aspectRatio: ratio }}
+      >
+        {post.heroImage ? (
           <Image
             className="card__image"
             src={urlFor(post.heroImage)
@@ -65,6 +62,8 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
             loading="lazy"
             sizes="(min-width: 768px) 33vw, 50vw"
           />
+        ) : (
+          <ThumbSpec ratio={ratio} />
         )}
       </div>
 

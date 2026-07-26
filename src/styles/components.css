@@ -539,6 +539,26 @@
   aspect-ratio: 3 / 2;
 }
 
+/* Bloco de miniatura AINDA SEM CAPA: chapado em parchment, com o selo de
+   dimensão preto no canto inferior esquerdo (ver ThumbSpec). Encaixou a imagem,
+   o modificador sai e o selo deixa de ser renderizado. */
+.card__image-wrapper--empty {
+  background-color: var(--tbf-color-parchment);
+}
+
+.thumb-spec {
+  position: absolute;
+  bottom: var(--tbf-space-3);
+  left: var(--tbf-space-3);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-color-obsidian);
+  opacity: 0.72;
+  pointer-events: none;
+}
+
 .card__image {
   width: 100%;
   height: 100%;
@@ -838,9 +858,10 @@
   position: sticky;
   top: var(--tbf-nav-height-sm);
   z-index: var(--tbf-ticker-z);
-  /* Listra pontilhada fina nas extremidades (pedido) — branca. */
-  border-top: 2px dotted var(--tbf-text-primary);
-  border-bottom: 2px dotted var(--tbf-text-primary);
+  /* Listra pontilhada fina nas extremidades (pedido): branca em toda página,
+     inclusive nas de tema invertido (ver --tbf-ticker-rule em tokens.css). */
+  border-top: 2px dotted var(--tbf-ticker-rule);
+  border-bottom: 2px dotted var(--tbf-ticker-rule);
 }
 
 @media (min-width: 1280px) {
@@ -896,7 +917,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
-  animation: carouselInfiniteScroll 28s linear infinite;
+  animation: carouselInfiniteScroll var(--tbf-carousel-duration) linear infinite;
   will-change: transform;
 }
 
@@ -1017,6 +1038,14 @@
   }
 }
 
+/* Frame do carrossel de imprensa. Existe só para ancorar a camada de assets
+   .TBF. FORA do `overflow: hidden` do trilho: os marcadores são mais altos que
+   a faixa de logos e estavam sendo decepados. */
+.press-carousel-frame {
+  position: relative;
+  width: 100%;
+}
+
 .press-carousel {
   position: relative;
   overflow: hidden;
@@ -1052,7 +1081,7 @@
   margin: 0;
   padding-inline: clamp(1.5rem, 5vw, 4rem);
   list-style: none;
-  animation: carouselInfiniteScroll 30s linear infinite;
+  animation: carouselInfiniteScroll var(--tbf-carousel-duration-press) linear infinite;
   will-change: transform;
 }
 
@@ -1076,6 +1105,17 @@
   justify-content: space-between;
   padding-inline: clamp(1rem, 4vw, 3rem);
   pointer-events: none;
+}
+
+/* Assets .TBF. da camada sobreposta. SVG inline: a altura manda e a largura sai
+   do viewBox de cada asset, e é isso que garante a forma fiel (o burst é quadrado,
+   os swooshes são 1:2). A sombra é a única herança do tratamento antigo. */
+.press-carousel__mark {
+  height: clamp(56px, 9vw, 96px);
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.35));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2350,6 +2390,42 @@ button.tag:focus-visible {
   .label-fullbleed {
     min-height: 80vh;
     padding-block: 0;
+  }
+}
+
+/* Foto de fundo das seções full-bleed das labels.
+   PROBLEMA no mobile: a seção passa de 2000px de altura (texto empilhado) numa
+   viewport de 390px, e `object-fit: cover` sobre uma foto 16:9 amplia a imagem
+   ~9x para cobrir isso: sobra uma fatia central irreconhecível e borrada. Era o
+   "ela fica distorcida" do pedido.
+   SOLUÇÃO: no mobile a foto vira uma FAIXA no topo, no crop nativo dela, com
+   fade para o preto; de 768px para cima volta a cobrir a seção inteira, onde
+   `cover` faz sentido porque a caixa é larga. */
+.label-bg-photo {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: min(52vh, 420px);
+  z-index: 0;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 58%, transparent 100%);
+}
+
+/* O fade interno é do tratamento de desktop. No mobile quem faz o acabamento é
+   a máscara acima, senão as duas pontas escurecem a faixa inteira. */
+.label-bg-photo__fade {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .label-bg-photo {
+    inset: 0;
+    height: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .label-bg-photo__fade {
+    display: block;
   }
 }
 

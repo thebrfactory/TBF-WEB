@@ -131,6 +131,13 @@
   --tbf-radius-raw-0:    0;
   --tbf-radius-raw-2:    2px;
   --tbf-radius-raw-4:    4px;
+  /* Degraus 8/12/18 nomeados: 12 e 18 já viviam soltos no components.css (tiles
+     de imagem e cards/popups); 8 entra para as pastilhas pequenas. Regra do
+     fundador: "bordas arredondadas, sempre", então há um degrau para cada
+     tamanho de caixa, e ninguém mais chuta um px cru. */
+  --tbf-radius-raw-8:    8px;
+  --tbf-radius-raw-12:   12px;
+  --tbf-radius-raw-18:   18px;
   --tbf-radius-raw-full: 9999px;
 
   /* ─── 1.7 Z-Index Primitives ─── */
@@ -405,6 +412,12 @@
   --tbf-radius-button: var(--tbf-radius-raw-full);
   --tbf-radius-tag:    var(--tbf-radius-raw-0);
   --tbf-radius-full:   var(--tbf-radius-raw-full);
+  /* Pastilha = caixinha com borda e texto curto (áreas de interesse das labels,
+     marcadores do /pitch). Tile = miniatura/quadro de imagem. Card = cartão,
+     popup, banner. */
+  --tbf-radius-chip:   var(--tbf-radius-raw-8);
+  --tbf-radius-tile:   var(--tbf-radius-raw-12);
+  --tbf-radius-card:   var(--tbf-radius-raw-18);
 
   /* ─── 2.10 Z-Index Semantic ─── */
   --tbf-z-below:   var(--tbf-z-raw-below);
@@ -508,6 +521,22 @@
   --tbf-ticker-duration:  var(--tbf-motion-duration-ticker);
   --tbf-ticker-easing:    var(--tbf-motion-easing-ticker);
   --tbf-ticker-z:         var(--tbf-z-sticky);
+  /* Listra pontilhada das extremidades. Cor FIXA (parchment), não `text-primary`:
+     dentro de [data-theme="inverse"] (/labels/*) o texto primário vira obsidiana
+     e a listra ficava preta sobre a faixa preta, invisível. Era o bug visto em
+     /labels/runwayunited. */
+  --tbf-ticker-rule:      var(--tbf-color-parchment);
+
+  /* ─── 3.6b Carrosséis ───
+     MESMA VELOCIDADE em todos os carrosséis do site (pedido). Duração igual não
+     é velocidade igual: cada trilho tem um comprimento diferente, e a animação
+     percorre 50% dele no mesmo tempo. Então as durações são proporcionais ao
+     comprimento, calibradas para ~134 px/s em 1440px:
+       · fotos: 10 slides de 22vw + 4px de gap = ~3208px de percurso / 24s
+       · press: 8 logos de 140px + 64px de gap = ~1632px de percurso / 12s
+     Mudou a quantidade de slides ou a largura? Recalcule, não estime. */
+  --tbf-carousel-duration:       24s;
+  --tbf-carousel-duration-press: 12s;
 
   /* ─── 3.7 Button ─── */
   --tbf-btn-primary-bg:           var(--tbf-cta-bg);
