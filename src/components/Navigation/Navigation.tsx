@@ -15,9 +15,10 @@ const SEARCH_PLACEHOLDER = 'Search .TBF.'
 
 // Labels saiu da navegação principal (por pedido): a entrada para as divisões
 // vive agora só no final da página /pitch — "labels só aparecem pra quem está dentro".
+// Pitch também saiu da navegação principal (pedido do fundador): o deck vive
+// agora só no rodapé, em Pages. Mesma lógica de Labels, entrada discreta.
 const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
   { href: '/editorial', label: 'Magazine' },
-  { href: '/pitch', label: 'Pitch' },
   // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
   { href: '/brandsystem/login', label: 'Login', external: true },
 ]

@@ -1,6 +1,6 @@
 // =============================================================================
-// TICKER — TBF WEB 2026
-// CSS puro — zero JavaScript | aria-hidden="true" obrigatório
+// TICKER · TBF WEB 2026
+// CSS puro, zero JavaScript | aria-hidden="true" obrigatório
 // Sticky abaixo do nav | Loop seamless via texto duplicado
 // =============================================================================
 
@@ -11,7 +11,17 @@ interface TickerProps {
 const DEFAULT_TEXT =
   '.THE BRAZILIAN FACTORY. · COLLECTIVE HOTEL CASINO · ONLY FOR ARTISTS & CHANGEMAKERS · EST. 2025 · SÃO PAULO · GOIÂNIA · SALVADOR ·'
 
+// Cópias por volta. Uma volta precisa ser MAIS LARGA que a tela, senão sobra um
+// vão vazio correndo no letreiro (com 2 cópias, uma media ~1311px e já falhava
+// num monitor de 1440px). Com 3, a volta passa de 3900px e cobre ultrawide.
+// O trilho anda de 0 a -50%, então o total é REPEAT * 2.
+// Mexeu aqui? `--tbf-ticker-duration` multiplica a duração base por REPEAT para
+// manter a MESMA velocidade em px/s. Os dois números andam juntos.
+const REPEAT = 3
+
 export function Ticker({ text = DEFAULT_TEXT }: TickerProps) {
+  const copies = Array.from({ length: REPEAT * 2 })
+
   return (
     <div
       className="ticker"
@@ -19,11 +29,13 @@ export function Ticker({ text = DEFAULT_TEXT }: TickerProps) {
       role="presentation"
     >
       <div className="ticker__track">
-        {/* Texto duplicado para loop seamless via CSS */}
-        <span className="ticker__item">{text}</span>
-        <span className="ticker__item" aria-hidden="true">
-          {text}
-        </span>
+        {/* Sequência repetida e depois duplicada: 50% do trilho é exatamente uma
+            volta, que é o que faz o loop não ter costura. */}
+        {copies.map((_, i) => (
+          <span className="ticker__item" key={i}>
+            {text}
+          </span>
+        ))}
       </div>
     </div>
   )

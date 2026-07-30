@@ -871,9 +871,14 @@
   }
 }
 
+/* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).
+   O trilho tem o texto DUPLICADO e anda de 0 a -50%. Com `gap` no flex, a
+   largura total é item+folga+item, então metade dá item+folga/2 e a volta
+   erra meia folga: é o salto visível no fim de cada ciclo. A folga passa a ser
+   `margin-right` de CADA item, o que torna a célula (item+folga) uniforme e faz
+   50% valer exatamente uma cópia. */
 .ticker__track {
   display: flex;
-  gap: var(--tbf-ticker-gap);
   white-space: nowrap;
   animation: ticker-scroll var(--tbf-ticker-duration) var(--tbf-ticker-easing) infinite;
 }
@@ -886,6 +891,8 @@
   text-transform: var(--tbf-type-ticker-transform);
   color: var(--tbf-ticker-text);
   flex-shrink: 0;
+  /* A folga vive AQUI, não em `gap` do trilho (ver nota acima). */
+  margin-right: var(--tbf-ticker-gap);
 }
 
 @media (min-width: 1280px) {
@@ -1073,13 +1080,20 @@
   background: linear-gradient(to left, #000000 0%, transparent 100%);
 }
 
+/* LOOP SEM COSTURA (correção 2026-07-30). O trilho tem a lista DUPLICADA e anda
+   de 0 a -50%. Para o salto ser invisível, 50% da largura total precisa ser
+   exatamente uma cópia. Com `gap` isso não fecha: 16 itens têm 15 gaps, então
+   metade dá 8 itens + 7,5 gaps e sobra meio vão a cada volta, que é o "começar
+   do zero" que aparecia na tela. A folga vira `margin-right` por item: cada
+   célula passa a medir item+folga, 16 células uniformes, e metade é uma cópia
+   exata. O `padding-inline` saiu pelo mesmo motivo (entrava na conta do 50% e
+   era inútil, as bordas já têm máscara de gradiente). */
 .press-carousel-track {
   display: flex;
   align-items: center;
-  gap: clamp(1.5rem, 5vw, 4rem);
   width: max-content;
   margin: 0;
-  padding-inline: clamp(1.5rem, 5vw, 4rem);
+  padding: 0;
   list-style: none;
   animation: carouselInfiniteScroll var(--tbf-carousel-duration-press) linear infinite;
   will-change: transform;
@@ -1097,6 +1111,9 @@
   justify-content: center;
   width: clamp(72px, 11.2vw, 112px);
   height: clamp(29px, 4vw, 45px);
+  /* A folga entre logos vive AQUI, não em `gap` do trilho: é o que mantém a
+     célula uniforme e o loop sem costura (ver nota em .press-carousel-track). */
+  margin-right: clamp(1.5rem, 5vw, 4rem);
 }
 
 .press-carousel__overlay {

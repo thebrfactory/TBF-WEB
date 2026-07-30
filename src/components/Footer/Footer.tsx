@@ -18,7 +18,10 @@ const NAV_COLUMNS = [
       { href: '/manifesto', label: 'Manifesto' },
       { href: '/collective', label: 'Collective' },
       { href: '/access', label: 'Access' },
-      { href: '/pitch', label: 'Pitch' },
+      // Deck vigente é o 2.0. A 1.0 (/pitch) segue congelada e sem link no site.
+      // O rótulo diz "2.0" de propósito: só o href apontando para v2 era
+      // invisível no rodapé, e não dava para distinguir do deck antigo.
+      { href: '/pitch/v2', label: 'Pitch 2.0' },
     ],
   },
   {

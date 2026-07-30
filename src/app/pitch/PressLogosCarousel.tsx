@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-// Wordmarks de imprensa — carrossel infinito com sombreado nas bordas simulando
+// Wordmarks de imprensa: carrossel infinito com sombreado nas bordas simulando
 // o fim de um trilho, mas na verdade é um loop contínuo (mesma técnica do
 // PhotoCarousel: lista duplicada + translateX 0 → -50%).
 const PRESS_LOGOS = [
