@@ -282,6 +282,41 @@ const CONTEXT_LAYERS = [
   },
 ]
 
+// Referências do fundador, selecionadas em CHANGES/PERSONALITIES.
+// A ordem é a das pastas: Warhol, Abloh, Oswald, will.i.am, Metsavaht.
+const REFERENCE_PEOPLE = [
+  {
+    name: 'ANDY WARHOL',
+    src: '/images/pitch/references/warhol.webp',
+    rolePt: 'Transformou consumo em arte',
+    roleEn: 'Turned consumption into art',
+  },
+  {
+    name: 'VIRGIL ABLOH',
+    src: '/images/pitch/references/abloh.webp',
+    rolePt: 'Traduziu a rua para a alta-costura',
+    roleEn: 'Translated the street into luxury',
+  },
+  {
+    name: 'OSWALD DE ANDRADE',
+    src: '/images/pitch/references/oswald.webp',
+    rolePt: 'Devorou a influência estrangeira e a devolveu brasileira',
+    roleEn: 'Devoured foreign influence and gave it back Brazilian',
+  },
+  {
+    name: 'WILL.I.AM',
+    src: '/images/pitch/references/william.webp',
+    rolePt: 'Levou a cultura pop para dentro da tecnologia',
+    roleEn: 'Carried pop culture into technology',
+  },
+  {
+    name: 'OSKAR METSAVAHT',
+    src: '/images/pitch/references/metsavaht.webp',
+    rolePt: 'Fez do Brasil uma linguagem de design',
+    roleEn: 'Made Brazil a design language',
+  },
+]
+
 const THESIS_CHAIN = [
   { pt: 'Capital\nCultural', en: 'Cultural Capital' },
   { pt: 'Capital\nNarrativo', en: 'Narrative Capital' },
@@ -478,21 +513,21 @@ export function PitchV2Client() {
             paddingBottom: 'clamp(3rem, 8vw, 7rem)',
           }}
         >
+          {/* Eyebrow e headline vieram do fundador já em inglês (2026-07-31).
+              Por isso os dois perderam a linha <En> de tradução: a camada de
+              tradução existe para dobrar o português, e aqui não há português
+              para dobrar. O resto do movimento segue bilíngue. */}
           <PitchReveal delay={100}>
-            <p className="p2-eyebrow">
-              Felipe Tavares · Deck de trabalho · .TBF. inc
-              <En>Felipe Tavares · Working deck · .TBF. inc</En>
-            </p>
+            <p className="p2-eyebrow">FELIPE T. · CONFIDENTIAL DOC · .TBF. inc</p>
           </PitchReveal>
 
           <PitchReveal delay={200}>
             <h1 className="p2-cover-headline">
-              Nascida na Bahia.
+              SP BASED.
               <br />
-              Construída pelo Brasil.
+              BUILDED AROUND THE COUNTRY.
               <br />
-              <span style={{ color: ACCENT }}>Desenhada para o mundo.</span>
-              <En size="lead">Born in Bahia. Built across Brazil. Designed for the world.</En>
+              <span style={{ color: ACCENT }}>DESIGNED FOR WORLDWIDE ACTUATION.</span>
             </h1>
           </PitchReveal>
 
@@ -520,6 +555,12 @@ export function PitchV2Client() {
           // O trilho de logos é sangrado: o respiro lateral vive no cabeçalho da
           // seção, não na seção, senão o carrossel deixa de correr de ponta a ponta.
           paddingInline: 0,
+          // Este é o movimento mais cheio do deck (kicker + carrossel + cinco
+          // retratos). Com o respiro padrão ele passava de 1,4 tela no desktop e
+          // os nomes caíam fora do primeiro quadro. Respiro vertical menor só
+          // aqui; a folga de baixo continua acima da barra de navegação fixa.
+          paddingTop: 'clamp(2.5rem, 6vw, 4rem)',
+          paddingBottom: 'clamp(6.5rem, 12vw, 7.5rem)',
           background: '#000000',
         }}
         aria-label="Campo de Referência / Reference Field"
@@ -537,6 +578,48 @@ export function PitchV2Client() {
         </PitchReveal>
 
         <PressLogosCarousel />
+
+        {/* ── As cinco personalidades de referência ────────────────────────────
+               Selecionadas pelo fundador em CHANGES/PERSONALITIES (prefixo
+               SELECTED no arquivo). Todas em licença livre, crédito e origem
+               registrados no _CREDITOS.md daquela pasta. O retrato é 1:1 na
+               origem, então o quadro nunca deforma. */}
+        <div className="p2-refs-people">
+          <PitchReveal delay={200}>
+            <p className="p2-assert p2-refs-people__lead">
+              Todas essas personalidades capturaram o espírito do momento e transformaram isso em
+              linguagem.
+              <En>
+                All of these figures captured the spirit of their moment and turned it into
+                language.
+              </En>
+            </p>
+          </PitchReveal>
+
+          <div className="p2-refs-people__grid">
+            {REFERENCE_PEOPLE.map((person, i) => (
+              <PitchReveal key={person.name} delay={300 + i * 80}>
+                <figure className="p2-person">
+                  <Image
+                    src={person.src}
+                    alt={person.name}
+                    width={1200}
+                    height={1200}
+                    className="p2-person__img"
+                    sizes="(max-width: 767px) 45vw, 18vw"
+                  />
+                  <figcaption>
+                    <p className="p2-person__name">{person.name}</p>
+                    <p className="p2-person__role">
+                      {person.rolePt}
+                      <En>{person.roleEn}</En>
+                    </p>
+                  </figcaption>
+                </figure>
+              </PitchReveal>
+            ))}
+          </div>
+        </div>
 
         <PitchReveal delay={250}>
           <p
@@ -1410,6 +1493,84 @@ export function PitchV2Client() {
           padding: 0 1.25rem;
         }
         .p2-refs-label .p2-en { text-align: center; }
+
+        /* ─── AS CINCO PERSONALIDADES DE REFERÊNCIA ──────────────────────────
+           Mobile-first: duas colunas, que é o que cabe num retrato quadrado sem
+           virar selo ilegível no 390px. A quinta fica sozinha na última linha e
+           é isso mesmo: cinco é ímpar, e forçar simetria custaria cortar uma
+           referência que o fundador escolheu. Em 768px+ as cinco entram na mesma
+           linha e a leitura vira uma faixa só. */
+        .p2-refs-people {
+          margin-top: clamp(2rem, 5vw, 2.75rem);
+          padding-inline: clamp(1.25rem, 5vw, 6rem);
+        }
+
+        .p2-refs-people__lead {
+          max-width: 34ch;
+          margin-bottom: clamp(1.5rem, 3vw, 1.75rem);
+        }
+
+        .p2-refs-people__grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: clamp(1rem, 3vw, 1.5rem);
+        }
+
+        /* O teto de 900px não é estética, é altura: sem ele, no 1440 cada
+           retrato passa de 230px e o movimento fica 1,4× a tela, empurrando os
+           nomes para fora do primeiro quadro. Com o teto, o movimento cabe e as
+           cinco referências são lidas de uma vez. */
+        @media (min-width: 768px) {
+          .p2-refs-people__grid {
+            grid-template-columns: repeat(5, 1fr);
+            max-width: 900px;
+          }
+        }
+
+        .p2-person {
+          margin: 0;
+        }
+
+        .p2-person__img {
+          width: 100%;
+          height: auto;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          display: block;
+          border-radius: var(--tbf-radius-card);
+          /* O deck é preto e os retratos são de época, de temperaturas muito
+             diferentes entre si. O dessaturado parcial costura as cinco fotos
+             numa família só, sem apagar o rosto de ninguém. */
+          filter: grayscale(1) contrast(1.05);
+          transition: filter 600ms ${EASE};
+        }
+
+        .p2-person:hover .p2-person__img {
+          filter: grayscale(0) contrast(1);
+        }
+
+        .p2-person__name {
+          margin: 0.85rem 0 0;
+          font-family: var(--tbf-font-family-display);
+          font-weight: 800;
+          font-size: clamp(0.7rem, 2.2vw, 0.8rem);
+          letter-spacing: 0.02em;
+          line-height: 1.15;
+          color: ${PAPER};
+        }
+
+        .p2-person__role {
+          margin: 0.3rem 0 0;
+          font-family: var(--tbf-font-family-display);
+          font-weight: 350;
+          font-size: clamp(0.68rem, 2vw, 0.75rem);
+          line-height: 1.35;
+          color: rgba(240,237,230,0.55);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .p2-person__img { transition: none; }
+        }
 
         /* ─── NAVEGAÇÃO POR SETAS ────────────────────────────────────────── */
         .p2-nav {
