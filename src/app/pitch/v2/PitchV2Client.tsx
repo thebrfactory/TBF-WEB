@@ -525,9 +525,9 @@ export function PitchV2Client() {
             <h1 className="p2-cover-headline">
               SP BASED.
               <br />
-              BUILDED AROUND THE COUNTRY.
+              BUILT ACROSS THE COUNTRY.
               <br />
-              <span style={{ color: ACCENT }}>DESIGNED FOR WORLDWIDE ACTUATION.</span>
+              <span style={{ color: ACCENT }}>DESIGNED FOR WORLDWIDE REACH.</span>
             </h1>
           </PitchReveal>
 
