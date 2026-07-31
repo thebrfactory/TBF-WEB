@@ -1,7 +1,7 @@
 'use client'
 
 // =============================================================================
-// PITCH 2.0 CLIENT · working deck, 12 movimentos
+// PITCH 2.0 CLIENT · working deck, 13 movimentos
 // -----------------------------------------------------------------------------
 // DUAL LANGUAGE (pedido do fundador): português é a voz principal, inglês entra
 // logo abaixo, pequeno e discreto. A distinção não é só de tamanho, é de
@@ -27,6 +27,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PressLogosCarousel } from '../PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
 
@@ -45,20 +46,25 @@ const EDITORIAL_VIDEO = {
 // ─── Movimentos: fonte única da navegação por setas ──────────────────────────
 // A ordem aqui define o que as setas percorrem e o que o contador mostra.
 const MOVEMENTS = [
+  // A capa passou a ser o hero da homepage, byte a byte (componente HomeHero,
+  // pedido do fundador 2026-07-31). A capa anterior não foi descartada: virou o
+  // movimento 02, "Abertura", e por isso todos os seguintes andaram uma casa —
+  // o deck tem 13 movimentos.
   { id: 'mov-01', pt: 'Capa', en: 'Cover' },
-  // O campo de referência era um interlúdio sem número. Virou movimento 02 por
-  // pedido do fundador, e por isso todos os seguintes andaram uma casa.
-  { id: 'mov-02', pt: 'Campo de Referência', en: 'Reference Field' },
-  { id: 'mov-03', pt: 'A Pergunta', en: 'The Question' },
-  { id: 'mov-04', pt: 'O Contexto', en: 'The Context' },
-  { id: 'mov-05', pt: 'Nossa Tese', en: 'Our Thesis' },
-  { id: 'mov-06', pt: 'O Sistema Operacional', en: 'The Operating System' },
-  { id: 'mov-07', pt: 'Lógica de Portfólio', en: 'Portfolio Logic' },
-  { id: 'mov-08', pt: 'Evidência de Execução', en: 'Evidence of Execution' },
-  { id: 'mov-09', pt: 'Case Selecionado', en: 'Selected Case' },
-  { id: 'mov-10', pt: 'Por Que a Overlens', en: 'Why Overlens' },
-  { id: 'mov-11', pt: 'Visão de Longo Prazo', en: 'Long-term Vision' },
-  { id: 'mov-12', pt: 'Fecho', en: 'Close' },
+  { id: 'mov-02', pt: 'Abertura', en: 'Opening' },
+  // O campo de referência era um interlúdio sem número. Virou movimento por
+  // pedido do fundador.
+  { id: 'mov-03', pt: 'Campo de Referência', en: 'Reference Field' },
+  { id: 'mov-04', pt: 'A Pergunta', en: 'The Question' },
+  { id: 'mov-05', pt: 'O Contexto', en: 'The Context' },
+  { id: 'mov-06', pt: 'Nossa Tese', en: 'Our Thesis' },
+  { id: 'mov-07', pt: 'O Sistema Operacional', en: 'The Operating System' },
+  { id: 'mov-08', pt: 'Lógica de Portfólio', en: 'Portfolio Logic' },
+  { id: 'mov-09', pt: 'Evidência de Execução', en: 'Evidence of Execution' },
+  { id: 'mov-10', pt: 'Case Selecionado', en: 'Selected Case' },
+  { id: 'mov-11', pt: 'Por Que a Overlens', en: 'Why Overlens' },
+  { id: 'mov-12', pt: 'Visão de Longo Prazo', en: 'Long-term Vision' },
+  { id: 'mov-13', pt: 'Fecho', en: 'Close' },
 ] as const
 
 // ─── Camada de tradução ──────────────────────────────────────────────────────
@@ -435,11 +441,22 @@ export function PitchV2Client() {
     <div className="p2-deck">
       <DeckNav />
 
-      {/* ── 01 · CAPA ───────────────────────────────────────────────────────── */}
+      {/* ── 01 · CAPA ─────────────────────────────────────────────────────────
+             A capa é o hero da homepage, sem uma linha de diferença: mesmo
+             componente (HomeHero), mesmo vídeo, mesmo logotype, mesmo deck.
+             Quem abre o deck vê o site. Único acréscimo: o encaixe de scroll do
+             movimento, que é do deck e não existe na home. ─────────────────── */}
+      <HomeHero id="mov-01" style={{ scrollSnapAlign: 'start' }} />
+
+      <Ticker />
+
+      {/* ── 02 · ABERTURA ─────────────────────────────────────────────────────
+             A capa da 2.1. Perdeu o posto para o hero da home e virou o
+             movimento de abertura, intacta. ────────────────────────────────── */}
       <section
-        id="mov-01"
+        id="mov-02"
         style={{ ...S, justifyContent: 'flex-end', padding: 0, background: '#000000' }}
-        aria-label="Capa / Cover"
+        aria-label="Abertura / Opening"
       >
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} />
@@ -492,14 +509,12 @@ export function PitchV2Client() {
         </div>
       </section>
 
-      <Ticker />
-
       {/* ── LINHAGEM: o carrossel da 1.0, aqui rotulado como referência ─────────
              O deck 2.0 posiciona a 032c como modelo estudado, nunca copiado.
              O rótulo honra isso: são referências de linguagem, não veículos
              que publicaram a .TBF. ────────────────────────────────────────── */}
       <section
-        id="mov-02"
+        id="mov-03"
         style={{
           ...S,
           // O trilho de logos é sangrado: o respiro lateral vive no cabeçalho da
@@ -509,9 +524,9 @@ export function PitchV2Client() {
         }}
         aria-label="Campo de Referência / Reference Field"
       >
-        <Numeral n="02" />
+        <Numeral n="03" />
         <div style={{ paddingInline: 'clamp(1.25rem, 5vw, 6rem)' }}>
-          <Kicker n="02" pt="Campo de Referência" en="Reference Field" />
+          <Kicker n="03" pt="Campo de Referência" en="Reference Field" />
         </div>
 
         <PitchReveal delay={100}>
@@ -537,10 +552,10 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 03 · A PERGUNTA ─────────────────────────────────────────────────── */}
-      <section id="mov-03" style={{ ...S }} aria-label="A Pergunta / The Question">
-        <Numeral n="03" />
-        <Kicker n="03" pt="A Pergunta" en="The Question" />
+      {/* ── 04 · A PERGUNTA ─────────────────────────────────────────────────── */}
+      <section id="mov-04" style={{ ...S }} aria-label="A Pergunta / The Question">
+        <Numeral n="04" />
+        <Kicker n="04" pt="A Pergunta" en="The Question" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2" style={{ maxWidth: '14ch', marginBottom: '3rem' }}>
@@ -570,14 +585,14 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 04 · O CONTEXTO ─────────────────────────────────────────────────── */}
+      {/* ── 05 · O CONTEXTO ─────────────────────────────────────────────────── */}
       <section
-        id="mov-04"
+        id="mov-05"
         style={{ ...S, background: '#111110' }}
         aria-label="O Contexto / The Context"
       >
-        <Numeral n="04" />
-        <Kicker n="04" pt="O Contexto" en="The Context" />
+        <Numeral n="05" />
+        <Kicker n="05" pt="O Contexto" en="The Context" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
@@ -619,10 +634,10 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 05 · NOSSA TESE ─────────────────────────────────────────────────── */}
-      <section id="mov-05" style={{ ...S }} aria-label="Nossa Tese / Our Thesis">
-        <Numeral n="05" />
-        <Kicker n="05" pt="Nossa Tese" en="Our Thesis" />
+      {/* ── 06 · NOSSA TESE ─────────────────────────────────────────────────── */}
+      <section id="mov-06" style={{ ...S }} aria-label="Nossa Tese / Our Thesis">
+        <Numeral n="06" />
+        <Kicker n="06" pt="Nossa Tese" en="Our Thesis" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
@@ -667,14 +682,14 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 06 · O SISTEMA OPERACIONAL ──────────────────────────────────────── */}
+      {/* ── 07 · O SISTEMA OPERACIONAL ──────────────────────────────────────── */}
       <section
-        id="mov-06"
+        id="mov-07"
         style={{ ...S, background: '#111110' }}
         aria-label="O Sistema Operacional / The Operating System"
       >
-        <Numeral n="06" />
-        <Kicker n="06" pt="O Sistema Operacional" en="The Operating System" />
+        <Numeral n="07" />
+        <Kicker n="07" pt="O Sistema Operacional" en="The Operating System" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '1.5rem' }}>
@@ -716,10 +731,10 @@ export function PitchV2Client() {
         </div>
       </section>
 
-      {/* ── 07 · LÓGICA DE PORTFÓLIO ────────────────────────────────────────── */}
-      <section id="mov-07" style={{ ...S }} aria-label="Lógica de Portfólio / Portfolio Logic">
-        <Numeral n="07" />
-        <Kicker n="07" pt="Lógica de Portfólio" en="Portfolio Logic" />
+      {/* ── 08 · LÓGICA DE PORTFÓLIO ────────────────────────────────────────── */}
+      <section id="mov-08" style={{ ...S }} aria-label="Lógica de Portfólio / Portfolio Logic">
+        <Numeral n="08" />
+        <Kicker n="08" pt="Lógica de Portfólio" en="Portfolio Logic" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: '3rem' }}>
@@ -781,14 +796,14 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 08 · EVIDÊNCIA DE EXECUÇÃO ──────────────────────────────────────── */}
+      {/* ── 09 · EVIDÊNCIA DE EXECUÇÃO ──────────────────────────────────────── */}
       <section
-        id="mov-08"
+        id="mov-09"
         style={{ ...S, background: '#111110' }}
         aria-label="Evidência de Execução / Evidence of Execution"
       >
-        <Numeral n="08" />
-        <Kicker n="08" pt="Evidência de Execução" en="Evidence of Execution" />
+        <Numeral n="09" />
+        <Kicker n="09" pt="Evidência de Execução" en="Evidence of Execution" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: '3.5rem' }}>
@@ -838,10 +853,10 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 09 · CASE SELECIONADO ───────────────────────────────────────────── */}
-      <section id="mov-09" style={{ ...S }} aria-label="Case Selecionado / Selected Case">
-        <Numeral n="09" />
-        <Kicker n="09" pt="Case Selecionado" en="Selected Case" />
+      {/* ── 10 · CASE SELECIONADO ───────────────────────────────────────────── */}
+      <section id="mov-10" style={{ ...S }} aria-label="Case Selecionado / Selected Case">
+        <Numeral n="10" />
+        <Kicker n="10" pt="Case Selecionado" en="Selected Case" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2" style={{ marginBottom: '0.5rem' }}>
@@ -899,14 +914,14 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 10 · POR QUE A OVERLENS ─────────────────────────────────────────── */}
+      {/* ── 11 · POR QUE A OVERLENS ─────────────────────────────────────────── */}
       <section
-        id="mov-10"
+        id="mov-11"
         style={{ ...S, background: '#111110' }}
         aria-label="Por Que a Overlens / Why Overlens"
       >
-        <Numeral n="10" />
-        <Kicker n="10" pt="Por Que a Overlens" en="Why Overlens" />
+        <Numeral n="11" />
+        <Kicker n="11" pt="Por Que a Overlens" en="Why Overlens" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2" style={{ maxWidth: '16ch', marginBottom: '3.5rem' }}>
@@ -951,10 +966,10 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 11 · VISÃO DE LONGO PRAZO ───────────────────────────────────────── */}
-      <section id="mov-11" style={{ ...S }} aria-label="Visão de Longo Prazo / Long-term Vision">
-        <Numeral n="11" />
-        <Kicker n="11" pt="Visão de Longo Prazo" en="Long-term Vision" />
+      {/* ── 12 · VISÃO DE LONGO PRAZO ───────────────────────────────────────── */}
+      <section id="mov-12" style={{ ...S }} aria-label="Visão de Longo Prazo / Long-term Vision">
+        <Numeral n="12" />
+        <Kicker n="12" pt="Visão de Longo Prazo" en="Long-term Vision" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
@@ -999,9 +1014,9 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 12 · FECHO ──────────────────────────────────────────────────────── */}
+      {/* ── 13 · FECHO ──────────────────────────────────────────────────────── */}
       <section
-        id="mov-12"
+        id="mov-13"
         style={{ ...S, alignItems: 'center', textAlign: 'center', background: '#000000' }}
         aria-label="Fecho / Close"
       >
