@@ -6,13 +6,20 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
+import { Ticker } from '@/components/Ticker/Ticker'
 import deployCount from '@/data/deploy-count.json'
 
-// Selo de versão do rodapé. O número de deploy é REAL: sai de
-// src/data/deploy-count.json, incrementado pela skill /deploy a cada publicação
-// em produção (ver scripts/bump-deploy-count.mjs). Antes era um "1.5.0" fixo que
-// nunca mudou — mentira simpática, mas mentira.
-const SITE_VERSION = `.TBF.SYSTEM VERSION ${deployCount.version} · DEPLOY ${deployCount.deploys}`
+// Selo de versão do rodapé. Nomenclatura oficial (pedido do fundador
+// 2026-07-31): `.TBF. OS 3.0.<deploy>`. O 3.0 é a linhagem do sistema
+// (SISTEMA 3.0 / TBF BUSINESS OS) e o último número é SEMPRE o número de
+// deploy REAL, que sai de src/data/deploy-count.json e é incrementado pela
+// skill /deploy a cada publicação em produção.
+const SITE_VERSION = `.TBF. OS 3.0.${deployCount.deploys}`
+
+// Cidades sob gestão, agora em letreiro. O separador e o ponto final repetem a
+// construção do letreiro do topo (o texto precisa fechar com " · " para emendar
+// consigo mesmo no loop).
+const CITIES_TICKER = 'SÃO PAULO, SP. · GOIÂNIA, GO. · SALVADOR, BA. ·'
 
 const NAV_COLUMNS = [
   {
@@ -87,14 +94,11 @@ export function Footer() {
         </div>
 
         {/* Cidades .TBF.: logo abaixo de "Consumed Worldwide." e ACIMA das colunas
-            Pages/Company/Legal (pedido). Espalhadas de ponta a ponta da largura,
-            sem separador. */}
+            Pages/Company/Legal. Desde 2026-07-31 correm em LETREIRO, com a mesma
+            construção do letreiro do topo (pedido do fundador) — mesmo
+            componente, só que no fluxo em vez de pinado. */}
         <div className="footer__cities">
-          <p className="footer__cities-list">
-            <span>São Paulo, SP.</span>
-            <span>Goiânia, GO.</span>
-            <span>Salvador, BA.</span>
-          </p>
+          <Ticker text={CITIES_TICKER} sticky={false} className="ticker--cities" />
         </div>
 
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
@@ -131,7 +135,7 @@ export function Footer() {
           <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>
             R. Pamplona, 145. Jardim Paulista, São Paulo, SP. 01405-100
           </p>
-          <p className="footer__meta" style={{ margin: 0, opacity: 0.4 }}>
+          <p className="footer__meta" style={{ textTransform: 'uppercase', margin: 0 }}>
             {SITE_VERSION}
           </p>
         </div>

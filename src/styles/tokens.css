@@ -19,6 +19,10 @@
   --tbf-color-smoke:          #1E1C1A;
   --tbf-color-mist:           #2C2A27;
   --tbf-color-quartz:         #6E6B67;
+  /* Um degrau acima do quartz. Nasceu da linha de copyright do rodapé, que o
+     fundador pediu toda na MESMA cor e um pouco mais clara que o resto do
+     rodapé (2026-07-31). */
+  --tbf-color-quartz-light:   #8C8884;
   --tbf-color-success:        #3A7A4A;
   --tbf-color-error:          #B54040;
   --tbf-color-warning:        #8B6914;
@@ -483,6 +487,7 @@
   /* ─── 3.3 Footer ─── */
   --tbf-footer-bg:         var(--tbf-bg-secondary);
   --tbf-footer-text:       var(--tbf-text-tertiary);
+  --tbf-footer-meta:       var(--tbf-color-quartz-light);
   --tbf-footer-link:       var(--tbf-text-primary);
   --tbf-footer-link-hover: var(--tbf-accent);
   --tbf-footer-border:     var(--tbf-border);
@@ -537,10 +542,23 @@
      percorre 50% dele no mesmo tempo. Então as durações são proporcionais ao
      comprimento, calibradas para ~134 px/s em 1440px:
        · fotos: 10 slides de 22vw + 4px de gap = ~3208px de percurso / 24s
-       · press: 8 logos de 112px + 64px de gap = ~1408px de percurso / 10.5s
-     Mudou a quantidade de slides ou a largura? Recalcule, não estime. */
+       · press: 8 logos de 112px + 64px de gap = 1408px por CÓPIA; o trilho leva
+         QUATRO cópias e anda 50% dele = 2816px de percurso / 21s
+     Mudou a quantidade de slides ou a largura? Recalcule, não estime.
+
+     POR QUE QUATRO CÓPIAS (2026-07-31): o percurso da animação precisa ser
+     MAIOR que a janela, senão no fim do ciclo o trilho já saiu da tela e sobra
+     um rombo preto antes da volta. Com duas cópias o percurso era 1408px e em
+     tela de 1920px o buraco aparecia depois do último logo (o msch). Regra:
+     (largura total / 2) >= largura da maior tela suportada. */
   --tbf-carousel-duration:       24s;
-  --tbf-carousel-duration-press: 10.5s;
+  --tbf-carousel-duration-press: 21s;
+
+  /* Respiro do carrossel de fotos da home: o MESMO valor em cima (entre o
+     letreiro e o trilho) e embaixo (entre o trilho e os cards). Existe como
+     token justamente para os dois lados não desandarem um do outro. Metade do
+     que era, por pedido do fundador (2026-07-31). */
+  --tbf-home-carousel-gap: var(--tbf-space-5);
 
   /* ─── 3.7 Button ─── */
   --tbf-btn-primary-bg:           var(--tbf-cta-bg);

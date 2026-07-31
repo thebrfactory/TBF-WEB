@@ -61,9 +61,12 @@ const MOVEMENTS = [
   { id: 'mov-07', pt: 'O Sistema Operacional', en: 'The Operating System' },
   { id: 'mov-08', pt: 'Lógica de Portfólio', en: 'Portfolio Logic' },
   { id: 'mov-09', pt: 'Evidência de Execução', en: 'Evidence of Execution' },
-  { id: 'mov-10', pt: 'Case Selecionado', en: 'Selected Case' },
-  { id: 'mov-11', pt: 'Por Que a Overlens', en: 'Why Overlens' },
-  { id: 'mov-12', pt: 'Visão de Longo Prazo', en: 'Long-term Vision' },
+  // A Visão de Longo Prazo passou à FRENTE do Case Selecionado (pedido do
+  // fundador 2026-07-31): o deck declara onde a casa quer chegar e só então
+  // mostra a prova. Case e Overlens andaram uma casa cada.
+  { id: 'mov-10', pt: 'Visão de Longo Prazo', en: 'Long-term Vision' },
+  { id: 'mov-11', pt: 'Case Selecionado', en: 'Selected Case' },
+  { id: 'mov-12', pt: 'Por Que a Overlens', en: 'Why Overlens' },
   { id: 'mov-13', pt: 'Fecho', en: 'Close' },
 ] as const
 
@@ -255,16 +258,35 @@ function Numeral({ n }: { n: string }) {
   )
 }
 
+// ─── Geometria do slide ──────────────────────────────────────────────────────
+// UM MOVIMENTO = UMA TELA (pedido do fundador 2026-07-31). Antes era
+// `minHeight: 100dvh`, que garante o piso e não impõe teto nenhum: os
+// movimentos mais cheios passavam de uma tela e meia e o deck virava uma página
+// rolável com pedaços de slide.
+//
+// A altura NÃO é 100dvh: é 100dvh MENOS a faixa pinada no topo (nav fixo +
+// letreiro sticky). O motivo é o encaixe. Cada movimento tem
+// `scroll-margin-top` igual a essa faixa, senão o kicker para debaixo dela — e
+// com 100dvh cheios o movimento passava a começar 88px abaixo do topo da
+// janela e terminar 88px ABAIXO da dobra: o último bloco ficava fora da tela,
+// exatamente o que este trabalho veio consertar. Descontando a faixa, o
+// movimento encaixado ocupa a janela inteira que sobra, do letreiro ao rodapé.
+//
+// O resto que segura isso de pé:
+//   1. o respiro de baixo reserva a barra de navegação do deck, fixa no canto;
+//   2. TODA a escala tipográfica e de espaçamento do deck tem um termo em `vh`
+//      (ver --p2-gap e os clamps com `min(...vw, ...vh)` mais abaixo): quando a
+//      janela encurta, o conteúdo encolhe junto em vez de vazar.
+// Mexeu em qualquer um dos dois? Confira os 13 movimentos em 390px e 1440px.
 const S: React.CSSProperties = {
-  minHeight: '100dvh',
+  height: 'calc(100dvh - var(--p2-band))',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  padding: 'clamp(4rem, 10vw, 8rem) clamp(1.25rem, 5vw, 6rem)',
-  // A barra de navegação é fixa no canto inferior direito. Sem esta folga, a
-  // última linha de cada movimento passa por baixo dela no mobile.
-  paddingBottom: 'clamp(7rem, 14vw, 9rem)',
+  paddingInline: 'clamp(1.25rem, 5vw, 6rem)',
+  paddingTop: 'clamp(0.75rem, 2.5vh, 2.5rem)',
+  paddingBottom: 'clamp(4.25rem, 8vh, 7rem)',
   position: 'relative',
   overflow: 'hidden',
   scrollSnapAlign: 'start',
@@ -381,44 +403,43 @@ const OPERATING_SYSTEM = [
 // "MELFIORE. / spin-off from Secret Honey Club". O naming canônico
 // (_SHARED/BUSINESS/bu-naming.md, vigente desde 2026-06-11) é THE FIORE DAILY,
 // e "Secret Honey Club" é nome histórico já aposentado. Corrigido aqui.
+//
+// PONTO NO INÍCIO E NO FIM em TODAS as labels (pedido do fundador 2026-07-31):
+// a marcação de `.TBF.` vale para o portfólio inteiro, não só para a holding.
+// E UMA cor só para os quatro cartões: a paleta por label fazia a lista parecer
+// quatro coisas de peso diferente — são quatro propriedades da mesma casa.
 const PORTFOLIO = [
   {
     name: '.THE BRAZILIAN FACTORY.',
     rolePt: 'Holding, camada de pesquisa e de venture',
     roleEn: 'Holding, research and venture layer',
     href: '/editorial',
-    color: PAPER,
   },
   {
-    name: 'RUNWAY UNTD COLLECTIVE.',
-    rolePt: 'Primeiro selo, laboratório de moda, cultura e comunidade',
+    name: '.RUNWAY UNTD COLLECTIVE.',
+    rolePt: 'Primeiro label, laboratório de moda, cultura e comunidade',
     roleEn: 'First label, a laboratory for fashion, culture and community',
     href: '/labels/runwayunited',
-    color: PAPER,
   },
   {
-    name: 'THE FIORE DAILY.',
+    name: '.THE FIORE DAILY.',
     rolePt: 'Marca de mídia de lifestyle e sexualidade',
     roleEn: 'Lifestyle and sexuality media brand',
     href: '/labels/thefioredaily',
-    color: '#C8A96A',
   },
   {
-    name: 'THE GROWTH FACTORY.',
+    name: '.THE GROWTH FACTORY.',
     rolePt: 'Soluções de crescimento para negócios brasileiros construindo fora',
     roleEn: 'Growth solutions for Brazilian businesses building abroad',
     href: '/labels/factoryofgrowth',
-    color: ACCENT,
-  },
-  {
-    // Item presente no deck sem descrição. Mantido como propriedade em aberto.
-    name: 'DUDE… WHERE’S MY CULTURE?',
-    rolePt: 'Em desenvolvimento',
-    roleEn: 'In development',
-    href: null,
-    color: 'rgba(240,237,230,0.55)',
   },
 ]
+
+// "DUDE… WHERE'S MY CULTURE?" era o quinto cartão da lista de propriedades e
+// nunca foi uma vertical: é uma PERGUNTA, e o fundador leu como tal
+// (2026-07-31). Saiu da lista e virou o subtítulo do movimento — o que o
+// portfólio inteiro está respondendo.
+const PORTFOLIO_SUBTITLE = 'DUDE… WHERE’S MY CULTURE?'
 
 const EVIDENCE = [
   {
@@ -579,12 +600,6 @@ export function PitchV2Client() {
           // O trilho de logos é sangrado: o respiro lateral vive no cabeçalho da
           // seção, não na seção, senão o carrossel deixa de correr de ponta a ponta.
           paddingInline: 0,
-          // Este é o movimento mais cheio do deck (kicker + carrossel + cinco
-          // retratos). Com o respiro padrão ele passava de 1,4 tela no desktop e
-          // os nomes caíam fora do primeiro quadro. Respiro vertical menor só
-          // aqui; a folga de baixo continua acima da barra de navegação fixa.
-          paddingTop: 'clamp(2.5rem, 6vw, 4rem)',
-          paddingBottom: 'clamp(6.5rem, 12vw, 7.5rem)',
           background: '#000000',
         }}
         aria-label="Campo de Referência / Reference Field"
@@ -621,12 +636,15 @@ export function PitchV2Client() {
                     className="p2-person__img"
                     sizes="(max-width: 767px) 45vw, 18vw"
                   />
+                  {/* SÓ O NOME (2026-07-31). A legenda trazia também o papel em
+                      português E em inglês: cinco colunas estreitas com blocos
+                      de texto de comprimentos diferentes, que desalinhavam a
+                      fila inteira e faziam o bloco parecer bagunçado. O papel de
+                      cada um já é dito pela frase que fecha o movimento; aqui
+                      basta o rosto e o nome. No telefone o papel já estava
+                      escondido — agora as duas telas contam a mesma coisa. */}
                   <figcaption>
                     <p className="p2-person__name">{person.name}</p>
-                    <p className="p2-person__role">
-                      {person.rolePt}
-                      <En>{person.roleEn}</En>
-                    </p>
                   </figcaption>
                 </figure>
               </PitchReveal>
@@ -648,18 +666,12 @@ export function PitchV2Client() {
           </PitchReveal>
         </div>
 
-        <PitchReveal delay={250}>
-          <p
-            className="p2-body p2-body--dim"
-            style={{ marginTop: 'clamp(2rem, 5vw, 3rem)', paddingInline: 'clamp(1.25rem, 5vw, 6rem)', maxWidth: '58ch' }}
-          >
-            Instituições estudadas como modelo de relevância cultural, nunca copiadas como
-            identidade.
-            <En>
-              Institutions studied as a model of cultural relevance, never copied as an identity.
-            </En>
-          </p>
-        </PitchReveal>
+        {/* O parágrafo "Instituições estudadas como modelo de relevância
+            cultural, nunca copiadas como identidade" saiu daqui (2026-07-31).
+            Ele dizia, com outras palavras, exatamente o que o fecho da Visão de
+            Longo Prazo já diz: "Norte: instituições como a 032c, estudadas como
+            modelo de relevância cultural, nunca copiadas como identidade".
+            Repetição não é ênfase — e este era o movimento mais cheio do deck. */}
       </section>
 
       {/* ── 04 · A PERGUNTA ─────────────────────────────────────────────────── */}
@@ -668,7 +680,7 @@ export function PitchV2Client() {
         <Kicker n="04" pt="A Pergunta" en="The Question" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2" style={{ maxWidth: '14ch', marginBottom: '3rem' }}>
+          <h2 className="p2-h2" style={{ maxWidth: '14ch', marginBottom: 'var(--p2-gap)' }}>
             Como se cria
             <br />
             <span style={{ color: ACCENT }}>valor cultural?</span>
@@ -688,7 +700,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-body p2-body--dim" style={{ marginTop: '3rem', maxWidth: '50ch' }}>
+          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: '50ch' }}>
             Esta pergunta é a fundação da .TBF.
             <En>This question is the foundation of .TBF.</En>
           </p>
@@ -705,7 +717,7 @@ export function PitchV2Client() {
         <Kicker n="05" pt="O Contexto" en="The Context" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
             Os mercados se organizam cada vez mais em torno de sentido.
             <En size="lead">Markets are increasingly organized around meaning.</En>
           </h2>
@@ -726,14 +738,14 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-assert" style={{ marginTop: '3rem', maxWidth: '28ch' }}>
+          <p className="p2-assert" style={{ marginTop: 'var(--p2-gap)', maxWidth: '28ch' }}>
             Atenção é a consequência, não o objetivo.
             <En>Attention is the consequence, not the objective.</En>
           </p>
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p className="p2-body" style={{ marginTop: '1.5rem', maxWidth: '58ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap-sm)', maxWidth: '58ch' }}>
             As empresas que duram aprendem a transformar valor simbólico em ativos que as pessoas
             escolhem, compartilham e aos quais retornam.
             <En>
@@ -750,7 +762,7 @@ export function PitchV2Client() {
         <Kicker n="06" pt="Nossa Tese" en="Our Thesis" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
             Capital cultural pode virar negócio durável.
             <En size="lead">Cultural capital can become durable business.</En>
           </h2>
@@ -781,7 +793,7 @@ export function PitchV2Client() {
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p className="p2-body" style={{ marginTop: '3rem', maxWidth: '60ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
             Estudamos, traduzimos e escalamos códigos culturais brasileiros: com cuidado suficiente
             para preservar sentido, com rigor suficiente para gerar valor.
             <En>
@@ -802,14 +814,14 @@ export function PitchV2Client() {
         <Kicker n="07" pt="O Sistema Operacional" en="The Operating System" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '1.5rem' }}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-sm)' }}>
             Um cultural venture studio em construção.
             <En size="lead">A cultural venture studio in the making.</En>
           </h2>
         </PitchReveal>
 
         <PitchReveal delay={150}>
-          <p className="p2-assert" style={{ marginBottom: '3rem' }}>
+          <p className="p2-assert p2-tertiary" style={{ marginBottom: 'var(--p2-gap)' }}>
             Não é uma agência com vocabulário maior.
             <En>Not an agency with a bigger vocabulary.</En>
           </p>
@@ -847,17 +859,27 @@ export function PitchV2Client() {
         <Kicker n="08" pt="Lógica de Portfólio" en="Portfolio Logic" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: '3rem' }}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: 'var(--p2-gap-sm)' }}>
             Um portfólio de propriedades, não uma lista de serviços.
             <En size="lead">A portfolio of properties, not a collection of services.</En>
           </h2>
         </PitchReveal>
 
+        {/* A pergunta que o portfólio inteiro responde. Ela era o quinto cartão
+            da lista — e não é uma vertical, é um subtítulo (pedido do fundador
+            2026-07-31). */}
+        <PitchReveal delay={150}>
+          <p className="p2-portfolio-subtitle" style={{ marginBottom: 'var(--p2-gap)' }}>
+            {PORTFOLIO_SUBTITLE}
+          </p>
+        </PitchReveal>
+
         {/* Antes: gap de 1px sobre um fundo claro, o truque que desenha um fio
             entre as linhas. Não convive com canto arredondado (o fundo vazaria
             nos cantos) e, no fim, era um divisor horizontal disfarçado, que o
-            repo proíbe. Virou uma pilha de cartões com folga de verdade. */}
-        <div style={{ display: 'grid', gap: 'clamp(0.5rem, 1.5vw, 0.75rem)', maxWidth: '820px' }}>
+            repo proíbe. Virou uma grade de cartões com folga de verdade — duas
+            colunas, para as quatro propriedades caberem numa tela só. */}
+        <div className="p2-portfolio-grid" style={{ maxWidth: '900px' }}>
           {PORTFOLIO.map((item, i) => {
             const inner = (
               <div
@@ -865,12 +887,12 @@ export function PitchV2Client() {
                 style={{
                   background: '#0a0a09',
                   padding: 'clamp(1rem, 3vw, 1.75rem)',
-                  borderLeft: `3px solid ${item.color}`,
+                  borderLeft: `3px solid ${PAPER}`,
                   borderRadius: 'var(--tbf-radius-card)',
                   height: '100%',
                 }}
               >
-                <p className="p2-portfolio-name" style={{ color: item.color }}>
+                <p className="p2-portfolio-name" style={{ color: PAPER }}>
                   {item.name}
                 </p>
                 <p className="p2-item-desc" style={{ marginTop: '0.4rem' }}>
@@ -894,16 +916,10 @@ export function PitchV2Client() {
           })}
         </div>
 
-        <PitchReveal delay={650}>
-          <div style={{ marginTop: '2rem' }}>
-            <Link href="/labels" className="btn btn--ghost">
-              Conheça os Selos
-              <span className="btn__arrow" aria-hidden="true">
-                &#8594;
-              </span>
-            </Link>
-          </div>
-        </PitchReveal>
+        {/* O botão "Conheça os Selos" saiu (2026-07-31). Dois motivos: "selo"
+            não existe no vocabulário da casa — aqui se diz LABEL —, e o
+            movimento precisava de uma tela só. O caminho para /labels continua
+            no fecho do deck e no rodapé do site. */}
       </section>
 
       {/* ── 09 · EVIDÊNCIA DE EXECUÇÃO ──────────────────────────────────────── */}
@@ -916,7 +932,7 @@ export function PitchV2Client() {
         <Kicker n="09" pt="Evidência de Execução" en="Evidence of Execution" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: '3.5rem' }}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: 'var(--p2-gap)' }}>
             A ambição olha para a frente.
             <br />
             <span style={{ color: ACCENT }}>O ofício já está em movimento.</span>
@@ -925,7 +941,7 @@ export function PitchV2Client() {
         </PitchReveal>
 
         <PitchReveal delay={200}>
-          <div style={{ marginBottom: '3rem' }}>
+          <div style={{ marginBottom: 'var(--p2-gap)' }}>
             <p className="p2-stat">6+</p>
             <p className="p2-label">
               Anos em direção criativa
@@ -952,7 +968,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={650}>
-          <p className="p2-footnote" style={{ marginTop: '2.5rem', maxWidth: '60ch' }}>
+          <p className="p2-footnote p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
             Contexto selecionado: Soul Dila; moda brasileira; comunicação de hostel e hospitalidade;
             direção criativa em marcas de lifestyle.
             <En>
@@ -963,10 +979,62 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 10 · CASE SELECIONADO ───────────────────────────────────────────── */}
-      <section id="mov-10" style={{ ...S }} aria-label="Case Selecionado / Selected Case">
+      {/* ── 10 · VISÃO DE LONGO PRAZO ───────────────────────────────────────── */}
+      <section id="mov-10" style={{ ...S }} aria-label="Visão de Longo Prazo / Long-term Vision">
         <Numeral n="10" />
-        <Kicker n="10" pt="Case Selecionado" en="Selected Case" />
+        <Kicker n="10" pt="Visão de Longo Prazo" en="Long-term Vision" />
+
+        <PitchReveal delay={100}>
+          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
+            De empresa criativa a instituição cultural.
+            <En size="lead">From creative company to cultural institution.</En>
+          </h2>
+        </PitchReveal>
+
+        <PitchReveal delay={200}>
+          <div className="p2-chain">
+            {VISION_STAGES.map((stage, i) => (
+              <Fragment key={stage.pt}>
+                <div className="p2-chain__node">
+                  <span className="p2-chain__n">0{i + 1}</span>
+                  <p
+                    className="p2-chain__title"
+                    style={{ color: i === VISION_STAGES.length - 1 ? ACCENT : PAPER }}
+                  >
+                    {stage.pt}
+                  </p>
+                  <En>{stage.en}</En>
+                </div>
+                {i < VISION_STAGES.length - 1 && (
+                  <span className="p2-chain__arrow" aria-hidden="true">
+                    &#8594;
+                  </span>
+                )}
+              </Fragment>
+            ))}
+          </div>
+        </PitchReveal>
+
+        <PitchReveal delay={650}>
+          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
+            Norte: instituições como a 032c, estudadas como modelo de relevância cultural, nunca
+            copiadas como identidade.
+            <En>
+              North star: institutions such as 032c, studied as a model of cultural relevance, never
+              copied as an identity.
+            </En>
+          </p>
+        </PitchReveal>
+      </section>
+
+      {/* ── 11 · CASE SELECIONADO ───────────────────────────────────────────── */}
+      <section
+        id="mov-11"
+        style={{ ...S, background: '#111110' }}
+        aria-label="Case Selecionado / Selected Case"
+      >
+        <Numeral n="11" />
+        <Kicker n="11" pt="Case Selecionado" en="Selected Case" />
 
         <PitchReveal delay={100}>
           <h2 className="p2-h2" style={{ marginBottom: '0.5rem' }}>
@@ -1013,7 +1081,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-body" style={{ marginTop: '3rem', maxWidth: '62ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '62ch' }}>
             O trabalho traduziu hospitalidade em um convite culturalmente legível: verão brasileiro,
             feito para ser sentido, não explicado.
             <En>
@@ -1024,17 +1092,17 @@ export function PitchV2Client() {
         </PitchReveal>
       </section>
 
-      {/* ── 11 · POR QUE A OVERLENS ─────────────────────────────────────────── */}
+      {/* ── 12 · POR QUE A OVERLENS ─────────────────────────────────────────── */}
       <section
-        id="mov-11"
-        style={{ ...S, background: '#111110' }}
+        id="mov-12"
+        style={{ ...S }}
         aria-label="Por Que a Overlens / Why Overlens"
       >
-        <Numeral n="11" />
-        <Kicker n="11" pt="Por Que a Overlens" en="Why Overlens" />
+        <Numeral n="12" />
+        <Kicker n="12" pt="Por Que a Overlens" en="Why Overlens" />
 
         <PitchReveal delay={100}>
-          <h2 className="p2-h2" style={{ maxWidth: '16ch', marginBottom: '3.5rem' }}>
+          <h2 className="p2-h2" style={{ maxWidth: '16ch', marginBottom: 'var(--p2-gap-lg)' }}>
             Uma parceria para ir
             <br />
             <span style={{ color: ACCENT }}>além de entregáveis.</span>
@@ -1069,57 +1137,9 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={500}>
-          <p className="p2-assert p2-assert--lg" style={{ marginTop: '3rem', maxWidth: '30ch' }}>
+          <p className="p2-assert p2-assert--lg" style={{ marginTop: 'var(--p2-gap)', maxWidth: '30ch' }}>
             Juntas: serviços criativos podem virar ativos culturais.
             <En>Together: creative services can become cultural assets.</En>
-          </p>
-        </PitchReveal>
-      </section>
-
-      {/* ── 12 · VISÃO DE LONGO PRAZO ───────────────────────────────────────── */}
-      <section id="mov-12" style={{ ...S }} aria-label="Visão de Longo Prazo / Long-term Vision">
-        <Numeral n="12" />
-        <Kicker n="12" pt="Visão de Longo Prazo" en="Long-term Vision" />
-
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: '3.5rem' }}>
-            De empresa criativa a instituição cultural.
-            <En size="lead">From creative company to cultural institution.</En>
-          </h2>
-        </PitchReveal>
-
-        <PitchReveal delay={200}>
-          <div className="p2-chain">
-            {VISION_STAGES.map((stage, i) => (
-              <Fragment key={stage.pt}>
-                <div className="p2-chain__node">
-                  <span className="p2-chain__n">0{i + 1}</span>
-                  <p
-                    className="p2-chain__title"
-                    style={{ color: i === VISION_STAGES.length - 1 ? ACCENT : PAPER }}
-                  >
-                    {stage.pt}
-                  </p>
-                  <En>{stage.en}</En>
-                </div>
-                {i < VISION_STAGES.length - 1 && (
-                  <span className="p2-chain__arrow" aria-hidden="true">
-                    &#8594;
-                  </span>
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </PitchReveal>
-
-        <PitchReveal delay={650}>
-          <p className="p2-body p2-body--dim" style={{ marginTop: '3rem', maxWidth: '60ch' }}>
-            Norte: instituições como a 032c, estudadas como modelo de relevância cultural, nunca
-            copiadas como identidade.
-            <En>
-              North star: institutions such as 032c, studied as a model of cultural relevance, never
-              copied as an identity.
-            </En>
           </p>
         </PitchReveal>
       </section>
@@ -1154,7 +1174,16 @@ export function PitchV2Client() {
 
           <PitchReveal delay={350}>
             <TbfWordmark
-              style={{ width: '100%', maxWidth: '700px', height: 'auto', display: 'block', marginBottom: '2.5rem' }}
+              style={{
+                width: '100%',
+                // Teto menor (era 700px): no fecho o logotipo dividia a tela com
+                // citação, contatos, três botões e o rodapé legal, e era ele que
+                // empurrava o movimento para fora de uma tela.
+                maxWidth: 'min(460px, 62vw)',
+                height: 'auto',
+                display: 'block',
+                marginBottom: 'var(--p2-gap)',
+              }}
             />
           </PitchReveal>
 
@@ -1176,7 +1205,7 @@ export function PitchV2Client() {
                 Manifesto &#8594;
               </Link>
               <Link href="/labels" className="btn btn--secondary">
-                Selos &#8594;
+                Labels &#8594;
               </Link>
               <a
                 href="https://instagram.com/thebrfactory"
@@ -1204,6 +1233,21 @@ export function PitchV2Client() {
           background: #000000;
           color: ${PAPER};
           font-family: var(--tbf-font-family-display);
+
+          /* RÉGUA VERTICAL DO DECK. Todo respiro entre blocos de um movimento
+             sai daqui, e o termo dominante é vh: numa janela baixa o deck se
+             comprime sozinho e continua cabendo em uma tela. Antes eram valores
+             fixos (3rem, 3.5rem) espalhados em estilo inline, que não sabiam
+             nada sobre a altura da janela — é de lá que vinha o vazamento. */
+          /* FAIXA PINADA no topo: nav fixo + letreiro sticky. É de onde saem
+             AO MESMO TEMPO o encaixe do movimento (scroll-margin-top) e a
+             altura dele (100dvh menos a faixa). Um valor só, para os dois nunca
+             se descolarem. */
+          --p2-band: calc(var(--tbf-nav-height-sm) + var(--tbf-ticker-height-sm));
+
+          --p2-gap:    clamp(1rem, 3.2vh, 2.25rem);
+          --p2-gap-sm: clamp(0.5rem, 1.6vh, 1.1rem);
+          --p2-gap-lg: clamp(1.25rem, 4.2vh, 3rem);
         }
 
         /* O nav e o letreiro são sticky e ficam pinados no topo. Sem esta
@@ -1211,12 +1255,7 @@ export function PitchV2Client() {
            kicker aparece cortado. Composto dos tokens de altura, não de número
            mágico, para acompanhar qualquer mudança no header. */
         .p2-deck > section {
-          scroll-margin-top: calc(var(--tbf-nav-height-sm) + var(--tbf-ticker-height-sm));
-        }
-        @media (min-width: 1280px) {
-          .p2-deck > section {
-            scroll-margin-top: calc(var(--tbf-nav-height-xl) + var(--tbf-ticker-height-xl));
-          }
+          scroll-margin-top: var(--p2-band);
         }
 
         /* Encaixe suave nos movimentos. Precisa viver no container que ROLA (o
@@ -1229,6 +1268,12 @@ export function PitchV2Client() {
            quebra a hidratação da página inteira. */
         html {
           scroll-snap-type: y proximity;
+        }
+
+        @media (min-width: 1280px) {
+          .p2-deck {
+            --p2-band: calc(var(--tbf-nav-height-xl) + var(--tbf-ticker-height-xl));
+          }
         }
 
         /* ─── CAMADA DE TRADUÇÃO (EN) ────────────────────────────────────────
@@ -1246,13 +1291,28 @@ export function PitchV2Client() {
           line-height: 1.55;
           letter-spacing: 0.015em;
           color: rgba(240,237,230,0.52);
-          margin-top: 0.6rem;
+          /* PAR COLADO (pedido do fundador 2026-07-31). A tradução tem de andar
+             AGARRADA à frase que traduz. Com respiro de 0,6rem, a distância de
+             uma frase para a sua tradução ficava igual à distância entre dois
+             itens da lista, e o olho lia um texto corrido só, não pares. A
+             regra de agora: dentro do par, quase nada; entre pares, quem separa
+             é a margem do item (ver .p2-pair-gap). */
+          margin-top: 0.1rem;
           text-transform: none;
         }
         .p2-en--lead {
           font-size: clamp(0.95rem, 2.8vw, 1.15rem);
           color: rgba(240,237,230,0.58);
-          margin-top: 0.9rem;
+          margin-top: 0.2rem;
+        }
+
+        /* SEPARAÇÃO ENTRE PARES. Vale para toda lista do deck em que cada item
+           traz PT + EN: o que separa um item do outro precisa ser visivelmente
+           MAIOR que o que separa a frase da sua tradução, senão a lista volta a
+           parecer um bloco de texto. */
+        .p2-partner-line:last-child,
+        .p2-exec-item:last-child {
+          margin-bottom: 0;
         }
 
         /* ─── KICKER ─────────────────────────────────────────────────────── */
@@ -1261,7 +1321,7 @@ export function PitchV2Client() {
           flex-wrap: wrap;
           align-items: baseline;
           gap: 0.5rem;
-          margin-bottom: 2rem;
+          margin-bottom: var(--p2-gap);
         }
         .p2-kicker__n {
           font-family: var(--tbf-font-family-printed);
@@ -1296,30 +1356,38 @@ export function PitchV2Client() {
           pointer-events: none;
           font-family: var(--tbf-font-family-printed);
           font-weight: 100;
-          font-size: clamp(7rem, 26vw, 20rem);
+          /* O numeral é decoração: ele acompanha a MENOR das duas dimensões da
+             janela, senão vira uma mancha de 20rem numa tela baixa e come o
+             movimento inteiro. */
+          font-size: clamp(5rem, min(22vw, 32vh), 15rem);
           line-height: 0.8;
           letter-spacing: -0.04em;
           color: rgba(240,237,230,0.045);
         }
 
         /* ─── TIPOGRAFIA DO DECK ─────────────────────────────────────────── */
+        /* Toda headline mede a janela pelos DOIS lados: o termo vh é o que faz
+           o título encolher numa tela baixa em vez de empurrar o resto do
+           movimento para fora. Os tetos também baixaram (4.5rem → 3.6rem), que
+           é o pedido de "mais enxuto e legível": título menor, movimento
+           inteiro visível de uma vez. */
         .p2-h2 {
           position: relative;
           z-index: 1;
           font-family: var(--tbf-font-family-display);
-          font-size: clamp(2rem, 7vw, 4.5rem);
+          font-size: clamp(1.9rem, min(6.4vw, 6.6vh), 3.6rem);
           font-weight: 900;
-          line-height: 0.95;
+          line-height: 0.98;
           letter-spacing: -0.04em;
           color: ${PAPER};
         }
         .p2-h2--md {
-          font-size: clamp(1.75rem, 6vw, 3.5rem);
+          font-size: clamp(1.6rem, min(5vw, 5vh), 2.6rem);
         }
         .p2-quote {
-          font-size: clamp(1.5rem, 5.5vw, 3.5rem);
+          font-size: clamp(1.5rem, min(5.2vw, 5.6vh), 3rem);
           max-width: 18ch;
-          margin: 0 auto 2.5rem;
+          margin: 0 auto var(--p2-gap);
         }
 
         .p2-body {
@@ -1327,8 +1395,8 @@ export function PitchV2Client() {
           z-index: 1;
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
-          font-size: clamp(0.875rem, 2.5vw, 1.125rem);
-          line-height: 1.7;
+          font-size: clamp(0.85rem, min(2.4vw, 2.1vh), 1.0625rem);
+          line-height: 1.6;
           color: rgba(240,237,230,0.65);
         }
         .p2-body--dim { color: rgba(240,237,230,0.5); }
@@ -1342,11 +1410,11 @@ export function PitchV2Client() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: var(--tbf-text-tertiary);
-          margin-bottom: 1.5rem;
+          margin-bottom: var(--p2-gap-sm);
         }
         .p2-eyebrow--accent {
           color: ${ACCENT};
-          margin-bottom: 2.5rem;
+          margin-bottom: var(--p2-gap);
         }
 
         .p2-label {
@@ -1365,7 +1433,7 @@ export function PitchV2Client() {
           z-index: 1;
           font-family: var(--tbf-font-family-display);
           font-weight: 700;
-          font-size: clamp(1rem, 3vw, 1.5rem);
+          font-size: clamp(1rem, min(2.9vw, 2.8vh), 1.4rem);
           line-height: 1.3;
           letter-spacing: -0.02em;
           color: ${PAPER};
@@ -1374,7 +1442,7 @@ export function PitchV2Client() {
         .p2-context-word {
           font-family: var(--tbf-font-family-display);
           font-weight: 900;
-          font-size: clamp(1.5rem, 5vw, 2.5rem);
+          font-size: clamp(1.35rem, min(4.4vw, 4vh), 2.1rem);
           line-height: 1;
           letter-spacing: -0.03em;
           color: ${PAPER};
@@ -1386,18 +1454,19 @@ export function PitchV2Client() {
           z-index: 1;
           font-family: var(--tbf-font-family-display);
           font-weight: 700;
-          font-size: clamp(1rem, 3.5vw, 1.75rem);
+          font-size: clamp(1rem, min(3.2vw, 3.2vh), 1.6rem);
+          line-height: 1.2;
           letter-spacing: -0.02em;
           color: ${ACCENT};
         }
         .p2-assert--lg {
-          font-size: clamp(1.125rem, 4vw, 2rem);
+          font-size: clamp(1.05rem, min(3.6vw, 3.6vh), 1.8rem);
         }
 
         .p2-item-title {
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(1rem, 3vw, 1.375rem);
+          font-size: clamp(0.95rem, min(2.7vw, 2.5vh), 1.25rem);
           letter-spacing: -0.02em;
           line-height: 1.15;
           color: ${PAPER};
@@ -1405,15 +1474,28 @@ export function PitchV2Client() {
         .p2-item-desc {
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
-          font-size: clamp(0.8rem, 2vw, 0.9rem);
-          line-height: 1.6;
+          font-size: clamp(0.78rem, min(1.9vw, 1.8vh), 0.9rem);
+          line-height: 1.5;
           color: rgba(240,237,230,0.5);
+        }
+
+        /* Subtítulo do movimento 08: a pergunta, em Printed itálico, no mesmo
+           registro de voz do resto da camada secundária do deck. */
+        .p2-portfolio-subtitle {
+          position: relative;
+          z-index: 1;
+          font-family: var(--tbf-font-family-printed);
+          font-weight: 300;
+          font-style: italic;
+          font-size: clamp(0.9rem, min(2.8vw, 2.6vh), 1.3rem);
+          letter-spacing: 0.02em;
+          color: rgba(240,237,230,0.6);
         }
 
         .p2-portfolio-name {
           font-family: var(--tbf-font-family-display);
           font-weight: 900;
-          font-size: clamp(1rem, 3vw, 1.5rem);
+          font-size: clamp(0.95rem, min(2.6vw, 2.4vh), 1.3rem);
           letter-spacing: -0.03em;
         }
         /* Deslize curto no hover: confirma que a linha é clicável sem sublinhado. */
@@ -1428,7 +1510,7 @@ export function PitchV2Client() {
         .p2-stat {
           font-family: var(--tbf-font-family-display);
           font-weight: 900;
-          font-size: clamp(3rem, 12vw, 7rem);
+          font-size: clamp(2.5rem, min(10vw, 10vh), 5rem);
           line-height: 1;
           letter-spacing: -0.05em;
           color: ${ACCENT};
@@ -1441,39 +1523,39 @@ export function PitchV2Client() {
           letter-spacing: 0.12em;
           text-transform: uppercase;
           color: ${ACCENT};
-          margin-bottom: 3rem;
+          margin-bottom: var(--p2-gap);
         }
         .p2-case-body {
           font-family: var(--tbf-font-family-display);
           font-weight: 700;
-          font-size: clamp(1rem, 2.8vw, 1.25rem);
-          line-height: 1.35;
+          font-size: clamp(0.95rem, min(2.5vw, 2.3vh), 1.15rem);
+          line-height: 1.3;
           letter-spacing: -0.02em;
           color: ${PAPER};
         }
         .p2-exec-item {
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
-          font-size: clamp(0.85rem, 2.2vw, 1rem);
-          line-height: 1.6;
+          font-size: clamp(0.82rem, min(2vw, 1.9vh), 0.95rem);
+          line-height: 1.45;
           color: rgba(240,237,230,0.65);
-          margin-bottom: 0.9rem;
+          margin-bottom: calc(var(--p2-gap-sm) * 1.6);
         }
 
         .p2-partner-name {
           font-family: var(--tbf-font-family-display);
           font-weight: 900;
-          font-size: clamp(1.25rem, 4vw, 2rem);
+          font-size: clamp(1.15rem, min(3.4vw, 3.2vh), 1.75rem);
           letter-spacing: -0.03em;
-          margin-bottom: 1.5rem;
+          margin-bottom: var(--p2-gap-sm);
         }
         .p2-partner-line {
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
-          font-size: clamp(0.875rem, 2.2vw, 1rem);
-          line-height: 1.6;
+          font-size: clamp(0.85rem, min(2.1vw, 2vh), 1rem);
+          line-height: 1.5;
           color: rgba(240,237,230,0.6);
-          margin-bottom: 1rem;
+          margin-bottom: calc(var(--p2-gap-sm) * 1.6);
         }
 
         .p2-footnote {
@@ -1496,10 +1578,10 @@ export function PitchV2Client() {
           font-weight: 350;
           font-size: clamp(0.875rem, 2.5vw, 1rem);
           color: rgba(240,237,230,0.5);
-          margin-bottom: 3rem;
+          margin-bottom: var(--p2-gap);
         }
         .p2-legal {
-          margin-top: 5rem;
+          margin-top: var(--p2-gap);
           font-family: var(--tbf-font-family-printed);
           font-weight: 300;
           font-size: 0.72rem;
@@ -1522,49 +1604,62 @@ export function PitchV2Client() {
         .p2-refs-label .p2-en { text-align: center; }
 
         /* ─── AS CINCO PERSONALIDADES DE REFERÊNCIA ──────────────────────────
-           Mobile-first: duas colunas, que é o que cabe num retrato quadrado sem
-           virar selo ilegível no 390px. A quinta fica sozinha na última linha e
-           é isso mesmo: cinco é ímpar, e forçar simetria custaria cortar uma
-           referência que o fundador escolheu. Em 768px+ as cinco entram na mesma
-           linha e a leitura vira uma faixa só. */
+           UMA FILA ÚNICA, do 390px ao 1440px, como uma barra de stories. A
+           versão anterior era 2 colunas no mobile com a quinta sozinha na
+           última linha: ocupava quase meia tela e quebrava o "um movimento, uma
+           tela".
+           No mobile o círculo é pequeno demais para segurar a legenda — 5
+           colunas de ~60px dariam duas palavras por linha —, então lá fica só o
+           NOME. A função de cada referência volta a partir de 768px, onde a
+           coluna tem largura para ser lida. Cortar o que não cabe é o pedido de
+           "mais enxuto e legível"; espremer não seria nem uma coisa nem outra. */
+        /* O respiro sai do TAMANHO DOS MARCADORES, não do gosto: os assets .TBF.
+           do carrossel são mais altos que a faixa de logos e sobram para fora
+           dela (é o desenho). Com o respiro antigo, essa sobra caía em cima da
+           primeira fila de retratos — foi o encosto que o fundador viu. */
         .p2-refs-people {
-          margin-top: clamp(2rem, 5vw, 2.75rem);
+          margin-top: calc(var(--p2-gap) + clamp(1rem, 3vw, 2.5rem));
           padding-inline: clamp(1.25rem, 5vw, 6rem);
         }
 
         .p2-refs-people__lead {
           max-width: 34ch;
-          margin-top: clamp(1.75rem, 4vw, 2.25rem);
+          margin-top: var(--p2-gap);
         }
 
         .p2-refs-people__grid {
           display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: clamp(1rem, 3vw, 1.5rem);
-        }
-
-        /* O teto de 900px não é estética, é altura: sem ele, no 1440 cada
-           retrato passa de 230px e o movimento fica 1,4× a tela, empurrando os
-           nomes para fora do primeiro quadro. Com o teto, o movimento cabe e as
-           cinco referências são lidas de uma vez. */
-        @media (min-width: 768px) {
-          .p2-refs-people__grid {
-            grid-template-columns: repeat(5, 1fr);
-            max-width: 900px;
-          }
+          grid-template-columns: repeat(5, 1fr);
+          gap: clamp(0.5rem, 2.5vw, 1.5rem);
+          /* −40% (pedido do fundador 2026-07-31): 900px → 540px. A fila é uma
+             NOTA de rodapé do campo de referência, não o assunto do movimento;
+             no tamanho anterior competia com o trilho de imprensa. */
+          max-width: 540px;
+          /* Centrada: o trilho de logos acima corre de ponta a ponta e o rótulo
+             do movimento é centrado. Ancorada à esquerda, a fila de retratos
+             deixava meia tela vazia à direita. */
+          margin-inline: auto;
         }
 
         .p2-person {
           margin: 0;
+          text-align: center;
         }
 
+        /* Retrato REDONDO, estética de story do Instagram (pedido do fundador
+           2026-07-31). O quadrado com canto arredondado virava um cartãozinho;
+           o círculo lê como pessoa. Os arquivos já são 1:1 na origem, então o
+           recorte circular não corta rosto nenhum. */
         .p2-person__img {
           width: 100%;
           height: auto;
           aspect-ratio: 1 / 1;
           object-fit: cover;
           display: block;
-          border-radius: var(--tbf-radius-card);
+          border-radius: var(--tbf-radius-full);
+          box-shadow:
+            0 0 0 2px #000000,
+            0 0 0 3px rgba(240, 237, 230, 0.28);
           /* O deck é preto e os retratos são de época, de temperaturas muito
              diferentes entre si. O dessaturado parcial costura as cinco fotos
              numa família só, sem apagar o rosto de ninguém. */
@@ -1576,23 +1671,19 @@ export function PitchV2Client() {
           filter: grayscale(0) contrast(1);
         }
 
+        /* Os nomes têm comprimentos muito diferentes (WILL.I.AM x OSWALD DE
+           ANDRADE): sem uma altura reservada, uns ocupam uma linha e outros
+           duas, e a fila desalinha embaixo. Duas linhas reservadas para todos
+           deixam a base do bloco reta. */
         .p2-person__name {
-          margin: 0.85rem 0 0;
+          margin: 0.7rem 0 0;
+          min-height: 2.3em;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.7rem, 2.2vw, 0.8rem);
-          letter-spacing: 0.02em;
+          font-size: clamp(0.56rem, 1.7vw, 0.78rem);
+          letter-spacing: 0.06em;
           line-height: 1.15;
-          color: ${PAPER};
-        }
-
-        .p2-person__role {
-          margin: 0.3rem 0 0;
-          font-family: var(--tbf-font-family-display);
-          font-weight: 350;
-          font-size: clamp(0.68rem, 2vw, 0.75rem);
-          line-height: 1.35;
-          color: rgba(240,237,230,0.55);
+          color: rgba(240, 237, 230, 0.85);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1669,30 +1760,50 @@ export function PitchV2Client() {
           .p2-nav__label { display: none; }
         }
 
+        /* A barra de navegação é FIXA sobre o movimento. No telefone ela
+           precisa caber na folga de baixo reservada pelo slide (ver S), senão
+           come a última linha do conteúdo — foi o que aconteceu com o terceiro
+           bloco do movimento 09. Botão menor, barra mais baixa. */
+        @media (max-width: 767px) {
+          .p2-nav {
+            padding: 0.35rem 0.35rem 0.35rem 0.9rem;
+            bottom: 0.6rem;
+            right: 0.6rem;
+          }
+          .p2-nav__btn {
+            width: 2.35rem;
+            height: 2.35rem;
+          }
+        }
+
         /* ─── LAYOUT ─────────────────────────────────────────────────────── */
+        /* Brother1816 THIN (100) na headline da abertura, por pedido do fundador
+           (2026-07-31). Era Black (900). No peso fino a mancha muda de natureza:
+           o entrelinhamento abre um pouco e o entreletramento afrouxa, senão as
+           hastes finas encostam e a linha some sobre o vídeo. */
         .p2-cover-headline {
           position: relative;
           z-index: 1;
           font-family: var(--tbf-font-family-display);
-          font-size: clamp(2rem, 9vw, 5rem);
-          font-weight: 900;
-          line-height: 0.95;
-          letter-spacing: -0.04em;
+          font-size: clamp(2rem, min(8.4vw, 8vh), 4.6rem);
+          font-weight: 100;
+          line-height: 1.02;
+          letter-spacing: -0.015em;
           color: ${PAPER};
-          margin-bottom: 2rem;
+          margin-bottom: var(--p2-gap);
         }
         .p2-cover-wordmark {
           width: 100%;
-          max-width: 520px;
+          max-width: min(520px, 60vw);
           height: auto;
           display: block;
-          margin-bottom: 1.25rem;
+          margin-bottom: var(--p2-gap-sm);
         }
 
         .p2-question-list {
           display: flex;
           flex-direction: column;
-          gap: 1.75rem;
+          gap: var(--p2-gap);
         }
 
         /* Grid de 3 colunas: empilha no mobile */
@@ -1701,7 +1812,7 @@ export function PitchV2Client() {
           z-index: 1;
           display: grid;
           grid-template-columns: 1fr;
-          gap: clamp(1.5rem, 4vw, 2.5rem);
+          gap: var(--p2-gap);
         }
 
         /* Cadeia de etapas: vertical no mobile, horizontal no desktop */
@@ -1750,12 +1861,34 @@ export function PitchV2Client() {
 
         .p2-os-grid,
         .p2-case-grid,
-        .p2-partner-grid {
+        .p2-partner-grid,
+        .p2-portfolio-grid {
           position: relative;
           z-index: 1;
           display: grid;
           grid-template-columns: 1fr;
-          gap: clamp(1rem, 3vw, 1.5rem);
+          gap: clamp(0.5rem, 1.6vh, 1.25rem);
+        }
+
+        /* Quatro cartões curtos empilhados passavam de uma tela no mobile. Em
+           duas colunas o movimento cabe e cada cartão continua legível. */
+        .p2-os-grid,
+        .p2-portfolio-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        /* CARTÕES DO MESMO TAMANHO (pedido do fundador 2026-07-31). O cartão já
+           pedia altura 100%, mas quem o segura é o wrapper do reveal, e ele não
+           esticava. Duas providências: 1fr iguala as DUAS linhas entre si (senão
+           cada uma se ajusta ao seu texto mais longo) e o wrapper passa a ocupar
+           a célula inteira. */
+        .p2-portfolio-grid {
+          grid-auto-rows: 1fr;
+        }
+
+        .p2-portfolio-grid > *,
+        .p2-portfolio-grid > * > a {
+          height: 100%;
         }
 
         @media (min-width: 768px) {
@@ -1763,7 +1896,8 @@ export function PitchV2Client() {
             grid-template-columns: repeat(3, 1fr);
           }
           .p2-os-grid,
-          .p2-partner-grid {
+          .p2-partner-grid,
+          .p2-portfolio-grid {
             grid-template-columns: repeat(2, 1fr);
           }
           .p2-case-grid {
@@ -1785,6 +1919,95 @@ export function PitchV2Client() {
           .p2-os-grid {
             grid-template-columns: repeat(4, 1fr);
           }
+        }
+
+        /* ─── RÉGUA DO TELEFONE ──────────────────────────────────────────────
+           Um iPhone 13 dá 664px de altura útil e o deck é BILÍNGUE: cada linha
+           nasce dobrada. No desktop os 13 movimentos cabem numa tela com folga;
+           no telefone, com a régua do desktop, os mais cheios passavam 200px.
+           Aqui a régua inteira encolhe de uma vez — respiros, corpo e a camada
+           de tradução — em vez de cada movimento ganhar um remendo. */
+        @media (max-width: 767px) {
+          .p2-deck {
+            --p2-gap:    clamp(0.6rem, 2.4vh, 1.2rem);
+            --p2-gap-sm: 0.4rem;
+            --p2-gap-lg: clamp(0.75rem, 3vh, 1.5rem);
+          }
+          .p2-en {
+            font-size: 0.68rem;
+            line-height: 1.3;
+            margin-top: 0.05rem;
+          }
+          .p2-en--lead { font-size: 0.82rem; margin-top: 0.15rem; }
+          .p2-h2 { font-size: clamp(1.4rem, 5.1vw, 1.85rem); }
+          .p2-h2--md { font-size: clamp(1.15rem, 4.4vw, 1.5rem); }
+          .p2-body { font-size: 0.78rem; line-height: 1.4; }
+          .p2-assert { font-size: 0.95rem; }
+          .p2-assert--lg { font-size: 1.05rem; }
+          .p2-item-desc { font-size: 0.66rem; line-height: 1.25; }
+          .p2-item-title { font-size: 0.82rem; line-height: 1.1; }
+          .p2-footnote { font-size: 0.7rem; line-height: 1.4; }
+          .p2-context-word { font-size: clamp(1.15rem, 4.4vw, 1.5rem); }
+          .p2-question { font-size: 0.92rem; }
+          .p2-case-body { font-size: 0.72rem; line-height: 1.2; }
+          .p2-case-client { font-size: 0.7rem; margin-bottom: var(--p2-gap-sm); }
+          .p2-label { font-size: 0.62rem; }
+          .p2-stat { line-height: 0.9; }
+          .p2-exec-item { font-size: 0.76rem; line-height: 1.25; margin-bottom: 0.2rem; }
+          .p2-partner-line { font-size: 0.8rem; margin-bottom: 0.7rem; }
+          .p2-kicker { margin-bottom: 0.35rem; }
+          .p2-kicker__n, .p2-kicker__pt { font-size: 0.62rem; }
+          .p2-kicker__en { font-size: 0.68rem; }
+
+          /* A cadeia de etapas (tese e visão) empilhava 4 nós + 3 setas: era o
+             bloco mais alto do deck no telefone. Em 2x2 ela vira um quadro só.
+             A seta some junto — em grade, ela apontaria para o lugar errado, e
+             a ordem já é dada pelo numeral de cada nó. */
+          .p2-chain {
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--p2-gap-sm) 0.75rem;
+          }
+          .p2-chain__arrow { display: none; }
+          .p2-chain__title { font-size: 1rem; margin-top: 0.25rem; }
+
+          /* Cartões (sistema operacional, portfólio, parceria): o respiro
+             interno de desktop custava ~120px por movimento no telefone. */
+          .p2-os-grid > * > div,
+          .p2-partner-grid > * > div,
+          .p2-portfolio-grid > * > div,
+          .p2-portfolio-grid > * > a > div {
+            padding: 0.75rem !important;
+          }
+
+          /* Os blocos com fio superior (contexto, evidência, case) reservavam
+             1,25rem entre o fio e o título — respiro de desktop. */
+          .p2-context-grid > * > div,
+          .p2-case-grid > * > div {
+            padding-top: 0.6rem !important;
+          }
+
+          /* OVERLENS × .TBF. lado a lado também no telefone: são duas listas
+             curtas, e empilhadas custavam meio movimento. */
+          .p2-partner-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+
+          /* Case: Desafio e Insight lado a lado, Execução inteira embaixo. São
+             dois parágrafos curtos contra uma lista de quatro itens — empilhar
+             os três era o único movimento que ainda não cabia numa tela. */
+          .p2-case-grid {
+            gap: 0.4rem 0.75rem;
+            grid-template-columns: 1fr 1fr;
+          }
+          .p2-case-grid > *:last-child {
+            grid-column: 1 / -1;
+          }
+
+          /* CAMADA TERCIÁRIA. São os parágrafos que ELABORAM o que o movimento
+             já afirmou: no desktop eles cabem e enriquecem; no telefone são a
+             diferença entre um slide e um slide e meio. O que some aqui nunca é
+             a tese do movimento — é o comentário sobre ela. */
+          .p2-tertiary { display: none; }
         }
 
         /* Acessibilidade: sem movimento, sem encaixe, sem desfoque. */

@@ -21,6 +21,13 @@ const PRESS_LOGOS = [
 // vertical. Inline, cada `viewBox` manda no aspecto e o desenho sai idêntico ao
 // vetor de origem (`CHANGES/PITCH/#00 #0N TBF.svg`).
 // Ordem visual: swoosh esquerdo · burst central · swoosh direito.
+//
+// O BURST VOLTOU (2026-07-31, pedido do fundador). Ele tinha saído porque
+// ficava parado no meio do frame enquanto o trilho corria por baixo e, a cada
+// volta, engolia um wordmark inteiro. A solução não é tirar a marca, é dar
+// calha a ela: o trilho agora são DUAS metades independentes, com um vão no
+// meio onde só o burst mora (ver .press-carousel--half no CSS). Nada mais passa
+// por trás de marca nenhuma.
 const OVERLAY_SHAPES = [
   {
     key: 'swoosh-left',
@@ -39,8 +46,16 @@ const OVERLAY_SHAPES = [
   },
 ] as const
 
+// QUATRO cópias, não duas. A animação anda 50% do trilho: com duas cópias esse
+// percurso é uma cópia só (1408px) e, numa tela de 1920px, no fim do ciclo o
+// trilho já tinha saído do quadro — sobrava um rombo preto depois do último
+// logo (o msch, o "!!!"). Era esse o buraco. Com quatro cópias o percurso vira
+// 2816px, maior que qualquer tela que o site atende, e a costura some. A
+// duração dobrou junto em tokens.css para a velocidade não mudar.
+const COPIES = 4
+
 export function PressLogosCarousel() {
-  const loop = [...PRESS_LOGOS, ...PRESS_LOGOS]
+  const loop = Array.from({ length: COPIES }, () => PRESS_LOGOS).flat()
 
   return (
     // O `overflow: hidden` que faz o trilho rolar sem vazar vive AGORA só no
@@ -48,6 +63,11 @@ export function PressLogosCarousel() {
     // clipping: os marcadores são mais altos que a faixa de logos e antes tinham
     // as pontas decepadas pelo overflow: era a "forma esquisita" do pedido.
     <div className="press-carousel-frame" aria-label="Featured in">
+      {/* UM trilho só. A calha dos três assets é feita por MÁSCARA (ver
+          .press-carousel no CSS): o trilho continua correndo inteiro por baixo,
+          mas fica transparente onde cada marca .TBF. mora. Duas metades de DOM,
+          que foi a primeira tentativa, mostravam o mesmo wordmark dos dois lados
+          do burst — duas janelas do mesmo loop sempre se sobrepõem. */}
       <div className="press-carousel">
         <ul className="press-carousel-track" role="list">
           {loop.map((src, i) => (
@@ -74,7 +94,7 @@ export function PressLogosCarousel() {
             viewBox={shape.viewBox}
             role="presentation"
             className="press-carousel__mark"
-            style={{ marginInline: 'clamp(0.5rem, 2vw, 1.5rem)' }}
+            style={{ marginInline: 0 }}
           >
             <path d={shape.d} fill="var(--tbf-color-parchment)" />
           </svg>

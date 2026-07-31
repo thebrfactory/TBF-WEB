@@ -6,6 +6,11 @@
 
 interface TickerProps {
   text?: string
+  /** Letreiro pinado abaixo do nav (padrão) ou correndo no fluxo da página —
+   *  este segundo caso é o letreiro de cidades do rodapé. */
+  sticky?: boolean
+  /** Classe extra no invólucro, para variantes de escala/altura. */
+  className?: string
 }
 
 const DEFAULT_TEXT =
@@ -19,12 +24,12 @@ const DEFAULT_TEXT =
 // manter a MESMA velocidade em px/s. Os dois números andam juntos.
 const REPEAT = 3
 
-export function Ticker({ text = DEFAULT_TEXT }: TickerProps) {
+export function Ticker({ text = DEFAULT_TEXT, sticky = true, className = '' }: TickerProps) {
   const copies = Array.from({ length: REPEAT * 2 })
 
   return (
     <div
-      className="ticker"
+      className={`ticker${sticky ? '' : ' ticker--flow'}${className ? ` ${className}` : ''}`}
       aria-hidden="true"
       role="presentation"
     >

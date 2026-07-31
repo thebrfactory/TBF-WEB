@@ -80,31 +80,29 @@ export default async function HomePage() {
       {/* ─── TICKER ──────────────────────────────────────────────────────────── */}
       <Ticker />
 
-      {/* ─── PHOTO CAROUSEL ──────────────────────────────────────────────────── */}
-      <PhotoCarousel articles={carouselArticles} />
+      {/* ─── PHOTO CAROUSEL ──────────────────────────────────────────────────────
+             O carrossel tem o MESMO respiro em cima e embaixo: acima é este
+             paddingTop, abaixo é o paddingTop da grade editorial logo a seguir.
+             Ele nasce centrado entre o letreiro e a primeira fileira de cards,
+             em vez de colado num dos dois. Gestalt, pedido do fundador
+             2026-07-31 (a medida caiu à metade em 2026-07-31, mesma sessão).
+             Mexeu num dos dois? Mexa no outro. */}
+      <div style={{ background: '#000000', paddingTop: 'var(--tbf-home-carousel-gap)' }}>
+        <PhotoCarousel articles={carouselArticles} />
+      </div>
 
-      {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────── */}
+      {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────────
+             O rótulo "MAGAZINE" saiu (pedido do fundador 2026-07-31): as capas
+             já dizem o que a seção é, e ele era a única coisa entre o carrossel
+             e os cards, o que desequilibrava o respiro de baixo. O nome da
+             seção segue existindo para leitor de tela no aria-label. */}
       <section
-        aria-labelledby="editorial-section-heading"
-        style={{ paddingTop: 'var(--tbf-space-10)', paddingBottom: 'var(--tbf-space-10)' }}
+        aria-label="Magazine"
+        style={{
+          paddingTop: 'var(--tbf-home-carousel-gap)',
+          paddingBottom: 'var(--tbf-space-10)',
+        }}
       >
-        <div className="container">
-          <div style={{ marginBottom: 'var(--tbf-space-8)' }}>
-            <h2
-              id="editorial-section-heading"
-              style={{
-                fontFamily: 'var(--tbf-font-family-ui)',
-                fontSize: 'var(--tbf-type-micro-size)',
-                letterSpacing: 'var(--tbf-type-micro-ls)',
-                color: 'var(--tbf-text-tertiary)',
-                textTransform: 'uppercase',
-              }}
-            >
-              Magazine
-            </h2>
-          </div>
-        </div>
-
         <div className="editorial-grid container">
           {data.featuredPost && (
             <ArticleCard post={data.featuredPost} variant="featured" />
@@ -207,12 +205,18 @@ export default async function HomePage() {
         aria-labelledby="sp-quote-heading"
         style={{ paddingBlock: 'var(--tbf-space-16)' }}
       >
-        <div style={{ maxWidth: 'min(92vw, 800px)', marginInline: 'auto', textAlign: 'center' }}>
+        {/* A caixa e o corpo do texto andam JUNTOS. A primeira linha da citação
+            ("São Paulo é já a cidade que pede romancistas e poetas.") precisa
+            caber inteira no desktop, sem quebra (pedido do fundador
+            2026-07-31): são ~26em de texto, então a largura da caixa e o teto do
+            corpo foram calibrados para essa linha sobreviver de 768px pra cima.
+            Encolher a caixa ou subir o corpo aqui traz a quebra de volta. */}
+        <div style={{ maxWidth: 'min(96vw, 1040px)', marginInline: 'auto', textAlign: 'center' }}>
           <blockquote
             className="manifesto-fragment"
             style={{
               fontFamily: 'var(--tbf-font-family-display)',
-              fontSize: 'clamp(1.3rem, 3.9vw, 2.1rem)',
+              fontSize: 'clamp(1.3rem, 3.3vw, 2.05rem)',
               fontWeight: 400,
               lineHeight: 1.35,
               letterSpacing: '-0.01em',

@@ -419,21 +419,10 @@
   opacity: 0.4;
 }
 
-/* Espalhadas de ponta a ponta da largura do rodapé, sem separador (pedido). O
-   corpo desce um pouco no mobile porque as três cidades precisam caber na mesma
-   linha em 390px: é o alinhamento que carrega a informação aqui, não o tamanho. */
-.footer__cities-list {
-  margin: 0;
-  display: flex;
-  justify-content: space-between;
-  gap: var(--tbf-space-2);
-  font-family: var(--tbf-font-family-display);
-  font-size: clamp(0.8rem, 2.4vw, 1.35rem);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--tbf-text-primary);
-}
+/* As cidades deixaram de ser uma linha estática de três blocos e viraram
+   LETREIRO em 2026-07-31 (pedido do fundador). A tipografia migrou para
+   `.ticker--cities`, junto do componente Ticker; aqui sobra só o encaixe do
+   bloco no rodapé. */
 
 /* Copyright row */
 .footer__copyright {
@@ -441,6 +430,13 @@
   flex-direction: column;
   gap: var(--tbf-space-2);
   margin-top: var(--tbf-space-6);
+}
+
+/* As três linhas do copyright na MESMA cor, um degrau mais clara que o resto do
+   rodapé (pedido do fundador 2026-07-31). Antes o selo de versão vinha com
+   opacity 0.4 e destoava das outras duas. */
+.footer__copyright .footer__meta {
+  color: var(--tbf-footer-meta);
 }
 
 @media (min-width: 1024px) {
@@ -888,6 +884,31 @@
   }
 }
 
+/* Letreiro no FLUXO (não pinado). Mesma construção do letreiro do topo — trilho
+   duplicado, folga em margin-right, volta em -50% — só que correndo dentro da
+   página. É o que o rodapé usa para as cidades. */
+.ticker--flow {
+  position: static;
+  top: auto;
+}
+
+/* Letreiro de cidades do rodapé: mesma mecânica, tipografia da linha de cidades
+   que ele substitui (display 800, caixa alta). */
+.ticker--cities {
+  height: auto;
+  padding-block: var(--tbf-space-3);
+  background-color: transparent;
+}
+
+.ticker--cities .ticker__item {
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(0.9rem, 2.4vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+}
+
 /* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).
    O trilho tem o texto DUPLICADO e anda de 0 a -50%. Com `gap` no flex, a
    largura total é item+folga+item, então metade dá item+folga/2 e a volta
@@ -1079,31 +1100,56 @@
   width: 100%;
 }
 
+/* CALHA DOS TRÊS ASSETS, POR MÁSCARA (2026-07-31).
+   O problema: uma marca parada sobre um trilho em movimento sempre come o que
+   passa por baixo. A primeira saída foi partir o trilho em duas metades de DOM;
+   ela cria outro defeito, porque duas janelas do MESMO loop sempre exibem o
+   mesmo wordmark ao mesmo tempo (foi o HIGHSNOBIETY dos dois lados do burst).
+   A saída boa é ficar com UM trilho e recortá-lo com uma máscara de gradiente:
+   ele fica transparente exatamente onde cada asset mora, e a passagem de opaco
+   para transparente é uma RAMPA. Daí a borda macia do pedido: o wordmark se
+   dissolve ao chegar perto da marca, em vez de esbarrar num limite.
+   As medidas saem das mesmas variáveis que dimensionam os assets (--press-mark),
+   então a calha nunca fica menor que a marca em nenhum breakpoint. */
 .press-carousel {
+  --press-mark: clamp(44px, 8vw, 96px);
+  --press-soft: clamp(2.5rem, 5vw, 4rem);
+  /* Ponta: respiro do overlay + a largura do swoosh (ele é 1:2, então metade da
+     altura). Até aqui a máscara fica ZERADA — é a faixa onde o swoosh mora. A
+     rampa começa depois, senão o wordmark aparece meio apagado por baixo dele. */
+  --press-edge: calc(clamp(1rem, 4vw, 3rem) + var(--press-mark) / 2);
+  /* Meio: o burst é quadrado, então metade dele + folga. */
+  --press-hole: calc(var(--press-mark) / 2 + var(--press-soft) * 0.5);
+
   position: relative;
   overflow: hidden;
   width: 100%;
-}
-
-.press-carousel::before,
-.press-carousel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: clamp(3rem, 12vw, 8rem);
-  z-index: 2;
-  pointer-events: none;
-}
-
-.press-carousel::before {
-  left: 0;
-  background: linear-gradient(to right, #000000 0%, transparent 100%);
-}
-
-.press-carousel::after {
-  right: 0;
-  background: linear-gradient(to left, #000000 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--press-edge),
+    #000000 calc(var(--press-edge) + var(--press-soft)),
+    #000000 calc(50% - var(--press-hole) - var(--press-soft)),
+    transparent calc(50% - var(--press-hole)),
+    transparent calc(50% + var(--press-hole)),
+    #000000 calc(50% + var(--press-hole) + var(--press-soft)),
+    #000000 calc(100% - var(--press-edge) - var(--press-soft)),
+    transparent calc(100% - var(--press-edge)),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0,
+    transparent var(--press-edge),
+    #000000 calc(var(--press-edge) + var(--press-soft)),
+    #000000 calc(50% - var(--press-hole) - var(--press-soft)),
+    transparent calc(50% - var(--press-hole)),
+    transparent calc(50% + var(--press-hole)),
+    #000000 calc(50% + var(--press-hole) + var(--press-soft)),
+    #000000 calc(100% - var(--press-edge) - var(--press-soft)),
+    transparent calc(100% - var(--press-edge)),
+    transparent 100%
+  );
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30). O trilho tem a lista DUPLICADA e anda
@@ -1157,14 +1203,21 @@
    do viewBox de cada asset, e é isso que garante a forma fiel (o burst é quadrado,
    os swooshes são 1:2). A sombra é a única herança do tratamento antigo. */
 .press-carousel__mark {
-  height: clamp(56px, 9vw, 96px);
+  height: clamp(44px, 8vw, 96px);
   width: auto;
   display: block;
   flex-shrink: 0;
-  /* Sombra um pouco mais expressiva, ainda discreta (pedido). Ela só aparece
-     onde o marcador cruza um wordmark claro: sobre o preto do trilho não há
-     nada para sombrear, e é justamente ali que o recorte precisa ficar nítido. */
-  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.85));
+  /* BORDA SUAVE (pedido do fundador 2026-07-31: "como na outra versão"). A
+     versão antiga passava por <Image>, que RASTERIZA o vetor: a escada de pixel
+     saía antisserrilhada e a silhueta lia macia. Inline, o SVG desenha com o
+     recorte cru do vetor e o contorno ficou duro contra o trilho. O meio-termo
+     que preserva a forma fiel: meio pixel de blur (só come a serrilha, não
+     borra o desenho).
+     A sombra é MENOR e MAIS FRACA do que já foi (pedido 2026-07-31): quem limpa
+     o fundo agora é a máscara do trilho, então o halo escuro não tem mais
+     trabalho a fazer e, forte, virava uma mancha visível em volta da marca.
+     Sobrou o mínimo para a silhueta não colar no preto chapado. */
+  filter: blur(0.5px) drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2554,17 +2607,25 @@ html[data-morphing] ::view-transition-new(root) {
    Cards de categoria estilo revista: foto de fundo + overlay + nome + botão.
    ============================================================================= */
 
-/* Linha de categorias — todas na mesma linha, menores, cantos arredondados e
-   espaçamento reduzido. Mobile: rola horizontalmente (mantém "uma linha"). */
+/* Linha de categorias em ESTÉTICA DE STORY: foto circular + nome embaixo
+   (pedido do fundador 2026-07-31). Os cards retangulares 3:4 anteriores não
+   funcionavam — cinco retângulos escuros com texto por cima, sem hierarquia
+   nenhuma. O círculo é pequeno o bastante para as cinco categorias caberem numa
+   linha só até no 390px, sem rolagem horizontal. */
+/* Mobile-first: a fila ROLA na horizontal, como a barra de stories. Com as
+   cinco espremidas em 390px o círculo caía para 62px e nomes longos
+   ("COLABORAÇÃO", "COOLHUNTING") passavam por cima do vizinho. Rolando, o
+   círculo respira e o nome cabe. Do 768px pra cima cabem as cinco centradas e a
+   rolagem some. */
 .category-row {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 46%;
-  gap: var(--tbf-space-2);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: clamp(0.75rem, 3vw, 2rem);
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: var(--tbf-space-2);
+  scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--tbf-space-2);
 }
 
 .category-row > * {
@@ -2573,28 +2634,52 @@ html[data-morphing] ::view-transition-new(root) {
 
 @media (min-width: 768px) {
   .category-row {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(5, 1fr);
-    grid-auto-columns: auto;
-    overflow: visible;
-    gap: var(--tbf-space-2);
+    justify-content: center;
+    overflow-x: visible;
+    padding-bottom: 0;
   }
 }
 
 .category-card {
+  flex: 0 0 auto;
+  /* O teto de 132px é o que impede o círculo de virar planeta no 1440; o piso
+     de 80px é o que faz o nome caber embaixo do círculo no telefone. */
+  width: clamp(80px, 16vw, 132px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: center;
+  font: inherit;
+  color: inherit;
+}
+
+/* A moldura redonda. O `overflow: hidden` mora aqui e não no botão, senão o
+   anel externo (box-shadow) seria decepado por ele mesmo. */
+.category-card__frame {
   position: relative;
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--tbf-radius-full);
   overflow: hidden;
   background: var(--tbf-bg-secondary);
-  border: none;
-  border-radius: 12px;
-  padding: 0;
-  cursor: pointer;
-  text-align: left;
-  font: inherit;
-  color: inherit;
+  /* Anel do story: um fio de fundo separando a foto do anel, e o anel. */
+  box-shadow:
+    0 0 0 2px var(--tbf-bg-primary),
+    0 0 0 3px rgba(240, 237, 230, 0.35);
+  transition: box-shadow var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
+}
+
+.category-card:hover .category-card__frame,
+.category-card:focus-visible .category-card__frame {
+  box-shadow:
+    0 0 0 2px var(--tbf-bg-primary),
+    0 0 0 3px var(--tbf-accent);
 }
 
 .category-card__image {
@@ -2606,57 +2691,37 @@ html[data-morphing] ::view-transition-new(root) {
   transform: scale(var(--tbf-card-img-scale-hover));
 }
 
+/* Sombreamento leve dentro do círculo: as cinco fotos vêm de temperaturas
+   diferentes e o véu costura todas na mesma família. */
 .category-card__overlay {
   position: absolute;
   inset: 0;
-  /* Sombreamento leve: escurece a imagem só o suficiente para ela recuar ao
-     segundo plano e a nomenclatura (centralizada) ganhar hierarquia.
-     Vinheta sutil — centro mais claro, bordas um pouco mais escuras. */
   background:
-    linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.30)),
-    radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.35) 100%);
-}
-
-.category-card__content {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--tbf-space-3);
+    linear-gradient(rgba(0,0,0,0.22), rgba(0,0,0,0.22)),
+    radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.35) 100%);
 }
 
 .category-card__label {
   font-family: var(--tbf-font-family-display);
-  font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+  font-size: clamp(0.6rem, 1.4vw, 0.85rem);
   font-weight: 800;
-  line-height: 1.05;
-  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: 0.02em;
+  color: var(--tbf-text-primary);
   text-transform: uppercase;
-  margin-bottom: 0;
-  text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
-.category-card__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--tbf-space-2);
-  font-family: var(--tbf-font-family-ui);
-  font-size: var(--tbf-type-micro-size);
-  letter-spacing: var(--tbf-type-micro-ls);
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
-}
-
-.category-card:hover .category-card__cta {
+.category-card:hover .category-card__label {
   color: var(--tbf-accent);
 }
 
-/* Cards compactos (linha única) — o card inteiro é clicável; some com o CTA. */
-.category-row .category-card__cta {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  .category-card__frame,
+  .category-card__image,
+  .category-card__label {
+    transition: none;
+  }
 }
 
 /* =============================================================================

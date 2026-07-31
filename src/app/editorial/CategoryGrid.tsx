@@ -34,21 +34,21 @@ export function CategoryGrid({ onSelect }: CategoryGridProps) {
               onClick={() => onSelect(cat.value)}
               aria-label={`Ver categoria ${cat.label}`}
             >
-              <Image
-                src={cat.image}
-                alt=""
-                fill
-                sizes="(min-width: 1280px) 25vw, (min-width: 768px) 50vw, 100vw"
-                className="category-card__image"
-              />
-              <span className="category-card__overlay" aria-hidden="true" />
-              <span className="category-card__content">
-                <span className="category-card__label">{cat.label}</span>
-                <span className="category-card__cta">
-                  Ver categoria
-                  <span className="btn__arrow" aria-hidden="true">→</span>
-                </span>
+              {/* Círculo + nome embaixo, estética de story do Instagram (pedido
+                  do fundador 2026-07-31). O nome saiu de DENTRO da foto: em
+                  moldura redonda ele brigava com o recorte e as cinco fotos
+                  são escuras demais para segurar texto por cima. */}
+              <span className="category-card__frame">
+                <Image
+                  src={cat.image}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 140px, 20vw"
+                  className="category-card__image"
+                />
+                <span className="category-card__overlay" aria-hidden="true" />
               </span>
+              <span className="category-card__label">{cat.label}</span>
             </button>
           ))}
         </div>
