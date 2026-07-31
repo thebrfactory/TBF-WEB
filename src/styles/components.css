@@ -1095,61 +1095,45 @@
 /* Frame do carrossel de imprensa. Existe só para ancorar a camada de assets
    .TBF. FORA do `overflow: hidden` do trilho: os marcadores são mais altos que
    a faixa de logos e estavam sendo decepados. */
+/* TRATAMENTO DOS ASSETS .TBF. — RESTAURADO AO ORIGINAL (2026-07-31).
+   Houve uma tentativa de dar "calha" às três marcas: primeiro partindo o trilho
+   em duas metades, depois recortando-o com máscara de gradiente, para nenhum
+   wordmark passar por baixo delas. As duas saíram PIORES que o problema: a
+   máscara corta letra no meio e abre buracos pretos em volta das marcas, e foi
+   isso que o fundador reprovou nos prints. O desenho certo é este, o de sempre:
+   o trilho corre INTEIRO, as marcas ficam por cima, e o que separa uma coisa da
+   outra é só a sombra suave. Sobreposição aqui é de propósito, não é defeito.
+   NÃO reintroduzir máscara nem partir o trilho. */
 .press-carousel-frame {
   position: relative;
   width: 100%;
 }
 
-/* CALHA DOS TRÊS ASSETS, POR MÁSCARA (2026-07-31).
-   O problema: uma marca parada sobre um trilho em movimento sempre come o que
-   passa por baixo. A primeira saída foi partir o trilho em duas metades de DOM;
-   ela cria outro defeito, porque duas janelas do MESMO loop sempre exibem o
-   mesmo wordmark ao mesmo tempo (foi o HIGHSNOBIETY dos dois lados do burst).
-   A saída boa é ficar com UM trilho e recortá-lo com uma máscara de gradiente:
-   ele fica transparente exatamente onde cada asset mora, e a passagem de opaco
-   para transparente é uma RAMPA. Daí a borda macia do pedido: o wordmark se
-   dissolve ao chegar perto da marca, em vez de esbarrar num limite.
-   As medidas saem das mesmas variáveis que dimensionam os assets (--press-mark),
-   então a calha nunca fica menor que a marca em nenhum breakpoint. */
 .press-carousel {
-  --press-mark: clamp(44px, 8vw, 96px);
-  --press-soft: clamp(2.5rem, 5vw, 4rem);
-  /* Ponta: respiro do overlay + a largura do swoosh (ele é 1:2, então metade da
-     altura). Até aqui a máscara fica ZERADA — é a faixa onde o swoosh mora. A
-     rampa começa depois, senão o wordmark aparece meio apagado por baixo dele. */
-  --press-edge: calc(clamp(1rem, 4vw, 3rem) + var(--press-mark) / 2);
-  /* Meio: o burst é quadrado, então metade dele + folga. */
-  --press-hole: calc(var(--press-mark) / 2 + var(--press-soft) * 0.5);
-
   position: relative;
   overflow: hidden;
   width: 100%;
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    transparent var(--press-edge),
-    #000000 calc(var(--press-edge) + var(--press-soft)),
-    #000000 calc(50% - var(--press-hole) - var(--press-soft)),
-    transparent calc(50% - var(--press-hole)),
-    transparent calc(50% + var(--press-hole)),
-    #000000 calc(50% + var(--press-hole) + var(--press-soft)),
-    #000000 calc(100% - var(--press-edge) - var(--press-soft)),
-    transparent calc(100% - var(--press-edge)),
-    transparent 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0,
-    transparent var(--press-edge),
-    #000000 calc(var(--press-edge) + var(--press-soft)),
-    #000000 calc(50% - var(--press-hole) - var(--press-soft)),
-    transparent calc(50% - var(--press-hole)),
-    transparent calc(50% + var(--press-hole)),
-    #000000 calc(50% + var(--press-hole) + var(--press-soft)),
-    #000000 calc(100% - var(--press-edge) - var(--press-soft)),
-    transparent calc(100% - var(--press-edge)),
-    transparent 100%
-  );
+}
+
+.press-carousel::before,
+.press-carousel::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(3rem, 12vw, 8rem);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.press-carousel::before {
+  left: 0;
+  background: linear-gradient(to right, #000000 0%, transparent 100%);
+}
+
+.press-carousel::after {
+  right: 0;
+  background: linear-gradient(to left, #000000 0%, transparent 100%);
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30). O trilho tem a lista DUPLICADA e anda
@@ -1203,21 +1187,16 @@
    do viewBox de cada asset, e é isso que garante a forma fiel (o burst é quadrado,
    os swooshes são 1:2). A sombra é a única herança do tratamento antigo. */
 .press-carousel__mark {
-  height: clamp(44px, 8vw, 96px);
+  height: clamp(56px, 9vw, 96px);
   width: auto;
   display: block;
   flex-shrink: 0;
-  /* BORDA SUAVE (pedido do fundador 2026-07-31: "como na outra versão"). A
-     versão antiga passava por <Image>, que RASTERIZA o vetor: a escada de pixel
-     saía antisserrilhada e a silhueta lia macia. Inline, o SVG desenha com o
-     recorte cru do vetor e o contorno ficou duro contra o trilho. O meio-termo
-     que preserva a forma fiel: meio pixel de blur (só come a serrilha, não
-     borra o desenho).
-     A sombra é MENOR e MAIS FRACA do que já foi (pedido 2026-07-31): quem limpa
-     o fundo agora é a máscara do trilho, então o halo escuro não tem mais
-     trabalho a fazer e, forte, virava uma mancha visível em volta da marca.
-     Sobrou o mínimo para a silhueta não colar no preto chapado. */
-  filter: blur(0.5px) drop-shadow(0 1px 6px rgba(0, 0, 0, 0.45));
+  /* Sombra um pouco mais expressiva, ainda discreta (pedido). Ela só aparece
+     onde o marcador cruza um wordmark claro: sobre o preto do trilho não há
+     nada para sombrear, e é justamente ali que o recorte precisa ficar nítido.
+     Esta é a medida que o fundador aprovou; ela já foi mexida duas vezes em
+     2026-07-31 (halo largo e depois quase nenhum) e voltou para cá. */
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.85));
 }
 
 @media (prefers-reduced-motion: reduce) {

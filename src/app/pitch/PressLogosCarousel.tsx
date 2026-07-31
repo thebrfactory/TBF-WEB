@@ -22,12 +22,12 @@ const PRESS_LOGOS = [
 // vetor de origem (`CHANGES/PITCH/#00 #0N TBF.svg`).
 // Ordem visual: swoosh esquerdo · burst central · swoosh direito.
 //
-// O BURST VOLTOU (2026-07-31, pedido do fundador). Ele tinha saído porque
-// ficava parado no meio do frame enquanto o trilho corria por baixo e, a cada
-// volta, engolia um wordmark inteiro. A solução não é tirar a marca, é dar
-// calha a ela: o trilho agora são DUAS metades independentes, com um vão no
-// meio onde só o burst mora (ver .press-carousel--half no CSS). Nada mais passa
-// por trás de marca nenhuma.
+// O BURST VOLTOU (2026-07-31, pedido do fundador) e a sobreposição com ele.
+// Ele tinha saído porque fica parado no meio enquanto o trilho corre por baixo.
+// Tentou-se dar calha a ele (trilho partido em dois, depois máscara de
+// gradiente) e as duas saíram piores: máscara corta letra no meio e abre buraco
+// preto em volta das marcas. O tratamento certo é o de sempre — trilho inteiro,
+// marcas por cima, sombra suave separando. Ver a nota em .press-carousel no CSS.
 const OVERLAY_SHAPES = [
   {
     key: 'swoosh-left',
@@ -63,11 +63,6 @@ export function PressLogosCarousel() {
     // clipping: os marcadores são mais altos que a faixa de logos e antes tinham
     // as pontas decepadas pelo overflow: era a "forma esquisita" do pedido.
     <div className="press-carousel-frame" aria-label="Featured in">
-      {/* UM trilho só. A calha dos três assets é feita por MÁSCARA (ver
-          .press-carousel no CSS): o trilho continua correndo inteiro por baixo,
-          mas fica transparente onde cada marca .TBF. mora. Duas metades de DOM,
-          que foi a primeira tentativa, mostravam o mesmo wordmark dos dois lados
-          do burst — duas janelas do mesmo loop sempre se sobrepõem. */}
       <div className="press-carousel">
         <ul className="press-carousel-track" role="list">
           {loop.map((src, i) => (
@@ -94,7 +89,7 @@ export function PressLogosCarousel() {
             viewBox={shape.viewBox}
             role="presentation"
             className="press-carousel__mark"
-            style={{ marginInline: 0 }}
+            style={{ marginInline: 'clamp(0.5rem, 2vw, 1.5rem)' }}
           >
             <path d={shape.d} fill="var(--tbf-color-parchment)" />
           </svg>

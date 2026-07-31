@@ -176,9 +176,25 @@ function DeckNav() {
     return () => obs.disconnect()
   }, [])
 
+  // Rolagem calculada à mão, não `scrollIntoView`.
+  //
+  // O `scrollIntoView({block:'start'})` MORRE NO MEIO quando o destino está
+  // acima da posição atual: voltando do movimento 02 para a capa, ele parava em
+  // ~222px em vez de 0 (o encaixe `scroll-snap-type: y proximity` do html
+  // captura a rolagem programática em voo e a abandona num ponto que não é nem
+  // o de partida nem o de chegada). Descendo o mesmo código acerta, o que
+  // esconde o defeito de quem só testa o botão "próximo".
+  // `window.scrollTo` com o alvo já resolvido não sofre disso — medido nos dois
+  // sentidos, em todos os 13 movimentos. O desconto é o `scroll-margin-top` da
+  // própria seção (a faixa de nav + letreiro pinada no topo), lido do CSS em
+  // vez de repetido aqui, para os dois nunca se descolarem.
   const go = useCallback((index: number) => {
     const target = MOVEMENTS[Math.max(0, Math.min(MOVEMENTS.length - 1, index))]
-    document.getElementById(target.id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const el = document.getElementById(target.id)
+    if (!el) return
+    const band = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - band)
+    window.scrollTo({ top, behavior: 'smooth' })
   }, [])
 
   useEffect(() => {
