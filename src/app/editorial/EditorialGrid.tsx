@@ -9,6 +9,7 @@ import { useState } from 'react'
 import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
+import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { CategoryGrid } from './CategoryGrid'
 
 const CATEGORIES: { value: ArticleCategory | 'all'; label: string }[] = [
@@ -130,12 +131,15 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
             {MOCK_ARTICLES.slice(1).map((mock, idx) => {
               const i = idx + 1
               return (
-                <a key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
+                <ArticleMorphLink key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
                       verdade por trás do link). Bloco chapado em parchment com o
                       selo da dimensão que a capa precisa ter; quando virar post
-                      real do CMS, ArticleCard mostra a imagem de verdade. */}
+                      real do CMS, ArticleCard mostra a imagem de verdade.
+                      `data-morph` mesmo sem imagem: é a CAIXA da capa que cresce
+                      na transição, não a foto. */}
                   <div
+                    data-morph
                     className="card__image-wrapper card__image-wrapper--empty"
                     style={{ aspectRatio: mock.ratio }}
                   >
@@ -152,7 +156,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
                       </span>
                     </div>
                   </div>
-                </a>
+                </ArticleMorphLink>
               )
             })}
           </div>

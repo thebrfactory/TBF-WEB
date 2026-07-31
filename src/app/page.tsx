@@ -13,6 +13,7 @@ import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
+import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 
 export const metadata: Metadata = {
   title: '.THE BRAZILIAN FACTORY.',
@@ -182,12 +183,15 @@ export default async function HomePage() {
                   ratio: '4/3',
                 },
               ].map((mock, i) => (
-                <Link key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
+                <ArticleMorphLink key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
                       verdade por trás do link). Bloco chapado em parchment com o
                       selo da dimensão que a capa precisa ter; post real do CMS
-                      passa pelo ArticleCard, que mostra a imagem de verdade. */}
+                      passa pelo ArticleCard, que mostra a imagem de verdade.
+                      `data-morph` mesmo sem imagem: é a CAIXA da capa que cresce
+                      na transição, não a foto. */}
                   <div
+                    data-morph
                     className="card__image-wrapper card__image-wrapper--empty"
                     style={{ aspectRatio: mock.ratio }}
                   >
@@ -204,7 +208,7 @@ export default async function HomePage() {
                       </span>
                     </div>
                   </div>
-                </Link>
+                </ArticleMorphLink>
               ))}
             </>
           )}

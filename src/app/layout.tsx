@@ -13,6 +13,7 @@ import { NewsletterPopup } from '@/components/NewsletterPopup/NewsletterPopup'
 import { CookieBanner } from '@/components/CookieBanner/CookieBanner'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
 import { ConsentedAnalytics } from '@/components/Analytics/ConsentedAnalytics'
+import { ViewTransitionBridge } from '@/components/PageTransition/ViewTransitionBridge'
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -116,6 +117,10 @@ export default function RootLayout({
         <a className="skip-nav" href="#main">
           Skip to main content
         </a>
+
+        {/* Libera a transição de imagem quando a rota nova é comitada. */}
+        <ViewTransitionBridge />
+
 
         {/* Cursor customizado — desktop only */}
         <div

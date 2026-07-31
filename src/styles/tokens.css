@@ -654,6 +654,15 @@
   --tbf-transition-enter-easing:   var(--tbf-motion-easing-page-enter);
   --tbf-transition-enter-ty:       20px;
 
+  /* Abrir matéria entrando pela foto (Pinterest / cosmos.so). A capa é o
+     elemento mais lento da transição de propósito: ela é o objeto que o olho
+     está seguindo, e o resto do layout tem que chegar por baixo dela, não junto.
+     Easing expo-out — a imagem sai rápido do card e assenta devagar no destino. */
+  --tbf-morph-duration:       500ms;
+  --tbf-morph-easing:         var(--tbf-easing-raw-ease-out);
+  --tbf-morph-fade-duration:  320ms;
+  --tbf-morph-scrim-blur:     6px;
+
   /* ─── 3.16 Loading Screen ─── */
   --tbf-loading-bg:             var(--tbf-bg-primary);
   --tbf-loading-text:           var(--tbf-text-primary);

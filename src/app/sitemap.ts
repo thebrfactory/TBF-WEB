@@ -29,6 +29,12 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
     priority: 0.9,
   },
   {
+    url: `${BASE_URL}/consulting`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.9,
+  },
+  {
     url: `${BASE_URL}/manifesto`,
     lastModified: new Date(),
     changeFrequency: 'monthly',

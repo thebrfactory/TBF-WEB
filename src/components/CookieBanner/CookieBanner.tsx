@@ -7,18 +7,17 @@
 // ConsentedAnalytics). Sem categoria de marketing: o site não seta esse cookie.
 // A escolha persiste em localStorage e pode ser reaberta a qualquer momento pelo
 // link "Cookie Preferences" do rodapé (evento tbf-open-cookie-prefs). Zero rede.
+//
+// CONSENTIMENTO NÃO É ETERNO (2026-07-31): a regra de validade (versão de
+// categorias + 12 meses) vive em `@/lib/consent`, compartilhada com o
+// ConsentedAnalytics e o NewsletterPopup. Sem ela, quem clicou uma vez nunca
+// mais via a caixa — foi o que aconteceu em produção, com registro legado que
+// ainda trazia a categoria `marketing`, morta no site desde então.
 // =============================================================================
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-
-const STORAGE_KEY = 'tbf-cookie-consent'
-
-type Consent = {
-  necessary: true
-  analytics: boolean
-  ts: number
-}
+import { readConsent, writeConsent } from '@/lib/consent'
 
 export function CookieBanner() {
   const [visible, setVisible] = useState(false)
@@ -28,26 +27,17 @@ export function CookieBanner() {
   // Primeira visita → aparece. Reabertura (rodapé) → aparece já em modo
   // preferências, refletindo a escolha salva (revogabilidade, LGPD art. 18).
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY)
-      if (!raw) {
-        setVisible(true)
-      } else {
-        const saved = JSON.parse(raw) as Partial<Consent>
-        setAnalytics(saved.analytics ?? true)
-      }
-    } catch {
+    const current = readConsent()
+    if (current) {
+      setAnalytics(current.analytics)
+    } else {
       setVisible(true)
     }
 
     // Reabridor: qualquer lugar do site pode reabrir o painel de preferências.
     const onReopen = () => {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY)
-        if (raw) setAnalytics((JSON.parse(raw) as Partial<Consent>).analytics ?? true)
-      } catch {
-        /* storage bloqueado — mantém o estado atual */
-      }
+      const saved = readConsent()
+      if (saved) setAnalytics(saved.analytics)
       setShowPrefs(true)
       setVisible(true)
     }
@@ -55,31 +45,17 @@ export function CookieBanner() {
     return () => window.removeEventListener('tbf-open-cookie-prefs', onReopen)
   }, [])
 
-  function persist(consent: Consent) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(consent))
-    } catch {
-      /* modo privado / storage bloqueado — segue sem persistir */
-    }
+  // Grava e avisa (1) o NewsletterPopup, que só aparece depois da escolha de
+  // cookies, e (2) o ConsentedAnalytics, que liga/desliga o Vercel na hora.
+  function persist(allowAnalytics: boolean) {
+    writeConsent(allowAnalytics)
     setVisible(false)
     setShowPrefs(false)
-    // Avisa (1) o NewsletterPopup, que só aparece depois da escolha de cookies, e
-    // (2) o ConsentedAnalytics, que liga/desliga o Vercel Analytics na hora.
-    try {
-      window.dispatchEvent(new Event('tbf-cookie-choice'))
-    } catch {
-      /* ambiente sem window — ignora */
-    }
   }
 
-  const acceptAll = () =>
-    persist({ necessary: true, analytics: true, ts: Date.now() })
-
-  const rejectOptional = () =>
-    persist({ necessary: true, analytics: false, ts: Date.now() })
-
-  const savePrefs = () =>
-    persist({ necessary: true, analytics, ts: Date.now() })
+  const acceptAll = () => persist(true)
+  const rejectOptional = () => persist(false)
+  const savePrefs = () => persist(analytics)
 
   if (!visible) return null
 

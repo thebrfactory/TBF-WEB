@@ -6,8 +6,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
+import deployCount from '@/data/deploy-count.json'
 
-const SITE_VERSION = '.TBF.SYSTEM VERSION 1.5.0'
+// Selo de versão do rodapé. O número de deploy é REAL: sai de
+// src/data/deploy-count.json, incrementado pela skill /deploy a cada publicação
+// em produção (ver scripts/bump-deploy-count.mjs). Antes era um "1.5.0" fixo que
+// nunca mudou — mentira simpática, mas mentira.
+const SITE_VERSION = `.TBF.SYSTEM VERSION ${deployCount.version} · DEPLOY ${deployCount.deploys}`
 
 const NAV_COLUMNS = [
   {
@@ -18,15 +23,18 @@ const NAV_COLUMNS = [
       { href: '/manifesto', label: 'Manifesto' },
       { href: '/collective', label: 'Collective' },
       { href: '/access', label: 'Access' },
-      // Deck vigente é o 2.0. A 1.0 (/pitch) segue congelada e sem link no site.
-      // O rótulo diz "2.0" de propósito: só o href apontando para v2 era
-      // invisível no rodapé, e não dava para distinguir do deck antigo.
+      // Os dois decks, na ordem cronológica: a 1.0 logo acima da 2.0 (pedido
+      // 2026-07-31). A 1.0 estava publicada mas sem nenhum link no site. Os
+      // rótulos carregam a versão de propósito: sem eles não dá para distinguir
+      // um deck do outro no rodapé.
+      { href: '/pitch', label: 'Pitch 1.0' },
       { href: '/pitch/v2', label: 'Pitch 2.0' },
     ],
   },
   {
     heading: 'Company',
     links: [
+      { href: '/consulting', label: 'Consulting' },
       { href: '/press', label: 'Press Room' },
       { href: '/about', label: 'About Us' },
       { href: '/about/quick-facts', label: 'Quick Facts' },

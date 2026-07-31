@@ -261,11 +261,15 @@
   backdrop-filter: grayscale(0.6);
 }
 
-/* Popup colado rente à margem superior do layout (desktop + mobile). Sombra
-   forte e extensa (pedido). Fica position: fixed → não trava o scroll da página. */
+/* Card flutuante no canto INFERIOR DIREITO (pedido 2026-07-31) — mesma família
+   visual do .cookie-banner: mesma largura, mesmo raio, mesma sombra. Só que o
+   cookie ancora à esquerda e este à direita, então mesmo se algum dia os dois
+   aparecessem juntos no desktop eles não se cobrem.
+   Mobile: quase a largura da tela, centralizado (à direita ele encostaria na
+   borda). Fica position: fixed → não trava o scroll da página. */
 .newsletter-popup {
   position: fixed;
-  top: var(--tbf-space-4);
+  bottom: calc(var(--tbf-space-4) + env(safe-area-inset-bottom));
   left: 50%;
   width: min(420px, calc(100vw - var(--tbf-space-8)));
   background-color: var(--tbf-bg-primary);
@@ -279,7 +283,7 @@
     0 2px 8px rgba(0, 0, 0, 0.6);
   opacity: 0;
   pointer-events: none;
-  transform: translate(-50%, -12px) scale(0.96);
+  transform: translate(-50%, 12px) scale(0.96);
   transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
               transform var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
 }
@@ -288,6 +292,19 @@
   opacity: 1;
   pointer-events: auto;
   transform: translate(-50%, 0) scale(1);
+}
+
+/* Desktop: encosta no canto inferior direito (o cookie vai para o esquerdo). */
+@media (min-width: 768px) {
+  .newsletter-popup {
+    left: auto;
+    right: var(--tbf-space-6);
+    transform: translateY(12px) scale(0.96);
+  }
+
+  .newsletter-popup--open {
+    transform: translateY(0) scale(1);
+  }
 }
 
 .newsletter-popup__close {
@@ -917,9 +934,12 @@
   overflow: hidden;
 }
 
+/* A duração vem por instância (style inline no <ul>, ver PhotoCarousel.tsx):
+   é proporcional ao número de fotos, para que carrosséis de tamanhos
+   diferentes andem na MESMA velocidade. O token só sobra como piso de
+   segurança se alguém renderizar o trilho sem passar a variável. */
 .carousel-track {
   display: flex;
-  gap: 4px;
   width: max-content;
   margin: 0;
   padding: 0;
@@ -931,13 +951,19 @@
 /* Movimento contínuo — NÃO pausa com o cursor sobre o trilho (por pedido). */
 
 /* ── Slide base ── */
+/* Larguras reduzidas em 20% (pedido 2026-07-31): 72→57.6vw, 42→33.6vw, 22→17.6vw.
+   A folga entre os cards é `margin-right` de CADA slide, NUNCA `gap` no flex:
+   com `gap`, N itens têm N-1 vãos, a metade do trilho não cai em cima de uma
+   cópia inteira e o loop salta meia folga a cada volta (mesma lei do .ticker__track
+   e do .press-carousel-track). */
 .carousel-slide {
   aspect-ratio: 3 / 4;
   position: relative;
   overflow: hidden;
   flex-shrink: 0;
   display: block;
-  width: 72vw; /* mobile-first: card grande */
+  width: 57.6vw; /* mobile-first: card grande */
+  margin-right: 4px;
 }
 
 .carousel-slide__link {
@@ -997,11 +1023,11 @@
 }
 
 @media (min-width: 768px) {
-  .carousel-slide { width: 42vw; }
+  .carousel-slide { width: 33.6vw; }
 }
 
 @media (min-width: 1024px) {
-  .carousel-slide { width: 22vw; }
+  .carousel-slide { width: 17.6vw; }
 }
 
 @keyframes carouselInfiniteScroll {
@@ -1962,6 +1988,77 @@ button.tag:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(root),
   ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/* =============================================================================
+   COMPONENTE 14B — ABRIR MATÉRIA ENTRANDO PELA FOTO
+   Referência de sensação: Pinterest e cosmos.so. Clicou no card, a capa cresce
+   até o lugar dela na matéria e o resto da página chega por baixo.
+
+   Quem marca os elementos é o JS (components/PageTransition/): a caixa da capa
+   clicada ganha `view-transition-name: tbf-article-cover` no clique, e a capa da
+   matéria de destino já nasce com o mesmo nome via .article-morph-target.
+   O browser casa os dois e interpola posição/tamanho/recorte sozinho.
+   ============================================================================= */
+
+.article-morph-target {
+  view-transition-name: tbf-article-cover;
+}
+
+/* O par morfa devagar e com curva expo-out; `contain` evita que o snapshot
+   arraste layout do resto da página. */
+::view-transition-group(tbf-article-cover) {
+  animation-duration: var(--tbf-morph-duration);
+  animation-timing-function: var(--tbf-morph-easing);
+}
+
+/* Dentro do grupo, as duas capas se dissolvem uma na outra em vez de piscar:
+   é o que disfarça a diferença de recorte entre o card (3/4) e o full-bleed
+   (32/9). Sem isso a troca aparece como um corte seco no meio do movimento. */
+::view-transition-old(tbf-article-cover),
+::view-transition-new(tbf-article-cover) {
+  animation-duration: var(--tbf-morph-duration);
+  animation-timing-function: var(--tbf-morph-easing);
+  mix-blend-mode: normal;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A capa fica ACIMA do resto durante o movimento — é ela que o olho segue. */
+::view-transition-group(tbf-article-cover) {
+  z-index: 2;
+}
+
+/* Página velha: recua de leve e desfoca, como o fundo do cosmos.so quando a
+   imagem abre. Página nova entra por baixo, sem deslocamento vertical: quem
+   carrega o movimento é a foto, não o layout. Isso sobrescreve, só na rota de
+   matéria, o page-exit/page-enter genérico do bloco acima. */
+html[data-morphing] ::view-transition-old(root) {
+  animation: var(--tbf-morph-fade-duration) var(--tbf-morph-easing) both morph-bg-exit;
+}
+
+html[data-morphing] ::view-transition-new(root) {
+  animation: var(--tbf-morph-duration) var(--tbf-morph-easing) both morph-bg-enter;
+}
+
+@keyframes morph-bg-exit {
+  from { opacity: 1; filter: blur(0); transform: scale(1); }
+  to   { opacity: 0; filter: blur(var(--tbf-morph-scrim-blur)); transform: scale(0.985); }
+}
+
+@keyframes morph-bg-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(tbf-article-cover),
+  ::view-transition-old(tbf-article-cover),
+  ::view-transition-new(tbf-article-cover),
+  html[data-morphing] ::view-transition-old(root),
+  html[data-morphing] ::view-transition-new(root) {
     animation: none;
   }
 }

@@ -209,10 +209,14 @@ export default async function ArticlePage({
             </p>
           </div>
         </header>
-        <div style={{ position: 'relative', aspectRatio: '32/9', marginBottom: 'var(--tbf-space-16)', background: '#060d18' }}>
-          <p style={{ position: 'absolute', top: 'var(--tbf-space-3)', left: 'var(--tbf-space-4)', fontFamily: 'var(--tbf-font-family-ui)', fontSize: '0.55rem', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.2)', textTransform: 'uppercase' }}>
-            ADD-PREVIEW-MATERIAL
-          </p>
+        {/* Capa do preview. É o outro lado da transição de imagem: a capa do card
+            clicado cresce até ESTE bloco (ver components/PageTransition/). Enquanto
+            o Sanity está vazio, esta é a matéria que se abre de verdade no site,
+            então é aqui que a transição precisa aterrissar, não só na versão CMS.
+            `mock.img` existia e não era mostrado: sem imagem no destino a
+            transição não teria para onde levar a foto. */}
+        <div className="article-morph-target" style={{ position: 'relative', aspectRatio: '32/9', marginBottom: 'var(--tbf-space-16)', background: '#060d18', overflow: 'hidden' }}>
+          <Image src={mock.img} alt={mock.title} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
         </div>
         <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBottom: 'var(--tbf-space-20)' }}>
           <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
@@ -363,31 +367,48 @@ export default async function ArticlePage({
         </div>
       </header>
 
-      {/* ─── HERO IMAGE FULL-BLEED ──────────────────────────────────────── */}
+      {/* ─── HERO IMAGE FULL-BLEED ────────────────────────────────────────
+          `article-morph-target` é o outro lado da transição de imagem: a capa
+          do card clicado cresce até ESTE bloco (ver components/PageTransition/).
+          O nome precisa existir na página de destino, com ou sem foto — sem par,
+          o browser não tem para onde levar a imagem.
+          Sem capa no CMS, o bloco segue como placeholder marcado. */}
       <div
-        className="layout-e"
+        className="layout-e article-morph-target"
         style={{
           marginLeft: 'calc(-1 * var(--tbf-grid-margin-sm))',
           marginBottom: 'var(--tbf-space-16)',
           position: 'relative',
           aspectRatio: '32 / 9',
           background: '#060d18',
+          overflow: 'hidden',
         }}
       >
-        <p
-          style={{
-            position: 'absolute',
-            top: 'var(--tbf-space-3)',
-            left: 'var(--tbf-space-4)',
-            fontFamily: 'var(--tbf-font-family-ui)',
-            fontSize: '0.55rem',
-            letterSpacing: '0.14em',
-            color: 'rgba(255,255,255,0.2)',
-            textTransform: 'uppercase',
-          }}
-        >
-          ADD-PREVIEW-MATERIAL
-        </p>
+        {heroImageUrl ? (
+          <Image
+            src={heroImageUrl}
+            alt={post.heroImage?.alt ?? post.title}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+          />
+        ) : (
+          <p
+            style={{
+              position: 'absolute',
+              top: 'var(--tbf-space-3)',
+              left: 'var(--tbf-space-4)',
+              fontFamily: 'var(--tbf-font-family-ui)',
+              fontSize: '0.55rem',
+              letterSpacing: '0.14em',
+              color: 'rgba(255,255,255,0.2)',
+              textTransform: 'uppercase',
+            }}
+          >
+            ADD-PREVIEW-MATERIAL
+          </p>
+        )}
       </div>
 
       {/* ─── CORPO + SIDEBAR ────────────────────────────────────────────── */}

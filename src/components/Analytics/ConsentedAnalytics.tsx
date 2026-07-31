@@ -10,21 +10,15 @@
 import { useEffect, useState } from 'react'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-
-const STORAGE_KEY = 'tbf-cookie-consent'
+import { readConsent } from '@/lib/consent'
 
 export function ConsentedAnalytics() {
   const [allowed, setAllowed] = useState(false)
 
   useEffect(() => {
-    const read = () => {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY)
-        setAllowed(raw ? !!JSON.parse(raw).analytics : false)
-      } catch {
-        setAllowed(false)
-      }
-    }
+    // readConsent devolve null para registro vencido ou de versão antiga: nesses
+    // casos o site volta a perguntar, e até lá não carrega nada.
+    const read = () => setAllowed(readConsent()?.analytics === true)
     read()
     window.addEventListener('tbf-cookie-choice', read)
     return () => window.removeEventListener('tbf-cookie-choice', read)

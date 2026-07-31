@@ -4,9 +4,9 @@
 // Hover: scale imagem + translateX título
 // =============================================================================
 
-import Link from 'next/link'
 import Image from 'next/image'
 import type { ArticleCardProps } from '@/types'
+import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { urlFor } from '@/lib/sanity'
 import { ThumbSpec, thumbDimensions, THUMB_RATIO_FALLBACK } from '@/components/ThumbSpec/ThumbSpec'
 
@@ -36,7 +36,9 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
   const dims = thumbDimensions(ratio)
 
   return (
-    <Link
+    // ArticleMorphLink e não Link: abrir a matéria entra PELA capa (a imagem
+    // cresce até o lugar dela na página da matéria). Ver PageTransition/.
+    <ArticleMorphLink
       href={`/editorial/${post.slug.current}`}
       className={cardClass}
       aria-label={post.title}
@@ -44,6 +46,7 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
       {/* Image: proporção vinda do CMS (cardRatio). Sem capa, o bloco vira
           parchment com o selo de dimensão (pedido). */}
       <div
+        data-morph
         className={`card__image-wrapper${post.heroImage ? '' : ' card__image-wrapper--empty'}`}
         style={{ aspectRatio: ratio }}
       >
@@ -119,6 +122,6 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
           </span>
         </div>
       </div>
-    </Link>
+    </ArticleMorphLink>
   )
 }

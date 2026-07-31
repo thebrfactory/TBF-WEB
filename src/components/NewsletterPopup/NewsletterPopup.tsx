@@ -5,12 +5,17 @@
 // Aparece uma vez por sessão, SOMENTE por tempo: 20s no site (pedido do fundador).
 // Sem gatilho de scroll — nunca aborda quem acabou de chegar.
 // Reaproveita a mesma lógica de submit do MailingList (rodapé) via useNewsletterSubmit.
+//
+// Mora no MESMO canto do banner de cookies (inferior direito) e é gateado por ele:
+// a contagem dos 20s só começa DEPOIS que a pessoa decidiu sobre cookies. As duas
+// caixas nunca dividem a tela, então não precisam se desviar uma da outra.
 // =============================================================================
 
 import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
+import { readConsent } from '@/lib/consent'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
 const SHOW_DELAY_MS = 20000
@@ -25,8 +30,8 @@ export function NewsletterPopup() {
   }, [])
 
   // Trigger — uma vez por sessão. Só aparece DEPOIS que a escolha de cookies foi
-  // feita (senão popup e cookie banner se sobrepõem na primeira visita, sobretudo
-  // no mobile) e SOMENTE após 20s no site (pedido do fundador — sem gatilho de scroll).
+  // feita (as duas caixas ocupam o mesmo canto: sem esse gate elas se sobrepõem)
+  // e SOMENTE após 20s no site (pedido do fundador — sem gatilho de scroll).
   useEffect(() => {
     if (sessionStorage.getItem(SESSION_KEY)) return
 
@@ -38,14 +43,9 @@ export function NewsletterPopup() {
       stop = () => clearTimeout(timer)
     }
 
-    let hasCookieChoice = true
-    try {
-      hasCookieChoice = !!localStorage.getItem('tbf-cookie-consent')
-    } catch {
-      hasCookieChoice = true // storage bloqueado → não trava o popup
-    }
-
-    if (hasCookieChoice) {
+    // Consentimento vencido ou de versão antiga conta como SEM escolha: o banner
+    // vai reaparecer, e o popup espera a nova decisão em vez de brigar por espaço.
+    if (readConsent()) {
       start()
       return () => stop()
     }
