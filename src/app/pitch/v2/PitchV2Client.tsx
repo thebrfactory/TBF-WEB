@@ -22,7 +22,7 @@
 // em TbfWordmark.tsx desde a 2.1, para o corpo do deck caber na cabeça.
 // =============================================================================
 
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PressLogosCarousel } from '../PressLogosCarousel'
@@ -74,26 +74,18 @@ function En({ children, size = 'sm' }: { children: React.ReactNode; size?: 'sm' 
   return <span className={size === 'lead' ? 'p2-en p2-en--lead' : 'p2-en'}>{children}</span>
 }
 
-function useReveal() {
-  useEffect(() => {
-    const els = document.querySelectorAll('.pitch-reveal')
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            ;(e.target as HTMLElement).style.opacity = '1'
-            ;(e.target as HTMLElement).style.transform = 'translateY(0)'
-            ;(e.target as HTMLElement).style.filter = 'blur(0)'
-          }
-        })
-      },
-      { threshold: 0.15 }
-    )
-    els.forEach((el) => obs.observe(el))
-    return () => obs.disconnect()
-  }, [])
-}
-
+// Cada bloco observa a si mesmo.
+//
+// A 2.0 tinha UM observer criado no mount da página, varrendo `.pitch-reveal`
+// com querySelectorAll. Todo bloco que nascesse depois desse mount (hot-reload,
+// re-render, conteúdo novo) ficava fora da lista e travava em `opacity: 0` —
+// invisível para sempre, sem erro nenhum no console. Foi exatamente o que
+// engoliu os cinco retratos do movimento 03 em 2026-07-31.
+//
+// Com o observer amarrado ao próprio elemento por ref, não existe janela de
+// tempo: o bloco só é observado depois de existir, sempre. O observer
+// desconecta no primeiro reveal, porque a animação é de entrada e não se
+// repete.
 function PitchReveal({
   children,
   delay = 0,
@@ -103,8 +95,42 @@ function PitchReveal({
   delay?: number
   style?: React.CSSProperties
 }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const show = () => {
+      el.style.opacity = '1'
+      el.style.transform = 'translateY(0)'
+      el.style.filter = 'blur(0)'
+    }
+
+    // Sem IntersectionObserver (navegador antigo, ambiente de teste), o texto
+    // aparece direto. Perder a animação é aceitável; perder o conteúdo não.
+    if (typeof IntersectionObserver === 'undefined') {
+      show()
+      return
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return
+          show()
+          obs.disconnect()
+        })
+      },
+      { threshold: 0.15 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
     <div
+      ref={ref}
       className="pitch-reveal"
       style={{
         opacity: 0,
@@ -470,8 +496,6 @@ const VISION_STAGES = [
 // ─── Página ──────────────────────────────────────────────────────────────────
 
 export function PitchV2Client() {
-  useReveal()
-
   return (
     <div className="p2-deck">
       <DeckNav />
