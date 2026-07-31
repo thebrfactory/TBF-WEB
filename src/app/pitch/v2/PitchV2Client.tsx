@@ -585,20 +585,9 @@ export function PitchV2Client() {
                registrados no _CREDITOS.md daquela pasta. O retrato é 1:1 na
                origem, então o quadro nunca deforma. */}
         <div className="p2-refs-people">
-          <PitchReveal delay={200}>
-            <p className="p2-assert p2-refs-people__lead">
-              Todas essas personalidades capturaram o espírito do momento e transformaram isso em
-              linguagem.
-              <En>
-                All of these figures captured the spirit of their moment and turned it into
-                language.
-              </En>
-            </p>
-          </PitchReveal>
-
           <div className="p2-refs-people__grid">
             {REFERENCE_PEOPLE.map((person, i) => (
-              <PitchReveal key={person.name} delay={300 + i * 80}>
+              <PitchReveal key={person.name} delay={200 + i * 80}>
                 <figure className="p2-person">
                   <Image
                     src={person.src}
@@ -619,6 +608,20 @@ export function PitchV2Client() {
               </PitchReveal>
             ))}
           </div>
+
+          {/* A frase fecha o bloco, não abre: entra depois dos cinco rostos,
+              como conclusão do que a pessoa acabou de ver (pedido do fundador
+              2026-07-31). Por isso o delay é o maior da seção. */}
+          <PitchReveal delay={650}>
+            <p className="p2-assert p2-refs-people__lead">
+              Todas essas personalidades capturaram o espírito do momento e transformaram isso em
+              linguagem.
+              <En>
+                All of these figures captured the spirit of their moment and turned it into
+                language.
+              </En>
+            </p>
+          </PitchReveal>
         </div>
 
         <PitchReveal delay={250}>
@@ -1507,7 +1510,7 @@ export function PitchV2Client() {
 
         .p2-refs-people__lead {
           max-width: 34ch;
-          margin-bottom: clamp(1.5rem, 3vw, 1.75rem);
+          margin-top: clamp(1.75rem, 4vw, 2.25rem);
         }
 
         .p2-refs-people__grid {
