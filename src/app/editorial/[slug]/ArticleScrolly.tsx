@@ -22,13 +22,20 @@ import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-da
 interface ArticleScrollyProps {
   tone: 'manifesto' | 'narrativa' | 'jornalismo' | 'ensaio'
   article: ManifestoArticle
+  /**
+   * Ritmo vertical. Existe para o fundador COMPARAR rolando de verdade, não
+   * para virar configuração permanente: quando ele escolher, a vencedora vira
+   * o padrão e as outras duas somem daqui e do scrolly.css.
+   * v0 = como nasceu (39 telas) · v1 = uniforme · v2 = seletiva.
+   */
+  rhythm?: 'v0' | 'v1' | 'v2'
 }
 
-export function ArticleScrolly({ article }: ArticleScrollyProps) {
+export function ArticleScrolly({ article, rhythm = 'v0' }: ArticleScrollyProps) {
   let chapterIndex = 0
 
   return (
-    <div className="scrolly-article">
+    <div className="scrolly-article" data-rhythm={rhythm}>
       <ArticleLoader title={article.loaderTitle} />
       <ScrollProgress />
 

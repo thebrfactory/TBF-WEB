@@ -163,10 +163,16 @@ export const revalidate = 3600
 
 export default async function ArticlePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>
+  // ?ritmo=v1|v2 — comparação de ritmo vertical pedida pelo fundador. Some
+  // quando ele escolher a vencedora.
+  searchParams: Promise<{ ritmo?: string }>
 }) {
   const { slug } = await params
+  const { ritmo } = await searchParams
+  const rhythm = ritmo === 'v1' || ritmo === 'v2' ? ritmo : 'v0'
 
   let post: EditorialPost | null = null
   let siteSettings: SiteSettings | null = null
@@ -184,7 +190,9 @@ export default async function ArticlePage({
   // Vive fora do Sanity (não é mock TBFipsum, é o texto real de debut.md convertido
   // em cenas — 05_PILOTO-CENAS.md é a lei do roteiro).
   if (!post && slug === theDayBrazilStoppedTranslatingItself.slug) {
-    return <ArticleScrolly tone="manifesto" article={theDayBrazilStoppedTranslatingItself} />
+    return (
+      <ArticleScrolly tone="manifesto" article={theDayBrazilStoppedTranslatingItself} rhythm={rhythm} />
+    )
   }
 
   // Mock articles para preview sem Sanity

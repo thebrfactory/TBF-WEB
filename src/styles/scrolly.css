@@ -358,7 +358,7 @@
 
 .scrolly-chapter {
   position: relative;
-  min-height: 60vh;
+  min-height: var(--sc-divider-min, 60vh);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -724,7 +724,7 @@
 .scrolly-cascade {
   max-width: var(--tbf-type-body-max-width);
   margin-inline: auto;
-  padding-block: var(--tbf-space-8);
+  padding-block: var(--sc-gap-connective-sm, var(--tbf-space-8));
 }
 
 .scrolly-cascade__line {
@@ -778,7 +778,7 @@
 
 .scrolly-fullbleed {
   position: relative;
-  min-height: 100dvh;
+  min-height: var(--sc-fullbleed-min, 100dvh);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -864,7 +864,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-12);
-  padding-block: var(--tbf-space-12);
+  padding-block: var(--sc-gap-connective, var(--tbf-space-12));
   max-width: var(--tbf-type-body-max-width);
   margin-inline: auto;
 }
@@ -893,7 +893,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-2);
-  padding-block: var(--tbf-space-8);
+  padding-block: var(--sc-gap-connective-sm, var(--tbf-space-8));
   max-width: var(--tbf-type-body-max-width);
   margin-inline: auto;
 }
@@ -910,7 +910,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-6);
-  padding-block: var(--tbf-space-12);
+  padding-block: var(--sc-gap-connective, var(--tbf-space-12));
   max-width: var(--tbf-type-body-max-width);
   margin-inline: auto;
 }
@@ -972,4 +972,41 @@
   .scrolly-body {
     padding-inline: var(--tbf-grid-margin-md);
   }
+}
+
+
+/* =============================================================================
+   RITMO — as duas versões que o fundador pediu para comparar (2026-08-01)
+
+   O texto do manifesto é curto; quem alongou a página foi o respiro entre as
+   cenas. Medido no piloto: 39 telas de rolagem no celular, contra as 15 a 25
+   de uma matéria longa de revista. As duas versões atacam isso por caminhos
+   opostos, e a diferença entre elas é a pergunta de fundo: o silêncio é do
+   artigo inteiro, ou só dos momentos que merecem?
+
+   v1 UNIFORME — encolhe tudo na mesma proporção (~30%). Mantém a proporção
+     entre as partes exatamente como está hoje, só que mais apertada. É a
+     versão honesta: nada é privilegiado, o artigo inteiro respira menos.
+
+   v2 SELETIVA — corta fundo o respiro dos trechos de ligação (~45%) e NÃO
+     toca nas 6 frases de tela cheia nem nos cortes de capítulo. O silêncio
+     fica concentrado onde ele é argumento. É a versão que aposta que respiro
+     não é espaçamento, é ênfase.
+   ============================================================================= */
+
+.scrolly-article[data-rhythm='v1'] {
+  /* Uniforme: encolhe TUDO, inclusive os momentos grandes. */
+  --sc-gap-connective: var(--tbf-space-6);
+  --sc-gap-connective-sm: var(--tbf-space-3);
+  --sc-fullbleed-min: 62dvh;
+  --sc-divider-min: 30vh;
+}
+
+.scrolly-article[data-rhythm='v2'] {
+  /* Seletiva: mata o vazio de ligação, preserva intactos os 6 momentos de
+     tela cheia e a tese fixada. O silêncio vira privilégio, não regra. */
+  --sc-gap-connective: var(--tbf-space-4);
+  --sc-gap-connective-sm: var(--tbf-space-2);
+  --sc-fullbleed-min: 100dvh;
+  --sc-divider-min: 28vh;
 }
