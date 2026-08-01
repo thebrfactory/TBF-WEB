@@ -13,6 +13,7 @@ import { NewsletterPopup } from '@/components/NewsletterPopup/NewsletterPopup'
 import { CookieBanner } from '@/components/CookieBanner/CookieBanner'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
 import { ConsentedAnalytics } from '@/components/Analytics/ConsentedAnalytics'
+import { AnalyticsGate } from '@/components/Analytics/AnalyticsGate'
 import { ViewTransitionBridge } from '@/components/PageTransition/ViewTransitionBridge'
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
@@ -200,6 +201,9 @@ export default function RootLayout({
 
         {/* Analytics carrega SÓ com consentimento (gateado pelo CookieBanner). */}
         <ConsentedAnalytics />
+
+        {/* GA4 sob Consent Mode v2 — default denied até o opt-in real. */}
+        <AnalyticsGate />
       </body>
     </html>
   )

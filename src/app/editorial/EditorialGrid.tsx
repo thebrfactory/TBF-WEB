@@ -33,6 +33,10 @@ const MOCK_ARTICLES = [
   { category: 'Manifesto',    title: 'We are not a trend: why .TBF. refuses to follow',    date: '01 Mai. 2026', ratio: '1/1' },
 ]
 
+// Piloto do motor scrolly (ORD-01): o 1º card do arquivo passa a apontar para
+// a matéria real, não para o mock TBFipsum — 04_RESUMO-APROVACAO.md §4.
+const PILOT_ARTICLE_SLUG = 'the-day-brazil-stopped-translating-itself'
+
 const PAGE_SIZE = 9
 
 interface EditorialGridProps {
@@ -130,8 +134,10 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
           <div className="editorial-grid container" role="feed" aria-label="Prévia do arquivo editorial">
             {MOCK_ARTICLES.slice(1).map((mock, idx) => {
               const i = idx + 1
+              // 1º card do arquivo (idx === 0) aponta para a matéria real do piloto.
+              const href = idx === 0 ? `/editorial/${PILOT_ARTICLE_SLUG}` : `/editorial/lorem-ipsum-${i + 1}`
               return (
-                <ArticleMorphLink key={i} href={`/editorial/lorem-ipsum-${i + 1}`} className="card card--standard" style={{ textDecoration: 'none' }}>
+                <ArticleMorphLink key={i} href={href} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
                       verdade por trás do link). Bloco chapado em parchment com o
                       selo da dimensão que a capa precisa ter; quando virar post

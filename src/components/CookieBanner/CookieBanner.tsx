@@ -13,23 +13,45 @@
 // ConsentedAnalytics e o NewsletterPopup. Sem ela, quem clicou uma vez nunca
 // mais via a caixa — foi o que aconteceu em produção, com registro legado que
 // ainda trazia a categoria `marketing`, morta no site desde então.
+//
+// ATRASO EM ROTA DE ARTIGO (2026-08-01, DOPAMINE ARTICLE ORD-02): em
+// /editorial/[slug] o pico de entrada (loader → hero) tem prioridade — o banner
+// só aparece depois de ARTICLE_BANNER_DELAY_MS. Nas demais rotas, imediato,
+// como sempre foi. O atraso é só de EXIBIÇÃO: nada não essencial é coletado
+// antes do opt-in, com ou sem atraso, em nenhuma rota. Regra dura do pedido:
+// o aviso NUNCA bloqueia a leitura — por isso ele é sempre uma barra inferior
+// não bloqueante, nunca overlay/modal, com ou sem o atraso.
+// A decisão (imediato vs. atrasado) é tomada a partir da rota de ENTRADA
+// (pathname no primeiro render) e não se repete numa navegação client-side
+// subsequente — evita reabrir/adiar um banner que o visitante já viu.
 // =============================================================================
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { readConsent, writeConsent } from '@/lib/consent'
 
+const ARTICLE_BANNER_DELAY_MS = 5000
+const ARTICLE_ROUTE_PATTERN = /^\/editorial\/[^/]+\/?$/
+
 export function CookieBanner() {
+  const pathname = usePathname()
   const [visible, setVisible] = useState(false)
   const [showPrefs, setShowPrefs] = useState(false)
   const [analytics, setAnalytics] = useState(true)
 
-  // Primeira visita → aparece. Reabertura (rodapé) → aparece já em modo
-  // preferências, refletindo a escolha salva (revogabilidade, LGPD art. 18).
+  // Primeira visita → aparece (imediato, ou após 5s em rota de artigo).
+  // Reabertura (rodapé) → aparece já em modo preferências, refletindo a
+  // escolha salva (revogabilidade, LGPD art. 18).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const current = readConsent()
+    let timer: ReturnType<typeof setTimeout> | undefined
+
     if (current) {
       setAnalytics(current.analytics)
+    } else if (ARTICLE_ROUTE_PATTERN.test(pathname ?? '')) {
+      timer = setTimeout(() => setVisible(true), ARTICLE_BANNER_DELAY_MS)
     } else {
       setVisible(true)
     }
@@ -42,7 +64,10 @@ export function CookieBanner() {
       setVisible(true)
     }
     window.addEventListener('tbf-open-cookie-prefs', onReopen)
-    return () => window.removeEventListener('tbf-open-cookie-prefs', onReopen)
+    return () => {
+      if (timer) clearTimeout(timer)
+      window.removeEventListener('tbf-open-cookie-prefs', onReopen)
+    }
   }, [])
 
   // Grava e avisa (1) o NewsletterPopup, que só aparece depois da escolha de

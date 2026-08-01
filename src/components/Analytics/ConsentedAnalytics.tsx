@@ -5,6 +5,11 @@
 // pessoa consentiu com analytics no CookieBanner. Antes disso (ou após rejeitar)
 // nada é carregado. Torna o toggle de analytics REAL, não decorativo (LGPD).
 // Re-lê no evento tbf-cookie-choice, então aceitar/rejeitar liga/desliga na hora.
+//
+// Escopo deste componente: SÓ Vercel Analytics/Speed Insights (cookieless,
+// primeira parte). O GA4 (Google, terceiro, precisa de Consent Mode v2) tem
+// gate próprio em @/components/Analytics/AnalyticsGate — os dois leem o mesmo
+// @/lib/consent, cada um cuida do seu fornecedor.
 // =============================================================================
 
 import { useEffect, useState } from 'react'

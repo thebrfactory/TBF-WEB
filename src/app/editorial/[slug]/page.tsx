@@ -11,6 +11,8 @@ import Link from 'next/link'
 import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, SITE_SETTINGS_QUERY, urlFor } from '@/lib/sanity'
 import type { EditorialPost, SiteSettings } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { ArticleScrolly } from './ArticleScrolly'
+import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 
 // ─── Static Params ────────────────────────────────────────────────────────────
 
@@ -176,6 +178,13 @@ export default async function ArticlePage({
     ])
   } catch {
     // fallback
+  }
+
+  // Piloto do motor scrolly (ORD-01): primeira matéria real da casa, tone="manifesto".
+  // Vive fora do Sanity (não é mock TBFipsum, é o texto real de debut.md convertido
+  // em cenas — 05_PILOTO-CENAS.md é a lei do roteiro).
+  if (!post && slug === theDayBrazilStoppedTranslatingItself.slug) {
+    return <ArticleScrolly tone="manifesto" article={theDayBrazilStoppedTranslatingItself} />
   }
 
   // Mock articles para preview sem Sanity

@@ -1,0 +1,975 @@
+/* =============================================================================
+   SCROLLY.CSS — motor de animação por rolagem (ORD-01, SPEC §2/§2.1/§2.2/§2.3)
+   Importado 1x por globals.css. Zero dependência. Só transform/opacity animam
+   em scroll. Grão em data URI (~330B, teto 2KB). Dark mode sempre; branco é
+   evento raro. Três estados obrigatórios por primitiva: scroll-driven CSS,
+   fallback @supports not (animation-timeline: …) + .is-visible via IO,
+   e desligamento total em prefers-reduced-motion: reduce.
+   ============================================================================= */
+
+/* ─── Wrapper raiz ────────────────────────────────────────────────────────── */
+
+.scrolly-article {
+  position: relative;
+  background: var(--tbf-bg-primary);
+  color: var(--tbf-text-primary);
+  isolation: isolate;
+}
+
+.scrolly-article::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: var(--tbf-z-raw-below);
+  pointer-events: none;
+  opacity: var(--tbf-bg-overlay-grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/rect%3E%3C/svg%3E");
+  background-size: 90px 90px;
+}
+
+.scrolly-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* =============================================================================
+   ARTICLE LOADER
+   ============================================================================= */
+
+.scrolly-loader {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tbf-z-raw-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tbf-space-8);
+  background: var(--tbf-bg-primary);
+  animation: scrolly-loader-in var(--tbf-motion-duration-loading-enter) var(--tbf-motion-easing-loading-enter) both;
+}
+
+.scrolly-loader--exit {
+  animation: scrolly-loader-out var(--tbf-motion-duration-loading-exit) var(--tbf-motion-easing-loading-exit) both;
+}
+
+@keyframes scrolly-loader-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scrolly-loader-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.scrolly-loader__glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 42%, rgba(240, 237, 230, var(--tbf-bg-glow-loading-opacity)), transparent 60%);
+  animation: scrolly-loader-glow var(--tbf-motion-duration-loading-pulse) var(--tbf-easing-raw-ease-in-out) infinite;
+}
+
+@keyframes scrolly-loader-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.scrolly-loader__object {
+  position: relative;
+  width: clamp(140px, 30vw, 220px);
+  height: clamp(60px, 12vw, 90px);
+  perspective: 800px;
+}
+
+.scrolly-loader__plane {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--tbf-type-h1-family);
+  font-weight: var(--tbf-font-weight-raw-800);
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  color: var(--tbf-text-primary);
+  letter-spacing: var(--tbf-letter-spacing-raw-tight-25, -0.01em);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  animation: scrolly-loader-spin 8s linear infinite;
+}
+
+.scrolly-loader__plane--1 { transform: rotateY(0deg) translateZ(1px); }
+.scrolly-loader__plane--2 { transform: rotateY(120deg) translateZ(1px); opacity: 0.55; }
+.scrolly-loader__plane--3 { transform: rotateY(240deg) translateZ(1px); opacity: 0.3; }
+
+@keyframes scrolly-loader-spin {
+  from { transform: rotateY(0deg) translateZ(1px); }
+  to { transform: rotateY(360deg) translateZ(1px); }
+}
+
+.scrolly-loader__plane--2 { animation-delay: -2.66s; }
+.scrolly-loader__plane--3 { animation-delay: -5.33s; }
+
+.scrolly-loader__title {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  text-align: center;
+  max-width: 80vw;
+  opacity: 0;
+  animation: scrolly-loader-title-in var(--tbf-motion-duration-reveal-headline) var(--tbf-motion-easing-reveal) 200ms both;
+}
+
+@keyframes scrolly-loader-title-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-loader { display: none; }
+}
+
+/* =============================================================================
+   SCROLL PROGRESS
+   ============================================================================= */
+
+.scrolly-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: var(--tbf-z-raw-toast);
+  background: transparent;
+}
+
+.scrolly-progress__bar {
+  height: 100%;
+  width: 100%;
+  background: var(--tbf-text-primary);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+@supports (animation-timeline: scroll()) {
+  .scrolly-progress__bar {
+    animation: scrolly-progress-fill linear both;
+    animation-timeline: scroll(root);
+  }
+
+  @keyframes scrolly-progress-fill {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-progress { display: none; }
+}
+
+/* =============================================================================
+   HERO CINEMA
+   ============================================================================= */
+
+.scrolly-hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  overflow: clip;
+  contain: layout paint;
+}
+
+.scrolly-hero__media,
+.scrolly-hero__void {
+  position: absolute;
+  inset: 0;
+}
+
+.scrolly-hero__void {
+  background: var(--tbf-bg-primary);
+  background-image: radial-gradient(circle at 50% 30%, rgba(240, 237, 230, var(--tbf-bg-glow-hero-opacity)), transparent 65%);
+}
+
+.scrolly-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.75) 100%);
+}
+
+.scrolly-hero__content {
+  position: relative;
+  z-index: var(--tbf-z-raw-content);
+  padding: var(--tbf-space-16) var(--tbf-grid-margin-sm) var(--tbf-space-20);
+  max-width: var(--tbf-grid-max-xl);
+  margin-inline: auto;
+  width: 100%;
+}
+
+.scrolly-hero__eyebrow {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  margin-bottom: var(--tbf-space-4);
+  opacity: 0;
+  animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 100ms both;
+}
+
+.scrolly-hero__title {
+  font-family: var(--tbf-type-display-xl-family);
+  font-weight: var(--tbf-type-display-xl-weight);
+  font-size: var(--tbf-type-display-xl-size-sm);
+  line-height: var(--tbf-type-display-xl-lh-sm);
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  color: var(--tbf-text-primary);
+  text-wrap: balance;
+  clip-path: inset(0 0 0 0);
+  opacity: 0;
+  transform: translateY(var(--tbf-motion-translate-reveal));
+  animation: scrolly-fade-up var(--tbf-motion-duration-reveal-headline) var(--tbf-motion-easing-reveal) 250ms both;
+}
+
+@media (min-width: 1024px) {
+  .scrolly-hero__title { font-size: var(--tbf-type-display-xl-size); }
+}
+
+.scrolly-hero__subtitle {
+  font-family: var(--tbf-type-deck-family);
+  font-weight: var(--tbf-type-deck-weight);
+  font-size: var(--tbf-type-deck-size-sm);
+  line-height: var(--tbf-type-deck-lh);
+  font-style: italic;
+  color: var(--tbf-text-secondary);
+  max-width: 60ch;
+  margin-top: var(--tbf-space-6);
+  opacity: 0;
+  animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 450ms both;
+}
+
+@keyframes scrolly-fade-up {
+  from { opacity: 0; transform: translateY(var(--tbf-motion-translate-reveal)); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-hero__eyebrow,
+  .scrolly-hero__title,
+  .scrolly-hero__subtitle {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   PINNED INTRO
+   ============================================================================= */
+
+.scrolly-pinned {
+  position: relative;
+  height: 180vh;
+  contain: layout paint;
+}
+
+@media (min-width: 768px) {
+  .scrolly-pinned { height: 250vh; }
+}
+
+.scrolly-pinned__sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-inline: var(--tbf-grid-margin-sm);
+  overflow: clip;
+}
+
+.scrolly-pinned__bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 55%, rgba(240, 237, 230, 0.05), transparent 70%);
+  transform: scale(1);
+  will-change: transform;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-pinned__bg {
+    animation: scrolly-pinned-zoom linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
+  @keyframes scrolly-pinned-zoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.06); }
+  }
+}
+
+.scrolly-pinned__kicker {
+  position: relative;
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  margin-bottom: var(--tbf-space-6);
+}
+
+.scrolly-pinned__text {
+  position: relative;
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: var(--tbf-type-display-lg-weight);
+  font-size: var(--tbf-type-display-lg-size-sm);
+  line-height: var(--tbf-type-display-lg-lh-sm);
+  letter-spacing: var(--tbf-type-display-lg-ls);
+  max-width: 20ch;
+  text-wrap: balance;
+}
+
+@media (min-width: 1024px) {
+  .scrolly-pinned__text { font-size: var(--tbf-type-display-lg-size); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-pinned { height: auto; padding-block: var(--tbf-space-20); }
+  .scrolly-pinned__sticky { position: relative; height: auto; }
+  .scrolly-pinned__bg { animation: none; transform: none; }
+}
+
+/* =============================================================================
+   CHAPTER DIVIDER — ponto canônico da virada de tema
+   ============================================================================= */
+
+.scrolly-chapter {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: clip;
+  contain: layout paint;
+  background: var(--tbf-bg-primary);
+  color: var(--tbf-text-primary);
+}
+
+.scrolly-chapter--grey { background: var(--tbf-color-smoke); }
+.scrolly-chapter--light { background: var(--tbf-bg-inverse); color: var(--tbf-text-inverse); }
+
+.scrolly-chapter__wipe {
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-chapter__wipe {
+    animation: scrolly-wipe-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+
+  @keyframes scrolly-wipe-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+.scrolly-chapter__word {
+  position: relative;
+  font-family: var(--tbf-type-display-xl-family);
+  font-weight: var(--tbf-font-weight-raw-800);
+  font-size: clamp(3rem, 16vw, 10rem);
+  line-height: 1;
+  overflow: clip;
+  transform: translateX(6%);
+  opacity: 0.9;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-chapter__word {
+    animation: scrolly-chapter-slide linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
+  @keyframes scrolly-chapter-slide {
+    from { transform: translateX(10%); }
+    to   { transform: translateX(-10%); }
+  }
+}
+
+.scrolly-chapter__index {
+  position: relative;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  color: var(--tbf-text-tertiary);
+  margin-top: var(--tbf-space-4);
+}
+
+.scrolly-chapter--light .scrolly-chapter__index { color: rgba(0, 0, 0, 0.4); }
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-chapter__wipe { animation: none; opacity: 1; }
+  .scrolly-chapter__word { animation: none; transform: none; }
+}
+
+/* =============================================================================
+   SCROLLY REVEAL — genérico (default / line / scale)
+   ============================================================================= */
+
+.scrolly-reveal {
+  opacity: 0;
+  transform: translateY(var(--tbf-motion-translate-reveal));
+}
+
+.scrolly-reveal--scale { transform: scale(0.94); }
+.scrolly-reveal--line  { transform: translateY(12px); }
+
+@supports (animation-timeline: view()) {
+  .scrolly-reveal {
+    animation: scrolly-reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+
+  .scrolly-reveal--scale { animation-name: scrolly-reveal-scale-in; }
+  .scrolly-reveal--line  { animation-name: scrolly-reveal-line-in; }
+
+  @keyframes scrolly-reveal-in {
+    from { opacity: 0; transform: translateY(var(--tbf-motion-translate-reveal)); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrolly-reveal-scale-in {
+    from { opacity: 0; transform: scale(0.94); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes scrolly-reveal-line-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .scrolly-reveal {
+    transition: opacity var(--tbf-motion-duration-reveal-headline) var(--tbf-motion-easing-reveal),
+                transform var(--tbf-motion-duration-reveal-headline) var(--tbf-motion-easing-reveal);
+  }
+
+  .scrolly-reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-reveal,
+  .scrolly-reveal--scale,
+  .scrolly-reveal--line {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   PULL QUOTE
+   ============================================================================= */
+
+.scrolly-quote {
+  max-width: var(--tbf-type-body-max-width);
+  margin-block: var(--tbf-space-16);
+}
+
+.scrolly-quote__text {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: var(--tbf-type-display-lg-weight);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.15;
+  color: var(--tbf-text-primary);
+}
+
+.scrolly-quote__attribution {
+  margin-top: var(--tbf-space-4);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+/* =============================================================================
+   MEDIA PARALLAX
+   ============================================================================= */
+
+.scrolly-media {
+  margin-block: var(--tbf-space-16);
+}
+
+.scrolly-media__frame {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: clip;
+  contain: layout paint;
+}
+
+.scrolly-media__img { transform: translateY(0); }
+
+@supports (animation-timeline: view()) {
+  .scrolly-media__img {
+    animation: scrolly-parallax linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+
+  @keyframes scrolly-parallax {
+    from { transform: translateY(-6%) scale(1.12); }
+    to   { transform: translateY(6%) scale(1.12); }
+  }
+}
+
+.scrolly-media__caption {
+  margin-top: var(--tbf-space-3);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  color: var(--tbf-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-media__img { animation: none; transform: none; }
+}
+
+/* =============================================================================
+   STAT BLOCK
+   ============================================================================= */
+
+.scrolly-stat {
+  padding-block: var(--tbf-space-12);
+  text-align: center;
+}
+
+.scrolly-stat__value {
+  font-family: var(--tbf-type-display-xl-family);
+  font-weight: var(--tbf-type-display-xl-weight);
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  line-height: 1;
+  color: var(--tbf-text-primary);
+}
+
+.scrolly-stat__bar {
+  height: 2px;
+  max-width: 240px;
+  margin: var(--tbf-space-4) auto;
+  background: var(--tbf-text-tertiary);
+  transform: scaleX(0);
+  transform-origin: center;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-stat__bar {
+    animation: scrolly-bar-grow linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+
+  @keyframes scrolly-bar-grow {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+}
+
+.scrolly-stat__label {
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-stat__bar { animation: none; transform: scaleX(1); }
+}
+
+/* =============================================================================
+   DATA TOGGLE
+   ============================================================================= */
+
+.scrolly-toggle__pills {
+  display: flex;
+  gap: var(--tbf-space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--tbf-space-6);
+}
+
+.scrolly-toggle__pill {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  padding: var(--tbf-space-2) var(--tbf-space-4);
+  border-radius: var(--tbf-radius-full);
+  border: 1px solid var(--tbf-border);
+  background: transparent;
+  color: var(--tbf-text-tertiary);
+  cursor: pointer;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+              border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.scrolly-toggle__pill--active {
+  color: var(--tbf-text-primary);
+  border-color: var(--tbf-border-active);
+}
+
+/* =============================================================================
+   SHARE ROW
+   ============================================================================= */
+
+.scrolly-share {
+  padding-block: var(--tbf-space-8);
+}
+
+.scrolly-share__btn {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+  background: transparent;
+  border: 1px solid var(--tbf-border);
+  border-radius: var(--tbf-radius-full);
+  padding: var(--tbf-space-3) var(--tbf-space-6);
+  cursor: pointer;
+  transition: border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.scrolly-share__btn:hover,
+.scrolly-share__btn:focus-visible { border-color: var(--tbf-border-active); }
+
+/* =============================================================================
+   STICKER LAYER
+   ============================================================================= */
+
+.scrolly-stickers {
+  position: relative;
+  height: calc(60vh + (var(--scrolly-sticker-count, 3) * 18vh));
+  contain: layout paint;
+}
+
+.scrolly-stickers__item {
+  position: absolute;
+  left: calc(10% + (var(--i, 0) * 13%) % 70%);
+  top: calc(8vh + (var(--i, 0) * 22vh));
+  max-width: 62vw;
+  font-family: var(--tbf-type-body-sm-family);
+  font-style: italic;
+  font-size: var(--tbf-type-body-sm-size-sm);
+  color: var(--tbf-text-secondary);
+  opacity: 0;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-stickers__item {
+    animation: scrolly-sticker-in linear both, stickerFloat1 6s ease-in-out infinite;
+    animation-timeline: view(), auto;
+    animation-range: entry 0% cover 40%, none;
+  }
+
+  .scrolly-stickers__item--2 { animation-name: scrolly-sticker-in, stickerFloat2; }
+  .scrolly-stickers__item--3 { animation-name: scrolly-sticker-in, stickerFloat3; }
+
+  @keyframes scrolly-sticker-in {
+    0%   { opacity: 0; }
+    30%  { opacity: 1; }
+    70%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+}
+
+.scrolly-stickers--hide-mobile .scrolly-stickers__item { display: none; }
+
+@media (min-width: 768px) {
+  .scrolly-stickers--hide-mobile .scrolly-stickers__item { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-stickers__item { animation: none; opacity: 0.8; }
+}
+
+/* =============================================================================
+   LINE CASCADE — modo manifesto (nova primitiva do piloto)
+   ============================================================================= */
+
+.scrolly-cascade {
+  max-width: var(--tbf-type-body-max-width);
+  margin-inline: auto;
+  padding-block: var(--tbf-space-8);
+}
+
+.scrolly-cascade__line {
+  font-family: var(--tbf-type-deck-family);
+  font-size: clamp(1.05rem, 3vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--tbf-text-primary);
+  margin-block: var(--tbf-space-4);
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.scrolly-cascade__line--emphasis {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: var(--tbf-type-display-lg-weight);
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  margin-block: var(--tbf-space-10);
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-cascade__line {
+    animation: scrolly-cascade-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 50%;
+    animation-delay: calc(var(--i, 0) * 30ms);
+  }
+
+  @keyframes scrolly-cascade-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .scrolly-cascade__line {
+    transition: opacity var(--tbf-motion-duration-reveal-card) var(--tbf-motion-easing-reveal),
+                transform var(--tbf-motion-duration-reveal-card) var(--tbf-motion-easing-reveal);
+  }
+
+  .scrolly-cascade__line.is-visible { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-cascade__line { animation: none; transition: none; opacity: 1; transform: none; }
+}
+
+/* =============================================================================
+   FULL BLEED LINE — TIER 1 (nova primitiva do piloto)
+   ============================================================================= */
+
+.scrolly-fullbleed {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-inline: var(--tbf-grid-margin-sm);
+  overflow: clip;
+  contain: layout paint;
+  background: var(--tbf-bg-primary);
+  color: var(--tbf-text-primary);
+}
+
+.scrolly-fullbleed--grey  { background: var(--tbf-color-smoke); }
+.scrolly-fullbleed--light { background: var(--tbf-bg-inverse); color: var(--tbf-text-inverse); }
+
+.scrolly-fullbleed__wipe {
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  opacity: 0;
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-fullbleed__wipe {
+    animation: scrolly-wipe-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 70%;
+  }
+}
+
+.scrolly-fullbleed__text {
+  position: relative;
+  font-family: var(--tbf-type-display-xl-family);
+  font-weight: var(--tbf-type-display-xl-weight);
+  line-height: var(--tbf-type-display-xl-lh-sm);
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  max-width: 18ch;
+  text-wrap: balance;
+  font-size: clamp(1.75rem, 7vw, 3.5rem);
+  opacity: 0;
+  transform: scale(0.92);
+}
+
+.scrolly-fullbleed__text--word {
+  max-width: none;
+  font-size: clamp(3rem, 20vw, 12rem);
+  letter-spacing: var(--tbf-letter-spacing-raw-tight-4, -0.02em);
+}
+
+.scrolly-fullbleed__text--wordmark {
+  max-width: none;
+  font-size: clamp(2rem, 10vw, 5rem);
+}
+
+@supports (animation-timeline: view()) {
+  .scrolly-fullbleed__text {
+    animation: scrolly-reveal-scale-in linear both;
+    animation-timeline: view();
+    animation-range: entry 10% entry 60%;
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .scrolly-fullbleed__wipe,
+  .scrolly-fullbleed__text { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-fullbleed__wipe,
+  .scrolly-fullbleed__text {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* =============================================================================
+   TIER 3 — estruturas (mirror lists, raw cascade, negation pairs)
+   Composições montadas em ArticleScrolly.tsx com LineCascade/ScrollyReveal;
+   estas classes só cuidam do layout específico de cada forma.
+   ============================================================================= */
+
+.scrolly-mirror {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-12);
+  padding-block: var(--tbf-space-12);
+  max-width: var(--tbf-type-body-max-width);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .scrolly-mirror { flex-direction: row; gap: var(--tbf-space-16); }
+}
+
+.scrolly-mirror__list {
+  flex: 1;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+}
+
+.scrolly-mirror__list--before .scrolly-mirror__item { color: var(--tbf-text-tertiary); }
+.scrolly-mirror__list--after  .scrolly-mirror__item { color: var(--tbf-text-primary); font-weight: var(--tbf-font-weight-raw-700); }
+
+.scrolly-mirror__item {
+  font-family: var(--tbf-type-h3-family);
+  font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+}
+
+.scrolly-raw {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+  padding-block: var(--tbf-space-8);
+  max-width: var(--tbf-type-body-max-width);
+  margin-inline: auto;
+}
+
+.scrolly-raw__row {
+  font-family: var(--tbf-type-h3-family);
+  font-size: clamp(1.2rem, 4vw, 1.8rem);
+}
+
+.scrolly-raw__fixed { color: var(--tbf-text-primary); font-weight: var(--tbf-font-weight-raw-700); }
+.scrolly-raw__variable { color: var(--tbf-text-secondary); margin-left: var(--tbf-space-2); }
+
+.scrolly-negation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-6);
+  padding-block: var(--tbf-space-12);
+  max-width: var(--tbf-type-body-max-width);
+  margin-inline: auto;
+}
+
+.scrolly-negation__pair {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-1);
+}
+
+.scrolly-negation__no {
+  font-family: var(--tbf-type-body-family);
+  font-style: italic;
+  color: var(--tbf-text-tertiary);
+  font-size: clamp(1rem, 3vw, 1.25rem);
+}
+
+.scrolly-negation__yes {
+  font-family: var(--tbf-type-h2-family);
+  font-weight: var(--tbf-font-weight-raw-700);
+  color: var(--tbf-text-primary);
+  font-size: clamp(1.3rem, 4vw, 2rem);
+}
+
+/* =============================================================================
+   RESPIRO LATERAL — correção do orquestrador na revisão da ORD-01 (2026-08-01)
+
+   Os blocos de texto usavam `max-width: var(--tbf-type-body-max-width)` com
+   `margin-inline: auto` e mais nada. Em desktop isso centraliza e sobra margem,
+   então o defeito não aparece. No celular a largura da tela é MENOR que o
+   max-width, as margens automáticas viram zero, e cada linha encosta nas duas
+   bordas do aparelho. QA visual em 390px pegou: texto colado na borda da tela
+   do começo ao fim da matéria.
+
+   A margem lateral vive AQUI e não em cada bloco, para que primitiva nova
+   nasça respeitando o respiro sem depender de alguém lembrar.
+   Cenas de sangria (FullBleedLine, ChapterDivider, MediaParallax) NÃO entram:
+   elas são de borda a borda por natureza, e cuidam do próprio respiro interno.
+   ============================================================================= */
+
+.scrolly-cascade,
+.scrolly-quote,
+.scrolly-mirror,
+.scrolly-raw,
+.scrolly-negation,
+.scrolly-stat,
+.scrolly-body {
+  padding-inline: var(--tbf-grid-margin-sm);
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .scrolly-cascade,
+  .scrolly-quote,
+  .scrolly-mirror,
+  .scrolly-raw,
+  .scrolly-negation,
+  .scrolly-stat,
+  .scrolly-body {
+    padding-inline: var(--tbf-grid-margin-md);
+  }
+}
