@@ -84,7 +84,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
              2026-07-31 (a medida caiu à metade em 2026-07-31, mesma sessão).
              Mexeu num dos dois? Mexa no outro. */}
       <div style={{ background: '#000000', paddingTop: 'var(--tbf-home-carousel-gap)' }}>
-        <PhotoCarousel articles={carouselArticles} />
+        <PhotoCarousel articles={carouselArticles} fallbackLabel={t.magazine.cta} />
       </div>
 
       {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────────
@@ -239,6 +239,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
       <PhotoCarousel
         articles={carouselArticles}
+        fallbackLabel={t.magazine.cta}
         photos={[
           '/images/slide2/01.webp','/images/slide2/02.webp','/images/slide2/03.webp',
           '/images/slide2/04.webp','/images/slide2/05.webp','/images/slide2/06.webp',

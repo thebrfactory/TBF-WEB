@@ -2,8 +2,6 @@ import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
-import { useLang } from '@/lib/LangProvider'
-import { home } from '@/content/i18n/pages/home'
 
 const SLIDE1 = [
   '/images/slide1/01.webp', '/images/slide1/02.webp', '/images/slide1/03.webp',
@@ -23,6 +21,8 @@ interface Props {
   photos?: string[]
   articles?: CarouselArticle[]
   href?: string
+  /** Rótulo de acessibilidade do slide sem matéria atrelada, no idioma da rota. */
+  fallbackLabel?: string
 }
 
 // VELOCIDADE ≠ DURAÇÃO. A animação percorre sempre uma cópia inteira do trilho,
@@ -36,10 +36,10 @@ const SECONDS_PER_SLIDE = 2.4
 // Carrossel ÚNICO (mobile = desktop): auto-scroll contínuo (NÃO pausa no hover)
 // + cada item clicável. Ao passar o cursor/dedo, a imagem escurece e revela o
 // título da matéria (Brother bold) centralizado no card.
-export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial' }: Props) {
-  // Rótulo de acessibilidade do slide sem matéria atrelada: segue o idioma da
-  // rota, senão o leitor de tela em português ouve inglês no meio da página.
-  const tCarrossel = home[useLang()].magazine.cta
+// `fallbackLabel` chega por propriedade, e não de useLang(), para este
+// componente seguir sendo de SERVIDOR: chamar um hook de cliente aqui derruba a
+// pré-renderização da home inteira (custou um build quebrado na Vercel).
+export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial', fallbackLabel = 'Enter the Magazine' }: Props) {
   const hasArticles = !!articles && articles.length > 0
   const duration = `${(photos.length * SECONDS_PER_SLIDE).toFixed(2)}s`
 
@@ -68,7 +68,7 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial' }
                 <LinkTag
                   href={slide.href}
                   className="carousel-slide__link"
-                  aria-label={slide.title ?? tCarrossel}
+                  aria-label={slide.title ?? fallbackLabel}
                 >
                   <Image
                     src={slide.src}

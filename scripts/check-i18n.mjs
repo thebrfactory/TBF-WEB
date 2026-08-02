@@ -5,6 +5,9 @@
 //   1. Rota em inglês sem gêmea em português (a pílula PT|EN cai em 404).
 //   2. Dicionário com chave só num dos idiomas (texto some da tela).
 //   3. Link interno cru dentro de uma view (leva o leitor de volta ao inglês).
+//   4. Hook de cliente (useLang/useT) dentro de arquivo SEM 'use client'. Este
+//      não quebra o type-check nem o `next dev`: quebra o BUILD, na hora de
+//      pré-renderizar, e custou uma publicação falhada na Vercel em 2026-08-02.
 //
 // Roda em segundos, sem rede. `node scripts/check-i18n.mjs`
 // =============================================================================
@@ -89,6 +92,27 @@ for (const f of readdirSync(VIEWS)) {
   }
 }
 console.log(`   ${readdirSync(VIEWS).length} views conferidas`)
+
+console.log('\n4. Algum hook de cliente em arquivo de servidor?')
+const varreTsx = (dir, acc = []) => {
+  for (const e of readdirSync(dir)) {
+    const cheio = join(dir, e)
+    if (statSync(cheio).isDirectory()) varreTsx(cheio, acc)
+    else if (e.endsWith('.tsx') || e.endsWith('.ts')) acc.push(cheio)
+  }
+  return acc
+}
+const fontes = varreTsx(join(RAIZ, 'src'))
+let comHook = 0
+for (const f of fontes) {
+  const src = readFileSync(f, 'utf8')
+  if (!/\buseLang\(\)|\buseT\(\)/.test(src.replace(/\/\/.*$/gm, ''))) continue
+  comHook++
+  if (!/^['"]use client['"]/.test(src.trimStart())) {
+    erro(`${relative(RAIZ, f)}: chama useLang()/useT() sem 'use client' na primeira linha (isto derruba o build na pré-renderização)`)
+  }
+}
+console.log(`   ${comHook} arquivos com hook de idioma conferidos`)
 
 console.log(falhas === 0 ? '\n✓ site bilíngue íntegro\n' : `\n${falhas} problema(s)\n`)
 process.exit(falhas === 0 ? 0 : 1)
