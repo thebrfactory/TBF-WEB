@@ -126,20 +126,31 @@
   }
 }
 
-.nav__lang {
-  display: none;
-  font-family: var(--tbf-type-micro-family);
-  font-size: var(--tbf-type-micro-size);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--tbf-nav-link-color);
-  opacity: 0.6;
-  user-select: none;
+/* Bloco da direita do topo: links, busca, sanduíche e o lugar da pílula.
+   O espaçamento era fixo em 32px (inline no JSX). Virou classe porque, com a
+   pílula ocupando a ponta direita, 32px no celular empurram o sanduíche para
+   cima do logotipo centralizado. */
+.nav__right {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-4);
 }
 
 @media (min-width: 1024px) {
-  .nav__lang {
-    display: inline;
+  .nav__right {
+    gap: var(--tbf-space-8);
   }
+}
+
+/* Espaçador invisível do seletor de idioma. O rótulo estático "EN" que morava
+   aqui virou a pílula PT|EN, que é fixa e vive fora do header para não sumir
+   junto com ele no scroll (ver LanguageSwitch.tsx). Este bloco só reserva o
+   espaço dela — largura vinda da mesma variável, para os dois nunca brigarem.
+   Ao contrário do antigo "EN", existe TAMBÉM no mobile: a pílula aparece em
+   toda largura de tela, e sem o espaçador o menu sanduíche ficaria embaixo. */
+.nav__lang-slot {
+  display: block;
+  flex: 0 0 auto;
+  width: var(--tbf-lang-switch-w);
+  height: var(--tbf-lang-switch-h);
 }

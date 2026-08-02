@@ -33,7 +33,6 @@ import {
   StickerLayer,
   StatBlock,
 } from '@/components/scrolly'
-import { LanguageToggle } from '@/components/scrolly/LanguageToggle'
 import type { ManifestoArticle, ManifestoBlock, Lang } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 
 interface ArticleScrollyProps {
@@ -108,7 +107,10 @@ export function ArticleScrolly({ article, rhythm = 'v0', initialLang = 'en' }: A
         {renderBlocks(article.blocks, 'pt')}
       </div>
 
-      <LanguageToggle initialLang={initialLang} />
+      {/* O seletor PT|EN não mora mais aqui: virou a pílula da navegação
+          (components/LanguageSwitch), visível em todo o site e permanente no
+          topo mesmo com o header escondido. Ele continua conversando com esta
+          matéria pelo mesmo contrato — o atributo data-lang logo acima. */}
 
       <ShareRow title={article.heroTitle[initialLang]} />
     </div>

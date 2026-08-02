@@ -9,6 +9,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { LanguageSwitch } from '@/components/LanguageSwitch/LanguageSwitch'
 import styles from './Navigation.module.css'
 
 const SEARCH_PLACEHOLDER = 'Search .TBF.'
@@ -203,7 +204,7 @@ export function Navigation() {
         </Link>
 
         {/* Right: Desktop nav + Search + Language + Burger */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--tbf-space-8)' }}>
+        <div className={styles.nav__right}>
           <nav aria-label="Navegação principal">
             <ul className={styles.nav__links} role="list">
               {NAV_LINKS.map((link) =>
@@ -240,10 +241,6 @@ export function Navigation() {
             </svg>
           </button>
 
-          {/* Language indicator — EN */}
-          <span className={styles.nav__lang} aria-label="Site language: English">
-            EN
-          </span>
 
           {/* Burger button — mobile */}
           <button
@@ -278,8 +275,21 @@ export function Navigation() {
               )}
             </svg>
           </button>
+
+          {/* Lugar da pílula PT|EN — ÚLTIMO da fila, porque a pílula é o
+              elemento mais à direita do topo. Ela é renderizada FORA do header
+              (logo abaixo) para sobreviver ao header se esconder no scroll;
+              este espaçador invisível guarda o espaço dela aqui dentro, para
+              que o menu sanduíche e a busca se alinhem à esquerda dela e nada
+              salte quando o header some. Mesma largura, mesma variável. */}
+          <span className={styles['nav__lang-slot']} aria-hidden="true" />
         </div>
       </header>
+
+      {/* Idioma — o único elemento do topo que permanece SEMPRE visível,
+          inclusive com o header escondido. Por isso é irmão do <header>, e
+          não filho: um filho não escapa do transform do pai. */}
+      <LanguageSwitch />
 
       {/* Overlay */}
       <div

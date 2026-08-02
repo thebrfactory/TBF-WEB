@@ -135,6 +135,100 @@
 }
 
 /* =============================================================================
+   COMPONENTE 01A — LANGUAGE SWITCH (pílula PT|EN)
+
+   Único elemento do topo que NÃO se esconde ao rolar. Por isso vive fora do
+   <header> (que sofre translateY(-100%)) e tem position:fixed própria — ver o
+   comentário longo em components/LanguageSwitch/LanguageSwitch.tsx.
+
+   As duas medidas abaixo são a ponte entre a pílula (fixa, fora do fluxo) e o
+   espaçador invisível que guarda o lugar dela dentro do header. Mexer numa sem
+   a outra desalinha o topo, então elas moram na mesma variável.
+   ============================================================================= */
+
+:root {
+  /* Mobile-first: no celular a pílula divide 390px com o menu sanduíche e com
+     o logotipo, que é centralizado em position:absolute. Larga demais, ela
+     empurra o sanduíche para cima do logotipo. Estas medidas são o que sobra
+     de folga real, não gosto. Do desktop em diante o espaço volta a existir. */
+  --tbf-lang-switch-w: 72px;
+  --tbf-lang-switch-h: 34px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --tbf-lang-switch-w: 88px;
+    --tbf-lang-switch-h: 38px;
+  }
+}
+
+.lang-switch {
+  position: fixed;
+  /* Centrada na altura da barra de navegação, não colada no topo. */
+  top: calc((var(--tbf-nav-height-sm) - var(--tbf-lang-switch-h)) / 2);
+  right: var(--tbf-grid-margin-sm);
+  z-index: calc(var(--tbf-nav-z) + 1);
+  box-sizing: border-box;
+  width: var(--tbf-lang-switch-w);
+  height: var(--tbf-lang-switch-h);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  background: color-mix(in srgb, var(--tbf-bg-primary) 72%, transparent);
+  border: 1px solid var(--tbf-border);
+  border-radius: var(--tbf-radius-full);
+  backdrop-filter: blur(8px);
+}
+
+@media (min-width: 1280px) {
+  .lang-switch {
+    top: calc((var(--tbf-nav-height-xl) - var(--tbf-lang-switch-h)) / 2);
+    right: var(--tbf-grid-margin-xl);
+  }
+}
+
+.lang-switch__btn {
+  flex: 1;
+  height: 100%;
+  padding: 0;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: var(--tbf-radius-full);
+  cursor: pointer;
+  transition:
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.lang-switch__btn[aria-pressed='true'] {
+  color: var(--tbf-text-primary);
+  background: var(--tbf-bg-secondary);
+}
+
+.lang-switch__btn:hover {
+  color: var(--tbf-text-primary);
+}
+
+.lang-switch__btn:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lang-switch__btn {
+    transition: none;
+  }
+}
+
+/* =============================================================================
    COMPONENTE 01B — MOBILE DRAWER
    ============================================================================= */
 

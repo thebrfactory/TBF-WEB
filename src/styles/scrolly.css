@@ -1032,8 +1032,9 @@
 }
 
 /* =============================================================================
-   LANGUAGE TOGGLE (ORD-03) — bloco único de idioma: visibilidade EN/PT +
-   estética do botão. As duas versões do artigo vivem no HTML o tempo todo;
+   IDIOMA (ORD-03) — visibilidade EN/PT da matéria. O botão que trocava entre
+   as duas saiu daqui: virou a pílula fixa da navegação (.lang-switch, em
+   components.css). As duas versões do artigo vivem no HTML o tempo todo;
    só a visibilidade troca, via CSS puro, a partir de `data-lang` no wrapper
    raiz (#scrolly-article-root). display:none remove o idioma inativo do
    fluxo por completo — a altura da página é sempre a de UM idioma, nunca a
@@ -1048,54 +1049,3 @@
   display: none;
 }
 
-.scrolly-lang-toggle {
-  position: fixed;
-  top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-3));
-  right: var(--tbf-space-4);
-  z-index: var(--tbf-z-raw-sticky);
-  display: flex;
-  gap: var(--tbf-space-1);
-  padding: var(--tbf-space-1);
-  background: color-mix(in srgb, var(--tbf-bg-primary) 70%, transparent);
-  border: 1px solid var(--tbf-border);
-  border-radius: var(--tbf-radius-full);
-  backdrop-filter: blur(8px);
-}
-
-.scrolly-lang-toggle__btn {
-  min-width: 44px;
-  min-height: 44px;
-  padding: var(--tbf-space-2) var(--tbf-space-3);
-  font-family: var(--tbf-type-tag-family);
-  font-size: var(--tbf-type-tag-size);
-  letter-spacing: var(--tbf-type-tag-ls);
-  text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
-  background: transparent;
-  border: none;
-  border-radius: var(--tbf-radius-full);
-  cursor: pointer;
-  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
-    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
-}
-
-.scrolly-lang-toggle__btn[aria-pressed='true'] {
-  color: var(--tbf-text-primary);
-  background: var(--tbf-bg-secondary);
-}
-
-.scrolly-lang-toggle__btn:focus-visible {
-  outline: 2px solid var(--tbf-border-active);
-  outline-offset: 2px;
-}
-
-@media (max-width: 768px) {
-  .scrolly-lang-toggle {
-    /* Este override subia o botão para 12px do topo e o jogava POR BAIXO do
-       menu sanduíche da navegação, que ocupa o mesmo canto. Mobile-first não
-       é só encolher: é conferir quem já mora naquele espaço. O botão fica
-       abaixo da barra de navegação, onde o canto está livre. */
-    top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-2));
-    right: var(--tbf-space-3);
-  }
-}
