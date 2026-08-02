@@ -32,8 +32,36 @@
   }
 }
 
-.nav--scrolled {
-  background-color: var(--tbf-nav-bg-scrolled);
+/* Rolado, o header precisa de fundo para o texto continuar legível — mas fundo
+   CHAPADO desenha um traço reto na largura toda, porque o preto da barra nunca
+   é exatamente o preto da página, e o corte ainda decepa o título que passa por
+   baixo. Fere também a regra de marca de não ter traços horizontais.
+   No lugar dele, um véu em degradê que desce ALÉM da barra e morre em
+   transparente: opaco onde os links precisam de contraste, invisível onde
+   encontra a página. Por descer além da barra, é `pointer-events: none` —
+   senão engoliria cliques na faixa logo abaixo do topo. */
+.nav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200%;
+  background: linear-gradient(
+    to bottom,
+    var(--tbf-nav-bg-scrolled) 0%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 78%, transparent) 42%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 34%, transparent) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity var(--tbf-nav-transition);
+}
+
+.nav--scrolled::before {
+  opacity: 1;
 }
 
 .nav--hidden {
@@ -1600,7 +1628,7 @@ textarea.field__input {
     0 32px 80px rgba(0, 0, 0, 0.85),
     0 12px 32px rgba(0, 0, 0, 0.7),
     0 2px 8px rgba(0, 0, 0, 0.6);
-  padding: var(--tbf-space-5);
+  padding: var(--tbf-space-4);
 }
 
 /* Desktop: ancora o card no canto inferior esquerdo. Centralizado ele cai em cima
@@ -1616,7 +1644,7 @@ textarea.field__input {
 .cookie-banner__inner {
   display: flex;
   flex-direction: column;
-  gap: var(--tbf-space-3);
+  gap: var(--tbf-space-2);
 }
 
 .cookie-banner__text {
@@ -1678,16 +1706,26 @@ textarea.field__input {
   cursor: not-allowed;
 }
 
+/* Os dois botões dividem UMA linha, não uma coluna. Empilhados, o aviso comia
+   um terço da tela do celular (medido: 215px de 664) e cobria o herói da home.
+   Lado a lado, com os rótulos encurtados, cabem os dois com o mesmo peso —
+   aceitar e rejeitar continuam igualmente fáceis, que é o que a LGPD pede. */
 .cookie-banner__actions {
   display: flex;
-  flex-direction: column;
-  gap: var(--tbf-space-3);
+  flex-direction: row;
+  gap: var(--tbf-space-2);
   align-items: stretch;
 }
 
 .cookie-banner__btn {
-  width: 100%;
+  flex: 1 1 0;
+  min-width: 0;
+  /* O respiro lateral padrão do botão é generoso demais para meia largura de
+     card: come o espaço do rótulo e quebra "Rejeitar opcionais" em duas linhas,
+     desfazendo o ganho de altura. */
+  padding-inline: var(--tbf-space-2);
   justify-content: center;
+  text-align: center;
 }
 
 /* Reject ganha contorno fino e flat (o .btn base já zerou o bisel `outset`). */

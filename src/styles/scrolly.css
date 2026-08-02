@@ -976,52 +976,25 @@
 
 
 /* =============================================================================
-   RITMO — as duas versões que o fundador pediu para comparar (2026-08-01)
+   RITMO — o padrão da casa (escolhido 2026-08-02)
 
-   O texto do manifesto é curto; quem alongou a página foi o respiro entre as
-   cenas. Medido no piloto: 39 telas de rolagem no celular, contra as 15 a 25
-   de uma matéria longa de revista. As duas versões atacam isso por caminhos
-   opostos, e a diferença entre elas é a pergunta de fundo: o silêncio é do
-   artigo inteiro, ou só dos momentos que merecem?
+   O texto do manifesto é curto; quem alongava a página era o respiro entre as
+   cenas: 39 telas de rolagem no celular, contra as 15 a 25 de uma matéria
+   longa de revista. Três variantes foram comparadas rolando de verdade e a
+   ESTROFE venceu — as outras duas foram apagadas junto com esta decisão.
 
-   v1 UNIFORME — encolhe tudo na mesma proporção (~30%). Mantém a proporção
-     entre as partes exatamente como está hoje, só que mais apertada. É a
-     versão honesta: nada é privilegiado, o artigo inteiro respira menos.
+   O erro das perdedoras: mexiam no espaço ENTRE os blocos e deixavam o espaço
+   DENTRO deles igual. Frases da mesma respiração ("Not with a revolution. /
+   Not with a speech. / Not with a flag.") ficavam soltas, cada uma parecendo
+   um parágrafo isolado. O texto virava lista, não verso.
 
-   v2 SELETIVA — corta fundo o respiro dos trechos de ligação (~45%) e NÃO
-     toca nas 6 frases de tela cheia nem nos cortes de capítulo. O silêncio
-     fica concentrado onde ele é argumento. É a versão que aposta que respiro
-     não é espaçamento, é ênfase.
+   Aqui as linhas de um mesmo bloco se aproximam (viram estrofe) e o silêncio
+   migra para as bordas do bloco e para os 6 momentos de tela cheia, que
+   continuam intocados. Fica mais curto E mais parecido com o texto escrito.
+   Resultado medido: 30,2 telas.
    ============================================================================= */
 
-.scrolly-article[data-rhythm='v1'] {
-  /* Uniforme: encolhe TUDO, inclusive os momentos grandes. */
-  --sc-gap-connective: var(--tbf-space-6);
-  --sc-gap-connective-sm: var(--tbf-space-3);
-  --sc-fullbleed-min: 62dvh;
-  --sc-divider-min: 30vh;
-}
-
-.scrolly-article[data-rhythm='v2'] {
-  /* Seletiva: mata o vazio de ligação, preserva intactos os 6 momentos de
-     tela cheia e a tese fixada. O silêncio vira privilégio, não regra. */
-  --sc-gap-connective: var(--tbf-space-4);
-  --sc-gap-connective-sm: var(--tbf-space-2);
-  --sc-fullbleed-min: 100dvh;
-  --sc-divider-min: 28vh;
-}
-
-.scrolly-article[data-rhythm='v3'] {
-  /* v3 ESTROFE — o que estava errado nas duas primeiras: elas mexiam no espaço
-     ENTRE os blocos e deixavam o espaço DENTRO deles igual. Resultado: frases
-     que pertencem à mesma respiração ("Not with a revolution. / Not with a
-     speech. / Not with a flag.") ficavam soltas, cada uma parecendo um
-     parágrafo isolado. O texto virava lista, não verso.
-
-     Aqui as linhas de um mesmo bloco se aproximam (viram estrofe) e o silêncio
-     migra para as bordas do bloco e para os 6 momentos, que continuam
-     intocados em tela cheia. Fica mais curto E mais parecido com o texto que o
-     fundador escreveu. */
+.scrolly-article {
   --sc-line-gap: var(--tbf-space-2);
   --sc-line-lh: 1.4;
   --sc-emphasis-gap: var(--tbf-space-8);

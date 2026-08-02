@@ -220,12 +220,11 @@ export default async function ArticlePage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  // Idioma e ritmo NÃO saem de parâmetro de URL lido no servidor: isso torna a
-  // rota dinâmica e derruba a página em produção (DYNAMIC_SERVER_USAGE), porque
-  // ela é gerada estaticamente. Os dois idiomas já vão no HTML, então quem
-  // decide é o script que roda antes do primeiro paint (ArticleScrolly).
+  // O idioma NÃO sai de parâmetro de URL lido no servidor: isso torna a rota
+  // dinâmica e derruba a página em produção (DYNAMIC_SERVER_USAGE), porque ela
+  // é gerada estaticamente. Os dois idiomas já vão no HTML, então quem decide
+  // é o script que roda antes do primeiro paint (ArticleScrolly).
   const initialLang: Lang = 'en'
-  const rhythm = 'v0' as const
 
   let post: EditorialPost | null = null
   let siteSettings: SiteSettings | null = null
@@ -247,7 +246,6 @@ export default async function ArticlePage({
       <ArticleScrolly
         tone="manifesto"
         article={theDayBrazilStoppedTranslatingItself}
-        rhythm={rhythm}
         initialLang={initialLang}
       />
     )

@@ -120,11 +120,11 @@ export function CookieBanner() {
             </button>
           ) : (
             <button type="button" className="btn btn--primary cookie-banner__btn" onClick={acceptAll}>
-              Aceitar todos os cookies
+              Aceitar cookies
             </button>
           )}
           <button type="button" className="btn btn--secondary cookie-banner__btn" onClick={rejectOptional}>
-            Rejeitar cookies opcionais
+            Rejeitar opcionais
           </button>
         </div>
 

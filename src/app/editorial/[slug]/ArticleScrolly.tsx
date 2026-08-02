@@ -38,13 +38,6 @@ import type { ManifestoArticle, ManifestoBlock, Lang } from '@/content/articles/
 interface ArticleScrollyProps {
   tone: 'manifesto' | 'narrativa' | 'jornalismo' | 'ensaio'
   article: ManifestoArticle
-  /**
-   * Ritmo vertical. Existe para o fundador COMPARAR rolando de verdade, não
-   * para virar configuração permanente: quando ele escolher, a vencedora vira
-   * o padrão e as outras duas somem daqui e do scrolly.css.
-   * v0 = como nasceu (39 telas) · v1 = uniforme · v2 = seletiva.
-   */
-  rhythm?: 'v0' | 'v1' | 'v2' | 'v3'
   /** Idioma resolvido no servidor (?lang= > Accept-Language > 'en'). ORD-03. */
   initialLang?: Lang
 }
@@ -74,20 +67,14 @@ const LANG_BOOT_SCRIPT = `
     if (lang !== root.getAttribute('data-lang')) {
       root.setAttribute('data-lang', lang);
     }
-    // Ritmo vertical: comparação temporária com o fundador (?ritmo=v1|v2|v3).
-    // Vive aqui, e não no servidor, porque ler parâmetro de URL no servidor
-    // torna a rota dinâmica e derruba a página estática em produção.
-    var r = params.get('ritmo');
-    if (r === 'v1' || r === 'v2' || r === 'v3') root.setAttribute('data-rhythm', r);
   } catch (e) {}
 })();
 `
 
-export function ArticleScrolly({ article, rhythm = 'v0', initialLang = 'en' }: ArticleScrollyProps) {
+export function ArticleScrolly({ article, initialLang = 'en' }: ArticleScrollyProps) {
   return (
     <div
       className="scrolly-article"
-      data-rhythm={rhythm}
       data-lang={initialLang}
       id="scrolly-article-root"
       suppressHydrationWarning
