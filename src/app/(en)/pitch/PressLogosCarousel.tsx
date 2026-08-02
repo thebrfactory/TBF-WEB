@@ -1,4 +1,8 @@
+'use client'
+
 import Image from 'next/image'
+import { useLang } from '@/lib/LangProvider'
+import { pitch } from '@/content/i18n/pages/pitch'
 
 // Wordmarks de imprensa: carrossel infinito com sombreado nas bordas simulando
 // o fim de um trilho, mas na verdade é um loop contínuo (mesma técnica do
@@ -54,7 +58,11 @@ const OVERLAY_SHAPES = [
 // duração dobrou junto em tokens.css para a velocidade não mudar.
 const COPIES = 4
 
+// O idioma vem do contexto, não de propriedade: este carrossel é usado pelo
+// deck 1.0 (que virou bilíngue por rota) E pelo deck 2.0 (que é bilíngue por
+// desenho e não passa idioma nenhum). Exigir a propriedade quebrava o 2.0.
 export function PressLogosCarousel() {
+  const t = pitch[useLang()]
   const loop = Array.from({ length: COPIES }, () => PRESS_LOGOS).flat()
 
   return (
@@ -62,7 +70,7 @@ export function PressLogosCarousel() {
     // .press-carousel. A camada de assets .TBF. é irmã dele, dentro do frame sem
     // clipping: os marcadores são mais altos que a faixa de logos e antes tinham
     // as pontas decepadas pelo overflow: era a "forma esquisita" do pedido.
-    <div className="press-carousel-frame" aria-label="Featured in">
+    <div className="press-carousel-frame" aria-label={t.featuredIn.frameAriaLabel}>
       <div className="press-carousel">
         <ul className="press-carousel-track" role="list">
           {loop.map((src, i) => (

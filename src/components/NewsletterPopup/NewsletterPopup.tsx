@@ -16,6 +16,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 import { readConsent } from '@/lib/consent'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
 const SHOW_DELAY_MS = 20000
@@ -23,6 +26,10 @@ const SHOW_DELAY_MS = 20000
 export function NewsletterPopup() {
   const [open, setOpen] = useState(false)
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
+  const lang = useLang()
+  const t = shell[lang].popup
+  const brandAlt = shell[lang].footer.brandAlt
+  const privacyLabel = shell[lang].footer.links.privacy
 
   const close = useCallback(() => {
     setOpen(false)
@@ -97,7 +104,7 @@ export function NewsletterPopup() {
           type="button"
           className="newsletter-popup__close"
           onClick={close}
-          aria-label="Close"
+          aria-label={t.closeAriaLabel}
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" strokeWidth="1.5" />
@@ -106,7 +113,7 @@ export function NewsletterPopup() {
 
         <Image
           src="/brand/TBF-SAO-PAULO.svg"
-          alt=".TBF. SÃO PAULO"
+          alt={brandAlt}
           width={140}
           height={100}
           unoptimized
@@ -125,7 +132,7 @@ export function NewsletterPopup() {
             maxWidth: '20ch',
           }}
         >
-          Get the best stories<br />from .TBF. community.
+          {t.headlineLine1}<br />{t.headlineLine2}
         </h2>
 
         {status === 'success' ? (
@@ -138,7 +145,7 @@ export function NewsletterPopup() {
               textTransform: 'uppercase',
             }}
           >
-            You&apos;re in. Welcome to the factory.
+            {t.successMessage}
           </p>
         ) : (
           <form onSubmit={submit} noValidate>
@@ -147,9 +154,9 @@ export function NewsletterPopup() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email address"
+                placeholder={t.emailPlaceholder}
                 required
-                aria-label="Email address"
+                aria-label={t.emailAriaLabel}
                 disabled={status === 'loading'}
                 style={{
                   flex: 1,
@@ -175,7 +182,7 @@ export function NewsletterPopup() {
                   padding: '0.45rem 1.05rem',
                 }}
               >
-                {status === 'loading' ? '...' : 'Subscribe'}
+                {status === 'loading' ? '...' : t.submitLabel}
               </button>
             </div>
 
@@ -190,16 +197,16 @@ export function NewsletterPopup() {
                 color: 'var(--tbf-text-tertiary)',
               }}
             >
-              By subscribing, you agree to our{' '}
+              {t.privacyPrefix}
               <Link
-                href="/legal/privacy"
+                href={localizedPath('/legal/privacy', lang)}
                 style={{
                   color: 'inherit',
                   textDecoration: 'underline',
                   textUnderlineOffset: '2px',
                 }}
               >
-                Privacy Policy
+                {privacyLabel}
               </Link>
               .
             </p>

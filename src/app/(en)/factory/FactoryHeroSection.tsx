@@ -6,9 +6,14 @@
 
 import { useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { factory } from '@/content/i18n/pages/factory'
 
 export function FactoryHeroSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const lang = useLang()
+  const t = factory[lang].hero
 
   // IntersectionObserver para revelar elementos
   useEffect(() => {
@@ -50,7 +55,7 @@ export function FactoryHeroSection() {
             marginBottom: 'var(--tbf-space-6)',
           }}
         >
-          .TGF. · The Growth Factory
+          {t.eyebrow}
         </p>
 
         <h1
@@ -66,9 +71,9 @@ export function FactoryHeroSection() {
             marginBottom: 'var(--tbf-space-8)',
           }}
         >
-          Crescimento
+          {t.title[0]}
           <br />
-          sem desculpas.
+          {t.title[1]}
         </h1>
 
         <p
@@ -83,8 +88,7 @@ export function FactoryHeroSection() {
             marginBottom: 'var(--tbf-space-10)',
           }}
         >
-          Para negócios com faturamento estável que querem escala real.
-          Processo. Estratégia. Execução. Sem promessas genéricas.
+          {t.deck}
         </p>
 
         <div
@@ -97,11 +101,11 @@ export function FactoryHeroSection() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Schedule a Session
+            {t.scheduleCta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </a>
-          <Link href="/access?intent=tgf" className="btn btn--secondary">
-            Open a channel
+          <Link href={localizedPath('/access?intent=tgf', lang)} className="btn btn--secondary">
+            {t.channelCta}
           </Link>
         </div>
       </div>

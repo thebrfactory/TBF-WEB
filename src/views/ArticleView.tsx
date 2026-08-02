@@ -1,0 +1,661 @@
+// =============================================================================
+// /editorial/[slug] — ARTIGO INDIVIDUAL
+// Hero full-bleed + corpo editorial + sidebar sticky + créditos + relacionados
+// CTAs: Also from the ecosystem · Enter the Collective · Access the system
+// =============================================================================
+
+import { notFound } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
+import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, SITE_SETTINGS_QUERY, urlFor } from '@/lib/sanity'
+import type { EditorialPost, SiteSettings } from '@/types'
+import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
+import { ArticleScrolly } from '@/components/scrolly/ArticleScrolly'
+import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import { article as dict } from '@/content/i18n/pages/article'
+import { localizedPath, type Lang } from '@/lib/i18n'
+
+// ─── Helper: formatar data ─────────────────────────────────────────────────────
+
+function formatDate(dateString: string, lang: Lang): string {
+  return new Intl.DateTimeFormat(lang === 'pt' ? 'pt-BR' : 'en-US', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  }).format(new Date(dateString))
+}
+
+// ─── Helper: renderizar Portable Text simples ──────────────────────────────────
+
+function renderPortableText(body: EditorialPost['body']) {
+  if (!body || !Array.isArray(body)) return null
+
+  return body.map((block) => {
+    if (block._type !== 'block') return null
+
+    const text = block.children.map((child) => {
+      if (child.marks?.includes('strong')) {
+        return <strong key={child._key}>{child.text}</strong>
+      }
+      if (child.marks?.includes('em')) {
+        return <em key={child._key}>{child.text}</em>
+      }
+      return child.text
+    })
+
+    switch (block.style) {
+      case 'h2':
+        return (
+          <h2
+            key={block._key}
+            style={{
+              fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              letterSpacing: 'var(--tbf-type-h2-ls)',
+              color: 'var(--tbf-text-primary)',
+              marginTop: 'var(--tbf-space-12)',
+              marginBottom: 'var(--tbf-type-h2-mb)',
+            }}
+          >
+            {text}
+          </h2>
+        )
+      case 'h3':
+        return (
+          <h3
+            key={block._key}
+            style={{
+              fontFamily: 'var(--tbf-type-h3-family)',
+              fontSize: 'var(--tbf-type-h3-size-sm)',
+              fontWeight: 'var(--tbf-type-h3-weight)',
+              lineHeight: 'var(--tbf-type-h3-lh)',
+              letterSpacing: 'var(--tbf-type-h3-ls)',
+              color: 'var(--tbf-text-primary)',
+              marginTop: 'var(--tbf-space-8)',
+              marginBottom: 'var(--tbf-type-h3-mb)',
+            }}
+          >
+            {text}
+          </h3>
+        )
+      case 'blockquote':
+        return (
+          <blockquote
+            key={block._key}
+            style={{
+              paddingLeft: 'var(--tbf-space-6)',
+              marginBlock: 'var(--tbf-space-8)',
+              fontStyle: 'italic',
+              color: 'var(--tbf-text-secondary)',
+            }}
+          >
+            {text}
+          </blockquote>
+        )
+      default:
+        return (
+          <p
+            key={block._key}
+            style={{ marginBottom: 'var(--tbf-type-body-mb)' }}
+          >
+            {text}
+          </p>
+        )
+    }
+  })
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+
+export const revalidate = 3600
+
+export default async function ArticleView({
+  params,
+  lang,
+}: {
+  params: Promise<{ slug: string }>
+  lang: Lang
+}) {
+  const { slug } = await params
+  const t = dict[lang]
+  const path = (u: string) => localizedPath(u, lang)
+
+  let post: EditorialPost | null = null
+  let siteSettings: SiteSettings | null = null
+
+  try {
+    ;[post, siteSettings] = await Promise.all([
+      sanityFetch<EditorialPost>(ARTICLE_QUERY, { slug }),
+      sanityFetch<SiteSettings>(SITE_SETTINGS_QUERY),
+    ])
+  } catch {
+    // fallback
+  }
+
+  // Piloto do motor scrolly (ORD-01): primeira matéria real da casa, tone="manifesto".
+  // Vive fora do Sanity (não é mock TBFipsum, é o texto real de debut.md convertido
+  // em cenas — 05_PILOTO-CENAS.md é a lei do roteiro).
+  if (!post && slug === theDayBrazilStoppedTranslatingItself.slug) {
+    return (
+      <ArticleScrolly
+        tone="manifesto"
+        article={theDayBrazilStoppedTranslatingItself}
+        lang={lang}
+      />
+    )
+  }
+
+  // Mock articles para preview sem Sanity
+  if (!post) {
+    // Imagem de cada matéria de exemplo. O texto vem do dicionário; aqui fica
+    // só o que não é idioma.
+    const MOCK_IMAGES: Record<string, string> = {
+      'lorem-ipsum-1': '/images/slide1/01.webp',
+      'lorem-ipsum-2': '/images/slide1/03.webp',
+      'lorem-ipsum-3': '/images/slide1/05.webp',
+      'lorem-ipsum-4': '/images/slide1/07.webp',
+      'lorem-ipsum-5': '/images/slide1/09.webp',
+      'lorem-ipsum-6': '/images/slide1/02.webp',
+    }
+    const MOCK_DATES: Record<string, string> = {
+      'lorem-ipsum-1': '2026-06-01',
+      'lorem-ipsum-2': '2026-05-28',
+      'lorem-ipsum-3': '2026-05-20',
+      'lorem-ipsum-4': '2026-05-15',
+      'lorem-ipsum-5': '2026-05-08',
+      'lorem-ipsum-6': '2026-05-01',
+    }
+    const MOCKS: Record<string, { title: string; deck: string; category: string; img: string; date: string }> =
+      Object.fromEntries(
+        Object.entries(t.mocks).map(([k, v]) => [
+          k,
+          { ...v, img: MOCK_IMAGES[k], date: MOCK_DATES[k] },
+        ])
+      )
+    const mock = MOCKS[slug as string]
+    if (!mock) notFound()
+    const BODY = t.mockBody
+    return (
+      <article>
+        <header style={{ paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-16))', paddingBottom: 'var(--tbf-space-12)', paddingInline: 'var(--tbf-grid-margin-sm)' }}>
+          <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
+            <div style={{ display: 'flex', gap: 'var(--tbf-space-4)', alignItems: 'center', marginBottom: 'var(--tbf-space-6)', flexWrap: 'wrap' }}>
+              <span className="tag tag--category">{mock.category}</span>
+              <time dateTime={mock.date} style={{ fontFamily: 'var(--tbf-type-micro-family)', fontSize: 'var(--tbf-type-micro-size)', letterSpacing: 'var(--tbf-type-micro-ls)', color: 'var(--tbf-text-tertiary)', textTransform: 'uppercase', marginLeft: 'auto' }}>
+                {formatDate(mock.date, lang)}
+              </time>
+            </div>
+            <h1 style={{ fontFamily: 'var(--tbf-type-h1-family)', fontSize: 'var(--tbf-type-h1-size-sm)', fontWeight: 'var(--tbf-type-h1-weight)', lineHeight: 'var(--tbf-type-h1-lh)', letterSpacing: 'var(--tbf-type-h1-ls)', color: 'var(--tbf-text-primary)', marginBottom: 'var(--tbf-space-6)' }}>
+              {mock.title}
+            </h1>
+            <p style={{ fontFamily: 'var(--tbf-type-deck-family)', fontSize: 'var(--tbf-type-deck-size-sm)', fontWeight: 'var(--tbf-type-deck-weight)', lineHeight: 'var(--tbf-type-deck-lh)', color: 'var(--tbf-text-secondary)', maxWidth: '60ch' }}>
+              {mock.deck}
+            </p>
+          </div>
+        </header>
+        {/* Capa do preview. É o outro lado da transição de imagem: a capa do card
+            clicado cresce até ESTE bloco (ver components/PageTransition/). Enquanto
+            o Sanity está vazio, esta é a matéria que se abre de verdade no site,
+            então é aqui que a transição precisa aterrissar, não só na versão CMS.
+            `mock.img` existia e não era mostrado: sem imagem no destino a
+            transição não teria para onde levar a foto. */}
+        <div className="article-morph-target" style={{ position: 'relative', aspectRatio: '32/9', marginBottom: 'var(--tbf-space-16)', background: '#060d18', overflow: 'hidden' }}>
+          <Image src={mock.img} alt={mock.title} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
+        </div>
+        <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBottom: 'var(--tbf-space-20)' }}>
+          <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
+            <div className="article-body" style={{ maxWidth: 'var(--tbf-type-body-max-width)' }}>
+              {BODY.split('. ').map((s, i, arr) => (
+                <p key={i} style={{ marginBottom: 'var(--tbf-type-body-mb)' }}>{s}{i < arr.length - 1 ? '.' : ''}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBlock: 'var(--tbf-space-12)', display: 'flex', gap: 'var(--tbf-space-4)' }}>
+          <a href={path('/editorial')} className="btn btn--secondary">{t.backToMagazine}</a>
+        </div>
+      </article>
+    )
+  }
+
+  const collectiveOpen = siteSettings?.collectiveApplicationOpen ?? false
+
+  const heroImageUrl = post.heroImage
+    ? urlFor(post.heroImage).width(1920).height(1080).fit('crop').auto('format').url()
+    : null
+
+  const CATEGORY_LABELS = t.categories
+
+  return (
+    <article>
+      {/* ─── ARTICLE HEADER ─────────────────────────────────────────────── */}
+      <header
+        style={{
+          paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-16))',
+          paddingBottom: 'var(--tbf-space-12)',
+          paddingInline: 'var(--tbf-grid-margin-sm)',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 'var(--tbf-grid-max-xl)',
+            marginInline: 'auto',
+          }}
+        >
+          <div className="layout-d">
+            <div>
+              {/* Meta — categoria + data */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: 'var(--tbf-space-4)',
+                  alignItems: 'center',
+                  marginBottom: 'var(--tbf-space-6)',
+                  flexWrap: 'wrap',
+                }}
+              >
+                <span className="tag tag--category">
+                  {CATEGORY_LABELS[post.category] ?? post.category}
+                </span>
+                {post.tags?.slice(0, 2).map((tag) => (
+                  <span key={tag._id} className="tag tag--bu">
+                    {tag.label}
+                  </span>
+                ))}
+                <time
+                  dateTime={post.publishedAt}
+                  style={{
+                    fontFamily: 'var(--tbf-type-micro-family)',
+                    fontSize: 'var(--tbf-type-micro-size)',
+                    letterSpacing: 'var(--tbf-type-micro-ls)',
+                    color: 'var(--tbf-text-tertiary)',
+                    textTransform: 'uppercase',
+                    marginLeft: 'auto',
+                  }}
+                >
+                  {formatDate(post.publishedAt, lang)}
+                </time>
+              </div>
+
+              {/* Título */}
+              <h1
+                style={{
+                  fontFamily: 'var(--tbf-type-h1-family)',
+                  fontSize: 'var(--tbf-type-h1-size-sm)',
+                  fontWeight: 'var(--tbf-type-h1-weight)',
+                  lineHeight: 'var(--tbf-type-h1-lh)',
+                  letterSpacing: 'var(--tbf-type-h1-ls)',
+                  color: 'var(--tbf-text-primary)',
+                  marginBottom: 'var(--tbf-space-6)',
+                }}
+              >
+                {post.title}
+              </h1>
+
+              {/* Deck */}
+              {post.deck && (
+                <p
+                  style={{
+                    fontFamily: 'var(--tbf-type-deck-family)',
+                    fontSize: 'var(--tbf-type-deck-size-sm)',
+                    fontWeight: 'var(--tbf-type-deck-weight)',
+                    lineHeight: 'var(--tbf-type-deck-lh)',
+                    color: 'var(--tbf-text-secondary)',
+                    maxWidth: '60ch',
+                    marginBottom: 'var(--tbf-space-8)',
+                  }}
+                >
+                  {post.deck}
+                </p>
+              )}
+
+              {/* Byline */}
+              {post.author && (
+                <div className="byline">
+                  {post.author.portrait && (
+                    <Image
+                      className="byline__portrait"
+                      src={urlFor(post.author.portrait).width(80).height(80).fit('crop').url()}
+                      alt={post.author.name}
+                      width={40}
+                      height={40}
+                    />
+                  )}
+                  <span className="byline__text">
+                    Por{' '}
+                    <span className="byline__link">{post.author.name}</span>
+                    {post.author.instagramHandle && (
+                      <>
+                        {' · '}
+                        <a
+                          href={`https://instagram.com/${post.author.instagramHandle}`}
+                          className="byline__link"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          @{post.author.instagramHandle}
+                        </a>
+                      </>
+                    )}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ─── HERO IMAGE FULL-BLEED ────────────────────────────────────────
+          `article-morph-target` é o outro lado da transição de imagem: a capa
+          do card clicado cresce até ESTE bloco (ver components/PageTransition/).
+          O nome precisa existir na página de destino, com ou sem foto — sem par,
+          o browser não tem para onde levar a imagem.
+          Sem capa no CMS, o bloco segue como placeholder marcado. */}
+      <div
+        className="layout-e article-morph-target"
+        style={{
+          marginLeft: 'calc(-1 * var(--tbf-grid-margin-sm))',
+          marginBottom: 'var(--tbf-space-16)',
+          position: 'relative',
+          aspectRatio: '32 / 9',
+          background: '#060d18',
+          overflow: 'hidden',
+        }}
+      >
+        {heroImageUrl ? (
+          <Image
+            src={heroImageUrl}
+            alt={post.heroImage?.alt ?? post.title}
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+          />
+        ) : (
+          <p
+            style={{
+              position: 'absolute',
+              top: 'var(--tbf-space-3)',
+              left: 'var(--tbf-space-4)',
+              fontFamily: 'var(--tbf-font-family-ui)',
+              fontSize: '0.55rem',
+              letterSpacing: '0.14em',
+              color: 'rgba(255,255,255,0.2)',
+              textTransform: 'uppercase',
+            }}
+          >
+            ADD-PREVIEW-MATERIAL
+          </p>
+        )}
+      </div>
+
+      {/* ─── CORPO + SIDEBAR ────────────────────────────────────────────── */}
+      <div
+        style={{
+          paddingInline: 'var(--tbf-grid-margin-sm)',
+          paddingBottom: 'var(--tbf-space-20)',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 'var(--tbf-grid-max-xl)',
+            marginInline: 'auto',
+            display: 'grid',
+            gridTemplateColumns: '1fr',
+            gap: 'var(--tbf-space-12)',
+          }}
+        >
+          {/* Corpo */}
+          <div
+            className="article-body"
+            style={{ maxWidth: 'var(--tbf-type-body-max-width)' }}
+          >
+            {renderPortableText(post.body)}
+          </div>
+
+          {/* Sidebar — só desktop via CSS grid override */}
+          {(post.author || (post.tags && post.tags.length > 0) || (post.relatedPosts && post.relatedPosts.length > 0)) && (
+            <aside
+              aria-label={t.articleInfo}
+              style={{
+                paddingTop: 'var(--tbf-space-8)',
+              }}
+            >
+              {/* Autor */}
+              {post.author && (
+                <div style={{ marginBottom: 'var(--tbf-space-8)' }}>
+                  <p
+                    style={{
+                      fontFamily: 'var(--tbf-type-micro-family)',
+                      fontSize: 'var(--tbf-type-micro-size)',
+                      letterSpacing: 'var(--tbf-type-micro-ls)',
+                      color: 'var(--tbf-text-tertiary)',
+                      textTransform: 'uppercase',
+                      marginBottom: 'var(--tbf-space-4)',
+                    }}
+                  >
+                    Autor
+                  </p>
+                  <div className="byline">
+                    {post.author.portrait && (
+                      <Image
+                        className="byline__portrait"
+                        src={urlFor(post.author.portrait).width(80).height(80).fit('crop').url()}
+                        alt={post.author.name}
+                        width={40}
+                        height={40}
+                      />
+                    )}
+                    <span className="byline__text">
+                      {post.author.name}
+                      {post.author.instagramHandle && (
+                        <>
+                          <br />
+                          <a
+                            href={`https://instagram.com/${post.author.instagramHandle}`}
+                            className="byline__link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            @{post.author.instagramHandle}
+                          </a>
+                        </>
+                      )}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Tags */}
+              {post.tags && post.tags.length > 0 && (
+                <div style={{ marginBottom: 'var(--tbf-space-8)' }}>
+                  <p
+                    style={{
+                      fontFamily: 'var(--tbf-type-micro-family)',
+                      fontSize: 'var(--tbf-type-micro-size)',
+                      letterSpacing: 'var(--tbf-type-micro-ls)',
+                      color: 'var(--tbf-text-tertiary)',
+                      textTransform: 'uppercase',
+                      marginBottom: 'var(--tbf-space-3)',
+                    }}
+                  >
+                    Tags
+                  </p>
+                  <div className="tag-group">
+                    {post.tags.map((tag) => (
+                      <span key={tag._id} className="tag">
+                        {tag.label}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </aside>
+          )}
+        </div>
+      </div>
+
+      {/* ─── CRÉDITOS ───────────────────────────────────────────────────── */}
+      {post.credits && post.credits.length > 0 && (
+        <section
+          aria-labelledby="creditos-heading"
+          style={{
+            paddingInline: 'var(--tbf-grid-margin-sm)',
+            paddingBlock: 'var(--tbf-space-12)',
+            }}
+        >
+          <div
+            style={{
+              maxWidth: 'var(--tbf-grid-max-xl)',
+              marginInline: 'auto',
+            }}
+          >
+            <p
+              id="creditos-heading"
+              style={{
+                fontFamily: 'var(--tbf-type-micro-family)',
+                fontSize: 'var(--tbf-type-micro-size)',
+                letterSpacing: 'var(--tbf-type-micro-ls)',
+                color: 'var(--tbf-text-tertiary)',
+                textTransform: 'uppercase',
+                marginBottom: 'var(--tbf-space-6)',
+              }}
+            >
+              Créditos
+            </p>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
+                gap: 'var(--tbf-space-6)',
+              }}
+            >
+              {post.credits.map((credit) => (
+                <div key={credit._key}>
+                  <p
+                    style={{
+                      fontFamily: 'var(--tbf-type-micro-family)',
+                      fontSize: 'var(--tbf-type-micro-size)',
+                      letterSpacing: 'var(--tbf-type-micro-ls)',
+                      color: 'var(--tbf-text-tertiary)',
+                      textTransform: 'uppercase',
+                      marginBottom: 'var(--tbf-space-1)',
+                    }}
+                  >
+                    {credit.role}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: 'var(--tbf-type-body-family)',
+                      fontSize: 'var(--tbf-type-body-sm-size-sm)',
+                      color: 'var(--tbf-text-primary)',
+                    }}
+                  >
+                    {credit.name}
+                    {credit.handle && (
+                      <span
+                        style={{
+                          color: 'var(--tbf-text-tertiary)',
+                          marginLeft: 'var(--tbf-space-2)',
+                        }}
+                      >
+                        @{credit.handle}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── ARTIGOS RELACIONADOS — CTA primário ────────────────────────── */}
+      {post.relatedPosts && post.relatedPosts.length > 0 && (
+        <section
+          aria-labelledby="related-heading"
+          style={{
+            paddingInline: 'var(--tbf-grid-margin-sm)',
+            paddingBlock: 'var(--tbf-space-16)',
+          }}
+        >
+          <div
+            style={{
+              maxWidth: 'var(--tbf-grid-max-xl)',
+              marginInline: 'auto',
+            }}
+          >
+            <p
+              id="related-heading"
+              style={{
+                fontFamily: 'var(--tbf-type-micro-family)',
+                fontSize: 'var(--tbf-type-micro-size)',
+                letterSpacing: 'var(--tbf-type-micro-ls)',
+                color: 'var(--tbf-text-tertiary)',
+                textTransform: 'uppercase',
+                marginBottom: 'var(--tbf-space-8)',
+              }}
+            >
+              {t.alsoFrom}
+            </p>
+            <div className="layout-c">
+              {post.relatedPosts.map((related) => (
+                <ArticleCard key={related._id} post={related} variant="standard" />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── CTAs FINAIS ────────────────────────────────────────────────── */}
+      <div
+        style={{
+          paddingInline: 'var(--tbf-grid-margin-sm)',
+          paddingBlock: 'var(--tbf-space-12)',
+          display: 'flex',
+          gap: 'var(--tbf-space-4)',
+          flexWrap: 'wrap',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 'var(--tbf-grid-max-xl)',
+            marginInline: 'auto',
+            width: '100%',
+            display: 'flex',
+            gap: 'var(--tbf-space-4)',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+          }}
+        >
+          {/* CTA 2: Enter the Collective (condicional) */}
+          {collectiveOpen && (
+            <Link href={path('/collective')} className="btn btn--secondary">
+              {t.enterCollective}
+              <span className="btn__arrow" aria-hidden="true">→</span>
+            </Link>
+          )}
+
+          {/* CTA 3: Access the system (discreto) */}
+          <Link
+            href={path('/access')}
+            style={{
+              fontFamily: 'var(--tbf-type-tag-family)',
+              fontSize: 'var(--tbf-type-tag-size)',
+              letterSpacing: 'var(--tbf-type-tag-ls)',
+              color: 'var(--tbf-text-tertiary)',
+              textTransform: 'uppercase',
+              textDecoration: 'none',
+              transition: 'color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro)',
+            }}
+          >
+            {t.accessSystem}
+          </Link>
+        </div>
+      </div>
+    </article>
+  )
+}

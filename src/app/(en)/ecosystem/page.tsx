@@ -1,5 +1,8 @@
-import { redirect } from 'next/navigation'
+// Rota `/ecosystem` — redireciona para /labels. A lógica vive em
+// src/views/EcosystemView.tsx e serve os dois idiomas.
 
-export default function EcosystemRedirect() {
-  redirect('/labels')
+import EcosystemView from '@/views/EcosystemView'
+
+export default function Page() {
+  return <EcosystemView lang="en" />
 }

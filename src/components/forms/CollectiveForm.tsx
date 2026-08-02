@@ -9,9 +9,14 @@
 import { useState, useId } from 'react'
 import Link from 'next/link'
 import type { CollectiveFormData, ContactFormState } from '@/types'
+import { useLang } from '@/lib/LangProvider'
+import { collective } from '@/content/i18n/pages/collective'
+import { localizedPath } from '@/lib/i18n'
 
 export function CollectiveForm() {
   const formId = useId()
+  const lang = useLang()
+  const t = collective[lang].form
 
   const [form, setForm] = useState<CollectiveFormData>({
     name: '',
@@ -25,12 +30,12 @@ export function CollectiveForm() {
   function validate(): boolean {
     const newErrors: Partial<Record<keyof CollectiveFormData, string>> = {}
 
-    if (!form.name.trim()) newErrors.name = 'Nome é obrigatório.'
-    if (!form.role.trim()) newErrors.role = 'Área de atuação é obrigatória.'
+    if (!form.name.trim()) newErrors.name = t.errors.nameRequired
+    if (!form.role.trim()) newErrors.role = t.errors.roleRequired
     if (!form.howDidYouFind.trim()) {
-      newErrors.howDidYouFind = 'Como você chegou aqui? Isso importa.'
+      newErrors.howDidYouFind = t.errors.howRequired
     } else if (form.howDidYouFind.trim().length < 15) {
-      newErrors.howDidYouFind = 'Elabore um pouco mais.'
+      newErrors.howDidYouFind = t.errors.howMin
     }
 
     setErrors(newErrors)
@@ -44,6 +49,8 @@ export function CollectiveForm() {
     setState({ status: 'loading' })
 
     try {
+      // Contrato com a API é fixo — nomes de campo e formType não mudam com o
+      // idioma da UI.
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,10 +75,10 @@ export function CollectiveForm() {
         setState({ status: 'success' })
       } else {
         const data = await res.json()
-        setState({ status: 'error', error: data.error ?? 'Algo falhou.' })
+        setState({ status: 'error', error: data.error ?? t.errors.generic })
       }
     } catch {
-      setState({ status: 'error', error: 'Erro de conexão.' })
+      setState({ status: 'error', error: t.errors.connection })
     }
   }
 
@@ -88,7 +95,7 @@ export function CollectiveForm() {
             marginBottom: 'var(--tbf-space-4)',
           }}
         >
-          Presença registrada.
+          {t.success.title}
         </p>
         <p
           style={{
@@ -98,7 +105,7 @@ export function CollectiveForm() {
             marginBottom: 'var(--tbf-space-4)',
           }}
         >
-          Avaliamos e retornamos quando faz sentido.
+          {t.success.line}
         </p>
         <p
           style={{
@@ -109,7 +116,7 @@ export function CollectiveForm() {
             textTransform: 'uppercase',
           }}
         >
-          .TBF. Collective Hotel Casino
+          {t.success.tag}
         </p>
       </div>
     )
@@ -120,7 +127,7 @@ export function CollectiveForm() {
       className="form"
       onSubmit={handleSubmit}
       noValidate
-      aria-label="Formulário de candidatura ao coletivo"
+      aria-label={t.formAriaLabel}
     >
       {/* CTA 2: Read the Manifesto first — ANTES do formulário */}
       <p
@@ -132,23 +139,23 @@ export function CollectiveForm() {
           marginBottom: 'var(--tbf-space-2)',
         }}
       >
-        Antes de candidatar-se,{' '}
+        {t.beforeApplyingPre}
         <Link
-          href="/manifesto"
+          href={localizedPath('/manifesto', lang)}
           style={{
             color: 'var(--tbf-accent)',
             textDecoration: 'none',
             }}
         >
-          leia o manifesto
+          {t.beforeApplyingLink}
         </Link>
-        . Quem chega sem contexto, sai sem resposta.
+        {t.beforeApplyingPost}
       </p>
 
       {/* Nome */}
       <div className={`field${errors.name ? ' field--error' : ''}`}>
         <label className="field__label" htmlFor={`${formId}-name`}>
-          Nome
+          {t.nameLabel}
         </label>
         <input
           id={`${formId}-name`}
@@ -156,7 +163,7 @@ export function CollectiveForm() {
           className="field__input"
           value={form.name}
           onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          placeholder="Seu nome"
+          placeholder={t.namePlaceholder}
           autoComplete="name"
           required
           aria-required="true"
@@ -172,7 +179,7 @@ export function CollectiveForm() {
       {/* Área de atuação */}
       <div className={`field${errors.role ? ' field--error' : ''}`}>
         <label className="field__label" htmlFor={`${formId}-role`}>
-          Área de atuação
+          {t.roleLabel}
         </label>
         <input
           id={`${formId}-role`}
@@ -180,7 +187,7 @@ export function CollectiveForm() {
           className="field__input"
           value={form.role}
           onChange={(e) => setForm((f) => ({ ...f, role: e.target.value }))}
-          placeholder="Fotografia, direção de arte, styling, música..."
+          placeholder={t.rolePlaceholder}
           required
           aria-required="true"
           aria-describedby={errors.role ? `${formId}-role-error` : undefined}
@@ -195,14 +202,14 @@ export function CollectiveForm() {
       {/* Portfolio / Link */}
       <div className="field">
         <label className="field__label" htmlFor={`${formId}-portfolio`}>
-          Portfolio ou Link{' '}
+          {t.portfolioLabel}{' '}
           <span
             style={{
               color: 'var(--tbf-text-tertiary)',
               fontWeight: 'var(--tbf-font-weight-raw-300)',
             }}
           >
-            (opcional)
+            {t.portfolioOptional}
           </span>
         </label>
         <input
@@ -211,7 +218,7 @@ export function CollectiveForm() {
           className="field__input"
           value={form.portfolioLink ?? ''}
           onChange={(e) => setForm((f) => ({ ...f, portfolioLink: e.target.value }))}
-          placeholder="https://... ou @handle"
+          placeholder={t.portfolioPlaceholder}
           autoComplete="url"
         />
       </div>
@@ -219,14 +226,14 @@ export function CollectiveForm() {
       {/* Como chegou aqui */}
       <div className={`field${errors.howDidYouFind ? ' field--error' : ''}`}>
         <label className="field__label" htmlFor={`${formId}-how`}>
-          Como você chegou até aqui?
+          {t.howLabel}
         </label>
         <textarea
           id={`${formId}-how`}
           className="field__input"
           value={form.howDidYouFind}
           onChange={(e) => setForm((f) => ({ ...f, howDidYouFind: e.target.value }))}
-          placeholder="Essa resposta diz tudo. Seja honesto."
+          placeholder={t.howPlaceholder}
           required
           aria-required="true"
           aria-describedby={errors.howDidYouFind ? `${formId}-how-error` : undefined}
@@ -261,7 +268,7 @@ export function CollectiveForm() {
           disabled={state.status === 'loading'}
           aria-disabled={state.status === 'loading'}
         >
-          {state.status === 'loading' ? 'Enviando…' : 'Submit your presence'}
+          {state.status === 'loading' ? t.submitLoading : t.submitCta}
           {state.status !== 'loading' && (
             <span className="btn__arrow" aria-hidden="true">→</span>
           )}

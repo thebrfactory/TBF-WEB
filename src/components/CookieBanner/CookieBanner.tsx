@@ -30,6 +30,9 @@ import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { readConsent, writeConsent } from '@/lib/consent'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
 
 const ARTICLE_BANNER_DELAY_MS = 5000
 const ARTICLE_ROUTE_PATTERN = /^\/editorial\/[^/]+\/?$/
@@ -39,6 +42,9 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false)
   const [showPrefs, setShowPrefs] = useState(false)
   const [analytics, setAnalytics] = useState(true)
+  const lang = useLang()
+  const t = shell[lang].cookies
+  const privacyLabel = shell[lang].footer.links.privacy
 
   // Primeira visita → aparece (imediato, ou após 5s em rota de artigo).
   // Reabertura (rodapé) → aparece já em modo preferências, refletindo a
@@ -89,15 +95,15 @@ export function CookieBanner() {
       className="cookie-banner"
       role="dialog"
       aria-live="polite"
-      aria-label="Aviso de cookies"
+      aria-label={t.dialogAriaLabel}
     >
       <div className="cookie-banner__inner">
         {showPrefs && (
           <div className="cookie-banner__prefs">
             <label className="cookie-pref cookie-pref--locked">
-              <input type="checkbox" checked disabled aria-label="Cookies necessários (sempre ativos)" />
+              <input type="checkbox" checked disabled aria-label={t.necessaryAriaLabel} />
               <span>
-                <strong>Necessários</strong>: essenciais para o funcionamento do site. Sempre ativos.
+                <strong>{t.necessaryLabel}</strong>{t.necessaryText}
               </span>
             </label>
             <label className="cookie-pref">
@@ -107,7 +113,7 @@ export function CookieBanner() {
                 onChange={(e) => setAnalytics(e.target.checked)}
               />
               <span>
-                <strong>Analytics</strong>: nos ajudam a entender como o site é usado (Vercel, sem perfilamento).
+                <strong>{t.analyticsLabel}</strong>{t.analyticsText}
               </span>
             </label>
           </div>
@@ -116,23 +122,23 @@ export function CookieBanner() {
         <div className="cookie-banner__actions">
           {showPrefs ? (
             <button type="button" className="btn btn--primary cookie-banner__btn" onClick={savePrefs}>
-              Salvar preferências
+              {t.savePrefs}
             </button>
           ) : (
             <button type="button" className="btn btn--primary cookie-banner__btn" onClick={acceptAll}>
-              Aceitar cookies
+              {t.acceptAll}
             </button>
           )}
           <button type="button" className="btn btn--secondary cookie-banner__btn" onClick={rejectOptional}>
-            Rejeitar opcionais
+            {t.rejectOptional}
           </button>
         </div>
 
         {/* Texto abaixo dos botões (pedido), enxuto. */}
         <p className="cookie-banner__text">
-          Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com a{' '}
-          <Link href="/legal/privacy" className="cookie-banner__link">
-            Política de Privacidade
+          {t.textPrefix}
+          <Link href={localizedPath('/legal/privacy', lang)} className="cookie-banner__link">
+            {privacyLabel}
           </Link>
           .
         </p>
@@ -143,7 +149,7 @@ export function CookieBanner() {
             className="cookie-banner__prefs-toggle"
             onClick={() => setShowPrefs(true)}
           >
-            Preferências de cookies
+            {t.prefsToggle}
           </button>
         )}
       </div>

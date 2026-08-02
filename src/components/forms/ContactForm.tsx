@@ -7,6 +7,8 @@
 // =============================================================================
 
 import { useId, useState } from 'react'
+import { useLang } from '@/lib/LangProvider'
+import { contactUs } from '@/content/i18n/pages/contact-us'
 
 interface FormData {
   name: string
@@ -19,6 +21,8 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 
 export function ContactForm() {
   const formId = useId()
+  const lang = useLang()
+  const t = contactUs[lang].form
 
   const [form, setForm] = useState<FormData>({ name: '', email: '', message: '', handle: '' })
   const [status, setStatus] = useState<Status>('idle')
@@ -27,16 +31,16 @@ export function ContactForm() {
 
   function validate(): boolean {
     const next: Partial<Record<keyof FormData, string>> = {}
-    if (!form.name.trim()) next.name = 'Nome é obrigatório.'
+    if (!form.name.trim()) next.name = t.errors.nameRequired
     if (!form.email.trim()) {
-      next.email = 'E-mail é obrigatório.'
+      next.email = t.errors.emailRequired
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      next.email = 'E-mail inválido.'
+      next.email = t.errors.emailInvalid
     }
     if (!form.message.trim()) {
-      next.message = 'Mensagem é obrigatória.'
+      next.message = t.errors.messageRequired
     } else if (form.message.trim().length < 20) {
-      next.message = 'Conta mais. Mínimo 20 caracteres.'
+      next.message = t.errors.messageMin
     }
     setErrors(next)
     return Object.keys(next).length === 0
@@ -50,6 +54,8 @@ export function ContactForm() {
     setError('')
 
     try {
+      // Contrato com a API é fixo: name/email/message/handle/intent, sem
+      // depender do idioma da UI.
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -61,11 +67,11 @@ export function ContactForm() {
       } else {
         const data = await res.json()
         setStatus('error')
-        setError(data.error ?? 'Algo falhou. Tente novamente.')
+        setError(data.error ?? t.errors.generic)
       }
     } catch {
       setStatus('error')
-      setError('Erro de conexão. Tente novamente.')
+      setError(t.errors.connection)
     }
   }
 
@@ -81,7 +87,7 @@ export function ContactForm() {
             marginBottom: 'var(--tbf-space-6)',
           }}
         >
-          Canal aberto.
+          {t.success.title}
         </p>
         <p
           style={{
@@ -91,7 +97,7 @@ export function ContactForm() {
             marginBottom: 'var(--tbf-space-4)',
           }}
         >
-          Retornamos quando faz sentido.
+          {t.success.line}
         </p>
         <p
           style={{
@@ -102,7 +108,7 @@ export function ContactForm() {
             textTransform: 'uppercase',
           }}
         >
-          .TBF.
+          {t.success.tag}
         </p>
       </div>
     )
@@ -113,18 +119,18 @@ export function ContactForm() {
       className="form contact-form"
       onSubmit={handleSubmit}
       noValidate
-      aria-label="Formulário de contato"
+      aria-label={t.formAriaLabel}
     >
       {/* Nome */}
       <div className={`field${errors.name ? ' field--error' : ''}`}>
-        <label className="field__label" htmlFor={`${formId}-name`}>Nome</label>
+        <label className="field__label" htmlFor={`${formId}-name`}>{t.nameLabel}</label>
         <input
           id={`${formId}-name`}
           type="text"
           className="field__input"
           value={form.name}
           onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-          placeholder="Seu nome completo"
+          placeholder={t.namePlaceholder}
           autoComplete="name"
           required
           aria-required="true"
@@ -139,14 +145,14 @@ export function ContactForm() {
 
       {/* E-mail */}
       <div className={`field${errors.email ? ' field--error' : ''}`}>
-        <label className="field__label" htmlFor={`${formId}-email`}>E-mail</label>
+        <label className="field__label" htmlFor={`${formId}-email`}>{t.emailLabel}</label>
         <input
           id={`${formId}-email`}
           type="email"
           className="field__input"
           value={form.email}
           onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          placeholder="seu@email.com"
+          placeholder={t.emailPlaceholder}
           autoComplete="email"
           required
           aria-required="true"
@@ -162,9 +168,9 @@ export function ContactForm() {
       {/* Handle / Link (opcional) */}
       <div className="field">
         <label className="field__label" htmlFor={`${formId}-handle`}>
-          Handle ou Link{' '}
+          {t.handleLabel}{' '}
           <span style={{ color: 'var(--tbf-text-tertiary)', fontWeight: 'var(--tbf-font-weight-raw-300)' }}>
-            (opcional)
+            {t.handleOptional}
           </span>
         </label>
         <input
@@ -173,20 +179,20 @@ export function ContactForm() {
           className="field__input"
           value={form.handle}
           onChange={(e) => setForm((f) => ({ ...f, handle: e.target.value }))}
-          placeholder="@handle ou https://..."
+          placeholder={t.handlePlaceholder}
           autoComplete="url"
         />
       </div>
 
       {/* Mensagem */}
       <div className={`field${errors.message ? ' field--error' : ''}`}>
-        <label className="field__label" htmlFor={`${formId}-message`}>Mensagem</label>
+        <label className="field__label" htmlFor={`${formId}-message`}>{t.messageLabel}</label>
         <textarea
           id={`${formId}-message`}
           className="field__input"
           value={form.message}
           onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-          placeholder="O que você quer dizer. Sem filtro."
+          placeholder={t.messagePlaceholder}
           required
           aria-required="true"
           aria-describedby={errors.message ? `${formId}-message-error` : undefined}
@@ -220,7 +226,7 @@ export function ContactForm() {
         disabled={status === 'loading'}
         aria-disabled={status === 'loading'}
       >
-        {status === 'loading' ? 'Enviando…' : 'Send the transmission'}
+        {status === 'loading' ? t.submitLoading : t.submitCta}
         {status !== 'loading' && <span className="btn__arrow" aria-hidden="true">→</span>}
       </button>
     </form>

@@ -117,7 +117,7 @@ export function SiteShell({ lang, children }: { lang: Lang; children: React.Reac
             </div>
           </section>
 
-          <Footer />
+          <Footer lang={lang} />
 
           {/* Aviso de cookies LGPD — primeira visita, persiste a escolha */}
           <CookieBanner />

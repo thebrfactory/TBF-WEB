@@ -8,6 +8,9 @@
 import { useState, useId } from 'react'
 import Link from 'next/link'
 import type { ContactIntent, ContactFormData, ContactFormState } from '@/types'
+import { useLang } from '@/lib/LangProvider'
+import { access } from '@/content/i18n/pages/access'
+import { localizedPath } from '@/lib/i18n'
 
 interface EntryPoint {
   value: ContactIntent
@@ -23,6 +26,8 @@ interface AccessFormProps {
 
 export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
   const formId = useId()
+  const lang = useLang()
+  const t = access[lang].form
 
   const [intent, setIntent] = useState<ContactIntent>(defaultIntent)
   const [form, setForm] = useState<Omit<ContactFormData, 'intent'>>({
@@ -37,15 +42,15 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
   function validate(): boolean {
     const newErrors: Partial<Record<keyof ContactFormData, string>> = {}
 
-    if (!form.name.trim()) newErrors.name = 'Nome é obrigatório.'
+    if (!form.name.trim()) newErrors.name = t.errors.nameRequired
     if (!form.email.trim()) {
-      newErrors.email = 'E-mail é obrigatório.'
+      newErrors.email = t.errors.emailRequired
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      newErrors.email = 'E-mail inválido.'
+      newErrors.email = t.errors.emailInvalid
     }
-    if (!form.message.trim()) newErrors.message = 'Mensagem é obrigatória.'
+    if (!form.message.trim()) newErrors.message = t.errors.messageRequired
     if (form.message.trim().length < 20) {
-      newErrors.message = 'Conta mais. Mínimo 20 caracteres.'
+      newErrors.message = t.errors.messageMin
     }
 
     setErrors(newErrors)
@@ -59,6 +64,8 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
     setState({ status: 'loading' })
 
     try {
+      // Contrato com a API é fixo: name/email/message/handle/intent, sem
+      // depender do idioma da UI.
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,10 +76,10 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
         setState({ status: 'success' })
       } else {
         const data = await res.json()
-        setState({ status: 'error', error: data.error ?? 'Algo falhou. Tente novamente.' })
+        setState({ status: 'error', error: data.error ?? t.errors.generic })
       }
     } catch {
-      setState({ status: 'error', error: 'Erro de conexão. Tente novamente.' })
+      setState({ status: 'error', error: t.errors.connection })
     }
   }
 
@@ -89,7 +96,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             marginBottom: 'var(--tbf-space-6)',
           }}
         >
-          Canal aberto.
+          {t.success.title}
         </p>
         <p
           style={{
@@ -99,7 +106,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             marginBottom: 'var(--tbf-space-4)',
           }}
         >
-          Retornamos quando faz sentido.
+          {t.success.line}
         </p>
         <p
           style={{
@@ -110,7 +117,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             textTransform: 'uppercase',
           }}
         >
-          .TBF.
+          {t.success.tag}
         </p>
       </div>
     )
@@ -141,7 +148,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             display: 'block',
           }}
         >
-          Ponto de Entrada
+          {t.entryLegend}
         </legend>
 
         <ul className="intent-group" role="list">
@@ -185,7 +192,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
         className="form"
         onSubmit={handleSubmit}
         noValidate
-        aria-label="Formulário de contato"
+        aria-label={t.formAriaLabel}
       >
         <h2
           id={`${formId}-form-heading`}
@@ -197,13 +204,13 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             textTransform: 'uppercase',
           }}
         >
-          A transmissão
+          {t.formHeading}
         </h2>
 
         {/* Nome */}
         <div className={`field${errors.name ? ' field--error' : ''}`}>
           <label className="field__label" htmlFor={`${formId}-name`}>
-            Nome
+            {t.nameLabel}
           </label>
           <input
             id={`${formId}-name`}
@@ -211,7 +218,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             className="field__input"
             value={form.name}
             onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
-            placeholder="Seu nome completo"
+            placeholder={t.namePlaceholder}
             autoComplete="name"
             required
             aria-required="true"
@@ -231,7 +238,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
         {/* E-mail */}
         <div className={`field${errors.email ? ' field--error' : ''}`}>
           <label className="field__label" htmlFor={`${formId}-email`}>
-            E-mail
+            {t.emailLabel}
           </label>
           <input
             id={`${formId}-email`}
@@ -239,7 +246,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             className="field__input"
             value={form.email}
             onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-            placeholder="seu@email.com"
+            placeholder={t.emailPlaceholder}
             autoComplete="email"
             required
             aria-required="true"
@@ -259,14 +266,14 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
         {/* Handle / Link (opcional) */}
         <div className="field">
           <label className="field__label" htmlFor={`${formId}-handle`}>
-            Handle ou Link{' '}
+            {t.handleLabel}{' '}
             <span
               style={{
                 color: 'var(--tbf-text-tertiary)',
                 fontWeight: 'var(--tbf-font-weight-raw-300)',
               }}
             >
-              (opcional)
+              {t.handleOptional}
             </span>
           </label>
           <input
@@ -275,7 +282,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             className="field__input"
             value={form.handle ?? ''}
             onChange={(e) => setForm((f) => ({ ...f, handle: e.target.value }))}
-            placeholder="@handle ou https://..."
+            placeholder={t.handlePlaceholder}
             autoComplete="url"
           />
         </div>
@@ -283,14 +290,14 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
         {/* Mensagem */}
         <div className={`field${errors.message ? ' field--error' : ''}`}>
           <label className="field__label" htmlFor={`${formId}-message`}>
-            Mensagem
+            {t.messageLabel}
           </label>
           <textarea
             id={`${formId}-message`}
             className="field__input"
             value={form.message}
             onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-            placeholder="O que você quer dizer. Sem filtro."
+            placeholder={t.messagePlaceholder}
             required
             aria-required="true"
             aria-describedby={errors.message ? `${formId}-message-error` : undefined}
@@ -336,7 +343,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             disabled={state.status === 'loading'}
             aria-disabled={state.status === 'loading'}
           >
-            {state.status === 'loading' ? 'Enviando…' : 'Send the transmission'}
+            {state.status === 'loading' ? t.submitLoading : t.submitCta}
             {state.status !== 'loading' && (
               <span className="btn__arrow" aria-hidden="true">→</span>
             )}
@@ -344,7 +351,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
 
           {/* CTA 2: Enter the Collective instead */}
           <Link
-            href="/collective"
+            href={localizedPath('/collective', lang)}
             style={{
               fontFamily: 'var(--tbf-type-tag-family)',
               fontSize: 'var(--tbf-type-tag-size)',
@@ -355,7 +362,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
               transition: 'color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro)',
             }}
           >
-            Enter the Collective instead →
+            {t.collectiveLinkCta}
           </Link>
         </div>
       </form>

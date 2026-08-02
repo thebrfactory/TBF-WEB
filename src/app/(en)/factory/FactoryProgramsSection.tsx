@@ -7,49 +7,33 @@
 import { useEffect, useRef } from 'react'
 import { PortableText } from '@portabletext/react'
 import type { TGFProgram } from '@/types'
+import { useLang } from '@/lib/LangProvider'
+import { factory } from '@/content/i18n/pages/factory'
 
 interface FactoryProgramsSectionProps {
   programs: TGFProgram[]
 }
 
-// Programas placeholder quando Sanity não disponível
-const PLACEHOLDER_PROGRAMS = [
-  {
-    _id: 'placeholder-1',
-    name: 'Programa de Aceleração',
-    tagline: 'Para negócios que querem escalar de forma estruturada.',
-    description: null,
-    targetAudience: 'Empresas com faturamento acima de R$ 50k/mês',
-    deliverables: [
-      'Diagnóstico completo do negócio',
-      'Estratégia de crescimento personalizada',
-      'Acompanhamento semanal por 3 meses',
-      'Acesso direto ao fundador',
-    ],
-    ctaLabel: 'Start the Program',
-    ctaUrl: 'https://cal.com/tbf',
-    order: 1,
-  },
-  {
-    _id: 'placeholder-2',
-    name: 'Advisory',
-    tagline: 'Conselho estratégico contínuo para decisões que importam.',
-    description: null,
-    targetAudience: 'Fundadores e líderes de negócio',
-    deliverables: [
-      'Sessões mensais de estratégia',
-      'Disponibilidade por mensagem',
-      'Revisão de KPIs e metas',
-    ],
-    ctaLabel: 'Apply for Advisory',
-    ctaUrl: 'https://cal.com/tbf',
-    order: 2,
-  },
-]
-
 export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps) {
   const sectionRef = useRef<HTMLElement>(null)
-  const displayPrograms = programs.length > 0 ? programs : PLACEHOLDER_PROGRAMS
+  const lang = useLang()
+  const t = factory[lang].programs
+
+  // Programas placeholder quando Sanity não disponível — texto sai do
+  // dicionário, ordem/URL do cal.com são os únicos campos fixos aqui.
+  const placeholderPrograms = t.placeholder.map((p, i) => ({
+    _id: `placeholder-${i + 1}`,
+    name: p.name,
+    tagline: p.tagline,
+    description: null,
+    targetAudience: p.targetAudience,
+    deliverables: p.deliverables,
+    ctaLabel: p.ctaLabel,
+    ctaUrl: 'https://cal.com/tbf',
+    order: i + 1,
+  }))
+
+  const displayPrograms = programs.length > 0 ? programs : placeholderPrograms
 
   useEffect(() => {
     const el = sectionRef.current
@@ -91,7 +75,7 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
           marginBottom: 'var(--tbf-space-12)',
         }}
       >
-        Programas
+        {t.heading}
       </h2>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--tbf-space-20)' }}>
@@ -172,7 +156,7 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
                   textTransform: 'uppercase',
                   marginBottom: 'var(--tbf-space-4)',
                 }}>
-                  Para quem
+                  {t.forWhomLabel}
                 </p>
                 <p style={{
                   fontFamily: 'var(--tbf-type-body-family)',
@@ -193,7 +177,7 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
                       textTransform: 'uppercase',
                       marginBottom: 'var(--tbf-space-4)',
                     }}>
-                      Inclui
+                      {t.includesLabel}
                     </p>
                     <ul style={{ listStyle: 'none', padding: 0 }}>
                       {program.deliverables.map((item, i) => (

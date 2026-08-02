@@ -9,9 +9,18 @@
 
 import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
 
 export function MailingList() {
   const { email, setEmail, status, errorMsg, submit } = useNewsletterSubmit()
+  const lang = useLang()
+  const t = shell[lang].mailing
+  const privacyLabel = shell[lang].footer.links.privacy
+  // ".TBF." é literal no dicionário de propósito — separa aqui só pra deixar
+  // a marca em negrito, sem precisar de markup dentro do texto traduzido.
+  const [headlinePre, headlinePost] = t.headlineLine2.split('.TBF.')
 
   return (
     <section
@@ -42,7 +51,7 @@ export function MailingList() {
               marginBottom: 'var(--tbf-space-4)',
             }}
           >
-            Join our mailing list
+            {t.eyebrow}
           </p>
           <h2
             id="mailing-list-heading"
@@ -55,7 +64,11 @@ export function MailingList() {
               color: 'var(--tbf-text-primary)',
             }}
           >
-            Get the best stories<br />from <span style={{ fontWeight: 800 }}>.TBF.</span> community.
+            {t.headlineLine1}
+            <br />
+            {headlinePre}
+            <span style={{ fontWeight: 800 }}>.TBF.</span>
+            {headlinePost}
           </h2>
         </div>
 
@@ -69,7 +82,7 @@ export function MailingList() {
               textTransform: 'uppercase',
             }}
           >
-            You&apos;re in. Welcome to the factory.
+            {t.successMessage}
           </p>
         ) : (
           <form
@@ -87,9 +100,9 @@ export function MailingList() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email address"
+              placeholder={t.emailPlaceholder}
               required
-              aria-label="Email address"
+              aria-label={t.emailAriaLabel}
               disabled={status === 'loading'}
               style={{
                 width: '100%',
@@ -115,7 +128,7 @@ export function MailingList() {
                 '...'
               ) : (
                 <>
-                  Subscribe
+                  {t.submitLabel}
                   <span className="btn__arrow" aria-hidden="true">→</span>
                 </>
               )}
@@ -131,16 +144,16 @@ export function MailingList() {
                 color: 'var(--tbf-text-tertiary)',
               }}
             >
-              By subscribing, you agree to our{' '}
+              {t.privacyPrefix}
               <Link
-                href="/legal/privacy"
+                href={localizedPath('/legal/privacy', lang)}
                 style={{
                   color: 'inherit',
                   textDecoration: 'underline',
                   textUnderlineOffset: '2px',
                 }}
               >
-                Privacy Policy
+                {privacyLabel}
               </Link>
               .
             </p>

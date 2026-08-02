@@ -5,6 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Work, Discipline } from './_data'
 import styles from './tavaristico.module.css'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { tavaristico } from '@/content/i18n/pages/tavaristico'
 
 const slugify = (d: string) => d.toLowerCase().replace(/[^a-z]+/g, '-').replace(/(^-|-$)/g, '')
 const ALL = 'all'
@@ -19,9 +22,16 @@ export function MasonryGallery({
   works: Work[]
   disciplines: Discipline[]
 }) {
+  const lang = useLang()
+  const t = tavaristico[lang].gallery
+  const path = (p: string) => localizedPath(p, lang)
+
   const [active, setActive] = useState<string>(ALL)
 
   // Deep-link: lê a disciplina do hash ao montar (#art-direction) e responde a navegação.
+  // Disciplinas (Art Direction, Branding...) não se traduzem: são convenção de
+  // categoria profissional do portfólio, mantidas em inglês nos dois idiomas —
+  // o slug do hash também não muda entre idiomas por causa disso.
   useEffect(() => {
     const fromHash = () => {
       const h = window.location.hash.replace(/^#/, '')
@@ -45,14 +55,14 @@ export function MasonryGallery({
   return (
     <>
       {!onlyOne && (
-        <div className={styles.filters} role="group" aria-label="Filtrar por disciplina">
+        <div className={styles.filters} role="group" aria-label={t.filterAriaLabel}>
           <button
             type="button"
             className={`${styles.chip} ${active === ALL ? styles.chipActive : ''}`}
             aria-pressed={active === ALL}
             onClick={() => select(ALL)}
           >
-            All
+            {t.all}
           </button>
           {disciplines.map((d) => (
             <button
@@ -72,7 +82,7 @@ export function MasonryGallery({
         {works.map((w, i) => (
           <Link
             key={w.slug}
-            href={`/creators/tavaristico/works/${w.slug}`}
+            href={path(`/creators/tavaristico/works/${w.slug}`)}
             className={`${styles.card} ${visible(w) ? '' : styles.cardHidden}`}
           >
             <span className={styles.cardMedia} style={{ aspectRatio: RATIOS[i % RATIOS.length] }}>

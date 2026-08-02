@@ -8,6 +8,8 @@ import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
 import { Ticker } from '@/components/Ticker/Ticker'
 import deployCount from '@/data/deploy-count.json'
+import { localizedPath, type Lang } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
 
 // Selo de versão do rodapé. Nomenclatura oficial (pedido do fundador
 // 2026-07-31): `.TBF. OS 3.0.<deploy>`. O 3.0 é a linhagem do sistema
@@ -21,48 +23,57 @@ const SITE_VERSION = `.TBF. OS 3.0.${deployCount.deploys}`
 // consigo mesmo no loop).
 const CITIES_TICKER = 'SÃO PAULO, SP. · GOIÂNIA, GO. · SALVADOR, BA. ·'
 
+// `headingKey`/`linkKey` apontam pra `shell.footer` — rótulo vem do
+// dicionário, o href fica cru aqui e passa por `localizedPath()` na hora de
+// renderizar.
 const NAV_COLUMNS = [
   {
-    heading: 'Pages',
+    headingKey: 'pages',
     links: [
-      { href: '/editorial', label: 'Magazine' },
-      { href: '/labels', label: 'Labels' },
-      { href: '/manifesto', label: 'Manifesto' },
-      { href: '/collective', label: 'Collective' },
-      { href: '/access', label: 'Access' },
+      { href: '/editorial', linkKey: 'magazine' },
+      { href: '/labels', linkKey: 'labels' },
+      { href: '/manifesto', linkKey: 'manifesto' },
+      { href: '/collective', linkKey: 'collective' },
+      { href: '/access', linkKey: 'access' },
       // Os dois decks, na ordem cronológica: a 1.0 logo acima da 2.0 (pedido
       // 2026-07-31). A 1.0 estava publicada mas sem nenhum link no site. Os
       // rótulos carregam a versão de propósito: sem eles não dá para distinguir
       // um deck do outro no rodapé.
-      { href: '/pitch', label: 'Pitch 1.0' },
-      { href: '/pitch/v2', label: 'Pitch 2.0' },
+      { href: '/pitch', linkKey: 'pitch1' },
+      { href: '/pitch/v2', linkKey: 'pitch2' },
     ],
   },
   {
-    heading: 'Company',
+    headingKey: 'company',
     links: [
-      { href: '/consulting', label: 'Consulting' },
-      { href: '/press', label: 'Press Room' },
-      { href: '/about', label: 'About Us' },
-      { href: '/about/quick-facts', label: 'Quick Facts' },
-      { href: '/press/media', label: 'Media' },
-      { href: '/creators/tavaristico', label: 'Founders' },
-      { href: '/careers', label: 'Careers' },
-      { href: '/publishing', label: 'Publishing' },
+      { href: '/consulting', linkKey: 'consulting' },
+      { href: '/press', linkKey: 'press' },
+      { href: '/about', linkKey: 'about' },
+      { href: '/about/quick-facts', linkKey: 'quickFacts' },
+      { href: '/press/media', linkKey: 'media' },
+      { href: '/creators/tavaristico', linkKey: 'founders' },
+      { href: '/careers', linkKey: 'careers' },
+      { href: '/publishing', linkKey: 'publishing' },
     ],
   },
   {
-    heading: 'Legal',
+    headingKey: 'legal',
     links: [
-      { href: '/legal/terms', label: 'Terms of Service' },
-      { href: '/legal/privacy', label: 'Privacy Policy' },
-      { href: '/legal/conduct', label: 'Code of Conduct' },
-      { href: '/legal/law-enforcement', label: 'Law Enforcement Guidelines' },
+      { href: '/legal/terms', linkKey: 'terms' },
+      { href: '/legal/privacy', linkKey: 'privacy' },
+      { href: '/legal/conduct', linkKey: 'conduct' },
+      { href: '/legal/law-enforcement', linkKey: 'lawEnforcement' },
     ],
   },
-] as const
+] as const satisfies {
+  headingKey: 'pages' | 'company' | 'legal'
+  links: readonly { href: string; linkKey: keyof typeof shell.en.footer.links }[]
+}[]
 
-export function Footer() {
+export function Footer({ lang }: { lang: Lang }) {
+  const t = shell[lang].footer
+  // aria-label do logo é o mesmo texto invariável usado no Navigation.
+  const logoAriaLabel = shell[lang].nav.logoAriaLabel
   const currentYear = new Date().getFullYear()
 
   return (
@@ -73,10 +84,10 @@ export function Footer() {
             lugar. Blocos Labels + Instagram removidos (pedido). */}
         <div className="footer__grid--top">
           <div>
-            <Link href="/" aria-label=".THE BRAZILIAN FACTORY." style={{ display: 'block', maxWidth: 110 }}>
+            <Link href={localizedPath('/', lang)} aria-label={logoAriaLabel} style={{ display: 'block', maxWidth: 110 }}>
               <Image
                 src="/brand/TBF-SAO-PAULO.svg"
-                alt=".TBF. SÃO PAULO"
+                alt={t.brandAlt}
                 width={110}
                 height={79}
                 style={{ display: 'block', width: '100%', height: 'auto' }}
@@ -84,11 +95,11 @@ export function Footer() {
               />
             </Link>
             <p className="footer__meta" style={{ padding: 0, textTransform: 'uppercase', marginTop: 'var(--tbf-space-4)' }}>
-              Culture™
+              {t.tagline[0]}
               <br />
-              Crafted in São Paulo, Brazil.
+              {t.tagline[1]}
               <br />
-              Consumed Worldwide.
+              {t.tagline[2]}
             </p>
           </div>
         </div>
@@ -104,22 +115,24 @@ export function Footer() {
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
         <div className="footer__grid--nav">
           {NAV_COLUMNS.map((col) => (
-            <nav key={col.heading} aria-label={col.heading}>
+            <nav key={col.headingKey} aria-label={t.columns[col.headingKey]}>
               <p
                 className="footer__meta"
                 style={{ textTransform: 'uppercase', marginBottom: 'var(--tbf-space-4)', padding: 0, opacity: 0.4 }}
               >
-                {col.heading}
+                {t.columns[col.headingKey]}
               </p>
               <ul className="footer__nav-list" role="list">
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="footer__link">{link.label}</Link>
+                    <Link href={localizedPath(link.href, lang)} className="footer__link">
+                      {t.links[link.linkKey]}
+                    </Link>
                   </li>
                 ))}
-                {col.heading === 'Legal' && (
+                {col.headingKey === 'legal' && (
                   <li>
-                    <CookiePrefsButton />
+                    <CookiePrefsButton lang={lang} />
                   </li>
                 )}
               </ul>

@@ -32,9 +32,19 @@ import { localizedPath, splitLang, type Lang } from '@/lib/i18n'
 /** Ordem de leitura da pílula: PT à esquerda, EN à direita (desenho aprovado). */
 const ORDER: readonly Lang[] = ['pt', 'en']
 
+/**
+ * Rotas que existem em UM idioma só, e por isso não podem oferecer a troca:
+ * apertar PT levaria a um 404. Hoje é só o Studio do Sanity, que é ferramenta
+ * de administração e não página do site. Se algum dia entrar outra, ela vem
+ * para cá em vez de virar link quebrado.
+ */
+const SEM_GEMEO = ['/studio']
+
 export function LanguageSwitch() {
   const pathname = usePathname() || '/'
-  const { lang } = splitLang(pathname)
+  const { lang, path } = splitLang(pathname)
+
+  if (SEM_GEMEO.some((p) => path === p || path.startsWith(p + '/'))) return null
 
   return (
     <div className="lang-switch" role="group" aria-label="Idioma / Language">

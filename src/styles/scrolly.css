@@ -1004,21 +1004,4 @@
   --sc-divider-min: 26vh;
 }
 
-/* =============================================================================
-   IDIOMA (ORD-03) — visibilidade EN/PT da matéria. O botão que trocava entre
-   as duas saiu daqui: virou a pílula fixa da navegação (.lang-switch, em
-   components.css). As duas versões do artigo vivem no HTML o tempo todo;
-   só a visibilidade troca, via CSS puro, a partir de `data-lang` no wrapper
-   raiz (#scrolly-article-root). display:none remove o idioma inativo do
-   fluxo por completo — a altura da página é sempre a de UM idioma, nunca a
-   soma dos dois. Funciona sem JS (o servidor já resolve `data-lang` no HTML).
-   ============================================================================= */
-
-.scrolly-article[data-lang='en'] .scrolly-lang--pt {
-  display: none;
-}
-
-.scrolly-article[data-lang='pt'] .scrolly-lang--en {
-  display: none;
-}
 

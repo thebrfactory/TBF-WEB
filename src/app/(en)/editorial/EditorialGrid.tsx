@@ -11,26 +11,17 @@ import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { CategoryGrid } from './CategoryGrid'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { editorial } from '@/content/i18n/pages/editorial'
 
-const CATEGORIES: { value: ArticleCategory | 'all'; label: string }[] = [
-  { value: 'all', label: 'Tudo' },
-  { value: 'fashion-film', label: 'Fashion Film' },
-  { value: 'editorial', label: 'Editorial' },
-  { value: 'manifesto', label: 'Manifesto' },
-  { value: 'coolhunting', label: 'Coolhunting' },
-  { value: 'collaboration', label: 'Colaboração' },
-]
-
-// aspect-ratio VARIADA por card (mesmo espírito da home, ver app/page.tsx) —
-// é isso que dá a cara Pinterest ao masonry; sem variação todo card cai no
-// fallback 3/2 e fica tudo com a mesma altura.
-const MOCK_ARTICLES = [
-  { category: 'Editorial',    title: 'What about the Brazilian fashion culture?',         date: '01 Jun. 2026', ratio: '3/4' },
-  { category: 'Coolhunting',  title: 'AFTERPARTY: the feeling behind Brazilian parties',  date: '28 Mai. 2026', ratio: '1/1' },
-  { category: 'Fashion Film', title: 'ACT I: feeling a Brazilian runway backstage',        date: '20 Mai. 2026', ratio: '4/3' },
-  { category: 'Editorial',    title: 'São Paulo as fashion capital: the city that prints its own rules', date: '15 Mai. 2026', ratio: '3/4' },
-  { category: 'Colaboração',  title: 'When Brazilian music and fashion collide',            date: '08 Mai. 2026', ratio: '4/5' },
-  { category: 'Manifesto',    title: 'We are not a trend: why .TBF. refuses to follow',    date: '01 Mai. 2026', ratio: '1/1' },
+const CATEGORY_FILTERS: (ArticleCategory | 'all')[] = [
+  'all',
+  'fashion-film',
+  'editorial',
+  'manifesto',
+  'coolhunting',
+  'collaboration',
 ]
 
 // Piloto do motor scrolly (ORD-01): o 1º card do arquivo passa a apontar para
@@ -44,6 +35,10 @@ interface EditorialGridProps {
 }
 
 export function EditorialGrid({ posts }: EditorialGridProps) {
+  const lang = useLang()
+  const t = editorial[lang]
+  const path = (p: string) => localizedPath(p, lang)
+
   const [activeCategory, setActiveCategory] = useState<ArticleCategory | 'all'>('all')
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
@@ -65,7 +60,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
   return (
     /* Respiro entre o letreiro em motion e os cards estilo pinterest (pedido):
        colados, o olho não separava as duas áreas. */
-    <section aria-label="Arquivo editorial" style={{ paddingTop: 'var(--tbf-space-12)' }}>
+    <section aria-label={t.grid.sectionAriaLabel} style={{ paddingTop: 'var(--tbf-space-12)' }}>
       {/* ─── FILTROS — só quando há conteúdo real ─── */}
       {hasPosts && (
         <div
@@ -76,15 +71,15 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
           }}
         >
           <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
-            <ul className="tag-group" role="list" aria-label="Filtrar por categoria">
-              {CATEGORIES.map((cat) => (
-                <li key={cat.value}>
+            <ul className="tag-group" role="list" aria-label={t.filterAriaLabel}>
+              {CATEGORY_FILTERS.map((cat) => (
+                <li key={cat}>
                   <button
-                    className={`tag${activeCategory === cat.value ? ' tag--active' : ''}`}
-                    onClick={() => handleCategoryChange(cat.value)}
-                    aria-pressed={activeCategory === cat.value}
+                    className={`tag${activeCategory === cat ? ' tag--active' : ''}`}
+                    onClick={() => handleCategoryChange(cat)}
+                    aria-pressed={activeCategory === cat}
                   >
-                    {cat.label}
+                    {t.categories[cat]}
                   </button>
                 </li>
               ))}
@@ -97,7 +92,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
       {hasPosts ? (
         <>
           {visible.length > 0 ? (
-            <div className="editorial-grid container" role="feed" aria-label="Artigos editoriais">
+            <div className="editorial-grid container" role="feed" aria-label={t.grid.feedAriaLabel}>
               {visible.map((post, i) => (
                 <ArticleCard
                   key={post._id}
@@ -109,7 +104,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
           ) : (
             <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBlock: 'var(--tbf-space-16)', textAlign: 'center' }}>
               <p style={{ fontFamily: 'var(--tbf-type-micro-family)', fontSize: 'var(--tbf-type-micro-size)', letterSpacing: 'var(--tbf-type-micro-ls)', textTransform: 'uppercase', color: 'var(--tbf-text-tertiary)' }}>
-                Nenhum conteúdo nesta categoria ainda.
+                {t.grid.emptyCategory}
               </p>
             </div>
           )}
@@ -118,9 +113,9 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
               <button
                 className="btn btn--secondary"
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                aria-label={`Carregar mais ${filtered.length - visibleCount} artigos`}
+                aria-label={t.grid.loadMoreAria(filtered.length - visibleCount)}
               >
-                Expand the archive
+                {t.grid.loadMoreCta}
                 <span className="btn__arrow" aria-hidden="true">↓</span>
               </button>
             </div>
@@ -131,11 +126,11 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
            O destaque saiu daqui: a imagem de capa agora é o fundo do header
            da página (ver app/editorial/page.tsx). */
         <>
-          <div className="editorial-grid container" role="feed" aria-label="Prévia do arquivo editorial">
-            {MOCK_ARTICLES.slice(1).map((mock, idx) => {
+          <div className="editorial-grid container" role="feed" aria-label={t.grid.previewAriaLabel}>
+            {t.mockArticles.slice(1).map((mock, idx) => {
               const i = idx + 1
               // 1º card do arquivo (idx === 0) aponta para a matéria real do piloto.
-              const href = idx === 0 ? `/editorial/${PILOT_ARTICLE_SLUG}` : `/editorial/lorem-ipsum-${i + 1}`
+              const href = idx === 0 ? path(`/editorial/${PILOT_ARTICLE_SLUG}`) : path(`/editorial/lorem-ipsum-${i + 1}`)
               return (
                 <ArticleMorphLink key={i} href={href} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de

@@ -20,6 +20,7 @@ const en = {
     magazineShort: 'MAG',
     magazine: 'Magazine',
     login: 'Login',
+    logoAriaLabel: '.THE BRAZILIAN FACTORY.',
     mainNav: 'Main navigation',
     mobileMenu: 'Mobile menu',
     navMenu: 'Navigation menu',
@@ -32,6 +33,54 @@ const en = {
     closeSearch: 'Close search',
     escToClose: 'Press Esc to close',
     language: 'Language',
+  },
+
+  // Rodapé no chamado da newsletter (MailingList). Mesmas frases de fundo do
+  // popup sitewide (NewsletterPopup) — chaves separadas de propósito: os dois
+  // textos podem divergir no futuro sem se atrapalhar.
+  mailing: {
+    eyebrow: 'Join our mailing list',
+    headlineLine1: 'Get the best stories',
+    // Contém o literal ".TBF." de propósito — o componente separa a frase
+    // nesse ponto pra deixar só a marca em negrito, sem markup no dicionário.
+    headlineLine2: 'from .TBF. community.',
+    successMessage: "You're in. Welcome to the factory.",
+    emailPlaceholder: 'Email address',
+    emailAriaLabel: 'Email address',
+    submitLabel: 'Subscribe',
+    privacyPrefix: 'By subscribing, you agree to our ',
+    genericError: 'Something went wrong. Please try again.',
+  },
+
+  // Popup sitewide de captura de e-mail (NewsletterPopup) — 20s de permanência.
+  popup: {
+    closeAriaLabel: 'Close',
+    headlineLine1: 'Get the best stories',
+    headlineLine2: 'from .TBF. community.',
+    successMessage: "You're in. Welcome to the factory.",
+    emailPlaceholder: 'Email address',
+    emailAriaLabel: 'Email address',
+    submitLabel: 'Subscribe',
+    privacyPrefix: 'By subscribing, you agree to our ',
+  },
+
+  // Aviso de cookies (CookieBanner) + botão de reabertura no rodapé
+  // (CookiePrefsButton). O inglês aqui foi ESCRITO agora (2026-08-02) — o
+  // banner vivia inteiro em português, inclusive no site em inglês. Ver README
+  // desta pasta e o relato da leva de i18n do cromo.
+  cookies: {
+    dialogAriaLabel: 'Cookie notice',
+    necessaryAriaLabel: 'Necessary cookies (always active)',
+    necessaryLabel: 'Necessary',
+    necessaryText: ': essential for the site to work. Always active.',
+    analyticsLabel: 'Analytics',
+    analyticsText: ': help us understand how the site is used (Vercel, no profiling).',
+    savePrefs: 'Save preferences',
+    acceptAll: 'Accept cookies',
+    rejectOptional: 'Reject optional',
+    textPrefix: 'We use cookies to improve your experience. By continuing, you agree to our ',
+    prefsToggle: 'Cookie preferences',
+    footerButton: 'Cookie Preferences',
   },
 
   footer: {
@@ -81,6 +130,7 @@ const pt: typeof en = {
     magazineShort: 'MAG',
     magazine: 'Revista',
     login: 'Entrar',
+    logoAriaLabel: '.THE BRAZILIAN FACTORY.',
     mainNav: 'Navegação principal',
     mobileMenu: 'Menu mobile',
     navMenu: 'Menu de navegação',
@@ -93,6 +143,46 @@ const pt: typeof en = {
     closeSearch: 'Fechar busca',
     escToClose: 'Aperte Esc para fechar',
     language: 'Idioma',
+  },
+
+  mailing: {
+    eyebrow: 'Assine nossa newsletter',
+    headlineLine1: 'As melhores histórias',
+    headlineLine2: 'da comunidade .TBF.',
+    successMessage: 'Pronto. Bem-vindo à fábrica.',
+    emailPlaceholder: 'Endereço de e-mail',
+    emailAriaLabel: 'Endereço de e-mail',
+    submitLabel: 'Inscrever-se',
+    privacyPrefix: 'Ao se inscrever, você concorda com a nossa ',
+    genericError: 'Algo deu errado. Tente de novo.',
+  },
+
+  popup: {
+    closeAriaLabel: 'Fechar',
+    headlineLine1: 'As melhores histórias',
+    headlineLine2: 'da comunidade .TBF.',
+    successMessage: 'Pronto. Bem-vindo à fábrica.',
+    emailPlaceholder: 'Endereço de e-mail',
+    emailAriaLabel: 'Endereço de e-mail',
+    submitLabel: 'Inscrever-se',
+    privacyPrefix: 'Ao se inscrever, você concorda com a nossa ',
+  },
+
+  // Texto ORIGINAL do banner, só movido pro dicionário — nenhuma palavra
+  // mudou (pedido explícito: manter o PT como está).
+  cookies: {
+    dialogAriaLabel: 'Aviso de cookies',
+    necessaryAriaLabel: 'Cookies necessários (sempre ativos)',
+    necessaryLabel: 'Necessários',
+    necessaryText: ': essenciais para o funcionamento do site. Sempre ativos.',
+    analyticsLabel: 'Analytics',
+    analyticsText: ': nos ajudam a entender como o site é usado (Vercel, sem perfilamento).',
+    savePrefs: 'Salvar preferências',
+    acceptAll: 'Aceitar cookies',
+    rejectOptional: 'Rejeitar opcionais',
+    textPrefix: 'Usamos cookies para melhorar sua experiência. Ao continuar, você concorda com a ',
+    prefsToggle: 'Preferências de cookies',
+    footerButton: 'Preferências de Cookies',
   },
 
   footer: {

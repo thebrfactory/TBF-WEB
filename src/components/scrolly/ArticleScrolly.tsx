@@ -1,24 +1,15 @@
 // =============================================================================
-// ArticleScrolly — composição das cenas (SPEC §3, ORD-01) + bilíngue (ORD-03)
+// ArticleScrolly — composição das cenas (SPEC §3, ORD-01) + bilíngue
 // `page.tsx` continua dono do fetch/SEO; este componente só monta o motor.
 // tone="manifesto" é o único implementado neste ciclo (é o que o piloto usa —
 // narrativa/jornalismo/ensaio entram quando houver matéria real desses tons).
 //
-// BILÍNGUE (ORD-03): as duas versões de idioma são renderizadas AO MESMO TEMPO
-// no HTML (server component — zero JS necessário para o conteúdo em si) e a
-// alternância é 100% CSS, controlada pelo atributo `data-lang` no wrapper raiz.
-// Isso resolve três exigências ao mesmo tempo:
-//   1. Zero flash: o servidor já resolve `data-lang` via ?lang=/Accept-Language
-//      (ver page.tsx); um <script> bloqueante (1º filho do wrapper, roda antes
-//      do browser pintar o resto) corrige para a preferência salva no
-//      localStorage ANTES de qualquer conteúdo aparecer, se ela divergir do
-//      palpite do servidor.
-//   2. Troca sem reload e sem perder a posição de leitura: trocar de idioma só
-//      alterna `display:none` via CSS — o scrollY em pixels não muda. (O que
-//      pode mudar é QUAL trecho aparece nessa posição, já que EN e PT têm
-//      comprimentos de texto diferentes — reportado em ORD-03-report.md.)
-//   3. Funciona sem JS: o `data-lang` inicial já vem certo no HTML do servidor,
-//      então mesmo sem JavaScript o visitante vê o idioma correto (via CSS puro).
+// BILÍNGUE: cada idioma é uma ROTA (`/editorial/x` e `/pt/editorial/x`), então
+// o servidor já sabe qual servir e renderiza SÓ ele. Antes as duas versões iam
+// juntas no HTML e um script escondia uma delas antes do primeiro paint, porque
+// a rota era a mesma para os dois idiomas. Agora isso é desperdício: o HTML da
+// matéria caiu pela metade, o script sumiu e cada idioma tem URL própria, que é
+// o que o Google indexa e o leitor compartilha.
 // =============================================================================
 
 import {
@@ -33,73 +24,36 @@ import {
   StickerLayer,
   StatBlock,
 } from '@/components/scrolly'
-import type { ManifestoArticle, ManifestoBlock, Lang } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import type { Lang } from '@/lib/i18n'
 
 interface ArticleScrollyProps {
   tone: 'manifesto' | 'narrativa' | 'jornalismo' | 'ensaio'
   article: ManifestoArticle
-  /** Idioma resolvido no servidor (?lang= > Accept-Language > 'en'). ORD-03. */
-  initialLang?: Lang
+  /** Idioma da rota. Quem manda é a URL, não o navegador. */
+  lang: Lang
 }
 
-// Script bloqueante: roda ANTES do browser pintar o conteúdo que vem depois
-// dele no HTML (é um <script> síncrono, sem defer/async/module). Reproduz a
-// MESMA prioridade da ORD-03 (§C), agora com acesso a localStorage, que o
-// servidor não tem: ?lang= > escolha salva > navigator.language > 'en'.
-const LANG_BOOT_SCRIPT = `
-(function () {
-  try {
-    var root = document.getElementById('scrolly-article-root');
-    if (!root) return;
-    var params = new URLSearchParams(window.location.search);
-    var urlLang = params.get('lang');
-    var lang;
-    if (urlLang === 'pt' || urlLang === 'en') {
-      lang = urlLang;
-    } else {
-      var saved = window.localStorage.getItem('tbf-article-lang');
-      if (saved === 'pt' || saved === 'en') {
-        lang = saved;
-      } else {
-        lang = (navigator.language || '').toLowerCase().indexOf('pt') === 0 ? 'pt' : 'en';
-      }
-    }
-    if (lang !== root.getAttribute('data-lang')) {
-      root.setAttribute('data-lang', lang);
-    }
-  } catch (e) {}
-})();
-`
-
-export function ArticleScrolly({ article, initialLang = 'en' }: ArticleScrollyProps) {
+export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
   return (
-    <div
-      className="scrolly-article"
-      data-lang={initialLang}
-      id="scrolly-article-root"
-      suppressHydrationWarning
-    >
-      {/* eslint-disable-next-line react/no-danger */}
-      <script dangerouslySetInnerHTML={{ __html: LANG_BOOT_SCRIPT }} />
-
-      <ArticleLoader title={article.loaderTitle[initialLang]} />
+    <div className="scrolly-article" id="scrolly-article-root">
+      <ArticleLoader title={article.loaderTitle[lang]} />
       <ScrollProgress />
 
-      <div className="scrolly-lang scrolly-lang--en" lang="en">
-        <HeroCinema title={article.heroTitle.en} subtitle={article.heroSubtitle.en} eyebrow={article.category} image={null} />
-        {renderBlocks(article.blocks, 'en')}
-      </div>
-      <div className="scrolly-lang scrolly-lang--pt" lang="pt-BR">
-        <HeroCinema title={article.heroTitle.pt} subtitle={article.heroSubtitle.pt} eyebrow={article.category} image={null} />
-        {renderBlocks(article.blocks, 'pt')}
-      </div>
+      <HeroCinema
+        title={article.heroTitle[lang]}
+        subtitle={article.heroSubtitle[lang]}
+        eyebrow={article.category}
+        image={null}
+      />
+      {renderBlocks(article.blocks, lang)}
 
       {/* O seletor PT|EN não mora mais aqui: virou a pílula da navegação
           (components/LanguageSwitch), visível em todo o site e permanente no
-          topo mesmo com o header escondido. Ele continua conversando com esta
-          matéria pelo mesmo contrato — o atributo data-lang logo acima. */}
+          topo mesmo com o header escondido. Lá ele NAVEGA para a mesma matéria
+          na outra rota, em vez de esconder metade do HTML. */}
 
-      <ShareRow title={article.heroTitle[initialLang]} />
+      <ShareRow title={article.heroTitle[lang]} />
     </div>
   )
 }

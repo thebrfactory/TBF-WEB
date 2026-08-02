@@ -10,21 +10,26 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { LanguageSwitch } from '@/components/LanguageSwitch/LanguageSwitch'
+import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
 import styles from './Navigation.module.css'
-
-const SEARCH_PLACEHOLDER = 'Search .TBF.'
 
 // Labels saiu da navegação principal (por pedido): a entrada para as divisões
 // vive agora só no final da página /pitch — "labels só aparecem pra quem está dentro".
 // Pitch também saiu da navegação principal (pedido do fundador): o deck vive
 // agora só no rodapé, em Pages. Mesma lógica de Labels, entrada discreta.
-const NAV_LINKS: { href: string; label: string; external?: boolean }[] = [
-  { href: '/editorial', label: 'Magazine' },
+// `labelKey` aponta pra chave em `shell.nav`; `/brandsystem/login` é outra
+// aplicação (zona .AURA.) e por isso fica de fora do localizedPath().
+const NAV_LINKS: { href: string; labelKey: 'magazine' | 'login'; external?: boolean }[] = [
+  { href: '/editorial', labelKey: 'magazine' },
   // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
-  { href: '/brandsystem/login', label: 'Login', external: true },
+  { href: '/brandsystem/login', labelKey: 'login', external: true },
 ]
 
 export function Navigation() {
+  const lang = useLang()
+  const t = shell[lang].nav
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
@@ -169,25 +174,25 @@ export function Navigation() {
             porque o Magazine já está na lista de links. Duas classes CSS
             alternam por breakpoint (sem JS/matchMedia, evita hydration mismatch). */}
         <Link
-          href="/editorial"
+          href={localizedPath('/editorial', lang)}
           className={`${styles.nav__link} ${styles['nav__left--mobile']}`}
           aria-current={pathname === '/editorial' ? 'page' : undefined}
         >
-          MAG
+          {t.magazineShort}
         </Link>
         <Link
-          href="/"
+          href={localizedPath('/', lang)}
           className={`${styles.nav__link} ${styles['nav__left--desktop']}`}
           aria-current={pathname === '/' ? 'page' : undefined}
         >
-          Home
+          {t.home}
         </Link>
 
         {/* Center: Logo — absolutamente centralizado */}
         <Link
-          href="/"
+          href={localizedPath('/', lang)}
           className={styles.nav__logo}
-          aria-label=".THE BRAZILIAN FACTORY."
+          aria-label={t.logoAriaLabel}
           style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
         >
           <svg
@@ -205,23 +210,23 @@ export function Navigation() {
 
         {/* Right: Desktop nav + Search + Language + Burger */}
         <div className={styles.nav__right}>
-          <nav aria-label="Navegação principal">
+          <nav aria-label={t.mainNav}>
             <ul className={styles.nav__links} role="list">
               {NAV_LINKS.map((link) =>
                 link.external ? (
                   <li key={link.href}>
                     <a href={link.href} className={styles.nav__link}>
-                      {link.label}
+                      {t[link.labelKey]}
                     </a>
                   </li>
                 ) : (
                   <li key={link.href}>
                     <Link
-                      href={link.href}
+                      href={localizedPath(link.href, lang)}
                       className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
                       aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
                     >
-                      {link.label}
+                      {t[link.labelKey]}
                     </Link>
                   </li>
                 )
@@ -232,7 +237,7 @@ export function Navigation() {
           {/* Search icon — desktop only */}
           <button
             className={styles.nav__icon}
-            aria-label="Search"
+            aria-label={t.search}
             onClick={() => setSearchOpen(true)}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -248,7 +253,7 @@ export function Navigation() {
             className={styles.nav__burger}
             aria-expanded={drawerOpen}
             aria-controls="mobile-drawer"
-            aria-label={drawerOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-label={drawerOpen ? t.closeMenu : t.openMenu}
             onClick={() => setDrawerOpen(!drawerOpen)}
           >
             <svg
@@ -305,7 +310,7 @@ export function Navigation() {
         className={`drawer ${drawerOpen ? 'drawer--open' : ''}`}
         role="dialog"
         aria-modal="true"
-        aria-label="Menu de navegação"
+        aria-label={t.navMenu}
       >
         <button
           className="drawer__close"
@@ -313,7 +318,7 @@ export function Navigation() {
             setDrawerOpen(false)
             burgerRef.current?.focus()
           }}
-          aria-label="Fechar menu"
+          aria-label={t.closeMenu}
         >
           <svg
             width="24"
@@ -330,15 +335,15 @@ export function Navigation() {
           </svg>
         </button>
 
-        <nav className="drawer__nav" aria-label="Menu mobile">
+        <nav className="drawer__nav" aria-label={t.mobileMenu}>
           {NAV_LINKS.map((link) =>
             link.external ? (
               <a key={link.href} href={link.href} className="drawer__link">
-                {link.label}
+                {t[link.labelKey]}
               </a>
             ) : (
-              <Link key={link.href} href={link.href} className="drawer__link">
-                {link.label}
+              <Link key={link.href} href={localizedPath(link.href, lang)} className="drawer__link">
+                {t[link.labelKey]}
               </Link>
             )
           )}
@@ -350,7 +355,7 @@ export function Navigation() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Search"
+          aria-label={t.search}
           style={{
             position: 'fixed',
             inset: 0,
@@ -364,7 +369,7 @@ export function Navigation() {
           }}
         >
           <button
-            aria-label="Close search"
+            aria-label={t.closeSearch}
             onClick={() => { setSearchOpen(false); setSearchQuery('') }}
             style={{
               position: 'absolute',
@@ -392,7 +397,7 @@ export function Navigation() {
               color: 'rgba(255,255,255,0.4)',
               marginBottom: 'var(--tbf-space-4)',
             }}>
-              Search .TBF.
+              {t.searchTitle}
             </p>
             <div style={{ position: 'relative' }}>
               <svg
@@ -414,8 +419,8 @@ export function Navigation() {
                 type="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={SEARCH_PLACEHOLDER}
-                aria-label="Search query"
+                placeholder={t.searchPlaceholder}
+                aria-label={t.searchQuery}
                 style={{
                   width: '100%',
                   background: 'transparent',
@@ -439,7 +444,7 @@ export function Navigation() {
               marginTop: 'var(--tbf-space-4)',
               textTransform: 'uppercase',
             }}>
-              Press Esc to close
+              {t.escToClose}
             </p>
           </div>
         </div>

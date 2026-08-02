@@ -20,13 +20,15 @@ versões divergem em silêncio. Existe **uma** página por rota.
 
 Três peças por rota:
 
-1. **A página real**, em `src/app/(en)/<rota>/page.tsx`. Recebe `lang` e lê o
-   texto do dicionário. Nenhuma frase escrita direto na marcação.
+1. **A página real**, em `src/views/<Nome>View.tsx`. Recebe `lang` e lê o texto
+   do dicionário. Nenhuma frase escrita direto na marcação. Ela sai de dentro de
+   `app/` porque as duas rotas precisam da MESMA página com metadados
+   diferentes, e `metadata` é declarado por arquivo de rota.
 2. **O dicionário**, em `src/content/i18n/pages/<rota>.ts`, exportando
    `{ en: {...}, pt: {...} }` com **exatamente as mesmas chaves** nos dois.
-3. **A casca portuguesa**, em `src/app/(pt)/pt/<rota>/page.tsx` — cinco linhas
-   que chamam a mesma página com `lang="pt"` e declaram os metadados em
-   português.
+3. **As duas cascas**: `src/app/(en)/<rota>/page.tsx` e
+   `src/app/(pt)/pt/<rota>/page.tsx`. Cada uma declara os metadados no seu
+   idioma e renderiza a view com o `lang` certo. Cinco linhas de corpo.
 
 ## Regras duras
 

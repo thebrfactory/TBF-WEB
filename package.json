@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "check:i18n": "node scripts/check-i18n.mjs",
     "deploy:count": "node scripts/bump-deploy-count.mjs"
   },
   "dependencies": {

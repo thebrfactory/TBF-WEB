@@ -4,9 +4,17 @@
 // COOKIE PREFERENCES — reabre o CookieBanner em modo preferências de qualquer
 // lugar (rodapé). Revogabilidade exigida pela LGPD (art. 18) e resposta ao
 // "cadê o banner de cookies?": some depois da 1a escolha, mas volta por aqui.
+//
+// O Footer (que chama este botão) é componente de SERVIDOR, então o idioma
+// chega por propriedade em vez de useLang().
 // =============================================================================
 
-export function CookiePrefsButton() {
+import type { Lang } from '@/lib/i18n'
+import { shell } from '@/content/i18n/shell'
+
+export function CookiePrefsButton({ lang }: { lang: Lang }) {
+  const t = shell[lang].cookies
+
   return (
     <button
       type="button"
@@ -27,7 +35,7 @@ export function CookiePrefsButton() {
         textAlign: 'inherit',
       }}
     >
-      Cookie Preferences
+      {t.footerButton}
     </button>
   )
 }

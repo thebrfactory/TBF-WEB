@@ -1,0 +1,24 @@
+// Rota `/pt/labels/factoryofgrowth` — a mesma página, em português.
+// A página em si vive em src/views/FactoryOfGrowthView.tsx e serve os dois idiomas.
+
+import type { Metadata } from 'next'
+import FactoryOfGrowthView from '@/views/FactoryOfGrowthView'
+import { factoryOfGrowth } from '@/content/i18n/pages/labels/factoryofgrowth'
+import { languageAlternates } from '@/lib/i18n'
+
+const t = factoryOfGrowth.pt
+
+export const metadata: Metadata = {
+  title: t.meta.title,
+  description: t.meta.description,
+  alternates: languageAlternates('/labels/factoryofgrowth'),
+  openGraph: {
+    title: t.meta.ogTitle,
+    description: t.meta.ogDescription,
+    images: [{ url: '/og-factory.jpg', width: 1200, height: 630 }],
+  },
+}
+
+export default function Page() {
+  return <FactoryOfGrowthView lang="pt" />
+}
