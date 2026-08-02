@@ -12,6 +12,8 @@
 // =============================================================================
 
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { useLang } from '@/lib/LangProvider'
+import { shell } from '@/content/i18n/shell'
 
 interface HomeHeroProps {
   id?: string
@@ -19,6 +21,10 @@ interface HomeHeroProps {
 }
 
 export function HomeHero({ id, style }: HomeHeroProps = {}) {
+  // A assinatura sai do dicionário do rodapé de propósito: é a MESMA frase nos
+  // dois lugares, e duas cópias divergiriam no primeiro ajuste de copy.
+  const deck = shell[useLang()].footer.tagline
+
   return (
       <section
         id={id}
@@ -64,9 +70,11 @@ export function HomeHero({ id, style }: HomeHeroProps = {}) {
             <path d="M590.06,428.52c3.22,0,5.21,1.9,5.21,5.02s-2,5.02-5.21,5.02-5.21-1.9-5.21-5.02,2-5.02,5.21-5.02Z" fill="#fff"/>
           </svg>
 
-          {/* Deck — alinhado ao início do SVG */}
+          {/* Deck — alinhado ao início do SVG. Mesmo texto do selo do rodapé,
+              lido do mesmo lugar: a assinatura da casa não pode divergir de si
+              mesma entre o topo e o pé da página. */}
           <p className="hero-home__deck">
-            Culture™<br />Crafted in São Paulo, Brazil<br />.Consumed Worldwide.
+            {deck[0]}<br />{deck[1]}<br />{deck[2]}
           </p>
         </div>
 

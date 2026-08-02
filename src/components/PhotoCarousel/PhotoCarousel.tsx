@@ -2,6 +2,8 @@ import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
+import { useLang } from '@/lib/LangProvider'
+import { home } from '@/content/i18n/pages/home'
 
 const SLIDE1 = [
   '/images/slide1/01.webp', '/images/slide1/02.webp', '/images/slide1/03.webp',
@@ -35,6 +37,9 @@ const SECONDS_PER_SLIDE = 2.4
 // + cada item clicável. Ao passar o cursor/dedo, a imagem escurece e revela o
 // título da matéria (Brother bold) centralizado no card.
 export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial' }: Props) {
+  // Rótulo de acessibilidade do slide sem matéria atrelada: segue o idioma da
+  // rota, senão o leitor de tela em português ouve inglês no meio da página.
+  const tCarrossel = home[useLang()].magazine.cta
   const hasArticles = !!articles && articles.length > 0
   const duration = `${(photos.length * SECONDS_PER_SLIDE).toFixed(2)}s`
 
@@ -63,7 +68,7 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial' }
                 <LinkTag
                   href={slide.href}
                   className="carousel-slide__link"
-                  aria-label={slide.title ?? 'Enter the Magazine'}
+                  aria-label={slide.title ?? tCarrossel}
                 >
                   <Image
                     src={slide.src}
