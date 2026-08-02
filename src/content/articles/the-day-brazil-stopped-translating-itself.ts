@@ -1,70 +1,110 @@
 // =============================================================================
-// CONTEÚDO DO PILOTO — "THE DAY BRAZIL STOPPED TRANSLATING ITSELF"
-// ORD-01 · fonte: `1. TBF.COM/article/#01/debut.md`, mapa: `05_PILOTO-CENAS.md`
-// Cada linha do texto original está representada abaixo, na ordem. Nada foi
-// cortado, nada foi inventado — só reorganizado em blocos tipados que o
-// ArticleScrolly sabe montar em cenas (tone="manifesto").
+// CONTEÚDO DO PILOTO — "THE DAY BRAZIL STOPPED TRANSLATING ITSELF" /
+// "O DIA EM QUE O BRASIL PAROU DE SE TRADUZIR"
+// ORD-01 · fonte EN: `1. TBF.COM/article/#01/debut.md`, mapa: `05_PILOTO-CENAS.md`
+// ORD-03 · fonte PT: `1. TBF.COM/article/#01/debut-pt.md` (tradução já aprovada em
+// voz pelo orquestrador — TRANSPORTADA aqui linha a linha, nunca traduzida por
+// este executor). Cada campo de texto virou `{ en, pt }`. A estrutura de cenas é
+// EXATAMENTE a mesma nos dois idiomas: mesma quantidade de blocos, mesma ordem,
+// mesmo tipo (regra dura da ORD-03).
+//
+// Nota de transporte (ver ORD-03-report.md / ESC-03.md para detalhe): o bloco
+// `raw` ("Raw land." / "Raw bodies." / "Raw stories.") usa um dispositivo visual
+// que assume um PREFIXO FIXO repetido — isso não existe em português, onde o
+// adjetivo ("crua"/"crus"/"cruas") muda de forma e vem DEPOIS do substantivo
+// ("Terra crua.", "Corpos crus.", "Histórias cruas."). Mantive `kind: 'raw'`
+// (mesmo tipo de bloco nos dois idiomas, como a regra exige) e movi a frase PT
+// inteira para `items`, deixando `fixed` vazio em PT — nenhuma palavra foi
+// inventada, só reposicionada dentro da mesma estrutura de dados. Escalado em
+// ESC-03.md para o fundador confirmar se quer um tratamento visual dedicado.
 // =============================================================================
 
 import type { ScrollyTheme } from '@/components/scrolly'
 
+export interface Bilingual {
+  en: string
+  pt: string
+}
+
+export type Lang = 'en' | 'pt'
+
 export type ManifestoBlock =
-  | { kind: 'lines'; lines: string[]; emphasize?: number[] }
+  | { kind: 'lines'; lines: Bilingual[]; emphasize?: number[] }
   | { kind: 'divider'; theme?: ScrollyTheme }
-  | { kind: 'word'; label: string; theme?: ScrollyTheme }
-  | { kind: 'pinned'; text: string; kicker?: string }
-  | { kind: 'fullbleed'; text: string; theme?: ScrollyTheme; scale?: 'display' | 'word' | 'wordmark' }
-  | { kind: 'mirror'; before: string[]; after: string[] }
-  | { kind: 'raw'; fixed: string; items: string[] }
-  | { kind: 'negation'; pairs: [string, string][] }
-  | { kind: 'stickers'; fragments: string[] }
-  | { kind: 'stat'; value: number; formatted: string; label: string; prefix?: string }
-  | { kind: 'closing'; text: string }
+  | { kind: 'word'; label: Bilingual; theme?: ScrollyTheme }
+  | { kind: 'pinned'; text: Bilingual; kicker?: Bilingual }
+  | { kind: 'fullbleed'; text: Bilingual; theme?: ScrollyTheme; scale?: 'display' | 'word' | 'wordmark' }
+  | { kind: 'mirror'; before: Bilingual[]; after: Bilingual[] }
+  | { kind: 'raw'; fixed: Bilingual; items: Bilingual[] }
+  | { kind: 'negation'; pairs: [Bilingual, Bilingual][] }
+  | { kind: 'stickers'; fragments: Bilingual[] }
+  | { kind: 'stat'; value: number; formatted: Bilingual; label: Bilingual; prefix?: Bilingual }
+  | { kind: 'closing'; text: Bilingual }
 
 export interface ManifestoArticle {
   slug: string
-  loaderTitle: string
-  heroTitle: string
-  heroSubtitle: string
+  loaderTitle: Bilingual
+  heroTitle: Bilingual
+  heroSubtitle: Bilingual
   category: string
   publishedAt: string
-  deck: string
+  deck: Bilingual
   blocks: ManifestoBlock[]
 }
 
 export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
   slug: 'the-day-brazil-stopped-translating-itself',
-  // Loader usa só a 1ª metade do título (05_PILOTO-CENAS.md §6) — o resto entra no hero.
-  loaderTitle: 'THE DAY BRAZIL STOPPED',
-  heroTitle: 'THE DAY BRAZIL STOPPED TRANSLATING ITSELF.',
-  heroSubtitle: 'Or: what if the Gurgel Renegado had always been parked next to the Jeep Renegade?',
+  // Loader usa só a 1ª metade do título (05_PILOTO-CENAS.md §6) — o resto entra
+  // no hero. O corte em PT é mecânico (mesma substring do título já aprovado em
+  // debut-pt.md, na mesma posição semântica do corte EN: antes do trecho que
+  // fala do ato de "se traduzir"), não é uma escolha de tradução.
+  loaderTitle: { en: 'THE DAY BRAZIL STOPPED', pt: 'O DIA EM QUE O BRASIL PAROU' },
+  heroTitle: {
+    en: 'THE DAY BRAZIL STOPPED TRANSLATING ITSELF.',
+    pt: 'O DIA EM QUE O BRASIL PAROU DE SE TRADUZIR.',
+  },
+  heroSubtitle: {
+    en: 'Or: what if the Gurgel Renegado had always been parked next to the Jeep Renegade?',
+    pt: 'Ou: e se o Gurgel Renegado sempre tivesse estado estacionado ao lado do Jeep Renegade?',
+  },
   category: 'Manifesto',
   publishedAt: '2026-08-01',
-  deck: "The first industry Brazil industrialised wasn't steel. It was confidence.",
+  deck: {
+    en: "The first industry Brazil industrialised wasn't steel. It was confidence.",
+    pt: 'A primeira indústria que o Brasil industrializou não foi o aço. Foi a confiança.',
+  },
   blocks: [
     // ─── Abertura ─────────────────────────────────────────────────────────
     {
       kind: 'lines',
       lines: [
-        'There is no official date for when a country stops being a colony.',
-        'Some say it happens after independence.',
-        'Others believe it happens when the economy grows.',
-        'Some insist it happens after winning wars.',
-        "They're all wrong.",
+        { en: 'There is no official date for when a country stops being a colony.', pt: 'Não existe data oficial para quando um país deixa de ser colônia.' },
+        { en: 'Some say it happens after independence.', pt: 'Uns dizem que acontece depois da independência.' },
+        { en: 'Others believe it happens when the economy grows.', pt: 'Outros acham que acontece quando a economia cresce.' },
+        { en: 'Some insist it happens after winning wars.', pt: 'Alguns insistem que acontece depois de vencer guerras.' },
+        { en: "They're all wrong.", pt: 'Todos estão errados.' },
       ],
     },
     // TIER 1 #1 — a tese
     {
       kind: 'pinned',
       kicker: undefined,
-      text: 'A country only stops being a colony when it no longer asks permission to imagine itself.',
+      text: {
+        en: 'A country only stops being a colony when it no longer asks permission to imagine itself.',
+        pt: 'Um país só deixa de ser colônia quando para de pedir licença para se imaginar.',
+      },
     },
     {
       kind: 'lines',
-      lines: ['Brazil crossed that threshold quietly.', 'Not with a revolution.', 'Not with a speech.', 'Not with a flag.'],
+      lines: [
+        { en: 'Brazil crossed that threshold quietly.', pt: 'O Brasil cruzou essa linha em silêncio.' },
+        { en: 'Not with a revolution.', pt: 'Não com uma revolução.' },
+        { en: 'Not with a speech.', pt: 'Não com um discurso.' },
+        { en: 'Not with a flag.', pt: 'Não com uma bandeira.' },
+      ],
     },
     // TIER 2 — fecho da abertura
-    { kind: 'lines', lines: ['It started in a dealership.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'It started in a dealership.', pt: 'Começou numa concessionária.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
@@ -72,56 +112,83 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        'Two compact SUVs.',
-        'One American.',
-        'One Brazilian.',
-        'On the left, the Jeep Renegade.',
-        'On the right, the Gurgel Renegado.',
-        'Nobody takes pictures.',
-        'Nobody says "look, a Brazilian car."',
-        'Nobody writes patriotic posts on social media.',
-        'Because there is nothing unusual about it.',
-        'Your father owned a Gurgel.',
-        'Your grandfather worked at one of its suppliers.',
-        "Your cousin designs suspensions for the company's African division.",
-        'Your neighbor develops embedded software in Campinas.',
-        'Choosing a Gurgel feels no more political than choosing Adidas over Nike.',
-        "That's how cultures become invisible.",
-        "Not when they're imposed.",
+        { en: 'Two compact SUVs.', pt: 'Dois SUVs compactos.' },
+        { en: 'One American.', pt: 'Um americano.' },
+        { en: 'One Brazilian.', pt: 'Um brasileiro.' },
+        { en: 'On the left, the Jeep Renegade.', pt: 'À esquerda, o Jeep Renegade.' },
+        { en: 'On the right, the Gurgel Renegado.', pt: 'À direita, o Gurgel Renegado.' },
+        { en: 'Nobody takes pictures.', pt: 'Ninguém tira foto.' },
+        { en: 'Nobody says "look, a Brazilian car."', pt: 'Ninguém diz "olha, um carro brasileiro".' },
+        { en: 'Nobody writes patriotic posts on social media.', pt: 'Ninguém escreve post patriótico nas redes.' },
+        { en: 'Because there is nothing unusual about it.', pt: 'Porque não há nada de estranho nisso.' },
+        { en: 'Your father owned a Gurgel.', pt: 'Seu pai teve um Gurgel.' },
+        { en: 'Your grandfather worked at one of its suppliers.', pt: 'Seu avô trabalhou num dos fornecedores.' },
+        { en: "Your cousin designs suspensions for the company's African division.", pt: 'Seu primo desenha suspensão para a divisão africana da empresa.' },
+        { en: 'Your neighbor develops embedded software in Campinas.', pt: 'Seu vizinho desenvolve software embarcado em Campinas.' },
+        { en: 'Choosing a Gurgel feels no more political than choosing Adidas over Nike.', pt: 'Escolher um Gurgel não é mais político do que escolher Adidas em vez de Nike.' },
+        { en: "That's how cultures become invisible.", pt: 'É assim que culturas ficam invisíveis.' },
+        { en: "Not when they're imposed.", pt: 'Não quando são impostas.' },
       ],
     },
     // TIER 2 — definição de cultura invisível
-    { kind: 'lines', lines: ['When they become normal.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'When they become normal.', pt: 'Quando viram normal.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        'History rarely changes because someone invents something.',
-        'History changes because millions stop noticing it.',
-        "The Gurgel Renegado wasn't revolutionary because it existed.",
-        'It was revolutionary because nobody needed to explain why it existed.',
-        'That subtle difference reshaped an entire country.',
+        { en: 'History rarely changes because someone invents something.', pt: 'A história raramente muda porque alguém inventou alguma coisa.' },
+        { en: 'History changes because millions stop noticing it.', pt: 'A história muda porque milhões param de reparar.' },
+        { en: "The Gurgel Renegado wasn't revolutionary because it existed.", pt: 'O Gurgel Renegado não foi revolucionário porque existiu.' },
+        { en: 'It was revolutionary because nobody needed to explain why it existed.', pt: 'Foi revolucionário porque ninguém precisou explicar por que ele existia.' },
+        { en: 'That subtle difference reshaped an entire country.', pt: 'Essa diferença sutil redesenhou um país inteiro.' },
       ],
     },
 
     { kind: 'divider' },
 
     // ─── TIER 3 — o que o mundo queria x o que o Brasil passou a exportar ─
-    { kind: 'lines', lines: ['For decades, Brazil was told what it should export.'] },
+    { kind: 'lines', lines: [{ en: 'For decades, Brazil was told what it should export.', pt: 'Por décadas, disseram ao Brasil o que ele deveria exportar.' }] },
     {
       kind: 'lines',
-      lines: ['The world wanted Brazil to remain an endless supplier of raw materials.'],
+      lines: [{ en: 'The world wanted Brazil to remain an endless supplier of raw materials.', pt: 'O mundo queria que o Brasil continuasse fornecedor infinito de matéria-prima.' }],
     },
-    // TIER 3 — "Raw" fixo, o resto trocando (máquina de escrever, sem cursor)
-    { kind: 'raw', fixed: 'Raw', items: ['land.', 'bodies.', 'stories.'] },
-    { kind: 'lines', lines: ['But somewhere along the way, Brazil learned to export something else.'] },
+    // TIER 3 — "Raw" fixo, o resto trocando (máquina de escrever, sem cursor).
+    // Ver nota de transporte no topo do arquivo: em PT o adjetivo muda de forma
+    // e de posição, então não há prefixo fixo — `fixed.pt` fica vazio e a frase
+    // completa (já traduzida, sem invenção) vai inteira em `items.pt`.
+    {
+      kind: 'raw',
+      fixed: { en: 'Raw', pt: '' },
+      items: [
+        { en: 'land.', pt: 'Terra crua.' },
+        { en: 'bodies.', pt: 'Corpos crus.' },
+        { en: 'stories.', pt: 'Histórias cruas.' },
+      ],
+    },
+    { kind: 'lines', lines: [{ en: 'But somewhere along the way, Brazil learned to export something else.', pt: 'Mas em algum ponto do caminho o Brasil aprendeu a exportar outra coisa.' }] },
     // TIER 3 — as duas listas espelhadas
     {
       kind: 'mirror',
-      before: ['Coffee.', 'Sugar.', 'Rubber.', 'Ore.', 'Soy.', 'Talent.', 'Footballers.', 'Models.', 'Musicians.'],
-      after: ['Systems.', 'Languages.', 'Myths.', 'Infrastructure.', 'Imagination.'],
+      before: [
+        { en: 'Coffee.', pt: 'Café.' },
+        { en: 'Sugar.', pt: 'Açúcar.' },
+        { en: 'Rubber.', pt: 'Borracha.' },
+        { en: 'Ore.', pt: 'Minério.' },
+        { en: 'Soy.', pt: 'Soja.' },
+        { en: 'Talent.', pt: 'Talento.' },
+        { en: 'Footballers.', pt: 'Jogadores.' },
+        { en: 'Models.', pt: 'Modelos.' },
+        { en: 'Musicians.', pt: 'Músicos.' },
+      ],
+      after: [
+        { en: 'Systems.', pt: 'Sistemas.' },
+        { en: 'Languages.', pt: 'Linguagens.' },
+        { en: 'Myths.', pt: 'Mitos.' },
+        { en: 'Infrastructure.', pt: 'Infraestrutura.' },
+        { en: 'Imagination.', pt: 'Imaginação.' },
+      ],
     },
 
     { kind: 'divider' },
@@ -129,37 +196,52 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        'People often ask what transformed the Brazilian economy.',
-        "They're asking the wrong question.",
-        'The economy was never the beginning.',
-        'It was the consequence.',
-        "The first industry Brazil industrialised wasn't steel.",
+        { en: 'People often ask what transformed the Brazilian economy.', pt: 'Costumam perguntar o que transformou a economia brasileira.' },
+        { en: "They're asking the wrong question.", pt: 'É a pergunta errada.' },
+        { en: 'The economy was never the beginning.', pt: 'A economia nunca foi o começo.' },
+        { en: 'It was the consequence.', pt: 'Foi a consequência.' },
+        { en: "The first industry Brazil industrialised wasn't steel.", pt: 'A primeira indústria que o Brasil industrializou não foi o aço.' },
       ],
     },
     // TIER 1 #2 — o pivô, o momento mais silencioso da página
-    { kind: 'fullbleed', text: 'It was confidence.', theme: 'dark', scale: 'display' },
+    { kind: 'fullbleed', text: { en: 'It was confidence.', pt: 'Foi a confiança.' }, theme: 'dark', scale: 'display' },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        'By the early 2000s, Brazilian companies were no longer trying to become "the Brazilian version" of foreign brands.',
-        'That expression disappeared.',
+        {
+          en: 'By the early 2000s, Brazilian companies were no longer trying to become "the Brazilian version" of foreign brands.',
+          pt: 'No início dos anos 2000, as empresas brasileiras já não tentavam ser "a versão brasileira" de marcas estrangeiras.',
+        },
+        { en: 'That expression disappeared.', pt: 'Essa expressão desapareceu.' },
       ],
     },
     // TIER 3 — pares de negação
     {
       kind: 'negation',
       pairs: [
-        ['There was no Brazilian Apple.', 'Only Arara Technologies.'],
-        ['No Brazilian Disney.', 'Only Amazônia Studios.'],
-        ['No Brazilian Studio 54.', 'Only Brazilian Hi-Fi.'],
+        [
+          { en: 'There was no Brazilian Apple.', pt: 'Não existia Apple brasileira.' },
+          { en: 'Only Arara Technologies.', pt: 'Só Arara Technologies.' },
+        ],
+        [
+          { en: 'No Brazilian Disney.', pt: 'Não existia Disney brasileira.' },
+          { en: 'Only Amazônia Studios.', pt: 'Só Amazônia Studios.' },
+        ],
+        [
+          { en: 'No Brazilian Studio 54.', pt: 'Não existia Studio 54 brasileiro.' },
+          { en: 'Only Brazilian Hi-Fi.', pt: 'Só Brazilian Hi-Fi.' },
+        ],
       ],
     },
     {
       kind: 'lines',
-      lines: ['Nobody introduced these institutions by comparing them to somewhere else.', 'Comparison had become obsolete.'],
+      lines: [
+        { en: 'Nobody introduced these institutions by comparing them to somewhere else.', pt: 'Ninguém apresentava essas instituições comparando com outro lugar.' },
+        { en: 'Comparison had become obsolete.', pt: 'A comparação tinha ficado obsoleta.' },
+      ],
     },
 
     { kind: 'divider' },
@@ -167,68 +249,68 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        "Brazilian Hi-Fi wasn't a nightclub.",
-        'It was where the country rehearsed its next version of itself.',
-        'Designers met engineers.',
-        'Filmmakers met physicists.',
-        'Fashion editors argued with anthropologists until sunrise.',
-        'Musicians tested unfinished albums in front of semiconductor founders.',
-        "Ideas weren't pitched.",
-        'They circulated.',
-        'Every country has places where culture accelerates.',
-        'New York had Studio 54.',
-        'Manchester had the Haçienda.',
-        'São Paulo had Brazilian Hi-Fi.',
-        'The difference?',
-        "Brazilian Hi-Fi didn't launch trends.",
+        { en: "Brazilian Hi-Fi wasn't a nightclub.", pt: 'Brazilian Hi-Fi não era uma casa noturna.' },
+        { en: 'It was where the country rehearsed its next version of itself.', pt: 'Era onde o país ensaiava sua próxima versão.' },
+        { en: 'Designers met engineers.', pt: 'Designers encontravam engenheiros.' },
+        { en: 'Filmmakers met physicists.', pt: 'Cineastas encontravam físicos.' },
+        { en: 'Fashion editors argued with anthropologists until sunrise.', pt: 'Editoras de moda discutiam com antropólogos até o sol nascer.' },
+        { en: 'Musicians tested unfinished albums in front of semiconductor founders.', pt: 'Músicos testavam álbuns inacabados na frente de fundadores de semicondutores.' },
+        { en: "Ideas weren't pitched.", pt: 'Ideias não eram pitchadas.' },
+        { en: 'They circulated.', pt: 'Circulavam.' },
+        { en: 'Every country has places where culture accelerates.', pt: 'Todo país tem lugares onde a cultura acelera.' },
+        { en: 'New York had Studio 54.', pt: 'Nova York teve o Studio 54.' },
+        { en: 'Manchester had the Haçienda.', pt: 'Manchester teve o Haçienda.' },
+        { en: 'São Paulo had Brazilian Hi-Fi.', pt: 'São Paulo teve o Brazilian Hi-Fi.' },
+        { en: 'The difference?', pt: 'A diferença?' },
+        { en: "Brazilian Hi-Fi didn't launch trends.", pt: 'O Brazilian Hi-Fi não lançava tendências.' },
       ],
     },
     // TIER 2 — o que diferencia Brazilian Hi-Fi de Studio 54
-    { kind: 'lines', lines: ['It metabolised them.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'It metabolised them.', pt: 'Ele as metabolizava.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        'Around the same time, another institution quietly emerged.',
-        'Nobody could explain exactly what it was.',
-        'Agency?',
-        'Not really.',
-        'Production company?',
-        'Sometimes.',
-        'Holding?',
-        'Too small.',
-        'Creative studio?',
-        'Not even close.',
-        'People simply called it:',
+        { en: 'Around the same time, another institution quietly emerged.', pt: 'Na mesma época, outra instituição surgiu discretamente.' },
+        { en: 'Nobody could explain exactly what it was.', pt: 'Ninguém sabia explicar exatamente o que era.' },
+        { en: 'Agency?', pt: 'Agência?' },
+        { en: 'Not really.', pt: 'Não exatamente.' },
+        { en: 'Production company?', pt: 'Produtora?' },
+        { en: 'Sometimes.', pt: 'Às vezes.' },
+        { en: 'Holding?', pt: 'Holding?' },
+        { en: 'Too small.', pt: 'Pequena demais.' },
+        { en: 'Creative studio?', pt: 'Estúdio criativo?' },
+        { en: 'Not even close.', pt: 'Nem perto.' },
+        { en: 'People simply called it:', pt: 'As pessoas simplesmente chamavam de:' },
       ],
     },
     // TIER 1 #3 — a casa se nomeia
-    { kind: 'fullbleed', text: '.THE BRAZILIAN FACTORY.', theme: 'dark', scale: 'wordmark' },
+    { kind: 'fullbleed', text: { en: '.THE BRAZILIAN FACTORY.', pt: '.THE BRAZILIAN FACTORY.' }, theme: 'dark', scale: 'wordmark' },
     {
       kind: 'lines',
       lines: [
-        'Trying to define it always felt slightly embarrassing.',
-        'Like trying to define the internet as a website.',
-        'Technically possible.',
-        'Conceptually useless.',
-        "The Brazilian Factory didn't produce campaigns.",
-        "It didn't produce films.",
-        "It didn't produce brands.",
-        'Those were side effects.',
+        { en: 'Trying to define it always felt slightly embarrassing.', pt: 'Tentar definir sempre soava meio constrangedor.' },
+        { en: 'Like trying to define the internet as a website.', pt: 'Como tentar definir a internet como um site.' },
+        { en: 'Technically possible.', pt: 'Tecnicamente possível.' },
+        { en: 'Conceptually useless.', pt: 'Conceitualmente inútil.' },
+        { en: "The Brazilian Factory didn't produce campaigns.", pt: 'A Brazilian Factory não produzia campanhas.' },
+        { en: "It didn't produce films.", pt: 'Não produzia filmes.' },
+        { en: "It didn't produce brands.", pt: 'Não produzia marcas.' },
+        { en: 'Those were side effects.', pt: 'Isso eram efeitos colaterais.' },
       ],
     },
     // TIER 2 — o que a casa vende, dito sem vender
-    { kind: 'lines', lines: ['Its real product was institutional imagination.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'Its real product was institutional imagination.', pt: 'Seu produto real era imaginação institucional.' }], emphasize: [0] },
     {
       kind: 'lines',
       lines: [
-        'It transformed cultural signals into companies.',
-        'Companies into movements.',
-        'Movements into myths.',
-        'If Brazilian Hi-Fi was where ideas collided...',
-        'The Brazilian Factory was where they acquired permanent form.',
+        { en: 'It transformed cultural signals into companies.', pt: 'Ela transformava sinais culturais em empresas.' },
+        { en: 'Companies into movements.', pt: 'Empresas em movimentos.' },
+        { en: 'Movements into myths.', pt: 'Movimentos em mitos.' },
+        { en: 'If Brazilian Hi-Fi was where ideas collided...', pt: 'Se o Brazilian Hi-Fi era onde as ideias colidiam...' },
+        { en: 'The Brazilian Factory was where they acquired permanent form.', pt: 'A Brazilian Factory era onde elas ganhavam forma permanente.' },
       ],
     },
 
@@ -238,32 +320,32 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        'This is also where MELFIORE enters the story.',
-        'Nobody remembers the first night she appeared.',
-        'Only that one day everyone already knew her.',
-        'Not because she went viral.',
-        'Virality was always considered a weak form of reputation.',
-        'People knew MELFIORE because someone always had a story.',
+        { en: 'This is also where MELFIORE enters the story.', pt: 'É aqui também que a MELFIORE entra na história.' },
+        { en: 'Nobody remembers the first night she appeared.', pt: 'Ninguém lembra da primeira noite em que ela apareceu.' },
+        { en: 'Only that one day everyone already knew her.', pt: 'Só que um dia todo mundo já a conhecia.' },
+        { en: 'Not because she went viral.', pt: 'Não porque viralizou.' },
+        { en: 'Virality was always considered a weak form of reputation.', pt: 'Viralizar sempre foi considerado uma forma fraca de reputação.' },
+        { en: 'People knew MELFIORE because someone always had a story.', pt: 'As pessoas conheciam a MELFIORE porque alguém sempre tinha uma história.' },
       ],
     },
     // TIER 3 — as únicas aspas do artigo, conversa de festa ouvida pela metade
     {
       kind: 'stickers',
       fragments: [
-        'I met her after a screening.',
-        'She disappeared with a filmmaker from Recife.',
-        'She convinced a software founder to finance an opera.',
-        'She was wearing yellow over her eyes.',
+        { en: 'I met her after a screening.', pt: 'Conheci ela depois de uma exibição.' },
+        { en: 'She disappeared with a filmmaker from Recife.', pt: 'Ela sumiu com um cineasta de Recife.' },
+        { en: 'She convinced a software founder to finance an opera.', pt: 'Ela convenceu um fundador de software a financiar uma ópera.' },
+        { en: 'She was wearing yellow over her eyes.', pt: 'Ela estava de amarelo sobre os olhos.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        'Nobody could verify any of it.',
-        'Nobody wanted to.',
-        'Some figures become celebrities.',
-        'Others become folklore.',
-        'MELFIORE belonged to the second category.',
+        { en: 'Nobody could verify any of it.', pt: 'Ninguém conseguia confirmar nada.' },
+        { en: 'Nobody wanted to.', pt: 'Ninguém queria.' },
+        { en: 'Some figures become celebrities.', pt: 'Algumas figuras viram celebridades.' },
+        { en: 'Others become folklore.', pt: 'Outras viram folclore.' },
+        { en: 'MELFIORE belonged to the second category.', pt: 'A MELFIORE pertencia à segunda categoria.' },
       ],
     },
 
@@ -272,124 +354,169 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        'Foreign journalists kept asking the same question.',
-        '"When did Brazil become a cultural superpower?"',
-        'Brazilian historians usually smiled before answering.',
-        '"We didn\'t."',
+        { en: 'Foreign journalists kept asking the same question.', pt: 'Jornalistas estrangeiros repetiam a mesma pergunta.' },
+        { en: '"When did Brazil become a cultural superpower?"', pt: '"Quando o Brasil virou uma potência cultural?"' },
+        { en: 'Brazilian historians usually smiled before answering.', pt: 'Historiadores brasileiros costumavam sorrir antes de responder.' },
+        { en: '"We didn\'t."', pt: '"Não viramos."' },
       ],
     },
     // TIER 1 #4 — o título voltando, na voz de outro personagem
-    { kind: 'fullbleed', text: 'We simply stopped translating ourselves.', theme: 'dark', scale: 'display' },
-    { kind: 'lines', lines: ['That sentence confused almost everyone.', 'Until they looked closer.'] },
-
-    { kind: 'divider' },
-
+    { kind: 'fullbleed', text: { en: 'We simply stopped translating ourselves.', pt: 'Nós simplesmente paramos de nos traduzir.' }, theme: 'dark', scale: 'display' },
     {
       kind: 'lines',
       lines: [
-        'The suspension system developed by Gurgel for dirt roads in Goiás became the global standard for rural mobility in Australia.',
-        'A Brazilian operating system designed for public schools became the preferred educational platform across Latin America and West Africa.',
-        'Children in London dressed as Curupira on Halloween.',
-        'Japanese animation studios openly cited Monteiro Lobato alongside Miyazaki.',
-        'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured R$ 500 million from a Brazilian cultural investment fund.',
+        { en: 'That sentence confused almost everyone.', pt: 'Essa frase confundia quase todo mundo.' },
+        { en: 'Until they looked closer.', pt: 'Até olharem de perto.' },
       ],
     },
-    // TIER 3 — o único número do texto
-    { kind: 'stat', value: 500, formatted: '500', prefix: 'R$ ', label: 'milhões — o fundo cultural de Xique-Xique' },
-    { kind: 'lines', lines: ['None of this happened because Brazil wanted global recognition.', 'It happened because recognition became inevitable.'] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        'For decades, critics misunderstood Brazilian originality.',
-        'They assumed it emerged despite contradiction.',
-        'They couldn\'t see that contradiction was the engine.',
-        'Long before artificial intelligence began remixing culture, Brazil had already mastered the practice.',
-        'Not in laboratories.',
-        'In street festivals.',
-        'In public squares.',
-        'On carnival trucks.',
-        'Inside dance halls.',
-        'In improvised garages.',
-        'The infamous Carreta Furacão became one of the earliest case studies taught in design schools worldwide.',
-        'Not because it was absurd.',
-        'Because it revealed a uniquely Brazilian technology.',
-        'The ability to absorb global symbols...',
-        '...and return them as something impossible to classify.',
-        'Not imitation.',
-        'Not parody.',
-        'Transformation.',
-        'Oswald de Andrade had already named the process a century earlier.',
+        {
+          en: 'The suspension system developed by Gurgel for dirt roads in Goiás became the global standard for rural mobility in Australia.',
+          pt: 'O sistema de suspensão que a Gurgel desenvolveu para estradas de terra em Goiás virou o padrão global de mobilidade rural na Austrália.',
+        },
+        {
+          en: 'A Brazilian operating system designed for public schools became the preferred educational platform across Latin America and West Africa.',
+          pt: 'Um sistema operacional brasileiro feito para escolas públicas virou a plataforma educacional preferida da América Latina e da África Ocidental.',
+        },
+        { en: 'Children in London dressed as Curupira on Halloween.', pt: 'Crianças em Londres se vestiam de Curupira no Halloween.' },
+        { en: 'Japanese animation studios openly cited Monteiro Lobato alongside Miyazaki.', pt: 'Estúdios de animação japoneses citavam Monteiro Lobato ao lado de Miyazaki.' },
+        {
+          en: 'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured R$ 500 million from a Brazilian cultural investment fund.',
+          pt: 'Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha R$ 500 milhões garantidos por um fundo brasileiro de investimento cultural.',
+        },
+      ],
+    },
+    // TIER 3 — o único número do texto. `label.en` deriva das palavras já usadas
+    // no parágrafo EN acima ("Brazilian cultural investment fund"), já que o
+    // rótulo é legenda de UI (StatBlock), não uma linha do corpo do texto — não
+    // existe frase EN equivalente em debut.md para transportar. Ver ESC-03.md.
+    {
+      kind: 'stat',
+      value: 500,
+      formatted: { en: '500', pt: '500' },
+      prefix: { en: 'R$ ', pt: 'R$ ' },
+      label: {
+        en: "million — the filmmaker's cultural investment fund, Xique-Xique",
+        pt: 'milhões — o fundo cultural de Xique-Xique',
+      },
+    },
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'None of this happened because Brazil wanted global recognition.', pt: 'Nada disso aconteceu porque o Brasil queria reconhecimento global.' },
+        { en: 'It happened because recognition became inevitable.', pt: 'Aconteceu porque o reconhecimento virou inevitável.' },
+      ],
+    },
+
+    { kind: 'divider' },
+
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'For decades, critics misunderstood Brazilian originality.', pt: 'Por décadas, os críticos entenderam errado a originalidade brasileira.' },
+        { en: 'They assumed it emerged despite contradiction.', pt: 'Achavam que ela surgia apesar da contradição.' },
+        { en: "They couldn't see that contradiction was the engine.", pt: 'Não enxergavam que a contradição era o motor.' },
+        {
+          en: 'Long before artificial intelligence began remixing culture, Brazil had already mastered the practice.',
+          pt: 'Muito antes de a inteligência artificial começar a remixar cultura, o Brasil já dominava a prática.',
+        },
+        { en: 'Not in laboratories.', pt: 'Não em laboratórios.' },
+        { en: 'In street festivals.', pt: 'Em festas de rua.' },
+        { en: 'In public squares.', pt: 'Em praças públicas.' },
+        { en: 'On carnival trucks.', pt: 'Em cima de trio elétrico.' },
+        { en: 'Inside dance halls.', pt: 'Dentro de salões de baile.' },
+        { en: 'In improvised garages.', pt: 'Em garagens improvisadas.' },
+        {
+          en: 'The infamous Carreta Furacão became one of the earliest case studies taught in design schools worldwide.',
+          pt: 'A infame Carreta Furacão virou um dos primeiros estudos de caso ensinados em escolas de design do mundo inteiro.',
+        },
+        { en: 'Not because it was absurd.', pt: 'Não por ser absurda.' },
+        { en: 'Because it revealed a uniquely Brazilian technology.', pt: 'Por revelar uma tecnologia unicamente brasileira.' },
+        { en: 'The ability to absorb global symbols...', pt: 'A capacidade de absorver símbolos globais...' },
+        { en: '...and return them as something impossible to classify.', pt: '...e devolvê-los como algo impossível de classificar.' },
+        { en: 'Not imitation.', pt: 'Não imitação.' },
+        { en: 'Not parody.', pt: 'Não paródia.' },
+        { en: 'Transformation.', pt: 'Transformação.' },
+        { en: 'Oswald de Andrade had already named the process a century earlier.', pt: 'Oswald de Andrade já tinha batizado o processo um século antes.' },
       ],
     },
     // TIER 1 #5 — uma palavra sozinha, ChapterDivider no seu uso mais puro
-    { kind: 'word', label: 'Anthropophagy.' },
-    { kind: 'lines', lines: ['In this Brazil, anthropophagy never remained an artistic manifesto.'] },
+    { kind: 'word', label: { en: 'Anthropophagy.', pt: 'Antropofagia.' } },
+    { kind: 'lines', lines: [{ en: 'In this Brazil, anthropophagy never remained an artistic manifesto.', pt: 'Neste Brasil, a antropofagia nunca ficou como manifesto artístico.' }] },
     // TIER 2 — a piada séria: manifesto virou política
-    { kind: 'lines', lines: ['It became industrial policy.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'It became industrial policy.', pt: 'Virou política industrial.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        "Foreign analysts spent years trying to decode the country's unexpected rise.",
-        'Most failed because they kept measuring GDP.',
-        'The real transformation had happened elsewhere.',
-        'Brazil had quietly rewritten the grammar of influence.',
-        'Hollywood no longer dictated imagination.',
-        'Silicon Valley no longer monopolised innovation.',
-        'Milan no longer defined elegance.',
-        'Tokyo no longer owned the future.',
-        'Not because those places declined.',
+        { en: "Foreign analysts spent years trying to decode the country's unexpected rise.", pt: 'Analistas estrangeiros passaram anos tentando decifrar a ascensão inesperada do país.' },
+        { en: 'Most failed because they kept measuring GDP.', pt: 'A maioria falhou porque continuava medindo PIB.' },
+        { en: 'The real transformation had happened elsewhere.', pt: 'A transformação real tinha acontecido em outro lugar.' },
+        { en: 'Brazil had quietly rewritten the grammar of influence.', pt: 'O Brasil tinha reescrito, em silêncio, a gramática da influência.' },
+        { en: 'Hollywood no longer dictated imagination.', pt: 'Hollywood não ditava mais a imaginação.' },
+        { en: 'Silicon Valley no longer monopolised innovation.', pt: 'O Vale do Silício não monopolizava mais a inovação.' },
+        { en: 'Milan no longer defined elegance.', pt: 'Milão não definia mais a elegância.' },
+        { en: 'Tokyo no longer owned the future.', pt: 'Tóquio não era mais dona do futuro.' },
+        { en: 'Not because those places declined.', pt: 'Não porque esses lugares decaíram.' },
       ],
     },
     // TIER 2 — a tese geopolítica em nove palavras
-    { kind: 'lines', lines: ['Because another accent entered the conversation.'], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'Because another accent entered the conversation.', pt: 'Porque outro sotaque entrou na conversa.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        'Looking back, historians agree on one detail.',
-        "The decisive moment wasn't technological.",
-        "It wasn't economic.",
-        "It wasn't geopolitical.",
-        "It wasn't even political.",
-        'It was psychological.',
+        { en: 'Looking back, historians agree on one detail.', pt: 'Olhando para trás, os historiadores concordam num detalhe.' },
+        { en: "The decisive moment wasn't technological.", pt: 'O momento decisivo não foi tecnológico.' },
+        { en: "It wasn't economic.", pt: 'Não foi econômico.' },
+        { en: "It wasn't geopolitical.", pt: 'Não foi geopolítico.' },
+        { en: "It wasn't even political.", pt: 'Não foi nem político.' },
+        { en: 'It was psychological.', pt: 'Foi psicológico.' },
       ],
     },
     // TIER 1 #6 — o clímax emocional. A ÚNICA virada para branco do artigo inteiro.
     {
       kind: 'fullbleed',
-      text: 'The day Brazilian children stopped believing the future always spoke another language.',
+      text: {
+        en: 'The day Brazilian children stopped believing the future always spoke another language.',
+        pt: 'O dia em que as crianças brasileiras pararam de acreditar que o futuro sempre falava outra língua.',
+      },
       theme: 'light',
       scale: 'display',
     },
     {
       kind: 'lines',
       lines: [
-        'Everything else followed naturally.',
-        'Including the cars.',
-        'Including the films.',
-        'Including the billion-dollar companies.',
-        'Including the currency.',
-        'Including the confidence.',
+        { en: 'Everything else followed naturally.', pt: 'Todo o resto veio naturalmente.' },
+        { en: 'Including the cars.', pt: 'Inclusive os carros.' },
+        { en: 'Including the films.', pt: 'Inclusive os filmes.' },
+        { en: 'Including the billion-dollar companies.', pt: 'Inclusive as empresas bilionárias.' },
+        { en: 'Including the currency.', pt: 'Inclusive a moeda.' },
+        { en: 'Including the confidence.', pt: 'Inclusive a confiança.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        "Perhaps that's why nobody remembers exactly when Brazil became one of the world's cultural centres.",
-        'They only remember something much simpler.',
-        'The day choosing a Gurgel stopped meaning anything at all.',
-        'Because, by then...',
+        {
+          en: "Perhaps that's why nobody remembers exactly when Brazil became one of the world's cultural centres.",
+          pt: 'Talvez seja por isso que ninguém lembra exatamente quando o Brasil virou um dos centros culturais do mundo.',
+        },
+        { en: 'They only remember something much simpler.', pt: 'Lembram apenas de algo muito mais simples.' },
+        { en: 'The day choosing a Gurgel stopped meaning anything at all.', pt: 'O dia em que escolher um Gurgel deixou de significar qualquer coisa.' },
+        { en: 'Because, by then...', pt: 'Porque, a essa altura...' },
       ],
     },
     // Fecho — 05_PILOTO-CENAS.md §6: sozinha, entrando devagar no preto, depois do branco do clímax.
-    { kind: 'closing', text: '...it had always been there.' },
+    { kind: 'closing', text: { en: '...it had always been there.', pt: '...ele sempre esteve ali.' } },
   ],
 }

@@ -730,9 +730,9 @@
 .scrolly-cascade__line {
   font-family: var(--tbf-type-deck-family);
   font-size: clamp(1.05rem, 3vw, 1.5rem);
-  line-height: 1.5;
+  line-height: var(--sc-line-lh, 1.5);
   color: var(--tbf-text-primary);
-  margin-block: var(--tbf-space-4);
+  margin-block: var(--sc-line-gap, var(--tbf-space-4));
   opacity: 0;
   transform: translateY(16px);
 }
@@ -742,7 +742,7 @@
   font-weight: var(--tbf-type-display-lg-weight);
   font-size: clamp(1.5rem, 5vw, 2.5rem);
   line-height: 1.2;
-  margin-block: var(--tbf-space-10);
+  margin-block: var(--sc-emphasis-gap, var(--tbf-space-10));
 }
 
 @supports (animation-timeline: view()) {
@@ -1009,4 +1009,93 @@
   --sc-gap-connective-sm: var(--tbf-space-2);
   --sc-fullbleed-min: 100dvh;
   --sc-divider-min: 28vh;
+}
+
+.scrolly-article[data-rhythm='v3'] {
+  /* v3 ESTROFE — o que estava errado nas duas primeiras: elas mexiam no espaço
+     ENTRE os blocos e deixavam o espaço DENTRO deles igual. Resultado: frases
+     que pertencem à mesma respiração ("Not with a revolution. / Not with a
+     speech. / Not with a flag.") ficavam soltas, cada uma parecendo um
+     parágrafo isolado. O texto virava lista, não verso.
+
+     Aqui as linhas de um mesmo bloco se aproximam (viram estrofe) e o silêncio
+     migra para as bordas do bloco e para os 6 momentos, que continuam
+     intocados em tela cheia. Fica mais curto E mais parecido com o texto que o
+     fundador escreveu. */
+  --sc-line-gap: var(--tbf-space-2);
+  --sc-line-lh: 1.4;
+  --sc-emphasis-gap: var(--tbf-space-8);
+  --sc-gap-connective: var(--tbf-space-5);
+  --sc-gap-connective-sm: var(--tbf-space-5);
+  --sc-fullbleed-min: 100dvh;
+  --sc-divider-min: 26vh;
+}
+
+/* =============================================================================
+   LANGUAGE TOGGLE (ORD-03) — bloco único de idioma: visibilidade EN/PT +
+   estética do botão. As duas versões do artigo vivem no HTML o tempo todo;
+   só a visibilidade troca, via CSS puro, a partir de `data-lang` no wrapper
+   raiz (#scrolly-article-root). display:none remove o idioma inativo do
+   fluxo por completo — a altura da página é sempre a de UM idioma, nunca a
+   soma dos dois. Funciona sem JS (o servidor já resolve `data-lang` no HTML).
+   ============================================================================= */
+
+.scrolly-article[data-lang='en'] .scrolly-lang--pt {
+  display: none;
+}
+
+.scrolly-article[data-lang='pt'] .scrolly-lang--en {
+  display: none;
+}
+
+.scrolly-lang-toggle {
+  position: fixed;
+  top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-3));
+  right: var(--tbf-space-4);
+  z-index: var(--tbf-z-raw-sticky);
+  display: flex;
+  gap: var(--tbf-space-1);
+  padding: var(--tbf-space-1);
+  background: color-mix(in srgb, var(--tbf-bg-primary) 70%, transparent);
+  border: 1px solid var(--tbf-border);
+  border-radius: var(--tbf-radius-full);
+  backdrop-filter: blur(8px);
+}
+
+.scrolly-lang-toggle__btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--tbf-space-2) var(--tbf-space-3);
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  background: transparent;
+  border: none;
+  border-radius: var(--tbf-radius-full);
+  cursor: pointer;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.scrolly-lang-toggle__btn[aria-pressed='true'] {
+  color: var(--tbf-text-primary);
+  background: var(--tbf-bg-secondary);
+}
+
+.scrolly-lang-toggle__btn:focus-visible {
+  outline: 2px solid var(--tbf-border-active);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .scrolly-lang-toggle {
+    /* Este override subia o botão para 12px do topo e o jogava POR BAIXO do
+       menu sanduíche da navegação, que ocupa o mesmo canto. Mobile-first não
+       é só encolher: é conferir quem já mora naquele espaço. O botão fica
+       abaixo da barra de navegação, onde o canto está livre. */
+    top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-2));
+    right: var(--tbf-space-3);
+  }
 }

@@ -13,6 +13,25 @@ import type { EditorialPost, SiteSettings } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ArticleScrolly } from './ArticleScrolly'
 import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import type { Lang } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+
+// ─── Idioma (ORD-03, corrigido na revisão do orquestrador) ──────────────────
+// A ORD-03 lia o Accept-Language do navegador aqui. Isso QUEBRAVA a página em
+// produção: ler cabeçalho força renderização dinâmica, e esta rota é gerada
+// estaticamente (generateStaticParams + revalidate). O sintoma era um 500 com
+// digest DYNAMIC_SERVER_USAGE, invisível no dev server, que renderiza tudo sob
+// demanda. Passou batido porque a ordem proibia rodar o build (para não brigar
+// com outro executor); o build do orquestrador pegou.
+//
+// A perda é pequena e o ganho é grande: os DOIS idiomas já vão no HTML, então
+// o servidor não precisa adivinhar nada. O idioma inicial sai de ?lang= (que
+// vence tudo) e, no cliente, do script que roda antes do primeiro paint lendo
+// a escolha salva e o idioma do navegador. A página volta a ser estática, que
+// é o que mantém a matéria rápida no celular.
+
+function resolveServerLang(langParam?: string): Lang {
+  return langParam === 'pt' || langParam === 'en' ? langParam : 'en'
+}
 
 // ─── Static Params ────────────────────────────────────────────────────────────
 
@@ -33,6 +52,40 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
+
+  // Piloto bilíngue do motor scrolly (ORD-03): vive fora do Sanity, então
+  // precisa do próprio branch de metadata — título/descrição no idioma
+  // servido + alternates.languages apontando pt-BR/en para a mesma URL com
+  // ?lang= trocado (D. SEO da ORD-03).
+  if (slug === theDayBrazilStoppedTranslatingItself.slug) {
+    const lang: Lang = 'en'
+    const article = theDayBrazilStoppedTranslatingItself
+    const canonicalPath = `/editorial/${slug}`
+
+    return {
+      title: article.heroTitle[lang],
+      description: article.deck[lang],
+      alternates: {
+        canonical: `${canonicalPath}?lang=${lang}`,
+        languages: {
+          'pt-BR': `${canonicalPath}?lang=pt`,
+          en: `${canonicalPath}?lang=en`,
+        },
+      },
+      openGraph: {
+        title: article.heroTitle[lang],
+        description: article.deck[lang],
+        type: 'article',
+        publishedTime: article.publishedAt,
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: article.heroTitle[lang],
+        description: article.deck[lang],
+      },
+    }
+  }
+
   try {
     const post = await sanityFetch<EditorialPost>(ARTICLE_QUERY, { slug })
     if (!post) return {}
@@ -163,16 +216,16 @@ export const revalidate = 3600
 
 export default async function ArticlePage({
   params,
-  searchParams,
 }: {
   params: Promise<{ slug: string }>
-  // ?ritmo=v1|v2 — comparação de ritmo vertical pedida pelo fundador. Some
-  // quando ele escolher a vencedora.
-  searchParams: Promise<{ ritmo?: string }>
 }) {
   const { slug } = await params
-  const { ritmo } = await searchParams
-  const rhythm = ritmo === 'v1' || ritmo === 'v2' ? ritmo : 'v0'
+  // Idioma e ritmo NÃO saem de parâmetro de URL lido no servidor: isso torna a
+  // rota dinâmica e derruba a página em produção (DYNAMIC_SERVER_USAGE), porque
+  // ela é gerada estaticamente. Os dois idiomas já vão no HTML, então quem
+  // decide é o script que roda antes do primeiro paint (ArticleScrolly).
+  const initialLang: Lang = 'en'
+  const rhythm = 'v0' as const
 
   let post: EditorialPost | null = null
   let siteSettings: SiteSettings | null = null
@@ -191,7 +244,12 @@ export default async function ArticlePage({
   // em cenas — 05_PILOTO-CENAS.md é a lei do roteiro).
   if (!post && slug === theDayBrazilStoppedTranslatingItself.slug) {
     return (
-      <ArticleScrolly tone="manifesto" article={theDayBrazilStoppedTranslatingItself} rhythm={rhythm} />
+      <ArticleScrolly
+        tone="manifesto"
+        article={theDayBrazilStoppedTranslatingItself}
+        rhythm={rhythm}
+        initialLang={initialLang}
+      />
     )
   }
 
