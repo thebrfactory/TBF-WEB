@@ -220,6 +220,10 @@
   flex: 1;
   height: 100%;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
   font-family: var(--tbf-type-micro-family);
   font-size: var(--tbf-type-micro-size);
   font-weight: 600;
@@ -236,7 +240,7 @@
     background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
-.lang-switch__btn[aria-pressed='true'] {
+.lang-switch__btn[data-active='true'] {
   color: var(--tbf-text-primary);
   background: var(--tbf-bg-secondary);
 }
