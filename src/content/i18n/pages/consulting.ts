@@ -13,7 +13,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Consulting | Branding & Business Development | .THE BRAZILIAN FACTORY.',
+    title: 'Consulting | Branding & Business Development',
     description:
       'Branding and business development consulting by .THE BRAZILIAN FACTORY. Creative and strategic infrastructure for brands and businesses under construction. By project, no agency, no package.',
     ogTitle: '.TBF. CONSULTING | Branding & Business Development',
@@ -122,7 +122,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Consulting | Branding & Business Development | .THE BRAZILIAN FACTORY.',
+    title: 'Consulting | Branding & Business Development',
     description:
       'Consultoria de branding e business development da .THE BRAZILIAN FACTORY. Infraestrutura criativa e estratégica para marcas e empresas em construção. Por projeto, sem agência e sem pacote.',
     ogTitle: '.TBF. CONSULTING | Branding & Business Development',

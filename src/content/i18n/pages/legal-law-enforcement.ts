@@ -12,7 +12,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Law Enforcement Guidelines | .THE BRAZILIAN FACTORY.',
+    title: 'Law Enforcement Guidelines',
     description: 'Guidelines for law enforcement and government authorities requesting information from .THE BRAZILIAN FACTORY.',
   },
 
@@ -96,7 +96,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Diretrizes para Autoridades | .THE BRAZILIAN FACTORY.',
+    title: 'Diretrizes para Autoridades',
     description: 'Diretrizes para autoridades policiais e órgãos governamentais que solicitem informações à .THE BRAZILIAN FACTORY.',
   },
 

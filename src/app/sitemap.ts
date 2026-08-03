@@ -10,6 +10,7 @@
 
 import type { MetadataRoute } from 'next'
 import { sanityFetch, ARTICLE_SLUGS_QUERY } from '@/lib/sanity'
+import { WORKS } from '@/app/(en)/creators/tavaristico/_data'
 
 const BASE_URL = 'https://thebrfactory.com'
 
@@ -19,18 +20,37 @@ type Rota = {
   priority: number
 }
 
-// Rotas estáticas com prioridade SEO (conforme 02_sitemap.md).
-// `/access` é noindex e por isso não entra.
+// Rotas estáticas, na ordem de importância SEO.
+// Toda rota daqui TEM de existir em app/(en) e app/(pt): o sitemap é uma promessa
+// ao buscador, e anunciar 404 custa confiança de domínio. Rota nova na árvore,
+// linha nova aqui.
+// Fora de propósito: `/access` (noindex) e `/studio` (CMS, não é página pública).
 const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
   { path: '/editorial', changeFrequency: 'daily', priority: 0.9 },
-  { path: '/labels/factoryofgrowth', changeFrequency: 'weekly', priority: 0.9 },
   { path: '/consulting', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/manifesto', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/labels', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/labels/factoryofgrowth', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/labels/thefioredaily', changeFrequency: 'weekly', priority: 0.8 },
+  { path: '/labels/runwayunited', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/ecosystem', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/melfiore', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/runway', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/creators/tavaristico', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/contact-us', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/publishing', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/press', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/factory', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/collective', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/careers', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/about/quick-facts', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/press/media', changeFrequency: 'monthly', priority: 0.5 },
+  { path: '/pitch/v2', changeFrequency: 'monthly', priority: 0.4 },
+  { path: '/pitch', changeFrequency: 'monthly', priority: 0.3 },
+  { path: '/legal/terms', changeFrequency: 'monthly', priority: 0.3 },
+  { path: '/legal/privacy', changeFrequency: 'monthly', priority: 0.3 },
+  { path: '/legal/conduct', changeFrequency: 'monthly', priority: 0.3 },
+  { path: '/legal/law-enforcement', changeFrequency: 'monthly', priority: 0.3 },
 ]
 
 /** Uma rota vira duas entradas, cada uma apontando para a irmã. */
@@ -56,13 +76,25 @@ function bilingue(rota: Rota): MetadataRoute.Sitemap {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const rotas: Rota[] = [...STATIC_ROUTES]
 
+  // Portfólio do .TAVARÍSTICO.: os trabalhos vivem em dado local, não no CMS.
+  for (const { slug } of WORKS) {
+    rotas.push({
+      path: `/creators/tavaristico/works/${slug}`,
+      changeFrequency: 'monthly',
+      priority: 0.5,
+    })
+  }
+
   try {
     const slugs = await sanityFetch<{ slug: string }[]>(ARTICLE_SLUGS_QUERY)
     for (const { slug } of slugs) {
       rotas.push({ path: `/editorial/${slug}`, changeFrequency: 'weekly', priority: 0.8 })
     }
-  } catch {
-    // Sanity offline — sobem só as rotas estáticas
+  } catch (erro) {
+    // Sanity fora do ar: sobem só as rotas estáticas, e o sitemap perde TODAS as
+    // matérias sem avisar ninguém. Foi exatamente o que aconteceu em produção, então
+    // o erro passa a ser gritado no log em vez de engolido em silêncio.
+    console.error('[sitemap] slugs das materias nao vieram do Sanity:', erro)
   }
 
   return rotas.flatMap(bilingue)

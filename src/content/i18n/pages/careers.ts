@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Careers | .THE BRAZILIAN FACTORY.',
+    title: 'Careers',
     description:
       'Join the team building .THE BRAZILIAN FACTORY. A creative company at the intersection of culture, fashion, wellness and growth.',
   },
@@ -42,7 +42,7 @@ const en = {
     h2: 'Current openings',
     p1: 'We do not always have a formal listing open, but we are always looking for exceptional people. If you have a perspective on what you would build here and why it would matter, send us a message.',
     p2: 'Areas we are always interested in: editorial, creative direction, photography, video, community management, design, brand strategy, and growth.',
-    email: 'careers@thebrfactory.com',
+    email: 'contact@thebrfactory.com',
   },
 
   howWeWork: {
@@ -58,7 +58,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Carreiras | .THE BRAZILIAN FACTORY.',
+    title: 'Carreiras',
     description:
       'Junte-se ao time que constrói a .THE BRAZILIAN FACTORY. Uma empresa criativa na interseção entre cultura, moda, bem-estar e growth.',
   },
@@ -93,7 +93,7 @@ const pt: typeof en = {
     h2: 'Oportunidades atuais',
     p1: 'Nem sempre temos uma vaga formal aberta, mas estamos sempre em busca de gente excepcional. Se você tem uma visão do que construiria aqui e por que isso importaria, manda uma mensagem pra gente.',
     p2: 'Áreas que sempre nos interessam: editorial, direção criativa, fotografia, vídeo, gestão de comunidade, design, estratégia de marca e growth.',
-    email: 'careers@thebrfactory.com',
+    email: 'contact@thebrfactory.com',
   },
 
   howWeWork: {

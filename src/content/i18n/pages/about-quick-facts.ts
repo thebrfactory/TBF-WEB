@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Quick Facts | .THE BRAZILIAN FACTORY.',
+    title: 'Quick Facts',
     description:
       'Key facts and figures about .THE BRAZILIAN FACTORY. Founding date, labels, location and company data.',
   },
@@ -62,7 +62,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Dados Rápidos | .THE BRAZILIAN FACTORY.',
+    title: 'Dados Rápidos',
     description:
       'Principais dados e números sobre a .THE BRAZILIAN FACTORY. Data de fundação, labels, localização e dados da empresa.',
   },

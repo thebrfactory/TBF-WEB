@@ -9,7 +9,9 @@ import { languageAlternates } from '@/lib/i18n'
 const t = home.pt
 
 export const metadata: Metadata = {
-  title: t.meta.title,
+  // `absolute` porque o title da home JÁ É a marca: sem isso o template do layout
+  // ('%s | .THE BRAZILIAN FACTORY.') carimbaria a marca em cima da marca.
+  title: { absolute: t.meta.title },
   description: t.meta.description,
   alternates: languageAlternates('/'),
   openGraph: {

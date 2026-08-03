@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Media Resources | .THE BRAZILIAN FACTORY.',
+    title: 'Media Resources',
     description:
       'Official brand assets, logos, visual identity guidelines and photography resources from .THE BRAZILIAN FACTORY. for editorial and press use.',
   },
@@ -85,7 +85,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Media Resources | .THE BRAZILIAN FACTORY.',
+    title: 'Media Resources',
     description:
       'Ativos de marca oficiais, logos, guia de identidade visual e fotografia da .THE BRAZILIAN FACTORY. para uso editorial e de imprensa.',
   },

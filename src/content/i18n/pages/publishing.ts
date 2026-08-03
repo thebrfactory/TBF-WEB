@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Publishing | .THE BRAZILIAN FACTORY.',
+    title: 'Publishing',
     description:
       '.THE BRAZILIAN FACTORY. Publishing: editorial content, creative contributions and brand storytelling from inside the .TBF. ecosystem.',
   },
@@ -46,7 +46,7 @@ const en = {
     p1: 'We are open to editorial pitches, photography submissions and creative partnerships from independent writers, photographers, designers and cultural thinkers. We prioritize work that is specific, rigorous and culturally grounded.',
     p2: 'Before reaching out, explore our editorial to understand the kind of work we publish. Pitches that align with our existing voice and topics are far more likely to be considered.',
     pitchLabel: 'Editorial pitches',
-    pitchEmail: 'pitch@thebrfactory.com',
+    pitchEmail: 'contact@thebrfactory.com',
     partnershipsLabel: 'Brand partnerships',
     partnershipsEmail: 'press@thebrfactory.com',
   },
@@ -60,7 +60,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Publishing | .THE BRAZILIAN FACTORY.',
+    title: 'Publishing',
     description:
       'Publishing da .THE BRAZILIAN FACTORY.: conteúdo editorial, contribuições criativas e narrativas de marca de dentro do ecossistema .TBF.',
   },
@@ -97,7 +97,7 @@ const pt: typeof en = {
     p1: 'Estamos abertos a pautas editoriais, envio de fotografia e parcerias criativas de escritores, fotógrafos, designers e pensadores independentes. Priorizamos trabalho específico, rigoroso e culturalmente ancorado.',
     p2: 'Antes de entrar em contato, explore nosso editorial para entender o tipo de trabalho que publicamos. Pautas alinhadas com nossa voz e temas atuais têm muito mais chance de serem consideradas.',
     pitchLabel: 'Pautas editoriais',
-    pitchEmail: 'pitch@thebrfactory.com',
+    pitchEmail: 'contact@thebrfactory.com',
     partnershipsLabel: 'Parcerias de marca',
     partnershipsEmail: 'press@thebrfactory.com',
   },

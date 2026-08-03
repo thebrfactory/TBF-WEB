@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Press Room | .THE BRAZILIAN FACTORY.',
+    title: 'Press Room',
     description:
       'Official source for .THE BRAZILIAN FACTORY. news, announcements, brand assets and media inquiries.',
   },
@@ -64,7 +64,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Press Room | .THE BRAZILIAN FACTORY.',
+    title: 'Press Room',
     description:
       'Fonte oficial de notícias, anúncios, ativos de marca e contatos de imprensa da .THE BRAZILIAN FACTORY.',
   },

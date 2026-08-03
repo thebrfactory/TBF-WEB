@@ -10,7 +10,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Privacy Policy | .THE BRAZILIAN FACTORY.',
+    title: 'Privacy Policy',
     description:
       'Privacy Policy for .THE BRAZILIAN FACTORY. digital properties. Compliant with Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018).',
   },
@@ -77,7 +77,7 @@ const en = {
 
   s11Title: '11. Contact & Data Controller',
   s11Body: 'For privacy inquiries, data subject requests or to contact our Data Protection Officer:',
-  email: 'privacidade@thebrfactory.com',
+  email: 'legal@thebrfactory.com',
   addressBlock: ['.TBF. INC · CNPJ 61.360.565/0001-74', 'R. Pamplona, 145. Jardim Paulista', 'São Paulo, SP. 01405-100 · Brasil'] as [
     string,
     string,
@@ -87,7 +87,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Política de Privacidade | .THE BRAZILIAN FACTORY.',
+    title: 'Política de Privacidade',
     description:
       'Política de Privacidade das propriedades digitais da .THE BRAZILIAN FACTORY. Em conformidade com a Lei Geral de Proteção de Dados (LGPD, Lei 13.709/2018).',
   },
@@ -151,7 +151,7 @@ const pt: typeof en = {
 
   s11Title: '11. Contato e Controladora de Dados',
   s11Body: 'Para dúvidas sobre privacidade, solicitações do titular dos dados ou contato com nosso Encarregado de Proteção de Dados (DPO):',
-  email: 'privacidade@thebrfactory.com',
+  email: 'legal@thebrfactory.com',
   addressBlock: ['.TBF. INC · CNPJ 61.360.565/0001-74', 'R. Pamplona, 145, Jardim Paulista', 'São Paulo, SP, 01405-100 · Brasil'],
 }
 

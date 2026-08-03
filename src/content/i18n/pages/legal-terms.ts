@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Terms of Service | .THE BRAZILIAN FACTORY.',
+    title: 'Terms of Service',
     description: 'Terms of Service for thebrfactory.com and all .TBF. digital properties.',
   },
 
@@ -78,7 +78,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Termos de Uso | .THE BRAZILIAN FACTORY.',
+    title: 'Termos de Uso',
     description: 'Termos de Uso do thebrfactory.com e de todas as propriedades digitais da .TBF.',
   },
 

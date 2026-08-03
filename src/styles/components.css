@@ -810,6 +810,38 @@
   }
 }
 
+/* Enquanto o aviso de cookies está aberto, a assinatura do hero da home sobe o
+   tanto exato da altura dele (medida no componente) mais uma folga. Sem isso o
+   card cortava ".THE BRAZILIAN FACTORY." ao meio no primeiro load, no mobile e
+   no desktop: os dois são ancorados na base. Respondeu o aviso, o hero volta
+   sozinho para a composição desenhada.
+   Só o hero da home: nas outras rotas a assinatura não disputa esse canto. */
+[data-cookie-banner='open'] .hero--home {
+  padding-bottom: calc(
+    var(--tbf-hero-padding-sm) + var(--tbf-cookie-banner-h, 0px) + var(--tbf-space-4)
+  );
+}
+
+@media (min-width: 1280px) {
+  [data-cookie-banner='open'] .hero--home {
+    padding-bottom: calc(
+      var(--tbf-hero-padding-xl) + var(--tbf-cookie-banner-h, 0px) + var(--tbf-space-4)
+    );
+  }
+}
+
+/* A volta ao lugar é animada; a subida não precisa ser, o aviso já entra junto. */
+.hero--home {
+  transition: padding-bottom var(--tbf-motion-duration-reveal-cta)
+    var(--tbf-motion-easing-reveal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero--home {
+    transition: none;
+  }
+}
+
 /* ── Hero da HOME — logo + deck alinhados, junto à base do vídeo ── */
 /* Mobile-first: grupo ocupa toda a largura (logo de margem a margem),
    ancorado embaixo (.hero já é align-items: flex-end + padding-bottom). */

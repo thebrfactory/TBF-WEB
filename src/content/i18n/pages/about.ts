@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'About Us | .THE BRAZILIAN FACTORY.',
+    title: 'About Us',
     description:
       '.THE BRAZILIAN FACTORY. is a multi-label creative company born in São Paulo, built to give Brazilian culture a global platform.',
   },
@@ -59,7 +59,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Sobre Nós | .THE BRAZILIAN FACTORY.',
+    title: 'Sobre Nós',
     description:
       '.THE BRAZILIAN FACTORY. é uma empresa criativa multilabel nascida em São Paulo, construída para dar à cultura brasileira uma plataforma global.',
   },

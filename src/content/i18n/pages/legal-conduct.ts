@@ -6,7 +6,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Code of Conduct | .THE BRAZILIAN FACTORY.',
+    title: 'Code of Conduct',
     description:
       'Community standards and behavioral guidelines for all .THE BRAZILIAN FACTORY. digital properties and interactions.',
   },
@@ -69,7 +69,7 @@ const en = {
   s7Title: '7. Contact',
   s7Body: ['Questions about this Code of Conduct may be directed to', '.'] as [string, string],
 
-  email: 'conduta@thebrfactory.com',
+  email: 'legal@thebrfactory.com',
   addressBlock: ['.TBF. INC · CNPJ 61.360.565/0001-74', 'R. Pamplona, 145. Jardim Paulista', 'São Paulo, SP. 01405-100 · Brasil'] as [
     string,
     string,
@@ -79,7 +79,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Código de Conduta | .THE BRAZILIAN FACTORY.',
+    title: 'Código de Conduta',
     description:
       'Padrões de comunidade e diretrizes de comportamento para todas as propriedades digitais e interações da .THE BRAZILIAN FACTORY.',
   },
@@ -141,7 +141,7 @@ const pt: typeof en = {
   s7Title: '7. Contato',
   s7Body: ['Dúvidas sobre este Código de Conduta podem ser direcionadas ao', '.'],
 
-  email: 'conduta@thebrfactory.com',
+  email: 'legal@thebrfactory.com',
   addressBlock: ['.TBF. INC · CNPJ 61.360.565/0001-74', 'R. Pamplona, 145, Jardim Paulista', 'São Paulo, SP, 01405-100 · Brasil'],
 }
 

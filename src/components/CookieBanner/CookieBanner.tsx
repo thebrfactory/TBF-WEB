@@ -26,7 +26,7 @@
 // subsequente — evita reabrir/adiar um banner que o visitante já viu.
 // =============================================================================
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { readConsent, writeConsent } from '@/lib/consent'
@@ -39,6 +39,7 @@ const ARTICLE_ROUTE_PATTERN = /^\/editorial\/[^/]+\/?$/
 
 export function CookieBanner() {
   const pathname = usePathname()
+  const cardRef = useRef<HTMLDivElement>(null)
   const [visible, setVisible] = useState(false)
   const [showPrefs, setShowPrefs] = useState(false)
   const [analytics, setAnalytics] = useState(true)
@@ -76,6 +77,38 @@ export function CookieBanner() {
     }
   }, [])
 
+  // O card é ancorado embaixo, e a assinatura do hero da home também: sem aviso
+  // nenhum, os dois disputam o mesmo canto e o aviso cortava ".THE BRAZILIAN
+  // FACTORY." ao meio no primeiro load. Em vez de mudar o desenho do card, o
+  // banner ANUNCIA sua presença e sua altura real (medida, não chutada, porque o
+  // texto quebra em número diferente de linhas por idioma e por largura de tela)
+  // e quem se mexe é o hero, que sobe o tanto exato e volta ao lugar quando o
+  // visitante responde. Ver `[data-cookie-banner]` em styles/components.css.
+  useEffect(() => {
+    const raiz = document.documentElement
+    const card = cardRef.current
+    if (!visible || !card) {
+      raiz.removeAttribute('data-cookie-banner')
+      raiz.style.removeProperty('--tbf-cookie-banner-h')
+      return
+    }
+
+    const medir = () => {
+      raiz.style.setProperty('--tbf-cookie-banner-h', `${card.offsetHeight}px`)
+      raiz.setAttribute('data-cookie-banner', 'open')
+    }
+    medir()
+
+    // Abrir as preferências ou girar o aparelho muda a altura do card.
+    const observer = new ResizeObserver(medir)
+    observer.observe(card)
+    return () => {
+      observer.disconnect()
+      raiz.removeAttribute('data-cookie-banner')
+      raiz.style.removeProperty('--tbf-cookie-banner-h')
+    }
+  }, [visible])
+
   // Grava e avisa (1) o NewsletterPopup, que só aparece depois da escolha de
   // cookies, e (2) o ConsentedAnalytics, que liga/desliga o Vercel na hora.
   function persist(allowAnalytics: boolean) {
@@ -92,6 +125,7 @@ export function CookieBanner() {
 
   return (
     <div
+      ref={cardRef}
       className="cookie-banner"
       role="dialog"
       aria-live="polite"

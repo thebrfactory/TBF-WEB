@@ -41,7 +41,9 @@ export async function POST(request: NextRequest) {
 
     // Integração com Resend (quando configurado via env)
     const resendApiKey = process.env.RESEND_API_KEY
-    const recipientEmail = process.env.CONTACT_EMAIL ?? 'thebrazilianfactory@gmail.com'
+    // Destino padrão é a caixa da MARCA, não o Gmail pessoal: quem escreve pelo site
+    // entra no canal oficial. CONTACT_EMAIL segue podendo redirecionar por env.
+    const recipientEmail = process.env.CONTACT_EMAIL ?? 'contact@thebrfactory.com'
 
     if (resendApiKey) {
       const emailPayload = {
