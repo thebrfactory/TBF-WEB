@@ -180,59 +180,36 @@ function DeckNav() {
   //
   // O `scrollIntoView({block:'start'})` MORRE NO MEIO quando o destino está
   // acima da posição atual: voltando do movimento 02 para a capa, ele parava em
-  // ~222px em vez de 0 (o encaixe `scroll-snap-type: y proximity` do html
-  // captura a rolagem programática em voo e a abandona num ponto que não é nem
-  // o de partida nem o de chegada). Descendo o mesmo código acerta, o que
-  // esconde o defeito de quem só testa o botão "próximo".
-  // `window.scrollTo` com o alvo já resolvido não sofre disso — medido nos dois
-  // sentidos, em todos os 13 movimentos. O desconto é o `scroll-margin-top` da
-  // própria seção (a faixa de nav + letreiro pinada no topo), lido do CSS em
-  // vez de repetido aqui, para os dois nunca se descolarem.
+  // ~222px em vez de 0. `window.scrollTo` com o alvo já resolvido não sofre
+  // disso. O desconto é o `scroll-margin-top` da própria seção (a faixa de nav
+  // + letreiro pinada no topo), lido do CSS em vez de repetido aqui, para os
+  // dois nunca se descolarem.
   //
-  // O ENCAIXE SAI DO CAMINHO DURANTE A VIAGEM (bug relatado 2026-08-08).
-  // Trocar `scrollIntoView` por `window.scrollTo` resolveu o alvo, não a causa:
-  // com `scroll-snap-type: y proximity` ligado no html, o navegador reavalia o
-  // encaixe DURANTE a rolagem suave, encontra um ponto de parada no meio do
-  // caminho e abandona a viagem ali. Voltando do movimento 02 para a capa, a
-  // página parava em ~151px, nem no ponto de partida nem no de chegada: era
-  // exatamente o "fica parado no meio".
+  // O FOCO NO BOTÃO MATAVA A VIAGEM (bug relatado 2026-08-08: "quando aperto pra
+  // voltar na página 2, não volta para a capa, fica parado no meio").
   //
-  // Aqui o encaixe é desligado antes de partir e RELIGADO na chegada. Chegada é
-  // detectada por quadro: ou o alvo foi alcançado, ou a página parou de se
-  // mexer (cobre o caso de o destino ser mais alto do que o documento permite
-  // rolar). O teto de tempo existe para o encaixe nunca ficar desligado se algo
-  // interromper a viagem no meio.
+  // A causa não é o encaixe de scroll, como parecia. Um clique de verdade deixa
+  // o botão FOCADO. Ao chegar na capa, o botão "anterior" vira `disabled`, e
+  // então o navegador precisa tirar o foco de um elemento desabilitado: essa
+  // mudança de foco cancela a rolagem suave que ainda estava em voo, e a página
+  // congela onde estiver (medido: 332px). Prova do diagnóstico, na build de
+  // produção, saindo sempre do mesmo ponto: pela tecla ← chega em 0; por
+  // `.click()` de script chega em 0; por clique de MOUSE para em 332; e com o
+  // foco impedido no mousedown, o mesmo clique de mouse chega em 0.
+  //
+  // Por isso o foco sai ANTES de partir. Quem navega pelo teclado não perde
+  // nada: as setas ← e → são ouvidas na janela, não no botão.
   const go = useCallback((index: number) => {
     const target = MOVEMENTS[Math.max(0, Math.min(MOVEMENTS.length - 1, index))]
     const el = document.getElementById(target.id)
     if (!el) return
+
+    const focado = document.activeElement
+    if (focado instanceof HTMLElement && focado !== document.body) focado.blur()
+
     const band = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
     const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - band)
-
-    const root = document.documentElement
-    root.style.scrollSnapType = 'none'
-
-    let quadros = 0
-    let ultimo = -1
-    let parado = 0
-    const religar = () => {
-      root.style.scrollSnapType = ''
-    }
-    const observar = () => {
-      const y = Math.round(window.scrollY)
-      if (Math.abs(y - top) <= 2) return religar()
-      if (y === ultimo) {
-        if (++parado >= 4) return religar() // a página parou onde deu
-      } else {
-        parado = 0
-        ultimo = y
-      }
-      if (++quadros > 180) return religar() // teto de ~3s: nunca fica desligado
-      requestAnimationFrame(observar)
-    }
-
     window.scrollTo({ top, behavior: 'smooth' })
-    requestAnimationFrame(observar)
   }, [])
 
   useEffect(() => {
