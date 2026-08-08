@@ -216,7 +216,40 @@
   }
 }
 
+/* A BOLINHA. Antes o estado ativo era o fundo do próprio botão: ele acendia num
+   lado e apagava no outro, sem nada atravessando o meio. Agora existe UM
+   elemento, e ele viaja.
+
+   A medida sai da própria pílula, não de número mágico: metade do espaço útil
+   (largura menos os 3px de padding de cada lado) menos metade do vão de 2px
+   entre os dois botões. Mudar --tbf-lang-switch-w continua acertando sozinho.
+
+   Fica ATRÁS dos rótulos (z-index) — os botões sobem para z-index 1, senão a
+   bolinha cobre o texto e some com o "PT". */
+.lang-switch__thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  z-index: 0;
+  width: calc((100% - 6px - 2px) / 2);
+  height: calc(100% - 6px);
+  background: var(--tbf-bg-secondary);
+  border-radius: var(--tbf-radius-full);
+  transform: translateX(0);
+  /* Desaceleração longa da casa: a bolinha sai rápido e CHEGA devagar, que é o
+     que faz o movimento parecer peso e não animação. Duração acima da micro
+     (150ms) de propósito — o percurso é longo e a 150ms vira teleporte. */
+  transition: transform var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
+}
+
+/* O deslocamento é a largura da própria bolinha mais o vão. */
+.lang-switch[data-lang='en'] .lang-switch__thumb {
+  transform: translateX(calc(100% + 2px));
+}
+
 .lang-switch__btn {
+  position: relative;
+  z-index: 1;
   flex: 1;
   height: 100%;
   padding: 0;
@@ -235,14 +268,18 @@
   box-shadow: none;
   border-radius: var(--tbf-radius-full);
   cursor: pointer;
+  /* Mesma duração e mesma curva da bolinha: o texto acende no ritmo em que ela
+     chega, em vez de trocar antes e denunciar duas animações separadas. */
   transition:
-    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out),
     background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
+/* O fundo saiu daqui: quem pinta o estado ativo agora é a bolinha. Sobrou a
+   cor do texto, que troca junto com a viagem dela. */
 .lang-switch__btn[data-active='true'] {
   color: var(--tbf-text-primary);
-  background: var(--tbf-bg-secondary);
+  background: transparent;
 }
 
 .lang-switch__btn:hover {
@@ -255,7 +292,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lang-switch__btn {
+  .lang-switch__btn,
+  .lang-switch__thumb {
     transition: none;
   }
 }
@@ -453,10 +491,87 @@
   color: var(--tbf-text-primary);
 }
 
+/* FAROL DA MARCA (pedido do fundador 2026-08-08) — enquanto o popup está aberto
+   o site inteiro fica em grayscale, e só isso não explicava POR QUE. O .svg
+   TBF SÃO PAULO passa a respirar: é ele que aponta para a origem do efeito.
+
+   Por que a curva mora nos KEYFRAMES e o timing é `linear`: qualquer easing
+   pronto (inclusive o ease-in-out da casa, que é agressivo de propósito) dá
+   uma piscada de LED — sobe e desce rápido e para nos extremos. Uma lâmpada
+   não faz isso. Os oito passos abaixo são uma cossenoide amostrada
+   (o = 0,66 + 0,34·cos 2πt), que é o desenho físico de luz subindo e caindo.
+
+   A sombra branca só existe perto do pico, e cresce ao QUADRADO da opacidade:
+   no vale ela é zero, no topo ela é o brilho. É isso que separa luminosidade
+   de brilho artificial — o halo não acompanha a opacidade, ele chega depois.
+   Duas camadas (7px densa + 22px difusa) porque uma sombra só vira contorno. */
+.newsletter-popup__brand {
+  will-change: opacity, filter;
+}
+
+.newsletter-popup--open .newsletter-popup__brand {
+  /* 3000ms era respiração de quem está dormindo. 1700ms é a batida de um farol:
+     ainda é luz subindo e caindo, mas com pressa de ser notada (pedido do
+     fundador 2026-08-08, "mais rápido"). */
+  animation: tbf-brand-beacon 1700ms linear infinite;
+}
+
+@keyframes tbf-brand-beacon {
+  0%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.42))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.18));
+  }
+  12.5% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.305))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.131));
+  }
+  25% {
+    opacity: 0.66;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.105))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.045));
+  }
+  37.5% {
+    opacity: 0.42;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.009))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.004));
+  }
+  50% {
+    opacity: 0.32;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0));
+  }
+  62.5% {
+    opacity: 0.42;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.009))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.004));
+  }
+  75% {
+    opacity: 0.66;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.105))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.045));
+  }
+  87.5% {
+    opacity: 0.9;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.305))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.131));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .newsletter-popup,
   .newsletter-popup-overlay {
     transition: none;
+  }
+
+  /* Sem pulsação para quem pediu menos movimento — o logotipo fica no pico da
+     luz, que é o estado que ele teria com a animação parada. */
+  .newsletter-popup--open .newsletter-popup__brand {
+    animation: none;
+    filter: drop-shadow(0 0 7px rgba(255, 255, 255, 0.42))
+            drop-shadow(0 0 22px rgba(255, 255, 255, 0.18));
   }
 }
 
@@ -528,11 +643,23 @@
 
 /* Cidades sob gestão. Bloco entre "Consumed Worldwide." e as colunas de
    navegação, em todas as páginas. */
+/* DE PONTA A PONTA (pedido do fundador 2026-08-08). O letreiro nascia dentro do
+   `.footer__inner`, que é centrado e tem teto de 1152px: numa tela de 1440px ele
+   corria dentro de uma caixa de 1152px e as palavras eram cortadas no meio, com
+   a listra pontilhada parando antes da borda. Letreiro cortado no meio da
+   palavra parece defeito, não desenho.
+
+   `margin-inline: calc(50% - 50vw)` é o que devolve a largura da JANELA a um
+   filho de container centrado, sem depender de saber quanto de padding existe
+   acima dele. O `body` já tem overflow-x: hidden, então os 100vw não criam
+   rolagem lateral. */
 .footer__cities {
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-2);
   margin-top: var(--tbf-space-10);
+  width: 100vw;
+  margin-inline: calc(50% - 50vw);
 }
 
 .footer__cities-label {
@@ -1050,21 +1177,16 @@
   top: auto;
 }
 
-/* Letreiro de cidades do rodapé: mesma mecânica, tipografia da linha de cidades
-   que ele substitui (display 800, caixa alta). */
+/* Letreiro de cidades do rodapé. Desde 2026-08-08 ele é o MESMO letreiro do
+   topo: mesma altura, mesma tipografia, mesmo fundo, mesma listra pontilhada
+   (pedido do fundador). Ele herdava a tipografia da linha de cidades que
+   substituiu (display 800, até 1.35rem) e por isso parecia outro elemento, num
+   corpo grande demais que ainda por cima estourava a caixa do rodapé.
+   A classe continua existindo como ponto de encaixe: a diferença entre os dois
+   letreiros passa a ser só uma, o de cima é pinado e o de baixo corre no fluxo
+   (`.ticker--flow`). */
 .ticker--cities {
-  height: auto;
-  padding-block: var(--tbf-space-3);
-  background-color: transparent;
-}
-
-.ticker--cities .ticker__item {
-  font-family: var(--tbf-font-family-display);
-  font-size: clamp(0.9rem, 2.4vw, 1.35rem);
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--tbf-text-primary);
+  background-color: var(--tbf-ticker-bg);
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).

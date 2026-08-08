@@ -13,7 +13,6 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 import { readConsent } from '@/lib/consent'
 import { useLang } from '@/lib/LangProvider'
@@ -111,12 +110,17 @@ export function NewsletterPopup() {
           </svg>
         </button>
 
+        {/* O logotipo respira enquanto o popup está aberto (pedido do fundador
+            2026-08-08): o site em preto e branco sozinho não explicava a causa
+            do efeito, e a marca acesa é o que puxa o olho até aqui. A curva da
+            luz mora no CSS (.newsletter-popup__brand, components.css). */}
         <Image
           src="/brand/TBF-SAO-PAULO.svg"
           alt={brandAlt}
           width={140}
           height={100}
           unoptimized
+          className="newsletter-popup__brand"
           style={{ width: 'auto', height: 44, marginBottom: 'var(--tbf-space-6)' }}
         />
 
@@ -195,11 +199,25 @@ export function NewsletterPopup() {
                 fontSize: 'var(--tbf-type-caption-size-sm)',
                 lineHeight: 1.5,
                 color: 'var(--tbf-text-tertiary)',
+                // O aviso de nova guia caía sozinho na última linha, órfão. O
+                // navegador reequilibra as linhas em vez de empurrar a sobra
+                // toda para o fim.
+                textWrap: 'pretty',
               }}
             >
               {t.privacyPrefix}
-              <Link
+              {/* NOVA GUIA (pedido do fundador 2026-08-08). O popup pode aparecer
+                  em QUALQUER página, inclusive no meio de uma matéria: mandar a
+                  pessoa para a política de privacidade na mesma aba tirava ela de
+                  onde estava. Abrir em segundo plano (a aba nasce atrás) não tem
+                  API — só o navegador decide isso, no cmd/ctrl+clique do usuário.
+                  Como ele mesmo pediu, a melhor decisão possível: nova guia +
+                  aviso escrito de que ela vai abrir, para ninguém se perder.
+                  É <a>, não <Link>: destino externo à navegação de cliente. */}
+              <a
                 href={localizedPath('/legal/privacy', lang)}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   color: 'inherit',
                   textDecoration: 'underline',
@@ -207,8 +225,10 @@ export function NewsletterPopup() {
                 }}
               >
                 {privacyLabel}
-              </Link>
-              .
+                <span aria-hidden="true"> ↗</span>
+              </a>
+              {' '}
+              <span style={{ opacity: 0.72 }}>{t.newTabNotice}</span>
             </p>
 
             {status === 'error' && (

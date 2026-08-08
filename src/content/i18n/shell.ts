@@ -62,6 +62,9 @@ const en = {
     emailAriaLabel: 'Email address',
     submitLabel: 'Subscribe',
     privacyPrefix: 'By subscribing, you agree to our ',
+    // Aviso de nova guia: o link da política abre fora da página atual, e quem
+    // clica precisa saber disso ANTES (pedido do fundador 2026-08-08).
+    newTabNotice: '(new tab)',
   },
 
   // Aviso de cookies (CookieBanner) + botão de reabertura no rodapé
@@ -99,6 +102,7 @@ const en = {
       access: 'Access',
       pitch1: 'Pitch 1.0',
       pitch2: 'Pitch 2.0',
+      pitch3: 'Pitch 3.0',
       consulting: 'Consulting',
       press: 'Press Room',
       about: 'About Us',
@@ -166,6 +170,7 @@ const pt: typeof en = {
     emailAriaLabel: 'Endereço de e-mail',
     submitLabel: 'Inscrever-se',
     privacyPrefix: 'Ao se inscrever, você concorda com a nossa ',
+    newTabNotice: '(nova guia)',
   },
 
   // Texto ORIGINAL do banner, só movido pro dicionário — nenhuma palavra
@@ -201,6 +206,7 @@ const pt: typeof en = {
       access: 'Acesso',
       pitch1: 'Pitch 1.0',
       pitch2: 'Pitch 2.0',
+      pitch3: 'Pitch 3.0',
       consulting: 'Consultoria',
       press: 'Sala de Imprensa',
       about: 'Sobre',

@@ -41,6 +41,7 @@ const NAV_COLUMNS = [
       // um deck do outro no rodapé.
       { href: '/pitch', linkKey: 'pitch1' },
       { href: '/pitch/v2', linkKey: 'pitch2' },
+      { href: '/pitch/v3', linkKey: 'pitch3' },
     ],
   },
   {

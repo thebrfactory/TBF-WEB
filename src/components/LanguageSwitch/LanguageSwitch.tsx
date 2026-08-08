@@ -25,6 +25,7 @@
 // idioma o tempo todo.
 // =============================================================================
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { localizedPath, splitLang, type Lang } from '@/lib/i18n'
@@ -44,20 +45,48 @@ export function LanguageSwitch() {
   const pathname = usePathname() || '/'
   const { lang, path } = splitLang(pathname)
 
+  // A BOLINHA ATRAVESSA A PÍLULA (pedido do fundador 2026-08-08).
+  //
+  // O problema de desenho: trocar de idioma é um carregamento COMPLETO de
+  // página (dois root layouts, ver o comentário acima). Se a bolinha só
+  // dependesse da URL, ela já nasceria do outro lado na página nova e ninguém
+  // veria movimento nenhum — a troca seria um salto seco.
+  //
+  // `indo` é o idioma clicado. Ele desloca a bolinha NA HORA do clique, enquanto
+  // o navegador ainda está buscando a página nova: a viagem acontece por cima da
+  // página velha, que continua na tela até o documento novo chegar. Nada segura
+  // a navegação — o link é um link de verdade e vai embora no mesmo instante.
+  // Chegando a página nova, o componente remonta e o estado zera sozinho.
+  const [indo, setIndo] = useState<Lang | null>(null)
+  const mostrado = indo ?? lang
+
   if (SEM_GEMEO.some((p) => path === p || path.startsWith(p + '/'))) return null
 
   return (
-    <div className="lang-switch" role="group" aria-label="Idioma / Language">
+    <div
+      className="lang-switch"
+      data-lang={mostrado}
+      role="group"
+      aria-label="Idioma / Language"
+    >
+      {/* A bolinha. Era o fundo do botão ativo (aparecia e sumia); agora é UM
+          elemento só que escorrega entre as duas pontas. */}
+      <span className="lang-switch__thumb" aria-hidden="true" />
+
       {ORDER.map((code) => {
-        const active = code === lang
+        // `aria-current` segue a URL (o que a página É), o traço visual segue o
+        // destino do clique (para onde ela está indo). Só divergem durante o
+        // carregamento.
+        const real = code === lang
         return (
           <Link
             key={code}
             href={localizedPath(pathname, code)}
             className="lang-switch__btn"
-            data-active={active}
+            data-active={code === mostrado}
             hrefLang={code}
-            aria-current={active ? 'true' : undefined}
+            aria-current={real ? 'true' : undefined}
+            onClick={() => setIndo(code)}
           >
             {code.toUpperCase()}
           </Link>

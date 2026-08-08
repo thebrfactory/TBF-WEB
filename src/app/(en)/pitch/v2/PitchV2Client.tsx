@@ -188,13 +188,51 @@ function DeckNav() {
   // sentidos, em todos os 13 movimentos. O desconto é o `scroll-margin-top` da
   // própria seção (a faixa de nav + letreiro pinada no topo), lido do CSS em
   // vez de repetido aqui, para os dois nunca se descolarem.
+  //
+  // O ENCAIXE SAI DO CAMINHO DURANTE A VIAGEM (bug relatado 2026-08-08).
+  // Trocar `scrollIntoView` por `window.scrollTo` resolveu o alvo, não a causa:
+  // com `scroll-snap-type: y proximity` ligado no html, o navegador reavalia o
+  // encaixe DURANTE a rolagem suave, encontra um ponto de parada no meio do
+  // caminho e abandona a viagem ali. Voltando do movimento 02 para a capa, a
+  // página parava em ~151px, nem no ponto de partida nem no de chegada: era
+  // exatamente o "fica parado no meio".
+  //
+  // Aqui o encaixe é desligado antes de partir e RELIGADO na chegada. Chegada é
+  // detectada por quadro: ou o alvo foi alcançado, ou a página parou de se
+  // mexer (cobre o caso de o destino ser mais alto do que o documento permite
+  // rolar). O teto de tempo existe para o encaixe nunca ficar desligado se algo
+  // interromper a viagem no meio.
   const go = useCallback((index: number) => {
     const target = MOVEMENTS[Math.max(0, Math.min(MOVEMENTS.length - 1, index))]
     const el = document.getElementById(target.id)
     if (!el) return
     const band = parseFloat(getComputedStyle(el).scrollMarginTop) || 0
     const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - band)
+
+    const root = document.documentElement
+    root.style.scrollSnapType = 'none'
+
+    let quadros = 0
+    let ultimo = -1
+    let parado = 0
+    const religar = () => {
+      root.style.scrollSnapType = ''
+    }
+    const observar = () => {
+      const y = Math.round(window.scrollY)
+      if (Math.abs(y - top) <= 2) return religar()
+      if (y === ultimo) {
+        if (++parado >= 4) return religar() // a página parou onde deu
+      } else {
+        parado = 0
+        ultimo = y
+      }
+      if (++quadros > 180) return religar() // teto de ~3s: nunca fica desligado
+      requestAnimationFrame(observar)
+    }
+
     window.scrollTo({ top, behavior: 'smooth' })
+    requestAnimationFrame(observar)
   }, [])
 
   useEffect(() => {
@@ -252,15 +290,29 @@ function DeckNav() {
 }
 
 // Kicker de seção: numeral do deck + rótulo bilíngue.
+//
+// PONTO FIXO (pedido do fundador 2026-08-08). Antes o kicker era o primeiro
+// item do fluxo de um movimento CENTRADO na vertical: cada movimento tem uma
+// quantidade diferente de conteúdo, então o título numerado subia e descia de
+// slide para slide. Quem folheia o deck via o rótulo dançar.
+//
+// Agora ele é ancorado ao topo do próprio movimento (`.p2-kicker-slot`, absolute
+// dentro da section) e o movimento reserva o espaço dele em padding-top. O
+// resto do conteúdo continua centrado no que sobra: a composição de cada slide
+// não muda, só o título passa a cair sempre na mesma linha, logo abaixo do
+// letreiro. A âncora vale para os 13 movimentos porque a distância sai de UMA
+// variável, --p2-kicker-top.
 function Kicker({ n, pt, en }: { n: string; pt: string; en: string }) {
   return (
-    <PitchReveal delay={0}>
-      <p className="p2-kicker">
-        <span className="p2-kicker__n">{n}</span>
-        <span className="p2-kicker__pt">{pt}</span>
-        <span className="p2-kicker__en">{en}</span>
-      </p>
-    </PitchReveal>
+    <div className="p2-kicker-slot">
+      <PitchReveal delay={0}>
+        <p className="p2-kicker">
+          <span className="p2-kicker__n">{n}</span>
+          <span className="p2-kicker__pt">{pt}</span>
+          <span className="p2-kicker__en">{en}</span>
+        </p>
+      </PitchReveal>
+    </div>
   )
 }
 
@@ -300,8 +352,10 @@ const S: React.CSSProperties = {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  paddingInline: 'clamp(1.25rem, 5vw, 6rem)',
-  paddingTop: 'clamp(0.75rem, 2.5vh, 2.5rem)',
+  paddingInline: 'var(--p2-pad-x)',
+  // O respiro de cima é o lugar reservado ao kicker, que saiu do fluxo para
+  // ficar sempre na mesma linha (ver --p2-kicker-top).
+  paddingTop: 'var(--p2-kicker-reserve)',
   paddingBottom: 'clamp(4.25rem, 8vh, 7rem)',
   position: 'relative',
   overflow: 'hidden',
@@ -542,7 +596,7 @@ export function PitchV2Client() {
              componente (HomeHero), mesmo vídeo, mesmo logotype, mesmo deck.
              Quem abre o deck vê o site. Único acréscimo: o encaixe de scroll do
              movimento, que é do deck e não existe na home. ─────────────────── */}
-      <HomeHero id="mov-01" style={{ scrollSnapAlign: 'start' }} />
+      <HomeHero id="mov-01" style={{ scrollSnapAlign: 'start' }} advance={false} />
 
       <Ticker />
 
@@ -555,7 +609,7 @@ export function PitchV2Client() {
         aria-label="Abertura / Opening"
       >
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} />
+          <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} advance={false} />
           <div
             style={{
               position: 'absolute',
@@ -621,9 +675,10 @@ export function PitchV2Client() {
         aria-label="Campo de Referência / Reference Field"
       >
         <Numeral n="03" />
-        <div style={{ paddingInline: 'clamp(1.25rem, 5vw, 6rem)' }}>
-          <Kicker n="03" pt="Campo de Referência" en="Reference Field" />
-        </div>
+        {/* O kicker traz o próprio recuo lateral (`.p2-kicker-slot`), então
+            este movimento não precisa mais do invólucro que devolvia a margem
+            que a seção sangrada tirou. */}
+        <Kicker n="03" pt="Campo de Referência" en="Reference Field" />
 
         <PitchReveal delay={100}>
           <p className="p2-refs-label">
@@ -1261,6 +1316,20 @@ export function PitchV2Client() {
              se descolarem. */
           --p2-band: calc(var(--tbf-nav-height-sm) + var(--tbf-ticker-height-sm));
 
+          /* Recuo lateral do movimento. Era um clamp repetido no estilo inline
+             da seção E no cabeçalho do movimento 03; virou variável porque o
+             kicker (que agora é ancorado, não empurrado) precisa começar
+             exatamente na mesma coluna do texto. */
+          --p2-pad-x: clamp(1.25rem, 5vw, 6rem);
+
+          /* PONTO FIXO DO KICKER (pedido do fundador 2026-08-08). O topo da
+             seção já cai logo abaixo do letreiro por causa do scroll-margin,
+             então esta é a distância entre o letreiro e o título numerado. Um
+             valor só, para os 13 movimentos começarem na MESMA linha. */
+          --p2-kicker-top: clamp(0.75rem, 2.4vh, 1.75rem);
+          /* Espaço que o movimento reserva para o kicker que saiu do fluxo. */
+          --p2-kicker-reserve: calc(var(--p2-kicker-top) + clamp(1.6rem, 4.5vh, 2.6rem));
+
           --p2-gap:    clamp(1rem, 3.2vh, 2.25rem);
           --p2-gap-sm: clamp(0.5rem, 1.6vh, 1.1rem);
           --p2-gap-lg: clamp(1.25rem, 4.2vh, 3rem);
@@ -1332,12 +1401,23 @@ export function PitchV2Client() {
         }
 
         /* ─── KICKER ─────────────────────────────────────────────────────── */
+        /* A âncora. Fora do fluxo, presa ao topo do movimento (toda section do
+           deck é position: relative), na mesma coluna do texto. O movimento
+           reserva o espaço dela em padding-top, então nada passa por baixo. */
+        .p2-kicker-slot {
+          position: absolute;
+          top: var(--p2-kicker-top);
+          left: var(--p2-pad-x);
+          right: var(--p2-pad-x);
+          z-index: 2;
+        }
+
         .p2-kicker {
           display: flex;
           flex-wrap: wrap;
           align-items: baseline;
           gap: 0.5rem;
-          margin-bottom: var(--p2-gap);
+          margin-bottom: 0;
         }
         .p2-kicker__n {
           font-family: var(--tbf-font-family-printed);
@@ -1971,7 +2051,6 @@ export function PitchV2Client() {
           .p2-stat { line-height: 0.9; }
           .p2-exec-item { font-size: 0.76rem; line-height: 1.25; margin-bottom: 0.2rem; }
           .p2-partner-line { font-size: 0.8rem; margin-bottom: 0.7rem; }
-          .p2-kicker { margin-bottom: 0.35rem; }
           .p2-kicker__n, .p2-kicker__pt { font-size: 0.62rem; }
           .p2-kicker__en { font-size: 0.68rem; }
 

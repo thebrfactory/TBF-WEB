@@ -18,9 +18,15 @@ import { shell } from '@/content/i18n/shell'
 interface HomeHeroProps {
   id?: string
   style?: React.CSSProperties
+  /**
+   * Um gesto atravessa o hero e leva ao conteúdo seguinte (ver useHeroAdvance).
+   * Ligado na home; o deck desliga, porque lá quem manda na rolagem são as
+   * setas e o encaixe de movimento.
+   */
+  advance?: boolean
 }
 
-export function HomeHero({ id, style }: HomeHeroProps = {}) {
+export function HomeHero({ id, style, advance = true }: HomeHeroProps = {}) {
   // A assinatura sai do dicionário do rodapé de propósito: é a MESMA frase nos
   // dois lugares, e duas cópias divergiriam no primeiro ajuste de copy.
   const deck = shell[useLang()].footer.tagline
@@ -36,7 +42,7 @@ export function HomeHero({ id, style }: HomeHeroProps = {}) {
         <div className="hero__overlay-grain" aria-hidden="true" />
 
         {/* Vídeo de fundo (mobile vertical / desktop horizontal) */}
-        <HeroVideo />
+        <HeroVideo advance={advance} />
 
         {/* LOGOTYPE + DECK — grupo alinhado, junto à base do vídeo */}
         <div className="hero-home__content">
