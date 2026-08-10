@@ -15,6 +15,7 @@ import { Ticker } from '@/components/Ticker/Ticker'
 import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
+import { PilotArticleCard } from '@/components/ArticleCard/PilotArticleCard'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { home } from '@/content/i18n/pages/home'
@@ -109,6 +110,11 @@ export default async function HomeView({ lang }: { lang: Lang }) {
 
           {!data.featuredPost && data.latestPosts.length === 0 && (
             <>
+              {/* A matéria real do piloto abre a grade da home. Enquanto o
+                  Sanity está vazio, ela era a única coisa publicada que não
+                  aparecia aqui: o resto da fileira é mock TBFipsum. */}
+              <PilotArticleCard lang={lang} variant="featured" />
+
               {t.mockCards.map((mock, i) => (
                 <ArticleMorphLink key={i} href={path(`/editorial/lorem-ipsum-${i + 1}`)} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de

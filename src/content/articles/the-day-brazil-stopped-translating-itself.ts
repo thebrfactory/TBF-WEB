@@ -40,6 +40,13 @@ export type ManifestoBlock =
   | { kind: 'stickers'; fragments: Bilingual[] }
   | { kind: 'stat'; value: number; formatted: Bilingual; label: Bilingual; prefix?: Bilingual }
   | { kind: 'closing'; text: Bilingual }
+  // O motor já tinha o componente de imagem (MediaParallax) desde a ORD-01; ele
+  // só estava dormente porque o piloto nasceu sem foto. Este bloco é o que
+  // acorda. `credit` é campo separado de `caption` de propósito: as imagens são
+  // de licença livre COM ATRIBUIÇÃO OBRIGATÓRIA (CC BY / CC BY-SA), então o
+  // crédito não pode depender de alguém lembrar de escrevê-lo dentro da legenda.
+  // Procedência completa em `public/images/editorial/gurgel/_CREDITOS.md`.
+  | { kind: 'image'; src: string; alt: Bilingual; caption?: Bilingual; credit: string }
 
 export interface ManifestoArticle {
   slug: string
@@ -49,6 +56,12 @@ export interface ManifestoArticle {
   category: string
   publishedAt: string
   deck: Bilingual
+  /**
+   * Capa. Serve a DOIS lugares ao mesmo tempo, de propósito: o fundo do hero da
+   * matéria e a miniatura dela no /editorial e na home. Um campo só, para a capa
+   * do card nunca divergir da capa que a pessoa vê ao abrir.
+   */
+  cover: { src: string; alt: Bilingual; credit: string }
   blocks: ManifestoBlock[]
 }
 
@@ -72,6 +85,20 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
   deck: {
     en: "The first industry Brazil industrialised wasn't steel. It was confidence.",
     pt: 'A primeira indústria que o Brasil industrializou não foi o aço. Foi a confiança.',
+  },
+  // NOTA DE FATO, e ela importa para quem editar este artigo: não existe um
+  // modelo "Gurgel Renegado" na história real da montadora. A matéria é
+  // especulativa e o próprio subtítulo assume o "e se". O SUV compacto real da
+  // Gurgel, o par lógico do Jeep Renegade, é o CARAJÁS (1986) — é ele nas
+  // fotos. Nenhuma legenda chama o carro de Renegado, para a imagem não
+  // desmentir a ficção nem fingir que ela é registro histórico.
+  cover: {
+    src: '/images/editorial/gurgel/01-capa.webp',
+    alt: {
+      en: 'A Gurgel Carajás, the Brazilian compact SUV, photographed in São Paulo state.',
+      pt: 'Um Gurgel Carajás, o SUV compacto brasileiro, fotografado no interior de São Paulo.',
+    },
+    credit: 'Marcelo Bezerra Cavalcanti / Wikimedia Commons · CC BY 3.0',
   },
   blocks: [
     // ─── Abertura ─────────────────────────────────────────────────────────
@@ -105,6 +132,13 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     // TIER 2 — fecho da abertura
     { kind: 'lines', lines: [{ en: 'It started in a dealership.', pt: 'Começou numa concessionária.' }], emphasize: [0] },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/08-concessionaria.webp',
+      alt: { en: 'A car dealership showroom.', pt: 'O salão de uma concessionária de automóveis.' },
+      caption: { en: 'Where the story begins: the showroom floor, the most ordinary room in the country.', pt: 'Onde a história começa: o salão da concessionária, a sala mais comum do país.' },
+      credit: 'Domínio público / Wikimedia Commons',
+    },
 
     { kind: 'divider' },
 
@@ -132,6 +166,20 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     // TIER 2 — definição de cultura invisível
     { kind: 'lines', lines: [{ en: 'When they become normal.', pt: 'Quando viram normal.' }], emphasize: [0] },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/03-jeep-renegade.webp',
+      alt: { en: 'A 2015 Jeep Renegade, front three-quarter view.', pt: 'Um Jeep Renegade 2015, em três quartos frontal.' },
+      caption: { en: 'On the left of the aisle, the American.', pt: 'À esquerda do corredor, o americano.' },
+      credit: 'Mr.choppers / Wikimedia Commons · CC BY-SA 3.0',
+    },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/02-gurgel-renegado.webp',
+      alt: { en: 'A Gurgel Carajas, the Brazilian compact SUV.', pt: 'Um Gurgel Carajás, o SUV compacto brasileiro.' },
+      caption: { en: 'On the right, the Brazilian. The real Gurgel compact SUV was called Carajas; the Renegado of this story never existed.', pt: 'À direita, o brasileiro. O SUV compacto real da Gurgel se chamava Carajás; o Renegado desta história nunca existiu.' },
+      credit: 'Diogo Rodrigues Gonçalves / Wikimedia Commons · CC BY 2.0',
+    },
 
     { kind: 'divider' },
 
@@ -168,6 +216,13 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       ],
     },
     { kind: 'lines', lines: [{ en: 'But somewhere along the way, Brazil learned to export something else.', pt: 'Mas em algum ponto do caminho o Brasil aprendeu a exportar outra coisa.' }] },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/09-industria.webp',
+      alt: { en: 'Brazilian industrial plant, archive photograph.', pt: 'Planta industrial brasileira, foto de arquivo.' },
+      caption: { en: 'The industry the country was told to build.', pt: 'A indústria que mandaram o país construir.' },
+      credit: 'Wikimedia Commons · CC BY-SA 2.0',
+    },
     // TIER 3 — as duas listas espelhadas
     {
       kind: 'mirror',
@@ -205,6 +260,13 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     // TIER 1 #2 — o pivô, o momento mais silencioso da página
     { kind: 'fullbleed', text: { en: 'It was confidence.', pt: 'Foi a confiança.' }, theme: 'dark', scale: 'display' },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/06-estrada-goias.webp',
+      alt: { en: 'A dirt road cutting through the Brazilian countryside.', pt: 'Uma estrada de terra cortando o interior do Brasil.' },
+      caption: { en: 'The suspension was engineered for this ground, and the ground turned out to be everywhere.', pt: 'A suspensão foi projetada para este chão, e este chão acabou existindo no mundo inteiro.' },
+      credit: 'Wikimedia Commons · CC BY-SA 4.0',
+    },
 
     { kind: 'divider' },
 
@@ -447,6 +509,20 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     // TIER 1 #5 — uma palavra sozinha, ChapterDivider no seu uso mais puro
     { kind: 'word', label: { en: 'Anthropophagy.', pt: 'Antropofagia.' } },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/05-oswald.webp',
+      alt: { en: 'Portrait of the Brazilian writer Oswald de Andrade.', pt: 'Retrato do escritor brasileiro Oswald de Andrade.' },
+      caption: { en: 'Oswald de Andrade, who wrote the manifesto this country never got around to industrialising.', pt: 'Oswald de Andrade, que escreveu o manifesto que este país nunca chegou a industrializar.' },
+      credit: 'Domínio público / Wikimedia Commons',
+    },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/07-modernismo.webp',
+      alt: { en: 'Brazilian modernist work.', pt: 'Obra do modernismo brasileiro.' },
+      caption: { en: 'Modernism got as far as the museum. In this story, it got as far as the factory.', pt: 'O modernismo chegou até o museu. Nesta história, ele chegou até a fábrica.' },
+      credit: 'Domínio público / Wikimedia Commons',
+    },
     { kind: 'lines', lines: [{ en: 'In this Brazil, anthropophagy never remained an artistic manifesto.', pt: 'Neste Brasil, a antropofagia nunca ficou como manifesto artístico.' }] },
     // TIER 2 — a piada séria: manifesto virou política
     { kind: 'lines', lines: [{ en: 'It became industrial policy.', pt: 'Virou política industrial.' }], emphasize: [0] },

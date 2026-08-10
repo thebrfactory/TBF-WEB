@@ -23,6 +23,7 @@ import {
   ShareRow,
   StickerLayer,
   StatBlock,
+  MediaParallax,
 } from '@/components/scrolly'
 import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import type { Lang } from '@/lib/i18n'
@@ -40,11 +41,15 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
       <ArticleLoader title={article.loaderTitle[lang]} />
       <ScrollProgress />
 
+      {/* A capa deixou de ser `null`. O void preto existia porque o piloto
+          nasceu sem foto, e forçar uma imagem ali teria sido mentira visual;
+          agora existe foto de licença livre, e é a MESMA que vira miniatura no
+          /editorial e na home. */}
       <HeroCinema
         title={article.heroTitle[lang]}
         subtitle={article.heroSubtitle[lang]}
         eyebrow={article.category}
-        image={null}
+        image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
       />
       {renderBlocks(article.blocks, lang)}
 
@@ -115,6 +120,19 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
             formatted={block.formatted[lang]}
             prefix={block.prefix?.[lang]}
             label={block.label[lang]}
+          />
+        )
+
+      case 'image':
+        // O crédito anda GRUDADO na legenda, no mesmo nó, porque as licenças em
+        // uso (CC BY e CC BY-SA) exigem atribuição junto da obra. Sem legenda,
+        // o crédito aparece sozinho: a atribuição nunca é opcional.
+        return (
+          <MediaParallax
+            key={key}
+            src={block.src}
+            alt={block.alt[lang]}
+            caption={[block.caption?.[lang], block.credit].filter(Boolean).join(' · ')}
           />
         )
 

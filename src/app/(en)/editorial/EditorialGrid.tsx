@@ -10,6 +10,7 @@ import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
+import { PilotArticleCard } from '@/components/ArticleCard/PilotArticleCard'
 import { CategoryGrid } from './CategoryGrid'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'
@@ -23,10 +24,6 @@ const CATEGORY_FILTERS: (ArticleCategory | 'all')[] = [
   'coolhunting',
   'collaboration',
 ]
-
-// Piloto do motor scrolly (ORD-01): o 1º card do arquivo passa a apontar para
-// a matéria real, não para o mock TBFipsum — 04_RESUMO-APROVACAO.md §4.
-const PILOT_ARTICLE_SLUG = 'the-day-brazil-stopped-translating-itself'
 
 const PAGE_SIZE = 9
 
@@ -127,10 +124,14 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
            da página (ver app/editorial/page.tsx). */
         <>
           <div className="editorial-grid container" role="feed" aria-label={t.grid.previewAriaLabel}>
-            {t.mockArticles.slice(1).map((mock, idx) => {
-              const i = idx + 1
-              // 1º card do arquivo (idx === 0) aponta para a matéria real do piloto.
-              const href = idx === 0 ? path(`/editorial/${PILOT_ARTICLE_SLUG}`) : path(`/editorial/lorem-ipsum-${i + 1}`)
+            {/* O piloto abre o arquivo, agora com CAPA DE VERDADE. Antes ele
+                era o 1º mock: link certo, mas bloco chapado com o selo de
+                dimensão, porque a matéria não tinha foto. Tem. */}
+            <PilotArticleCard lang={lang} variant="featured" />
+
+            {t.mockArticles.slice(2).map((mock, idx) => {
+              const i = idx + 2
+              const href = path(`/editorial/lorem-ipsum-${i + 1}`)
               return (
                 <ArticleMorphLink key={i} href={href} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de
