@@ -174,8 +174,6 @@ export function PitchClient() {
             sources={EDITORIAL_VIDEO}
             poster="/images/editorial-feature.webp"
             opacity={0.35}
-            /* Deck: a rolagem é do próprio deck, o gesto do hero não entra. */
-            advance={false}
           />
           <div
             style={{

@@ -8,7 +8,6 @@
 // =============================================================================
 
 import { useEffect, useRef, useState } from 'react'
-import { useHeroAdvance } from '@/hooks/useHeroAdvance'
 
 type SourcePair = { av1: string; h264: string }
 type SourceSet = { desktop: SourcePair; mobile: SourcePair }
@@ -28,13 +27,6 @@ interface HeroVideoProps {
   poster?: string
   /** Opacidade do vídeo (0–1). Default 0.35 — igual à imagem original. */
   opacity?: number
-  /**
-   * Um gesto (deslize de dedo, roda/trackpad, ou toque) atravessa o hero e leva
-   * ao conteúdo seguinte. Ligado por padrão: é o comportamento pedido para toda
-   * página com vídeo de fundo. Os decks (/pitch e /pitch/v2) desligam — lá a
-   * navegação já é por setas e encaixe de movimento, e as duas brigariam.
-   */
-  advance?: boolean
 }
 
 // Reaproveitado no hero da home, no /editorial e no /pitch. Mesmo tratamento:
@@ -44,17 +36,9 @@ export function HeroVideo({
   sources = HERO_SOURCES,
   poster = HERO_POSTER,
   opacity = 0.35,
-  advance = true,
 }: HeroVideoProps = {}) {
   const [variant, setVariant] = useState<Variant | null>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const wrapRef = useRef<HTMLDivElement>(null)
-
-  // Um gesto atravessa o hero. O hook sobe deste nó até a seção do hero, então
-  // ele funciona igual nas duas montagens que existem no site: o vídeo solto
-  // dentro da section (home, labels, consulting) e o vídeo dentro de uma div de
-  // fundo (/editorial).
-  useHeroAdvance(wrapRef, advance)
 
   const MEDIA_BASE = {
     position: 'absolute',
@@ -110,7 +94,7 @@ export function HeroVideo({
   const src = variant ? sources[variant] : null
 
   return (
-    <div ref={wrapRef} aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+    <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
       {/* Pré-mount / SSR: poster estático evita flash preto */}
       {!src && (
         // eslint-disable-next-line @next/next/no-img-element
