@@ -1359,7 +1359,10 @@ export function PitchV3Client() {
              valor só, para os 13 movimentos começarem na MESMA linha. */
           --p3-kicker-top: clamp(0.75rem, 2.4vh, 1.75rem);
           /* Espaço que o movimento reserva para o kicker que saiu do fluxo. */
-          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(1.6rem, 4.5vh, 2.6rem));
+          /* O termo somado é a distância entre o kicker e o título. Subiu de
+             (1.6rem, 4.5vh, 2.6rem) a pedido do fundador: o número do movimento
+             estava colado na headline e os dois liam como um bloco só. */
+          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(2.25rem, 6vh, 3.5rem));
 
           /* ─── RÉGUA INVISÍVEL DO DECK ──────────────────────────────────
              Pedido do fundador (#01 CHANGES): "blocos invisíveis e réguas
@@ -1647,7 +1650,10 @@ export function PitchV3Client() {
           z-index: 1;
           font-family: var(--tbf-font-family-display);
           font-size: clamp(1.9rem, min(6.4vw, 6.6vh), 3.6rem);
-          font-weight: 900;
+          /* ExtraBold, não Black (pedido do fundador). No Black a headline
+             fechava demais o contraforma nos corpos grandes do deck e brigava
+             com o numeral marca-d'água. Um grau abaixo na mesma família. */
+          font-weight: 800;
           line-height: 0.98;
           letter-spacing: -0.04em;
           color: ${PAPER};
@@ -2183,6 +2189,18 @@ export function PitchV3Client() {
           .p3-chain__arrow {
             transform: none;
             margin: 2.25rem 0 0 0;
+          }
+        }
+
+        /* O movimento 11 (Case) tem QUATRO blocos: Desafio, Insight, Resultado e
+           Execução. Nas três colunas declaradas acima eles viram duas fileiras, e
+           era essa fileira extra que fazia o movimento mais cheio do deck estourar
+           a tela. Na largura de desktop as quatro cabem lado a lado.
+           Precisa vir DEPOIS do bloco de 768px: mesma especificidade, quem está
+           por último na folha é quem vale. */
+        @media (min-width: 1280px) {
+          .p3-case-grid {
+            grid-template-columns: repeat(4, 1fr);
           }
         }
 
