@@ -92,10 +92,17 @@ function En({ children, size = 'sm' }: { children: React.ReactNode; size?: 'sm' 
 function PitchReveal({
   children,
   delay = 0,
+  slot,
   style = {},
 }: {
   children: React.ReactNode
   delay?: number
+  /**
+   * BLOCO INVISÍVEL da régua. `head` marca a faixa do título do movimento: ela
+   * tem altura mínima reservada, então o primeiro bloco de corpo cai sempre na
+   * mesma linha, com título de uma, duas ou três linhas. Ver `.p2-slot--head`.
+   */
+  slot?: 'head'
   style?: React.CSSProperties
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -134,7 +141,7 @@ function PitchReveal({
   return (
     <div
       ref={ref}
-      className="pitch-reveal"
+      className={slot ? `pitch-reveal p2-slot p2-slot--${slot}` : 'pitch-reveal'}
       style={{
         opacity: 0,
         transform: 'translateY(28px)',
@@ -145,6 +152,32 @@ function PitchReveal({
       }}
     >
       {children}
+    </div>
+  )
+}
+
+// ─── Régua visível (conferência) ─────────────────────────────────────────────
+// A régua do deck é invisível por definição. Esta é a forma de OLHAR para ela:
+// `?grid=1` na URL sobrepõe as colunas e os dois trilhos (o do título e o do
+// primeiro bloco de corpo). Sem o parâmetro, o componente não renderiza nada.
+//
+// O parâmetro é lido no efeito, e não por `useSearchParams`, de propósito: o
+// hook do Next obrigaria a página inteira a nascer dentro de um limite de
+// Suspense só por causa de uma ferramenta de conferência.
+function GridRuler() {
+  const [ligada, setLigada] = useState(false)
+
+  useEffect(() => {
+    setLigada(new URLSearchParams(window.location.search).has('grid'))
+  }, [])
+
+  if (!ligada) return null
+
+  return (
+    <div className="p2-ruler" aria-hidden="true">
+      <div className="p2-ruler__cols" />
+      <div className="p2-ruler__rail p2-ruler__rail--head" />
+      <div className="p2-ruler__rail p2-ruler__rail--body" />
     </div>
   )
 }
@@ -328,7 +361,13 @@ const S: React.CSSProperties = {
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
+  // TRILHO, NÃO CENTRO (pedido do fundador, #01 CHANGES). Centralizar
+  // verticalmente significa deixar a ALTURA DO CONTEÚDO decidir onde o título
+  // começa: 13 movimentos com quantidades diferentes de texto davam 13 alturas
+  // de título diferentes, e era daí que vinha a sensação de desorganizado. Com
+  // o conteúdo ancorado no topo, o título de todo movimento nasce na mesma
+  // linha. O que sobra embaixo é respiro reservado, não sobra.
+  justifyContent: 'flex-start',
   paddingInline: 'var(--p2-pad-x)',
   // O respiro de cima é o lugar reservado ao kicker, que saiu do fluxo para
   // ficar sempre na mesma linha (ver --p2-kicker-top).
@@ -567,13 +606,14 @@ export function PitchV2Client() {
   return (
     <div className="p2-deck">
       <DeckNav />
+      <GridRuler />
 
       {/* ── 01 · CAPA ─────────────────────────────────────────────────────────
              A capa é o hero da homepage, sem uma linha de diferença: mesmo
              componente (HomeHero), mesmo vídeo, mesmo logotype, mesmo deck.
              Quem abre o deck vê o site. Único acréscimo: o encaixe de scroll do
              movimento, que é do deck e não existe na home. ─────────────────── */}
-      <HomeHero id="mov-01" style={{ scrollSnapAlign: 'start' }} advance={false} />
+      <HomeHero id="mov-01" style={{ scrollSnapAlign: 'start' }} />
 
       <Ticker />
 
@@ -586,7 +626,7 @@ export function PitchV2Client() {
         aria-label="Abertura / Opening"
       >
         <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} advance={false} />
+          <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} />
           <div
             style={{
               position: 'absolute',
@@ -628,7 +668,7 @@ export function PitchV2Client() {
           </PitchReveal>
 
           <PitchReveal delay={450}>
-            <p className="p2-body" style={{ maxWidth: '46ch' }}>
+            <p className="p2-body" style={{ maxWidth: 'var(--p2-measure)' }}>
               Um cultural venture studio para ideias brasileiras com alcance global.
               <En>A cultural venture studio for Brazilian ideas with global reach.</En>
             </p>
@@ -727,8 +767,8 @@ export function PitchV2Client() {
         <Numeral n="04" />
         <Kicker n="04" pt="A Pergunta" en="The Question" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2" style={{ maxWidth: '14ch', marginBottom: 'var(--p2-gap)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2">
             Como se cria
             <br />
             <span style={{ color: ACCENT }}>valor cultural?</span>
@@ -748,7 +788,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: '50ch' }}>
+          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure)' }}>
             Esta pergunta é a fundação da .TBF.
             <En>This question is the foundation of .TBF.</En>
           </p>
@@ -764,8 +804,8 @@ export function PitchV2Client() {
         <Numeral n="05" />
         <Kicker n="05" pt="O Contexto" en="The Context" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             Os mercados se organizam cada vez mais em torno de sentido.
             <En size="lead">Markets are increasingly organized around meaning.</En>
           </h2>
@@ -786,14 +826,14 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-assert" style={{ marginTop: 'var(--p2-gap)', maxWidth: '28ch' }}>
+          <p className="p2-assert" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure-tight)' }}>
             Atenção é a consequência, não o objetivo.
             <En>Attention is the consequence, not the objective.</En>
           </p>
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap-sm)', maxWidth: '58ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap-sm)', maxWidth: 'var(--p2-measure-wide)' }}>
             As empresas que duram aprendem a transformar valor simbólico em ativos que as pessoas
             escolhem, compartilham e aos quais retornam.
             <En>
@@ -809,8 +849,8 @@ export function PitchV2Client() {
         <Numeral n="06" />
         <Kicker n="06" pt="Nossa Tese" en="Our Thesis" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             Capital cultural pode virar negócio durável.
             <En size="lead">Cultural capital can become durable business.</En>
           </h2>
@@ -841,7 +881,7 @@ export function PitchV2Client() {
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure-wide)' }}>
             Estudamos, traduzimos e escalamos códigos culturais brasileiros: com cuidado suficiente
             para preservar sentido, com rigor suficiente para gerar valor.
             <En>
@@ -861,8 +901,8 @@ export function PitchV2Client() {
         <Numeral n="07" />
         <Kicker n="07" pt="O Sistema Operacional" en="The Operating System" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-sm)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             Um cultural venture studio em construção.
             <En size="lead">A cultural venture studio in the making.</En>
           </h2>
@@ -906,8 +946,8 @@ export function PitchV2Client() {
         <Numeral n="08" />
         <Kicker n="08" pt="Lógica de Portfólio" en="Portfolio Logic" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: 'var(--p2-gap-sm)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             Um portfólio de propriedades, não uma lista de serviços.
             <En size="lead">A portfolio of properties, not a collection of services.</En>
           </h2>
@@ -927,7 +967,7 @@ export function PitchV2Client() {
             nos cantos) e, no fim, era um divisor horizontal disfarçado, que o
             repo proíbe. Virou uma grade de cartões com folga de verdade — duas
             colunas, para as quatro propriedades caberem numa tela só. */}
-        <div className="p2-portfolio-grid" style={{ maxWidth: '900px' }}>
+        <div className="p2-portfolio-grid" style={{ maxWidth: 'var(--p2-measure-grid)' }}>
           {PORTFOLIO.map((item, i) => {
             const inner = (
               <div
@@ -979,8 +1019,8 @@ export function PitchV2Client() {
         <Numeral n="09" />
         <Kicker n="09" pt="Evidência de Execução" en="Evidence of Execution" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '22ch', marginBottom: 'var(--p2-gap)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             A ambição olha para a frente.
             <br />
             <span style={{ color: ACCENT }}>O ofício já está em movimento.</span>
@@ -1016,7 +1056,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={650}>
-          <p className="p2-footnote p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
+          <p className="p2-footnote p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure-wide)' }}>
             Contexto selecionado: Soul Dila; moda brasileira; comunicação de hostel e hospitalidade;
             direção criativa em marcas de lifestyle.
             <En>
@@ -1032,8 +1072,8 @@ export function PitchV2Client() {
         <Numeral n="10" />
         <Kicker n="10" pt="Visão de Longo Prazo" en="Long-term Vision" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2 p2-h2--md" style={{ maxWidth: '20ch', marginBottom: 'var(--p2-gap-lg)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2 p2-h2--md">
             De empresa criativa a instituição cultural.
             <En size="lead">From creative company to cultural institution.</En>
           </h2>
@@ -1064,7 +1104,7 @@ export function PitchV2Client() {
         </PitchReveal>
 
         <PitchReveal delay={650}>
-          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: '60ch' }}>
+          <p className="p2-body p2-body--dim" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure-wide)' }}>
             Norte: instituições como a 032c, estudadas como modelo de relevância cultural, nunca
             copiadas como identidade.
             <En>
@@ -1084,8 +1124,8 @@ export function PitchV2Client() {
         <Numeral n="11" />
         <Kicker n="11" pt="Case Selecionado" en="Selected Case" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2" style={{ marginBottom: '0.5rem' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2">
             VERÃOZÃO
           </h2>
         </PitchReveal>
@@ -1129,7 +1169,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={550}>
-          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap)', maxWidth: '62ch' }}>
+          <p className="p2-body p2-tertiary" style={{ marginTop: 'var(--p2-gap-sm)', maxWidth: 'var(--p2-measure-wide)' }}>
             O trabalho traduziu hospitalidade em um convite culturalmente legível: verão brasileiro,
             feito para ser sentido, não explicado.
             <En>
@@ -1149,8 +1189,8 @@ export function PitchV2Client() {
         <Numeral n="12" />
         <Kicker n="12" pt="Por Que a Overlens" en="Why Overlens" />
 
-        <PitchReveal delay={100}>
-          <h2 className="p2-h2" style={{ maxWidth: '16ch', marginBottom: 'var(--p2-gap-lg)' }}>
+        <PitchReveal delay={100} slot="head">
+          <h2 className="p2-h2">
             Uma parceria para ir
             <br />
             <span style={{ color: ACCENT }}>além de entregáveis.</span>
@@ -1185,7 +1225,7 @@ export function PitchV2Client() {
         </div>
 
         <PitchReveal delay={500}>
-          <p className="p2-assert p2-assert--lg" style={{ marginTop: 'var(--p2-gap)', maxWidth: '30ch' }}>
+          <p className="p2-assert p2-assert--lg" style={{ marginTop: 'var(--p2-gap)', maxWidth: 'var(--p2-measure-tight)' }}>
             Juntas: serviços criativos podem virar ativos culturais.
             <En>Together: creative services can become cultural assets.</En>
           </p>
@@ -1307,6 +1347,66 @@ export function PitchV2Client() {
           /* Espaço que o movimento reserva para o kicker que saiu do fluxo. */
           --p2-kicker-reserve: calc(var(--p2-kicker-top) + clamp(1.6rem, 4.5vh, 2.6rem));
 
+          /* ─── RÉGUA INVISÍVEL DO DECK ──────────────────────────────────
+             Pedido do fundador (#01 CHANGES): "blocos invisíveis e réguas
+             invisíveis para dar proporção ao layout de cada tela (...) todos os
+             textos se alinham em uma mesma posição". São duas réguas, e nada
+             além delas.
+
+             RÉGUA VERTICAL — COLUNAS. A largura útil do movimento vira uma
+             grade de colunas iguais, e toda medida de texto passa a ser um
+             NÚMERO DE COLUNAS. Antes conviviam 14ch, 16ch, 20ch, 22ch, 28ch,
+             30ch, 46ch, 50ch, 58ch, 60ch, 62ch e um 900px avulso: doze larguras
+             escolhidas a olho, que nunca terminavam na mesma linha vertical.
+             Agora existem quatro medidas, e todas caem na grade.
+
+             A contagem de colunas MUDA POR TELA (mobile-first): no telefone são
+             4 e todo texto ocupa as 4, porque dividir 350px em doze faixas daria
+             uma coluna de 24px — grade de desktop aplicada ao telefone é o
+             defeito clássico. A partir de 768px são 8, e de 1280px são 12.
+
+             RÉGUA HORIZONTAL — TRILHOS. Ver o comentário do objeto S (o
+             movimento ancora no topo em vez de centralizar) e .p2-slot--head
+             (a faixa do título tem altura mínima reservada).
+
+             PARA CONFERIR as duas réguas com o olho, abra a página com ?grid=1 :
+             as colunas e os dois trilhos aparecem sobrepostos. */
+          --p2-grid-max: 1200px;
+          --p2-gutter: clamp(0.75rem, 1.6vw, 1.5rem);
+          --p2-inner: min(calc(100vw - 2 * var(--p2-pad-x)), var(--p2-grid-max));
+          --p2-track: calc(
+            (var(--p2-inner) - (var(--p2-cols) - 1) * var(--p2-gutter)) / var(--p2-cols)
+          );
+
+          /* Telefone: 4 colunas, e todo texto ocupa as 4. */
+          --p2-cols: 4;
+          --p2-n-tight: 4;
+          --p2-n-measure: 4;
+          --p2-n-wide: 4;
+          --p2-n-head: 4;
+          --p2-n-grid: 4;
+
+          /* As quatro medidas do deck, derivadas da grade — nunca escritas à mão. */
+          --p2-measure-tight: calc(
+            var(--p2-track) * var(--p2-n-tight) + var(--p2-gutter) * (var(--p2-n-tight) - 1)
+          );
+          --p2-measure: calc(
+            var(--p2-track) * var(--p2-n-measure) + var(--p2-gutter) * (var(--p2-n-measure) - 1)
+          );
+          --p2-measure-wide: calc(
+            var(--p2-track) * var(--p2-n-wide) + var(--p2-gutter) * (var(--p2-n-wide) - 1)
+          );
+          --p2-measure-head: calc(
+            var(--p2-track) * var(--p2-n-head) + var(--p2-gutter) * (var(--p2-n-head) - 1)
+          );
+          --p2-measure-grid: calc(
+            var(--p2-track) * var(--p2-n-grid) + var(--p2-gutter) * (var(--p2-n-grid) - 1)
+          );
+
+          /* Altura reservada à faixa do título (o bloco invisível). Termo em vh
+             porque tudo neste deck encolhe junto com a janela. */
+          --p2-head-min: clamp(3.5rem, 9.8vh, 7rem);
+
           --p2-gap:    clamp(1rem, 3.2vh, 2.25rem);
           --p2-gap-sm: clamp(0.5rem, 1.6vh, 1.1rem);
           --p2-gap-lg: clamp(1.25rem, 4.2vh, 3rem);
@@ -1332,9 +1432,33 @@ export function PitchV2Client() {
           scroll-snap-type: y proximity;
         }
 
+        /* A grade abre conforme a tela cresce. Só os CONTADORES mudam: as
+           medidas acima se recalculam sozinhas a partir deles. */
+        @media (min-width: 768px) {
+          .p2-deck {
+            --p2-cols: 8;
+            --p2-n-tight: 5;
+            --p2-n-measure: 6;
+            --p2-n-wide: 8;
+            --p2-n-head: 6;
+            --p2-n-grid: 8;
+          }
+        }
+
         @media (min-width: 1280px) {
           .p2-deck {
             --p2-band: calc(var(--tbf-nav-height-xl) + var(--tbf-ticker-height-xl));
+            /* No desktop sobra altura, então o trilho é alto o bastante para
+               caber um título de DUAS linhas inteiro — que é o caso dos
+               movimentos 04 e 12. No telefone o mesmo trilho comeria o fim do
+               movimento, e por isso lá ele é curto. */
+            --p2-head-min: clamp(5rem, 14vh, 9rem);
+            --p2-cols: 12;
+            --p2-n-tight: 4;
+            --p2-n-measure: 6;
+            --p2-n-wide: 8;
+            --p2-n-head: 6;
+            --p2-n-grid: 9;
           }
         }
 
@@ -1375,6 +1499,66 @@ export function PitchV2Client() {
         .p2-partner-line:last-child,
         .p2-exec-item:last-child {
           margin-bottom: 0;
+        }
+
+        /* ─── BLOCO INVISÍVEL DO TÍTULO ──────────────────────────────────── */
+        /* A faixa do título tem PISO de altura, não altura fixa. Com piso, o
+           primeiro bloco de corpo do movimento cai sempre na mesma linha, tanto
+           faz se o título tem uma, duas ou três linhas — que é exatamente o
+           parâmetro pedido. Com altura fixa, um título de três linhas seria
+           cortado; o deck tem overflow hidden e o corte seria silencioso.
+
+           O piso só entra a partir de 640px de ALTURA de janela. Abaixo disso
+           não há espaço para reservar nada, e insistir na régua empurraria o
+           fim do movimento para fora da tela — perder o alinhamento é aceitável,
+           perder o conteúdo não. */
+        .p2-slot--head {
+          margin-bottom: var(--p2-gap);
+        }
+        .p2-slot--head > .p2-h2 {
+          max-width: var(--p2-measure-head);
+        }
+        @media (min-height: 640px) {
+          .p2-slot--head {
+            min-height: var(--p2-head-min);
+          }
+        }
+
+        /* ─── RÉGUA VISÍVEL (só com ?grid=1) ─────────────────────────────── */
+        /* Ferramenta de conferência, não decoração: pinta as colunas e os dois
+           trilhos por cima do deck para provar, com o olho, que os 13
+           movimentos começam na mesma linha. Não existe sem o parâmetro. */
+        .p2-ruler {
+          position: fixed;
+          inset: 0;
+          z-index: 9999;
+          pointer-events: none;
+          padding-inline: var(--p2-pad-x);
+        }
+        .p2-ruler__cols {
+          height: 100%;
+          max-width: var(--p2-grid-max);
+          background-image: repeating-linear-gradient(
+            to right,
+            rgba(255, 101, 0, 0.14) 0,
+            rgba(255, 101, 0, 0.14) var(--p2-track),
+            transparent var(--p2-track),
+            transparent calc(var(--p2-track) + var(--p2-gutter))
+          );
+        }
+        .p2-ruler__rail {
+          position: absolute;
+          left: 0;
+          right: 0;
+          border-top: 1px dashed rgba(255, 101, 0, 0.75);
+        }
+        .p2-ruler__rail--head {
+          top: calc(var(--p2-band) + var(--p2-kicker-reserve));
+        }
+        .p2-ruler__rail--body {
+          top: calc(
+            var(--p2-band) + var(--p2-kicker-reserve) + var(--p2-head-min) + var(--p2-gap)
+          );
         }
 
         /* ─── KICKER ─────────────────────────────────────────────────────── */
