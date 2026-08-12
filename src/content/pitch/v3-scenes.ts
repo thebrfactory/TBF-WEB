@@ -42,13 +42,17 @@ export interface Bi {
 // A mecânica do deck (contador, setas, IntersectionObserver) é toda derivada
 // deste array. Cada `id` precisa existir como `<section id>` no cliente.
 export const SCENES = [
-  { id: 'cena-01', pt: 'Capa', en: 'Cover' },
-  { id: 'cena-02', pt: 'Campo de Referência', en: 'Reference Field' },
-  { id: 'cena-03', pt: 'A Pergunta, o Contexto e a Tese', en: 'The Question, the Context, the Thesis' },
-  { id: 'cena-04', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business' },
-  { id: 'cena-05', pt: 'Case Selecionado', en: 'Selected Case' },
-  { id: 'cena-06', pt: 'Por Que a Overlens', en: 'Why Overlens' },
-  { id: 'cena-07', pt: 'Fecho', en: 'Close' },
+  // A CAPA DE ANTES VOLTOU, como PAGINA 00 (pedido do fundador 2026-08-12). Ela
+  // e o hero da home com o letreiro em movimento, e nao entra na contagem das 7
+  // cenas do argumento: por isso o numero dela e `00` e o total continua `07`.
+  { id: 'cena-00', pt: 'Capa', en: 'Cover', n: '00' },
+  { id: 'cena-01', pt: 'Abertura', en: 'Opening', n: '01' },
+  { id: 'cena-02', pt: 'Campo de Referência', en: 'Reference Field', n: '02' },
+  { id: 'cena-03', pt: 'A Pergunta, o Contexto e a Tese', en: 'The Question, the Context, the Thesis', n: '03' },
+  { id: 'cena-04', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '04' },
+  { id: 'cena-05', pt: 'Case Selecionado', en: 'Selected Case', n: '05' },
+  { id: 'cena-06', pt: 'Por Que a Overlens', en: 'Why Overlens', n: '06' },
+  { id: 'cena-07', pt: 'Fecho', en: 'Close', n: '07' },
 ] as const
 
 // =============================================================================
@@ -162,7 +166,6 @@ export const BUSINESS = {
     pt: 'E construímos propriedades que ganham forma, audiência, produto e continuidade.',
     en: 'And we build properties that gain form, audience, product and continuity.',
   } as Bi,
-  assert: { pt: 'Não é uma agência com vocabulário maior.', en: 'Not an agency with a bigger vocabulary.' } as Bi,
   /** A linha de raciocínio. Quatro tempos, um verbo cada. */
   method: [
     {
@@ -233,8 +236,6 @@ export const BUSINESS = {
       proof: null,
     },
   ],
-  /** Evidência de ofício, do antigo mov-09. Mantida em uma linha só. */
-  craftStat: { value: '6+', label: { pt: 'anos em direção criativa', en: 'years in creative direction' } as Bi },
   craftFields: {
     pt: 'Moda, hospitalidade e lifestyle: universos de marca, público internacional dentro do Brasil e relações longas de cliente.',
     en: 'Fashion, hospitality and lifestyle: brand worlds, an international audience inside Brazil and long client relationships.',

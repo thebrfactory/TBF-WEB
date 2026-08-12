@@ -45,6 +45,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PressLogosCarousel } from '../PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
+import { HomeHero } from '@/components/HomeHero/HomeHero'
+import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
 import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP, CLOSE } from '@/content/pitch/v3-scenes'
 
@@ -259,8 +261,10 @@ function DeckNav() {
     <div className="p3-nav" role="group" aria-label="Navegação do deck">
       <div className="p3-nav__meta" aria-live="polite">
         <span className="p3-nav__count">
-          {String(active + 1).padStart(2, '0')}
-          <span className="p3-nav__total"> / {SCENES.length}</span>
+          {current.n}
+          {/* O total conta as 7 CENAS do argumento. A capa e pagina 00 e nao
+              entra na conta, senao o passador anunciaria 8 telas. */}
+          <span className="p3-nav__total"> / 07</span>
         </span>
         {/* Só leitor de tela: o fundador quer apenas os números no passador,
             mas o bloco é aria-live e sem isto a troca de cena fica muda. */}
@@ -388,6 +392,44 @@ const S: React.CSSProperties = {
 // O painel expandido é absolute + overflow-y:auto DENTRO do próprio cartão
 // (nunca por cima de outro, nunca fora da seção): a regra "um movimento, uma
 // tela" não permite que a expansão empurre a cena para fora da janela.
+// PAINEL DO CASE: alterna as fotos sozinho, tipo um gif (pedido do fundador
+// 2026-08-12: "está ilegível, preciso que tenha uma proporção maior e fique
+// alternando entre fotos"). O filme de lançamento é a PRIMEIRA moldura e toca em
+// laço; depois dele o painel cruza as nove fotos do arco, uma a cada 2,4s.
+// Sem biblioteca: dois nós sobrepostos e opacidade, que é o que uma troca de
+// imagem precisa. Respeita prefers-reduced-motion (ver o CSS no fim do arquivo).
+function CasePanel() {
+  const [i, setI] = useState(0)
+  const total = CASE.media.length
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = setInterval(() => setI((v) => (v + 1) % total), 2400)
+    return () => clearInterval(t)
+  }, [total])
+
+  return (
+    <div className="p3-case-panel">
+      {CASE.media.map((m, idx) => (
+        <Image
+          key={m.src}
+          src={m.src}
+          alt={m.alt.pt}
+          width={900}
+          height={1200}
+          sizes="(max-width: 767px) 55vw, 30vw"
+          priority={idx === 0}
+          className={`p3-case-panel__img${idx === i ? ' p3-case-panel__img--on' : ''}`}
+        />
+      ))}
+      <span className="p3-case-panel__role" aria-live="off">
+        {CASE.media[i].role.pt}
+        <En>{CASE.media[i].role.en}</En>
+      </span>
+    </div>
+  )
+}
+
 function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[number]; delay: number }) {
   const [open, setOpen] = useState(false)
 
@@ -463,7 +505,18 @@ export function PitchV3Client() {
       <DeckNav />
       <GridRuler />
 
-      {/* ── CENA 01 · CAPA ────────────────────────────────────────────────────
+      {/* ── CENA 00 · CAPA ────────────────────────────────────────────────────
+             A CAPA DE ANTES, DE VOLTA (pedido do fundador 2026-08-12), lida como
+             PAGINA 00: o hero da home mais o tabloide em movimento. Ela nao
+             recebe kicker nem numeral porque nao e uma cena de argumento, e o
+             passador mostra 00 nela. E a unica secao do deck sem a geometria S:
+             o hero ja se mede em tela cheia e o Ticker corre logo abaixo. */}
+      <section id="cena-00" aria-label="Capa / Cover" style={{ scrollSnapAlign: 'start' }}>
+        <HomeHero />
+        <Ticker />
+      </section>
+
+      {/* ── CENA 01 · ABERTURA ────────────────────────────────────────────────────
              As duas telas antigas (o hero da home + a Abertura) viraram uma:
              o vídeo editorial dá a presença, o letreiro do fundador dá a
              frase, e Culture™ mora aqui, onde o direcionamento pede que
@@ -712,12 +765,6 @@ export function PitchV3Client() {
           </h2>
         </PitchReveal>
 
-        <PitchReveal delay={150}>
-          <p className="p3-assert p3-tertiary" style={{ marginBottom: 'var(--p3-gap-sm)' }}>
-            {BUSINESS.assert.pt}
-            <En>{BUSINESS.assert.en}</En>
-          </p>
-        </PitchReveal>
 
         {/* Nível 1 — o método, sem vocabulário de startup: quatro verbos. */}
         <div className="p3-os-grid p3-method-grid">
@@ -767,13 +814,6 @@ export function PitchV3Client() {
         </div>
 
         <div className="p3-craft-row p3-tertiary">
-          <PitchReveal delay={820}>
-            <span className="p3-stat p3-craft-row__stat">{BUSINESS.craftStat.value}</span>
-            <span className="p3-label">
-              {BUSINESS.craftStat.label.pt}
-              <En>{BUSINESS.craftStat.label.en}</En>
-            </span>
-          </PitchReveal>
           <PitchReveal delay={860}>
             <p className="p3-footnote">
               {BUSINESS.vision.lead.pt} {BUSINESS.vision.stages.pt}
@@ -803,23 +843,7 @@ export function PitchV3Client() {
 
         <div className="p3-case-layout">
           <PitchReveal delay={200}>
-            <div className="p3-case-video">
-              {/* Filme VERTICAL (720x1280): <video> puro, não HeroVideo, porque
-                  o componente exige um par desktop/mobile e este filme não tem
-                  variante horizontal. */}
-              <video
-                muted
-                loop
-                playsInline
-                preload="none"
-                poster={CASE.video.poster}
-                className="p3-case-video__el"
-                aria-label={CASE.video.alt.pt}
-              >
-                <source src={CASE.video.srcAv1} type='video/mp4; codecs="av01.0.05M.08"' />
-                <source src={CASE.video.src} type="video/mp4" />
-              </video>
-            </div>
+            <CasePanel />
           </PitchReveal>
 
           <div className="p3-case-copy">
@@ -841,9 +865,16 @@ export function PitchV3Client() {
         </div>
 
         <PitchReveal delay={420}>
+          {/* FAIXA QUE ANDA SOZINHA (pedido do fundador: "proporção muito
+              pequena, aqui a gente pode fazer tipo um carrossel que se
+              movimenta"). A lista é duplicada e o trilho corre em translateX:
+              é assim que uma esteira infinita se faz sem JS, e é o mesmo
+              princípio do carrossel de logos da cena 02. `aria-hidden` na
+              segunda cópia para o leitor de tela não ler tudo duas vezes. */}
           <div className="p3-case-media" role="group" aria-label="Mídia do case / Case media">
-            {CASE.media.map((m) => (
-              <figure key={m.src} className="p3-case-media__item">
+            <div className="p3-case-media__track">
+            {[...CASE.media, ...CASE.media].map((m, idx) => (
+              <figure key={m.src + idx} className="p3-case-media__item" aria-hidden={idx >= CASE.media.length}>
                 <Image
                   src={m.src}
                   alt={m.alt.pt}
@@ -858,6 +889,7 @@ export function PitchV3Client() {
                 </figcaption>
               </figure>
             ))}
+            </div>
           </div>
         </PitchReveal>
 
@@ -1565,7 +1597,10 @@ export function PitchV3Client() {
           border-left: 3px solid ${PAPER};
           border-radius: var(--tbf-radius-card);
           height: 100%;
-          overflow: hidden;
+          /* SEM overflow: hidden. Ele era a causa do texto cortado no meio da
+             frase quando o cartao abria: a expansao e mais alta que o cartao
+             fechado, e recortada ela mentia. Agora ela cresce para fora. */
+          overflow: visible;
           cursor: pointer;
           transition: border-color 300ms ${EASE};
         }
@@ -1574,12 +1609,17 @@ export function PitchV3Client() {
         }
         .p3-portfolio-more {
           position: absolute;
-          inset: 0;
-          padding: clamp(0.85rem, 2.6vw, 1.5rem);
+          left: 0;
+          right: 0;
+          bottom: 0;
+          min-height: 100%;
+          padding: clamp(0.6rem, 1.3vh, 1rem);
           background: #0a0a09;
+          border-radius: var(--tbf-radius-card);
+          box-shadow: 0 -12px 24px rgba(0,0,0,0.55);
+          z-index: 6;
           opacity: 0;
           pointer-events: none;
-          overflow-y: auto;
           transition: opacity 320ms ${EASE};
         }
         .p3-portfolio-card--open .p3-portfolio-more {
@@ -1690,7 +1730,8 @@ export function PitchV3Client() {
            desktop, empilhados no mobile. */
         .p3-case-layout {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          align-items: flex-start;
           gap: var(--p3-gap-sm);
         }
         .p3-case-video {
@@ -1714,19 +1755,69 @@ export function PitchV3Client() {
 
         /* Faixa horizontal com as nove imagens do case, na ordem do arco
            narrativo. Rola de lado: é a faixa que tem overflow, não a cena. */
-        .p3-case-media {
+        /* PAINEL DO CASE, tipo gif. Proporcao GRANDE (pedido do fundador): no
+           telefone metade da largura da cena, no desktop um terco, sempre com o
+           teto em vh para nao estourar a tela do deck. As molduras se sobrepoem
+           em grid de uma celula, e a troca e de opacidade. */
+        .p3-case-panel {
+          position: relative;
+          display: grid;
+          width: clamp(7rem, 42vw, 12rem);
+          aspect-ratio: 3 / 4;
+          max-height: 29vh;
+          border-radius: var(--tbf-radius-card);
+          overflow: hidden;
+          flex: 0 0 auto;
+        }
+        .p3-case-panel__img {
+          grid-area: 1 / 1;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          transition: opacity 900ms ${EASE};
+        }
+        .p3-case-panel__img--on { opacity: 1; }
+        .p3-case-panel__role {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 0.7rem 0.5rem 0.4rem;
+          background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
+          font-family: var(--tbf-font-family-printed);
+          font-weight: 500;
+          font-size: 0.6rem;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          text-align: center;
+          color: ${PAPER};
+        }
+
+        /* ESTEIRA. O trilho tem o dobro da lista e anda uma metade inteira: no
+           fim do ciclo a segunda copia esta exatamente onde a primeira comecou,
+           e o salto de volta e invisivel. */
+        .p3-case-media__track {
           display: flex;
           gap: 0.6rem;
-          overflow-x: auto;
+          width: max-content;
+          animation: p3-belt 42s linear infinite;
+        }
+        @keyframes p3-belt {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        .p3-case-media:hover .p3-case-media__track { animation-play-state: paused; }
+
+        .p3-case-media {
+          overflow: hidden;
           padding-bottom: 0.4rem;
           margin-top: var(--p3-gap-sm);
-          scroll-snap-type: x proximity;
         }
         .p3-case-media__item {
           flex: 0 0 auto;
-          width: clamp(4.5rem, 16vw, 6.5rem);
+          width: clamp(5.5rem, 13vh, 8rem);
           margin: 0;
-          scroll-snap-align: start;
         }
         .p3-case-media__img {
           width: 100%;
@@ -1877,6 +1968,8 @@ export function PitchV3Client() {
         }
 
         @media (prefers-reduced-motion: reduce) {
+          .p3-case-media__track { animation: none; }
+          .p3-case-panel__img { transition: none; }
           .p3-person__img { transition: none; }
         }
 
@@ -2086,8 +2179,23 @@ export function PitchV3Client() {
              empurrando a imprensa para fora. Com termo em vh a tira encolhe
              quando a janela é baixa, que é a regra do deck inteiro. As nove
              imagens continuam todas lá, na mesma ordem do arco. */
+          /* Miniatura MAIOR no desktop tambem (pedido do fundador: a faixa
+             estava com proporcao muito pequena). Termo em vh: em tela baixa ela
+             encolhe junto, que e a regra do deck. */
           .p3-case-media__item {
-            width: clamp(3.5rem, 9.5vh, 5.25rem);
+            width: clamp(4.5rem, 9.5vh, 6.25rem);
+          }
+          /* Teto do painel no desktop. 25vh em 900px = 225px de altura, contra
+             os 171px do filme minusculo que ele substituiu: continua bem maior,
+             e agora a cena fecha em uma tela. */
+          .p3-case-panel { max-height: 22.5vh; }
+          /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
+             empilhados numa tela que nao tem essa altura para dar. */
+          .p3-press {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.2rem 1.25rem;
+            align-items: baseline;
           }
           .p3-case-media {
             gap: 0.45rem;
