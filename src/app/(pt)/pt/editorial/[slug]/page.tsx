@@ -7,6 +7,7 @@ import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, urlFor } from '@/lib/s
 import type { EditorialPost } from '@/types'
 import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import { languageAlternates } from '@/lib/i18n'
+import { OG_IMAGE_PATH } from '@/lib/og'
 
 const LANG = 'pt' as const
 
@@ -40,6 +41,7 @@ export async function generateMetadata({
       openGraph: {
         title: a.heroTitle[LANG],
         description: a.deck[LANG],
+        images: [{ url: OG_IMAGE_PATH, width: 1200, height: 630 }],
         type: 'article',
         publishedTime: a.publishedAt,
       },
@@ -47,6 +49,7 @@ export async function generateMetadata({
         card: 'summary_large_image',
         title: a.heroTitle[LANG],
         description: a.deck[LANG],
+        images: [OG_IMAGE_PATH],
       },
     }
   }
@@ -59,7 +62,7 @@ export async function generateMetadata({
       ? urlFor(post.ogImage).width(1200).height(630).url()
       : post.heroImage
       ? urlFor(post.heroImage).width(1200).height(630).url()
-      : '/og-default.jpg'
+      : undefined
 
     return {
       title: post.title,
@@ -68,7 +71,11 @@ export async function generateMetadata({
       openGraph: {
         title: post.title,
         description: post.metaDescription ?? post.deck,
-        images: [{ url: ogImageUrl, width: 1200, height: 630 }],
+        images: [
+          ogImageUrl
+            ? { url: ogImageUrl, width: 1200, height: 630 }
+            : { url: OG_IMAGE_PATH, width: 1200, height: 630 },
+        ],
         type: 'article',
         publishedTime: post.publishedAt,
       },
@@ -76,7 +83,7 @@ export async function generateMetadata({
         card: 'summary_large_image',
         title: post.title,
         description: post.metaDescription ?? post.deck,
-        images: [ogImageUrl],
+        images: [ogImageUrl ?? OG_IMAGE_PATH],
       },
     }
   } catch {

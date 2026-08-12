@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import HomeView from '@/views/HomeView'
 import { home } from '@/content/i18n/pages/home'
 import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 
 const t = home.en
 
@@ -14,11 +15,7 @@ export const metadata: Metadata = {
   title: { absolute: t.meta.title },
   description: t.meta.description,
   alternates: languageAlternates('/'),
-  openGraph: {
-    title: t.meta.title,
-    description: t.meta.ogDescription,
-    images: [{ url: '/og-default.jpg', width: 1200, height: 630 }],
-  },
+  openGraph: openGraphMeta({ title: t.meta.title, description: t.meta.ogDescription }),
 }
 
 export const revalidate = 3600

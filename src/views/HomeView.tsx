@@ -16,8 +16,6 @@ import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { PilotArticleCard } from '@/components/ArticleCard/PilotArticleCard'
-import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
-import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { home } from '@/content/i18n/pages/home'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
@@ -67,6 +65,21 @@ export default async function HomeView({ lang }: { lang: Lang }) {
   const carouselArticles =
     articlePool.length > 0 ? articlePool : fallbackCarousel(lang)
 
+  // Vitrine da home = só matéria com capa. O critério é o MESMO que o
+  // <ArticleCard /> usa para decidir se desenha a foto ou o bloco chapado
+  // (`post.heroImage`), de propósito: se um dia ele mudar de campo, este filtro
+  // tem que mudar junto, e a única forma de garantir isso é os dois lerem a
+  // mesma coisa. Se a featured não tem capa, ela não é promovida a featured nem
+  // rebaixada a standard — ela simplesmente não entra.
+  const featuredWithCover = data.featuredPost?.heroImage ? data.featuredPost : undefined
+  const postsWithCover = data.latestPosts.filter((p) => p.heroImage)
+  // Quantos cards a grade vai realmente desenhar. Quando é UM, a grade
+  // multi-coluna precisa saber (ver `.editorial-grid--solo` em components.css):
+  // sem isso, o card único fica do tamanho de um terço da tela.
+  const homeCardCount =
+    (featuredWithCover ? 1 : 0) + postsWithCover.length ||
+    1 /* fallback do piloto: também é um card */
+
   return (
     <>
       <LoadingScreen />
@@ -100,50 +113,30 @@ export default async function HomeView({ lang }: { lang: Lang }) {
           paddingBottom: 'var(--tbf-space-10)',
         }}
       >
-        <div className="editorial-grid container">
-          {data.featuredPost && (
-            <ArticleCard post={data.featuredPost} variant="featured" />
+        <div
+          className={`editorial-grid container${homeCardCount === 1 ? ' editorial-grid--solo' : ''}`}
+        >
+          {/* SÓ MATÉRIA COM CAPA (pedido do fundador 2026-08-12, #01 CHANGES).
+              A home é vitrine: card sem capa aparecia como bloco chapado em
+              parchment com o selo de dimensão, o que é ferramenta de produção e
+              não peça de vitrine. Duas coisas saíram por causa disso:
+              1) os mocks TBFipsum, que nunca tiveram capa nem matéria por trás;
+              2) qualquer post do Sanity publicado sem heroImage — o filtro é por
+                 DADO, não por lista, então um post sem capa não volta a vazar
+                 aqui só porque alguém publicou com pressa.
+              O /editorial (o arquivo) segue mostrando tudo: lá o bloco chapado
+              tem função, é o inventário do que existe. */}
+          {featuredWithCover && (
+            <ArticleCard post={featuredWithCover} variant="featured" />
           )}
-          {data.latestPosts.map((post) => (
+          {postsWithCover.map((post) => (
             <ArticleCard key={post._id} post={post} variant="standard" />
           ))}
 
-          {!data.featuredPost && data.latestPosts.length === 0 && (
-            <>
-              {/* A matéria real do piloto abre a grade da home. Enquanto o
-                  Sanity está vazio, ela era a única coisa publicada que não
-                  aparecia aqui: o resto da fileira é mock TBFipsum. */}
-              <PilotArticleCard lang={lang} variant="featured" />
-
-              {t.mockCards.map((mock, i) => (
-                <ArticleMorphLink key={i} href={path(`/editorial/lorem-ipsum-${i + 1}`)} className="card card--standard" style={{ textDecoration: 'none' }}>
-                  {/* Placeholder/mock: sem imagem real (não existe matéria de
-                      verdade por trás do link). Bloco chapado em parchment com o
-                      selo da dimensão que a capa precisa ter; post real do CMS
-                      passa pelo ArticleCard, que mostra a imagem de verdade.
-                      `data-morph` mesmo sem imagem: é a CAIXA da capa que cresce
-                      na transição, não a foto. */}
-                  <div
-                    data-morph
-                    className="card__image-wrapper card__image-wrapper--empty"
-                    style={{ aspectRatio: mock.ratio }}
-                  >
-                    <ThumbSpec ratio={mock.ratio} />
-                  </div>
-                  <div className="card__content">
-                    <div className="card__tags">
-                      <span className="tag tag--category">{mock.category}</span>
-                    </div>
-                    <h3 className="card__title">{mock.title}</h3>
-                    <div className="byline">
-                      <span className="byline__text">
-                        <span className="card__meta">{mock.date}</span>
-                      </span>
-                    </div>
-                  </div>
-                </ArticleMorphLink>
-              ))}
-            </>
+          {/* Sanity vazio (ou sem nenhum post com capa): a matéria real do piloto
+              abre a grade sozinha. Ela tem capa própria, vinda do próprio artigo. */}
+          {!featuredWithCover && postsWithCover.length === 0 && (
+            <PilotArticleCard lang={lang} variant="featured" />
           )}
         </div>
 

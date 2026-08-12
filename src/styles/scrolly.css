@@ -201,10 +201,45 @@
   background-image: radial-gradient(circle at 50% 30%, rgba(240, 237, 230, var(--tbf-bg-glow-hero-opacity)), transparent 65%);
 }
 
+/* O SCRIM. Antes era uma rampa de dois pontos (0.15 → 0.75), e uma rampa linear
+   entrega a opacidade errada justo onde o texto mora: na altura do eyebrow ela
+   vale ~0.38, e no hero do Gurgel é ali que fica a lataria quase branca do
+   carro. Resultado medido: eyebrow e subtítulo ilegíveis.
+
+   Agora a rampa é escalonada — segura no topo, onde a foto tem que respirar, e
+   fecha na metade de baixo, que é a caixa de texto. É a escolha editorial de
+   sempre: a imagem entrega o clima em cima, a tipografia manda embaixo. */
 .scrolly-hero__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.75) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.10) 0%,
+    rgba(0, 0, 0, 0.20) 18%,
+    rgba(0, 0, 0, 0.62) 32%,
+    rgba(0, 0, 0, 0.80) 48%,
+    rgba(0, 0, 0, 0.90) 70%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+}
+
+/* No desktop o mesmo gradiente entrega menos: a caixa de texto é ancorada
+   embaixo, mas a viewport é baixa e larga, então o eyebrow cai a ~27% da altura
+   (contra ~39% no mobile) e pega a faixa clara da rampa. Medido em screenshot,
+   não suposto. A rampa do desktop fecha mais cedo para chegar densa na mesma
+   posição de texto. */
+@media (min-width: 1024px) {
+  .scrolly-hero__overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.10) 0%,
+      rgba(0, 0, 0, 0.22) 12%,
+      rgba(0, 0, 0, 0.58) 24%,
+      rgba(0, 0, 0, 0.78) 40%,
+      rgba(0, 0, 0, 0.88) 62%,
+      rgba(0, 0, 0, 0.95) 100%
+    );
+  }
 }
 
 .scrolly-hero__content {
@@ -221,7 +256,12 @@
   font-size: var(--tbf-type-tag-size);
   letter-spacing: var(--tbf-type-tag-ls);
   text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
+  /* Parchment, não quartz: sobre foto o cinza recuado da paleta desaparece.
+     A hierarquia continua existindo pelo tamanho e pelo tracking, não por
+     apagar a cor até o texto sumir. A sombra larga é o seguro contra o
+     trecho claro da imagem. */
+  color: var(--tbf-text-primary);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.70);
   margin-bottom: var(--tbf-space-4);
   opacity: 0;
   animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 100ms both;
@@ -234,6 +274,7 @@
   line-height: var(--tbf-type-display-xl-lh-sm);
   letter-spacing: var(--tbf-type-display-xl-ls);
   color: var(--tbf-text-primary);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
   text-wrap: balance;
   clip-path: inset(0 0 0 0);
   opacity: 0;
@@ -251,7 +292,10 @@
   font-size: var(--tbf-type-deck-size-sm);
   line-height: var(--tbf-type-deck-lh);
   font-style: italic;
-  color: var(--tbf-text-secondary);
+  /* Era editorial-gray (#4A4744): cinza ESCURO sobre foto e sobre preto.
+     Vira parchment levemente rebaixado — recua sem sumir. */
+  color: color-mix(in srgb, var(--tbf-text-primary) 82%, transparent);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.65);
   max-width: 60ch;
   margin-top: var(--tbf-space-6);
   opacity: 0;
@@ -535,6 +579,31 @@
 }
 
 .scrolly-media__img { transform: translateY(0); }
+
+/* PRANCHA (variante `plate`) — folheto, anúncio, retrato vertical.
+   Mobile-first: no celular a peça ocupa a largura toda e cresce em altura, que é
+   o jeito natural de ler material vertical num aparelho vertical. No desktop ela
+   é centrada e limitada pela ALTURA da tela, não pela largura, para um folheto em
+   pé nunca passar de uma tela de altura. Sem cover, sem scale: nada é recortado. */
+.scrolly-media--plate .scrolly-media__plate-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .scrolly-media--plate .scrolly-media__plate-img {
+    /* O TETO É DE ALTURA, MAS ESCRITO EM LARGURA, e isso não é preciosismo:
+       `width: auto` + `max-height` deixa a largura sem valor resolvido e a figura
+       colapsa (medido: 29px de altura no desktop, só a legenda sobrava). Aqui a
+       largura é sempre um número — o menor entre a coluna e a largura que a peça
+       teria se tivesse exatamente 80svh de altura. `--plate-ratio` (largura ÷
+       altura do arquivo) vem inline do MediaParallax, então a conta usa a
+       proporção NATIVA da imagem, não um palpite. */
+    width: min(100%, calc(80svh * var(--plate-ratio, 1)));
+  }
+}
 
 @supports (animation-timeline: view()) {
   .scrolly-media__img {

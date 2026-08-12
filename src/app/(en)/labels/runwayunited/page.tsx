@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import RunwayUnitedView from '@/views/RunwayUnitedView'
 import { runwayUnited } from '@/content/i18n/pages/labels/runwayunited'
 import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 
 const t = runwayUnited.en
 
@@ -12,11 +13,7 @@ export const metadata: Metadata = {
   title: t.meta.title,
   description: t.meta.description,
   alternates: languageAlternates('/labels/runwayunited'),
-  openGraph: {
-    title: t.meta.ogTitle,
-    description: t.meta.ogDescription,
-    images: [{ url: '/og-factory.jpg', width: 1200, height: 630 }],
-  },
+  openGraph: openGraphMeta({ title: t.meta.ogTitle, description: t.meta.ogDescription }),
 }
 
 export default function Page() {

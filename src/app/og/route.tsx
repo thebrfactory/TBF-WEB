@@ -1,18 +1,13 @@
-// =============================================================================
-// OG IMAGE PADRÃO — TBF WEB 2026
-// Gerada via next/og (ImageResponse)
-// Identidade TBF: Obsidiana + Pergaminho + Âmbar
-// =============================================================================
+// Gerador ÚNICO de imagem social, em URL ESTÁVEL (/og).
+// Existe porque o convention file `opengraph-image.tsx` tem URL hasheada e some
+// quando uma página de segmento filho declara `openGraph` próprio — medido:
+// /manifesto declarava openGraph e saía sem og:image nenhum.
 
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = '.THE BRAZILIAN FACTORY.'
-export const size = { width: 1200, height: 630 }
-export const contentType = 'image/png'
-
-export default async function OGImage() {
+export async function GET() {
   return new ImageResponse(
     (
       <div
@@ -57,8 +52,16 @@ export default async function OGImage() {
         </p>
 
         {/* Título */}
-        <h1
+        {/* O NOME DA CASA, EM DUAS LINHAS DE VERDADE.
+            Antes era `.THE BRAZILIAN<br />FACTORY.` — e o Satori, que é quem
+            desenha esta imagem, NÃO honra <br />. As duas linhas colavam e o
+            card social saía escrito ".THE BRAZILIANFACTORY.", sem o espaço:
+            o nome da marca errado no ativo mais compartilhado do site.
+            Duas <div> numa coluna flex é a forma que o Satori entende. */}
+        <div
           style={{
+            display: 'flex',
+            flexDirection: 'column',
             fontFamily: 'sans-serif',
             fontSize: '80px',
             fontWeight: 800,
@@ -68,10 +71,9 @@ export default async function OGImage() {
             marginBottom: '32px',
           }}
         >
-          .THE BRAZILIAN
-          <br />
-          FACTORY.
-        </h1>
+          <div>.THE BRAZILIAN</div>
+          <div>FACTORY.</div>
+        </div>
 
         {/* Tagline */}
         <p
@@ -80,7 +82,11 @@ export default async function OGImage() {
             fontSize: '20px',
             fontWeight: 300,
             lineHeight: 1.4,
-            color: '#4A4744',
+            /* Era #4A4744 sobre preto: 2,37:1, praticamente invisível no card —
+               conferido olhando o PNG gerado, não no papel. Continua recuado,
+               mas agora aparece. Isto é a cor DESTA imagem, não o token do
+               site: a paleta do site é decisão do fundador e segue de pé. */
+            color: '#8A8681',
           }}
         >
           Culture™ Crafted in São Paulo. Consumed Worldwide.
@@ -105,7 +111,8 @@ export default async function OGImage() {
       </div>
     ),
     {
-      ...size,
+      width: 1200,
+      height: 630,
     }
   )
 }

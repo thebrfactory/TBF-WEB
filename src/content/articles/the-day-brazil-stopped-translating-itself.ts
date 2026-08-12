@@ -46,7 +46,29 @@ export type ManifestoBlock =
   // de licença livre COM ATRIBUIÇÃO OBRIGATÓRIA (CC BY / CC BY-SA), então o
   // crédito não pode depender de alguém lembrar de escrevê-lo dentro da legenda.
   // Procedência completa em `public/images/editorial/gurgel/_CREDITOS.md`.
-  | { kind: 'image'; src: string; alt: Bilingual; caption?: Bilingual; credit: string }
+  //
+  // `variant` escolhe entre foto que sangra (`bleed`, padrão) e prancha de museu
+  // (`plate`) — ver o cabeçalho de MediaParallax.tsx para o porquê. Em `plate`,
+  // `width`/`height` são a proporção NATIVA do arquivo e não são opcionais: é
+  // ela que define a altura da peça, já que nada é recortado.
+  | {
+      kind: 'image'
+      src: string
+      alt: Bilingual
+      caption?: Bilingual
+      credit: string
+      variant?: 'bleed'
+    }
+  | {
+      kind: 'image'
+      src: string
+      alt: Bilingual
+      caption?: Bilingual
+      credit: string
+      variant: 'plate'
+      width: number
+      height: number
+    }
 
 export interface ManifestoArticle {
   slug: string
@@ -173,12 +195,38 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       caption: { en: 'On the left of the aisle, the American.', pt: 'À esquerda do corredor, o americano.' },
       credit: 'Mr.choppers / Wikimedia Commons · CC BY-SA 3.0',
     },
+    // O carro da ficção agora é um DESENHO, não uma foto de outro modelo com
+    // legenda desmentindo. Kleber Silva desenhou em 2020 uma releitura moderna do
+    // Gurgel BR-800 — um Gurgel compacto contemporâneo que nunca foi produzido.
+    // É o objeto exato de que esta matéria precisa: o leitor vê o carro do "e se"
+    // sem que nada finja ser registro histórico. A legenda diz que é render.
+    // (O Carajás real, o compacto que a Gurgel de fato fez, continua na matéria:
+    // é ele na capa.)
     {
       kind: 'image',
-      src: '/images/editorial/gurgel/02-gurgel-renegado.webp',
-      alt: { en: 'A Gurgel Carajas, the Brazilian compact SUV.', pt: 'Um Gurgel Carajás, o SUV compacto brasileiro.' },
-      caption: { en: 'On the right, the Brazilian. The real Gurgel compact SUV was called Carajas; the Renegado of this story never existed.', pt: 'À direita, o brasileiro. O SUV compacto real da Gurgel se chamava Carajás; o Renegado desta história nunca existiu.' },
-      credit: 'Diogo Rodrigues Gonçalves / Wikimedia Commons · CC BY 2.0',
+      src: '/images/editorial/gurgel/10-renegado-frente.webp',
+      alt: {
+        en: 'A design rendering of a modern Gurgel compact SUV, front three-quarter view, in yellow.',
+        pt: 'Render de um SUV compacto Gurgel moderno, em três quartos frontal, amarelo.',
+      },
+      caption: {
+        en: 'On the right, the Brazilian. It was never built: this is the modern Gurgel the designer Kleber Silva drew in 2020, a rereading of the BR-800.',
+        pt: 'À direita, o brasileiro. Ele nunca foi feito: este é o Gurgel moderno que o designer Kleber Silva desenhou em 2020, uma releitura do BR-800.',
+      },
+      credit: 'Render: Kleber Silva',
+    },
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/11-renegado-traseira.webp',
+      alt: {
+        en: 'The same rendering of a modern Gurgel compact SUV, seen from the rear three-quarter.',
+        pt: 'O mesmo render do SUV compacto Gurgel moderno, visto em três quartos traseiro.',
+      },
+      caption: {
+        en: 'The wordmark on the tailgate is the only part of this car that ever existed.',
+        pt: 'A assinatura na tampa é a única parte deste carro que existiu de verdade.',
+      },
+      credit: 'Render: Kleber Silva',
     },
 
     { kind: 'divider' },
@@ -453,6 +501,23 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         },
       ],
     },
+    // A frase anterior fala de SUSPENSÃO virando padrão global. Esta é a peça de
+    // que a frase fala: a estrutura nua, a parte que ninguém fotografa porque não
+    // é a parte bonita. Entra aqui, e não junto dos carros prontos, porque o
+    // argumento do parágrafo é de engenharia, não de estilo.
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/13-chassi.webp',
+      alt: {
+        en: 'The bare chassis of a Gurgel on a stand, wheels and steering fitted, beneath the Gurgel wordmark.',
+        pt: 'O chassi nu de um Gurgel sobre um cavalete, com rodas e direção montadas, sob a marca Gurgel.',
+      },
+      caption: {
+        en: 'The part nobody photographs. This is where the suspension argument lives.',
+        pt: 'A parte que ninguém fotografa. É aqui que mora o argumento da suspensão.',
+      },
+      credit: 'Acervo Gurgel · procedência não verificada',
+    },
     // TIER 3 — o único número do texto. `label.en` deriva das palavras já usadas
     // no parágrafo EN acima ("Brazilian cultural investment fund"), já que o
     // rótulo é legenda de UI (StatBlock), não uma linha do corpo do texto — não
@@ -526,6 +591,28 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     { kind: 'lines', lines: [{ en: 'In this Brazil, anthropophagy never remained an artistic manifesto.', pt: 'Neste Brasil, a antropofagia nunca ficou como manifesto artístico.' }] },
     // TIER 2 — a piada séria: manifesto virou política
     { kind: 'lines', lines: [{ en: 'It became industrial policy.', pt: 'Virou política industrial.' }], emphasize: [0] },
+    // O SEGUNDO RETRATO, e ele é o par do primeiro. Oswald está algumas telas
+    // acima, com a legenda dizendo que ele escreveu o manifesto que o país nunca
+    // industrializou. Aqui está o homem que industrializou: mesma pose de retrato,
+    // um século depois, e no lugar da caneta um carro que ele mesmo projetou. É o
+    // ponto exato em que a frase "virou política industrial" ganha rosto.
+    // `plate` porque é retrato em pé: em 16/10 com cover, o corte comeria a cabeça.
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/12-joao-gurgel.webp',
+      variant: 'plate',
+      width: 736,
+      height: 1122,
+      alt: {
+        en: 'Joao Augusto Conrado do Amaral Gurgel leaning on the open door of a Gurgel Supermini.',
+        pt: 'João Augusto Conrado do Amaral Gurgel debruçado na porta aberta de um Gurgel Supermini.',
+      },
+      caption: {
+        en: 'Joao Gurgel, engineer, leaning on a car he drew himself. The manifesto got a factory.',
+        pt: 'João Gurgel, engenheiro, debruçado num carro que ele mesmo desenhou. O manifesto ganhou uma fábrica.',
+      },
+      credit: 'Autor não identificado · procedência não verificada',
+    },
 
     { kind: 'divider' },
 
@@ -579,6 +666,31 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Including the currency.', pt: 'Inclusive a moeda.' },
         { en: 'Including the confidence.', pt: 'Inclusive a confiança.' },
       ],
+    },
+    // A ÚLTIMA IMAGEM É A ÚNICA COISA REAL DA MATÉRIA INTEIRA, e é por isso que
+    // ela é a última. Tudo até aqui foi especulação declarada; este folheto foi
+    // impresso pela Gurgel em 1981 e traz a tese do artigo escrita pela própria
+    // empresa, em três palavras, antes de qualquer um deste texto ter nascido.
+    // O país disse isso em voz alta uma vez. A matéria é sobre o Brasil onde a
+    // frase pegou.
+    // `plate` porque o slogan é a beirada de cima do folheto e a marca é a de
+    // baixo: em cover 16/10 com scale, o recorte apagaria justamente as duas
+    // coisas pelas quais a imagem está aqui.
+    {
+      kind: 'image',
+      src: '/images/editorial/gurgel/14-nossa-terra.webp',
+      variant: 'plate',
+      width: 736,
+      height: 516,
+      alt: {
+        en: 'A 1981 Gurgel brochure for the G-15 L, showing the pickup on a farm track beside a man on horseback, under the line "Nossa terra - Nossa gente - Nosso carro".',
+        pt: 'Folheto Gurgel de 1981 do G-15 L, com a picape numa estrada de fazenda ao lado de um homem a cavalo, sob a frase "Nossa terra - Nossa gente - Nosso carro".',
+      },
+      caption: {
+        en: 'Our land. Our people. Our car. Gurgel printed the thesis of this article in 1981, and meant it literally.',
+        pt: 'Nossa terra. Nossa gente. Nosso carro. A Gurgel imprimiu a tese desta matéria em 1981, e falava literalmente.',
+      },
+      credit: 'Folheto Gurgel, 1981 · acervo, procedência não verificada',
     },
     {
       kind: 'lines',

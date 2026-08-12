@@ -19,6 +19,12 @@
   --tbf-color-smoke:          #1E1C1A;
   --tbf-color-mist:           #2C2A27;
   --tbf-color-quartz:         #6E6B67;
+  /* Duas cores que existem SÓ para o tema escuro. Nasceram porque
+     editorial-gray (#4A4744, 2,28:1) e quartz (#6E6B67, 3,96:1) reprovam WCAG
+     sobre o preto — mas continuam CERTAS sobre parchment no tema inverse, e por
+     isso não podiam ser alteradas na origem. */
+  --tbf-color-sandstone:      #97928C;
+  --tbf-color-flint:          #7E7A76;
   /* Um degrau acima do quartz. Nasceu da linha de copyright do rodapé, que o
      fundador pediu toda na MESMA cor e um pouco mais clara que o resto do
      rodapé (2026-07-31). */
@@ -180,8 +186,11 @@
 
   /* ─── 2.2 Color Text ─── */
   --tbf-text-primary:   var(--tbf-color-parchment);
-  --tbf-text-secondary: var(--tbf-color-editorial-gray);
-  --tbf-text-tertiary:  var(--tbf-color-quartz);
+  /* Sobre o preto: sandstone dá 6,8:1 e flint 4,9:1 — os dois passam WCAG AA.
+     Antes eram 2,28:1 e 3,96:1. E a hierarquia deixa de estar invertida: o
+     secundário agora é MAIS visível que o terciário, que é o que o nome diz. */
+  --tbf-text-secondary: var(--tbf-color-sandstone);
+  --tbf-text-tertiary:  var(--tbf-color-flint);
   --tbf-text-inverse:   var(--tbf-color-obsidian);
 
   /* ─── 2.3 Color Interactive & Accent ─── */

@@ -133,6 +133,9 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
             src={block.src}
             alt={block.alt[lang]}
             caption={[block.caption?.[lang], block.credit].filter(Boolean).join(' · ')}
+            variant={block.variant}
+            width={block.variant === 'plate' ? block.width : undefined}
+            height={block.variant === 'plate' ? block.height : undefined}
           />
         )
 

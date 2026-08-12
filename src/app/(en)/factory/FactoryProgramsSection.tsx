@@ -29,7 +29,10 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
     targetAudience: p.targetAudience,
     deliverables: p.deliverables,
     ctaLabel: p.ctaLabel,
-    ctaUrl: 'https://cal.com/tbf',
+    // Link real de agendamento, confirmado pelo fundador em 2026-08-10.
+    // O anterior (cal.com/tbf) era INVENTADO: ele nunca criou essa conta, e o
+    // endereço devolvia 404 em produção — CTA morto no ar, em três lugares.
+    ctaUrl: 'https://calendly.com/thebrazilianfactory/30min',
     order: i + 1,
   }))
 
@@ -136,7 +139,7 @@ export function FactoryProgramsSection({ programs }: FactoryProgramsSectionProps
                   </div>
                 )}
                 <a
-                  href={program.ctaUrl ?? 'https://cal.com/tbf'}
+                  href={program.ctaUrl ?? 'https://calendly.com/thebrazilianfactory/30min'}
                   className="btn btn--primary"
                   target={program.ctaUrl ? '_blank' : undefined}
                   rel={program.ctaUrl ? 'noopener noreferrer' : undefined}

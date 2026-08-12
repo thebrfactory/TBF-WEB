@@ -71,3 +71,87 @@ Autor: roger4336.
 Licença: CC BY-SA 2.0 (Creative Commons Attribution-Share Alike 2.0 Generic).
 URL da página do arquivo: https://commons.wikimedia.org/wiki/File:S%C3%A3o_Paulo_-_Caterpillar_Brasil_Plant_-_1974.jpg
 Crédito pronto: Foto: roger4336 / Wikimedia Commons, CC BY-SA 2.0.
+
+---
+
+# SEGUNDA LEVA — imagens fornecidas pelo fundador (2026-08-12, #01 CHANGES)
+
+🔴 **LEIA ISTO ANTES DE PUBLICAR.** As 8 imagens acima passaram por verificação de
+licença arquivo a arquivo, com página de licença explícita. **Estas cinco não.**
+Elas vieram da pasta `~/Desktop/GURGEL`, entregues pelo fundador com autorização
+de uso ("você pode usar"), e a procedência de cada uma está declarada abaixo com
+o que é possível afirmar — nada mais. Os arquivos têm largura de 736px a 1280px,
+marca de material salvo de rede social (Pinterest), sem página de origem para a
+maioria. Portanto:
+
+- Nenhuma delas tem licença aberta atestável. A decisão de publicar é do fundador.
+- Os créditos no artigo dizem `procedência não verificada` onde é o caso, em vez
+  de inventar uma licença. Duas exceções: os dois renders, cujo autor é conhecido.
+- Resolução: são de baixa resolução para uso em sangria. As duas peças de arte
+  impressa entram como `variant: 'plate'` (proporção nativa, sem recorte nem
+  zoom), o que também evita esticar pixel que não existe. Os dois renders e o
+  chassi entram em sangria e ficam macios em tela retina — é o que o arquivo dá.
+  **Nada foi upscalado: nitidez inventada é pior que imagem macia.**
+
+## 10-renegado-frente.webp · 11-renegado-traseira.webp
+
+O que mostram: render de um SUV compacto Gurgel moderno, amarelo, três quartos
+frontal e três quartos traseiro. **Não é um carro que existiu** — é releitura
+autoral do Gurgel BR-800.
+Autor: **Kleber Silva** (designer), trabalho de 2020.
+Fonte declarada pelo fundador: https://www.autoo.com.br/lembra-da-gurgel-designer-atualiza-alguns-modelos-da-marca/
+Licença: não declarada. Uso editorial com crédito ao autor.
+Crédito em uso no artigo: `Render: Kleber Silva`.
+Onde entram: no par do corredor da concessionária, como "o brasileiro". Foi por
+causa deles que a vaga 02 (Carajás) saiu de lá — ver nota no fim deste arquivo.
+Arquivo original: 1280 × 960 px, o melhor da leva.
+
+## 12-joao-gurgel.webp
+
+O que mostra: João Augusto Conrado do Amaral Gurgel, o engenheiro fundador da
+montadora, debruçado na porta aberta de um Gurgel Supermini. Retrato vertical.
+Autor: não identificado.
+Licença: não declarada.
+Crédito em uso: `Autor não identificado · procedência não verificada`.
+Onde entra: logo depois de "Virou política industrial", fazendo par com o retrato
+do Oswald de Andrade. `variant: 'plate'` — em sangria 16/10 o recorte cortaria a
+cabeça do retratado.
+Arquivo: 736 × 1122 px.
+
+## 13-chassi.webp
+
+O que mostra: chassi nu de um Gurgel sobre cavalete, com rodas e direção
+montadas, sob a marca Gurgel. Provável foto de museu ou exposição.
+Autor: não identificado. Licença: não declarada.
+Crédito em uso: `Acervo Gurgel · procedência não verificada`.
+Onde entra: depois do parágrafo em que a suspensão desenvolvida para estradas de
+terra em Goiás vira padrão global — o argumento é de engenharia, e esta é a peça.
+Arquivo: 735 × 479 px (proporção 1,53, quase o 16/10 do quadro; recorte mínimo).
+
+## 14-nossa-terra.webp
+
+O que mostra: folheto Gurgel de 1981 do modelo G-15 L. A picape numa estrada de
+fazenda, ao lado de um homem a cavalo, sob a frase **"Nossa terra - Nossa gente -
+Nosso carro"** e a marca `GURGEL G-15 L` no rodapé.
+Autor: departamento de publicidade da Gurgel Motores (empresa encerrada em 1994).
+Licença: não declarada. Material publicitário histórico.
+Crédito em uso: `Folheto Gurgel, 1981 · acervo, procedência não verificada`.
+Onde entra: **é a última imagem do artigo**, e de propósito — depois de uma
+matéria inteira de especulação declarada, é a única peça real, e ela traz a tese
+do texto impressa pela própria empresa, em três palavras, em 1981.
+`variant: 'plate'`: o slogan é a beirada de cima e a marca é a de baixo; em
+recorte 16/10 com zoom, o quadro apagaria exatamente as duas razões de a imagem
+estar ali.
+Arquivo: 736 × 516 px.
+
+---
+
+## Nota sobre a vaga 02 (`02-gurgel-renegado.webp`)
+
+**O arquivo continua aqui e a procedência dele acima segue valendo, mas ele NÃO
+está mais em uso no artigo.** Ele era o Carajás real fazendo o papel do "Gurgel
+Renegado" no corredor da concessionária, com uma legenda que precisava desmentir
+a própria imagem ("o Renegado desta história nunca existiu"). Com os renders do
+Kleber Silva o problema desapareceu: agora o leitor vê um Gurgel compacto moderno
+que de fato foi desenhado por alguém, a legenda diz que é render, e nada finge ser
+registro histórico. O Carajás real não saiu da matéria — **é ele na capa.**

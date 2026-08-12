@@ -180,13 +180,17 @@
      empurra o sanduíche para cima do logotipo. Estas medidas são o que sobra
      de folga real, não gosto. Do desktop em diante o espaço volta a existir. */
   --tbf-lang-switch-w: 72px;
-  --tbf-lang-switch-h: 34px;
+  /* A altura persegue a MARCA do sanduíche (svg de 24px), não a caixa de
+     clique dele (40px com padding): a pílula é preenchida e com borda, então
+     pesa mais que um ícone vazado do mesmo tamanho. A largura fica onde está —
+     estreitar espremeria os rótulos de 10px até a ilegibilidade. */
+  --tbf-lang-switch-h: 28px;
 }
 
 @media (min-width: 1024px) {
   :root {
     --tbf-lang-switch-w: 88px;
-    --tbf-lang-switch-h: 38px;
+    --tbf-lang-switch-h: 30px;
   }
 }
 
@@ -2746,6 +2750,21 @@ html[data-morphing] ::view-transition-new(root) {
 }
 
 @media (min-width: 768px)  { .editorial-grid { column-count: 3; } }
+
+/* UM CARD SÓ na grade — `--solo`.
+   A grade é MULTI-COLUNA (column-count), não grid: um card único cai dentro da
+   primeira coluna e sai do tamanho de uma coluna, com os outros dois vãos
+   vazios do lado. Isso apareceu na home quando ela passou a mostrar só matéria
+   com capa (2026-08-12): sobrou um card pequeno e órfão num vão de 1440px.
+   Solo desliga as colunas. Mobile-first: no celular o card ocupa a largura
+   inteira, que é o que um card único merece; no desktop ele para em dois terços
+   da coluna de texto para não virar banner de anúncio. */
+.editorial-grid--solo { column-count: 1; }
+
+@media (min-width: 768px) {
+  .editorial-grid--solo { column-count: 1; }
+  .editorial-grid--solo .card { max-width: 66%; }
+}
 
 .editorial-grid .card {
   display: block;

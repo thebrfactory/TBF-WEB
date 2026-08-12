@@ -1,6 +1,6 @@
 // =============================================================================
 // ROBOTS.TXT — TBF WEB 2026
-// /access e /api/* são noindex
+// /access, /api/* e /studio (painel admin do Sanity) são noindex
 // =============================================================================
 
 import type { MetadataRoute } from 'next'
@@ -11,7 +11,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/access', '/api/'],
+        disallow: ['/access', '/api/', '/studio'],
       },
     ],
     sitemap: 'https://thebrfactory.com/sitemap.xml',

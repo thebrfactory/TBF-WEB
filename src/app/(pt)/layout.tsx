@@ -60,14 +60,7 @@ export const metadata: Metadata = {
     siteName: '.THE BRAZILIAN FACTORY.',
     title: '.THE BRAZILIAN FACTORY.',
     description: 'Culture™ feita em São Paulo. Consumida no mundo inteiro.',
-    images: [
-      {
-        url: '/og-default.jpg',
-        width: 1200,
-        height: 630,
-        alt: '.THE BRAZILIAN FACTORY.',
-      },
-    ],
+    images: [{ url: '/og', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -75,7 +68,7 @@ export const metadata: Metadata = {
     creator: '@thebrfactory',
     title: '.THE BRAZILIAN FACTORY.',
     description: 'Culture™ feita em São Paulo. Consumida no mundo inteiro.',
-    images: ['/og-default.jpg'],
+    images: ['/og'],
   },
   icons: {
     icon: [

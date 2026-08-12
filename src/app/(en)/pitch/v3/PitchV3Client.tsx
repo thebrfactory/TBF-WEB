@@ -286,7 +286,9 @@ function DeckNav() {
           {String(active + 1).padStart(2, '0')}
           <span className="p3-nav__total"> / {MOVEMENTS.length}</span>
         </span>
-        <span className="p3-nav__label">{current.pt}</span>
+        {/* Só leitor de tela: o fundador quer apenas os números no passador,
+            mas o bloco é aria-live e sem isto a troca de movimento fica muda. */}
+        <span className="sr-only">{current.pt}</span>
       </div>
 
       <div className="p3-nav__buttons">
@@ -2001,15 +2003,6 @@ export function PitchV3Client() {
           font-weight: 300;
           color: rgba(240,237,230,0.4);
         }
-        .p3-nav__label {
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 300;
-          font-style: italic;
-          font-size: 0.75rem;
-          letter-spacing: 0.04em;
-          color: rgba(240,237,230,0.6);
-          max-width: 13ch;
-        }
         .p3-nav__buttons { display: flex; gap: 0.35rem; }
         .p3-nav__btn {
           width: 2.75rem;
@@ -2032,10 +2025,6 @@ export function PitchV3Client() {
         }
         .p3-nav__btn:active:not(:disabled) { transform: scale(0.94); }
         .p3-nav__btn:disabled { opacity: 0.25; cursor: default; }
-
-        @media (max-width: 400px) {
-          .p3-nav__label { display: none; }
-        }
 
         /* A barra de navegação é FIXA sobre o movimento. No telefone ela
            precisa caber na folga de baixo reservada pelo slide (ver S), senão

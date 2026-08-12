@@ -96,7 +96,7 @@ export function FactoryHeroSection() {
           style={{ display: 'flex', gap: 'var(--tbf-space-4)', flexWrap: 'wrap' }}
         >
           <a
-            href="https://cal.com/tbf"
+            href="https://calendly.com/thebrazilianfactory/30min"
             className="btn btn--primary"
             target="_blank"
             rel="noopener noreferrer"
