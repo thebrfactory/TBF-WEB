@@ -894,17 +894,7 @@ export function PitchV3Client() {
         </PitchReveal>
 
         <PitchReveal delay={520}>
-          <div className="p3-press">
-            <p className="p3-label">
-              {CASE.press.label.pt}
-              <En>{CASE.press.label.en}</En>
-            </p>
-            <p className="p3-body p3-tertiary" style={{ marginTop: '0.4rem' }}>
-              {CASE.press.body.pt}
-              <En>{CASE.press.body.en}</En>
-            </p>
-            <p className="p3-press__credit">{CASE.press.credit}</p>
-          </div>
+          <p className="p3-press__credit">{CASE.press.credit}</p>
         </PitchReveal>
 
         {/* Números do case: VAZIO enquanto não houver medição verificada do
@@ -1730,7 +1720,7 @@ export function PitchV3Client() {
            desktop, empilhados no mobile. */
         .p3-case-layout {
           display: flex;
-          flex-direction: row;
+          flex-direction: column;
           align-items: flex-start;
           gap: var(--p3-gap-sm);
         }
@@ -1762,9 +1752,10 @@ export function PitchV3Client() {
         .p3-case-panel {
           position: relative;
           display: grid;
-          width: clamp(7rem, 42vw, 12rem);
-          aspect-ratio: 3 / 4;
-          max-height: 29vh;
+          width: min(100%, 34rem);
+          aspect-ratio: 4 / 3;
+          max-height: 34vh;
+          margin-block: var(--p3-gap-sm);
           border-radius: var(--tbf-radius-card);
           overflow: hidden;
           flex: 0 0 auto;
@@ -1787,7 +1778,7 @@ export function PitchV3Client() {
           background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
           font-family: var(--tbf-font-family-printed);
           font-weight: 500;
-          font-size: 0.6rem;
+          font-size: clamp(0.62rem, 1.5vh, 0.8rem);
           letter-spacing: 0.08em;
           text-transform: uppercase;
           text-align: center;
@@ -1816,7 +1807,7 @@ export function PitchV3Client() {
         }
         .p3-case-media__item {
           flex: 0 0 auto;
-          width: clamp(5.5rem, 13vh, 8rem);
+          width: clamp(3.5rem, 8vh, 5rem);
           margin: 0;
         }
         .p3-case-media__img {
@@ -1828,7 +1819,11 @@ export function PitchV3Client() {
           border-radius: var(--tbf-radius-card);
         }
         .p3-case-media__role {
-          margin-top: 0.3rem;
+          margin-top: 0.2rem;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
           font-family: var(--tbf-font-family-printed);
           font-weight: 500;
           font-size: 0.58rem;
@@ -2183,12 +2178,16 @@ export function PitchV3Client() {
              estava com proporcao muito pequena). Termo em vh: em tela baixa ela
              encolhe junto, que e a regra do deck. */
           .p3-case-media__item {
-            width: clamp(4.5rem, 9.5vh, 6.25rem);
+            width: clamp(3.5rem, 7vh, 4.75rem);
           }
           /* Teto do painel no desktop. 25vh em 900px = 225px de altura, contra
              os 171px do filme minusculo que ele substituiu: continua bem maior,
              e agora a cena fecha em uma tela. */
-          .p3-case-panel { max-height: 22.5vh; }
+          .p3-case-panel {
+            width: clamp(14rem, 30vw, 24rem);
+            aspect-ratio: 3 / 4;
+            max-height: 40vh;
+          }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */
           .p3-press {
