@@ -7,7 +7,8 @@ import { IDENTITY, DISCIPLINES, WORKS } from '@/app/(en)/creators/tavaristico/_d
 import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
-import type { Lang } from '@/lib/i18n'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
+import { localizedPath, type Lang } from '@/lib/i18n'
 
 export default function TavaristicoView({ lang }: { lang: Lang }) {
   const t = tavaristico[lang]
@@ -48,6 +49,18 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           </a>
           <span className={styles.link}>{t.index.representedByPrefix} {IDENTITY.representedBy}</span>
         </div>
+      </section>
+
+      {/* ─── PROPOSTA DE HOSPEDAGEM ──────────────────────────────────────
+             A entrada para /creators/tavaristico/hospitality (#01 CHANGES
+             2026-08-14). Fica DEPOIS do contato, e fora da vitrine de obras,
+             porque não é obra: a vitrine olha para trás, a proposta olha para
+             frente. Posta entre os cases, ela seria lida como mais um deles. */}
+      <section className={`${styles.contact} container`}>
+        <span className={styles.label}>{t.index.hospitalityKicker}</span>
+        <Link href={localizedPath('/creators/tavaristico/hospitality', lang)} className={styles.contactName}>
+          {t.index.hospitalityLabel}
+        </Link>
       </section>
     </main>
   )

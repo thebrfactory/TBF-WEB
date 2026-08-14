@@ -1,0 +1,278 @@
+/* =============================================================================
+   /creators/tavaristico/hospitality — a proposta de fotografia comercial
+   -----------------------------------------------------------------------------
+   MOBILE-FIRST, sem exceção (regra 1 do ecossistema): tudo aqui nasce em uma
+   coluna e só abre em grade quando há largura. Os breakpoints são os mesmos do
+   resto do site (768 e 1024).
+
+   SEM TRAÇOS HORIZONTAIS em lugar nenhum (regra dura do repo). O que separa uma
+   seção da outra é respiro e mudança de peso tipográfico, nunca uma linha.
+   ============================================================================= */
+
+.page {
+  background: var(--tbf-color-bg, #000000);
+  color: var(--tbf-text-primary, #f0ede6);
+}
+
+.crumb {
+  display: inline-block;
+  margin-bottom: var(--tbf-space-8);
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  text-decoration: none;
+}
+
+.crumb:hover { color: var(--tbf-text-primary); }
+
+.eyebrow {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-color-accent, #ff6500);
+  margin-bottom: var(--tbf-space-4);
+}
+
+/* ─── ABERTURA ─────────────────────────────────────────────────────────────
+   O título é a frase mais dura da página, e é de propósito: a proposta abre
+   dizendo o problema do cliente, não o nome de quem assina. */
+.hero {
+  padding-block: var(--tbf-space-16) var(--tbf-space-20);
+}
+
+.title {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: var(--tbf-type-display-lg-weight);
+  font-size: clamp(1.9rem, 7.5vw, 4rem);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  max-width: 18ch;
+  margin: 0;
+}
+
+.deck {
+  margin-top: var(--tbf-space-6);
+  max-width: 52ch;
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.95rem, 3.6vw, 1.15rem);
+  line-height: 1.55;
+  color: var(--tbf-text-secondary);
+}
+
+/* A tese. Maior peso visual da abertura, sem virar outro título. */
+.thesis {
+  margin-top: var(--tbf-space-10);
+  max-width: 24ch;
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--tbf-color-accent, #ff6500);
+}
+
+.thesisSub {
+  margin-top: var(--tbf-space-2);
+  max-width: 34ch;
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.9rem, 3.4vw, 1rem);
+  line-height: 1.5;
+  color: var(--tbf-text-tertiary);
+}
+
+/* ─── SEÇÕES ─────────────────────────────────────────────────────────────── */
+.section {
+  padding-block: var(--tbf-space-16);
+}
+
+.sectionTitle {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: 800;
+  font-size: clamp(1.35rem, 5.5vw, 2.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  max-width: 20ch;
+  margin: 0 0 var(--tbf-space-8);
+}
+
+.sectionDeck {
+  margin: calc(var(--tbf-space-8) * -0.5) 0 var(--tbf-space-10);
+  max-width: 52ch;
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.9rem, 3.4vw, 1.05rem);
+  line-height: 1.55;
+  color: var(--tbf-text-secondary);
+}
+
+/* ─── O ARGUMENTO: quatro pontos numerados ────────────────────────────────
+   Cartão, não lista com marcador: cada ponto é uma afirmação que se sustenta
+   sozinha, e cartão é o que diz isso sem escrever. */
+.argumentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-4);
+}
+
+.argumentCard {
+  background: #0a0a09;
+  border-top: 2px solid var(--tbf-color-accent, #ff6500);
+  border-radius: var(--tbf-radius-card);
+  padding: var(--tbf-space-6);
+}
+
+.argumentN {
+  display: block;
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  color: var(--tbf-color-accent, #ff6500);
+  margin-bottom: var(--tbf-space-3);
+}
+
+.argumentTitle {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: 800;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--tbf-space-2);
+}
+
+.argumentBody {
+  margin: 0;
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+  line-height: 1.5;
+  color: var(--tbf-text-tertiary);
+}
+
+/* ─── A GALERIA ───────────────────────────────────────────────────────────
+   UMA COLUNA NO TELEFONE, e as fotos sangram de ponta a ponta: é como se lê
+   foto num aparelho vertical, e é o que o fundador aprovou no artigo do
+   Gurgel na mesma leva de mudanças.
+
+   No desktop vira duas colunas com as proporções NATIVAS preservadas — nada de
+   quadro fixo com recorte. Numa proposta de fotografia, recortar a foto do
+   próprio portfólio para caber numa grade é dar um tiro no pé. */
+.gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-10);
+}
+
+.shot {
+  margin: 0;
+}
+
+.shotImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--tbf-radius-card);
+}
+
+.shotRole {
+  margin-top: var(--tbf-space-3);
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+.shotRole strong {
+  display: block;
+  font-weight: inherit;
+  color: var(--tbf-color-accent, #ff6500);
+  margin-bottom: 0.2rem;
+  opacity: 0.7;
+}
+
+/* ─── O QUE É O TRABALHO ──────────────────────────────────────────────────
+   Sem cartão aqui, de propósito: o argumento acima já usou cartão, e repetir a
+   caixa faria as duas seções lerem como a mesma coisa. */
+.deliverList {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-8);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.deliverTitle {
+  font-family: var(--tbf-type-display-lg-family);
+  font-weight: 800;
+  font-size: clamp(1rem, 4vw, 1.15rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--tbf-space-2);
+}
+
+.deliverBody {
+  margin: 0;
+  max-width: 46ch;
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+  line-height: 1.5;
+  color: var(--tbf-text-tertiary);
+}
+
+/* ─── FECHO ──────────────────────────────────────────────────────────────── */
+.cta {
+  padding-block: var(--tbf-space-16) var(--tbf-space-24);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tbf-space-4);
+  margin-top: var(--tbf-space-8);
+}
+
+.ctaMail {
+  font-family: var(--tbf-type-body-family);
+  font-size: clamp(0.85rem, 3.2vw, 0.95rem);
+  color: var(--tbf-text-secondary);
+  text-decoration: none;
+}
+
+.ctaMail:hover { color: var(--tbf-text-primary); }
+
+.clientNote {
+  margin-top: var(--tbf-space-10);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  color: var(--tbf-text-tertiary);
+}
+
+/* =============================================================================
+   DESKTOP
+   ============================================================================= */
+
+@media (min-width: 768px) {
+  .argumentGrid { grid-template-columns: repeat(2, 1fr); }
+  .deliverList { grid-template-columns: repeat(2, 1fr); }
+
+  /* Duas colunas de foto, alinhadas pelo TOPO: as proporções são diferentes de
+     propósito, e esticar uma para casar com a outra desmentiria o arquivo. */
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    gap: var(--tbf-space-8);
+  }
+
+  /* A primeira foto é a CAPA do anúncio, e por isso ocupa as duas colunas: é a
+     única que o hóspede vê antes de decidir se rola. */
+  .shot:first-child { grid-column: 1 / -1; }
+}
+
+@media (min-width: 1024px) {
+  .argumentGrid { grid-template-columns: repeat(4, 1fr); }
+  .gallery { gap: var(--tbf-space-10); }
+}

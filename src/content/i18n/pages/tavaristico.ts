@@ -26,6 +26,11 @@ const en = {
     instagramLabel: 'Instagram ↗',
     linkedinLabel: 'LinkedIn ↗',
     representedByPrefix: 'Represented by',
+    // ENTRADA PARA A PROPOSTA DE HOSPEDAGEM (#01 CHANGES 2026-08-14). Fica no
+    // bloco de contato, e não na vitrine de obras, porque não é obra: é oferta.
+    // Na vitrine ela seria lida como mais um case e perderia o verbo.
+    hospitalityKicker: 'Also available',
+    hospitalityLabel: 'Photography for hostels, hotels and guesthouses ↗',
   },
   gallery: {
     filterAriaLabel: 'Filter by discipline',
@@ -59,6 +64,8 @@ const pt: typeof en = {
     instagramLabel: 'Instagram ↗',
     linkedinLabel: 'LinkedIn ↗',
     representedByPrefix: 'Representado pela',
+    hospitalityKicker: 'Também disponível',
+    hospitalityLabel: 'Fotografia para hostels, hotéis e pousadas ↗',
   },
   gallery: {
     filterAriaLabel: 'Filtrar por disciplina',

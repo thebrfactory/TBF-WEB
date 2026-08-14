@@ -913,7 +913,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             linhas, empurrando a fileira inteira para a altura do cartão mais
             cheio. Com a largura cheia da cena o mesmo texto cabe em menos
             linhas, sem cortar uma palavra. */}
-        <div className="p3-portfolio-grid" style={{ maxWidth: 'var(--p3-inner)' }}>
+        {/* `--grow`: com o método fora da cena (#06) sobrou uma faixa vazia de
+            quase 300px embaixo dos cartões em 1440x900 — a cena tem altura de
+            tela cheia e ancora no topo, então o que sai vira buraco, não vira
+            respiro. Os cartões passam a tomar a altura que sobrou (a cena é
+            flex-column) e `grid-auto-rows: 1fr` reparte igual entre eles. Os
+            quatro continuam do mesmo tamanho, agora maiores. */}
+        <div className="p3-portfolio-grid p3-portfolio-grid--grow" style={{ maxWidth: 'var(--p3-inner)' }}>
           {BUSINESS.portfolio.map((item, i) => (
             <PortfolioCard key={item.name} item={item} delay={560 + i * 70} />
           ))}
@@ -1889,8 +1895,12 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            largura ele estoura a janela por baixo. Então a conta é ao contrário —
            a altura é o teto (--p3-story-h) e a LARGURA sai dela, multiplicada
            por 9/16. É a mesma lógica da prancha do artigo, e pela mesma razão. */
+        /* Teto MEDIDO, não escolhido: com 46vh a cena 05 estourava 91px no
+           iPhone 13, e o que ficava de fora era a faixa de mídia e o crédito da
+           imprensa. 33vh cabe a cena inteira com o story ainda em tamanho de
+           telefone na mão. */
         .p3-story {
-          --p3-story-h: min(46vh, 20rem);
+          --p3-story-h: min(33vh, 20rem);
           position: relative;
           display: flex;
           flex-direction: column;
@@ -1964,13 +1974,18 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           padding: 0.25rem 0.1rem 0.6rem;
           background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
         }
+        /* SEM invert AQUI. O BRAND-ASSET-01.svg é preto, e no fecho do deck ele
+           leva invert(1) para virar branco sobre o preto. Neste avatar o fundo é
+           o laranja da marca, e o filtro NÃO respeita a fronteira do desenho: ele
+           inverte o elemento inteiro, fundo junto, e o laranja saía azul-ciano
+           (visto na conferência). Estrela preta sobre laranja é o próprio
+           bloco da marca, e não precisa de filtro nenhum. */
         .p3-story__avatar {
           width: clamp(1rem, 2.4vh, 1.35rem);
           height: clamp(1rem, 2.4vh, 1.35rem);
           border-radius: var(--tbf-radius-full);
           background: ${ACCENT};
           padding: 0.15rem;
-          filter: invert(1);
           flex: 0 0 auto;
         }
         .p3-story__handle {
@@ -2397,6 +2412,19 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           height: 100%;
         }
 
+        /* Ver a nota no JSX da cena 04. min-height: 0 é obrigatório: sem ele
+           um item de flex não encolhe abaixo do próprio conteúdo e o flex: 1
+           só cresce, nunca cede — que é como uma cena de altura fixa estoura. */
+        .p3-portfolio-grid--grow {
+          flex: 1 1 auto;
+          /* Teto: sem ele os quatro cartoes esticam ate o rodape da cena e
+             viram quatro caixas altas com o texto encolhido no topo. Com o
+             teto eles crescem o suficiente para o buraco sumir e o resto vira
+             respiro, que e o que respiro deve ser. */
+          max-height: min(46vh, 26rem);
+          min-height: 0;
+        }
+
         @media (min-width: 768px) {
           .p3-os-grid,
           .p3-partner-grid,
@@ -2523,14 +2551,35 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p3-item-title { font-size: 0.78rem; line-height: 1.05; }
           .p3-footnote { font-size: 0.7rem; line-height: 1.4; }
           .p3-question { font-size: 0.87rem; }
+          /* Os quadros das perguntas (novos em 2026-08-14) custavam 100px de
+             estouro na cena 03 no telefone — medido, e num deck com
+             overflow: hidden estouro come conteúdo em silêncio. O quadro
+             continua existindo (é o pedido), só com o respiro do telefone. */
+          .p3-question-box { padding: 0.45rem 0.5rem; }
+          /* LADO A LADO JÁ NO TELEFONE, e é medida, não gosto. Empilhadas, as
+             duas caixas pagam DOIS respiros internos e dois topos de borda, e a
+             cena 03 passava 79px da tela — com o bloco de contexto ("o Brasil já
+             produz repertório...") esmagado a ZERO pelo flex, ou seja, sumido.
+             Em duas colunas a pergunta quebra em mais linhas, mas paga um
+             respiro só, e a cena volta a caber inteira. */
+          .p3-question-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.32rem;
+          }
+          .p3-question { font-size: 0.78rem; line-height: 1.22; }
           .p3-context-line { font-size: 0.8rem; }
-          .p3-thesis-line { font-size: 1.22rem; margin-bottom: 0.26rem; }
-          .p3-goal__line { font-size: 1.25rem; }
+          .p3-thesis-line { font-size: 1.14rem; margin-bottom: 0.2rem; }
+          .p3-goal__line { font-size: 1.14rem; }
           .p3-case-body { font-size: 0.72rem; line-height: 1.2; }
           .p3-case-client { font-size: 0.7rem; margin-bottom: var(--p3-gap-sm); }
           .p3-label { font-size: 0.62rem; }
           .p3-stat { line-height: 0.9; }
-          .p3-partner-line { font-size: 0.74rem; margin-bottom: 0.2rem; }
+          /* Cena 06: 31px de estouro medido no iPhone 13, e o que ficava de
+             fora era o fim do bloco de hipoteses. A grade de parceria e o bloco
+             mais alto da cena (328px medidos): o corte sai do respiro entre as
+             linhas dela, nao do tamanho da letra. */
+          .p3-partner-line { font-size: 0.71rem; margin-bottom: 0.1rem; }
+          .p3-partner-name { margin-bottom: 0.25rem; }
           .p3-kicker__n, .p3-kicker__pt { font-size: 0.62rem; }
           .p3-kicker__en { font-size: 0.68rem; }
           .p3-kicker-mini { font-size: 0.6rem; }
@@ -2544,7 +2593,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             gap: var(--p3-gap-sm) 0.75rem;
           }
           .p3-chain__arrow { display: none; }
-          .p3-chain__title { font-size: 0.82rem; margin-top: 0.12rem; }
+          .p3-chain__title { font-size: 0.78rem; margin-top: 0.1rem; }
 
           /* Cartões (método, portfólio, parceria): o respiro interno de
              desktop custava espaço demais por cena no telefone. */

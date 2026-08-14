@@ -625,8 +625,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       formatted: { en: '500', pt: '500' },
       prefix: { en: 'R$ ', pt: 'R$ ' },
       label: {
-        en: "million — the filmmaker's cultural investment fund, Xique-Xique",
-        pt: 'milhões — o fundo cultural de Xique-Xique',
+        en: "million, the filmmaker's cultural investment fund, Xique-Xique",
+        pt: 'milhões, o fundo cultural de Xique-Xique',
       },
     },
     {

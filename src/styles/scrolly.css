@@ -641,9 +641,20 @@
     margin-inline: auto;
   }
 
-  /* Em meia largura o 16/10 vira uma tira baixa demais para um carro inteiro. */
+  /* 4/3, e o número não é de gosto: é a proporção NATIVA dos dois renders
+     (1280 × 960). Em `cover`, quadro e arquivo com a mesma proporção significa
+     recorte ZERO — o carro aparece inteiro, com as duas pontas.
+
+     O 16/10 do quadro solto não serve aqui: em meia largura vira uma tira baixa
+     demais para um carro. E o 4/5 que este quadro teve por uma passada era pior
+     ainda — retrato aplicado a arquivo deitado come um quarto da largura de
+     cada lado, e o que sobrava na tela era roda (visto na conferência de
+     2026-08-14).
+
+     Se um par futuro trouxer arquivos de outra proporção, é ESTE número que
+     muda junto. */
   .scrolly-pair__frame {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 4 / 3;
     max-width: 100%;
   }
 }

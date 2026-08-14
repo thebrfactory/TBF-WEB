@@ -475,7 +475,11 @@ export const PARTNERSHIP_OPEN: PartnerScene = {
         { pt: 'Estrutura empresarial já consolidada.', en: 'An established company structure.' },
         { pt: 'Execução em alto padrão.', en: 'High-quality execution.' },
         { pt: 'Capacidade de operar e escalar com consistência.', en: 'The ability to operate and scale with consistency.' },
-        { pt: 'Um mercado onde cultura ainda não virou linguagem.', en: 'A market where culture has not yet become language.' },
+        // TRÊS LINHAS, não quatro. A quarta ("um mercado onde cultura ainda não
+        // virou linguagem") estourava a cena 05 em 31px no iPhone 13 — medido — e
+        // num deck com overflow: hidden isso come conteúdo sem avisar. O lado
+        // esquerdo nasceu com três por causa dessa conta; quem tem quatro é o
+        // lado da .TBF., e é assim nas duas versões da cena.
       ],
     },
     {
