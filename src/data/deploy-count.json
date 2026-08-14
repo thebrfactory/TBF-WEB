@@ -1,6 +1,6 @@
 {
   "_comment": "Contador de deploys de PRODUÇÃO do thebrfactory.com. NÃO editar à mão: quem incrementa é `npm run deploy:count` (scripts/bump-deploy-count.mjs), chamado pela skill /deploy antes do push para main. Semente 42 = deployments de ambiente Production registrados pelo Vercel no GitHub (thebrfactory/TBF-WEB) até 2026-07-30.",
   "version": "1.5.0",
-  "deploys": 54,
-  "lastDeployAt": "2026-08-12"
+  "deploys": 55,
+  "lastDeployAt": "2026-08-14"
 }
