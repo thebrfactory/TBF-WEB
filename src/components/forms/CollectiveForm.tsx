@@ -7,7 +7,7 @@
 // =============================================================================
 
 import { useState, useId } from 'react'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { CollectiveFormData, ContactFormState } from '@/types'
 import { useLang } from '@/lib/LangProvider'
 import { collective } from '@/content/i18n/pages/collective'

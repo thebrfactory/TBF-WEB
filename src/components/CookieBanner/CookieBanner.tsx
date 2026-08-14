@@ -28,7 +28,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { readConsent, writeConsent } from '@/lib/consent'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'

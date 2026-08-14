@@ -5,7 +5,7 @@
 // =============================================================================
 
 import { useEffect, useRef } from 'react'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'
 import { factory } from '@/content/i18n/pages/factory'

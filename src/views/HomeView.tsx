@@ -7,7 +7,7 @@
 // localizedPath. Ver src/content/i18n/README.md.
 // =============================================================================
 
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { sanityFetch, HOMEPAGE_QUERY } from '@/lib/sanity'
 import type { HomePageProps } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'

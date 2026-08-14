@@ -6,7 +6,7 @@
 // localizedPath. Ver src/content/i18n/README.md.
 // =============================================================================
 
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { labels } from '@/content/i18n/pages/labels'
 import { localizedPath, type Lang } from '@/lib/i18n'
 

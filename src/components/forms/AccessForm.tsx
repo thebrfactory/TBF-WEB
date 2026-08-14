@@ -6,7 +6,7 @@
 // =============================================================================
 
 import { useState, useId } from 'react'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { ContactIntent, ContactFormData, ContactFormState } from '@/types'
 import { useLang } from '@/lib/LangProvider'
 import { access } from '@/content/i18n/pages/access'

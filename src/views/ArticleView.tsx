@@ -6,7 +6,7 @@
 
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, SITE_SETTINGS_QUERY, urlFor } from '@/lib/sanity'
 import type { EditorialPost, SiteSettings } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'

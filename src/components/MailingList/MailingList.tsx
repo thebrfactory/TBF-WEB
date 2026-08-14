@@ -7,7 +7,7 @@
 // ignora o campo `consent`), aviso de privacidade em inglês, cores alinhadas.
 // =============================================================================
 
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { useNewsletterSubmit } from '@/hooks/useNewsletterSubmit'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'

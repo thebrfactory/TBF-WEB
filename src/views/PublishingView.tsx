@@ -3,7 +3,7 @@
 // =============================================================================
 
 import type { CSSProperties } from 'react'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { publishing } from '@/content/i18n/pages/publishing'
 import { localizedPath, type Lang } from '@/lib/i18n'
 

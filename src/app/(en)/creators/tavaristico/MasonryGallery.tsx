@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Work, Discipline } from './_data'
 import styles from './tavaristico.module.css'
 import { useLang } from '@/lib/LangProvider'

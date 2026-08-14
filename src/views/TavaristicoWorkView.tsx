@@ -9,7 +9,7 @@
 // estáticas — ver src/content/i18n/README.md.
 
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { notFound } from 'next/navigation'
 import { WORKS, findWork, isProv } from '@/app/(en)/creators/tavaristico/_data'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'

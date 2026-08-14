@@ -5,7 +5,7 @@
 // Zero sidebar · Zero distração
 // =============================================================================
 
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { manifesto } from '@/content/i18n/pages/manifesto'
 import { localizedPath, type Lang } from '@/lib/i18n'
 

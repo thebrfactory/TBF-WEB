@@ -3,13 +3,17 @@
 // 3 colunas desktop / 2 colunas mobile-first
 // =============================================================================
 
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
 import { Ticker } from '@/components/Ticker/Ticker'
 import deployCount from '@/data/deploy-count.json'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
+// A estrutura das colunas mora em `lib/footer-routes.ts`, e não aqui, porque a
+// regra "página do rodapé abre em guia nova" (#01 CHANGES 2026-08-14) é
+// derivada dela. Uma lista só, para as duas coisas nunca divergirem.
+import { FOOTER_COLUMNS } from '@/lib/footer-routes'
 
 // Selo de versão do rodapé. Nomenclatura oficial (pedido do fundador
 // 2026-07-31): `.TBF. OS 3.0.<deploy>`. O 3.0 é a linhagem do sistema
@@ -22,54 +26,6 @@ const SITE_VERSION = `.TBF. OS 3.0.${deployCount.deploys}`
 // construção do letreiro do topo (o texto precisa fechar com " · " para emendar
 // consigo mesmo no loop).
 const CITIES_TICKER = 'SÃO PAULO, SP. · GOIÂNIA, GO. · SALVADOR, BA. ·'
-
-// `headingKey`/`linkKey` apontam pra `shell.footer` — rótulo vem do
-// dicionário, o href fica cru aqui e passa por `localizedPath()` na hora de
-// renderizar.
-const NAV_COLUMNS = [
-  {
-    headingKey: 'pages',
-    links: [
-      { href: '/editorial', linkKey: 'magazine' },
-      { href: '/labels', linkKey: 'labels' },
-      { href: '/manifesto', linkKey: 'manifesto' },
-      { href: '/collective', linkKey: 'collective' },
-      { href: '/access', linkKey: 'access' },
-      // Os dois decks, na ordem cronológica: a 1.0 logo acima da 2.0 (pedido
-      // 2026-07-31). A 1.0 estava publicada mas sem nenhum link no site. Os
-      // rótulos carregam a versão de propósito: sem eles não dá para distinguir
-      // um deck do outro no rodapé.
-      { href: '/pitch', linkKey: 'pitch1' },
-      { href: '/pitch/v2', linkKey: 'pitch2' },
-      { href: '/pitch/v3', linkKey: 'pitch3' },
-    ],
-  },
-  {
-    headingKey: 'company',
-    links: [
-      { href: '/consulting', linkKey: 'consulting' },
-      { href: '/press', linkKey: 'press' },
-      { href: '/about', linkKey: 'about' },
-      { href: '/about/quick-facts', linkKey: 'quickFacts' },
-      { href: '/press/media', linkKey: 'media' },
-      { href: '/creators/tavaristico', linkKey: 'founders' },
-      { href: '/careers', linkKey: 'careers' },
-      { href: '/publishing', linkKey: 'publishing' },
-    ],
-  },
-  {
-    headingKey: 'legal',
-    links: [
-      { href: '/legal/terms', linkKey: 'terms' },
-      { href: '/legal/privacy', linkKey: 'privacy' },
-      { href: '/legal/conduct', linkKey: 'conduct' },
-      { href: '/legal/law-enforcement', linkKey: 'lawEnforcement' },
-    ],
-  },
-] as const satisfies {
-  headingKey: 'pages' | 'company' | 'legal'
-  links: readonly { href: string; linkKey: keyof typeof shell.en.footer.links }[]
-}[]
 
 export function Footer({ lang }: { lang: Lang }) {
   const t = shell[lang].footer
@@ -115,7 +71,7 @@ export function Footer({ lang }: { lang: Lang }) {
 
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
         <div className="footer__grid--nav">
-          {NAV_COLUMNS.map((col) => (
+          {FOOTER_COLUMNS.map((col) => (
             <nav key={col.headingKey} aria-label={t.columns[col.headingKey]}>
               <p
                 className="footer__meta"

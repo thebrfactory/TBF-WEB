@@ -42,13 +42,14 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { PressLogosCarousel } from '../PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
-import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP, CLOSE } from '@/content/pitch/v3-scenes'
+import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
+import type { PartnerScene } from '@/content/pitch/v3-scenes'
 
 const ACCENT = '#FF6500'
 const PAPER = '#F0EDE6'
@@ -398,30 +399,95 @@ const S: React.CSSProperties = {
 // laço; depois dele o painel cruza as nove fotos do arco, uma a cada 2,4s.
 // Sem biblioteca: dois nós sobrepostos e opacidade, que é o que uma troca de
 // imagem precisa. Respeita prefers-reduced-motion (ver o CSS no fim do arquivo).
+// PLAYER DE STORIES (pedido do fundador #01, #01 CHANGES 2026-08-14, com a
+// referência: um destaque do próprio @thebrfactory no Instagram). "essa imagem
+// principal quadrada eu preciso que se torne um layout de instagram stories e
+// apenas imagens nesse formato sejam colocadas."
+//
+// O que muda em relação ao painel anterior:
+//   1. O QUADRO É 9/16, não 4/3 nem 3/4. É a proporção do formato, e é ela que
+//      faz a peça ser reconhecida como story antes de qualquer outro detalhe.
+//   2. Ganha a CRONOMETRAGEM: a barra segmentada no topo, um traço por imagem,
+//      o traço da vez enchendo no mesmo tempo em que a imagem fica na tela. É o
+//      que diz "isto está passando", e é o que uma troca de opacidade sozinha
+//      nunca disse.
+//   3. Ganha o CABEÇALHO: avatar da marca e o handle. O selo de "39 sem" da
+//      referência não entra — inventar idade de post é fingir registro.
+//
+// Cada barra é uma animação CSS de largura, reiniciada pela `key` do React (que
+// muda a cada volta): sem timer por segmento, sem estado por barra. A imagem
+// continua trocando por opacidade, com as molduras sobrepostas num grid de uma
+// célula só.
+//
+// prefers-reduced-motion: sem avanço automático e sem barra correndo. Fica na
+// primeira imagem e as barras mostram só a posição, paradas.
+const STORY_MS = 2400
+
 function CasePanel() {
   const [i, setI] = useState(0)
+  const [running, setRunning] = useState(true)
   const total = CASE.media.length
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const t = setInterval(() => setI((v) => (v + 1) % total), 2400)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setRunning(false)
+      return
+    }
+    const t = setInterval(() => setI((v) => (v + 1) % total), STORY_MS)
     return () => clearInterval(t)
   }, [total])
 
   return (
-    <div className="p3-case-panel">
-      {CASE.media.map((m, idx) => (
+    <div className="p3-story" role="group" aria-label="Case VERÃOZÃO / VERÃOZÃO case">
+      {/* Cronômetro. `aria-hidden` porque é decoração de tempo: o que interessa
+          ao leitor de tela é a legenda de papel, logo abaixo. */}
+      <div className="p3-story__bars" aria-hidden="true">
+        {CASE.media.map((m, idx) => (
+          <span key={m.src} className="p3-story__bar">
+            <span
+              // A `key` muda a cada volta do laço, e é isso que reinicia a
+              // animação do segmento da vez sem tocar nos outros.
+              key={idx === i ? `on-${i}` : `off-${idx}`}
+              className={
+                idx < i
+                  ? 'p3-story__fill p3-story__fill--done'
+                  : idx === i && running
+                    ? 'p3-story__fill p3-story__fill--live'
+                    : idx === i
+                      ? 'p3-story__fill p3-story__fill--done'
+                      : 'p3-story__fill'
+              }
+            />
+          </span>
+        ))}
+      </div>
+
+      <div className="p3-story__head" aria-hidden="true">
         <Image
-          key={m.src}
-          src={m.src}
-          alt={m.alt.pt}
-          width={900}
-          height={1200}
-          sizes="(max-width: 767px) 55vw, 30vw"
-          priority={idx === 0}
-          className={`p3-case-panel__img${idx === i ? ' p3-case-panel__img--on' : ''}`}
+          src="/brand/BRAND-ASSET-01.svg"
+          alt=""
+          width={48}
+          height={48}
+          className="p3-story__avatar"
         />
-      ))}
+        <span className="p3-story__handle">.TBF.</span>
+      </div>
+
+      <div className="p3-story__frame">
+        {CASE.media.map((m, idx) => (
+          <Image
+            key={m.src}
+            src={m.src}
+            alt={m.alt.pt}
+            width={1080}
+            height={1920}
+            sizes="(max-width: 767px) 55vw, 24vw"
+            priority={idx === 0}
+            className={`p3-case-panel__img${idx === i ? ' p3-case-panel__img--on' : ''}`}
+          />
+        ))}
+      </div>
+
       <span className="p3-case-panel__role" aria-live="off">
         {CASE.media[i].role.pt}
         <En>{CASE.media[i].role.en}</En>
@@ -499,7 +565,19 @@ function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[numb
 
 // ─── Página ──────────────────────────────────────────────────────────────────
 
-export function PitchV3Client() {
+/**
+ * O DECK RECEBE O DESTINATÁRIO POR FORA (#02, #01 CHANGES 2026-08-14).
+ *
+ * `/pitch/v3` monta com a cena aberta (`PARTNERSHIP_OPEN`) e é o deck que se
+ * manda para qualquer mesa. `/pitch/v3/overlens` passa a cena da Overlens e vira
+ * a proposta endereçada. As duas rotas rodam o MESMO componente: se um ajuste de
+ * layout só valesse para uma delas, a proposta endereçada envelheceria sozinha,
+ * que é exatamente o que acontece quando se duplica um deck.
+ *
+ * Para uma proposta nova: escrever um `PartnerScene` em `v3-scenes.ts` e criar
+ * `/pitch/v3/<empresa>` passando ele aqui. Não editar a cena aberta.
+ */
+export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
   return (
     <div className="p3-deck">
       <DeckNav />
@@ -513,8 +591,23 @@ export function PitchV3Client() {
              o hero ja se mede em tela cheia e o Ticker corre logo abaixo. */}
       <section id="cena-00" aria-label="Capa / Cover" style={{ scrollSnapAlign: 'start' }}>
         <HomeHero />
-        <Ticker />
       </section>
+
+      {/* LETREIRO EM TODAS AS CENAS (pedido do fundador #03, #01 CHANGES
+          2026-08-14: "preciso que o letreiro motion esteja em TODAS as páginas
+          assim como na v2").
+
+          Ele já estava aqui e já era `position: sticky` — o que não funcionava
+          era o LUGAR. Ele nascia DENTRO da `section#cena-00`, e um elemento
+          sticky só gruda enquanto o pai dele está na tela: passada a capa, o
+          letreiro ia embora junto com ela e as sete cenas seguintes rodavam sem
+          ele. É exatamente por isso que na 2.0 ele é filho direto do deck, e é
+          para lá que ele volta.
+
+          Não mexer na altura: `--p3-band` já contava com o letreiro pinado no
+          topo (é dela que saem o encaixe e a altura de cada cena), então a
+          geometria do deck não muda — ela só passa a valer de verdade. */}
+      <Ticker />
 
       {/* ── CENA 01 · ABERTURA ────────────────────────────────────────────────────
              As duas telas antigas (o hero da home + a Abertura) viraram uma:
@@ -613,34 +706,50 @@ export function PitchV3Client() {
 
         <PressLogosCarousel />
 
-        {/* ── As cinco personalidades de referência ────────────────────────────
+        {/* ── As DUAS personalidades de referência ─────────────────────────────
                Selecionadas pelo fundador em CHANGES/PERSONALITIES (prefixo
-               SELECTED no arquivo). Todas em licença livre, crédito e origem
-               registrados no _CREDITOS.md daquela pasta. O retrato é 1:1 na
-               origem, então o quadro nunca deforma. */}
+               SELECTED no arquivo). Licença livre, crédito e origem registrados
+               no _CREDITOS.md daquela pasta. O retrato é 1:1 na origem, então o
+               quadro nunca deforma.
+
+               UM EM CADA EXTREMIDADE, LIGADOS POR PONTOS (pedido #04). A fila
+               virou uma PONTE: Warhol numa ponta, Oswald na outra, e entre eles
+               a mesma linha pontilhada que corre embaixo de HOME no menu. É a
+               cena inteira dizendo, sem escrever, o que a frase de baixo depois
+               escreve — "campos diferentes, a mesma capacidade".
+
+               Por que a linha é um elemento à parta e não uma borda de um dos
+               dois: ela precisa nascer no centro e crescer para os dois lados
+               quando a cena entra (ver `.p3-refs-bridge__line`), e borda de
+               figura não faz isso sem empurrar o retrato de lugar. */}
         <div className="p3-refs-people">
-          <div className="p3-refs-people__grid">
+          <div className="p3-refs-bridge">
             {REFERENCE.people.map((person, i) => (
-              <PitchReveal key={person.name} delay={200 + i * 80}>
-                <figure className="p3-person">
-                  <Image
-                    src={person.src}
-                    alt={person.name}
-                    width={1200}
-                    height={1200}
-                    className="p3-person__img"
-                    sizes="(max-width: 767px) 45vw, 18vw"
-                  />
-                  {/* SÓ O NOME. A legenda trazia também o papel em português E
-                      em inglês: cinco colunas estreitas com blocos de texto de
-                      comprimentos diferentes, que desalinhavam a fila inteira.
-                      O papel de cada um já é dito pela frase que fecha o
-                      bloco; aqui basta o rosto e o nome. */}
-                  <figcaption>
-                    <p className="p3-person__name">{person.name}</p>
-                  </figcaption>
-                </figure>
-              </PitchReveal>
+              <Fragment key={person.name}>
+                {/* A linha entra entre os dois, e só entre os dois. */}
+                {i > 0 && (
+                  <PitchReveal delay={340}>
+                    <span className="p3-refs-bridge__line" aria-hidden="true" />
+                  </PitchReveal>
+                )}
+                <PitchReveal delay={200 + i * 90}>
+                  <figure className="p3-person">
+                    <Image
+                      src={person.src}
+                      alt={person.name}
+                      width={1200}
+                      height={1200}
+                      className="p3-person__img"
+                      sizes="(max-width: 767px) 30vw, 14vw"
+                    />
+                    {/* SÓ O NOME. O papel de cada um já é dito pela frase que
+                        fecha o bloco; aqui basta o rosto e o nome. */}
+                    <figcaption>
+                      <p className="p3-person__name">{person.name}</p>
+                    </figcaption>
+                  </figure>
+                </PitchReveal>
+              </Fragment>
             ))}
           </div>
 
@@ -675,13 +784,22 @@ export function PitchV3Client() {
           </h2>
         </PitchReveal>
 
-        <div className="p3-argument-block">
+        {/* CADA PERGUNTA NUM QUADRADINHO (pedido do fundador #05, #01 CHANGES
+            2026-08-14). Soltas, as duas perguntas eram dois parágrafos colados,
+            e a segunda parecia continuação da primeira em vez de uma segunda
+            pergunta. No quadro cada uma vira um objeto, e as duas passam a ler
+            como um par — que é o que são. Mesma caixa do resto do deck (fundo
+            #0a0a09, borda de topo no acento, raio de cartão do design system),
+            para a cena 03 não inventar um cartão só dela. */}
+        <div className="p3-question-grid">
           {ARGUMENT.question.items.map((q, i) => (
             <PitchReveal key={q.pt} delay={180 + i * 80}>
-              <p className="p3-question">
-                {q.pt}
-                <En>{q.en}</En>
-              </p>
+              <div className="p3-question-box">
+                <p className="p3-question">
+                  {q.pt}
+                  <En>{q.en}</En>
+                </p>
+              </div>
             </PitchReveal>
           ))}
         </div>
@@ -766,33 +884,21 @@ export function PitchV3Client() {
         </PitchReveal>
 
 
-        {/* Nível 1 — o método, sem vocabulário de startup: quatro verbos. */}
-        <div className="p3-os-grid p3-method-grid">
-          {BUSINESS.method.map((step, i) => (
-            <PitchReveal key={step.title.pt} delay={220 + i * 80}>
-              <div
-                style={{
-                  background: '#0a0a09',
-                  padding: 'clamp(0.85rem, 2.4vw, 1.1rem)',
-                  height: '100%',
-                  borderTop: `2px solid ${ACCENT}`,
-                  borderRadius: 'var(--tbf-radius-card)',
-                }}
-              >
-                <p className="p3-item-title">
-                  {step.title.pt}
-                  <En>{step.title.en}</En>
-                </p>
-                <p className="p3-item-desc p3-tertiary" style={{ marginTop: '0.35rem' }}>
-                  {step.desc.pt}
-                  <En>{step.desc.en}</En>
-                </p>
-              </div>
-            </PitchReveal>
-          ))}
-        </div>
+        {/* O MÉTODO SAIU DA CENA (pedido do fundador #06, #01 CHANGES
+            2026-08-14: "remove esse 4 quadradinhos"). Eram OBSERVAR, DAR FORMA,
+            COLOCAR EM MOVIMENTO e FAZER PERMANECER, em quatro cartões acima do
+            portfólio.
 
-        {/* Nível 2 — o portfólio: quatro propriedades, expansíveis. */}
+            A cena tinha DOIS níveis de leitura de quatro caixas cada, um em cima
+            do outro, e as duas fileiras competiam pela mesma tela: quem olhava
+            não sabia se as oito caixas eram uma lista só de oito ou duas de
+            quatro. Sem o método, o portfólio fica sozinho e a cena passa a ter
+            uma pergunta só — quais são as propriedades.
+
+            `BUSINESS.method` continua em `v3-scenes.ts`, intacto: o conteúdo não
+            foi apagado, só não é mais desenhado aqui. */}
+
+        {/* O portfólio: quatro propriedades, expansíveis. */}
         <PitchReveal delay={500}>
           <p className="p3-portfolio-subtitle" style={{ margin: 'var(--p3-gap-sm) 0' }}>
             {BUSINESS.portfolioSubtitle}
@@ -918,23 +1024,23 @@ export function PitchV3Client() {
       </section>
 
       {/* ── CENA 06 · POR QUE A OVERLENS ─────────────────────────────────────── */}
-      <section id="cena-06" style={{ ...S }} aria-label="Por Que a Overlens / Why Overlens">
+      <section id="cena-06" style={{ ...S }} aria-label={`${partner.kicker.pt} / ${partner.kicker.en}`}>
         <Numeral n="06" />
-        <Kicker n="06" pt="Por Que a Overlens" en="Why Overlens" />
+        <Kicker n="06" pt={partner.kicker.pt} en={partner.kicker.en} />
 
         <PitchReveal delay={100} slot="head">
           <h2 className="p3-h2 p3-h2--md">
-            {PARTNERSHIP.question.pt[0]}
+            {partner.question.pt[0]}
             <br />
-            {PARTNERSHIP.question.pt[1]}
-            <En size="lead">{PARTNERSHIP.question.en.join(' ')}</En>
+            {partner.question.pt[1]}
+            <En size="lead">{partner.question.en.join(' ')}</En>
           </h2>
         </PitchReveal>
 
         {/* Os dois lados, tratamento visual equivalente: nenhum dos dois é
             "cliente" do outro. */}
         <div className="p3-partner-grid">
-          {PARTNERSHIP.sides.map((side, i) => {
+          {partner.sides.map((side, i) => {
             const color = side.color === 'accent' ? ACCENT : PAPER
             return (
               <PitchReveal key={side.who} delay={200 + i * 120}>
@@ -965,20 +1071,20 @@ export function PitchV3Client() {
         {/* THE GOAL: onde os dois lados convergem, maior peso visual da cena. */}
         <PitchReveal delay={480}>
           <div className="p3-goal">
-            <p className="p3-kicker-mini">{PARTNERSHIP.goal.kicker}</p>
+            <p className="p3-kicker-mini">{partner.goal.kicker}</p>
             <p className="p3-goal__line">
-              {PARTNERSHIP.goal.lines[0].pt}
+              {partner.goal.lines[0].pt}
               <br />
-              <span style={{ color: ACCENT }}>{PARTNERSHIP.goal.lines[1].pt}</span>
-              <En size="lead">{PARTNERSHIP.goal.lines.map((l) => l.en).join(' ')}</En>
+              <span style={{ color: ACCENT }}>{partner.goal.lines[1].pt}</span>
+              <En size="lead">{partner.goal.lines.map((l) => l.en).join(' ')}</En>
             </p>
           </div>
         </PitchReveal>
 
         <PitchReveal delay={600}>
           <p className="p3-body p3-tertiary" style={{ marginTop: 'var(--p3-gap-sm)', maxWidth: 'var(--p3-measure-wide)' }}>
-            {PARTNERSHIP.hypotheses.pt}
-            <En>{PARTNERSHIP.hypotheses.en}</En>
+            {partner.hypotheses.pt}
+            <En>{partner.hypotheses.en}</En>
           </p>
         </PitchReveal>
       </section>
@@ -1029,8 +1135,8 @@ export function PitchV3Client() {
 
           <PitchReveal delay={450}>
             <p className="p3-eyebrow p3-eyebrow--accent">
-              {CLOSE.eyebrow.pt}
-              <En>{CLOSE.eyebrow.en}</En>
+              {partner.closeEyebrow.pt}
+              <En>{partner.closeEyebrow.en}</En>
             </p>
           </PitchReveal>
 
@@ -1509,6 +1615,32 @@ export function PitchV3Client() {
           margin-bottom: var(--p3-gap-sm);
         }
 
+        /* ─── AS DUAS PERGUNTAS EM QUADRO (cena 03, tempo 1) ─────────────────
+           Mobile-first: empilhadas no telefone, lado a lado a partir de 768px
+           (ver o media query mais abaixo). grid-auto-rows: 1fr + altura cheia
+           no wrapper do reveal para os dois quadros terem a MESMA altura mesmo
+           com perguntas de comprimentos diferentes — sem isso o quadro da
+           pergunta curta fica baixo e o par perde o alinhamento. */
+        .p3-question-grid {
+          position: relative;
+          z-index: 1;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-auto-rows: 1fr;
+          gap: clamp(0.5rem, 1.6vh, 1rem);
+          margin-top: var(--p3-gap-sm);
+          max-width: var(--p3-measure-wide);
+        }
+        .p3-question-grid > * { height: 100%; }
+
+        .p3-question-box {
+          height: 100%;
+          background: #0a0a09;
+          padding: clamp(0.7rem, 1.6vh, 1.05rem);
+          border-top: 2px solid ${ACCENT};
+          border-radius: var(--tbf-radius-card);
+        }
+
         .p3-argument-block {
           display: flex;
           flex-direction: column;
@@ -1749,17 +1881,106 @@ export function PitchV3Client() {
            telefone metade da largura da cena, no desktop um terco, sempre com o
            teto em vh para nao estourar a tela do deck. As molduras se sobrepoem
            em grid de uma celula, e a troca e de opacidade. */
-        .p3-case-panel {
+        /* ─── PLAYER DE STORIES (cena 05) ────────────────────────────────────
+           Ver o cabeçalho de CasePanel para o porquê. O que mora aqui:
+
+           A PEÇA SE MEDE PELA ALTURA, não pela largura. Um quadro 9/16 numa cena
+           que já tem de caber em uma tela é o pior caso possível do deck: em
+           largura ele estoura a janela por baixo. Então a conta é ao contrário —
+           a altura é o teto (--p3-story-h) e a LARGURA sai dela, multiplicada
+           por 9/16. É a mesma lógica da prancha do artigo, e pela mesma razão. */
+        .p3-story {
+          --p3-story-h: min(46vh, 20rem);
           position: relative;
-          display: grid;
-          width: min(100%, 34rem);
-          aspect-ratio: 4 / 3;
-          max-height: 34vh;
+          display: flex;
+          flex-direction: column;
+          width: calc(var(--p3-story-h) * 9 / 16);
+          max-width: 100%;
           margin-block: var(--p3-gap-sm);
-          border-radius: var(--tbf-radius-card);
-          overflow: hidden;
           flex: 0 0 auto;
         }
+
+        /* O quadro: só ele tem o raio e o recorte. As barras e o cabeçalho ficam
+           POR CIMA dele, e por isso são absolutos com z-index. */
+        .p3-story__frame {
+          position: relative;
+          display: grid;
+          width: 100%;
+          height: var(--p3-story-h);
+          border-radius: var(--tbf-radius-card);
+          overflow: hidden;
+          background: #000000;
+        }
+
+        /* CRONÔMETRO. Um traço por imagem, dividindo a largura em partes iguais.
+           A borda arredondada é a do Instagram e é o que faz a barra ser lida
+           como barra de story em vez de barra de progresso de formulário. */
+        .p3-story__bars {
+          position: absolute;
+          top: 0.4rem;
+          left: 0.4rem;
+          right: 0.4rem;
+          z-index: 3;
+          display: flex;
+          gap: 0.15rem;
+        }
+        .p3-story__bar {
+          flex: 1 1 0;
+          height: 2px;
+          border-radius: 999px;
+          background: rgba(240, 237, 230, 0.32);
+          overflow: hidden;
+        }
+        .p3-story__fill {
+          display: block;
+          width: 0;
+          height: 100%;
+          background: ${PAPER};
+        }
+        /* Segmento já visto: cheio e parado. */
+        .p3-story__fill--done { width: 100%; }
+        /* Segmento da vez: enche no MESMO tempo em que a imagem fica na tela.
+           linear de propósito — cronômetro com easing mente sobre o tempo. */
+        .p3-story__fill--live {
+          animation: p3-story-fill ${STORY_MS}ms linear forwards;
+        }
+        @keyframes p3-story-fill {
+          from { width: 0; }
+          to   { width: 100%; }
+        }
+
+        /* CABEÇALHO: avatar + handle, sobre o degradê que garante contraste
+           qualquer que seja a foto embaixo (regra do repo: imagem com texto
+           sobreposto recebe overlay). */
+        .p3-story__head {
+          position: absolute;
+          top: 0.9rem;
+          left: 0.4rem;
+          right: 0.4rem;
+          z-index: 3;
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          padding: 0.25rem 0.1rem 0.6rem;
+          background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
+        }
+        .p3-story__avatar {
+          width: clamp(1rem, 2.4vh, 1.35rem);
+          height: clamp(1rem, 2.4vh, 1.35rem);
+          border-radius: var(--tbf-radius-full);
+          background: ${ACCENT};
+          padding: 0.15rem;
+          filter: invert(1);
+          flex: 0 0 auto;
+        }
+        .p3-story__handle {
+          font-family: var(--tbf-font-family-display);
+          font-weight: 800;
+          font-size: clamp(0.6rem, 1.5vh, 0.75rem);
+          letter-spacing: 0.02em;
+          color: ${PAPER};
+        }
+
         .p3-case-panel__img {
           grid-area: 1 / 1;
           width: 100%;
@@ -1769,11 +1990,18 @@ export function PitchV3Client() {
           transition: opacity 900ms ${EASE};
         }
         .p3-case-panel__img--on { opacity: 1; }
+        /* A legenda de papel fica POR CIMA do quadro, encostada na base dele.
+           Fora do fluxo de propósito: no fluxo ela somaria altura embaixo de um
+           quadro que já se mede pela altura, e a cena voltaria a estourar. O raio
+           de baixo repete o do quadro para a tarja não vazar do canto. */
         .p3-case-panel__role {
           position: absolute;
           left: 0;
           right: 0;
           bottom: 0;
+          z-index: 3;
+          border-bottom-left-radius: var(--tbf-radius-card);
+          border-bottom-right-radius: var(--tbf-radius-card);
           padding: 0.7rem 0.5rem 0.4rem;
           background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
           font-family: var(--tbf-font-family-printed);
@@ -1920,16 +2148,46 @@ export function PitchV3Client() {
           margin-top: var(--p3-gap);
         }
 
-        .p3-refs-people__grid {
+        /* A PONTE (cena 02). Três colunas: retrato, linha elástica, retrato. A
+           coluna do meio é 1fr e as das pontas são auto, então a linha come
+           toda a largura que sobrar — é ela que empurra os dois para as
+           extremidades, sem justify-content: space-between e sem largura
+           chutada. align-items: center alinha a linha com o CENTRO do círculo,
+           não com o nome, que é onde o olho espera a ponte. */
+        .p3-refs-bridge {
           display: grid;
-          grid-template-columns: repeat(5, 1fr);
-          gap: clamp(0.5rem, 2.5vw, 1.5rem);
-          max-width: 540px;
-          margin-inline: auto;
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+          gap: clamp(0.5rem, 2vw, 1.5rem);
+          width: 100%;
         }
 
+        /* A LINHA DE PONTOS. Mesma construção do underline de HOME no menu
+           (.nav__link::after em components.css): border-bottom pontilhado em
+           2px. Aqui ela cresce do CENTRO para os dois lados quando o bloco
+           revela, que é o gesto de uma ponte sendo lançada — daí o
+           transform-origin: center.
+
+           A escala vem do PitchReveal, que troca o transform do wrapper: por
+           isso o scaleX mora no wrapper e não aqui. O que este seletor faz é só
+           desenhar os pontos e ocupar a coluna inteira. */
+        .p3-refs-bridge__line {
+          display: block;
+          width: 100%;
+          height: 0;
+          border-bottom: 2px dotted rgba(240, 237, 230, 0.45);
+        }
+
+        /* LARGURA EXPLÍCITA, e ela não é preciosismo. Antes o retrato vivia numa
+           coluna 1fr de uma grade de cinco, então a figura tinha largura vinda
+           de fora e o width: 100% da imagem sabia de quanto era 100%. Nas
+           colunas auto da ponte não há essa largura: figura de conteúdo dentro
+           de imagem de largura 100% da figura é uma referência circular, e o
+           retrato colapsa. Termo em vh junto do vw porque o deck inteiro encolhe
+           com a altura da janela, não só com a largura. */
         .p3-person {
           margin: 0;
+          width: clamp(4.5rem, min(22vw, 16vh), 9rem);
           text-align: center;
         }
 
@@ -2145,6 +2403,10 @@ export function PitchV3Client() {
           .p3-portfolio-grid {
             grid-template-columns: repeat(2, 1fr);
           }
+          /* As duas perguntas lado a lado assim que houver largura. */
+          .p3-question-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
           .p3-chain {
             grid-template-columns: repeat(7, auto);
             justify-content: start;
@@ -2180,13 +2442,12 @@ export function PitchV3Client() {
           .p3-case-media__item {
             width: clamp(3.5rem, 7vh, 4.75rem);
           }
-          /* Teto do painel no desktop. 25vh em 900px = 225px de altura, contra
-             os 171px do filme minusculo que ele substituiu: continua bem maior,
-             e agora a cena fecha em uma tela. */
-          .p3-case-panel {
-            width: clamp(14rem, 30vw, 24rem);
-            aspect-ratio: 3 / 4;
-            max-height: 40vh;
+          /* Teto do story no desktop. Só a ALTURA muda — a largura sai dela
+             sozinha, pela conta 9/16 em .p3-story. Em 900px de janela isso dá
+             288px de altura por 162 de largura, que é uma tela de telefone
+             plausível ao lado da copy sem roubar a cena dela. */
+          .p3-story {
+            --p3-story-h: min(32vh, 22rem);
           }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */

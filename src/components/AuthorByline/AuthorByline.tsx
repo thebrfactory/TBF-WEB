@@ -4,7 +4,7 @@
 // =============================================================================
 
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { urlFor } from '@/lib/sanity'
 import type { CollectiveMember } from '@/types'
 

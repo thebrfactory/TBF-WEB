@@ -10,7 +10,7 @@
 
 import { useEffect } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { PressLogosCarousel } from './PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { Ticker } from '@/components/Ticker/Ticker'

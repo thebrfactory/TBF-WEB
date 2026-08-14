@@ -51,7 +51,10 @@ export const SCENES = [
   { id: 'cena-03', pt: 'A Pergunta, o Contexto e a Tese', en: 'The Question, the Context, the Thesis', n: '03' },
   { id: 'cena-04', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '04' },
   { id: 'cena-05', pt: 'Case Selecionado', en: 'Selected Case', n: '05' },
-  { id: 'cena-06', pt: 'Por Que a Overlens', en: 'Why Overlens', n: '06' },
+  // Nome NEUTRO. Esta lista serve ao passador (o número + o anúncio de leitor de
+  // tela), e o passador é o mesmo nas duas rotas: a aberta e a endereçada. Quem
+  // diz o nome do destinatário é o kicker da cena, que vem do `PartnerScene`.
+  { id: 'cena-06', pt: 'A Parceria', en: 'The Partnership', n: '06' },
   { id: 'cena-07', pt: 'Fecho', en: 'Close', n: '07' },
 ] as const
 
@@ -86,12 +89,26 @@ export const REFERENCE = {
     pt: ['Capturar o espírito de um tempo.', 'Transformá-lo em linguagem.'],
     en: ['Capture the spirit of a time.', 'Turn it into language.'],
   },
+  // DOIS, NÃO CINCO (pedido do fundador #04, #01 CHANGES 2026-08-14: "deixe
+  // apenas o ícone do andy warhol e do oswald de andrade, cada um em uma
+  // extremidade da página unidos por uma linha de pontos").
+  //
+  // A fila de cinco círculos iguais no meio da tela tratava os cinco como uma
+  // lista, e lista não é argumento. Com dois, e um em cada beirada, a cena passa
+  // a AFIRMAR alguma coisa: de um lado quem transformou consumo em arte, do
+  // outro quem devorou a influência estrangeira e a devolveu brasileira, e a
+  // linha pontilhada entre eles é a ponte que a .TBF. diz atravessar. A mesma
+  // linha de pontos que corre embaixo de HOME no menu, no hover.
+  //
+  // Os outros três saíram da cena, não da história. Ficam aqui inteiros, para
+  // repor é copiar de volta para o array:
+  //   { name: 'VIRGIL ABLOH', src: '/images/pitch/references/abloh.webp', role: { pt: 'Traduziu a rua para a alta-costura', en: 'Translated the street into luxury' } },
+  //   { name: 'WILL.I.AM', src: '/images/pitch/references/william.webp', role: { pt: 'Levou a cultura pop para dentro da tecnologia', en: 'Carried pop culture into technology' } },
+  //   { name: 'OSKAR METSAVAHT', src: '/images/pitch/references/metsavaht.webp', role: { pt: 'Fez do Brasil uma linguagem de design', en: 'Made Brazil a design language' } },
+  // Os arquivos .webp dos três continuam em public/images/pitch/references/.
   people: [
     { name: 'ANDY WARHOL', src: '/images/pitch/references/warhol.webp', role: { pt: 'Transformou consumo em arte', en: 'Turned consumption into art' } },
-    { name: 'VIRGIL ABLOH', src: '/images/pitch/references/abloh.webp', role: { pt: 'Traduziu a rua para a alta-costura', en: 'Translated the street into luxury' } },
     { name: 'OSWALD DE ANDRADE', src: '/images/pitch/references/oswald.webp', role: { pt: 'Devorou a influência estrangeira e a devolveu brasileira', en: 'Devoured foreign influence and gave it back Brazilian' } },
-    { name: 'WILL.I.AM', src: '/images/pitch/references/william.webp', role: { pt: 'Levou a cultura pop para dentro da tecnologia', en: 'Carried pop culture into technology' } },
-    { name: 'OSKAR METSAVAHT', src: '/images/pitch/references/metsavaht.webp', role: { pt: 'Fez do Brasil uma linguagem de design', en: 'Made Brazil a design language' } },
   ],
   close: {
     pt: 'Campos diferentes. A mesma capacidade: perceber cultura antes que ela vire mercado.',
@@ -348,12 +365,50 @@ export const CASE = {
 }
 
 // =============================================================================
-// CENA 06 — POR QUE A OVERLENS · 55 a 65 s
+// CENA 06 — A CENA DO PARCEIRO · 55 a 65 s
 // Dois territórios que convergem. Nenhum dos dois é "cliente" do outro: a cena
 // resolve no centro, onde está o objetivo comum, e é o objetivo que recebe o
 // maior peso visual.
+//
+// DUAS VERSÕES DA MESMA CENA, e essa é a arquitetura que este bloco resolve
+// (pedido do fundador #02, #01 CHANGES 2026-08-14):
+//
+//   PARTNERSHIP_OPEN ...... vive em /pitch/v3. Genérica, endereçada a NINGUÉM em
+//                           particular: "por que a .TBF. está à procura de novos
+//                           parceiros estratégicos?". É o deck que se manda para
+//                           qualquer mesa.
+//   PARTNERSHIP_OVERLENS .. vive em /pitch/v3/overlens. A proposta para UMA
+//                           empresa específica, com o nome dela na tela.
+//
+// Ele foi explícito sobre o porquê: a cena com nome de empresa "é muito bom",
+// mas ela não pode morar no deck público — proposta endereçada a alguém não é
+// deck de apresentação, é carta. A regra que fica: toda nova proposta para
+// empresa específica nasce como uma rota-filha de /pitch/v3, com o slug da
+// empresa, reusando este mesmo formato. NÃO editar a cena aberta para encaixar
+// um cliente novo.
+//
+// As duas têm a MESMA forma (dois lados, um objetivo, hipóteses), de propósito:
+// é uma cena com dois conteúdos, não duas cenas. Por isso o tipo abaixo.
 // =============================================================================
-export const PARTNERSHIP = {
+
+export interface PartnerScene {
+  /** Rótulo numerado da cena. Muda com o destinatário. */
+  kicker: Bi
+  question: { pt: string[]; en: string[] }
+  sides: {
+    who: string
+    color: 'paper' | 'accent'
+    lines: Bi[]
+  }[]
+  goal: { kicker: string; lines: Bi[] }
+  hypotheses: Bi
+  /** Assinatura do fecho (cena 07). Também muda com o destinatário. */
+  closeEyebrow: Bi
+}
+
+export const PARTNERSHIP_OVERLENS: PartnerScene = {
+  kicker: { pt: 'Por Que a Overlens', en: 'Why Overlens' },
+  closeEyebrow: { pt: 'Uma conversa de trabalho com a Overlens', en: 'A working conversation with Overlens' },
   question: {
     pt: ['Como uma empresa de educação pode crescer', 'entendendo o cenário cultural brasileiro?'],
     en: ['How can an education company grow', 'by understanding Brazilian culture?'],
@@ -393,6 +448,60 @@ export const PARTNERSHIP = {
   } as Bi,
 }
 
+// A CENA ABERTA. Mesma forma, destinatário nenhum.
+//
+// A pergunta é a que ele escreveu: "Por que a .TBF. está a procura de novos
+// parceiros estratégicos?". O lado esquerdo deixa de ser uma empresa e passa a
+// ser o PERFIL de quem a .TBF. procura — que é o que uma proposta aberta pode
+// dizer sem mentir. O lado direito é o mesmo: o que a .TBF. traz não muda com
+// quem está do outro lado da mesa.
+//
+// O objetivo também mudou, e tinha de mudar: "transformar educação em cultura"
+// só faz sentido conversando com uma empresa de educação. Aqui ele volta a ser o
+// que a casa faz com qualquer parceiro — transformar cultura em propriedade, que
+// é a tese da cena 03 e fecha o circuito do deck.
+export const PARTNERSHIP_OPEN: PartnerScene = {
+  kicker: { pt: 'Novos Parceiros', en: 'New Partners' },
+  closeEyebrow: { pt: 'Uma conversa de trabalho', en: 'A working conversation' },
+  question: {
+    pt: ['Por que a .TBF. está à procura', 'de novos parceiros estratégicos?'],
+    en: ['Why is .TBF. looking for', 'new strategic partners?'],
+  },
+  sides: [
+    {
+      who: 'QUEM PROCURAMOS',
+      color: 'paper',
+      lines: [
+        { pt: 'Estrutura empresarial já consolidada.', en: 'An established company structure.' },
+        { pt: 'Execução em alto padrão.', en: 'High-quality execution.' },
+        { pt: 'Capacidade de operar e escalar com consistência.', en: 'The ability to operate and scale with consistency.' },
+        { pt: 'Um mercado onde cultura ainda não virou linguagem.', en: 'A market where culture has not yet become language.' },
+      ],
+    },
+    {
+      who: '.TBF.',
+      color: 'accent',
+      lines: [
+        { pt: 'Coolhunting e leitura de tendências culturais.', en: 'Coolhunting and cultural trend reading.' },
+        { pt: 'Desenvolvimento de propriedade intelectual.', en: 'Intellectual property development.' },
+        { pt: 'Direção criativa e projetos de impacto.', en: 'Creative direction and projects with impact.' },
+        { pt: 'Repertório que vira desejo, linguagem e presença cultural.', en: 'Repertoire that becomes desire, language and cultural presence.' },
+      ],
+    },
+  ],
+  goal: {
+    kicker: 'THE GOAL',
+    lines: [
+      { pt: 'Transformar o que a sua empresa faz em cultura.', en: 'Turn what your company does into culture.' },
+      { pt: 'E cultura em propriedade.', en: 'And culture into property.' },
+    ],
+  },
+  hypotheses: {
+    pt: 'Novos formatos de conteúdo, comunidade, experiências, colaborações e propriedades com relevância cultural, desenhados a partir do que a parceria já sabe fazer.',
+    en: 'New content formats, community, experiences, collaborations and properties with cultural relevance, designed from what the partnership already knows how to do.',
+  },
+}
+
 // =============================================================================
 // CENA 07 — FECHO · 20 a 25 s
 // Fim definitivo. Sem CTA de venda, sem oitava tela, sem "obrigado".
@@ -411,7 +520,10 @@ export const CLOSE = {
     en: ['Brazil already exports culture.', 'Now it needs to export property.'],
   },
   culture: 'Culture™',
-  eyebrow: { pt: 'Uma conversa de trabalho com a Overlens', en: 'A working conversation with Overlens' } as Bi,
+  // A ASSINATURA DO FECHO SAIU DAQUI (#02, 2026-08-14). Ela dizia "uma conversa
+  // de trabalho com a Overlens" — quem é o destinatário é decisão da CENA 06,
+  // não do fecho, senão o deck aberto fecharia com o nome de uma empresa
+  // específica. Agora vem de `PartnerScene.closeEyebrow`.
   site: 'thebrfactory.com',
   email: 'tavaristico@thebrfactory.com',
   links: [
