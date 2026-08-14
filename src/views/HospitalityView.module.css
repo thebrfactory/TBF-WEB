@@ -101,17 +101,27 @@
    grande igual na 05/07"). Aqui a página não tem a restrição de uma tela por
    cena que o deck tem, então a fila pode ser generosa: a miniatura chega a
    5.5rem de largura, quase 10rem de altura no 9/16. */
+/* O QUADRO MAIOR E A MINIATURA PELA METADE (pedido do fundador 2026-08-14:
+   "aumente o tamanho do story e diminua o tamanho da miniatura 50%").
+
+   A troca tem lógica além do tamanho: esta página, ao contrário do deck, NÃO
+   tem a restrição de uma tela por cena, então o quadro pode ser o que ele
+   deveria ser desde o começo, um telefone em tamanho de telefone. E a fila
+   deixa de competir com ele: miniatura é índice, não é a peça. Pela metade,
+   cabem o dobro delas na mesma largura, e o leitor vê de uma vez que existem
+   treze quadros em vez de cinco. */
 .listingPlayer {
-  --story-h: min(58vh, 26rem);
+  --story-h: min(72vh, 34rem);
 }
 
 .listingThumbs {
-  --thumb-w: clamp(3.5rem, 13vw, 6.5rem);
+  /* Exatamente metade dos valores anteriores (3.5 / 13vw / 6.5). */
+  --thumb-w: clamp(1.75rem, 6.5vw, 3.25rem);
 }
 
 @media (min-width: 1024px) {
   .listingPlayer {
-    --story-h: min(62vh, 30rem);
+    --story-h: min(76vh, 40rem);
   }
 }
 

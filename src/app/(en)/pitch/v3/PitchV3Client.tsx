@@ -857,28 +857,18 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         <Numeral n="05" />
         <Kicker n="05" pt="Case Selecionado" en="Selected Case" />
 
-        {/* A IDENTIDADE DA CAMPANHA, NÃO O NOME DELA DIGITADO (pedido do
-            fundador 2026-08-14). O título era a palavra VERÃOZÃO na tipografia
-            do site, o que é a campanha traduzida para a voz da casa. A campanha
-            tem letra própria, e é ela que roda no Instagram do cliente.
-            `h2` com o texto em `sr-only` para o título da cena continuar
-            existindo para leitor de tela e para o sumário da página. */}
-        <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2 p3-case-title">
-            <Image
-              src={CASE.wordmark}
-              alt={CASE.headline}
-              width={900}
-              height={328}
-              priority
-              className="p3-case-wordmark"
-            />
-          </h2>
-        </PitchReveal>
-        <PitchReveal delay={140}>
-          <p className="p3-case-client">{CASE.client}</p>
-        </PitchReveal>
+        {/* O TÍTULO SAIU DE CIMA DA CENA e foi para o lado do story (pedido do
+            fundador 2026-08-14: "verãozão + nome do cliente do lado direito do
+            story"). O motivo é geometria: o story é 9/16 e a cena tem altura de
+            uma tela. Com o logotipo ocupando uma faixa horizontal em cima, a
+            altura que sobrava para o quadro era metade da que existe. Movido
+            para a coluna da direita, ele passa a dividir a LARGURA com o quadro
+            em vez de disputar altura, e o story cresce até o rodapé da cena.
 
+            A identidade é a da campanha, não a palavra digitada na tipografia da
+            casa: a campanha tem letra própria e é ela que roda no Instagram do
+            cliente. O `alt` carrega o texto, então o título da cena continua
+            existindo para leitor de tela e para o sumário da página. */}
         <div className="p3-case-layout">
           {/* SEM PitchReveal em volta, e a razão é estrutural, não estética: o
               invólucro do reveal é um <div> de verdade, e um <div> no meio anula
@@ -913,6 +903,21 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           />
 
           <div className="p3-case-copy">
+            <PitchReveal delay={100}>
+              <h2 className="p3-h2 p3-case-title">
+                <Image
+                  src={CASE.wordmark}
+                  alt={CASE.headline}
+                  width={900}
+                  height={591}
+                  priority
+                  className="p3-case-wordmark"
+                />
+              </h2>
+            </PitchReveal>
+            <PitchReveal delay={140}>
+              <p className="p3-case-client">{CASE.client}</p>
+            </PitchReveal>
             <PitchReveal delay={260}>
               <p className="p3-case-body">
                 {CASE.deck.pt[0]}
@@ -1808,9 +1813,20 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p3-case-layout {
           display: grid;
           grid-template-columns: auto minmax(0, 1fr);
+          /* Duas linhas: a de cima estica, a de baixo é do tamanho da fila. É
+             isso que faz o story crescer até onde a cena permite em vez de parar
+             na altura do texto. */
+          grid-template-rows: 1fr auto;
           align-items: start;
-          column-gap: var(--p3-gap-sm);
+          column-gap: var(--p3-gap);
           row-gap: var(--p3-gap-sm);
+          /* A composição toma a altura que sobra na cena. Sem isto a grade
+             mede-se pelo conteúdo e o story fica pequeno com a tela vazia
+             embaixo, que foi o que o fundador viu. min-height: 0 é
+             obrigatório: item de flex não encolhe abaixo do conteúdo sem ele, e
+             aí o 1fr só cresce e a cena estoura. */
+          flex: 1 1 auto;
+          min-height: 0;
         }
 
         .p3-deck-flat { display: contents; }
@@ -1821,16 +1837,31 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            texto para uma TERCEIRA linha, e as colunas colapsam: medido,
            1278px na primeira e 0px na segunda. Dizendo onde cada um mora, a
            grade fica do jeito que a referência pede. */
+        /* O STORY ATRAVESSA AS DUAS LINHAS (pedido do fundador 2026-08-14: "o
+           story expandido também para baixo no lugar das miniaturas"). Ele
+           ocupa a coluna da esquerda inteira, do topo da composição até a base,
+           e as miniaturas se mudaram para debaixo do texto, na coluna da
+           direita. */
         .p3-story {
           grid-column: 1;
-          grid-row: 1;
+          grid-row: 1 / -1;
+          align-self: stretch;
+          /* A ALTURA VEM DA GRADE, não de um vh chutado. --story-h continua
+             existindo para o cálculo da largura (9/16), e é por isso que ela
+             segue em vh: é a única forma de a largura ser um número resolvido
+             antes do layout. A altura real do quadro é 100% da linha. */
+          height: 100%;
+        }
+        .p3-story > div:last-child {
+          height: 100%;
         }
         .p3-case-copy {
           grid-column: 2;
           grid-row: 1;
+          align-self: start;
         }
         .p3-thumbs {
-          grid-column: 1 / -1;
+          grid-column: 2;
           grid-row: 2;
         }
         .p3-case-video {
@@ -1870,9 +1901,12 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            ainda fecha no iPhone 13 com o título, o cliente, a copy, a esteira e
            o crédito juntos. No desktop sobra altura e ele cresce (ver o media
            query de 1024px), que é onde o deck é apresentado de verdade. */
+        /* O TETO SUBIU porque o título saiu de cima da cena: a faixa que o
+           logotipo ocupava virou altura de quadro. O valor continua sendo o
+           maior em que a cena 05 fecha em uma tela, medido nos dois viewports
+           de aceite. */
         .p3-story {
-          --story-h: min(36vh, 20rem);
-          margin-block: var(--p3-gap-sm);
+          --story-h: min(52vh, 26rem);
         }
 
         /* A FILA DE MINIATURAS. Ela mora dentro do StoryDeck, colada embaixo do
@@ -1901,7 +1935,8 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            proporção para o TAMANHO DA PALAVRA ficar igual. */
         .p3-case-wordmark {
           width: auto;
-          height: clamp(3.7rem, 13.5vh, 7.5rem);
+          max-width: 100%;
+          height: clamp(3.2rem, 12vh, 6.5rem);
           max-width: 100%;
           object-fit: contain;
           object-position: left center;
@@ -2323,7 +2358,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           /* Teto do story no desktop. Só a ALTURA muda: a largura sai dela
              sozinha, pela conta 9/16 do componente. */
           .p3-story {
-            --story-h: min(41vh, 23rem);
+            --story-h: min(58vh, 32rem);
           }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */

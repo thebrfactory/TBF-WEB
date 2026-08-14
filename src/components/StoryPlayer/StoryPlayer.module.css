@@ -167,15 +167,39 @@
    Rola de lado quando não cabe, sem barra visível: é o gesto natural num
    telefone e o trackpad resolve no desktop. `scroll-snap` para a miniatura
    parar alinhada em vez de meio cortada. */
+/* 🔴 O RESPIRO INTERNO É O QUE SALVA O ANEL DA MINIATURA ATIVA, e não é
+   decoração: é correção de bug.
+
+   Esta fila rola de lado, ou seja, tem `overflow-x: auto`. E overflow RECORTA
+   tudo que passa da caixa de conteúdo, inclusive `box-shadow` e `outline`. Sem
+   respiro, o anel da miniatura selecionada era cortado nos quatro lados: rente
+   em cima e embaixo, e sumindo de vez nas miniaturas das pontas. Foi o "fica
+   sem a sombra e deixa muito feio cortado" que o fundador viu.
+
+   A correção é o par padding + margem negativa: o padding abre a folga que a
+   sombra precisa DENTRO da área de rolagem, e a margem negativa de mesmo valor
+   devolve o alinhamento, para a primeira miniatura continuar na mesma coluna do
+   quadro acima. Sem a margem, a fila inteira entraria 6px para dentro e a peça
+   pareceria desalinhada.
+
+   `--ring`: o valor mora numa variável porque três coisas dependem dele ao
+   mesmo tempo (a espessura do anel, este respiro e esta margem). Mexer numa e
+   esquecer das outras é como o corte volta. */
 .thumbs {
   --thumb-w: 4.5rem;
+  --ring: 2px;
+  --ring-room: calc(var(--ring) + 4px);
   display: flex;
   gap: 0.5rem;
-  width: 100%;
   overflow-x: auto;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
-  padding-bottom: 0.2rem;
+  padding: var(--ring-room);
+  margin: calc(var(--ring-room) * -1);
+  /* A caixa cresce o dobro do respiro para a fila continuar ocupando a largura
+     da coluna em que foi posta, e não a largura menos o respiro. */
+  width: calc(100% + var(--ring-room) * 2);
+  max-width: calc(100% + var(--ring-room) * 2);
 }
 
 .thumbs::-webkit-scrollbar { display: none; }
@@ -207,7 +231,7 @@
 .thumbOn,
 .thumbOn:hover {
   opacity: 1;
-  box-shadow: 0 0 0 2px #ff6500;
+  box-shadow: 0 0 0 var(--ring, 2px) #ff6500;
 }
 
 .thumbImg {
