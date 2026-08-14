@@ -139,9 +139,11 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
   // ACERVO ÚNICO (pedido do fundador, #01 CHANGES 2026-08-14): "preciso que use
   // APENAS as fotos que eu deixei na pasta". Desde então a matéria roda inteira
   // com o acervo Gurgel que ele reuniu (`~/Desktop/GURGEL`), e nenhuma imagem de
-  // banco de licença livre sobrou em uso. Os arquivos 01 a 09 continuam no
-  // repositório, com a procedência registrada no _CREDITOS.md, mas estão FORA da
-  // matéria — não repor nenhum deles sem falar com ele.
+  // banco de licença livre sobrou em uso. Os arquivos 01 a 09 foram APAGADOS do
+  // repositório na limpeza de peso do mesmo dia (só pesavam, ninguém os pedia).
+  // A procedência dos nove segue registrada no _CREDITOS.md e os arquivos estão
+  // no histórico do git, recuperáveis pelo commit anterior. Não repor nenhum
+  // deles sem falar com ele.
   //
   // Capa: a X-15 na estrada de terra. É a única foto horizontal do acervo que
   // funciona ao mesmo tempo como fundo do hero e como miniatura no /editorial e

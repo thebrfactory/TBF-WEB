@@ -20,7 +20,8 @@
 
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
-import { hospitality, SHOTS } from '@/content/i18n/pages/hospitality'
+import { hospitality, SHOTS, HIGHLIGHTS, HIGHLIGHT_PROFILE } from '@/content/i18n/pages/hospitality'
+import { StoryPlayer, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import styles from './HospitalityView.module.css'
 
@@ -30,12 +31,30 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
 
   return (
     <main className={styles.page}>
+      {/* ── O REEL, ANTES DE QUALQUER PALAVRA ──────────────────────────────
+             Pedido do fundador: as imagens entram em evidência logo de cara.
+             Fora do `.container` de propósito, para correr de ponta a ponta.
+             Ver `.reel` no CSS para o porquê da velocidade. */}
+      <div className="container">
+        <Link href={path('/creators/tavaristico')} className={styles.crumb}>
+          {t.crumb}
+        </Link>
+      </div>
+
+      <MediaBelt
+        className={styles.reel}
+        items={SHOTS.map((shot) => ({
+          src: shot.src,
+          alt: shot.alt[lang],
+          role: shot.role[lang],
+        }))}
+        label={t.reelLabel}
+      />
+      <p className={styles.reelLabel}>{t.reelLabel}</p>
+
       <div className="container">
         {/* ── Abertura ─────────────────────────────────────────────────── */}
         <header className={styles.hero}>
-          <Link href={path('/creators/tavaristico')} className={styles.crumb}>
-            {t.crumb}
-          </Link>
           <p className={styles.eyebrow}>{t.eyebrow}</p>
           <h1 className={styles.title}>{t.title}</h1>
           <p className={styles.deck}>{t.deck}</p>
@@ -98,6 +117,48 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
               </figure>
             ))}
           </div>
+        </section>
+
+        {/* ── O anúncio em stories ─────────────────────────────────────────
+               A MESMA LÓGICA DA CENA 05 DO DECK, e literalmente o mesmo
+               componente: `StoryPlayer` + `MediaBelt`, compartilhados desde
+               2026-08-14. Foi o pedido do fundador, e a razão é boa: a página
+               termina de argumentar mostrando o material já montado no formato
+               em que o hóspede vai encontrá-lo. */}
+        <section className={styles.section} aria-labelledby="hosp-listing">
+          <h2 id="hosp-listing" className={styles.sectionTitle}>
+            {t.listingTitle}
+          </h2>
+
+          <div className={styles.listing}>
+            <StoryPlayer
+              className={styles.listingPlayer}
+              items={HIGHLIGHTS.map((h) => ({
+                src: h.src,
+                alt: h.alt[lang],
+                role: h.role[lang],
+              }))}
+              handle={HIGHLIGHT_PROFILE.handle}
+              avatarSrc={HIGHLIGHT_PROFILE.avatar}
+              ms={2800}
+              label={t.listingTitle}
+            />
+            <div className={styles.listingCopy}>
+              <p className={styles.sectionDeck} style={{ marginTop: 0 }}>
+                {t.listingDeck}
+              </p>
+            </div>
+          </div>
+
+          <MediaBelt
+            className={styles.listingBelt}
+            items={HIGHLIGHTS.map((h) => ({
+              src: h.src,
+              alt: h.alt[lang],
+              role: h.role[lang],
+            }))}
+            label={t.listingRole}
+          />
         </section>
 
         {/* ── O que é o trabalho ───────────────────────────────────────── */}

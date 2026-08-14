@@ -1456,6 +1456,17 @@
   margin-right: clamp(1.5rem, 5vw, 4rem);
 }
 
+/* FOLGA LARGA (pedido do fundador 2026-08-14, cena 02 da 3.0: "coloque mais
+   espaçamento entre cada ítem"). Só vale onde a propriedade `spacing="wide"` é
+   passada: os decks 1.0 e 2.0 seguem com a folga original, porque a 2.0 é o deck
+   que já foi apresentado e não muda por tabela.
+
+   O loop continua sem costura: a folga maior deixa o percurso das quatro cópias
+   ainda MAIS largo que a tela, que é a condição que a costura precisa. */
+.press-carousel-frame--wide .press-carousel-slide {
+  margin-right: clamp(3rem, 9vw, 7rem);
+}
+
 .press-carousel__overlay {
   position: absolute;
   inset: 0;

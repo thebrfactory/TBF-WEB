@@ -192,6 +192,56 @@ export const SHOTS: Shot[] = [
   },
 ]
 
+
+// =============================================================================
+// OS DESTAQUES DO PERFIL — a segunda leva de material (2026-08-14)
+// -----------------------------------------------------------------------------
+// Pedido do fundador: "use também esses materiais seguindo a mesma lógica do
+// layout 05 no pitch". A pasta é `TAV05 → TBF .Ô De Casa → 02. MARÇO →
+// DESTAQUES`, 81 arquivos; entram treze.
+//
+// POR QUE ESTES TREZE, e por que eles fecham o argumento da página. As catorze
+// fotos de cima são FOTOGRAFIA: provam que a casa foi bem fotografada. Estas
+// são os DESTAQUES do perfil, e provam outra coisa, que é o que um hoteleiro
+// precisa ver: que o mesmo material vira um anúncio navegável, tipo por tipo de
+// quarto, com o preço da diária longe da conversa. É literalmente um anúncio de
+// Booking, só que contado por quem tem voz.
+//
+// A ordem é a de um anúncio de verdade: o que fazer, onde dormir (por tipo de
+// acomodação, que é como o hóspede filtra), o que comer, a prova social, e a
+// cidade. O último quadro é o único com número, e o número é deles, não nosso.
+// =============================================================================
+
+const destaques = '/images/creators/tavaristico/hospitality/destaques'
+
+export interface Highlight {
+  src: string
+  role: { en: string; pt: string }
+  alt: { en: string; pt: string }
+}
+
+export const HIGHLIGHTS: Highlight[] = [
+  { src: `${destaques}/01-play.webp`, role: { en: 'What there is to do', pt: 'O que tem para fazer' }, alt: { en: 'Highlight cover reading PLAY over the hostel mural.', pt: 'Capa de destaque com a palavra PLAY sobre o mural do hostel.' } },
+  { src: `${destaques}/02-piscina.webp`, role: { en: 'The heated pool', pt: 'A piscina aquecida' }, alt: { en: 'A guest in the heated pool, seen from behind.', pt: 'Uma hóspede na piscina aquecida, vista de costas.' } },
+  { src: `${destaques}/03-rede.webp`, role: { en: 'The hammocks', pt: 'As redes' }, alt: { en: 'A blue hammock strung among the plants.', pt: 'Uma rede azul armada entre as plantas.' } },
+  { src: `${destaques}/04-sleep.webp`, role: { en: 'Where you sleep', pt: 'Onde se dorme' }, alt: { en: 'Highlight cover reading SLEEP over a yellow room.', pt: 'Capa de destaque com a palavra SLEEP sobre um quarto amarelo.' } },
+  { src: `${destaques}/05-dorms.webp`, role: { en: 'Dorms', pt: 'Dorms' }, alt: { en: 'A shared dorm with bunk beds.', pt: 'Um quarto compartilhado com beliches.' } },
+  { src: `${destaques}/06-pods.webp`, role: { en: 'Pods', pt: 'Pods' }, alt: { en: 'The capsule pods with individual curtains.', pt: 'As cápsulas individuais com cortina.' } },
+  { src: `${destaques}/07-suites.webp`, role: { en: 'Suites', pt: 'Suítes' }, alt: { en: 'A private suite with artwork on the wall.', pt: 'Uma suíte privativa com arte na parede.' } },
+  { src: `${destaques}/08-lofts.webp`, role: { en: 'Lofts', pt: 'Lofts' }, alt: { en: 'A loft room seen from the doorway.', pt: 'Um loft visto da porta.' } },
+  { src: `${destaques}/09-estudios.webp`, role: { en: 'Studios', pt: 'Estúdios' }, alt: { en: 'A studio with a double bed and yellow wall.', pt: 'Um estúdio com cama de casal e parede amarela.' } },
+  { src: `${destaques}/10-eat-drink.webp`, role: { en: 'The kitchen', pt: 'A cozinha' }, alt: { en: 'A sandwich being made, highlight cover reading SANDUBAS.', pt: 'Um sanduíche sendo montado, capa de destaque com a palavra SANDUBAS.' } },
+  { src: `${destaques}/11-cafe.webp`, role: { en: 'Breakfast', pt: 'O café da manhã' }, alt: { en: 'Breakfast served, highlight cover reading CAFÉ DA MANHÃ.', pt: 'Café da manhã servido, capa de destaque com a chamada CAFÉ DA MANHÃ.' } },
+  { src: `${destaques}/12-awards.webp`, role: { en: 'What others say', pt: 'O que dizem' }, alt: { en: 'Highlight with awards and review scores for the hostel.', pt: 'Destaque com prêmios e notas de avaliação do hostel.' } },
+  { src: `${destaques}/13-explore.webp`, role: { en: 'The city starts here', pt: 'A cidade começa aqui' }, alt: { en: 'Highlight cover reading EXPLORE over the lit hostel sign at night.', pt: 'Capa de destaque com a palavra EXPLORE sobre o letreiro do hostel à noite.' } },
+]
+
+/** Foto de perfil do @odecasahostel, e o handle que assina o quadro. */
+export const HIGHLIGHT_PROFILE = {
+  handle: 'Ô',
+  avatar: '/images/creators/tavaristico/hospitality/o-avatar.webp',
+}
+
 const en = {
   meta: {
     title: 'Hospitality Photography · Tavarístico',
@@ -234,6 +284,13 @@ const en = {
         'Nobody travels to a bed. The street, the bar on the corner, the walk back. All of it is inventory, and none of it is in the gallery.',
     },
   ],
+
+  reelLabel: 'Ô de Casa Hostel, São Paulo. Fourteen frames, none of them a bed.',
+
+  listingTitle: 'And then it becomes a listing.',
+  listingDeck:
+    'The same material, cut for the place people actually browse. Room type by room type, with the nightly rate nowhere near the argument. This is the hostel profile as it stands today.',
+  listingRole: 'What this frame answers',
 
   galleryTitle: 'Ô de Casa Hostel, São Paulo',
   galleryDeck:
@@ -313,6 +370,13 @@ const pt: typeof en = {
         'Ninguém viaja para uma cama. A rua, o bar da esquina, a volta a pé. Tudo isso é inventário, e nada disso está na galeria.',
     },
   ],
+
+  reelLabel: 'Ô de Casa Hostel, São Paulo. Catorze quadros, nenhum deles uma cama.',
+
+  listingTitle: 'E aí vira anúncio.',
+  listingDeck:
+    'O mesmo material, recortado para o lugar onde as pessoas de fato procuram. Tipo de quarto por tipo de quarto, com o valor da diária longe do argumento. É o perfil do hostel como ele está hoje.',
+  listingRole: 'O que este quadro responde',
 
   galleryTitle: 'Ô de Casa Hostel, São Paulo',
   galleryDeck:

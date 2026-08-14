@@ -174,9 +174,14 @@ renders do Kleber Silva.
 
 ## O que saiu de uso, e por quê
 
-Os arquivos `01` a `09` **continuam no repositório** e a procedência deles, mais
-acima neste documento, continua valendo. Eles só não estão mais na matéria. Não
-repor nenhum deles sem falar com o fundador.
+Os arquivos `01` a `09` foram **apagados do repositório** na limpeza de peso de
+2026-08-14 (pedido: "otimize todas ao máximo, tem muita foto em resolução
+altíssima que não tem necessidade estar no site"). Sem uso, eles só pesavam.
+
+A procedência dos nove, mais acima neste documento, **continua valendo e é o
+motivo de este documento não ter sido encurtado**: se algum dia um deles voltar,
+a licença já está apurada. Os arquivos estão no histórico do git, recuperáveis
+pelo commit anterior a essa limpeza. Não repor nenhum sem falar com o fundador.
 
 | Arquivo | Era | Por que saiu |
 |---|---|---|

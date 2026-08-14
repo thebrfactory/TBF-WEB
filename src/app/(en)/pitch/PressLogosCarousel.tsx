@@ -61,7 +61,16 @@ const COPIES = 4
 // O idioma vem do contexto, não de propriedade: este carrossel é usado pelo
 // deck 1.0 (que virou bilíngue por rota) E pelo deck 2.0 (que é bilíngue por
 // desenho e não passa idioma nenhum). Exigir a propriedade quebrava o 2.0.
-export function PressLogosCarousel() {
+/**
+ * `spacing="wide"` abre a folga entre os logos (pedido do fundador 2026-08-14 na
+ * cena 02 da 3.0: "coloque mais espaçamento entre cada ítem").
+ *
+ * É PROPRIEDADE, e não uma mudança no valor padrão, por um motivo duro: este
+ * carrossel é o MESMO nos decks 1.0, 2.0 e 3.0, e a 2.0 é o deck que já foi
+ * apresentado. Ela não pode mudar por tabela porque a 3.0 pediu ar. Quem pede o
+ * ar é quem usa.
+ */
+export function PressLogosCarousel({ spacing = 'default' }: { spacing?: 'default' | 'wide' } = {}) {
   const t = pitch[useLang()]
   const loop = Array.from({ length: COPIES }, () => PRESS_LOGOS).flat()
 
@@ -70,7 +79,10 @@ export function PressLogosCarousel() {
     // .press-carousel. A camada de assets .TBF. é irmã dele, dentro do frame sem
     // clipping: os marcadores são mais altos que a faixa de logos e antes tinham
     // as pontas decepadas pelo overflow: era a "forma esquisita" do pedido.
-    <div className="press-carousel-frame" aria-label={t.featuredIn.frameAriaLabel}>
+    <div
+      className={`press-carousel-frame${spacing === 'wide' ? ' press-carousel-frame--wide' : ''}`}
+      aria-label={t.featuredIn.frameAriaLabel}
+    >
       <div className="press-carousel">
         <ul className="press-carousel-track" role="list">
           {loop.map((src, i) => (

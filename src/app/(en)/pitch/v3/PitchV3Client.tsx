@@ -48,6 +48,7 @@ import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
+import { StoryPlayer, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
 
@@ -399,102 +400,12 @@ const S: React.CSSProperties = {
 // laço; depois dele o painel cruza as nove fotos do arco, uma a cada 2,4s.
 // Sem biblioteca: dois nós sobrepostos e opacidade, que é o que uma troca de
 // imagem precisa. Respeita prefers-reduced-motion (ver o CSS no fim do arquivo).
-// PLAYER DE STORIES (pedido do fundador #01, #01 CHANGES 2026-08-14, com a
-// referência: um destaque do próprio @thebrfactory no Instagram). "essa imagem
-// principal quadrada eu preciso que se torne um layout de instagram stories e
-// apenas imagens nesse formato sejam colocadas."
-//
-// O que muda em relação ao painel anterior:
-//   1. O QUADRO É 9/16, não 4/3 nem 3/4. É a proporção do formato, e é ela que
-//      faz a peça ser reconhecida como story antes de qualquer outro detalhe.
-//   2. Ganha a CRONOMETRAGEM: a barra segmentada no topo, um traço por imagem,
-//      o traço da vez enchendo no mesmo tempo em que a imagem fica na tela. É o
-//      que diz "isto está passando", e é o que uma troca de opacidade sozinha
-//      nunca disse.
-//   3. Ganha o CABEÇALHO: avatar da marca e o handle. O selo de "39 sem" da
-//      referência não entra — inventar idade de post é fingir registro.
-//
-// Cada barra é uma animação CSS de largura, reiniciada pela `key` do React (que
-// muda a cada volta): sem timer por segmento, sem estado por barra. A imagem
-// continua trocando por opacidade, com as molduras sobrepostas num grid de uma
-// célula só.
-//
-// prefers-reduced-motion: sem avanço automático e sem barra correndo. Fica na
-// primeira imagem e as barras mostram só a posição, paradas.
-const STORY_MS = 2400
-
-function CasePanel() {
-  const [i, setI] = useState(0)
-  const [running, setRunning] = useState(true)
-  const total = CASE.media.length
-
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setRunning(false)
-      return
-    }
-    const t = setInterval(() => setI((v) => (v + 1) % total), STORY_MS)
-    return () => clearInterval(t)
-  }, [total])
-
-  return (
-    <div className="p3-story" role="group" aria-label="Case VERÃOZÃO / VERÃOZÃO case">
-      {/* Cronômetro. `aria-hidden` porque é decoração de tempo: o que interessa
-          ao leitor de tela é a legenda de papel, logo abaixo. */}
-      <div className="p3-story__bars" aria-hidden="true">
-        {CASE.media.map((m, idx) => (
-          <span key={m.src} className="p3-story__bar">
-            <span
-              // A `key` muda a cada volta do laço, e é isso que reinicia a
-              // animação do segmento da vez sem tocar nos outros.
-              key={idx === i ? `on-${i}` : `off-${idx}`}
-              className={
-                idx < i
-                  ? 'p3-story__fill p3-story__fill--done'
-                  : idx === i && running
-                    ? 'p3-story__fill p3-story__fill--live'
-                    : idx === i
-                      ? 'p3-story__fill p3-story__fill--done'
-                      : 'p3-story__fill'
-              }
-            />
-          </span>
-        ))}
-      </div>
-
-      <div className="p3-story__head" aria-hidden="true">
-        <Image
-          src="/brand/BRAND-ASSET-01.svg"
-          alt=""
-          width={48}
-          height={48}
-          className="p3-story__avatar"
-        />
-        <span className="p3-story__handle">.TBF.</span>
-      </div>
-
-      <div className="p3-story__frame">
-        {CASE.media.map((m, idx) => (
-          <Image
-            key={m.src}
-            src={m.src}
-            alt={m.alt.pt}
-            width={1080}
-            height={1920}
-            sizes="(max-width: 767px) 55vw, 24vw"
-            priority={idx === 0}
-            className={`p3-case-panel__img${idx === i ? ' p3-case-panel__img--on' : ''}`}
-          />
-        ))}
-      </div>
-
-      <span className="p3-case-panel__role" aria-live="off">
-        {CASE.media[i].role.pt}
-        <En>{CASE.media[i].role.en}</En>
-      </span>
-    </div>
-  )
-}
+// O PLAYER DE STORIES E A ESTEIRA SAIRAM DAQUI (2026-08-14). Os dois viraram
+// `src/components/StoryPlayer/StoryPlayer.tsx`, compartilhados com a proposta de
+// hospedagem em /creators/tavaristico/hospitality — o fundador pediu "a mesma
+// lógica do layout 05" lá, e duas cópias significaria que o próximo ajuste de
+// ritmo ou de contraste só chegaria numa das duas (regra 4: apontar, não copiar).
+// O porquê de cada detalhe do player mora no cabeçalho daquele arquivo.
 
 function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[number]; delay: number }) {
   const [open, setOpen] = useState(false)
@@ -704,7 +615,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </h2>
         </PitchReveal>
 
-        <PressLogosCarousel />
+        <PressLogosCarousel spacing="wide" />
 
         {/* ── As DUAS personalidades de referência ─────────────────────────────
                Selecionadas pelo fundador em CHANGES/PERSONALITIES (prefixo
@@ -946,8 +857,23 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         <Numeral n="05" />
         <Kicker n="05" pt="Case Selecionado" en="Selected Case" />
 
+        {/* A IDENTIDADE DA CAMPANHA, NÃO O NOME DELA DIGITADO (pedido do
+            fundador 2026-08-14). O título era a palavra VERÃOZÃO na tipografia
+            do site, o que é a campanha traduzida para a voz da casa. A campanha
+            tem letra própria, e é ela que roda no Instagram do cliente.
+            `h2` com o texto em `sr-only` para o título da cena continuar
+            existindo para leitor de tela e para o sumário da página. */}
         <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2">{CASE.headline}</h2>
+          <h2 className="p3-h2 p3-case-title">
+            <Image
+              src={CASE.wordmark}
+              alt={CASE.headline}
+              width={900}
+              height={328}
+              priority
+              className="p3-case-wordmark"
+            />
+          </h2>
         </PitchReveal>
         <PitchReveal delay={140}>
           <p className="p3-case-client">{CASE.client}</p>
@@ -955,7 +881,28 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         <div className="p3-case-layout">
           <PitchReveal delay={200}>
-            <CasePanel />
+            <StoryPlayer
+              className="p3-story"
+              items={CASE.media.map((m) => ({
+                src: m.src,
+                alt: m.alt.pt,
+                role: m.role.pt,
+                roleEn: m.role.en,
+              }))}
+              // O STORY É DO Ô, NÃO DA .TBF. (pedido do fundador 2026-08-14:
+              // "o quadro de story preciso que tenha nome Ô e a foto do ícone
+              // coloque a mesma foto do perfil do instagram deles"). E ele está
+              // certo pelo motivo que importa: estas peças foram publicadas no
+              // perfil do CLIENTE. Assinar o quadro com a marca da agência
+              // trocaria o autor da publicação, que é exatamente o tipo de
+              // detalhe que uma pessoa da área percebe num deck.
+              //
+              // O avatar é a foto de perfil real do @odecasahostel, e ela ainda
+              // por cima está na mesma paleta da campanha: Ô ciano sobre azul.
+              handle="Ô"
+              avatarSrc="/images/pitch/veraozao/o-avatar.webp"
+              label="Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces"
+            />
           </PitchReveal>
 
           <div className="p3-case-copy">
@@ -979,30 +926,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         <PitchReveal delay={420}>
           {/* FAIXA QUE ANDA SOZINHA (pedido do fundador: "proporção muito
               pequena, aqui a gente pode fazer tipo um carrossel que se
-              movimenta"). A lista é duplicada e o trilho corre em translateX:
-              é assim que uma esteira infinita se faz sem JS, e é o mesmo
-              princípio do carrossel de logos da cena 02. `aria-hidden` na
-              segunda cópia para o leitor de tela não ler tudo duas vezes. */}
-          <div className="p3-case-media" role="group" aria-label="Mídia do case / Case media">
-            <div className="p3-case-media__track">
-            {[...CASE.media, ...CASE.media].map((m, idx) => (
-              <figure key={m.src + idx} className="p3-case-media__item" aria-hidden={idx >= CASE.media.length}>
-                <Image
-                  src={m.src}
-                  alt={m.alt.pt}
-                  width={640}
-                  height={800}
-                  className="p3-case-media__img"
-                  sizes="150px"
-                />
-                <figcaption className="p3-case-media__role">
-                  {m.role.pt}
-                  <En>{m.role.en}</En>
-                </figcaption>
-              </figure>
-            ))}
-            </div>
-          </div>
+              movimenta"). Desde 2026-08-14 ela é o `MediaBelt` compartilhado
+              com a proposta de hospedagem: mesma esteira, mesmo motivo. */}
+          <MediaBelt
+            className="p3-belt"
+            items={CASE.media.map((m) => ({ src: m.src, alt: m.alt.pt, role: m.role.pt }))}
+            label="Mídia do case / Case media"
+          />
         </PitchReveal>
 
         <PitchReveal delay={520}>
@@ -1856,9 +1786,17 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         /* ─── LAYOUT DO CASE (cena 05): filme vertical + copy, lado a lado no
            desktop, empilhados no mobile. */
+        /* LADO A LADO JÁ NO TELEFONE (2026-08-14). Empilhado, o story e a copy
+           somavam altura um em cima do outro, e era isso que impedia o quadro de
+           crescer: 73px de estouro medido no iPhone 13 mesmo com o story já
+           reduzido. Em linha, os dois dividem a LARGURA, que é o que sobra numa
+           tela de telefone, e o story pode ocupar a altura inteira que a cena
+           tem para dar.
+           É também a composição da referência que o fundador mandou: o quadro à
+           esquerda, o texto à direita, numa coluna estreita. */
         .p3-case-layout {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           align-items: flex-start;
           gap: var(--p3-gap-sm);
         }
@@ -1883,197 +1821,51 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         /* Faixa horizontal com as nove imagens do case, na ordem do arco
            narrativo. Rola de lado: é a faixa que tem overflow, não a cena. */
-        /* PAINEL DO CASE, tipo gif. Proporcao GRANDE (pedido do fundador): no
-           telefone metade da largura da cena, no desktop um terco, sempre com o
-           teto em vh para nao estourar a tela do deck. As molduras se sobrepoem
-           em grid de uma celula, e a troca e de opacidade. */
-        /* ─── PLAYER DE STORIES (cena 05) ────────────────────────────────────
-           Ver o cabeçalho de CasePanel para o porquê. O que mora aqui:
+        /* O CSS do player e da esteira mora em StoryPlayer.module.css. O que
+           fica aqui é só a MEDIDA que esta cena entrega aos dois: a altura
+           disponível é do deck, não do componente.
 
-           A PEÇA SE MEDE PELA ALTURA, não pela largura. Um quadro 9/16 numa cena
-           que já tem de caber em uma tela é o pior caso possível do deck: em
-           largura ele estoura a janela por baixo. Então a conta é ao contrário —
-           a altura é o teto (--p3-story-h) e a LARGURA sai dela, multiplicada
-           por 9/16. É a mesma lógica da prancha do artigo, e pela mesma razão. */
-        /* Teto MEDIDO, não escolhido: com 46vh a cena 05 estourava 91px no
-           iPhone 13, e o que ficava de fora era a faixa de mídia e o crédito da
-           imprensa. 33vh cabe a cena inteira com o story ainda em tamanho de
-           telefone na mão. */
+           A ALTURA SUBIU (pedido do fundador 2026-08-14: "preciso que tenha esse
+           tamanho"). O story estava em 33vh, que foi o teto medido quando a cena
+           ainda carregava um título de texto em display grande e uma faixa de
+           miniaturas 4/5. Com a identidade da campanha no lugar do título e a
+           faixa em 9/16, sobrou altura para o quadro crescer. O número é medido,
+           não escolhido: é o maior valor em que as sete cenas continuam cabendo
+           em uma tela nos dois viewports de aceite. */
+        /* O TAMANHO DO STORY É MEDIDO, NÃO ESCOLHIDO, e a régua é a regra dura
+           do deck: uma cena, uma tela. Este valor é o maior em que a cena 05
+           ainda fecha no iPhone 13 com o título, o cliente, a copy, a esteira e
+           o crédito juntos. No desktop sobra altura e ele cresce (ver o media
+           query de 1024px), que é onde o deck é apresentado de verdade. */
         .p3-story {
-          --p3-story-h: min(33vh, 20rem);
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          width: calc(var(--p3-story-h) * 9 / 16);
-          max-width: 100%;
+          --story-h: min(36vh, 20rem);
           margin-block: var(--p3-gap-sm);
-          flex: 0 0 auto;
         }
 
-        /* O quadro: só ele tem o raio e o recorte. As barras e o cabeçalho ficam
-           POR CIMA dele, e por isso são absolutos com z-index. */
-        .p3-story__frame {
-          position: relative;
-          display: grid;
-          width: 100%;
-          height: var(--p3-story-h);
-          border-radius: var(--tbf-radius-card);
-          overflow: hidden;
-          background: #000000;
-        }
-
-        /* CRONÔMETRO. Um traço por imagem, dividindo a largura em partes iguais.
-           A borda arredondada é a do Instagram e é o que faz a barra ser lida
-           como barra de story em vez de barra de progresso de formulário. */
-        .p3-story__bars {
-          position: absolute;
-          top: 0.4rem;
-          left: 0.4rem;
-          right: 0.4rem;
-          z-index: 3;
-          display: flex;
-          gap: 0.15rem;
-        }
-        .p3-story__bar {
-          flex: 1 1 0;
-          height: 2px;
-          border-radius: 999px;
-          background: rgba(240, 237, 230, 0.32);
-          overflow: hidden;
-        }
-        .p3-story__fill {
-          display: block;
-          width: 0;
-          height: 100%;
-          background: ${PAPER};
-        }
-        /* Segmento já visto: cheio e parado. */
-        .p3-story__fill--done { width: 100%; }
-        /* Segmento da vez: enche no MESMO tempo em que a imagem fica na tela.
-           linear de propósito — cronômetro com easing mente sobre o tempo. */
-        .p3-story__fill--live {
-          animation: p3-story-fill ${STORY_MS}ms linear forwards;
-        }
-        @keyframes p3-story-fill {
-          from { width: 0; }
-          to   { width: 100%; }
-        }
-
-        /* CABEÇALHO: avatar + handle, sobre o degradê que garante contraste
-           qualquer que seja a foto embaixo (regra do repo: imagem com texto
-           sobreposto recebe overlay). */
-        .p3-story__head {
-          position: absolute;
-          top: 0.9rem;
-          left: 0.4rem;
-          right: 0.4rem;
-          z-index: 3;
-          display: flex;
-          align-items: center;
-          gap: 0.35rem;
-          padding: 0.25rem 0.1rem 0.6rem;
-          background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0));
-        }
-        /* SEM invert AQUI. O BRAND-ASSET-01.svg é preto, e no fecho do deck ele
-           leva invert(1) para virar branco sobre o preto. Neste avatar o fundo é
-           o laranja da marca, e o filtro NÃO respeita a fronteira do desenho: ele
-           inverte o elemento inteiro, fundo junto, e o laranja saía azul-ciano
-           (visto na conferência). Estrela preta sobre laranja é o próprio
-           bloco da marca, e não precisa de filtro nenhum. */
-        .p3-story__avatar {
-          width: clamp(1rem, 2.4vh, 1.35rem);
-          height: clamp(1rem, 2.4vh, 1.35rem);
-          border-radius: var(--tbf-radius-full);
-          background: ${ACCENT};
-          padding: 0.15rem;
-          flex: 0 0 auto;
-        }
-        .p3-story__handle {
-          font-family: var(--tbf-font-family-display);
-          font-weight: 800;
-          font-size: clamp(0.6rem, 1.5vh, 0.75rem);
-          letter-spacing: 0.02em;
-          color: ${PAPER};
-        }
-
-        .p3-case-panel__img {
-          grid-area: 1 / 1;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          opacity: 0;
-          transition: opacity 900ms ${EASE};
-        }
-        .p3-case-panel__img--on { opacity: 1; }
-        /* A legenda de papel fica POR CIMA do quadro, encostada na base dele.
-           Fora do fluxo de propósito: no fluxo ela somaria altura embaixo de um
-           quadro que já se mede pela altura, e a cena voltaria a estourar. O raio
-           de baixo repete o do quadro para a tarja não vazar do canto. */
-        .p3-case-panel__role {
-          position: absolute;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          z-index: 3;
-          border-bottom-left-radius: var(--tbf-radius-card);
-          border-bottom-right-radius: var(--tbf-radius-card);
-          padding: 0.7rem 0.5rem 0.4rem;
-          background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 500;
-          font-size: clamp(0.62rem, 1.5vh, 0.8rem);
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          text-align: center;
-          color: ${PAPER};
-        }
-
-        /* ESTEIRA. O trilho tem o dobro da lista e anda uma metade inteira: no
-           fim do ciclo a segunda copia esta exatamente onde a primeira comecou,
-           e o salto de volta e invisivel. */
-        .p3-case-media__track {
-          display: flex;
-          gap: 0.6rem;
-          width: max-content;
-          animation: p3-belt 42s linear infinite;
-        }
-        @keyframes p3-belt {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
-        }
-        .p3-case-media:hover .p3-case-media__track { animation-play-state: paused; }
-
-        .p3-case-media {
-          overflow: hidden;
-          padding-bottom: 0.4rem;
+        /* A miniatura da esteira passou de 4/5 para 9/16 quando o material virou
+           story. Mesma largura, a peça ficou 40% mais alta, e foi ela que
+           empurrou a cena 05 para fora da tela no telefone. A largura cai junto
+           para a altura voltar ao que era. */
+        .p3-belt {
+          --belt-w: clamp(2.4rem, 5vh, 3.4rem);
           margin-top: var(--p3-gap-sm);
         }
-        .p3-case-media__item {
-          flex: 0 0 auto;
-          width: clamp(3.5rem, 8vh, 5rem);
-          margin: 0;
+
+        /* A IDENTIDADE DA CAMPANHA no lugar do título de texto. O h2 perde a
+           tipografia porque o que ele carrega agora é uma imagem: sem isto, a
+           altura de linha da display continuaria reservando espaço vazio embaixo
+           do logotipo. O teto é de ALTURA, com termo em vh, como tudo no deck. */
+        .p3-case-title {
+          font-size: 0;
+          line-height: 0;
         }
-        .p3-case-media__img {
-          width: 100%;
-          height: auto;
-          aspect-ratio: 4 / 5;
-          object-fit: cover;
+        .p3-case-wordmark {
+          width: auto;
+          height: clamp(2.1rem, 7.5vh, 4.2rem);
+          max-width: 100%;
+          object-fit: contain;
+          object-position: left center;
           display: block;
-          border-radius: var(--tbf-radius-card);
-        }
-        .p3-case-media__role {
-          margin-top: 0.2rem;
-          display: -webkit-box;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-          overflow: hidden;
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 500;
-          font-size: 0.58rem;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
-          color: rgba(240,237,230,0.5);
-          text-align: center;
         }
 
         .p3-press {
@@ -2186,11 +1978,29 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            A escala vem do PitchReveal, que troca o transform do wrapper: por
            isso o scaleX mora no wrapper e não aqui. O que este seletor faz é só
            desenhar os pontos e ocupar a coluna inteira. */
+        /* PONTOS MAIS ESPAÇADOS (pedido do fundador 2026-08-14: "deixe mais
+           espaçado essa linha de pontos"). O border-bottom: dotted do CSS NÃO
+           tem folga configurável: o navegador escolhe o intervalo a partir da
+           espessura, e com 2px ele desenha uma linha quase contínua. Por isso a
+           ponte deixa de ser borda e passa a ser um degradê repetido, que é a
+           única construção em que ponto e vão são dois números que eu escolho.
+
+           A conta: 3px de ponto, 10px de passo, ou seja 7px de ar entre um e
+           outro. background-repeat: repeat-x com altura de 3px mantém a linha
+           fina; background-position: center a alinha com o centro do círculo,
+           como antes. */
         .p3-refs-bridge__line {
           display: block;
           width: 100%;
-          height: 0;
-          border-bottom: 2px dotted rgba(240, 237, 230, 0.45);
+          height: 3px;
+          background-image: radial-gradient(
+            circle,
+            rgba(240, 237, 230, 0.5) 1.5px,
+            transparent 1.6px
+          );
+          background-size: 10px 3px;
+          background-repeat: repeat-x;
+          background-position: center;
         }
 
         /* LARGURA EXPLÍCITA, e ela não é preciosismo. Antes o retrato vivia numa
@@ -2236,8 +2046,6 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .p3-case-media__track { animation: none; }
-          .p3-case-panel__img { transition: none; }
           .p3-person__img { transition: none; }
         }
 
@@ -2446,8 +2254,6 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             margin: 2.25rem 0 0 0;
           }
           .p3-case-layout {
-            flex-direction: row;
-            align-items: flex-start;
             gap: var(--p3-gap);
           }
         }
@@ -2467,15 +2273,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           /* Miniatura MAIOR no desktop tambem (pedido do fundador: a faixa
              estava com proporcao muito pequena). Termo em vh: em tela baixa ela
              encolhe junto, que e a regra do deck. */
-          .p3-case-media__item {
-            width: clamp(3.5rem, 7vh, 4.75rem);
+          .p3-belt {
+            --belt-w: clamp(3rem, 6.5vh, 4.5rem);
           }
-          /* Teto do story no desktop. Só a ALTURA muda — a largura sai dela
-             sozinha, pela conta 9/16 em .p3-story. Em 900px de janela isso dá
-             288px de altura por 162 de largura, que é uma tela de telefone
-             plausível ao lado da copy sem roubar a cena dela. */
+          /* Teto do story no desktop. Só a ALTURA muda: a largura sai dela
+             sozinha, pela conta 9/16 do componente. */
           .p3-story {
-            --p3-story-h: min(32vh, 22rem);
+            --story-h: min(41vh, 23rem);
           }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */
@@ -2484,10 +2288,6 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             grid-template-columns: auto 1fr;
             gap: 0.2rem 1.25rem;
             align-items: baseline;
-          }
-          .p3-case-media {
-            gap: 0.45rem;
-            padding-bottom: 0.2rem;
           }
           /* O filme e VERTICAL (720x1280): largura por vw em tela larga e baixa
              virava 185px de altura. Por vh ele acompanha a janela. */
@@ -2616,8 +2416,8 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p3-case-video {
             width: clamp(4.5rem, 20vw, 6.5rem);
           }
-          .p3-case-media__item {
-            width: clamp(3.75rem, 15vw, 5rem);
+          .p3-belt {
+            --belt-w: clamp(3.75rem, 15vw, 5rem);
           }
 
           /* CAMADA TERCIÁRIA. São os blocos que ELABORAM o que a cena já

@@ -1,0 +1,236 @@
+/* =============================================================================
+   STORY PLAYER + FAIXA DE MÍDIA — CSS compartilhado
+   -----------------------------------------------------------------------------
+   Ver o cabeçalho de StoryPlayer.tsx para o porquê de estes dois objetos serem
+   compartilhados em vez de copiados.
+
+   A PEÇA SE MEDE PELA ALTURA, não pela largura. Um quadro 9/16 numa cena que já
+   precisa caber em uma tela é o pior caso possível: medido em largura, ele
+   estoura a janela por baixo. Então a conta é ao contrário — a altura é o teto
+   (`--story-h`, entregue por quem usa) e a LARGURA sai dela, multiplicada por
+   9/16. É a mesma lógica da prancha do artigo, pela mesma razão.
+   ============================================================================= */
+
+.player {
+  --story-h: 20rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--story-h) * 9 / 16);
+  max-width: 100%;
+  flex: 0 0 auto;
+}
+
+/* O quadro: só ele tem o raio e o recorte. Barras e cabeçalho ficam POR CIMA
+   dele, e por isso são absolutos com z-index. */
+.frame {
+  position: relative;
+  display: grid;
+  width: 100%;
+  height: var(--story-h);
+  border-radius: var(--tbf-radius-card);
+  overflow: hidden;
+  background: #000000;
+}
+
+.img {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.imgOn { opacity: 1; }
+
+/* CRONÔMETRO. Um traço por imagem, dividindo a largura em partes iguais. A
+   borda arredondada é a do Instagram e é o que faz a barra ser lida como barra
+   de story em vez de barra de progresso de formulário. */
+.bars {
+  position: absolute;
+  top: 0.4rem;
+  left: 0.4rem;
+  right: 0.4rem;
+  z-index: 3;
+  display: flex;
+  gap: 0.15rem;
+}
+
+.bar {
+  flex: 1 1 0;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(240, 237, 230, 0.32);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #f0ede6;
+}
+
+/* Segmento já visto: cheio e parado. */
+.fillDone { width: 100%; }
+
+/* Segmento da vez: enche no MESMO tempo em que a imagem fica na tela.
+   `linear` de propósito — cronômetro com easing mente sobre o tempo. A duração
+   vem por variável inline, para o mesmo componente servir ritmos diferentes. */
+.fillLive {
+  animation: storyFill var(--story-ms, 2400ms) linear forwards;
+}
+
+@keyframes storyFill {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+/* CABEÇALHO: avatar (opcional) + handle, sobre o degradê que garante contraste
+   qualquer que seja a foto embaixo. Regra do repo: imagem com texto sobreposto
+   recebe overlay. */
+.head {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.4rem;
+  right: 0.4rem;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.1rem 0.6rem;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+}
+
+/* O avatar é uma FOTO DE PERFIL, e é tratado como tal: recortada no círculo,
+   preenchendo o quadro, com o anel fino que o Instagram desenha em volta. Nada
+   de fundo colorido nem de respiro interno — isso é tratamento de logotipo, e
+   logotipo com margem dentro de um círculo de 20px lê como bolinha, não como
+   perfil.
+   SEM filtro de inversão em hipótese nenhuma: o filtro não respeita a fronteira
+   do desenho, inverte o elemento inteiro, e na conferência de 2026-08-14 o
+   laranja da marca saiu ciano por causa disso. */
+.avatar {
+  width: clamp(1.1rem, 2.6vh, 1.5rem);
+  height: clamp(1.1rem, 2.6vh, 1.5rem);
+  border-radius: var(--tbf-radius-full);
+  object-fit: cover;
+  box-shadow: 0 0 0 1.5px rgba(240, 237, 230, 0.55);
+  flex: 0 0 auto;
+}
+
+/* Sem avatar, um anel da cor da marca segura o mesmo lugar: o cabeçalho não
+   pode mudar de altura entre uma página e outra. */
+.dot {
+  width: clamp(1rem, 2.4vh, 1.35rem);
+  height: clamp(1rem, 2.4vh, 1.35rem);
+  border-radius: var(--tbf-radius-full);
+  border: 2px solid #ff6500;
+  flex: 0 0 auto;
+}
+
+.handle {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 800;
+  font-size: clamp(0.6rem, 1.5vh, 0.75rem);
+  letter-spacing: 0.02em;
+  color: #f0ede6;
+}
+
+/* A legenda de papel fica POR CIMA do quadro, encostada na base dele. Fora do
+   fluxo de propósito: no fluxo ela somaria altura embaixo de um quadro que já
+   se mede pela altura. O raio de baixo repete o do quadro para a tarja não
+   vazar do canto. */
+.role {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  border-bottom-left-radius: var(--tbf-radius-card);
+  border-bottom-right-radius: var(--tbf-radius-card);
+  padding: 0.7rem 0.5rem 0.4rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+  font-family: var(--tbf-font-family-printed);
+  font-weight: 500;
+  font-size: clamp(0.62rem, 1.5vh, 0.8rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #f0ede6;
+}
+
+.roleEn {
+  display: block;
+  font-family: var(--tbf-font-family-printed);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: 0.015em;
+  text-transform: none;
+  color: rgba(240, 237, 230, 0.55);
+}
+
+/* =============================================================================
+   FAIXA DE MÍDIA — esteira infinita, sem JavaScript
+   -----------------------------------------------------------------------------
+   O trilho tem o DOBRO da lista e anda exatamente uma metade: no fim do ciclo a
+   segunda cópia está onde a primeira começou, e o salto de volta é invisível.
+   É o mesmo princípio do letreiro do topo do site.
+   ============================================================================= */
+
+.belt {
+  overflow: hidden;
+  padding-bottom: 0.4rem;
+}
+
+.beltTrack {
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
+  animation: beltRun var(--belt-s, 42s) linear infinite;
+}
+
+@keyframes beltRun {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Parar no hover é o que deixa alguém OLHAR uma miniatura específica. */
+.belt:hover .beltTrack { animation-play-state: paused; }
+
+.beltItem {
+  flex: 0 0 auto;
+  width: var(--belt-w, 4.5rem);
+  margin: 0;
+}
+
+.beltImg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--tbf-radius-card);
+}
+
+.beltRole {
+  margin-top: 0.2rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: var(--tbf-font-family-printed);
+  font-weight: 500;
+  font-size: 0.58rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 230, 0.5);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beltTrack { animation: none; }
+  .img { transition: none; }
+  .fillLive { animation: none; width: 100%; }
+}

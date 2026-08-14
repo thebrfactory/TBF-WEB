@@ -12,6 +12,52 @@
 .page {
   background: var(--tbf-color-bg, #000000);
   color: var(--tbf-text-primary, #f0ede6);
+  /* O nav do site é fixo e passa POR CIMA do conteúdo. Como esta página abre
+     direto na migalha (e logo abaixo no reel, que sangra), sem esta reserva o
+     "← PORTFOLIO" nasce embaixo do menu: no telefone ele colidia com o MAG do
+     nav (visto na conferência de 2026-08-14). A altura vem do token, não de um
+     número, para acompanhar qualquer mudança no header. */
+  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-4));
+}
+
+@media (min-width: 1280px) {
+  .page {
+    padding-top: calc(var(--tbf-nav-height-xl) + var(--tbf-space-4));
+  }
+}
+
+/* ─── REEL DE ABERTURA ─────────────────────────────────────────────────────
+   Pedido do fundador (2026-08-14): "preciso que as imagens já entrem em
+   evidência logo de cara, com uma dinâmica tipo um carrossel bem rápido".
+
+   Ele está certo sobre o problema. A página abria com três parágrafos de texto,
+   e a primeira foto só aparecia depois de duas dobras. Numa proposta de
+   FOTOGRAFIA, isso é pedir para o cliente acreditar antes de ver.
+
+   O reel corre de ponta a ponta, fora do `.container`, logo abaixo da migalha.
+   RÁPIDO de propósito (18s contra os 42s da esteira do rodapé da página): a
+   velocidade é o argumento, ela diz que existe volume de material. Ele para no
+   hover, que é o que deixa alguém olhar um quadro específico.
+
+   Quadro 4/5, não 9/16: aqui as peças são FOTOGRAFIA, e as catorze têm
+   proporções nativas diferentes. O 4/5 é o recorte que trata retrato e paisagem
+   com o mesmo respeito. */
+.reel {
+  --belt-w: clamp(9rem, 26vw, 15rem);
+  --belt-s: 18s;
+  margin-bottom: var(--tbf-space-10);
+}
+
+.reel img {
+  aspect-ratio: 4 / 5;
+}
+
+.reelLabel {
+  padding-inline: var(--tbf-grid-margin-sm);
+  margin-top: var(--tbf-space-3);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  color: var(--tbf-text-tertiary);
 }
 
 .crumb {
@@ -40,7 +86,47 @@
    O título é a frase mais dura da página, e é de propósito: a proposta abre
    dizendo o problema do cliente, não o nome de quem assina. */
 .hero {
-  padding-block: var(--tbf-space-16) var(--tbf-space-20);
+  padding-block: var(--tbf-space-8) var(--tbf-space-20);
+}
+
+/* ─── O ANÚNCIO EM STORIES ────────────────────────────────────────────────
+   A segunda leva de material, na mesma lógica da cena 05 do deck: um player de
+   story rodando ao lado do texto, e a esteira das treze peças embaixo. Ver o
+   cabeçalho de HIGHLIGHTS no dicionário para o que estes treze provam que as
+   catorze fotos não provam.
+
+   Mobile-first: empilhado no telefone, lado a lado a partir de 768px. */
+.listing {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-8);
+  align-items: flex-start;
+}
+
+.listingPlayer {
+  --story-h: min(60vh, 26rem);
+}
+
+.listingCopy {
+  flex: 1;
+  min-width: 0;
+}
+
+.listingBelt {
+  --belt-w: clamp(3.5rem, 12vw, 5rem);
+  --belt-s: 34s;
+  margin-top: var(--tbf-space-8);
+}
+
+@media (min-width: 768px) {
+  .listing {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--tbf-space-12);
+  }
+  .listingPlayer {
+    --story-h: min(64vh, 30rem);
+  }
 }
 
 .title {

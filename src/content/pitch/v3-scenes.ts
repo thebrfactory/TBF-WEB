@@ -290,7 +290,19 @@ export const BUSINESS = {
 // mostrar o bloco de números.
 // =============================================================================
 export const CASE = {
+  // A IDENTIDADE OFICIAL, NÃO O NOME DIGITADO (pedido do fundador 2026-08-14:
+  // "no lugar de VERÃOZÃO, use a identidade visual oficial da campanha").
+  // O título era a palavra VERÃOZÃO na Brother do site, o que é uma tradução da
+  // campanha para a tipografia da casa. A campanha TEM letra própria, desenhada
+  // para ela, e é ela que roda no Instagram do cliente: usar outra no deck é
+  // apresentar o trabalho com a voz errada.
+  //
+  // Origem: 00. IDENTIDADE/VERÃOZÃO.ai, exportado em PNG 1080x1440. O fundo azul
+  // do arquivo foi removido por chave de cor e a peça recortada no traço, para
+  // ela assentar em qualquer fundo do deck. Fica `headline` como texto ainda,
+  // porque é ele que vira o `alt` da imagem e o rótulo de leitor de tela.
   headline: 'VERÃOZÃO',
+  wordmark: '/images/pitch/veraozao/veraozao-wordmark.webp',
   client: 'Ô de Casa Hostel',
   deck: {
     pt: ['Quando uma temporada deixa de ser campanha', 'e vira uma cena.'],
@@ -329,19 +341,35 @@ export const CASE = {
     poster: '/images/pitch/veraozao/veraozao-launch-poster.webp',
     alt: { pt: 'Filme de lançamento da campanha VERÃOZÃO.', en: 'Launch film for the VERÃOZÃO campaign.' } as Bi,
   },
-  // Cada mídia cumpre UMA função no arco atmosfera, pessoas, experiência,
-  // circulação (o direcionamento proíbe galeria decorativa). `role` é o que a
-  // imagem prova, e é isso que a fala do deck usa para escolher onde parar.
+  // AS PEÇAS DA CAMPANHA, NÃO FOTOS DA CAMPANHA (pedido do fundador
+  // 2026-08-14: "troque as fotos por stories-ôàsis-fevereiro"). A diferença é o
+  // argumento inteiro desta cena: antes eram nove FOTOS do evento, que provam
+  // que a festa aconteceu. Estas são as PEÇAS que a .TBF. publicou, com a
+  // identidade da campanha impressa em cada uma. Elas provam outra coisa, que é
+  // a que o deck precisa: que existiu um sistema visual rodando todo dia, em
+  // fevereiro inteiro, no formato em que a audiência consome.
+  //
+  // Fonte: TAV05 → TBF .Ô De Casa → 00. VERÃOZÃO 26 → 01. PEÇAS →
+  // stories-ôàsis-fevereiro. Nativas em 1080x1920, reduzidas a 720x1280 (o teto
+  // de exibição no deck é ~300px, então 720 cobre retina com folga).
+  //
+  // A ordem é de ARCO, não cronológica: abre no visual-chave, atravessa
+  // atmosfera, rua, marca, gente, público, experiência, programação e
+  // comunidade, e fecha em duas pessoas rindo. É a curva que a fala do deck
+  // acompanha.
   media: [
-    { src: '/images/pitch/veraozao/01-atmosfera.webp', role: { pt: 'Atmosfera', en: 'Atmosphere' } as Bi, alt: { pt: 'O teto do hostel vestido de fitas, lâmpadas e globo de espelhos.', en: 'The hostel ceiling dressed in ribbons, bulbs and a mirror ball.' } as Bi },
-    { src: '/images/pitch/veraozao/02-estandarte.webp', role: { pt: 'Marca no espaço', en: 'Brand in the space' } as Bi, alt: { pt: 'O estandarte do Ô de Casa montado no espaço físico.', en: 'The Ô de Casa banner installed in the venue.' } as Bi },
-    { src: '/images/pitch/veraozao/03-equipe.webp', role: { pt: 'Pessoas', en: 'People' } as Bi, alt: { pt: 'Integrante da equipe do hostel na parede laranja.', en: 'A hostel team member against the orange wall.' } as Bi },
-    { src: '/images/pitch/veraozao/04-publico.webp', role: { pt: 'Público', en: 'Audience' } as Bi, alt: { pt: 'O público sentado em cadeiras de praia dentro do hostel.', en: 'Guests seated in beach chairs inside the hostel.' } as Bi },
-    { src: '/images/pitch/veraozao/05-oasis.webp', role: { pt: 'Experiência', en: 'Experience' } as Bi, alt: { pt: 'A praia montada dentro do hostel na ativação ÔÀSIS.', en: 'The beach built inside the hostel for the ÔÀSIS activation.' } as Bi },
-    { src: '/images/pitch/veraozao/06-sax.webp', role: { pt: 'Programação', en: 'Programming' } as Bi, alt: { pt: 'Saxofonista ao vivo sobre a mesa de DJ.', en: 'A live saxophone player over the DJ deck.' } as Bi },
-    { src: '/images/pitch/veraozao/07-globo-camera.webp', role: { pt: 'Circulação', en: 'Circulation' } as Bi, alt: { pt: 'Câmera da TV Globo gravando dentro do Ô de Casa.', en: 'A TV Globo camera recording inside Ô de Casa.' } as Bi },
-    { src: '/images/pitch/veraozao/08-globo-entrevista.webp', role: { pt: 'Circulação', en: 'Circulation' } as Bi, alt: { pt: 'Entrevista da TV Globo gravada no hostel durante a campanha.', en: 'A TV Globo interview recorded at the hostel during the campaign.' } as Bi },
-    { src: '/images/pitch/veraozao/09-sp1-no-ar.webp', role: { pt: 'No ar', en: 'On air' } as Bi, alt: { pt: 'A matéria no ar no SP1, da TV Globo.', en: 'The segment on air on SP1, TV Globo.' } as Bi },
+    { src: '/images/pitch/veraozao/story-01-chave.webp', role: { pt: 'Visual-chave', en: 'Key visual' } as Bi, alt: { pt: 'Peça de abertura da campanha VERÃOZÃO, com o estandarte e a identidade do ÔÀSIS.', en: 'Opening piece of the VERÃOZÃO campaign, with the banner and the ÔÀSIS identity.' } as Bi },
+    { src: '/images/pitch/veraozao/story-02-atmosfera.webp', role: { pt: 'Atmosfera', en: 'Atmosphere' } as Bi, alt: { pt: 'Story da campanha com a estrela de espelhos e o público embaixo.', en: 'Campaign story with the mirror star and the crowd beneath it.' } as Bi },
+    { src: '/images/pitch/veraozao/story-03-rua.webp', role: { pt: 'A rua', en: 'The street' } as Bi, alt: { pt: 'Story com o estandarte do Ô de Casa levantado na rua, em dia de sol.', en: 'Story with the Ô de Casa banner raised in the street on a sunny day.' } as Bi },
+    { src: '/images/pitch/veraozao/story-04-marca.webp', role: { pt: 'Marca no corpo', en: 'Brand on the body' } as Bi, alt: { pt: 'Story com duas hóspedes diante do mural da marca.', en: 'Story with two guests in front of the brand mural.' } as Bi },
+    { src: '/images/pitch/veraozao/story-05-pessoas.webp', role: { pt: 'Pessoas', en: 'People' } as Bi, alt: { pt: 'Story com hóspede maquiada com a identidade da campanha.', en: 'Story with a guest wearing the campaign identity as make-up.' } as Bi },
+    { src: '/images/pitch/veraozao/story-06-publico.webp', role: { pt: 'Público', en: 'Audience' } as Bi, alt: { pt: 'Story do público de braços erguidos na ativação de rua.', en: 'Story of the crowd with raised arms at the street activation.' } as Bi },
+    { src: '/images/pitch/veraozao/story-07-experiencia.webp', role: { pt: 'Experiência', en: 'Experience' } as Bi, alt: { pt: 'Story da festa de espuma dentro do hostel.', en: 'Story of the foam party inside the hostel.' } as Bi },
+    { src: '/images/pitch/veraozao/story-08-programacao.webp', role: { pt: 'Programação', en: 'Programming' } as Bi, alt: { pt: 'Story do DJ na cabine, sob luz azul.', en: 'Story of the DJ in the booth under blue light.' } as Bi },
+    { src: '/images/pitch/veraozao/story-09-comunidade.webp', role: { pt: 'Comunidade', en: 'Community' } as Bi, alt: { pt: 'Story com um grupo de hóspedes posando junto na rua.', en: 'Story with a group of guests posing together in the street.' } as Bi },
+    { src: '/images/pitch/veraozao/story-10-retrato.webp', role: { pt: 'Retrato', en: 'Portrait' } as Bi, alt: { pt: 'Story com retrato de hóspede de óculos vermelhos.', en: 'Story with a portrait of a guest in red sunglasses.' } as Bi },
+    { src: '/images/pitch/veraozao/story-11-noite.webp', role: { pt: 'A noite', en: 'The night' } as Bi, alt: { pt: 'Story da fachada à noite com o estandarte iluminado.', en: 'Story of the façade at night with the banner lit.' } as Bi },
+    { src: '/images/pitch/veraozao/story-12-fecho.webp', role: { pt: 'O que fica', en: 'What remains' } as Bi, alt: { pt: 'Story de fecho, com duas pessoas rindo dentro do hostel.', en: 'Closing story, two people laughing inside the hostel.' } as Bi },
   ],
   /** Prova de circulação. É fato datado e conferível, não número de vaidade. */
   press: {
@@ -350,7 +378,12 @@ export const CASE = {
       pt: 'A campanha virou pauta de televisão aberta: o Ô de Casa entrou no SP1 e no SPTV, da TV Globo, em matéria sobre o comércio no mês do carnaval, em janeiro de 2026.',
       en: 'The campaign became broadcast news: Ô de Casa appeared on SP1 and SPTV, TV Globo, in a story about carnival-month commerce, in January 2026.',
     } as Bi,
-    credit: 'Imagens de tela: SP1 / SPTV, TV Globo, janeiro de 2026.',
+    // O CRÉDITO SEGUE O QUE ESTÁ NA TELA. Ele dizia "imagens de tela: SP1 /
+    // SPTV, TV Globo" porque a faixa mostrava três capturas do telejornal. Com
+    // as peças da campanha no lugar das fotos (2026-08-14), creditar a Globo
+    // seria creditar imagem que não está mais ali. O fato da TV aberta continua
+    // vivo e verdadeiro logo acima, em `body`, que é onde ele vale como prova.
+    credit: 'Peças da campanha VERÃOZÃO, fevereiro de 2026. .TBF. para Ô de Casa Hostel.',
   },
   /**
    * Números do case. VAZIO de propósito enquanto não houver medição do período
