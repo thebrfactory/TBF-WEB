@@ -70,7 +70,7 @@
   top: 0.4rem;
   left: 0.4rem;
   right: 0.4rem;
-  z-index: 3;
+  z-index: 4;
   display: flex;
   gap: 0.15rem;
 }
@@ -105,20 +105,60 @@
   to   { width: 100%; }
 }
 
-/* CABEÇALHO: avatar (opcional) + handle, sobre o degradê que garante contraste
-   qualquer que seja a foto embaixo. Regra do repo: imagem com texto sobreposto
-   recebe overlay. */
+/* ─── O SOMBREADO, e por que ele é um nó e não um fundo ────────────────────
+   Ele já foi o `background` do cabeçalho. Como fundo do cabeçalho, tinha a
+   LARGURA DO CABEÇALHO, que respeita um recuo lateral de 0.4rem: sobrava um
+   degrau visível nas duas beiradas e o topo do quadro ficava sombreado "só num
+   pedaço". Foi o que o fundador viu.
+
+   Agora são dois nós próprios, ancorados no quadro inteiro (`inset` lateral em
+   0), então o degradê nasce colado nas bordas e o raio do quadro o recorta
+   junto com a foto. O de baixo é novo: sem ele, foto clara no rodapé encostava
+   direto no fim do quadro sem assentar.
+
+   `pointer-events: none` nos dois, senão eles roubam o clique dos passadores. */
+.shadeTop,
+.shadeBottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.shadeTop {
+  top: 0;
+  height: 28%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.62) 0%,
+    rgba(0, 0, 0, 0.34) 42%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.shadeBottom {
+  bottom: 0;
+  height: 24%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.22) 48%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* CABEÇALHO: avatar (opcional) + handle. Sem fundo próprio: quem dá contraste
+   é o `.shadeTop`, que cobre a largura inteira. */
 .head {
   position: absolute;
   top: 0.9rem;
-  left: 0.4rem;
-  right: 0.4rem;
-  z-index: 3;
+  left: 0.55rem;
+  right: 0.55rem;
+  z-index: 4;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.1rem 0.6rem;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  gap: 0.4rem;
 }
 
 /* O avatar é uma FOTO DE PERFIL, e é tratado como tal: recortada no círculo,
@@ -155,6 +195,55 @@
   letter-spacing: 0.02em;
   color: #f0ede6;
 }
+
+/* ─── PASSADORES ──────────────────────────────────────────────────────────
+   Sobre as beiradas do quadro, no meio da altura. Discretos parados, cheios no
+   hover e no foco de teclado: num story a foto é a peça, e seta permanente em
+   cima dela vira interface disputando a imagem.
+
+   Ficam FORA do `.frame` e dentro do `.player`, que não recorta: assim o anel
+   de foco deles nunca é decepado (é o mesmo defeito que cortava o anel da
+   miniatura ativa, e não vale reintroduzir do lado). */
+.pass {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  padding: 0;
+  border: 1px solid rgba(240, 237, 230, 0.32);
+  border-radius: var(--tbf-radius-full);
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px);
+  color: #f0ede6;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 240ms cubic-bezier(0.23, 1, 0.32, 1),
+              background 240ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.player:hover .pass,
+.pass:focus-visible {
+  opacity: 1;
+}
+
+.pass:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* No toque não existe hover: lá eles ficam sempre visíveis, senão a peça fica
+   sem forma de passar de quadro a não ser pelas miniaturas. */
+@media (hover: none) {
+  .pass { opacity: 0.85; }
+}
+
+.passPrev { left: 0.45rem; }
+.passNext { right: 0.45rem; }
 
 /* AQUI FICAVA A TARJA DE LEGENDA, e ela saiu inteira em 2026-08-14: "todo
    stories fica liso liso, sem nenhuma descrição". O que o story mostra é a

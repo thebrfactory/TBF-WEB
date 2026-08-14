@@ -1277,6 +1277,24 @@
   inset: 0;
 }
 
+/* 🔴 O ANEL DE FOCO DO CARROSSEL ERA ENGOLIDO POR INTEIRO, e este é o pior dos
+   três casos de sombra cortada achados em 2026-08-14: não era um corte parcial,
+   era ausência total.
+
+   O link ocupa exatamente `inset: 0` do slide, e o slide tem `overflow: hidden`.
+   O anel global de foco (`*:focus-visible`, 2px com 3px de afastamento) nasce
+   portanto 5px FORA da caixa que o recorta, e nunca aparecia: quem navega o
+   carrossel por teclado perdia o indicador de foco na peça inteira. Isso é
+   acessibilidade, não acabamento.
+
+   A correção não pode ser abrir o overflow do slide (é ele que segura o recorte
+   da foto no raio do cartão). Então o anel vira PARA DENTRO: `outline-offset`
+   negativo desenha o mesmo anel do design system encostado na borda de dentro,
+   onde nada o corta. */
+.carousel-slide__link:focus-visible {
+  outline-offset: -3px;
+}
+
 /* Overlay de hover/toque — escurece a imagem e revela o título da matéria,
    centralizado (Brother bold). Dispara em hover, foco e :active (toque mobile). */
 .carousel-slide__overlay {
@@ -2916,6 +2934,16 @@ html[data-morphing] ::view-transition-new(root) {
    ("COLABORAÇÃO", "COOLHUNTING") passavam por cima do vizinho. Rolando, o
    círculo respira e o nome cabe. Do 768px pra cima cabem as cinco centradas e a
    rolagem some. */
+/* 🔴 O RESPIRO DO ANEL, e não é margem estética: é correção de corte.
+   `overflow-x: auto` RECORTA `box-shadow` e `outline` dos descendentes, e o
+   `.category-card__frame` lá embaixo desenha um anel de 3px que sai da caixa.
+   Sem folga reservada aqui, o topo do anel era decepado nos CINCO círculos e as
+   laterais sumiam no primeiro e no último. Só acontecia no telefone, porque a
+   partir de 768px esta fila deixa de rolar.
+   O comentário que já existia no `.category-card` protege o anel do overflow do
+   próprio botão; o que faltava era proteger do overflow do AVÔ, que é quem de
+   fato rola. A margem negativa devolve o alinhamento da fila com o resto da
+   página. Achado na varredura de sombras cortadas de 2026-08-14. */
 .category-row {
   display: flex;
   justify-content: flex-start;
@@ -2924,7 +2952,9 @@ html[data-morphing] ::view-transition-new(root) {
   overflow-x: auto;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: var(--tbf-space-2);
+  padding: 4px 4px var(--tbf-space-2);
+  margin-inline: -4px;
+  margin-top: -4px;
 }
 
 .category-row > * {

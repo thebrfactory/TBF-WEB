@@ -941,9 +941,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             outras miniaturas embaixo e quando clicar nelas, ver na tela").
             Esteira que anda sozinha é bonita e impossível de clicar. */}
 
-        <PitchReveal delay={520}>
-          <p className="p3-press__credit">{CASE.press.credit}</p>
-        </PitchReveal>
+        {/* O CRÉDITO DA MÍDIA SAIU DA CENA (pedido do fundador 2026-08-14).
+            Ele dizia "Peças da campanha VERÃOZÃO, fevereiro de 2026, .TBF. para
+            Ô de Casa Hostel", e é informação verdadeira que a própria tela já
+            diz duas vezes: o logotipo da campanha e o nome do cliente estão ao
+            lado do quadro, em corpo maior. Linha de crédito só se justifica
+            quando credita alguém que a tela não nomeia.
+            O texto continua em CASE.press.credit, sem uso. */}
 
         {/* Números do case: VAZIO enquanto não houver medição verificada do
             período da campanha (ver a nota no módulo de conteúdo). Renderiza
@@ -1842,17 +1846,31 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            ocupa a coluna da esquerda inteira, do topo da composição até a base,
            e as miniaturas se mudaram para debaixo do texto, na coluna da
            direita. */
+        /* 🔴 9/16 TRAVADO, SEM RECORTE (pedido do fundador 2026-08-14: "preciso
+           que tenha o formato padrão story sem foto cortada").
+
+           O que estava errado: o quadro esticava até a altura da linha
+           (height: 100%) enquanto a LARGURA continuava saindo de --story-h. As
+           duas medidas deixavam de conversar, o quadro virava mais alto que
+           9/16, e o object-fit: cover da foto passava a recortar para preencher.
+           As peças são 1080x1920 nativas, ou seja JÁ SÃO 9/16: não havia nada a
+           recortar, o recorte era só do quadro deformado.
+
+           A correção é declarar a proporção e deixar a LARGURA sair dela:
+           aspect-ratio + height 100% + width auto. A altura da linha da grade é
+           definida, então o navegador resolve a largura sozinho, e o quadro fica
+           exatamente 9/16 em qualquer altura de janela. --story-h deixa de
+           mandar na largura e passa a ser só o teto. */
         .p3-story {
           grid-column: 1;
           grid-row: 1 / -1;
           align-self: stretch;
-          /* A ALTURA VEM DA GRADE, não de um vh chutado. --story-h continua
-             existindo para o cálculo da largura (9/16), e é por isso que ela
-             segue em vh: é a única forma de a largura ser um número resolvido
-             antes do layout. A altura real do quadro é 100% da linha. */
           height: 100%;
+          width: auto;
+          max-height: 100%;
+          aspect-ratio: 9 / 16;
         }
-        .p3-story > div:last-child {
+        .p3-story > div:first-of-type {
           height: 100%;
         }
         .p3-case-copy {
@@ -1936,7 +1954,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p3-case-wordmark {
           width: auto;
           max-width: 100%;
-          height: clamp(3.2rem, 12vh, 6.5rem);
+          height: clamp(5.1rem, 19.2vh, 10.4rem);
           max-width: 100%;
           object-fit: contain;
           object-position: left center;

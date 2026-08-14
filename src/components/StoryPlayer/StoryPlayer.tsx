@@ -178,7 +178,41 @@ export function StoryDeck({
               className={`${styles.img}${idx === i ? ` ${styles.imgOn}` : ''}`}
             />
           ))}
+
+          {/* O SOMBREADO DE CIMA é um nó próprio, e não o fundo do cabeçalho.
+              Como fundo do cabeçalho ele tinha a largura do cabeçalho, que
+              respeita um recuo lateral: sobrava um degrau visível nas duas
+              beiradas e o topo do quadro ficava com o sombreado "só num
+              pedaço", que foi o que o fundador viu. Aqui ele é `inset: 0` sobre
+              o quadro inteiro, então acompanha o raio e chega às bordas.
+              Também ganhou um irmão embaixo: sem ele, uma foto clara no rodapé
+              encostava direto no fim do quadro sem assentar. */}
+          <span className={styles.shadeTop} aria-hidden="true" />
+          <span className={styles.shadeBottom} aria-hidden="true" />
         </div>
+
+        {/* PASSADORES (pedido do fundador 2026-08-14). Ficam sobre as beiradas
+            do quadro, discretos, e aparecem por inteiro no hover ou no foco de
+            teclado. Um story de verdade se passa tocando na tela; aqui, num deck
+            que é apresentado com o mouse na mão, seta explícita é o que a pessoa
+            procura. Os dois dão a volta na lista, então nunca ficam
+            desabilitados: numa peça em laço, botão morto é ruído. */}
+        <button
+          type="button"
+          className={`${styles.pass} ${styles.passPrev}`}
+          onClick={() => ir(i - 1)}
+          aria-label="Peça anterior"
+        >
+          <span aria-hidden="true">&#8592;</span>
+        </button>
+        <button
+          type="button"
+          className={`${styles.pass} ${styles.passNext}`}
+          onClick={() => ir(i + 1)}
+          aria-label="Próxima peça"
+        >
+          <span aria-hidden="true">&#8594;</span>
+        </button>
       </div>
 
       {/* A FILA QUE COMANDA. `role="tablist"` porque é exatamente isso: um
