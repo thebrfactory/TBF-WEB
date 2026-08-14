@@ -11,8 +11,26 @@
    9/16. É a mesma lógica da prancha do artigo, pela mesma razão.
    ============================================================================= */
 
+/* O conjunto: quadro em cima, fila de miniaturas embaixo.
+
+   `align-items: stretch` no conjunto e `align-self: flex-start` no quadro, e a
+   combinação não é redundante: sem ela o conjunto encolhia até a largura do
+   QUADRO, que é 9/16 e portanto estreito, e a fila de miniaturas ficava presa
+   nesses 270px rolando num túnel. Com stretch, a fila recebe a largura inteira
+   da coluna em que o conjunto foi posto, enquanto o quadro continua com a
+   largura que a própria altura dele determina. */
+.deck {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.6rem;
+  min-width: 0;
+  max-width: 100%;
+}
+
 .player {
   --story-h: 20rem;
+  align-self: flex-start;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -138,37 +156,67 @@
   color: #f0ede6;
 }
 
-/* A legenda de papel fica POR CIMA do quadro, encostada na base dele. Fora do
-   fluxo de propósito: no fluxo ela somaria altura embaixo de um quadro que já
-   se mede pela altura. O raio de baixo repete o do quadro para a tarja não
-   vazar do canto. */
-.role {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 3;
-  border-bottom-left-radius: var(--tbf-radius-card);
-  border-bottom-right-radius: var(--tbf-radius-card);
-  padding: 0.7rem 0.5rem 0.4rem;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-  font-family: var(--tbf-font-family-printed);
-  font-weight: 500;
-  font-size: clamp(0.62rem, 1.5vh, 0.8rem);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-align: center;
-  color: #f0ede6;
+/* AQUI FICAVA A TARJA DE LEGENDA, e ela saiu inteira em 2026-08-14: "todo
+   stories fica liso liso, sem nenhuma descrição". O que o story mostra é a
+   foto. O texto de cada peça migrou para o `aria-label`/`title` da miniatura
+   correspondente, então a informação continua acessível sem sujar a imagem.
+
+   ─────────────────────────────────────────────────────────────────────────
+   A FILA DE MINIATURAS — o seletor
+   ─────────────────────────────────────────────────────────────────────────
+   Rola de lado quando não cabe, sem barra visível: é o gesto natural num
+   telefone e o trackpad resolve no desktop. `scroll-snap` para a miniatura
+   parar alinhada em vez de meio cortada. */
+.thumbs {
+  --thumb-w: 4.5rem;
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding-bottom: 0.2rem;
 }
 
-.roleEn {
+.thumbs::-webkit-scrollbar { display: none; }
+
+/* Botão de verdade, com a aparência zerada. Alvo de toque: a miniatura tem
+   altura de sobra (9/16 de 4.5rem já passa de 120px), então o mínimo de 44px
+   está garantido pela própria proporção. */
+.thumb {
+  flex: 0 0 auto;
+  width: var(--thumb-w);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  scroll-snap-align: center;
+  border-radius: var(--tbf-radius-card);
+  /* A não-selecionada recua: menos brilho e um véu. A seleção fica óbvia sem
+     precisar de moldura em todas. */
+  opacity: 0.45;
+  transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 300ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.thumb:hover,
+.thumb:focus-visible {
+  opacity: 0.85;
+}
+
+.thumbOn,
+.thumbOn:hover {
+  opacity: 1;
+  box-shadow: 0 0 0 2px #ff6500;
+}
+
+.thumbImg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
   display: block;
-  font-family: var(--tbf-font-family-printed);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: 0.015em;
-  text-transform: none;
-  color: rgba(240, 237, 230, 0.55);
+  border-radius: var(--tbf-radius-card);
 }
 
 /* =============================================================================
@@ -214,23 +262,12 @@
   border-radius: var(--tbf-radius-card);
 }
 
-.beltRole {
-  margin-top: 0.2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  font-family: var(--tbf-font-family-printed);
-  font-weight: 500;
-  font-size: 0.58rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(240, 237, 230, 0.5);
-  text-align: center;
-}
+/* A esteira também ficou lisa: ela é decorativa, e rótulo correndo em
+   miniatura de 3rem não se lê, só polui. */
 
 @media (prefers-reduced-motion: reduce) {
   .beltTrack { animation: none; }
   .img { transition: none; }
   .fillLive { animation: none; width: 100%; }
+  .thumb { transition: none; }
 }

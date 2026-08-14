@@ -21,7 +21,7 @@
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { hospitality, SHOTS, HIGHLIGHTS, HIGHLIGHT_PROFILE } from '@/content/i18n/pages/hospitality'
-import { StoryPlayer, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
+import { StoryDeck, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import styles from './HospitalityView.module.css'
 
@@ -62,19 +62,50 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
           <p className={styles.thesisSub}>{t.thesisSub}</p>
         </header>
 
-        {/* ── O argumento ──────────────────────────────────────────────── */}
+        {/* ── O argumento, ao lado do anúncio rodando ──────────────────────
+               Pedido do fundador (2026-08-14): aqui entra o story com as
+               miniaturas grandes, na mesma lógica da cena 05 do deck, e os
+               quatro quadros ficam AO LADO.
+
+               A composição faz o argumento sozinha, e é por isso que ela é
+               melhor do que as duas seções separadas que existiam antes: à
+               esquerda, o que os motores de reserva premiam, escrito; à
+               direita, o perfil do Ô de Casa provando cada um dos quatro
+               pontos, quadro por quadro, clicável. O leitor confere a tese
+               contra a prova sem rolar a página.
+
+               As miniaturas comandam o quadro grande: ver o cabeçalho do
+               StoryDeck. */}
         <section className={styles.section} aria-labelledby="hosp-argument">
           <h2 id="hosp-argument" className={styles.sectionTitle}>
             {t.argumentTitle}
           </h2>
-          <div className={styles.argumentGrid}>
-            {t.argument.map((item) => (
-              <div key={item.n} className={styles.argumentCard}>
-                <span className={styles.argumentN}>{item.n}</span>
-                <h3 className={styles.argumentTitle}>{item.title}</h3>
-                <p className={styles.argumentBody}>{item.body}</p>
-              </div>
-            ))}
+          <p className={styles.sectionDeck}>{t.listingDeck}</p>
+
+          <div className={styles.argumentSplit}>
+            <div className={styles.argumentGrid}>
+              {t.argument.map((item) => (
+                <div key={item.n} className={styles.argumentCard}>
+                  <span className={styles.argumentN}>{item.n}</span>
+                  <h3 className={styles.argumentTitle}>{item.title}</h3>
+                  <p className={styles.argumentBody}>{item.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <StoryDeck
+              playerClassName={styles.listingPlayer}
+              thumbsClassName={styles.listingThumbs}
+              items={HIGHLIGHTS.map((h) => ({
+                src: h.src,
+                alt: h.alt[lang],
+                role: h.role[lang],
+              }))}
+              handle={HIGHLIGHT_PROFILE.handle}
+              avatarSrc={HIGHLIGHT_PROFILE.avatar}
+              ms={3200}
+              label={t.listingTitle}
+            />
           </div>
         </section>
 
@@ -92,6 +123,11 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
           </h2>
           <p className={styles.sectionDeck}>{t.galleryDeck}</p>
 
+          {/* SEM LEGENDA (pedido do fundador 2026-08-14: "pode tirar as
+              descrições das fotos"). A função de cada quadro continua no dado e
+              continua no `alt`, que é onde ela serve a quem não vê a imagem.
+              Numa página cujo produto É a fotografia, rótulo embaixo de cada
+              foto disputa atenção com a foto. */}
           <div className={styles.gallery}>
             {SHOTS.map((shot, i) => (
               <figure key={shot.src} className={styles.shot}>
@@ -110,56 +146,16 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
                   }
                   className={styles.shotImg}
                 />
-                <figcaption className={styles.shotRole}>
-                  <strong>{t.roleLabel}</strong>
-                  {shot.role[lang]}
-                </figcaption>
               </figure>
             ))}
           </div>
         </section>
 
-        {/* ── O anúncio em stories ─────────────────────────────────────────
-               A MESMA LÓGICA DA CENA 05 DO DECK, e literalmente o mesmo
-               componente: `StoryPlayer` + `MediaBelt`, compartilhados desde
-               2026-08-14. Foi o pedido do fundador, e a razão é boa: a página
-               termina de argumentar mostrando o material já montado no formato
-               em que o hóspede vai encontrá-lo. */}
-        <section className={styles.section} aria-labelledby="hosp-listing">
-          <h2 id="hosp-listing" className={styles.sectionTitle}>
-            {t.listingTitle}
-          </h2>
-
-          <div className={styles.listing}>
-            <StoryPlayer
-              className={styles.listingPlayer}
-              items={HIGHLIGHTS.map((h) => ({
-                src: h.src,
-                alt: h.alt[lang],
-                role: h.role[lang],
-              }))}
-              handle={HIGHLIGHT_PROFILE.handle}
-              avatarSrc={HIGHLIGHT_PROFILE.avatar}
-              ms={2800}
-              label={t.listingTitle}
-            />
-            <div className={styles.listingCopy}>
-              <p className={styles.sectionDeck} style={{ marginTop: 0 }}>
-                {t.listingDeck}
-              </p>
-            </div>
-          </div>
-
-          <MediaBelt
-            className={styles.listingBelt}
-            items={HIGHLIGHTS.map((h) => ({
-              src: h.src,
-              alt: h.alt[lang],
-              role: h.role[lang],
-            }))}
-            label={t.listingRole}
-          />
-        </section>
+        {/* A SEÇÃO SEPARADA "E aí vira anúncio" FOI ABSORVIDA pelo bloco do
+            argumento, acima (2026-08-14). Ela mostrava o mesmo story dos
+            destaques numa seção própria, duas dobras depois da tese que ele
+            prova. Colado ao lado dos quatro quadros, o material passa a
+            responder à tese na mesma tela, que é o que ele estava pedindo. */}
 
         {/* ── O que é o trabalho ───────────────────────────────────────── */}
         <section className={styles.section} aria-labelledby="hosp-deliver">

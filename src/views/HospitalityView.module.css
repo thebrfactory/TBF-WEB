@@ -96,36 +96,22 @@
    catorze fotos não provam.
 
    Mobile-first: empilhado no telefone, lado a lado a partir de 768px. */
-.listing {
-  display: flex;
-  flex-direction: column;
-  gap: var(--tbf-space-8);
-  align-items: flex-start;
-}
-
+/* O quadro e a fila de miniaturas do bloco do argumento.
+   MINIATURA GRANDE (pedido do fundador 2026-08-14: "miniaturas em formato
+   grande igual na 05/07"). Aqui a página não tem a restrição de uma tela por
+   cena que o deck tem, então a fila pode ser generosa: a miniatura chega a
+   5.5rem de largura, quase 10rem de altura no 9/16. */
 .listingPlayer {
-  --story-h: min(60vh, 26rem);
+  --story-h: min(58vh, 26rem);
 }
 
-.listingCopy {
-  flex: 1;
-  min-width: 0;
+.listingThumbs {
+  --thumb-w: clamp(3.5rem, 13vw, 6.5rem);
 }
 
-.listingBelt {
-  --belt-w: clamp(3.5rem, 12vw, 5rem);
-  --belt-s: 34s;
-  margin-top: var(--tbf-space-8);
-}
-
-@media (min-width: 768px) {
-  .listing {
-    flex-direction: row;
-    align-items: flex-start;
-    gap: var(--tbf-space-12);
-  }
+@media (min-width: 1024px) {
   .listingPlayer {
-    --story-h: min(64vh, 30rem);
+    --story-h: min(62vh, 30rem);
   }
 }
 
@@ -192,6 +178,31 @@
   font-size: clamp(0.9rem, 3.4vw, 1.05rem);
   line-height: 1.55;
   color: var(--tbf-text-secondary);
+}
+
+/* ─── O ARGUMENTO AO LADO DA PROVA ───────────────────────────────────────
+   Mobile-first: no telefone os quatro quadros vêm primeiro e o story depois,
+   empilhados, porque numa coluna de 390px lado a lado espreme os dois. A partir
+   de 1024px vira duas colunas, e a do story é MENOR: o texto é o argumento, a
+   imagem é a prova, e prova não precisa de mais espaço que a tese.
+   `align-items: start` para o story não esticar até a altura dos quadros. */
+.argumentSplit {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-10);
+}
+
+@media (min-width: 1024px) {
+  .argumentSplit {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--tbf-space-12);
+  }
+  /* Em duas colunas os quatro quadros viram 2x2, que é a forma que eles têm
+     quando dividem a linha com outra coisa. */
+  .argumentSplit .argumentGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* ─── O ARGUMENTO: quatro pontos numerados ────────────────────────────────

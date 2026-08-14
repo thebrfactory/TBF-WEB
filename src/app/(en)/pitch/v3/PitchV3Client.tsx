@@ -48,7 +48,7 @@ import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
-import { StoryPlayer, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
+import { StoryDeck } from '@/components/StoryPlayer/StoryPlayer'
 import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
 
@@ -880,14 +880,22 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </PitchReveal>
 
         <div className="p3-case-layout">
-          <PitchReveal delay={200}>
-            <StoryPlayer
-              className="p3-story"
+          {/* SEM PitchReveal em volta, e a razão é estrutural, não estética: o
+              invólucro do reveal é um <div> de verdade, e um <div> no meio anula
+              o `display: contents` do StoryDeck. Com ele aqui, o quadro e a fila
+              continuavam empacotados numa coluna só, e a coluna inchava para os
+              790px que a fila queria (medido) — foi o buraco entre o story e o
+              texto que apareceu na conferência.
+              A peça não perde entrada por isso: o story já anima sozinho, com a
+              barra correndo desde o primeiro quadro. */}
+          <StoryDeck
+              deckClassName="p3-deck-flat"
+              playerClassName="p3-story"
+              thumbsClassName="p3-thumbs"
               items={CASE.media.map((m) => ({
                 src: m.src,
                 alt: m.alt.pt,
                 role: m.role.pt,
-                roleEn: m.role.en,
               }))}
               // O STORY É DO Ô, NÃO DA .TBF. (pedido do fundador 2026-08-14:
               // "o quadro de story preciso que tenha nome Ô e a foto do ícone
@@ -901,9 +909,8 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
               // por cima está na mesma paleta da campanha: Ô ciano sobre azul.
               handle="Ô"
               avatarSrc="/images/pitch/veraozao/o-avatar.webp"
-              label="Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces"
-            />
-          </PitchReveal>
+            label="Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces"
+          />
 
           <div className="p3-case-copy">
             <PitchReveal delay={260}>
@@ -923,17 +930,11 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </div>
         </div>
 
-        <PitchReveal delay={420}>
-          {/* FAIXA QUE ANDA SOZINHA (pedido do fundador: "proporção muito
-              pequena, aqui a gente pode fazer tipo um carrossel que se
-              movimenta"). Desde 2026-08-14 ela é o `MediaBelt` compartilhado
-              com a proposta de hospedagem: mesma esteira, mesmo motivo. */}
-          <MediaBelt
-            className="p3-belt"
-            items={CASE.media.map((m) => ({ src: m.src, alt: m.alt.pt, role: m.role.pt }))}
-            label="Mídia do case / Case media"
-          />
-        </PitchReveal>
+        {/* A ESTEIRA SEPARADA SAIU DAQUI. As miniaturas viraram o SELETOR do
+            story e passaram a viver dentro do próprio StoryDeck, logo abaixo do
+            quadro (pedido do fundador 2026-08-14: "quero poder selecionar
+            outras miniaturas embaixo e quando clicar nelas, ver na tela").
+            Esteira que anda sozinha é bonita e impossível de clicar. */}
 
         <PitchReveal delay={520}>
           <p className="p3-press__credit">{CASE.press.credit}</p>
@@ -1786,19 +1787,51 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         /* ─── LAYOUT DO CASE (cena 05): filme vertical + copy, lado a lado no
            desktop, empilhados no mobile. */
-        /* LADO A LADO JÁ NO TELEFONE (2026-08-14). Empilhado, o story e a copy
+        /* A COMPOSIÇÃO DA CENA 05, em grade de duas colunas e duas linhas:
+
+             [ quadro ] [ texto do case        ]
+             [ fila de miniaturas, largura inteira ]
+
+           LADO A LADO JÁ NO TELEFONE (2026-08-14). Empilhado, o story e a copy
            somavam altura um em cima do outro, e era isso que impedia o quadro de
-           crescer: 73px de estouro medido no iPhone 13 mesmo com o story já
-           reduzido. Em linha, os dois dividem a LARGURA, que é o que sobra numa
-           tela de telefone, e o story pode ocupar a altura inteira que a cena
-           tem para dar.
-           É também a composição da referência que o fundador mandou: o quadro à
-           esquerda, o texto à direita, numa coluna estreita. */
+           crescer: 73px de estouro medido no iPhone 13. Em linha, os dois
+           dividem a LARGURA, que é o que sobra numa tela de telefone.
+
+           A FILA NA LARGURA INTEIRA, e não embaixo do quadro: o quadro tem 9/16,
+           ou seja é estreito, e uma fila de doze miniaturas presa a 207px de
+           largura viraria um túnel de rolagem. display: contents no invólucro
+           do StoryDeck (.p3-deck-flat) dissolve a pilha padrão dele e entrega
+           quadro e fila como filhos diretos desta grade.
+
+           É a estrutura da referência que o fundador mandou: quadro à esquerda,
+           texto à direita, miniaturas atravessando por baixo. */
         .p3-case-layout {
-          display: flex;
-          flex-direction: row;
-          align-items: flex-start;
-          gap: var(--p3-gap-sm);
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr);
+          align-items: start;
+          column-gap: var(--p3-gap-sm);
+          row-gap: var(--p3-gap-sm);
+        }
+
+        .p3-deck-flat { display: contents; }
+
+        /* POSIÇÃO EXPLÍCITA nos três, e não é preciosismo. Com display:
+           contents a ordem no DOM vira quadro, fila, texto — nessa ordem. Na
+           colocação automática, a fila (que atravessa as duas colunas) empurra o
+           texto para uma TERCEIRA linha, e as colunas colapsam: medido,
+           1278px na primeira e 0px na segunda. Dizendo onde cada um mora, a
+           grade fica do jeito que a referência pede. */
+        .p3-story {
+          grid-column: 1;
+          grid-row: 1;
+        }
+        .p3-case-copy {
+          grid-column: 2;
+          grid-row: 1;
+        }
+        .p3-thumbs {
+          grid-column: 1 / -1;
+          grid-row: 2;
         }
         .p3-case-video {
           width: clamp(6rem, 24vw, 9rem);
@@ -1842,13 +1875,14 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           margin-block: var(--p3-gap-sm);
         }
 
-        /* A miniatura da esteira passou de 4/5 para 9/16 quando o material virou
-           story. Mesma largura, a peça ficou 40% mais alta, e foi ela que
-           empurrou a cena 05 para fora da tela no telefone. A largura cai junto
-           para a altura voltar ao que era. */
-        .p3-belt {
-          --belt-w: clamp(2.4rem, 5vh, 3.4rem);
-          margin-top: var(--p3-gap-sm);
+        /* A FILA DE MINIATURAS. Ela mora dentro do StoryDeck, colada embaixo do
+           quadro, e por isso a largura dela é limitada pela do quadro no
+           telefone: rola de lado. No desktop a cena tem largura sobrando e a
+           fila ganha a linha inteira (ver o media query de 1024px).
+           A miniatura é 9/16 como o quadro, então a largura em rem já define a
+           altura: 3.4rem de largura dá 96px de altura. */
+        .p3-thumbs {
+          --thumb-w: clamp(2.4rem, 5vh, 3.4rem);
         }
 
         /* A IDENTIDADE DA CAMPANHA no lugar do título de texto. O h2 perde a
@@ -1859,9 +1893,15 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           font-size: 0;
           line-height: 0;
         }
+        /* O ARQUIVO AMARELO TEM BRILHO, e o brilho conta como altura. A peça
+           oficial (stickers-fevereiro/01-FINAL-VERÃOZÃO.png) traz o halo em
+           volta da letra, então a caixa mede 900x591 enquanto a palavra ocupa
+           pouco mais da metade disso. Com o teto antigo, a letra sairia ~45%
+           menor do que era na versão ciano sem halo. O teto sobe na mesma
+           proporção para o TAMANHO DA PALAVRA ficar igual. */
         .p3-case-wordmark {
           width: auto;
-          height: clamp(2.1rem, 7.5vh, 4.2rem);
+          height: clamp(3.7rem, 13.5vh, 7.5rem);
           max-width: 100%;
           object-fit: contain;
           object-position: left center;
@@ -2254,7 +2294,8 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             margin: 2.25rem 0 0 0;
           }
           .p3-case-layout {
-            gap: var(--p3-gap);
+            column-gap: var(--p3-gap);
+            row-gap: var(--p3-gap-sm);
           }
         }
 
@@ -2273,8 +2314,11 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           /* Miniatura MAIOR no desktop tambem (pedido do fundador: a faixa
              estava com proporcao muito pequena). Termo em vh: em tela baixa ela
              encolhe junto, que e a regra do deck. */
-          .p3-belt {
-            --belt-w: clamp(3rem, 6.5vh, 4.5rem);
+          /* No desktop a fila sai de baixo do quadro e ocupa a largura da cena:
+             o StoryDeck é uma coluna, mas a cena 05 é uma linha, então a fila
+             recebe a largura cheia por posicionamento (ver .p3-case-layout). */
+          .p3-thumbs {
+            --thumb-w: clamp(3rem, 6.5vh, 4.5rem);
           }
           /* Teto do story no desktop. Só a ALTURA muda: a largura sai dela
              sozinha, pela conta 9/16 do componente. */
@@ -2416,8 +2460,8 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p3-case-video {
             width: clamp(4.5rem, 20vw, 6.5rem);
           }
-          .p3-belt {
-            --belt-w: clamp(3.75rem, 15vw, 5rem);
+          .p3-thumbs {
+            --thumb-w: clamp(3.25rem, 13vw, 4.5rem);
           }
 
           /* CAMADA TERCIÁRIA. São os blocos que ELABORAM o que a cena já
