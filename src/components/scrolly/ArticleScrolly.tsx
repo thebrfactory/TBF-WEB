@@ -24,7 +24,9 @@ import {
   StickerLayer,
   StatBlock,
   MediaParallax,
+  MediaPair,
 } from '@/components/scrolly'
+import type { MediaPairItem } from '@/components/scrolly'
 import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import type { Lang } from '@/lib/i18n'
 
@@ -136,6 +138,22 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
             variant={block.variant}
             width={block.variant === 'plate' ? block.width : undefined}
             height={block.variant === 'plate' ? block.height : undefined}
+          />
+        )
+
+      // O par carrega o crédito do mesmo jeito que a imagem solta: colado na
+      // legenda, no mesmo nó, porque atribuição nunca é opcional.
+      case 'pair':
+        return (
+          <MediaPair
+            key={key}
+            items={
+              block.items.map((it) => ({
+                src: it.src,
+                alt: it.alt[lang],
+                caption: [it.caption?.[lang], it.credit].filter(Boolean).join(' · '),
+              })) as [MediaPairItem, MediaPairItem]
+            }
           />
         )
 

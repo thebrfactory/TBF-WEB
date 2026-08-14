@@ -386,8 +386,22 @@
   text-wrap: balance;
 }
 
+/* CITAÇÃO FIXADA, UM DEGRAU ABAIXO (pedido do fundador, #01 CHANGES
+   2026-08-14: "essa parte está muito grande no scrolling, pode diminuir").
+
+   Ela usava a display-lg cheia (80px) e, com `max-width: 20ch`, ocupava três
+   linhas de ponta a ponta numa tela de 1440px — a frase virava um cartaz e
+   parava de ser uma frase. Cai para a raiz de 56px, que é o degrau seguinte da
+   MESMA escala do design system, e o teto de medida abre um pouco (24ch) para a
+   frase respirar em menos linhas no tamanho novo.
+
+   NÃO mexer no token `--tbf-type-display-lg-size`: ele é do design system e
+   serve o site inteiro. O ajuste é desta peça, e por isso mora aqui. */
 @media (min-width: 1024px) {
-  .scrolly-pinned__text { font-size: var(--tbf-type-display-lg-size); }
+  .scrolly-pinned__text {
+    font-size: var(--tbf-font-size-raw-56);
+    max-width: 24ch;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -578,7 +592,61 @@
   contain: layout paint;
 }
 
+/* TETO DA FOTO SOLTA NO DESKTOP (pedido do fundador, #01 CHANGES 2026-08-14):
+   "no mobile a imagem de ponta a ponta da tela fica bom, mas no desktop fica
+   muito grande e fica estourado".
+
+   O quadro 16/10 de largura cheia em 1440px dá 900px de altura: a foto sozinha
+   ocupa a janela inteira, e uma imagem que preenche a tela toda em matéria longa
+   lê como interrupção, não como ilustração. O teto é de LARGURA e vem do mesmo
+   token de coluna do texto, então a foto passa a respirar na mesma medida do
+   corpo em vez de ter uma medida própria inventada.
+
+   No telefone nada muda — lá o sangramento de ponta a ponta é o que ele aprovou,
+   e é por isso que a regra vive dentro do media query e não fora dele. */
+@media (min-width: 768px) {
+  .scrolly-media__frame {
+    max-width: min(100%, 68rem);
+    margin-inline: auto;
+  }
+}
+
 .scrolly-media__img { transform: translateY(0); }
+
+/* ─── PAR LADO A LADO ────────────────────────────────────────────────────────
+   A outra metade da mesma correção. Ver o cabeçalho de MediaPair em
+   MediaParallax.tsx para o porquê de o par existir e de o quadro ser 4/5.
+
+   Mobile-first: no telefone é uma coluna e cada peça continua sangrando de ponta
+   a ponta, exatamente como a foto solta. A partir de 768px viram duas colunas
+   iguais. `align-items: start` para que a legenda mais curta não estique a
+   figura dela até a altura da mais longa. */
+.scrolly-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-8);
+  margin-block: var(--tbf-space-16);
+}
+
+/* A margem do par é do container, não de cada figura: sem isto as duas peças
+   empilhadas no telefone ganham o respiro de bloco duas vezes. */
+.scrolly-pair__item { margin-block: 0; }
+
+@media (min-width: 768px) {
+  .scrolly-pair {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: var(--tbf-space-6);
+    max-width: min(100%, 68rem);
+    margin-inline: auto;
+  }
+
+  /* Em meia largura o 16/10 vira uma tira baixa demais para um carro inteiro. */
+  .scrolly-pair__frame {
+    aspect-ratio: 4 / 5;
+    max-width: 100%;
+  }
+}
 
 /* PRANCHA (variante `plate`) — folheto, anúncio, retrato vertical.
    Mobile-first: no celular a peça ocupa a largura toda e cresce em altura, que é

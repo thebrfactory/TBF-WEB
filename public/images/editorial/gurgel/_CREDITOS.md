@@ -155,3 +155,73 @@ a própria imagem ("o Renegado desta história nunca existiu"). Com os renders d
 Kleber Silva o problema desapareceu: agora o leitor vê um Gurgel compacto moderno
 que de fato foi desenhado por alguém, a legenda diz que é render, e nada finge ser
 registro histórico. O Carajás real não saiu da matéria — **é ele na capa.**
+
+---
+
+# TERCEIRA LEVA — a matéria passou a rodar SÓ com o acervo do fundador (2026-08-14, #01 CHANGES)
+
+🔴 **LEIA ISTO ANTES DE MEXER NAS IMAGENS DESTE ARTIGO.**
+
+Pedido literal do fundador: *"preciso que use APENAS as fotos que eu deixei na
+pasta"*. A pasta é `~/Desktop/GURGEL`, 14 arquivos, todos salvos por ele do
+Pinterest. Desde esta data **nenhuma imagem de banco de licença livre está em uso
+na matéria**.
+
+Crédito padrão, escolhido por ele (*"as minhas imagens eu peguei todas no
+Pinterest, pode colocar essa a fonte"*): `Fonte: Pinterest (divulgação/reprodução)`.
+Onde há autor conhecido, o autor vem primeiro e a fonte depois — é o caso dos dois
+renders do Kleber Silva.
+
+## O que saiu de uso, e por quê
+
+Os arquivos `01` a `09` **continuam no repositório** e a procedência deles, mais
+acima neste documento, continua valendo. Eles só não estão mais na matéria. Não
+repor nenhum deles sem falar com o fundador.
+
+| Arquivo | Era | Por que saiu |
+|---|---|---|
+| `01-capa.webp` | capa (Carajás real) | a capa agora é a X-15 dele, `18` |
+| `02-gurgel-renegado.webp` | já estava fora desde a 2ª leva | — |
+| `03-jeep-renegade.webp` | "à esquerda, o americano" | **não tem substituto**: o acervo dele é inteiro Gurgel. O texto continua dizendo que o Jeep está à esquerda, e o leitor sabe que carro é esse sem foto |
+| `04-fabrica.jpg` | vaga que nunca foi preenchida | — |
+| `05-oswald.webp` | retrato do Oswald | **não tem substituto.** Ver nota abaixo |
+| `06-estrada-goias.webp` | estrada de terra / suspensão | trocado pelo cartaz do X-12, `17` |
+| `07-modernismo.webp` | foto de grupo de 1929 | **não tem substituto.** Ver nota abaixo |
+| `08-concessionaria.webp` | showroom Datsun, EUA, 1974 | trocado pelo anúncio de concessionária Gurgel, `15` |
+| `09-industria.webp` | fábrica da Caterpillar, 1974 | trocada pela pista de testes da própria Gurgel, `16` |
+
+**Nota sobre o Oswald e o modernismo.** As duas saíram juntas e não foram
+substituídas por equivalente, porque equivalente não existe neste acervo. A troca
+melhora a página: "Antropofagia." fica sozinha na tela, sem ilustração de livro
+didático atrás dela, e a primeira coisa depois da palavra é a marca sendo comida
+pela ferrugem (`20`) — que é o que a palavra quer dizer. O retrato do João Gurgel
+(`12`) passa a ser o único retrato do trecho em vez do terceiro.
+
+## As seis imagens novas
+
+Todas de `~/Desktop/GURGEL`, sem licença aberta atestável, sem página de origem.
+Nenhuma foi upscalada: nitidez inventada é pior que imagem macia.
+
+| Arquivo | Origem na pasta | Nativo | Variante | Onde entra |
+|---|---|---|---|---|
+| `15-anuncio-supermini.webp` | `Gurgel Supermini - 1993.jpeg` | 550 × 622 | `plate` | a concessionária, em papel — o anúncio traz endereço e telefone impressos |
+| `16-pista-de-testes.webp` | `_ (1).jpeg` | 735 × 488 | `bleed` | "a indústria que mandaram o país construir" |
+| `17-x12-utilitarios.webp` | `The 1979 Gurgel X-12 of Brazil…jpeg` | 736 × 1011 | `plate` | o argumento da suspensão, dito pela própria empresa |
+| `18-x15-estrada.webp` | `_ (2).jpeg` | 736 × 519 | capa | hero da matéria + miniatura no /editorial e na home |
+| `19-linha-gurgel.webp` | `Linha Gurgel.jpeg` | 576 × 770 | `plate` | depois das listas espelhadas, na palavra "Sistemas" |
+| `20-emblema.webp` | `Gurgel.jpeg` | 735 × 1054 | `plate` | logo depois de "Antropofagia." |
+
+## Os oito arquivos da pasta que NÃO entraram
+
+`Folheto Gurgel Motomachine - 04`, `Folheto Gurgel Supermini - 04`,
+`Folheto Gurgel X-12 TR 1979 - 01`, e as demais repetições de folheto técnico.
+Ficaram de fora por decisão editorial, não por problema de arquivo: a matéria tem
+onze posições de imagem e já usa as onze. Estão na pasta do fundador se ele
+quiser trocar alguma.
+
+## Formato dos blocos
+
+A matéria ganhou um bloco novo, `kind: 'pair'` — duas peças lado a lado no
+desktop, empilhadas no telefone. Os dois renders do Kleber Silva (`10` e `11`)
+são o primeiro e único par: frente e traseira do mesmo carro. Foi a resposta ao
+outro pedido do mesmo dia, *"no desktop fica muito grande e fica estourado"*.
