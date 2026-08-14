@@ -599,12 +599,21 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             <TbfWordmark className="p3-cover-wordmark" />
           </PitchReveal>
 
-          <PitchReveal delay={400}>
-            <p className="p3-culture">{COVER.culture}</p>
-          </PitchReveal>
+          {/* UMA ASSINATURA SÓ, SEM QUEBRA DE TEXTO (resposta do fundador
+              2026-08-14). Ela nasceu em duas linhas — `Culture™` e a linha de
+              origem logo abaixo — e o efeito na tela era o de duas assinaturas
+              laranjas empilhadas disputando o mesmo posto. Agora é uma frase
+              contínua: `Culture™` mantém o corpo cheio e a origem entra inline
+              10% menor, que é a hierarquia que ele pediu no #01.
 
-          <PitchReveal delay={460}>
-            <p className="p3-craft-line">{COVER.craft}</p>
+              A quebra que sobra é a natural do parágrafo, quando a linha não
+              cabe na largura — não se força `nowrap` em texto neste repo
+              (`frontend/CLAUDE.md`), porque no telefone isso ou vaza a caixa ou
+              obriga a encolher a fonte até o ilegível. */}
+          <PitchReveal delay={400}>
+            <p className="p3-culture p3-culture--cover">
+              {COVER.culture} <span className="p3-craft-line">{COVER.craft}</span>
+            </p>
           </PitchReveal>
 
           {/* UMA LINHA SÓ, sem a dobra de tradução: ver a nota em COVER.body. */}
@@ -1548,21 +1557,26 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           color: ${ACCENT};
           margin-bottom: 0.35rem;
         }
+        /* A capa fecha a assinatura; o fecho (cena 07) usa '.p3-culture' puro e
+           mantém o respiro que sempre teve. */
+        .p3-culture--cover {
+          margin-bottom: var(--p3-gap-sm);
+        }
+
         /* A LINHA DE ORIGEM PASSA A SER A MESMA COISA QUE Culture™ (#01, #01
            CHANGES 2026-08-14: "mantenha a mesma formatação que Culture™ e
            diminua 10% o tamanho da fonte"). Ela era mais leve (peso 300) e mais
-           apagada (papel a 55%), o que a lia como legenda de rodapé; agora as
-           duas formam UMA assinatura de duas linhas, e a hierarquia entre elas é
-           só de tamanho: 10% menor, nos três termos do clamp.
-           Era peso 300, cor rgba(240,237,230,0.55), clamp(0.7rem, 2vw, 0.85rem). */
+           apagada (papel a 55%), o que a lia como legenda de rodapé.
+           Era peso 300, cor rgba(240,237,230,0.55), clamp(0.7rem, 2vw, 0.85rem).
+
+           Agora é um TRECHO INLINE da mesma frase (resposta dele, 2026-08-14:
+           "sem quebra de texto"), então herda família, peso, itálico e cor do
+           parágrafo e só declara o que a diferencia: os 10% de corpo. Um
+           '0.9em' em vez de um clamp próprio é o que garante que a proporção se
+           mantenha igual nos três degraus do clamp do pai, do telefone ao
+           desktop. */
         .p3-craft-line {
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 500;
-          font-style: italic;
-          font-size: clamp(0.765rem, 2.34vw, 0.945rem);
-          letter-spacing: 0.02em;
-          color: ${ACCENT};
-          margin-bottom: var(--p3-gap-sm);
+          font-size: 0.9em;
         }
 
         .p3-label {
