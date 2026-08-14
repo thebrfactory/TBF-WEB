@@ -427,8 +427,20 @@ function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[numb
           onMouseEnter={() => setOpen(true)}
           onMouseLeave={() => setOpen(false)}
         >
+          {/* UMA PALAVRA POR LINHA (#04, #01 CHANGES 2026-08-14). Ele desenhou a
+              quebra nas quatro marcas, e o motivo aparece na tela: só
+              `.RUNWAY UNTD COLLECTIVE.` era comprido o bastante para dobrar
+              sozinho, então três cartões abriam com uma linha de nome e um com
+              duas, e a fileira ficava desalinhada logo na primeira leitura. Com
+              a quebra imposta, os quatro nomes ocupam o mesmo bloco de três
+              linhas e os papéis abaixo começam todos na mesma altura.
+
+              A regra é "uma palavra por linha", não uma lista de quebras
+              digitadas: as quatro marcas têm exatamente três palavras, e uma
+              marca nova entra no mesmo desenho sem ninguém precisar lembrar
+              disso. Quem desenha é o `white-space: pre-line` do CSS. */}
           <p className="p3-portfolio-name" style={{ color: PAPER }}>
-            {item.name}
+            {item.name.split(' ').join('\n')}
           </p>
           <p className="p3-item-desc" style={{ marginTop: '0.4rem' }}>
             {item.role.pt}
@@ -550,21 +562,37 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             paddingBottom: 'clamp(3rem, 8vw, 7rem)',
           }}
         >
-          {/* Eyebrow e headline vieram do fundador já em inglês. Por isso os
-              dois não usam <En>: a camada de tradução existe para dobrar o
-              português, e aqui não há português para dobrar. */}
-          <PitchReveal delay={100}>
-            <p className="p3-eyebrow">{COVER.eyebrow}</p>
-          </PitchReveal>
+          {/* A LINHA DE EYEBROW SAIU E VIROU CARIMBO (#01, #01 CHANGES
+              2026-08-14). Ela dizia "FELIPE T. · CONFIDENTIAL DOC · .TBF. inc"
+              em corpo miúdo, e o aviso que importava ali era o do meio.
 
+              O selo entra ATRÁS do título, no lugar em que o carimbo cairia num
+              papel: em cima do texto, meio torto, com a tinta fraca. Ele é
+              `aria-hidden` e tem alt vazio de propósito — para o leitor de tela
+              o que existe na cena é a headline, e um carimbo decorativo lido em
+              voz alta atrapalharia exatamente quem mais precisa da headline.
+
+              A headline veio do fundador já em inglês, e por isso não usa <En>:
+              a camada de tradução existe para dobrar o português, e aqui não há
+              português para dobrar. */}
           <PitchReveal delay={200}>
-            <h1 className="p3-cover-headline">
-              {COVER.headlineEn[0]}
-              <br />
-              {COVER.headlineEn[1]}
-              <br />
-              <span style={{ color: ACCENT }}>{COVER.headlineEn[2]}</span>
-            </h1>
+            <div className="p3-cover-title">
+              <Image
+                src={COVER.stamp}
+                alt=""
+                aria-hidden="true"
+                width={1400}
+                height={705}
+                className="p3-cover-stamp"
+              />
+              <h1 className="p3-cover-headline">
+                {COVER.headlineEn[0]}
+                <br />
+                {COVER.headlineEn[1]}
+                <br />
+                <span style={{ color: ACCENT }}>{COVER.headlineEn[2]}</span>
+              </h1>
+            </div>
           </PitchReveal>
 
           <PitchReveal delay={330}>
@@ -579,10 +607,10 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             <p className="p3-craft-line">{COVER.craft}</p>
           </PitchReveal>
 
+          {/* UMA LINHA SÓ, sem a dobra de tradução: ver a nota em COVER.body. */}
           <PitchReveal delay={550}>
             <p className="p3-body" style={{ maxWidth: 'var(--p3-measure)' }}>
-              {COVER.body.pt}
-              <En>{COVER.body.en}</En>
+              {COVER.body}
             </p>
           </PitchReveal>
         </div>
@@ -615,7 +643,20 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </h2>
         </PitchReveal>
 
-        <PressLogosCarousel spacing="wide" />
+        {/* O TRILHO VAI PARA O MEIO DA CENA (#02, #01 CHANGES 2026-08-14:
+            "coloque esse carrossel no meio do slide, acima dele: apenas o
+            título"). A cena ancora no topo (é a regra do deck, ver `S`), então
+            tudo nascia grudado em cima e sobrava um terço de tela preta embaixo
+            — foi o "layout mal distribuído" que ele viu.
+
+            `margin-block: auto` num filho de coluna flex reparte o espaço livre
+            IGUALMENTE acima e abaixo dele: o trilho passa a flutuar no centro do
+            que sobra entre o título e a ponte, e a cena se distribui sozinha em
+            qualquer altura de janela. É uma propriedade, não uma altura chutada,
+            e por isso não precisa ser remedida a cada viewport. */}
+        <div className="p3-refs-rail">
+          <PressLogosCarousel spacing="wide" />
+        </div>
 
         {/* ── As DUAS personalidades de referência ─────────────────────────────
                Selecionadas pelo fundador em CHANGES/PERSONALITIES (prefixo
@@ -681,9 +722,9 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
              abre a tensão, o contexto mostra onde o valor vaza, a tese resolve.
              Os três tempos são revelados em sequência, com delay crescente, e a
              tese carrega o maior peso visual da cena. ─────────────────────── */}
-      <section id="cena-03" style={{ ...S, background: '#111110' }} aria-label="A Pergunta, o Contexto e a Tese / The Question, the Context, the Thesis">
+      <section id="cena-03" style={{ ...S, background: '#111110' }} aria-label="A Pergunta e a Tese / The Question and the Thesis">
         <Numeral n="03" />
-        <Kicker n="03" pt="A Pergunta, o Contexto e a Tese" en="The Question, the Context, the Thesis" />
+        <Kicker n="03" pt="A Pergunta e a Tese" en="The Question and the Thesis" />
 
         {/* Tempo 1 — a pergunta */}
         <PitchReveal delay={100} slot="head">
@@ -715,26 +756,21 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           ))}
         </div>
 
-        {/* Tempo 2 — o contexto */}
-        <div className="p3-argument-block p3-tertiary">
-          {ARGUMENT.context.lines.map((line, i) => (
-            <PitchReveal key={line.pt} delay={340 + i * 90}>
-              <p className="p3-context-line">
-                {line.pt}
-                <En>{line.en}</En>
-              </p>
-            </PitchReveal>
-          ))}
-        </div>
+        {/* 🔴 O TEMPO 2 (O CONTEXTO) SAIU DA TELA (#03, #01 CHANGES 2026-08-14).
+            Eram as duas linhas do contexto ("O Brasil já produz repertório..." e
+            "Mas o valor que nasce da nossa cultura...") mais a assertiva
+            ("Atenção é a consequência, não o objetivo."): ele colou as três e
+            escreveu "remove".
 
-        <PitchReveal delay={520}>
-          <p className="p3-assert" style={{ marginTop: 'var(--p3-gap-sm)' }}>
-            {ARGUMENT.context.assert.pt}
-            <En>{ARGUMENT.context.assert.en}</En>
-          </p>
-        </PitchReveal>
+            A cena deixa de ter três tempos e passa a ter dois, pergunta e tese,
+            que continuam sendo a tensão e a resolução — o contexto era a ponte
+            entre elas, e sem ele a tese responde a pergunta diretamente.
 
-        {/* Tempo 3 — a tese: resolução da cena, maior peso visual */}
+            O conteúdo NÃO foi apagado: `ARGUMENT.context` segue inteiro em
+            `v3-scenes.ts`. Para devolver qualquer uma das três, é reescrever
+            este bloco a partir do histórico deste arquivo. */}
+
+        {/* Tempo 2 — a tese: resolução da cena, maior peso visual */}
         <div className="p3-argument-block p3-argument-block--thesis">
           <PitchReveal delay={620}>
             <p className="p3-kicker-mini">
@@ -915,8 +951,18 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
                 />
               </h2>
             </PitchReveal>
+            {/* O CLIENTE ENTRA PELA MARCA DELE (#05, #01 CHANGES 2026-08-14).
+                Era o nome digitado na Printed da casa; virou o logotipo oficial
+                do hostel. O `alt` carrega o nome, então a linha continua
+                existindo para leitor de tela e para busca no documento. */}
             <PitchReveal delay={140}>
-              <p className="p3-case-client">{CASE.client}</p>
+              <Image
+                src={CASE.clientLogo}
+                alt={CASE.client}
+                width={1249}
+                height={420}
+                className="p3-case-client-logo"
+              />
             </PitchReveal>
             <PitchReveal delay={260}>
               <p className="p3-case-body">
@@ -1502,13 +1548,20 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           color: ${ACCENT};
           margin-bottom: 0.35rem;
         }
+        /* A LINHA DE ORIGEM PASSA A SER A MESMA COISA QUE Culture™ (#01, #01
+           CHANGES 2026-08-14: "mantenha a mesma formatação que Culture™ e
+           diminua 10% o tamanho da fonte"). Ela era mais leve (peso 300) e mais
+           apagada (papel a 55%), o que a lia como legenda de rodapé; agora as
+           duas formam UMA assinatura de duas linhas, e a hierarquia entre elas é
+           só de tamanho: 10% menor, nos três termos do clamp.
+           Era peso 300, cor rgba(240,237,230,0.55), clamp(0.7rem, 2vw, 0.85rem). */
         .p3-craft-line {
           font-family: var(--tbf-font-family-printed);
-          font-weight: 300;
+          font-weight: 500;
           font-style: italic;
-          font-size: clamp(0.7rem, 2vw, 0.85rem);
-          letter-spacing: 0.03em;
-          color: rgba(240,237,230,0.55);
+          font-size: clamp(0.765rem, 2.34vw, 0.945rem);
+          letter-spacing: 0.02em;
+          color: ${ACCENT};
           margin-bottom: var(--p3-gap-sm);
         }
 
@@ -1644,9 +1697,17 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           font-weight: 900;
           font-size: clamp(0.9rem, min(2.4vw, 2.2vh), 1.2rem);
           letter-spacing: -0.03em;
+          /* A quebra por palavra do #04 chega como \\n no texto; é este
+             'pre-line' que a desenha. Ver a nota no JSX do cartão. */
+          white-space: pre-line;
+          line-height: 1.04;
         }
+        /* O nome do painel expandido continua em linha corrida: lá o espaço
+           vertical é do conteúdo que a expansão veio mostrar, e três linhas de
+           título comeriam a explicação. */
         .p3-portfolio-name--more {
           margin-bottom: 0.4rem;
+          white-space: normal;
         }
 
         /* ─── CARTÃO DE PORTFÓLIO EXPANSÍVEL (cena 04) ───────────────────────
@@ -1776,6 +1837,21 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           font-size: clamp(1.5rem, min(4vw, 3.6vh), 2.25rem);
         }
 
+        /* A MARCA DO CLIENTE (#05). A altura é a da linha de texto que ela
+           substituiu, com folga para a assinatura manuscrita "de casa" que fica
+           embaixo da palavra HÔSTEL: a peça é larga (quase 3:1), então quem
+           manda é a altura e a largura sai dela. Termo em vh porque o deck
+           inteiro encolhe com a altura da janela. */
+        .p3-case-client-logo {
+          width: auto;
+          max-width: min(100%, 18rem);
+          height: clamp(1.9rem, 5.4vh, 3.2rem);
+          object-fit: contain;
+          object-position: left center;
+          display: block;
+          margin-bottom: var(--p3-gap-sm);
+        }
+
         .p3-case-client {
           font-family: var(--tbf-font-family-printed);
           font-weight: 500;
@@ -1867,11 +1943,35 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           align-self: stretch;
           height: 100%;
           width: auto;
-          max-height: 100%;
           aspect-ratio: 9 / 16;
-        }
-        .p3-story > div:first-of-type {
-          height: 100%;
+          /* 🔴 O TETO DO TELEFONE, e ele não é decoração. O quadro é 9/16: cada
+             pixel de altura vira 0,56 de largura, e num telefone a largura é o
+             recurso escasso. Sem teto, o story tomava a linha inteira da grade
+             (844px de altura viram 475 de largura numa tela de 390) e empurrava
+             a copy e a esteira para fora da cena, que tem overflow: hidden e come
+             o que sai sem avisar. Medido em 390x844 antes de existir este teto.
+             No desktop o teto sai (ver o media query de 1024px): lá sobra
+             largura e o quadro ocupa a altura inteira da cena, que é onde o deck
+             é apresentado. */
+          max-height: min(100%, 52vh, 26rem);
+          /* 🔴 É DAQUI QUE VINHA O STORY CORTADO NO MEIO (#05, #01 CHANGES
+             2026-08-14), e a causa não era o recorte da foto: era o QUADRO.
+
+             O player já ganhava a altura da linha da grade (667px medidos em
+             1440x900), mas o quadro por dentro continuava com a altura fixa que
+             o componente traz de fábrica, 'height: var(--story-h)' — 512px. A
+             peça, que é 9/16 da altura do player, entrava com 668px de altura
+             dentro de uma caixa de 512 com 'overflow: hidden': os últimos 156px
+             da imagem eram simplesmente decepados, sempre no mesmo lugar, mais
+             ou menos no meio do slide. Era isso que ele estava vendo.
+
+             A régua velha existia porque '--story-h' mandava nos dois ao mesmo
+             tempo (largura do player E altura do quadro). Aqui o player mede a
+             própria altura pela grade, então a variável passa a valer 100% e o
+             quadro cresce junto com ele. A tentativa anterior de corrigir isso
+             mirava '> div:first-of-type', que no DOM do player é a barra do
+             cronômetro, não o quadro — e por isso não consertava nada. */
+          --story-h: 100%;
         }
         .p3-case-copy {
           grid-column: 2;
@@ -1923,9 +2023,12 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            logotipo ocupava virou altura de quadro. O valor continua sendo o
            maior em que a cena 05 fecha em uma tela, medido nos dois viewports
            de aceite. */
-        .p3-story {
-          --story-h: min(52vh, 26rem);
-        }
+        /* 🔴 OS TETOS EM vh/rem SAÍRAM DAQUI (#05, 2026-08-14). Eram
+           'min(52vh, 26rem)' aqui e 'min(58vh, 32rem)' no media query de 1024px,
+           e é essa dupla que decepava o quadro: quem manda na altura do story é
+           a LINHA DA GRADE da cena, não um número escolhido à parte, e os dois
+           discordavam. '--story-h' agora vale 100% e mora junto com a proporção
+           lá em cima, num lugar só. */
 
         /* A FILA DE MINIATURAS. Ela mora dentro do StoryDeck, colada embaixo do
            quadro, e por isso a largura dela é limitada pela do quadro no
@@ -2038,8 +2141,17 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            UMA FILA ÚNICA, do 390px ao 1440px, como uma barra de stories. No
            mobile o círculo é pequeno demais para segurar a legenda, então lá
            fica só o NOME. */
+        /* O trilho no centro do que sobra (#02). Ver a nota no JSX da cena 02. */
+        .p3-refs-rail {
+          margin-block: auto;
+          width: 100%;
+        }
+
+        /* O respiro de cima saiu: com o trilho centrado por 'margin-block: auto',
+           um recuo fixo aqui roubaria do centro e a cena voltaria a pender para
+           cima. O ar entre o carrossel e a ponte agora é o espaço livre da cena,
+           repartido pelo próprio flex. */
         .p3-refs-people {
-          margin-top: calc(var(--p3-gap) + clamp(1rem, 3vw, 2.5rem));
           padding-inline: clamp(1.25rem, 5vw, 6rem);
         }
 
@@ -2103,9 +2215,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            de imagem de largura 100% da figura é uma referência circular, e o
            retrato colapsa. Termo em vh junto do vw porque o deck inteiro encolhe
            com a altura da janela, não só com a largura. */
+        /* 25% MENOR (#02, #01 CHANGES 2026-08-14). Os três termos do clamp e o
+           corpo do nome caíram na mesma proporção, então a ponte inteira encolhe
+           junto: retrato menor com nome do tamanho antigo viraria legenda maior
+           que a figura. Era clamp(4.5rem, min(22vw, 16vh), 9rem). */
         .p3-person {
           margin: 0;
-          width: clamp(4.5rem, min(22vw, 16vh), 9rem);
+          width: clamp(3.375rem, min(16.5vw, 12vh), 6.75rem);
           text-align: center;
         }
 
@@ -2128,11 +2244,16 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }
 
         .p3-person__name {
-          margin: 0.7rem 0 0;
+          margin: 0.55rem 0 0;
           min-height: 2.3em;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.56rem, 1.7vw, 0.78rem);
+          /* O nome acompanha o retrato, mas NÃO nos mesmos 25% (#02). O corpo
+             mínimo já era 9px; a 25% ele viraria 6,7px, que não é tipografia
+             pequena, é texto ilegível — e o nome é a única informação escrita da
+             ponte. Desce 10%, que é o quanto dá para descer sem perder a leitura.
+             Era clamp(0.56rem, 1.7vw, 0.78rem). */
+          font-size: clamp(0.5rem, 1.53vw, 0.7rem);
           letter-spacing: 0.06em;
           line-height: 1.15;
           color: rgba(240, 237, 230, 0.85);
@@ -2215,11 +2336,39 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }
 
         /* ─── LAYOUT ─────────────────────────────────────────────────────── */
+        /* O TÍTULO DA CAPA E O CARIMBO ATRÁS DELE (#01, #01 CHANGES 2026-08-14).
+           O invólucro existe só para dar origem ao selo: sem um pai posicionado,
+           'position: absolute' do carimbo subiria até a seção e ele deixaria de
+           acompanhar o título quando a headline mudar de altura. */
+        .p3-cover-title {
+          position: relative;
+        }
+        /* O carimbo. Fica ATRÁS (z-index 0 contra o 1 da headline), com a tinta
+           fraca: o pedido foi "um tom levemente transparente cobrindo parte do
+           fundo do título", ou seja ele cobre PARTE, não a caixa inteira, e não
+           disputa leitura com o texto. A rotação vem desenhada na arte.
+           'pointer-events: none' porque carimbo não é alvo de clique. */
+        .p3-cover-stamp {
+          position: absolute;
+          z-index: 0;
+          left: 4%;
+          top: 50%;
+          transform: translateY(-54%);
+          width: min(62%, 40rem);
+          height: auto;
+          opacity: 0.2;
+          pointer-events: none;
+          user-select: none;
+        }
+        /* TAMANHO REDUZIDO EM 20% (#01, #01 CHANGES 2026-08-14). Os três termos
+           do clamp caíram na mesma proporção, então a curva de resposta da
+           headline não muda: ela só passa inteira uma oitava abaixo.
+           Era clamp(2rem, min(8.4vw, 8vh), 4.6rem). */
         .p3-cover-headline {
           position: relative;
           z-index: 1;
           font-family: var(--tbf-font-family-display);
-          font-size: clamp(2rem, min(8.4vw, 8vh), 4.6rem);
+          font-size: clamp(1.6rem, min(6.72vw, 6.4vh), 3.68rem);
           font-weight: 100;
           line-height: 1.02;
           letter-spacing: -0.015em;
@@ -2373,10 +2522,11 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p3-thumbs {
             --thumb-w: clamp(3rem, 6.5vh, 4.5rem);
           }
-          /* Teto do story no desktop. Só a ALTURA muda: a largura sai dela
-             sozinha, pela conta 9/16 do componente. */
+          /* No desktop o quadro toma a altura inteira da cena: aqui sobra
+             largura, então o teto que protege o telefone sai do caminho (#05,
+             2026-08-14). Ver a nota do teto em '.p3-story'. */
           .p3-story {
-            --story-h: min(58vh, 32rem);
+            max-height: 100%;
           }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */

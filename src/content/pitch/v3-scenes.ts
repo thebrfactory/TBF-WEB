@@ -48,7 +48,9 @@ export const SCENES = [
   { id: 'cena-00', pt: 'Capa', en: 'Cover', n: '00' },
   { id: 'cena-01', pt: 'Abertura', en: 'Opening', n: '01' },
   { id: 'cena-02', pt: 'Campo de Referência', en: 'Reference Field', n: '02' },
-  { id: 'cena-03', pt: 'A Pergunta, o Contexto e a Tese', en: 'The Question, the Context, the Thesis', n: '03' },
+  // O NOME PERDEU O CONTEXTO junto com o bloco (#03, #01 CHANGES 2026-08-14):
+  // o passador não pode anunciar uma parte que a cena não mostra mais.
+  { id: 'cena-03', pt: 'A Pergunta e a Tese', en: 'The Question and the Thesis', n: '03' },
   { id: 'cena-04', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '04' },
   { id: 'cena-05', pt: 'Case Selecionado', en: 'Selected Case', n: '05' },
   // Nome NEUTRO. Esta lista serve ao passador (o número + o anúncio de leitor de
@@ -66,15 +68,29 @@ export const SCENES = [
 // que é onde o direcionamento pede que ela esteja.
 // =============================================================================
 export const COVER = {
-  eyebrow: 'FELIPE T. · CONFIDENTIAL DOC · .TBF. inc',
+  // O EYEBROW SAIU DA CENA (#01, #01 CHANGES 2026-08-14). Ele dizia
+  // "FELIPE T. · CONFIDENTIAL DOC · .TBF. inc" e o que ele fazia de útil era
+  // avisar que aquilo é documento de trabalho, não material público. Esse aviso
+  // não sumiu: virou o SELO, logo abaixo. Uma linha de texto miúdo pede leitura;
+  // um carimbo é lido sem ser lido, que é o comportamento certo para um aviso.
+  /**
+   * O carimbo de confidencial, atrás do título. Origem: a referência que o
+   * fundador mandou (`CHANGES/image-10.png`, carimbo vermelho sobre branco).
+   * O branco virou transparência e o traço foi tingido de PAPER: vermelho puro
+   * seria uma quinta cor num deck que só tem preto, papel e o acento, e o
+   * carimbo passaria a gritar mais que a headline. A rotação já vem desenhada
+   * na arte, então o CSS não gira nada; ele só posiciona e baixa a opacidade.
+   */
+  stamp: '/images/pitch/marks/confidential.webp',
   /** Headline em inglês nos dois idiomas: veio assim do fundador, não se traduz. */
   headlineEn: ['SP BASED.', 'BUILT ACROSS THE COUNTRY.', 'DESIGNED FOR WORLDWIDE REACH.'],
   culture: 'Culture™',
   craft: 'Crafted in São Paulo, Brazil. Consumed Worldwide.',
-  body: {
-    pt: 'Um cultural venture studio para ideias brasileiras com alcance global.',
-    en: 'A cultural venture studio for Brazilian ideas with global reach.',
-  } as Bi,
+  // UMA LINHA SÓ, EM INGLÊS (#01, #01 CHANGES 2026-08-14). Era a frase bilíngue
+  // "Um cultural venture studio para ideias brasileiras com alcance global." e
+  // virou a definição seca. Não é `Bi` porque não há português para dobrar: como
+  // a headline, veio do fundador já em inglês e é assim nas duas rotas.
+  body: 'A Brazilian Cultural Venture Studio',
 }
 
 // =============================================================================
@@ -132,6 +148,13 @@ export const ARGUMENT = {
       { pt: 'Como uma ideia local ganha desejo, comunidade e permanência?', en: 'How does a local idea earn desire, community and permanence?' },
     ] as Bi[],
   },
+  // 🔴 O CONTEXTO SAIU DA TELA (#03, #01 CHANGES 2026-08-14). O fundador colou
+  // as TRÊS falas do bloco (as duas linhas de contexto e a assertiva) e escreveu
+  // "-> remove". O dado continua aqui inteiro, e é uma linha no cliente para
+  // devolver: a cena 03 passa a ter dois tempos, a pergunta e a tese, e é isso
+  // que ela mostra hoje. Se ele quiser qualquer uma das três de volta, o texto
+  // está abaixo, do jeito que estava.
+  //
   // O contexto NÃO é "falta de infraestrutura" (o direcionamento proíbe essa
   // formulação genérica). O ponto é autoria e captura de valor: o repertório já
   // existe, o que escapa é a propriedade.
@@ -303,7 +326,19 @@ export const CASE = {
   // porque é ele que vira o `alt` da imagem e o rótulo de leitor de tela.
   headline: 'VERÃOZÃO',
   wordmark: '/images/pitch/veraozao/veraozao-wordmark.webp',
+  // O CLIENTE TAMBÉM ENTRA PELA IDENTIDADE, NÃO PELO NOME DIGITADO (#05, #01
+  // CHANGES 2026-08-14: "Ô de Casa Hostel -> preciso da identidade visual da
+  // empresa no lugar disso escrito"). Mesmo argumento do wordmark da campanha,
+  // aplicado a quem assina o trabalho: o hostel tem marca desenhada, e escrever
+  // o nome dele na tipografia da .TBF. é apresentar o cliente com a voz errada.
+  //
+  // Origem: `Ô From House/01. Branding/PNGS_ID_O/logo_negativo.png` (a versão
+  // negativa do manual da marca deles). O arquivo vinha branco sobre PRETO
+  // CHAPADO, sem canal alfa: o preto virou transparência e o traço foi tingido
+  // de PAPER, para a marca assentar em qualquer fundo do deck. `client` fica
+  // como texto porque é ele que vira o `alt` e o rótulo de leitor de tela.
   client: 'Ô de Casa Hostel',
+  clientLogo: '/images/pitch/odecasa/odecasa-logo.webp',
   deck: {
     pt: ['Quando uma temporada deixa de ser campanha', 'e vira uma cena.'],
     en: ['When a season stops being a campaign', 'and becomes a scene.'],
@@ -463,7 +498,13 @@ export const PARTNERSHIP_OVERLENS: PartnerScene = {
         { pt: 'Coolhunting e leitura de tendências culturais.', en: 'Coolhunting and cultural trend reading.' },
         { pt: 'Desenvolvimento de propriedade intelectual.', en: 'Intellectual property development.' },
         { pt: 'Direção criativa e projetos de impacto.', en: 'Creative direction and projects with impact.' },
-        { pt: 'Repertório que vira desejo, linguagem e presença cultural.', en: 'Repertoire that becomes desire, language and cultural presence.' },
+        // A QUARTA LINHA SAIU DAS DUAS VERSÕES DA CENA (#06, #01 CHANGES
+        // 2026-08-14). Ela dizia "Repertório que vira desejo, linguagem e
+        // presença cultural." e era a única do lado da .TBF. que não nomeava uma
+        // capacidade: as outras três dizem o que a casa FAZ, essa dizia o que o
+        // trabalho VIRA, que é promessa e já está dita na tese da cena 03. Com
+        // ela fora, os dois lados da mesa ficam com três linhas cada, que é a
+        // simetria que a cena sempre quis.
       ] as Bi[],
     },
   ],
@@ -522,7 +563,8 @@ export const PARTNERSHIP_OPEN: PartnerScene = {
         { pt: 'Coolhunting e leitura de tendências culturais.', en: 'Coolhunting and cultural trend reading.' },
         { pt: 'Desenvolvimento de propriedade intelectual.', en: 'Intellectual property development.' },
         { pt: 'Direção criativa e projetos de impacto.', en: 'Creative direction and projects with impact.' },
-        { pt: 'Repertório que vira desejo, linguagem e presença cultural.', en: 'Repertoire that becomes desire, language and cultural presence.' },
+        // Mesma retirada da versão endereçada (#06): ver a nota em
+        // PARTNERSHIP_OVERLENS. As duas cenas continuam com a mesma forma.
       ],
     },
   ],
