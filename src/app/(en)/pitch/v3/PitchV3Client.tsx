@@ -1082,8 +1082,14 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </div>
         </PitchReveal>
 
+        {/* Terciário por padrão (some no telefone). A proposta que traz um
+            escopo fechado em vez de hipóteses pede o contrário: ver a nota em
+            `keepHypothesesOnMobile`, em `v3-scenes.ts`. */}
         <PitchReveal delay={600}>
-          <p className="p3-body p3-tertiary" style={{ marginTop: 'var(--p3-gap-sm)', maxWidth: 'var(--p3-measure-wide)' }}>
+          <p
+            className={partner.keepHypothesesOnMobile ? 'p3-body' : 'p3-body p3-tertiary'}
+            style={{ marginTop: 'var(--p3-gap-sm)', maxWidth: 'var(--p3-measure-wide)' }}
+          >
             {partner.hypotheses.pt}
             <En>{partner.hypotheses.en}</En>
           </p>
