@@ -470,18 +470,6 @@ export interface PartnerScene {
   }[]
   goal: { kicker: string; lines: Bi[] }
   hypotheses: Bi
-  /**
-   * O parágrafo de `hypotheses` mora na CAMADA TERCIÁRIA, que o deck esconde no
-   * telefone de propósito (ver `.p3-tertiary` no cliente): ali ele é o
-   * comentário sobre a tese da cena, e o que some no telefone nunca é a tese.
-   *
-   * Numa proposta de escopo fechado isso se inverte. No Castelo esse parágrafo
-   * NÃO comenta a cena, ele é o combinado: quantas imagens, em que datas, para
-   * quê. Sumir no telefone seria sumir com a oferta justamente na tela em que
-   * ela vai ser lida. Este sinalizador existe só para esse caso, e por isso é
-   * opcional: sem ele, nada muda para as propostas que já existem.
-   */
-  keepHypothesesOnMobile?: boolean
   /** Assinatura do fecho (cena 07). Também muda com o destinatário. */
   closeEyebrow: Bi
 }
@@ -591,82 +579,6 @@ export const PARTNERSHIP_OPEN: PartnerScene = {
     pt: 'Novos formatos de conteúdo, comunidade, experiências, colaborações e propriedades com relevância cultural, desenhados a partir do que a parceria já sabe fazer.',
     en: 'New content formats, community, experiences, collaborations and properties with cultural relevance, designed from what the partnership already knows how to do.',
   },
-}
-
-// A PROPOSTA ENDEREÇADA AO HOSTEL CASTELO. Vive em /pitch/v3/castelo.
-//
-// Escrita a partir da pesquisa de 18/08/2026 (`~/TBF X CASTELO/PESQUISA INICIAL`):
-// casa-hostel na Pampulha, distribuída em Booking, Expedia, Agoda, TripAdvisor,
-// Google e Worldpackers, com nota de limpeza 9,3 e de atendimento 9,4 no recorte
-// consultado. O que falta não é volume de foto, é hierarquia na PRIMEIRA camada
-// visual desses canais, que é onde a reserva se decide.
-//
-// A cena tinha de mudar de registro sem mudar de forma. Nas outras duas versões
-// os dois lados da mesa são empresas trocando capacidade; aqui um lado é uma
-// CASA e o outro é quem sabe fotografá-la. Por isso o lado esquerdo não lista
-// estrutura empresarial: lista o que a casa já tem de matéria-prima e de prova.
-//
-// As `hypotheses` desta versão NÃO são hipóteses, são o escopo fechado. É
-// deliberado: numa proposta de contrapartida (hospedagem por trabalho), o que
-// abre a conversa é o limite escrito, não a possibilidade aberta. O acordo
-// completo (prazos, uso, o que fica de fora) vive no guia de alinhamento em
-// `~/TBF X CASTELO/PESQUISA INICIAL/proximos_passos_e_alinhamento.pdf`. O deck
-// não substitui o combinado por mensagem, ele antecede.
-export const PARTNERSHIP_CASTELO: PartnerScene = {
-  kicker: { pt: 'Por Que o Castelo', en: 'Why Castelo' },
-  closeEyebrow: {
-    pt: 'Uma conversa de trabalho com o Hostel Castelo',
-    en: 'A working conversation with Hostel Castelo',
-  },
-  question: {
-    pt: ['Como uma casa cheia de vida é escolhida', 'por quem nunca entrou nela?'],
-    en: ['How does a house full of life get chosen', 'by someone who has never walked in?'],
-  },
-  sides: [
-    {
-      // UMA PALAVRA, e não 'HOSTEL CASTELO'. O nome cheio quebrava em duas
-      // linhas no iPhone 13 e empurrava a lista da esquerda para baixo da
-      // direita: os dois lados da mesa deixavam de estar na mesma altura, que é
-      // a única coisa que essa cena precisa afirmar antes de qualquer palavra.
-      // O nome cheio já foi dito no kicker da cena, logo acima.
-      who: 'CASTELO',
-      color: 'paper' as const,
-      lines: [
-        { pt: 'Uma casa na Pampulha, com pátio, piscina e terraço.', en: 'A house in Pampulha, with a patio, a pool and a terrace.' },
-        { pt: 'Hospitalidade já comprovada por quem ficou.', en: 'Hospitality already proven by the people who stayed.' },
-        { pt: 'Presença viva em Booking, Expedia, Agoda e Google.', en: 'A live presence on Booking, Expedia, Agoda and Google.' },
-      ] as Bi[],
-    },
-    {
-      who: '.TBF.',
-      color: 'accent' as const,
-      lines: [
-        { pt: 'Direção de imagem e leitura cultural.', en: 'Image direction and cultural reading.' },
-        { pt: 'Fotografia comercial para a decisão de reserva.', en: 'Commercial photography for the booking decision.' },
-        { pt: 'Curadoria: a imagem certa vale mais que o volume.', en: 'Curation: the right image beats the volume of them.' },
-      ] as Bi[],
-    },
-  ],
-  goal: {
-    kicker: 'THE GOAL',
-    lines: [
-      // Duas linhas curtas, encadeadas pela mesma palavra. A versão anterior
-      // dizia 'experiência desejada' e ocupava duas linhas no telefone sem
-      // dizer nada a mais: desejo é a palavra que liga hospedagem a reserva.
-      { pt: 'Transformar hospedagem em desejo.', en: 'Turn a place to stay into desire.' },
-      { pt: 'E desejo em reserva.', en: 'And desire into bookings.' },
-    ] as Bi[],
-  },
-  /**
-   * Aqui não é hipótese, é o escopo fechado da contrapartida: por isso ele fica
-   * visível também no telefone (`keepHypothesesOnMobile`). A frase é curta de
-   * propósito, para caber na cena sem empurrar o objetivo para fora dela.
-   */
-  hypotheses: {
-    pt: 'Quinze imagens finais, produzidas na estadia de 27 de agosto a 9 de setembro, para os canais de reserva.',
-    en: 'Fifteen final images, produced during the stay from August 27 to September 9, for the booking channels.',
-  } as Bi,
-  keepHypothesesOnMobile: true,
 }
 
 // =============================================================================
