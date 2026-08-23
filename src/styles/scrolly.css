@@ -455,8 +455,15 @@
   font-family: var(--tbf-type-display-xl-family);
   font-weight: var(--tbf-font-weight-raw-800);
   font-size: clamp(3rem, 16vw, 10rem);
-  line-height: 1;
-  overflow: clip;
+  /* O TIL PRECISA CABER. Com `line-height: 1` a caixa da linha tem a altura exata
+     do corpo da fonte, e o acento de A maiusculo passa POR CIMA dessa borda. Junto
+     com o `overflow: clip` (que existe por causa do deslize horizontal), o
+     resultado era EXECUCAO sem til, com a cedilha intacta porque ela desce dentro
+     da caixa em vez de subir para fora. Visto em 23/08/2026 no capitulo EXECUCAO.
+     A folga vertical e o clip so no eixo X resolvem sem soltar o deslize. */
+  line-height: 1.16;
+  overflow-x: clip;
+  overflow-y: visible;
   transform: translateX(6%);
   opacity: 0.9;
 }

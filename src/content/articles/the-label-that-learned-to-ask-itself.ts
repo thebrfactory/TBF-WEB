@@ -23,7 +23,15 @@
 //   1.471     arquivos em inglês         group by idioma
 //   18        idiomas distintos          count(distinct idioma)
 //   13.267    itens catalogados          select count(*) from itens
-//   7 anos    span do acervo             min/max de `data` em itens: 2019 a 2026
+//   7 anos    span do ACERVO             min/max de `data` em itens: 2019 a 2026
+//
+// A IDADE DA LABEL NAO E A IDADE DO ACERVO, e confundir as duas foi o erro da
+// versao anterior, corrigido pelo fundador em 23/08/2026. A .TBF. fez UM ANO em
+// junho de 2026. Os sete anos sao de arquivo DELE, de trabalho, pesquisa e
+// repertorio, anteriores a existencia da empresa. O texto diz as duas coisas de
+// proposito, porque a diferenca entre elas E a tese: uma label de um ano que
+// comeca com sete anos de substrato nao comeca do zero. Nao reescrever isso para
+// "sete anos de .TBF."
 //   4         unidades de negócio        TAVARÍSTICO, Ô DE CASA, TBF, RUC
 //   Whisper   modelo da transcrição      mlx-community/whisper-large-v3-turbo,
 //                                        MLX, rodando local no Mac (sem nuvem)
@@ -51,8 +59,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     pt: 'A LABEL QUE APRENDEU A SE PERGUNTAR.',
   },
   heroSubtitle: {
-    en: 'How the .TBF. pointed a machine at seven years of its own archive, and what came back.',
-    pt: 'Como a .TBF. apontou uma máquina para sete anos do próprio acervo, e o que voltou.',
+    en: 'A one year old label pointed a machine at an archive seven years older than itself. This is what came back.',
+    pt: 'Uma label de um ano apontou uma máquina para um acervo sete anos mais velho que ela. Foi isto que voltou.',
   },
   category: 'Coolhunting',
   publishedAt: '2026-08-23',
@@ -94,19 +102,20 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'pinned',
       kicker: { en: 'SAO PAULO, AUGUST 2026', pt: 'SÃO PAULO, AGOSTO DE 2026' },
       text: {
-        en: 'The .TBF. is a creative label in Sao Paulo. In seven years it piled up thirteen thousand files: photographs, videos, screen grabs, recorded meetings. One night in August we put a machine to listen to all of them.',
-        pt: 'A .TBF. é uma label criativa de São Paulo. Em sete anos ela empilhou treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada. Numa noite de agosto colocamos uma máquina para ouvir todos eles.',
+        en: 'The .TBF. is a creative label in Sao Paulo, and it turned one year old in June. Its archive is older than the label itself: seven years of its founder working, researching and collecting, from before there was a company to keep any of it.',
+        pt: 'A .TBF. é uma label criativa de São Paulo, e ela fez um ano em junho. O acervo dela é mais velho que ela: sete anos do fundador trabalhando, pesquisando e juntando repertório, de antes de existir uma empresa para guardar aquilo.',
       },
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The reason was ordinary, and it is worth saying out loud.', pt: 'O motivo era banal, e vale dizer em voz alta.' },
-        { en: 'Nobody had ever heard the whole archive.', pt: 'Ninguém nunca tinha ouvido o acervo inteiro.' },
+        { en: 'Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.', pt: 'Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.' },
+        { en: 'One night in August we put a machine to listen to all of them.', pt: 'Numa noite de agosto colocamos uma máquina para ouvir todos eles.' },
+        { en: 'The reason was ordinary, and it is worth saying out loud:', pt: 'O motivo era banal, e vale dizer em voz alta:' },
+        { en: 'nobody had ever heard that archive from end to end.', pt: 'ninguém nunca tinha ouvido esse acervo de ponta a ponta.' },
         { en: 'Nobody has forty three hours to spare.', pt: 'Ninguém tem quarenta e três horas sobrando.' },
-        { en: 'So the files sat in folders, findable only by name and date.', pt: 'Então os arquivos ficavam em pastas, achaveis só por nome e data.' },
       ],
-      emphasize: [1],
+      emphasize: [1, 3],
     },
     {
       kind: 'lines',
@@ -152,18 +161,27 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'fullbleed',
       text: {
-        en: 'Half of what the .TBF. says, it says in English. Seven years of it, unnoticed.',
-        pt: 'Metade do que a .TBF. fala, ela fala em inglês. Sete anos disso, sem ninguém notar.',
+        en: 'Almost half of everything ever recorded here was spoken in English.',
+        pt: 'Quase metade de tudo que já foi gravado aqui foi falado em inglês.',
       },
       theme: 'dark',
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'That single number changes decisions that were already on the table:', pt: 'Esse número sozinho muda decisões que já estavam na mesa:' },
-        { en: 'which language a piece is written in, which market a product opens in,', pt: 'em que idioma uma peça nasce, em que mercado um produto abre,' },
-        { en: 'and who this label was already talking to without saying so.', pt: 'e com quem esta label já estava falando sem ter dito isso.' },
-        { en: 'No amount of intuition would have produced it.', pt: 'Nenhuma quantidade de intuição teria produzido esse número.' },
+        { en: 'Not accent. Not affectation.', pt: 'Não é sotaque. Não é firula.' },
+        { en: 'Work calls, classes, interviews, ideas said out loud on the way somewhere.', pt: 'É reunião de trabalho, aula, entrevista, ideia dita em voz alta no caminho.' },
+        { en: 'Seven years of recording like that, and nobody had noticed.', pt: 'Sete anos gravando assim, e ninguém tinha percebido.' },
+      ],
+      emphasize: [2],
+    },
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'It changes decisions that were already on the table:', pt: 'Isso muda decisões que já estavam na mesa:' },
+        { en: 'which language a piece is born in, which market a product opens in,', pt: 'em que idioma uma peça nasce, em que mercado um produto abre,' },
+        { en: 'and who this label was already talking to without ever saying so.', pt: 'e com quem esta label já estava falando sem nunca ter dito isso.' },
+        { en: 'No amount of intuition would have produced that number.', pt: 'Nenhuma quantidade de intuição teria produzido esse número.' },
       ],
       emphasize: [3],
     },
@@ -191,7 +209,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'The files had always been there.', pt: 'Os arquivos sempre estiveram ali.' },
-        { en: 'Thirteen thousand of them, across four business units and seven years.', pt: 'Treze mil deles, em quatro unidades de negócio e sete anos.' },
+        { en: 'Thirteen thousand, across seven years and four business units.', pt: 'Treze mil, atravessando sete anos e quatro unidades de negócio.' },
         { en: 'What changed in one night was not what we owned.', pt: 'O que mudou numa noite não foi o que a gente tinha.' },
         { en: 'It was that we could ask.', pt: 'Foi a gente poder perguntar.' },
       ],
@@ -261,7 +279,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'The same question, phrased the same way.', pt: 'A mesma pergunta, formulada do mesmo jeito.' },
       ],
       after: [
-        { en: 'Seven years of our own recordings.', pt: 'Sete anos de gravação nossa.' },
+        { en: 'Seven years of recordings nobody else has.', pt: 'Sete anos de gravação que mais ninguém tem.' },
         { en: 'What we refused, and the day we refused it.', pt: 'O que a gente recusou, e o dia em que recusou.' },
         { en: 'The first client, who is still a client.', pt: 'O primeiro cliente, que ainda é cliente.' },
         { en: 'Our mistakes, dated and kept.', pt: 'Nossos erros, datados e guardados.' },
@@ -432,8 +450,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'pinned',
       kicker: { en: 'YOU ARE INSIDE THE PROOF', pt: 'VOCÊ ESTÁ DENTRO DA PROVA' },
       text: {
-        en: 'This page exists in Portuguese and in English because of the number at the top of it. The .TBF. measured itself, found out it had been bilingual for seven years, and published accordingly. The form of this page is the argument of this page.',
-        pt: 'Esta página existe em português e em inglês por causa do número que está no topo dela. A .TBF. se mediu, descobriu que era bilíngue havia sete anos, e publicou de acordo. A forma desta página é o argumento desta página.',
+        en: 'You are reading this in English. The same page exists in Portuguese, and not out of courtesy to anyone: it exists because the archive showed that half of what gets recorded here is already English. The finding became a decision, and the decision became this page.',
+        pt: 'Você está lendo isto em português. A mesma página existe em inglês, e não por cortesia com ninguém: existe porque o acervo mostrou que metade do que se grava aqui já é em inglês. O achado virou decisão, e a decisão virou esta página.',
       },
     },
     {
