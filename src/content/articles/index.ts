@@ -15,11 +15,11 @@
 // =============================================================================
 
 import type { ManifestoArticle } from './types'
-import { theHouseThatLearnedToAskItself } from './the-house-that-learned-to-ask-itself'
+import { theLabelThatLearnedToAskItself } from './the-label-that-learned-to-ask-itself'
 import { theDayBrazilStoppedTranslatingItself } from './the-day-brazil-stopped-translating-itself'
 
 export const LOCAIS: ManifestoArticle[] = [
-  theHouseThatLearnedToAskItself,
+  theLabelThatLearnedToAskItself,
   theDayBrazilStoppedTranslatingItself,
 ]
 
