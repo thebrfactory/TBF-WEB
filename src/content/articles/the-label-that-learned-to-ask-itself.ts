@@ -48,8 +48,11 @@
 // entra se puder ser sustentado.
 //
 // CAPA. Não é foto nem ilustração: é o próprio acervo desenhado. Cada tracinho é
-// um dos 3.132 arquivos falados, na ordem real do índice, colorido pelo idioma que
-// a máquina ouviu (pergaminho = português, âmbar = inglês, cinza = os outros 16).
+// um dos 3.132 arquivos com áudio, na ordem real do índice, colorido pelo que a
+// máquina ouviu DENTRO dele (pergaminho = fala em português, âmbar = fala em
+// inglês, cinza = os outros 16 idiomas, quase preto = os 879 sem fala nenhuma).
+// O quase preto é o conserto de 23/08/2026: sem separar o silêncio, o âmbar dobra
+// e o campo mente dizendo metade em inglês.
 // A grade é 87 x 36, que é exatamente 3.132: nenhuma célula é enfeite. Gerador em
 // `TBF SYSTEM/operacao/acervo/gerar-capa-substrato.py`, que reproduz o arquivo
 // publicado byte a byte.
@@ -197,12 +200,12 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'image',
       src: '/images/editorial/substrato-capa.webp',
       alt: {
-        en: 'Field of 3,132 marks, one per spoken file, coloured by language.',
-        pt: 'Campo de 3.132 marcas, uma por arquivo falado, colorido por idioma.',
+        en: 'Field of 3,132 marks, one per audio file, coloured by what was said inside it.',
+        pt: 'Campo de 3.132 marcas, uma por arquivo com áudio, colorido pelo que foi dito dentro dele.',
       },
       caption: {
-        en: 'This is the finding, drawn. Every mark is one file: parchment for Portuguese, amber for English, grey for the other sixteen languages, in the order the index holds them. The grid is 87 by 36, which is exactly 3,132, so no cell is decoration. Made by a script that reads the database, not by hand.',
-        pt: 'Este é o achado, desenhado. Cada marca é um arquivo: pergaminho para português, âmbar para inglês, cinza para os outros dezesseis idiomas, na ordem em que o índice os guarda. A grade é 87 por 36, que dá exatamente 3.132, então nenhuma célula é enfeite. Feito por um script que lê o banco, não à mão.',
+        en: 'This is the finding, drawn. Every mark is one file: parchment for speech in Portuguese, amber for speech in English, grey for the other sixteen languages, and near black for the 879 files where nobody speaks at all. The grid is 87 by 36, which is exactly 3,132, so no cell is decoration. Made by a script that reads the database, not by hand.',
+        pt: 'Este é o achado, desenhado. Cada marca é um arquivo: pergaminho para fala em português, âmbar para fala em inglês, cinza para os outros dezesseis idiomas, e quase preto para os 879 arquivos em que ninguém fala nada. A grade é 87 por 36, que dá exatamente 3.132, então nenhuma célula é enfeite. Feito por um script que lê o banco, não à mão.',
       },
       credit: '.TBF. inc',
       variant: 'plate',
