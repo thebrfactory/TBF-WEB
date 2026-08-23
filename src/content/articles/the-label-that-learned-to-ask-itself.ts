@@ -19,8 +19,20 @@
 //
 //   3.132     transcrições geradas       select count(*) from transcricoes
 //   43,0 h    duração somada             select sum(dur)/3600 from transcricoes
-//   1.494     arquivos em português      group by idioma
-//   1.471     arquivos em inglês         group by idioma
+//   1.494     arquivos etiquetados pt    group by idioma
+//   1.471     arquivos etiquetados en    group by idioma
+//   2.253     arquivos com FALA de fato  where veredito='FALA'
+//   370.700   palavras ditas (FALA)      sum(palavras) where veredito='FALA'
+//   312.231   palavras ditas em pt       idem, group by idioma
+//    55.260   palavras ditas em inglês   idem = 14,9% do total
+//   575       arquivos 'en' SEM FALA     media de 1,8 palavra cada
+//
+// O EMPATE DE IDIOMA E ARTEFATO DE CONTAGEM, e o texto diz isso de proposito.
+// Contando ARQUIVO, pt e en empatam. Contando PALAVRA DITA, ingles e um setimo.
+// O Whisper etiqueta 'en' por padrao quando nao ouve fala, e 575 arquivos mudos
+// entraram no lado ingles. A versao anterior desta materia publicava o empate
+// como se fosse o achado; corrigido em 23/08/2026 depois que o fundador
+// perguntou o que a frase queria dizer. NAO reescrever de volta para 'metade'.
 //   18        idiomas distintos          count(distinct idioma)
 //   13.267    itens catalogados          select count(*) from itens
 //   7 anos    span do ACERVO             min/max de `data` em itens: 2019 a 2026
@@ -124,7 +136,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'an open transcription model, Whisper, running inside our own Mac.', pt: 'um modelo aberto de transcrição, o Whisper, rodando dentro do nosso próprio Mac.' },
         { en: 'No cloud. Nothing left the machine.', pt: 'Sem nuvem. Nada saiu da máquina.' },
         { en: 'Seven hours of processing, from eleven at night to six in the morning.', pt: 'Sete horas de processamento, das onze da noite às seis da manhã.' },
-        { en: 'It read 3,132 files that had a human voice in them, and failed on none.', pt: 'Ela leu 3.132 arquivos que tinham voz humana dentro, e não falhou em nenhum.' },
+        { en: 'It read 3,132 files that had audio in them, and failed on none.', pt: 'Ela leu 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
       ],
       emphasize: [2, 4],
     },
@@ -151,12 +163,11 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Read that again, because it is not a curiosity.', pt: 'Leia de novo, porque não é curiosidade.' },
-        { en: 'It is a tie, and nobody at the .TBF. knew it existed.', pt: 'É um empate, e ninguém na .TBF. sabia que ele existia.' },
+        { en: 'Read that again. It is a tie, and nobody at the .TBF. knew it existed.', pt: 'Leia de novo. É um empate, e ninguém na .TBF. sabia que ele existia.' },
         { en: 'A partial count, taken the day before on a sample, had said one third.', pt: 'Uma contagem parcial, feita na véspera sobre uma amostra, dizia um terço.' },
         { en: 'The full pass said half. And found sixteen other languages underneath.', pt: 'A passada inteira disse metade. E encontrou outros dezesseis idiomas embaixo.' },
       ],
-      emphasize: [1, 3],
+      emphasize: [0, 2],
     },
     {
       kind: 'fullbleed',
@@ -169,11 +180,50 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
+        { en: 'That sentence was written on this page, at that size, and it is false.', pt: 'Essa frase estava escrita nesta página, nesse tamanho, e ela é falsa.' },
+        { en: 'It stood until somebody asked how the number had been measured.', pt: 'Ela ficou de pé até alguém perguntar como o número tinha sido medido.' },
+      ],
+      emphasize: [0],
+    },
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'Whisper tags the language of every file it opens, including the ones where nobody speaks.', pt: 'O Whisper etiqueta o idioma de todo arquivo que abre, inclusive os que não têm ninguém falando.' },
+        { en: 'When it hears silence, street noise or music, its default guess is English.', pt: 'Quando ele ouve silêncio, barulho de rua ou música, o chute padrão dele é inglês.' },
+        { en: '575 of those 1,471 English files carry 1.8 words each.', pt: '575 daqueles 1.471 arquivos em inglês têm 1,8 palavra cada.' },
+        { en: 'They are mute video. A good part of the tie was the silence voting.', pt: 'São vídeo mudo. Boa parte do empate era o silêncio votando.' },
+      ],
+      emphasize: [2, 3],
+    },
+    {
+      kind: 'stat',
+      value: 312231,
+      formatted: { en: '312,231', pt: '312.231' },
+      label: { en: 'words actually said in Portuguese', pt: 'palavras realmente ditas em português' },
+    },
+    {
+      kind: 'stat',
+      value: 55260,
+      formatted: { en: '55,260', pt: '55.260' },
+      label: { en: 'words actually said in English', pt: 'palavras realmente ditas em inglês' },
+    },
+    {
+      kind: 'fullbleed',
+      text: {
+        en: 'One in every seven words said out loud here was said in English.',
+        pt: 'Uma em cada sete palavras ditas em voz alta aqui foi dita em inglês.',
+      },
+      theme: 'light',
+    },
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'A seventh, not a half. And it is still the finding.', pt: 'Um sétimo, não metade. E continua sendo o achado.' },
         { en: 'Not accent. Not affectation.', pt: 'Não é sotaque. Não é firula.' },
         { en: 'Work calls, classes, interviews, ideas said out loud on the way somewhere.', pt: 'É reunião de trabalho, aula, entrevista, ideia dita em voz alta no caminho.' },
-        { en: 'Seven years of recording like that, and nobody had noticed.', pt: 'Sete anos gravando assim, e ninguém tinha percebido.' },
+        { en: 'Eight hundred files, almost eight hours, and nobody had noticed.', pt: 'Oitocentos arquivos, quase oito horas, e ninguém tinha percebido.' },
       ],
-      emphasize: [2],
+      emphasize: [0, 3],
     },
     {
       kind: 'lines',
@@ -182,8 +232,9 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'which language a piece is born in, which market a product opens in,', pt: 'em que idioma uma peça nasce, em que mercado um produto abre,' },
         { en: 'and who this label was already talking to without ever saying so.', pt: 'e com quem esta label já estava falando sem nunca ter dito isso.' },
         { en: 'No amount of intuition would have produced that number.', pt: 'Nenhuma quantidade de intuição teria produzido esse número.' },
+        { en: 'And no number stands without asking how it was counted.', pt: 'E nenhum número fica de pé sem perguntar como ele foi contado.' },
       ],
-      emphasize: [3],
+      emphasize: [3, 4],
     },
 
     // ─── CAPÍTULO 1: ACERVO. Aqui o texto separa as quatro palavras que o resto
@@ -450,8 +501,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'pinned',
       kicker: { en: 'YOU ARE INSIDE THE PROOF', pt: 'VOCÊ ESTÁ DENTRO DA PROVA' },
       text: {
-        en: 'You are reading this in English. The same page exists in Portuguese, and not out of courtesy to anyone: it exists because the archive showed that half of what gets recorded here is already English. The finding became a decision, and the decision became this page.',
-        pt: 'Você está lendo isto em português. A mesma página existe em inglês, e não por cortesia com ninguém: existe porque o acervo mostrou que metade do que se grava aqui já é em inglês. O achado virou decisão, e a decisão virou esta página.',
+        en: 'You are reading this in English. The same page exists in Portuguese, and not out of courtesy to anyone: it exists because the archive showed eight hundred files of work spoken in English that nobody had ever counted. The finding became a decision, and the decision became this page.',
+        pt: 'Você está lendo isto em português. A mesma página existe em inglês, e não por cortesia com ninguém: existe porque o acervo mostrou oitocentos arquivos de trabalho falados em inglês que ninguém tinha contado. O achado virou decisão, e a decisão virou esta página.',
       },
     },
     {
