@@ -80,8 +80,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
   cover: {
     src: '/images/editorial/substrato-capa.webp',
     alt: {
-      en: 'Field of 3,132 marks, one per spoken file in the archive, coloured by the language the machine heard.',
-      pt: 'Campo de 3.132 marcas, uma por arquivo falado do acervo, colorido pelo idioma que a máquina ouviu.',
+      en: 'Field of 3,132 marks, one per audio file in the archive, coloured by what the machine heard inside it.',
+      pt: 'Campo de 3.132 marcas, uma por arquivo com áudio do acervo, colorido pelo que a máquina ouviu dentro dele.',
     },
     credit: '.TBF. inc',
   },
@@ -94,7 +94,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
   // exatamente um. Uma montagem anterior deste ensaio usou nove, e virou parede
   // de preto entre parágrafos gigantes, com a página em 72.000px de altura.
   //
-  // Aqui: DOIS `pinned`, a abertura e a virada de autoria. O corpo anda em
+  // Aqui: UM `pinned`, a abertura. (Eram dois; o segundo, a virada de autoria,
+  // caiu em 23/08/2026, ver o comentario do CAPITULO 6.) O corpo anda em
   // `lines` (cascata compacta, uma ideia por linha), as viradas em `fullbleed`
   // (100vh) e os capítulos em `word` (60vh).
   //

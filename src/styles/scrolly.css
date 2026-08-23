@@ -902,6 +902,32 @@
   margin-block: var(--sc-emphasis-gap, var(--tbf-space-10));
 }
 
+/* ─── ALTERNANCIA DE PESO, escopada por materia ───────────────────────────────
+   Pedido do fundador em 23/08/2026 sobre "A LABEL QUE APRENDEU A SE PERGUNTAR":
+   a alternancia entre linha fina e linha pesada e o ritmo do ensaio, e ele quer
+   o contraste MAIOR nas duas pontas. A linha comum desce de Light (300) para
+   Thin (100) e cresce um pouco, para o peso fino nao virar ilegibilidade; a
+   linha de enfase cresce de 2,5rem para 3,3rem no desktop.
+
+   Por que escopado e nao global: o mesmo motor serve o piloto, que esta em
+   PRODUCAO com o ritmo antigo. Mudar `.scrolly-cascade__line` direto reescreve
+   a tipografia de uma materia publicada sem ninguem ter pedido. Para promover
+   isto a padrao do motor, apagar o seletor de atributo e manter as declaracoes.
+   ------------------------------------------------------------------------- */
+
+[data-article='the-label-that-learned-to-ask-itself'] .scrolly-cascade__line {
+  font-weight: var(--tbf-font-weight-raw-100);
+  font-size: clamp(1.2rem, 3.4vw, 1.75rem);
+  letter-spacing: 0.005em;
+}
+
+[data-article='the-label-that-learned-to-ask-itself'] .scrolly-cascade__line--emphasis {
+  font-weight: var(--tbf-type-display-lg-weight);
+  font-size: clamp(1.85rem, 6.2vw, 3.3rem);
+  line-height: 1.14;
+  letter-spacing: -0.015em;
+}
+
 @supports (animation-timeline: view()) {
   .scrolly-cascade__line {
     animation: scrolly-cascade-in linear both;
