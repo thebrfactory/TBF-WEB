@@ -10,7 +10,8 @@ import type { EditorialPost, ArticleCategory } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ThumbSpec } from '@/components/ThumbSpec/ThumbSpec'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
-import { PilotArticleCard } from '@/components/ArticleCard/PilotArticleCard'
+import { LocalArticleCard } from '@/components/ArticleCard/LocalArticleCard'
+import { LOCAIS } from '@/content/articles'
 import { CategoryGrid } from './CategoryGrid'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'
@@ -124,10 +125,17 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
            da página (ver app/editorial/page.tsx). */
         <>
           <div className="editorial-grid container" role="feed" aria-label={t.grid.previewAriaLabel}>
-            {/* O piloto abre o arquivo, agora com CAPA DE VERDADE. Antes ele
-                era o 1º mock: link certo, mas bloco chapado com o selo de
-                dimensão, porque a matéria não tinha foto. Tem. */}
-            <PilotArticleCard lang={lang} variant="featured" />
+            {/* As matérias de verdade abrem o arquivo, com CAPA DE VERDADE. Os
+                mocks abaixo são preenchimento visual enquanto o Sanity está
+                vazio, e somem quando houver post publicado. */}
+            {LOCAIS.map((a, i) => (
+              <LocalArticleCard
+                key={a.slug}
+                article={a}
+                lang={lang}
+                variant={i === 0 ? 'featured' : 'standard'}
+              />
+            ))}
 
             {t.mockArticles.slice(2).map((mock, idx) => {
               const i = idx + 2

@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import ArticleView from '@/views/ArticleView'
 import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, urlFor } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
-import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import { materiaLocal, SLUGS_LOCAIS } from '@/content/articles'
 import { languageAlternates } from '@/lib/i18n'
 import { OG_IMAGE_PATH } from '@/lib/og'
 
@@ -14,11 +14,15 @@ const LANG = 'en' as const
 export const revalidate = 3600
 
 export async function generateStaticParams() {
+  // As matérias locais entram SEMPRE, com ou sem CMS no ar: elas não dependem do
+  // Sanity para existir, e sem elas aqui a rota nasceria fora do build estático.
+  const locais = SLUGS_LOCAIS.map((slug) => ({ slug }))
   try {
     const slugs = await sanityFetch<{ slug: string }[]>(ARTICLE_SLUGS_QUERY)
-    return slugs.map((s) => ({ slug: s.slug }))
+    const doCms = slugs.map((s) => ({ slug: s.slug })).filter((s) => !SLUGS_LOCAIS.includes(s.slug))
+    return [...locais, ...doCms]
   } catch {
-    return []
+    return locais
   }
 }
 
@@ -30,10 +34,11 @@ export async function generateMetadata({
   const { slug } = await params
   const alternates = languageAlternates(`/editorial/${slug}`)
 
-  // O piloto do motor scrolly vive fora do Sanity, então tem o próprio ramo de
-  // metadados: o texto sai do arquivo da matéria, já bilíngue.
-  if (slug === theDayBrazilStoppedTranslatingItself.slug) {
-    const a = theDayBrazilStoppedTranslatingItself
+  // As matérias do motor scrolly vivem fora do Sanity, então têm o próprio ramo
+  // de metadados: o texto sai do arquivo da matéria, já bilíngue.
+  const local = materiaLocal(slug)
+  if (local) {
+    const a = local
     return {
       title: a.heroTitle[LANG],
       description: a.deck[LANG],

@@ -28,12 +28,20 @@ function toRoman(n: number): string {
 
 interface ChapterDividerProps {
   index: number
+  /**
+   * Rótulo do <h2> de leitor de tela, já no idioma da rota. Era a string fixa
+   * "Capítulo N", em português, nas duas rotas. E aparecia NA TELA: a classe
+   * usada aqui (`scrolly-chapter__sr`) nunca existiu no CSS, então o texto que
+   * deveria ser só para leitor de tela ficava visível embaixo de cada capítulo.
+   * A classe certa, que existe desde sempre, é `scrolly-sr-only`.
+   */
+  srLabel: string
   theme?: ScrollyTheme
   /** Palavra-capítulo gigante (camada gráfica, aria-hidden). Opcional — o piloto não usa. */
   label?: string
 }
 
-export function ChapterDivider({ index, theme = 'dark', label }: ChapterDividerProps) {
+export function ChapterDivider({ index, theme = 'dark', label, srLabel }: ChapterDividerProps) {
   return (
     <section className={`scrolly-chapter scrolly-chapter--${theme}`}>
       <div className="scrolly-chapter__wipe" aria-hidden="true" />
@@ -45,7 +53,7 @@ export function ChapterDivider({ index, theme = 'dark', label }: ChapterDividerP
       <span className="scrolly-chapter__index" aria-hidden="true">
         {toRoman(index)}
       </span>
-      <h2 className="scrolly-chapter__sr">Capítulo {index}</h2>
+      <h2 className="scrolly-sr-only">{srLabel}</h2>
     </section>
   )
 }

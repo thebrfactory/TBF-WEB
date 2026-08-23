@@ -69,6 +69,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
 
 function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
   let chapterIndex = 0
+  const capitulo = (n: number) => (lang === 'pt' ? `Capítulo ${n}` : `Chapter ${n}`)
 
   return blocks.map((block, i) => {
     const key = `${lang}-${block.kind}-${i}`
@@ -79,11 +80,21 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
 
       case 'divider':
         chapterIndex += 1
-        return <ChapterDivider key={key} index={chapterIndex} theme={block.theme} />
+        return (
+          <ChapterDivider key={key} index={chapterIndex} theme={block.theme} srLabel={capitulo(chapterIndex)} />
+        )
 
       case 'word':
         chapterIndex += 1
-        return <ChapterDivider key={key} index={chapterIndex} theme={block.theme ?? 'dark'} label={block.label[lang]} />
+        return (
+          <ChapterDivider
+            key={key}
+            index={chapterIndex}
+            theme={block.theme ?? 'dark'}
+            label={block.label[lang]}
+            srLabel={capitulo(chapterIndex)}
+          />
+        )
 
       case 'pinned':
         return <PinnedIntro key={key} text={block.text[lang]} kicker={block.kicker?.[lang]} />

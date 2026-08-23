@@ -15,7 +15,8 @@ import { Ticker } from '@/components/Ticker/Ticker'
 import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
-import { PilotArticleCard } from '@/components/ArticleCard/PilotArticleCard'
+import { LocalArticleCard } from '@/components/ArticleCard/LocalArticleCard'
+import { LOCAIS } from '@/content/articles'
 import { home } from '@/content/i18n/pages/home'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
@@ -133,11 +134,19 @@ export default async function HomeView({ lang }: { lang: Lang }) {
             <ArticleCard key={post._id} post={post} variant="standard" />
           ))}
 
-          {/* Sanity vazio (ou sem nenhum post com capa): a matéria real do piloto
-              abre a grade sozinha. Ela tem capa própria, vinda do próprio artigo. */}
-          {!featuredWithCover && postsWithCover.length === 0 && (
-            <PilotArticleCard lang={lang} variant="featured" />
-          )}
+          {/* Sanity vazio (ou sem nenhum post com capa): as matérias reais que
+              vivem no repo abrem a grade. Cada uma tem capa própria, vinda do
+              próprio artigo. A mais nova entra em destaque. */}
+          {!featuredWithCover &&
+            postsWithCover.length === 0 &&
+            LOCAIS.map((a, i) => (
+              <LocalArticleCard
+                key={a.slug}
+                article={a}
+                lang={lang}
+                variant={i === 0 ? 'featured' : 'standard'}
+              />
+            ))}
         </div>
 
         <div className="container" style={{ marginTop: 'var(--tbf-space-8)' }}>

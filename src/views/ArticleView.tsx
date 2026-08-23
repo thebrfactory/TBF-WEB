@@ -11,7 +11,7 @@ import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, SITE_SETTINGS_QUERY, u
 import type { EditorialPost, SiteSettings } from '@/types'
 import { ArticleCard } from '@/components/ArticleCard/ArticleCard'
 import { ArticleScrolly } from '@/components/scrolly/ArticleScrolly'
-import { theDayBrazilStoppedTranslatingItself } from '@/content/articles/the-day-brazil-stopped-translating-itself'
+import { materiaLocal } from '@/content/articles'
 import { article as dict } from '@/content/i18n/pages/article'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
@@ -134,17 +134,13 @@ export default async function ArticleView({
     // fallback
   }
 
-  // Piloto do motor scrolly (ORD-01): primeira matéria real da casa, tone="manifesto".
-  // Vive fora do Sanity (não é mock TBFipsum, é o texto real de debut.md convertido
-  // em cenas — 05_PILOTO-CENAS.md é a lei do roteiro).
-  if (!post && slug === theDayBrazilStoppedTranslatingItself.slug) {
-    return (
-      <ArticleScrolly
-        tone="manifesto"
-        article={theDayBrazilStoppedTranslatingItself}
-        lang={lang}
-      />
-    )
+  // Matérias do motor scrolly. Vivem fora do Sanity (não são mock TBFipsum: são
+  // texto real da casa convertido em cenas) e estão listadas em
+  // src/content/articles/index.ts. O Sanity ainda tem precedência: se um dia
+  // existir um post com o mesmo slug, é ele que abre.
+  const local = !post ? materiaLocal(slug) : null
+  if (local) {
+    return <ArticleScrolly tone="manifesto" article={local} lang={lang} />
   }
 
   // Mock articles para preview sem Sanity
