@@ -803,6 +803,8 @@
 
 .scrolly-share {
   padding-block: var(--tbf-space-8);
+  display: flex;
+  justify-content: center;
 }
 
 .scrolly-share__btn {

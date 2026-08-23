@@ -227,7 +227,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'BEFORE: you opened folders and remembered filenames.', pt: 'ANTES: você abria pastas e lembrava nome de arquivo.' },
         { en: 'AFTER: you type a question in plain language and the archive answers.', pt: 'DEPOIS: você digita uma pergunta em linguagem normal e o acervo responde.' },
-        { en: 'Show me the starred photos from the hostel. Find where we talked about pricing.', pt: 'Me mostra as fotos marcadas do hostel. Acha onde a gente falou de preço.' },
+        { en: 'Show me the starred photos from the client.', pt: 'Me mostra as fotos marcadas do cliente.' },
         { en: 'The search now looks inside what was SAID and inside what is WRITTEN ON SCREEN.', pt: 'A busca agora olha dentro do que foi DITO e dentro do que está ESCRITO NA TELA.' },
       ],
       emphasize: [1, 3],
@@ -296,7 +296,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'The column on the left is what everyone feeds the machine.', pt: 'A coluna da esquerda é o que todo mundo dá de comer para a máquina.' },
-        { en: 'The column on the right is what only one label has.', pt: 'A coluna da direita é o que só uma label tem.' },
+        { en: 'The column on the right is what only our label has.', pt: 'A coluna da direita é o que só nossa label tem.' },
         { en: 'The same prompt over the left column returns the average.', pt: 'O mesmo prompt sobre a coluna da esquerda devolve a média.' },
         { en: 'Nobody escapes the average with a better adjective.', pt: 'Ninguém escapa da média com um adjetivo melhor.' },
       ],
@@ -319,7 +319,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'Feeding the machine your own archive is the first half.', pt: 'Dar o próprio acervo de comer à máquina é a primeira metade.' },
         { en: 'The second half is teaching it what this label refuses.', pt: 'A segunda metade é ensinar a ela o que esta label recusa.' },
-        { en: 'Every creative label has a manifesto.', pt: 'Toda label criativa tem manifesto.' },
+        { en: 'Every creative company needs a manifesto.', pt: 'Toda creative company precisa de manifesto.' },
         { en: 'A manifesto is memory, and memory fails at some rate, quietly.', pt: 'Manifesto é memória, e memória falha a alguma taxa, em silêncio.' },
       ],
       emphasize: [1, 3],
@@ -450,17 +450,13 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       emphasize: [2],
     },
 
-    // ─── CAPÍTULO 6: AUTORIA. Aqui a forma prova o conteúdo, e é o único
-    //     momento que merece o segundo dispositivo pesado da matéria.
+    // ─── CAPÍTULO 6: AUTORIA.
+    //     NAO EXISTE MAIS o bloco 'VOCE ESTA DENTRO DA PROVA', que dizia que a
+    //     pagina ser bilingue era consequencia do achado do acervo. Cortado pelo
+    //     fundador em 23/08/2026 por sensacionalismo: o site e dual language por
+    //     decisao tomada muito antes da pauta do media package, e amarrar uma
+    //     coisa na outra e inventar causa. Nao reintroduzir.
     { kind: 'word', label: { en: 'AUTHORSHIP', pt: 'AUTORIA' }, theme: 'dark' },
-    {
-      kind: 'pinned',
-      kicker: { en: 'YOU ARE INSIDE THE PROOF', pt: 'VOCÊ ESTÁ DENTRO DA PROVA' },
-      text: {
-        en: 'You are reading this in English. The same page exists in Portuguese, and not out of courtesy to anyone: it exists because the archive showed eight hundred files of work spoken in English that nobody had ever counted. The finding became a decision, and the decision became this page.',
-        pt: 'Você está lendo isto em português. A mesma página existe em inglês, e não por cortesia com ninguém: existe porque o acervo mostrou oitocentos arquivos de trabalho falados em inglês que ninguém tinha contado. O achado virou decisão, e a decisão virou esta página.',
-      },
-    },
     {
       kind: 'lines',
       lines: [
