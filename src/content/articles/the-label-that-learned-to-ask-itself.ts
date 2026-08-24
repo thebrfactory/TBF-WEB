@@ -57,6 +57,34 @@
 // `TBF SYSTEM/operacao/acervo/gerar-capa-substrato.py`, que reproduz o arquivo
 // publicado byte a byte.
 // =============================================================================
+//
+// REVISAO ANTI-IA, 2026-08-24 (skill `/humanizar`). O fundador leu a pagina e
+// disse que o ritmo, a argumentacao e o desenvolvimento eram de maquina. O
+// detector de vocabulario deu LIMPO: o problema nunca foi palavra, foi forma.
+// O que mudou, e por que:
+//   1. NEGRITO de 37 linhas para 12 (de 36% do texto para 12%). 22 dos 24
+//      blocos carregavam `emphasize`, quase sempre na 2a linha e na ultima. O
+//      olho aprende a batida em trinta segundos e para de ler.
+//   2. ANTITESE. A figura "X nao e Y, e Z" aparecia 12 vezes. Ela e o tique
+//      retorico numero um de LLM. Sobraram as que o DISPOSITIVO pede (o bloco
+//      `negation`) e as duas que sao tese de capitulo.
+//   3. AFORISMO DE TELA CHEIA de 5 para 3. Cada capitulo fechava num, sempre
+//      no mesmo lugar. Sairam "Ter nao e saber" (redundante logo apos quatro
+//      pares de negacao) e "A homogeneizacao e problema de fonte".
+//   4. ANUNCIO META cortado: "vale dizer em voz alta", "dita sem rodeio", "a
+//      parte que ninguem diz", "fique um segundo com", "quatro palavras em que
+//      o resto deste ensaio se apoia". Texto que comenta a propria estrutura.
+//   5. FOLEGO. Todo bloco tinha 4 ou 5 linhas de 8 a 14 palavras. Agora ha
+//      blocos de 2 e frases longas com subordinada, para a leitura variar.
+//   6. FECHO. O `closing` repetia o `deck` quase palavra por palavra. Agora
+//      termina no passo quatro, que o proprio texto admite estar aberto.
+// NENHUM NUMERO, NOME OU FATO FOI ALTERADO.
+//
+// O QUE NAO FOI CONSERTADO, e depende dele: o ensaio fala de 370.700 palavras
+// transcritas e nao cita UMA. Texto sobre uma descoberta que nao mostra a
+// descoberta le como maquina por mais limpo que fique o ritmo. Falta uma frase
+// real dita dentro de um daqueles arquivos. Inventar uma e proibido.
+// =============================================================================
 
 import type { ManifestoArticle } from './types'
 
@@ -121,22 +149,18 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.', pt: 'Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.' },
         { en: 'One night in August we put a machine to listen to all of them.', pt: 'Numa noite de agosto colocamos uma máquina para ouvir todos eles.' },
-        { en: 'The reason was ordinary, and it is worth saying out loud:', pt: 'O motivo era banal, e vale dizer em voz alta:' },
-        { en: 'nobody had ever heard that archive from end to end.', pt: 'ninguém nunca tinha ouvido esse acervo de ponta a ponta.' },
-        { en: 'Nobody has forty three hours to spare.', pt: 'Ninguém tem quarenta e três horas sobrando.' },
+        { en: 'Nobody had ever heard the whole archive, and the reason is dull:', pt: 'Ninguém nunca tinha ouvido esse acervo inteiro, e o motivo é chato:' },
+        { en: 'it is forty three hours of people talking. Nobody has that lying around.', pt: 'são quarenta e três horas de gente falando. Ninguém tem esse tempo sobrando.' },
       ],
-      emphasize: [1, 3],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'THE TOOL, said plainly:', pt: 'A FERRAMENTA, dita sem rodeio:' },
-        { en: 'an open transcription model, Whisper, running inside our own Mac.', pt: 'um modelo aberto de transcrição, o Whisper, rodando dentro do nosso próprio Mac.' },
-        { en: 'No cloud. Nothing left the machine.', pt: 'Sem nuvem. Nada saiu da máquina.' },
-        { en: 'Seven hours of processing, from eleven at night to six in the morning.', pt: 'Sete horas de processamento, das onze da noite às seis da manhã.' },
-        { en: 'It read 3,132 files that had audio in them, and failed on none.', pt: 'Ela leu 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
+        { en: 'The tool was Whisper, an open transcription model, running inside our own Mac.', pt: 'A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac.' },
+        { en: 'No cloud: nothing left the machine.', pt: 'Sem nuvem: nada saiu da máquina.' },
+        { en: 'It started at eleven at night and finished at six in the morning.', pt: 'Começou às onze da noite e terminou às seis da manhã.' },
+        { en: 'It read the 3,132 files that had audio in them, and failed on none.', pt: 'Leu os 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
       ],
-      emphasize: [2, 4],
     },
     {
       kind: 'lines',
@@ -177,21 +201,19 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Not accent. Not affectation.', pt: 'Não é sotaque. Não é firula.' },
-        { en: 'Work calls, classes, interviews, ideas said out loud on the way somewhere.', pt: 'É reunião de trabalho, aula, entrevista, ideia dita em voz alta no caminho.' },
+        { en: 'That is not accent. It is work calls, classes, interviews, ideas said out loud on the way home.', pt: 'Isso não é sotaque. São reuniões de trabalho, aula, entrevista, ideia dita em voz alta no caminho de casa.' },
         { en: 'Seven years of recording like that, and nobody had noticed.', pt: 'Sete anos gravando assim, e ninguém tinha percebido.' },
       ],
-      emphasize: [2],
+      emphasize: [1],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'It changes decisions that were already on the table:', pt: 'Isso muda decisões que já estavam na mesa:' },
         { en: 'which language a piece is born in, which market a product opens in,', pt: 'em que idioma uma peça nasce, em que mercado um produto abre,' },
-        { en: 'and who this label was already talking to without ever saying so.', pt: 'e com quem esta label já estava falando sem nunca ter dito isso.' },
-        { en: 'No amount of intuition would have produced that number.', pt: 'Nenhuma quantidade de intuição teria produzido esse número.' },
+        { en: 'and who this label was already talking to without noticing.', pt: 'e com quem esta label já estava falando sem ter percebido.' },
+        { en: 'No hunch was ever going to arrive at that number.', pt: 'Nenhum palpite ia chegar nesse número.' },
       ],
-      emphasize: [3],
     },
 
     // ─── CAPÍTULO 1: ACERVO. Aqui o texto separa as quatro palavras que o resto
@@ -216,27 +238,22 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'The files had always been there.', pt: 'Os arquivos sempre estiveram ali.' },
-        { en: 'Thirteen thousand, across seven years and four business units.', pt: 'Treze mil, atravessando sete anos e quatro unidades de negócio.' },
-        { en: 'What changed in one night was not what we owned.', pt: 'O que mudou numa noite não foi o que a gente tinha.' },
-        { en: 'It was that we could ask.', pt: 'Foi a gente poder perguntar.' },
+        { en: 'The files had always been there, thirteen thousand of them, across seven years and four business units.', pt: 'Os arquivos sempre estiveram ali, treze mil deles, atravessando sete anos e quatro unidades de negócio.' },
+        { en: 'That night we gained no files at all. We gained the question.', pt: 'Naquela noite não ganhamos arquivo nenhum. Ganhamos a pergunta.' },
       ],
-      emphasize: [3],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'BEFORE: you opened folders and remembered filenames.', pt: 'ANTES: você abria pastas e lembrava nome de arquivo.' },
-        { en: 'AFTER: you type a question in plain language and the archive answers.', pt: 'DEPOIS: você digita uma pergunta em linguagem normal e o acervo responde.' },
-        { en: 'Show me the starred photos from the client.', pt: 'Me mostra as fotos marcadas do cliente.' },
-        { en: 'The search now looks inside what was SAID and inside what is WRITTEN ON SCREEN.', pt: 'A busca agora olha dentro do que foi DITO e dentro do que está ESCRITO NA TELA.' },
+        { en: 'Before, you opened folders and tried to remember filenames.', pt: 'Antes você abria pasta e tentava lembrar nome de arquivo.' },
+        { en: 'Now you type "show me the starred photos from the client" and the archive answers.', pt: 'Agora você digita "me mostra as fotos marcadas do cliente" e o acervo responde.' },
+        { en: 'It looks inside what was said and inside what is written on screen.', pt: 'Ela olha dentro do que foi dito e dentro do que está escrito na tela.' },
       ],
-      emphasize: [1, 3],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'Four words the rest of this essay leans on, separated once:', pt: 'Quatro palavras em que o resto deste ensaio se apoia, separadas uma vez:' },
+        { en: 'Four words the rest of this text uses as if they were obvious, and they are not:', pt: 'Quatro palavras que o resto do texto usa como se fossem óbvias, e não são:' },
       ],
     },
     {
@@ -260,23 +277,16 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         ],
       ],
     },
-    {
-      kind: 'fullbleed',
-      text: { en: 'Having is not knowing.', pt: 'Ter não é saber.' },
-      theme: 'light',
-    },
-
     // ─── CAPÍTULO 2: O DIAGNÓSTICO. A ponte entre o caso da casa e o problema
     //     que todo mundo no mercado está vivendo.
     { kind: 'word', label: { en: 'THE SAMENESS', pt: 'A IGUALDADE' }, theme: 'dark' },
     {
       kind: 'lines',
       lines: [
-        { en: 'Step back from our night for a moment, because the point is not the night.', pt: 'Afaste um pouco da nossa noite, porque o ponto não é a noite.' },
-        { en: 'The tools became the same for everyone. Everybody repeats that, and it is true.', pt: 'As ferramentas ficaram iguais para todo mundo. Todo mundo repete isso, e é verdade.' },
-        { en: 'The part nobody says is that the inputs became the same too.', pt: 'A parte que ninguém diz é que os insumos também ficaram iguais.' },
+        { en: 'Step out of our night for a moment, because the point is not the night.', pt: 'Sai da nossa noite um instante, porque o ponto não é a noite.' },
+        { en: 'That the tools became the same for everyone, everyone has already said, and it is true.', pt: 'Que as ferramentas ficaram iguais para todo mundo, todo mundo já disse, e é verdade.' },
+        { en: 'The inputs became the same too, and nobody talks about that.', pt: 'Os insumos também ficaram iguais, e disso ninguém fala.' },
       ],
-      emphasize: [2],
     },
     {
       kind: 'mirror',
@@ -296,20 +306,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'The column on the left is what everyone feeds the machine.', pt: 'A coluna da esquerda é o que todo mundo dá de comer para a máquina.' },
-        { en: 'The column on the right is what only our label has.', pt: 'A coluna da direita é o que só nossa label tem.' },
-        { en: 'The same prompt over the left column returns the average.', pt: 'O mesmo prompt sobre a coluna da esquerda devolve a média.' },
-        { en: 'Nobody escapes the average with a better adjective.', pt: 'Ninguém escapa da média com um adjetivo melhor.' },
+        { en: 'Everyone feeds the machine the column on the left, and the machine hands back the average.', pt: 'Todo mundo dá a coluna da esquerda de comer para a máquina, e a máquina devolve a média.' },
+        { en: 'The one on the right only we have.', pt: 'A da direita só nós temos.' },
+        { en: 'Nobody escapes the average by writing a prettier prompt.', pt: 'Ninguém escapa da média escrevendo um prompt mais bonito.' },
       ],
-      emphasize: [1, 3],
-    },
-    {
-      kind: 'fullbleed',
-      text: {
-        en: 'Homogenisation is a problem of source, not of model.',
-        pt: 'A homogeneização é problema de fonte, não de modelo.',
-      },
-      theme: 'dark',
     },
 
     // ─── CAPÍTULO 3: CRITÉRIO. Da pesquisa para o pensamento. Explica o que é
@@ -318,12 +318,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Feeding the machine your own archive is the first half.', pt: 'Dar o próprio acervo de comer à máquina é a primeira metade.' },
-        { en: 'The second half is teaching it what this label refuses.', pt: 'A segunda metade é ensinar a ela o que esta label recusa.' },
-        { en: 'Every creative company needs a manifesto.', pt: 'Toda creative company precisa de manifesto.' },
-        { en: 'A manifesto is memory, and memory fails at some rate, quietly.', pt: 'Manifesto é memória, e memória falha a alguma taxa, em silêncio.' },
+        { en: 'Feeding the machine our own archive was half the job.', pt: 'Dar o acervo de comer à máquina foi metade do trabalho.' },
+        { en: 'The other half is teaching it what this label refuses, and that is where it gets hard:', pt: 'A outra metade é ensinar a ela o que esta label recusa, e aí começa o problema:' },
+        { en: 'a manifesto is memory, and memory fails at some rate, always quietly.', pt: 'manifesto é memória, e memória falha a alguma taxa, sempre em silêncio.' },
       ],
-      emphasize: [1, 3],
     },
     {
       kind: 'lines',
@@ -334,7 +332,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'One refuses the wrong dash. One closes the road to production.', pt: 'Um recusa o traço errado. Outro fecha o caminho para produção.' },
         { en: 'One counts how many of our rules are code, and how many are still hope.', pt: 'Outro conta quantas das nossas regras são código, e quantas ainda são só esperança.' },
       ],
-      emphasize: [1, 4],
+      emphasize: [4],
     },
     {
       kind: 'fullbleed',
@@ -353,7 +351,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'An alarm that rings on the wrong file teaches everyone to ignore alarms.', pt: 'Alarme que toca no arquivo errado ensina todo mundo a ignorar alarme.' },
         { en: 'So a new rule only enters if it is born with a test, or retires another one.', pt: 'Então regra nova só entra se nascer com teste, ou se aposentar outra.' },
       ],
-      emphasize: [1, 4],
+      emphasize: [1],
     },
     {
       kind: 'lines',
@@ -364,7 +362,6 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'Before paying a machine to invent a signal, exhaust the free one.', pt: 'Antes de pagar uma máquina para inventar sinal, esgote o que é de graça.' },
         { en: 'And what was cut is information too.', pt: 'E o que foi cortado também é informação.' },
       ],
-      emphasize: [1, 4],
     },
 
     // ─── CAPÍTULO 4: O ERRO. O contrapeso do ensaio inteiro, e ele é honesto:
@@ -393,12 +390,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'We caught it before the batch was applied, and fixed it.', pt: 'A gente pegou antes de aplicar o lote, e consertou.' },
-        { en: 'But sit with what it would have done.', pt: 'Mas fique um segundo com o que ele teria feito.' },
-        { en: 'A search for those files would have returned nothing.', pt: 'Uma busca por esses arquivos teria devolvido nada.' },
-        { en: 'And nothing looks exactly like an absence.', pt: 'E nada se parece exatamente com uma ausência.' },
-        { en: 'We would have concluded the archive was empty where it was full.', pt: 'A gente teria concluído que o acervo era vazio onde ele era cheio.' },
+        { en: 'Had we not, a search for those files would have returned nothing, and nothing looks exactly like an absence.', pt: 'Se não tivesse pego, a busca por esses arquivos devolveria nada, e nada se parece exatamente com uma ausência.' },
+        { en: 'We would have concluded the archive was empty in the place where it was fullest.', pt: 'Teríamos concluído que o acervo era vazio justo no lugar onde ele era mais cheio.' },
       ],
-      emphasize: [3, 4],
+      emphasize: [2],
     },
     {
       kind: 'fullbleed',
@@ -438,7 +433,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'Machines are good at one, two, three and six.', pt: 'A máquina é boa no um, no dois, no três e no seis.' },
         { en: 'Labels die between four and five, where somebody has to say what the finding means.', pt: 'As labels morrem entre o quatro e o cinco, onde alguém precisa dizer o que o achado significa.' },
       ],
-      emphasize: [2, 3],
+      emphasize: [3],
     },
     {
       kind: 'lines',
@@ -448,7 +443,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'Producing got cheap. Choosing got expensive.', pt: 'Produzir ficou barato. Escolher ficou caro.' },
         { en: 'The bottleneck moved, and most people still guard the old one.', pt: 'O gargalo mudou de lugar, e a maioria ainda vigia o antigo.' },
       ],
-      emphasize: [2],
+      emphasize: [1],
     },
 
     // ─── CAPÍTULO 6: AUTORIA.
@@ -461,12 +456,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'That is the whole method, and it is smaller than it sounds:', pt: 'Esse é o método inteiro, e ele é menor do que parece:' },
-        { en: 'point the machine at what is yours, write the criteria down as code,', pt: 'aponte a máquina para o que é seu, escreva os critérios como código,' },
-        { en: 'check every number before believing it,', pt: 'confira todo número antes de acreditar nele,' },
-        { en: 'and spend the hours you saved on the part that is still human.', pt: 'e gaste as horas que sobraram na parte que continua humana.' },
+        { en: 'The whole method is smaller than it sounds: point the machine at what is yours,', pt: 'O método inteiro é menor do que parece: apontar a máquina para o que é seu,' },
+        { en: 'write the criteria down as code, check every number before believing it,', pt: 'escrever os critérios como código, conferir todo número antes de acreditar nele,' },
+        { en: 'and spend the hours you saved on the part that is still human.', pt: 'e gastar as horas que sobraram na parte que continua humana.' },
       ],
-      emphasize: [1, 3],
     },
     {
       kind: 'lines',
@@ -476,7 +469,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'It has no provenance, and provenance cannot be generated.', pt: 'Ela não tem procedência, e procedência não se gera.' },
         { en: 'It widens the field. Somebody still has to frame the shot.', pt: 'Ela amplia o campo. Alguém ainda tem que enquadrar.' },
       ],
-      emphasize: [2, 3],
+      emphasize: [3],
     },
     {
       kind: 'lines',
@@ -486,7 +479,6 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         { en: 'What connection is nobody seeing?', pt: 'Qual conexão ninguém está vendo?' },
         { en: 'Which idea deserves to be built?', pt: 'Qual ideia merece virar execução?' },
       ],
-      emphasize: [0, 1, 2, 3],
     },
     {
       kind: 'lines',
@@ -500,8 +492,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'closing',
       text: {
-        en: 'AI levelled the tools. The advantage went back to being repertoire. The difference is that now you can build one.',
-        pt: 'A IA igualou as ferramentas. A vantagem voltou a ser o repertório. A diferença é que agora dá para construir um.',
+        en: 'The archive has answered the part it could answer. Step four is still ours.',
+        pt: 'O acervo já respondeu a parte que cabia a ele. O passo quatro continua sendo nosso.',
       },
     },
   ],
