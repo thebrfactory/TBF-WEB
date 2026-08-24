@@ -13,6 +13,7 @@ import type { Metadata, Viewport } from 'next'
 import '@/styles/globals.css'
 import { SiteShell } from '@/components/SiteShell/SiteShell'
 import { languageAlternates } from '@/lib/i18n'
+import { OG_IMAGE_PATH } from '@/lib/og'
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -60,7 +61,7 @@ export const metadata: Metadata = {
     siteName: '.THE BRAZILIAN FACTORY.',
     title: '.THE BRAZILIAN FACTORY.',
     description: 'Culture™ feita em São Paulo. Consumida no mundo inteiro.',
-    images: [{ url: '/og', width: 1200, height: 630 }],
+    images: [{ url: OG_IMAGE_PATH, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -68,7 +69,7 @@ export const metadata: Metadata = {
     creator: '@thebrfactory',
     title: '.THE BRAZILIAN FACTORY.',
     description: 'Culture™ feita em São Paulo. Consumida no mundo inteiro.',
-    images: ['/og'],
+    images: [OG_IMAGE_PATH],
   },
   icons: {
     icon: [
