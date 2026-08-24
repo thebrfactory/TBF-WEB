@@ -35,7 +35,7 @@ export function HeroCinema({ title, subtitle, eyebrow, image, lang }: HeroCinema
         {eyebrow && <p className="scrolly-hero__eyebrow">{eyebrow}</p>}
         <h1 className="scrolly-hero__title">{title}</h1>
         {subtitle && <p className="scrolly-hero__subtitle">{subtitle}</p>}
-        {lang && <AuthorSignature lang={lang} />}
+        {lang && <AuthorSignature lang={lang} shareTitle={title} />}
       </div>
     </section>
   )

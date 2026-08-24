@@ -316,24 +316,26 @@
   display: flex;
   align-items: center;
   gap: var(--tbf-space-3);
+  /* A fileira de compartilhar entra no fim desta mesma linha. `wrap` porque em
+     tela estreita o nome e os tres icones nao cabem lado a lado, e quebrar e
+     melhor que espremer. */
+  flex-wrap: wrap;
   margin-top: var(--tbf-space-6);
   opacity: 0;
   animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 600ms both;
 }
 
+/* A FOTO DE PERFIL DO @thebrfactory no lugar da inicial em texto (pedido dele,
+   2026-08-24). `object-fit: cover` por seguranca, ainda que o arquivo ja seja
+   quadrado: se um dia entrar uma foto de outra proporcao, ela recorta em vez de
+   deformar a marca. */
 .scrolly-signature__avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 32px;
   height: 32px;
   flex-shrink: 0;
   border-radius: var(--tbf-radius-full);
-  background: var(--tbf-bg-inverse);
-  color: var(--tbf-text-inverse);
-  font-family: var(--tbf-type-tag-family);
-  font-size: 0.8rem;
-  font-weight: var(--tbf-font-weight-raw-700);
+  object-fit: cover;
+  display: block;
 }
 
 .scrolly-signature__name {
@@ -756,11 +758,24 @@
   }
 }
 
+/* 🔴 A LEGENDA ERA ILEGIVEL, e ele viu no desktop (2026-08-24). Tres coisas
+   somadas, nao uma: 10px de corpo (o token `micro`, que existe para ROTULO
+   curto em caixa alta, nao para frase corrida), na cor terciaria (flint, 4,9:1
+   sobre o preto), e correndo a largura inteira de uma imagem full bleed, ou
+   seja uma linha de 1300px com letra de 10px. Vale para TODA imagem de TODA
+   materia: a legenda carrega o credito das licencas CC, entao ela precisa ser
+   lida de verdade, nao so existir no HTML.
+
+   O corpo passa a acompanhar a tela, a cor sobe para a secundaria (sandstone,
+   6,8:1, passa AA) e a linha ganha medida: 78ch cortam a travessia da imagem
+   sem espremer a legenda em coluna estreita. */
 .scrolly-media__caption {
   margin-top: var(--tbf-space-3);
-  font-family: var(--tbf-type-micro-family);
-  font-size: var(--tbf-type-micro-size);
-  color: var(--tbf-text-tertiary);
+  font-family: var(--tbf-type-caption-family);
+  font-size: clamp(0.8125rem, 1.15vw, 0.9375rem);
+  line-height: 1.5;
+  max-width: 78ch;
+  color: var(--tbf-text-secondary);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -895,6 +910,36 @@
   letter-spacing: var(--tbf-type-micro-ls);
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
+}
+
+/* A FILEIRA NO ALTO, ao lado de quem assina (2026-08-24: "eu nao vi os icones
+   de rede social"). Mesma fileira, corpo menor: ali ela acompanha uma linha de
+   16px, nao fecha uma materia. O `padding-block` do bloco sai, senao a linha da
+   assinatura cresce 32px sem motivo. */
+.scrolly-share--inline {
+  padding-block: 0;
+  flex-direction: row;
+  margin-left: auto;
+}
+
+.scrolly-share--inline .scrolly-share__row {
+  gap: var(--tbf-space-2);
+}
+
+/* 🔴 O ALVO DE TOQUE CONTINUA 44px, que e o minimo da casa. O que encolhe e o
+   DESENHO, nao a area clicavel: a moldura sai e sobra o icone, entao ele parece
+   um icone de 20px solto na linha e continua tendo 44 de area. */
+.scrolly-share--inline .scrolly-share__icon {
+  width: 44px;
+  height: 44px;
+  border-color: transparent;
+  color: color-mix(in srgb, var(--tbf-text-primary) 78%, transparent);
+}
+
+.scrolly-share--inline .scrolly-share__icon:hover,
+.scrolly-share--inline .scrolly-share__icon:focus-visible {
+  border-color: transparent;
+  color: var(--tbf-text-primary);
 }
 
 /* =============================================================================

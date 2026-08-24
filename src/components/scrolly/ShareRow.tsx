@@ -17,9 +17,16 @@ interface ShareRowProps {
   title: string
   url?: string
   onShare?: (method: 'native' | 'copy') => void
+  /**
+   * `block` (padrao) e a fileira centrada no pe da materia. `inline` e a mesma
+   * fileira ao lado de quem assina, no alto: icone menor e sem o rotulo escrito
+   * de "Link copiado", que ali empurraria a linha da assinatura. O aviso de
+   * copia continua existindo na variante inline, pela troca do proprio icone.
+   */
+  variant?: 'block' | 'inline'
 }
 
-export function ShareRow({ title, url, onShare }: ShareRowProps) {
+export function ShareRow({ title, url, onShare, variant = 'block' }: ShareRowProps) {
   const [copied, setCopied] = useState(false)
 
   function resolveUrl() {
@@ -54,7 +61,7 @@ export function ShareRow({ title, url, onShare }: ShareRowProps) {
   }
 
   return (
-    <div className="scrolly-share">
+    <div className={`scrolly-share${variant === 'inline' ? ' scrolly-share--inline' : ''}`}>
       <div className="scrolly-share__row">
         <button
           type="button"
@@ -95,7 +102,9 @@ export function ShareRow({ title, url, onShare }: ShareRowProps) {
           )}
         </button>
       </div>
-      {copied && <span className="scrolly-share__feedback" role="status">Link copiado</span>}
+      {copied && variant === 'block' && (
+        <span className="scrolly-share__feedback" role="status">Link copiado</span>
+      )}
     </div>
   )
 }
