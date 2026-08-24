@@ -1223,6 +1223,22 @@
   }
 }
 
+/* PESO POR SEGMENTO (#01 CHANGES 2026-08-24). O fundador escreveu o letreiro
+   com o peso ao lado de cada pedaço, então o contraste black/medium/thin é
+   CONTEÚDO, não enfeite: é o que separa o nome da casa das cidades e dos
+   qualificadores. Os três pesos existem em woff2 na família Brother1816
+   (Thin 100, Medium 500, Black 900), nenhum é sintetizado pelo navegador. */
+.ticker__seg--thin   { font-weight: var(--tbf-font-weight-raw-100); }
+.ticker__seg--medium { font-weight: var(--tbf-font-weight-raw-500); }
+.ticker__seg--black  { font-weight: var(--tbf-font-weight-raw-900); }
+
+/* O ponto separador corre no peso padrão e um pouco apagado: ele é pontuação
+   entre segmentos, não um deles. */
+.ticker__sep {
+  font-weight: var(--tbf-type-ticker-weight);
+  opacity: 0.55;
+}
+
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -3148,4 +3164,29 @@ html[data-morphing] ::view-transition-new(root) {
 @media (min-width: 768px) {
   .br-mobile-only { display: none; }
   .br-desktop-only { display: inline; }
+}
+
+/* =============================================================================
+   SETINHA DE GUIA NOVA (#01 CHANGES 2026-08-24)
+   -----------------------------------------------------------------------------
+   Ela avisa, antes do clique, que o link tira a pessoa da página. Quem desenha
+   é o componente NewTabIcon, e quem decide quando aparecer é o TbfLink: aqui
+   fica só o tamanho, que era o pedido ("padronize para ser um pouco menor").
+
+   MEDIDA EM `em`, e não em px: a seta passa a valer uma fração do texto ao lado
+   dela, então sai proporcional num link de rodapé de 12px e numa linha de corpo
+   de 20px sem ninguém escolher número nenhum. Antes ela vinha solta dentro da
+   string, no corpo inteiro do texto, e por isso parecia grande demais.
+
+   `display: inline-block` com `translate` no lugar de `vertical-align`: assenta
+   a ponta da seta na altura da maiúscula sem mexer na altura da linha.
+   ============================================================================= */
+.newtab-icon {
+  display: inline-block;
+  font-size: 0.72em;
+  line-height: 1;
+  margin-left: 0.22em;
+  transform: translateY(-0.06em);
+  /* A seta é decoração do link, não do texto: sublinhado dela sai. */
+  text-decoration: none;
 }

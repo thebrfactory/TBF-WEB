@@ -530,8 +530,14 @@
   --tbf-hero-padding-xl:  var(--tbf-space-raw-96);
 
   /* ─── 3.6 Ticker ─── */
-  --tbf-ticker-bg:        var(--tbf-bg-secondary);
-  --tbf-ticker-text:      var(--tbf-text-primary);
+  /* PRETO TOTAL, em toda página (#01 CHANGES 2026-08-24: "mude a cor atual no
+     fundo do letreiro que está em cinza para um preto total"). Era
+     `--tbf-bg-secondary`, que é fumaça (#1?), e dentro de [data-theme="inverse"]
+     (/factory, /labels/*) virava pergaminho: o letreiro mudava de cor conforme a
+     página. Cor FIXA nos dois lados, pela mesma razão que a listra pontilhada já
+     era fixa: o letreiro é a faixa preta do site, não um elemento do tema. */
+  --tbf-ticker-bg:        var(--tbf-color-obsidian);
+  --tbf-ticker-text:      var(--tbf-color-parchment);
   --tbf-ticker-height-sm: var(--tbf-space-raw-40);
   --tbf-ticker-height-xl: var(--tbf-space-raw-48);
   --tbf-ticker-gap:       var(--tbf-space-raw-64);

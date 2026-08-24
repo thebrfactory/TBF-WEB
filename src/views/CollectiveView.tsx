@@ -13,6 +13,9 @@ import type { CollectiveMember, SiteSettings } from '@/types'
 import { CollectiveForm } from '@/components/forms/CollectiveForm'
 import { collective } from '@/content/i18n/pages/collective'
 import type { Lang } from '@/lib/i18n'
+// A setinha de guia nova (#01 CHANGES 2026-08-24): o @ do integrante sai do
+// site com target="_blank" na mao, entao nao passa pela regra do TbfLink.
+import { NewTabIcon } from '@/components/TbfLink/NewTabIcon'
 
 export default async function CollectiveView({ lang }: { lang: Lang }) {
   const t = collective[lang]
@@ -185,6 +188,7 @@ export default async function CollectiveView({ lang }: { lang: Lang }) {
                       }}
                     >
                       @{member.instagramHandle}
+                      <NewTabIcon />
                     </a>
                   )}
                 </div>

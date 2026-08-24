@@ -18,6 +18,7 @@ import { readConsent } from '@/lib/consent'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
+import { NewTabIcon } from '@/components/TbfLink/NewTabIcon'
 
 const SESSION_KEY = 'tbf-newsletter-shown'
 const SHOW_DELAY_MS = 20000
@@ -212,7 +213,12 @@ export function NewsletterPopup() {
                   onde estava. Abrir em segundo plano (a aba nasce atrás) não tem
                   API — só o navegador decide isso, no cmd/ctrl+clique do usuário.
                   Como ele mesmo pediu, a melhor decisão possível: nova guia +
-                  aviso escrito de que ela vai abrir, para ninguém se perder.
+                  aviso de que ela vai abrir, para ninguém se perder.
+                  O AVISO VIROU SÓ A SETINHA (#01 CHANGES 2026-08-24: "não
+                  precisa colocar em parênteses 'nova guia'"). A seta e o
+                  parêntese diziam a mesma coisa, e o parêntese ainda ocupava uma
+                  linha inteira do aviso de LGPD. `t.newTabNotice` continua no
+                  dicionário, sem uso, caso ele queira o texto de volta.
                   É <a>, não <Link>: destino externo à navegação de cliente. */}
               <a
                 href={localizedPath('/legal/privacy', lang)}
@@ -225,10 +231,8 @@ export function NewsletterPopup() {
                 }}
               >
                 {privacyLabel}
-                <span aria-hidden="true"> ↗</span>
+                <NewTabIcon />
               </a>
-              {' '}
-              <span style={{ opacity: 0.72 }}>{t.newTabNotice}</span>
             </p>
 
             {status === 'error' && (

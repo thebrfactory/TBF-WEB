@@ -6,7 +6,7 @@
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
-import { Ticker } from '@/components/Ticker/Ticker'
+import { Ticker, type TickerSegment } from '@/components/Ticker/Ticker'
 import deployCount from '@/data/deploy-count.json'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
@@ -22,10 +22,18 @@ import { FOOTER_COLUMNS } from '@/lib/footer-routes'
 // skill /deploy a cada publicação em produção.
 const SITE_VERSION = `.TBF. OS 3.0.${deployCount.deploys}`
 
-// Cidades sob gestão, agora em letreiro. O separador e o ponto final repetem a
-// construção do letreiro do topo (o texto precisa fechar com " · " para emendar
-// consigo mesmo no loop).
-const CITIES_TICKER = 'SÃO PAULO, SP. · GOIÂNIA, GO. · SALVADOR, BA. ·'
+// Cidades sob gestão, agora em letreiro. A sigla do estado saiu e o nome dele
+// entrou por extenso, em thin contra a cidade em medium (#01 CHANGES
+// 2026-08-24). O separador vem do próprio componente: cada segmento fecha com
+// " · " e é isso que emenda a volta do loop consigo mesma.
+const CITIES_TICKER: TickerSegment[] = [
+  { text: 'SÃO PAULO', weight: 'medium' },
+  { text: 'BRAZIL', weight: 'thin' },
+  { text: 'GOIÂNIA', weight: 'medium' },
+  { text: 'GOIÁS', weight: 'thin' },
+  { text: 'SALVADOR', weight: 'medium' },
+  { text: 'BAHIA', weight: 'thin' },
+]
 
 export function Footer({ lang }: { lang: Lang }) {
   const t = shell[lang].footer

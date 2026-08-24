@@ -8,6 +8,11 @@ import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
+// A SETINHA DE GUIA NOVA (#01 CHANGES 2026-08-24). Estes dois vao para fora do
+// dominio com target="_blank" na mao, entao nao passam pela regra do TbfLink: o
+// icone entra explicito. Ele saiu da string do rotulo em content/i18n, onde
+// vinha grudado no texto e no corpo inteiro.
+import { NewTabIcon } from '@/components/TbfLink/NewTabIcon'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
 export default function TavaristicoView({ lang }: { lang: Lang }) {
@@ -38,6 +43,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         <div className={styles.links}>
           <a className={styles.link} href={IDENTITY.socials.instagram} target="_blank" rel="noopener noreferrer">
             {t.index.instagramLabel}
+            <NewTabIcon />
           </a>
           <a
             className={`${styles.link} ${IDENTITY.socials.linkedinProvisional ? styles.prov : ''}`}
@@ -46,6 +52,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
             rel="noopener noreferrer"
           >
             {t.index.linkedinLabel}
+            <NewTabIcon />
           </a>
           <span className={styles.link}>{t.index.representedByPrefix} {IDENTITY.representedBy}</span>
         </div>

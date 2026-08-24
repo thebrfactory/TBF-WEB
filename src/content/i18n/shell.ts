@@ -125,7 +125,11 @@ const pt: typeof en = {
 
   closing: {
     eyebrow: 'Estamos aqui para causar impacto',
-    headline: ['Vamos fazer trabalho corajoso', 'para a sua marca.'],
+    // TRADUÇÃO REFEITA pelo fundador (#01 CHANGES 2026-08-24: "essa descrição
+    // traduzida para português está muito ruim"). O inglês continua sendo
+    // "Let's make brave work for your brand.": ele corrigiu o português, não a
+    // frase. As duas linhas são a quebra da tipografia, não duas frases.
+    headline: ['Vamos transformar ideias', 'em impacto.'],
     cta: 'Fale com a gente',
   },
 
