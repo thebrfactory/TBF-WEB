@@ -74,7 +74,7 @@ O que ela filma é festa, ensaio, viagem. Gesto, não frase.
 Dentro dessas horas, uma em cada sete palavras foi dita em inglês.
 Ninguém na .TBF. sabia que esse número existia.
 
-E o inglês é quase todo emprestado: 50.582 daquelas 55.260 palavras são material salvo.
+E esse inglês é quase todo emprestado: de 55.260 palavras ditas em inglês, 50.582 são material salvo.
 Direção de arte no TikTok, tutorial de After Effects, reel de vendas, uma reza em hebraico.
 Os poucos clipes em inglês que saíram da nossa câmera são música tocando numa festa.
 **Não é com quem esta label estava falando. É o que esta label assiste.**
@@ -85,7 +85,7 @@ Os poucos clipes em inglês que saíram da nossa câmera são música tocando nu
 
 ![Campo de 3.132 marcas, uma por arquivo com áudio, colorido pelo que foi dito dentro dele.](/images/editorial/substrato-capa.webp)
 
-Este é o achado, desenhado. Cada marca é um arquivo: pergaminho para fala em português, âmbar para fala em inglês, cinza para os outros dezesseis idiomas, e quase preto para os 879 arquivos em que ninguém fala nada. A grade é 87 por 36, que dá exatamente 3.132, então nenhuma célula é enfeite. Feito por um script que lê o banco, não à mão.
+O achado, desenhado. Cada marca é um arquivo: pergaminho para o português, âmbar para o inglês, cinza para os outros dezesseis idiomas, quase preto para os 879 em que ninguém fala. A grade é 87 por 36, que dá exatamente 3.132. Feito por um script que lê o banco.
 
 _.TBF. inc_
 
@@ -94,7 +94,7 @@ Naquela noite não ganhamos arquivo nenhum. Ganhamos a pergunta.
 
 Antes você abria pasta e tentava lembrar nome de arquivo.
 Agora você digita "me mostra as fotos marcadas do cliente" e o acervo responde.
-Ela olha dentro do que foi dito e dentro do que está escrito na tela.
+A busca olha dentro do que foi dito e dentro do que está escrito na tela.
 
 `PARES DE NEGACAO`
 
@@ -240,7 +240,7 @@ What it films is a party, a shoot, a trip. Gesture, not speech.
 Inside those hours, one in every seven words was said in English.
 Nobody at the .TBF. knew that number existed.
 
-And the English is almost all borrowed: 50,582 of those 55,260 words are saved material.
+And that English is almost all borrowed: of 55,260 words spoken in English, 50,582 are saved material.
 Art direction on TikTok, an After Effects tutorial, a sales reel, a prayer in Hebrew.
 The few English clips our own camera shot are music playing at a party.
 **It is not who this label was talking to. It is what this label watches.**
@@ -251,7 +251,7 @@ The few English clips our own camera shot are music playing at a party.
 
 ![Field of 3,132 marks, one per audio file, coloured by what was said inside it.](/images/editorial/substrato-capa.webp)
 
-This is the finding, drawn. Every mark is one file: parchment for speech in Portuguese, amber for speech in English, grey for the other sixteen languages, and near black for the 879 files where nobody speaks at all. The grid is 87 by 36, which is exactly 3,132, so no cell is decoration. Made by a script that reads the database, not by hand.
+The finding, drawn. Every mark is one file: parchment for Portuguese, amber for English, grey for the other sixteen languages, near black for the 879 where nobody speaks. The grid is 87 by 36, which is exactly 3,132. Made by a script that reads the database.
 
 _.TBF. inc_
 
@@ -260,7 +260,7 @@ That night we gained no files at all. We gained the question.
 
 Before, you opened folders and tried to remember filenames.
 Now you type "show me the starred photos from the client" and the archive answers.
-It looks inside what was said and inside what is written on screen.
+The search looks inside what was said and inside what is written on screen.
 
 `PARES DE NEGACAO`
 

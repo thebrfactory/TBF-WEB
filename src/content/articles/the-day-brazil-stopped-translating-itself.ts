@@ -79,10 +79,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'There is no official date for when a country stops being a colony.', pt: 'Não existe data oficial para quando um país deixa de ser colônia.' },
-        { en: 'Some say it happens after independence.', pt: 'Uns dizem que acontece depois da independência.' },
-        { en: 'Others believe it happens when the economy grows.', pt: 'Outros acham que acontece quando a economia cresce.' },
-        { en: 'Some insist it happens after winning wars.', pt: 'Alguns insistem que acontece depois de vencer guerras.' },
-        { en: "They're all wrong.", pt: 'Todos estão errados.' },
+        { en: 'Independence has one. The economy has a chart. The wars have monuments.', pt: 'A independência tem data. A economia tem gráfico. As guerras têm monumento.' },
+        { en: 'None of them is the date.', pt: 'Nenhum dos três é a data.' },
       ],
     },
     // TIER 1 #1: a tese
@@ -217,7 +215,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     { kind: 'lines', lines: [{ en: 'For decades, Brazil was told what it should export.', pt: 'Por décadas, disseram ao Brasil o que ele deveria exportar.' }] },
     {
       kind: 'lines',
-      lines: [{ en: 'The world wanted Brazil to remain an endless supplier of raw materials.', pt: 'O mundo queria que o Brasil continuasse fornecedor infinito de matéria-prima.' }],
+      lines: [{ en: 'The order was always the same: stay a supplier of raw material.', pt: 'O pedido era sempre o mesmo: continuar fornecedor de matéria-prima.' }],
     },
     // TIER 3: "Raw" fixo, o resto trocando (máquina de escrever, sem cursor).
     // Ver nota de transporte no topo do arquivo: em PT o adjetivo muda de forma
@@ -263,10 +261,9 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Musicians.', pt: 'Músicos.' },
       ],
       after: [
-        { en: 'Systems.', pt: 'Sistemas.' },
+        { en: 'Operating systems.', pt: 'Sistemas operacionais.' },
         { en: 'Languages.', pt: 'Linguagens.' },
         { en: 'Myths.', pt: 'Mitos.' },
-        { en: 'Infrastructure.', pt: 'Infraestrutura.' },
         { en: 'Imagination.', pt: 'Imaginação.' },
       ],
     },
@@ -426,9 +423,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'It transformed cultural signals into companies.', pt: 'Ela transformava sinais culturais em empresas.' },
-        { en: 'Companies into movements.', pt: 'Empresas em movimentos.' },
-        { en: 'Movements into myths.', pt: 'Movimentos em mitos.' },
+        { en: 'It turned cultural signal into company, and company into myth.', pt: 'Ela transformava sinal cultural em empresa, e empresa em mito.' },
         { en: 'If Brazilian Hi-Fi was where ideas collided...', pt: 'Se o Brazilian Hi-Fi era onde as ideias colidiam...' },
         { en: 'The Brazilian Factory was where they acquired permanent form.', pt: 'A Brazilian Factory era onde elas ganhavam forma permanente.' },
       ],
@@ -463,9 +458,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       lines: [
         { en: 'Nobody could verify any of it.', pt: 'Ninguém conseguia confirmar nada.' },
         { en: 'Nobody wanted to.', pt: 'Ninguém queria.' },
-        { en: 'Some figures become celebrities.', pt: 'Algumas figuras viram celebridades.' },
-        { en: 'Others become folklore.', pt: 'Outras viram folclore.' },
-        { en: 'MELFIORE belonged to the second category.', pt: 'A MELFIORE pertencia à segunda categoria.' },
+        { en: 'Some figures become celebrities. MELFIORE became folklore.', pt: 'Algumas figuras viram celebridade. A MELFIORE virou folclore.' },
       ],
     },
 
@@ -557,9 +550,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'For decades, critics misunderstood Brazilian originality.', pt: 'Por décadas, os críticos entenderam errado a originalidade brasileira.' },
-        { en: 'They assumed it emerged despite contradiction.', pt: 'Achavam que ela surgia apesar da contradição.' },
-        { en: "They couldn't see that contradiction was the engine.", pt: 'Não enxergavam que a contradição era o motor.' },
+        { en: 'Brazilian originality always looked like it happened despite the contradiction.', pt: 'A originalidade brasileira sempre pareceu acontecer apesar da contradição.' },
+        { en: 'The contradiction was the engine.', pt: 'A contradição era o motor.' },
         {
           en: 'Long before artificial intelligence began remixing culture, Brazil had already mastered the practice.',
           pt: 'Muito antes de a inteligência artificial começar a remixar cultura, o Brasil já dominava a prática.',
@@ -643,8 +635,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: "Foreign analysts spent years trying to decode the country's unexpected rise.", pt: 'Analistas estrangeiros passaram anos tentando decifrar a ascensão inesperada do país.' },
-        { en: 'Most failed because they kept measuring GDP.', pt: 'A maioria falhou porque continuava medindo PIB.' },
+        { en: 'Foreign analysts spent years measuring the country\'s GDP and found nothing there.', pt: 'Analistas estrangeiros passaram anos medindo o PIB do país e não acharam nada ali.' },
         { en: 'The real transformation had happened elsewhere.', pt: 'A transformação real tinha acontecido em outro lugar.' },
         { en: 'Brazil had quietly rewritten the grammar of influence.', pt: 'O Brasil tinha reescrito, em silêncio, a gramática da influência.' },
         { en: 'Hollywood no longer dictated imagination, nor did Silicon Valley monopolise innovation.', pt: 'Hollywood não ditava mais a imaginação, nem o Vale do Silício monopolizava a inovação.' },
@@ -711,10 +702,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         {
-          en: "Perhaps that's why nobody remembers exactly when Brazil became one of the world's cultural centres.",
-          pt: 'Talvez seja por isso que ninguém lembra exatamente quando o Brasil virou um dos centros culturais do mundo.',
+          en: "Nobody remembers when Brazil became one of the world's cultural centres.",
+          pt: 'Ninguém lembra quando o Brasil virou um dos centros culturais do mundo.',
         },
-        { en: 'They only remember something much simpler.', pt: 'Lembram apenas de algo muito mais simples.' },
+        { en: 'They remember something else.', pt: 'Lembram de outra coisa.' },
         { en: 'The day choosing a Gurgel stopped meaning anything at all.', pt: 'O dia em que escolher um Gurgel deixou de significar qualquer coisa.' },
         { en: 'Because, by then...', pt: 'Porque, a essa altura...' },
       ],

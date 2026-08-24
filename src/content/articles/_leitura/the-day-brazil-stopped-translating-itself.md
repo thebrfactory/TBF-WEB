@@ -36,10 +36,8 @@
 ---
 
 Não existe data oficial para quando um país deixa de ser colônia.
-Uns dizem que acontece depois da independência.
-Outros acham que acontece quando a economia cresce.
-Alguns insistem que acontece depois de vencer guerras.
-Todos estão errados.
+A independência tem data. A economia tem gráfico. As guerras têm monumento.
+Nenhum dos três é a data.
 
 `BLOCO GRUDADO NA TELA`
 
@@ -95,7 +93,7 @@ Mudou porque ninguém precisou explicar por que ele existia.
 
 Por décadas, disseram ao Brasil o que ele deveria exportar.
 
-O mundo queria que o Brasil continuasse fornecedor infinito de matéria-prima.
+O pedido era sempre o mesmo: continuar fornecedor de matéria-prima.
 
 -  Terra crua.
 -  Corpos crus.
@@ -123,10 +121,9 @@ _Fonte: Pinterest (divulgação/reprodução)_
 - Modelos.
 - Músicos.
 
-- Sistemas.
+- Sistemas operacionais.
 - Linguagens.
 - Mitos.
-- Infraestrutura.
 - Imaginação.
 
 `IMAGEM`
@@ -215,9 +212,7 @@ Isso eram efeitos colaterais.
 
 **Seu produto real era imaginação institucional.**
 
-Ela transformava sinais culturais em empresas.
-Empresas em movimentos.
-Movimentos em mitos.
+Ela transformava sinal cultural em empresa, e empresa em mito.
 Se o Brazilian Hi-Fi era onde as ideias colidiam...
 A Brazilian Factory era onde elas ganhavam forma permanente.
 
@@ -239,9 +234,7 @@ As pessoas conheciam a MELFIORE porque alguém sempre tinha uma história.
 
 Ninguém conseguia confirmar nada.
 Ninguém queria.
-Algumas figuras viram celebridades.
-Outras viram folclore.
-A MELFIORE pertencia à segunda categoria.
+Algumas figuras viram celebridade. A MELFIORE virou folclore.
 
 ---
 
@@ -282,9 +275,8 @@ Aconteceu porque o reconhecimento virou inevitável.
 
 ---
 
-Por décadas, os críticos entenderam errado a originalidade brasileira.
-Achavam que ela surgia apesar da contradição.
-Não enxergavam que a contradição era o motor.
+A originalidade brasileira sempre pareceu acontecer apesar da contradição.
+A contradição era o motor.
 Muito antes de a inteligência artificial começar a remixar cultura, o Brasil já dominava a prática.
 Não em laboratórios.
 Em festas de rua.
@@ -326,8 +318,7 @@ _Autor não identificado · fonte: Pinterest (divulgação/reprodução)_
 
 ---
 
-Analistas estrangeiros passaram anos tentando decifrar a ascensão inesperada do país.
-A maioria falhou porque continuava medindo PIB.
+Analistas estrangeiros passaram anos medindo o PIB do país e não acharam nada ali.
 A transformação real tinha acontecido em outro lugar.
 O Brasil tinha reescrito, em silêncio, a gramática da influência.
 Hollywood não ditava mais a imaginação, nem o Vale do Silício monopolizava a inovação.
@@ -357,8 +348,8 @@ Nossa terra. Nossa gente. Nosso carro. A Gurgel imprimiu a tese desta matéria e
 
 _Folheto Gurgel, 1981 · fonte: Pinterest (divulgação/reprodução)_
 
-Talvez seja por isso que ninguém lembra exatamente quando o Brasil virou um dos centros culturais do mundo.
-Lembram apenas de algo muito mais simples.
+Ninguém lembra quando o Brasil virou um dos centros culturais do mundo.
+Lembram de outra coisa.
 O dia em que escolher um Gurgel deixou de significar qualquer coisa.
 Porque, a essa altura...
 
@@ -379,10 +370,8 @@ Porque, a essa altura...
 ---
 
 There is no official date for when a country stops being a colony.
-Some say it happens after independence.
-Others believe it happens when the economy grows.
-Some insist it happens after winning wars.
-They're all wrong.
+Independence has one. The economy has a chart. The wars have monuments.
+None of them is the date.
 
 `BLOCO GRUDADO NA TELA`
 
@@ -438,7 +427,7 @@ It changed things because nobody needed to explain why it existed.
 
 For decades, Brazil was told what it should export.
 
-The world wanted Brazil to remain an endless supplier of raw materials.
+The order was always the same: stay a supplier of raw material.
 
 - Raw land.
 - Raw bodies.
@@ -466,10 +455,9 @@ _Fonte: Pinterest (divulgação/reprodução)_
 - Models.
 - Musicians.
 
-- Systems.
+- Operating systems.
 - Languages.
 - Myths.
-- Infrastructure.
 - Imagination.
 
 `IMAGEM`
@@ -558,9 +546,7 @@ Those were side effects.
 
 **Its real product was institutional imagination.**
 
-It transformed cultural signals into companies.
-Companies into movements.
-Movements into myths.
+It turned cultural signal into company, and company into myth.
 If Brazilian Hi-Fi was where ideas collided...
 The Brazilian Factory was where they acquired permanent form.
 
@@ -582,9 +568,7 @@ People knew MELFIORE because someone always had a story.
 
 Nobody could verify any of it.
 Nobody wanted to.
-Some figures become celebrities.
-Others become folklore.
-MELFIORE belonged to the second category.
+Some figures become celebrities. MELFIORE became folklore.
 
 ---
 
@@ -625,9 +609,8 @@ It happened because recognition became inevitable.
 
 ---
 
-For decades, critics misunderstood Brazilian originality.
-They assumed it emerged despite contradiction.
-They couldn't see that contradiction was the engine.
+Brazilian originality always looked like it happened despite the contradiction.
+The contradiction was the engine.
 Long before artificial intelligence began remixing culture, Brazil had already mastered the practice.
 Not in laboratories.
 In street festivals.
@@ -669,8 +652,7 @@ _Autor não identificado · fonte: Pinterest (divulgação/reprodução)_
 
 ---
 
-Foreign analysts spent years trying to decode the country's unexpected rise.
-Most failed because they kept measuring GDP.
+Foreign analysts spent years measuring the country's GDP and found nothing there.
 The real transformation had happened elsewhere.
 Brazil had quietly rewritten the grammar of influence.
 Hollywood no longer dictated imagination, nor did Silicon Valley monopolise innovation.
@@ -700,8 +682,8 @@ Our land. Our people. Our car. Gurgel printed the thesis of this article in 1981
 
 _Folheto Gurgel, 1981 · fonte: Pinterest (divulgação/reprodução)_
 
-Perhaps that's why nobody remembers exactly when Brazil became one of the world's cultural centres.
-They only remember something much simpler.
+Nobody remembers when Brazil became one of the world's cultural centres.
+They remember something else.
 The day choosing a Gurgel stopped meaning anything at all.
 Because, by then...
 

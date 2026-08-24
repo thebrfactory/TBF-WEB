@@ -289,7 +289,13 @@
 .scrolly-hero__subtitle {
   font-family: var(--tbf-type-deck-family);
   font-weight: var(--tbf-type-deck-weight);
-  font-size: var(--tbf-type-deck-size-sm);
+  /* REGRA DO MOTOR, pedido do fundador em 24/08/2026: "preciso desse subtitulo
+     maior, nao da pra ler nada". Estava travado em 16px (deck-size-sm) em TODA
+     largura, sem media query: no hero de 1440px o subtitulo saia com um terco
+     da altura do olho do titulo, em italico e rebaixado a 82% de opacidade, e
+     virava enfeite. Agora escala com a viewport ate 1,6rem. Vale para toda
+     materia do motor, que e o que ele pediu. */
+  font-size: clamp(1.2rem, 2.1vw, 1.6rem);
   line-height: var(--tbf-type-deck-lh);
   font-style: italic;
   /* Era editorial-gray (#4A4744): cinza ESCURO sobre foto e sobre preto.
@@ -836,12 +842,23 @@
 
 .scrolly-stickers__item {
   position: absolute;
-  left: calc(10% + (var(--i, 0) * 13%) % 70%);
+  /* Base subiu de 10% para 15% em 24/08/2026: com a fonte maior, a linha girada
+     18deg balanca a primeira palavra para fora pela esquerda e o "C" de
+     "Conheci" encostava na borda da janela. */
+  left: calc(15% + (var(--i, 0) * 13%) % 70%);
   top: calc(8vh + (var(--i, 0) * 22vh));
-  max-width: 62vw;
+  /* REGRA DO MOTOR, pedido do fundador em 24/08/2026: os fragmentos soltos
+     precisam ser MAIORES. Estavam em 14px (body-sm-size-sm) fixo, girados 18deg
+     e a 82% de opacidade, sobre uma coluna vazia de 40% da tela: no desktop
+     liam-se como marca d'agua, e o conteudo deles (os boatos da MELFIORE) e
+     texto de verdade, nao textura. Agora escalam com a viewport ate 2rem.
+     `max-width` desce junto porque a linha girada parte de ate 49% da largura;
+     com fonte maior e 62vw ela vazava pela direita. */
+  max-width: min(52vw, 34ch);
   font-family: var(--tbf-type-body-sm-family);
   font-style: italic;
-  font-size: var(--tbf-type-body-sm-size-sm);
+  font-size: clamp(1.1rem, 2.9vw, 2rem);
+  line-height: 1.35;
   color: var(--tbf-text-secondary);
   opacity: 0;
 }
@@ -902,26 +919,28 @@
   margin-block: var(--sc-emphasis-gap, var(--tbf-space-10));
 }
 
-/* ─── ALTERNANCIA DE PESO, escopada por materia ───────────────────────────────
+/* ─── ALTERNANCIA DE PESO, REGRA DO MOTOR ─────────────────────────────────────
    Pedido do fundador em 23/08/2026 sobre "A LABEL QUE APRENDEU A SE PERGUNTAR":
    a alternancia entre linha fina e linha pesada e o ritmo do ensaio, e ele quer
    o contraste MAIOR nas duas pontas. A linha comum desce de Light (300) para
    Thin (100) e cresce um pouco, para o peso fino nao virar ilegibilidade; a
    linha de enfase cresce de 2,5rem para 3,3rem no desktop.
 
-   Por que escopado e nao global: o mesmo motor serve o piloto, que esta em
-   PRODUCAO com o ritmo antigo. Mudar `.scrolly-cascade__line` direto reescreve
-   a tipografia de uma materia publicada sem ninguem ter pedido. Para promover
-   isto a padrao do motor, apagar o seletor de atributo e manter as declaracoes.
+   PROMOVIDO A REGRA EM 24/08/2026, a pedido dele: "se lembra que eu pedi pra
+   colocar uma fonte mais thin nesse outro artigo? preciso que isso vire regra
+   tambem e va para o artigo manifesto". O seletor de atributo saiu e as
+   declaracoes ficaram, que era exatamente a instrucao deixada aqui na versao
+   anterior deste comentario. Agora vale para toda materia do motor scrolly,
+   piloto incluso.
    ------------------------------------------------------------------------- */
 
-[data-article='the-label-that-learned-to-ask-itself'] .scrolly-cascade__line {
+.scrolly-cascade__line {
   font-weight: var(--tbf-font-weight-raw-100);
   font-size: clamp(1.2rem, 3.4vw, 1.75rem);
   letter-spacing: 0.005em;
 }
 
-[data-article='the-label-that-learned-to-ask-itself'] .scrolly-cascade__line--emphasis {
+.scrolly-cascade__line--emphasis {
   font-weight: var(--tbf-type-display-lg-weight);
   font-size: clamp(1.85rem, 6.2vw, 3.3rem);
   line-height: 1.14;
