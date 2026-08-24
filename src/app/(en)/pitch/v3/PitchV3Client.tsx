@@ -184,6 +184,23 @@ function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[numb
   )
 }
 
+// Troca a esteira de miniaturas do case por pontos abaixo de 768px (pedido
+// do fundador: "as thumbs podem diminuir e se transformar em pontos"). Começa
+// em `false` para bater com o HTML do servidor e só liga depois do mount, no
+// mesmo padrão do GridRuler acima: ler `window` antes disso quebra a
+// hidratação.
+function useDotsNav() {
+  const [dots, setDots] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const onChange = () => setDots(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
+  return dots
+}
+
 // ─── Página ──────────────────────────────────────────────────────────────────
 
 /**
@@ -199,6 +216,7 @@ function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[numb
  * `/pitch/v3/<empresa>` passando ele aqui. Não editar a cena aberta.
  */
 export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
+  const dotsNav = useDotsNav()
   return (
     <div className="p3-deck">
       <DeckNav scenes={SCENES} total="07" />
@@ -640,8 +658,10 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
               //
               // O avatar é a foto de perfil real do @odecasahostel, e ela ainda
               // por cima está na mesma paleta da campanha: Ô ciano sobre azul.
-              handle="Ô"
+              // NOME COMPLETO (pedido do fundador): "Ô" virou "Ô De Casa".
+              handle="Ô De Casa"
               avatarSrc="/images/pitch/veraozao/o-avatar.webp"
+              nav={dotsNav ? 'dots' : 'thumbs'}
             label="Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces"
           />
 

@@ -407,7 +407,10 @@ export function DeckStyles() {
              rodapé das cenas cheias (03, 04, 05 e 06), que é pior: o deck tem
              overflow: hidden e come o conteúdo em silêncio. O kicker continua
              ancorado na MESMA linha nas 7 cenas, só sem o colchão inútil. */
-          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(1.35rem, 3.4vh, 2.1rem));
+          /* AUMENTADO (pedido do fundador): o título nascia colado no kicker.
+             Era clamp(1.35rem, 3.4vh, 2.1rem). O termo cresceu numa variável
+             só, então as 7 cenas ganham a mesma distância de uma vez. */
+          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(2.2rem, 5.8vh, 3.3rem));
 
           /* ─── RÉGUA INVISÍVEL DO DECK ──────────────────────────────────
              Pedido do fundador (#01 CHANGES): "blocos invisíveis e réguas
@@ -475,7 +478,11 @@ export function DeckStyles() {
              cobria de 13 a 70px do ultimo bloco). O numero nao e chute, e a
              distancia medida entre o topo da barra e o fim da janela: 58px no
              telefone, 92px no desktop. */
-          --p3-foot: 3.75rem;
+          /* AUMENTADO (pedido do fundador): margem de segurança para o
+             conteúdo não chegar tão perto do rodapé/passador. Era 3.75rem;
+             a barra de nav mede 58px no telefone, então a folga extra dá
+             respiro real antes do botão. */
+          --p3-foot: 4.5rem;
           --p3-gap:    clamp(0.8rem, 2.5vh, 1.75rem);
           --p3-gap-sm: clamp(0.4rem, 1.2vh, 0.85rem);
           --p3-gap-lg: clamp(1.25rem, 4.2vh, 3rem);
@@ -546,7 +553,8 @@ export function DeckStyles() {
             /* Régua de respiro um pouco mais apertada no desktop: em telas
                baixas (900px é o teste de aceite) o respiro de 3.2vh/1.6vh
                ainda sobrava. Ver --p3-gap/--p3-gap-sm na régua base. */
-            --p3-foot: 4.25rem;
+            /* Mesmo motivo do mobile: era 4.25rem. */
+            --p3-foot: 5rem;
             --p3-gap: clamp(0.7rem, 1.9vh, 1.45rem);
             --p3-gap-sm: clamp(0.3rem, 1vh, 0.7rem);
           }
@@ -1884,6 +1892,72 @@ export function DeckStyles() {
           }
           .p3-thumbs {
             --thumb-w: clamp(3.25rem, 13vw, 4.5rem);
+          }
+
+          /* CENA 05 NO TELEFONE, EMPILHADA (bug relatado: logotipo da
+             campanha, marca do cliente e copy caindo POR CIMA do quadro de
+             story). A causa era a grade de 2 colunas: a coluna "auto" do
+             quadro tem a largura calculada a partir da ALTURA (aspect-ratio
+             9/16), e essa altura só se resolve depois que a grade já mediu a
+             coluna, um ciclo que o Safari do iPhone resolve mal. Empilhar em
+             flex column tira a dependência circular: cada bloco mede a
+             própria altura e a soma é o que decide se cabe, sem grade
+             nenhuma no meio.
+
+             ORDEM (por 'order', não pelo DOM): quadro, depois a identidade da
+             campanha + copy, depois a fila de miniaturas por último, perto do
+             passador do deck. O quadro de story continua 9/16 sem recorte
+             ('.p3-story' mantém aspect-ratio); só o teto de altura encolhe
+             para sobrar altura para o resto. */
+          .p3-case-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--p3-gap-sm);
+          }
+          .p3-story {
+            order: 1;
+            grid-column: auto;
+            grid-row: auto;
+            align-self: center;
+            /* Era min(100%, 52vh, 26rem): esse teto presumia o quadro sozinho
+               numa coluna, dividindo a LARGURA com o texto. Empilhado, ele
+               agora divide a ALTURA com o wordmark, a marca do cliente, a
+               copy e a fila. Medido em 390x844 até fechar sem corte. */
+            /* Altura EXPLÍCITA, não só um teto: empilhado, o pai (a coluna
+               flex) não tem altura própria, então 'height: 100%' (regra
+               base) colapsaria a 0 e junto com ele a largura, que sai da
+               proporção 9/16 sobre a altura. */
+            /* 🔴 O VALOR SAIU DE MEDICAO, e a primeira medida estava apertada
+               demais: com 30vh sobravam 237px de vazio na cena (165 dentro da
+               copy, que crescia sozinha, e 72 no rodape). Vazio nao e respiro,
+               e quadro pequeno a toa: o story e a prova da cena. */
+            height: min(44vh, 22rem);
+            max-height: min(44vh, 22rem);
+          }
+          .p3-case-copy {
+            order: 2;
+            grid-column: auto;
+            grid-row: auto;
+            width: 100%;
+            /* 🔴 A COPY PARA DE CRESCER. A regra base dela traz 'flex: 1', que
+               num LADO A LADO significa "ocupe a largura que sobra". Empilhada
+               em coluna, o mesmo 'flex: 1' passou a significar "ocupe a ALTURA
+               que sobra", e a caixa esticava 165px abaixo da ultima linha de
+               texto: era o buraco entre a copy e a fileira de pontos. */
+            flex: 0 0 auto;
+          }
+          .p3-thumbs {
+            order: 3;
+            grid-column: auto;
+            grid-row: auto;
+            width: 100%;
+          }
+          /* O wordmark também encolhe: era pensado para dividir a linha com o
+             quadro (largura sobrando), e empilhado ele reserva altura demais
+             sozinho. */
+          .p3-case-wordmark {
+            height: clamp(3.4rem, 11vh, 5.5rem);
           }
 
           /* CAMADA TERCIÁRIA. São os blocos que ELABORAM o que a cena já

@@ -150,9 +150,13 @@
 
 /* CABEÇALHO: avatar (opcional) + handle. Sem fundo próprio: quem dá contraste
    é o `.shadeTop`, que cobre a largura inteira. */
+/* DESCEU (pedido do fundador: o avatar estava colado na borda de cima). Era
+   0.9rem. A barra de tempo (.bars) fica em top: 0.4rem com 2px de altura, ou
+   seja termina por volta de 0.55rem: 1.3rem deixa quase 0.8rem de respiro
+   entre as duas, sem colar. */
 .head {
   position: absolute;
-  top: 0.9rem;
+  top: 1.3rem;
   left: 0.55rem;
   right: 0.55rem;
   z-index: 4;
@@ -188,10 +192,19 @@
   flex: 0 0 auto;
 }
 
+/* NOME COMPLETO (pedido do fundador): "Ô" virou "Ô De Casa". A fonte desceu
+   um pouco (era clamp(0.6rem, 1.5vh, 0.75rem)) para o texto maior continuar
+   folgado no quadro mais estreito do telefone, e ganhou corte com reticências
+   como cinto de segurança: nunca estoura o cabeçalho, mesmo num quadro
+   pequeno. */
 .handle {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   font-family: var(--tbf-font-family-display);
   font-weight: 800;
-  font-size: clamp(0.6rem, 1.5vh, 0.75rem);
+  font-size: clamp(0.56rem, 1.4vh, 0.7rem);
   letter-spacing: 0.02em;
   color: #f0ede6;
 }
@@ -244,6 +257,104 @@
 
 .passPrev { left: 0.45rem; }
 .passNext { right: 0.45rem; }
+
+/* VARIANTE `dots`: as setas de cima do quadro somem. A fileira de pontos
+   já traz um par de setas próprio, e duas setas fazendo o mesmo trabalho em
+   dois lugares da mesma peça é ruído, não reforço. Decisão: quem navega pelo
+   ponto usa a fileira; quem está sobre o quadro usa clique na miniatura
+   (dot) ou o teclado do deck. */
+.playerDots .pass { display: none; }
+
+/* ─── FILEIRA DE PONTOS (variante `dots`) ───────────────────────────────────
+   Troca a esteira de miniaturas por pontos, pensada para telas estreitas: um
+   ponto de 6px lê melhor que uma miniatura de 3rem espremida. As setas ficam
+   FORA da faixa que rola, ladeando-a; os pontos rolam de lado quando a lista
+   é maior que a largura disponível (o case do deck tem 12 peças). */
+.dotsNav {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+/* Botão de seta com alvo de toque de 44px: a seta em si é pequena, o
+   `display: grid; place-items: center` centraliza o glifo dentro da caixa
+   cheia, que é o alvo real. */
+.dotArrow {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid rgba(240, 237, 230, 0.25);
+  border-radius: var(--tbf-radius-full);
+  background: transparent;
+  color: #f0ede6;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 240ms cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 240ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dotArrow:hover,
+.dotArrow:focus-visible {
+  background: rgba(255, 101, 0, 0.15);
+  border-color: #ff6500;
+}
+
+/* Faixa de pontos: rola de lado exatamente como .thumbs, mesmo raciocínio de
+   respiro (senão o anel de foco do ponto ativo corta na borda da faixa). */
+.dots {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  min-width: 0;
+}
+
+.dots::-webkit-scrollbar { display: none; }
+
+/* Botão de verdade com alvo de toque de 44px (largura mínima do WCAG),
+   desenhado como ponto de 6px CENTRADO na caixa, não a caixa inteira
+   pintada: 12 caixas de 44px cheias virariam uma barra sólida, não uma
+   fileira de pontos. */
+.dot {
+  flex: 0 0 auto;
+  width: 28px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  scroll-snap-align: center;
+}
+
+.dot::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(240, 237, 230, 0.35);
+  transition: background 240ms cubic-bezier(0.23, 1, 0.32, 1),
+              transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.dotOn::before {
+  background: #ff6500;
+  transform: scale(1.5);
+}
+
+.dot:hover::before,
+.dot:focus-visible::before {
+  background: rgba(255, 101, 0, 0.7);
+}
 
 /* AQUI FICAVA A TARJA DE LEGENDA, e ela saiu inteira em 2026-08-14: "todo
    stories fica liso liso, sem nenhuma descrição". O que o story mostra é a
@@ -383,4 +494,5 @@
   .img { transition: none; }
   .fillLive { animation: none; width: 100%; }
   .thumb { transition: none; }
+  .dot::before { transition: none; }
 }

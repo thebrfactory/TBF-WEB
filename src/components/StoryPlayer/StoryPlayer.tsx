@@ -73,6 +73,15 @@ interface StoryDeckProps {
   /** Classe da fila de miniaturas, para definir `--thumb-w`. */
   thumbsClassName?: string
   label?: string
+  /**
+   * Variante do seletor embaixo do quadro. `thumbs` (padrão) é a esteira de
+   * miniaturas. `dots` troca por uma fileira de pontos com setas anterior/
+   * próxima ao lado, pensada para o mobile: um ponto lê melhor que uma
+   * miniatura de 3rem numa tela de telefone. As setas SOBRE o quadro
+   * (`.pass`) somem nesta variante para não competir com as novas: ver o
+   * comentário em StoryPlayer.module.css.
+   */
+  nav?: 'thumbs' | 'dots'
 }
 
 export function StoryDeck({
@@ -84,6 +93,7 @@ export function StoryDeck({
   playerClassName = '',
   thumbsClassName = '',
   label,
+  nav = 'thumbs',
 }: StoryDeckProps) {
   const [i, setI] = useState(0)
   const [running, setRunning] = useState(true)
@@ -132,7 +142,7 @@ export function StoryDeck({
   return (
     <div className={`${styles.deck}${deckClassName ? ` ${deckClassName}` : ''}`}>
       <div
-        className={`${styles.player}${playerClassName ? ` ${playerClassName}` : ''}`}
+        className={`${styles.player}${playerClassName ? ` ${playerClassName}` : ''}${nav === 'dots' ? ` ${styles.playerDots}` : ''}`}
         style={{ ['--story-ms' as string]: `${ms}ms` }}
         role="group"
         aria-label={label}
@@ -215,37 +225,81 @@ export function StoryDeck({
         </button>
       </div>
 
-      {/* A FILA QUE COMANDA. `role="tablist"` porque é exatamente isso: um
-          seletor de painel único. Cada miniatura é um <button> de verdade, então
-          teclado e leitor de tela funcionam sem nenhum código extra. */}
-      <div
-        ref={trilho}
-        className={`${styles.thumbs}${thumbsClassName ? ` ${thumbsClassName}` : ''}`}
-        role="tablist"
-        aria-label={label}
-      >
-        {items.map((item, idx) => (
+      {nav === 'dots' ? (
+        // A FILEIRA DE PONTOS (pedido do fundador: "as thumbs podem diminuir
+        // e se transformar em pontos com setas para navegar"). Mesmo papel da
+        // fila de miniaturas, o `role="tablist"` inclusive é o mesmo, só a
+        // miniatura de 3rem virou um ponto de 6px com alvo de toque de 44px
+        // (ver .dot em StoryPlayer.module.css). As setas ficam FORA da faixa
+        // que rola, uma de cada lado, porque elas não pertencem a um item
+        // específico como os pontos.
+        <div
+          className={`${styles.dotsNav}${thumbsClassName ? ` ${thumbsClassName}` : ''}`}
+        >
           <button
-            key={item.src}
             type="button"
-            role="tab"
-            aria-selected={idx === i}
-            aria-label={item.role}
-            title={item.role}
-            onClick={() => ir(idx)}
-            className={`${styles.thumb}${idx === i ? ` ${styles.thumbOn}` : ''}`}
+            className={styles.dotArrow}
+            onClick={() => ir(i - 1)}
+            aria-label="Peça anterior"
           >
-            <Image
-              src={item.src}
-              alt=""
-              width={360}
-              height={640}
-              sizes="200px"
-              className={styles.thumbImg}
-            />
+            <span aria-hidden="true">&#8592;</span>
           </button>
-        ))}
-      </div>
+          <div ref={trilho} className={styles.dots} role="tablist" aria-label={label}>
+            {items.map((item, idx) => (
+              <button
+                key={item.src}
+                type="button"
+                role="tab"
+                aria-selected={idx === i}
+                aria-label={item.role}
+                title={item.role}
+                onClick={() => ir(idx)}
+                className={`${styles.dot}${idx === i ? ` ${styles.dotOn}` : ''}`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            className={styles.dotArrow}
+            onClick={() => ir(i + 1)}
+            aria-label="Próxima peça"
+          >
+            <span aria-hidden="true">&#8594;</span>
+          </button>
+        </div>
+      ) : (
+        // A FILA QUE COMANDA. `role="tablist"` porque é exatamente isso: um
+        // seletor de painel único. Cada miniatura é um <button> de verdade, então
+        // teclado e leitor de tela funcionam sem nenhum código extra.
+        <div
+          ref={trilho}
+          className={`${styles.thumbs}${thumbsClassName ? ` ${thumbsClassName}` : ''}`}
+          role="tablist"
+          aria-label={label}
+        >
+          {items.map((item, idx) => (
+            <button
+              key={item.src}
+              type="button"
+              role="tab"
+              aria-selected={idx === i}
+              aria-label={item.role}
+              title={item.role}
+              onClick={() => ir(idx)}
+              className={`${styles.thumb}${idx === i ? ` ${styles.thumbOn}` : ''}`}
+            >
+              <Image
+                src={item.src}
+                alt=""
+                width={360}
+                height={640}
+                sizes="200px"
+                className={styles.thumbImg}
+              />
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

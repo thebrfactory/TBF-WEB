@@ -124,7 +124,12 @@ const pt: typeof en = {
   skipNav: 'Pular para o conteúdo',
 
   closing: {
-    eyebrow: 'Estamos aqui para causar impacto',
+    // O OLHO PERDEU A PALAVRA "IMPACTO" (#01 CHANGES 2026-08-24, pedido dele no
+    // mesmo turno). Com o fecho novo terminando em "em impacto", o olho logo
+    // acima repetia a palavra a duas linhas de distância. O inglês não tem o
+    // problema: lá o fecho é "brave work for your brand", então "impact" no
+    // olho continua sendo a única vez que a palavra aparece.
+    eyebrow: 'Estamos aqui para fazer acontecer',
     // TRADUÇÃO REFEITA pelo fundador (#01 CHANGES 2026-08-24: "essa descrição
     // traduzida para português está muito ruim"). O inglês continua sendo
     // "Let's make brave work for your brand.": ele corrigiu o português, não a
