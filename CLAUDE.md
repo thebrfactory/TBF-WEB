@@ -6,6 +6,10 @@
 
 - Next.js 15 (App Router) + React 19 + Sanity CMS + Resend · deploy Vercel
 - `npm run dev` · antes de commitar: `npm run build` + `npm run type-check`
+- 🔴 **`build` e `dev` não convivem**: os dois escrevem na mesma `.next`, e o build
+  por cima do dev server deixa rotas mortas e um build sujo que depois aparece como
+  "erro" em página estática (foi o que travou o deploy em 24/08/2026). O
+  `prebuild` (`scripts/build-guard.mjs`) barra a colisão e diz como sair dela.
 
 ## Branches e deploy
 
