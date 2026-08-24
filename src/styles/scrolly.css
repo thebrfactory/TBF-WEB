@@ -308,6 +308,47 @@
   animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 450ms both;
 }
 
+/* ASSINATURA, pedido do fundador em #01 CHANGES 2026-08-24 (print da Forbes
+   Life: "F / Redacao Forbes"). Circulo escuro com inicial + nome em uma linha
+   discreta, logo abaixo do subtitulo. Nao anima com o resto do hero: entra
+   junto do subtitulo para nao competir com o titulo pela atencao. */
+.scrolly-signature {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-3);
+  margin-top: var(--tbf-space-6);
+  opacity: 0;
+  animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 600ms both;
+}
+
+.scrolly-signature__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--tbf-radius-full);
+  background: var(--tbf-bg-inverse);
+  color: var(--tbf-text-inverse);
+  font-family: var(--tbf-type-tag-family);
+  font-size: 0.8rem;
+  font-weight: var(--tbf-font-weight-raw-700);
+}
+
+.scrolly-signature__name {
+  font-family: var(--tbf-type-tag-family);
+  font-size: var(--tbf-type-tag-size);
+  letter-spacing: var(--tbf-type-tag-ls);
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tbf-text-primary) 82%, transparent);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.70);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolly-signature { animation: none; opacity: 1; }
+}
+
 @keyframes scrolly-fade-up {
   from { opacity: 0; transform: translateY(var(--tbf-motion-translate-reveal)); }
   to   { opacity: 1; transform: translateY(0); }
@@ -327,14 +368,19 @@
    PINNED INTRO
    ============================================================================= */
 
+/* SCROLL MAIS RAPIDO na abertura, pedido do fundador em #01 CHANGES
+   2026-08-24: "o scroll nessa parte da pagina esta muito lento, pode acelerar
+   um pouco so". A frase ficava pinada por 1,8 tela no mobile e 2,5 no desktop
+   (valores anteriores: 180vh / 250vh). Reduzido para 150vh / 200vh, so o
+   suficiente para destravar sem cortar o tempo de leitura da frase. */
 .scrolly-pinned {
   position: relative;
-  height: 180vh;
+  height: 150vh;
   contain: layout paint;
 }
 
 @media (min-width: 768px) {
-  .scrolly-pinned { height: 250vh; }
+  .scrolly-pinned { height: 200vh; }
 }
 
 .scrolly-pinned__sticky {
@@ -805,30 +851,51 @@
 
 /* =============================================================================
    SHARE ROW
+   Fileira de icones (LinkedIn, WhatsApp, copiar link), pedido do fundador em
+   #01 CHANGES 2026-08-24, referencia Forbes Life. Substitui o botao de texto
+   unico "Compartilhar" que existia antes. Alvo de toque de 44px, minimo de
+   acessibilidade, mesmo com icone de 20px dentro.
    ============================================================================= */
 
 .scrolly-share {
   padding-block: var(--tbf-space-8);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tbf-space-3);
 }
 
-.scrolly-share__btn {
-  font-family: var(--tbf-type-tag-family);
-  font-size: var(--tbf-type-tag-size);
-  letter-spacing: var(--tbf-type-tag-ls);
-  text-transform: uppercase;
+.scrolly-share__row {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-3);
+}
+
+.scrolly-share__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
   color: var(--tbf-text-primary);
   background: transparent;
   border: 1px solid var(--tbf-border);
   border-radius: var(--tbf-radius-full);
-  padding: var(--tbf-space-3) var(--tbf-space-6);
   cursor: pointer;
-  transition: border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  transition: border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+              color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
-.scrolly-share__btn:hover,
-.scrolly-share__btn:focus-visible { border-color: var(--tbf-border-active); }
+.scrolly-share__icon:hover,
+.scrolly-share__icon:focus-visible { border-color: var(--tbf-border-active); }
+
+.scrolly-share__feedback {
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
 
 /* =============================================================================
    STICKER LAYER
@@ -1075,12 +1142,24 @@
   .scrolly-mirror { flex-direction: row; gap: var(--tbf-space-16); }
 }
 
+/* FRASES EMPILHADAS, pedido do fundador em #01 CHANGES 2026-08-24: "parecem
+   dois textos, mas na verdade sao diversas frases escritas uma em cima da
+   outra". Causa: cada `<li>`/linha e uma frase INTEIRA (as vezes duas
+   linhas), mas o gap entre itens era `--tbf-space-2` (o mesmo usado dentro de
+   uma unica frase) e nenhum item travava `line-height`. Sem essas duas coisas
+   a ultima linha de uma frase cola na primeira da frase seguinte e o bloco
+   inteiro le como um paragrafo so. Mesma construcao em `.scrolly-mirror`,
+   `.scrolly-raw` e `.scrolly-negation`: consertado nos tres juntos. */
 .scrolly-mirror__list {
   flex: 1;
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: var(--tbf-space-2);
+  gap: var(--tbf-space-6);
+}
+
+@media (min-width: 768px) {
+  .scrolly-mirror__list { gap: var(--tbf-space-8); }
 }
 
 .scrolly-mirror__list--before .scrolly-mirror__item { color: var(--tbf-text-tertiary); }
@@ -1089,20 +1168,26 @@
 .scrolly-mirror__item {
   font-family: var(--tbf-type-h3-family);
   font-size: clamp(1.1rem, 3.4vw, 1.6rem);
+  line-height: 1.2;
 }
 
 .scrolly-raw {
   display: flex;
   flex-direction: column;
-  gap: var(--tbf-space-2);
+  gap: var(--tbf-space-6);
   padding-block: var(--sc-gap-connective-sm, var(--tbf-space-8));
   max-width: var(--tbf-type-body-max-width);
   margin-inline: auto;
 }
 
+@media (min-width: 768px) {
+  .scrolly-raw { gap: var(--tbf-space-8); }
+}
+
 .scrolly-raw__row {
   font-family: var(--tbf-type-h3-family);
   font-size: clamp(1.2rem, 4vw, 1.8rem);
+  line-height: 1.2;
 }
 
 .scrolly-raw__fixed { color: var(--tbf-text-primary); font-weight: var(--tbf-font-weight-raw-700); }
@@ -1121,6 +1206,11 @@
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-1);
+}
+
+.scrolly-negation__no,
+.scrolly-negation__yes {
+  line-height: 1.2;
 }
 
 .scrolly-negation__no {

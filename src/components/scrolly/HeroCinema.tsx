@@ -5,15 +5,20 @@
 // =============================================================================
 
 import Image from 'next/image'
+import { AuthorSignature } from './AuthorSignature'
+import type { Lang } from '@/lib/i18n'
 
 interface HeroCinemaProps {
   title: string
   subtitle?: string
   eyebrow?: string
   image?: { src: string; alt: string } | null
+  /** Idioma da assinatura abaixo do titulo/subtitulo. Opcional: mock articles
+      sem idioma local nao renderizam a assinatura. */
+  lang?: Lang
 }
 
-export function HeroCinema({ title, subtitle, eyebrow, image }: HeroCinemaProps) {
+export function HeroCinema({ title, subtitle, eyebrow, image, lang }: HeroCinemaProps) {
   return (
     <section className="scrolly-hero" aria-label="Abertura da matéria">
       {image ? (
@@ -30,6 +35,7 @@ export function HeroCinema({ title, subtitle, eyebrow, image }: HeroCinemaProps)
         {eyebrow && <p className="scrolly-hero__eyebrow">{eyebrow}</p>}
         <h1 className="scrolly-hero__title">{title}</h1>
         {subtitle && <p className="scrolly-hero__subtitle">{subtitle}</p>}
+        {lang && <AuthorSignature lang={lang} />}
       </div>
     </section>
   )

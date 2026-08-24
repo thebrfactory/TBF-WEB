@@ -54,6 +54,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
         subtitle={article.heroSubtitle[lang]}
         eyebrow={article.category}
         image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
+        lang={lang}
       />
       {renderBlocks(article.blocks, lang)}
 

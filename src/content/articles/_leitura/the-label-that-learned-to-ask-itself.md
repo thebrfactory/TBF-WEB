@@ -25,9 +25,9 @@
 
 ---
 
-# A LABEL QUE APRENDEU A SE PERGUNTAR.
+# A LABEL QUE DESCOBRIU A SI MESMA.
 
-**Uma label de um ano apontou uma máquina para um acervo sete anos mais velho que ela. Foi isto que voltou.**
+**Sete anos de arquivos revelaram uma versão da creative company que ninguém tinha visto.**
 
 > A IA entregou a todo mundo as mesmas ferramentas. Então a vantagem voltou a ser o repertório. Aí o acervo respondeu quanto do nosso era nosso mesmo.
 
@@ -39,7 +39,7 @@
 
 _SÃO PAULO, AGOSTO DE 2026_
 
-> A .TBF. é uma label criativa de São Paulo, e ela fez um ano em junho. O acervo dela é mais velho que ela: sete anos do fundador trabalhando, pesquisando e juntando repertório, de antes de existir uma empresa para guardar aquilo.
+> A .TBF. tem um ano. Seu acervo tem sete. Antes da empresa existir, já havia anos de pesquisa, referências e repertório esperando para serem descobertos.
 
 Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.
 Numa noite de agosto colocamos uma máquina para ouvir todos eles.
@@ -191,9 +191,9 @@ Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não
 
 ---
 
-# THE LABEL THAT LEARNED TO ASK ITSELF.
+# THE LABEL THAT DISCOVERED ITSELF.
 
-**A one year old label pointed a machine at an archive seven years older than itself. This is what came back.**
+**Seven years of archives revealed a version of the creative company nobody had seen.**
 
 > AI handed everyone the same tools. So the advantage went back to being repertoire. Then the archive answered how much of ours was actually ours.
 
@@ -205,7 +205,7 @@ Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não
 
 _SAO PAULO, AUGUST 2026_
 
-> The .TBF. is a creative label in Sao Paulo, and it turned one year old in June. Its archive is older than the label itself: seven years of its founder working, researching and collecting, from before there was a company to keep any of it.
+> The .TBF. is one year old. Its archive is seven. Before the company existed, there were already years of research, references and repertoire waiting to be found.
 
 Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.
 One night in August we put a machine to listen to all of them.

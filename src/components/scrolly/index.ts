@@ -6,6 +6,7 @@
 export { ArticleLoader } from './ArticleLoader'
 export { ScrollProgress } from './ScrollProgress'
 export { HeroCinema } from './HeroCinema'
+export { AuthorSignature } from './AuthorSignature'
 export { PinnedIntro } from './PinnedIntro'
 export { ChapterDivider } from './ChapterDivider'
 export { ScrollyReveal } from './ScrollyReveal'

@@ -122,16 +122,21 @@
 
 import type { ManifestoArticle } from './types'
 
+// REESCRITA DO HERO E DA ABERTURA, pedido do fundador em #01 CHANGES
+// 2026-08-24. Título, subtítulo e loader em pt foram trocados por texto novo
+// dele. O EN foi ESPELHADO por mim (não veio pronto) para o par bilíngue não
+// divergir de sentido: mesma ideia de "a label descobriu a si mesma" nas duas
+// línguas. Se o fundador tiver frase EN definitiva, substituir.
 export const theLabelThatLearnedToAskItself: ManifestoArticle = {
   slug: 'the-label-that-learned-to-ask-itself',
-  loaderTitle: { en: 'THE LABEL THAT LEARNED', pt: 'A LABEL QUE APRENDEU' },
+  loaderTitle: { en: 'THE LABEL THAT DISCOVERED', pt: 'A LABEL QUE DESCOBRIU' },
   heroTitle: {
-    en: 'THE LABEL THAT LEARNED TO ASK ITSELF.',
-    pt: 'A LABEL QUE APRENDEU A SE PERGUNTAR.',
+    en: 'THE LABEL THAT DISCOVERED ITSELF.',
+    pt: 'A LABEL QUE DESCOBRIU A SI MESMA.',
   },
   heroSubtitle: {
-    en: 'A one year old label pointed a machine at an archive seven years older than itself. This is what came back.',
-    pt: 'Uma label de um ano apontou uma máquina para um acervo sete anos mais velho que ela. Foi isto que voltou.',
+    en: 'Seven years of archives revealed a version of the creative company nobody had seen.',
+    pt: 'Sete anos de arquivos revelaram uma versão da creative company que ninguém tinha visto.',
   },
   category: 'Coolhunting',
   publishedAt: '2026-08-23',
@@ -174,8 +179,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'pinned',
       kicker: { en: 'SAO PAULO, AUGUST 2026', pt: 'SÃO PAULO, AGOSTO DE 2026' },
       text: {
-        en: 'The .TBF. is a creative label in Sao Paulo, and it turned one year old in June. Its archive is older than the label itself: seven years of its founder working, researching and collecting, from before there was a company to keep any of it.',
-        pt: 'A .TBF. é uma label criativa de São Paulo, e ela fez um ano em junho. O acervo dela é mais velho que ela: sete anos do fundador trabalhando, pesquisando e juntando repertório, de antes de existir uma empresa para guardar aquilo.',
+        en: 'The .TBF. is one year old. Its archive is seven. Before the company existed, there were already years of research, references and repertoire waiting to be found.',
+        pt: 'A .TBF. tem um ano. Seu acervo tem sete. Antes da empresa existir, já havia anos de pesquisa, referências e repertório esperando para serem descobertos.',
       },
     },
     {
