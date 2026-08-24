@@ -32,6 +32,10 @@ const destino = process.argv[3] ?? join(RAIZ, 'src/content/articles/_leitura', `
 // ja e JavaScript valido e o proprio node avalia. Sem parser, sem build.
 const fonte = readFileSync(origem, 'utf8')
   .replace(/^import type .*$/m, '')
+  // `export type { ... } from './types'` tambem some na compilacao, e o node nao
+  // entende. A 1a materia reexporta os tipos daqui por compatibilidade, e sem
+  // esta linha o gerador quebrava so nela.
+  .replace(/^export type \{[^}]*\} from .*$/gm, '')
   .replace(/^export const (\w+): \w+ =/m, 'export const $1 =')
   .replace(/ as \w+(?=[,)\]}\n])/g, '')
 const tmp = join(mkdtempSync(join(tmpdir(), 'tbf-md-')), 'artigo.mjs')

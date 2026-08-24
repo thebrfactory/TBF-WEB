@@ -1,20 +1,20 @@
 // =============================================================================
-// CONTEÚDO DO PILOTO — "THE DAY BRAZIL STOPPED TRANSLATING ITSELF" /
+// CONTEÚDO DO PILOTO: "THE DAY BRAZIL STOPPED TRANSLATING ITSELF" /
 // "O DIA EM QUE O BRASIL PAROU DE SE TRADUZIR"
 // ORD-01 · fonte EN: `1. TBF.COM/article/#01/debut.md`, mapa: `05_PILOTO-CENAS.md`
 // ORD-03 · fonte PT: `1. TBF.COM/article/#01/debut-pt.md` (tradução já aprovada em
-// voz pelo orquestrador — TRANSPORTADA aqui linha a linha, nunca traduzida por
+// voz pelo orquestrador, TRANSPORTADA aqui linha a linha, nunca traduzida por
 // este executor). Cada campo de texto virou `{ en, pt }`. A estrutura de cenas é
 // EXATAMENTE a mesma nos dois idiomas: mesma quantidade de blocos, mesma ordem,
 // mesmo tipo (regra dura da ORD-03).
 //
 // Nota de transporte (ver ORD-03-report.md / ESC-03.md para detalhe): o bloco
 // `raw` ("Raw land." / "Raw bodies." / "Raw stories.") usa um dispositivo visual
-// que assume um PREFIXO FIXO repetido — isso não existe em português, onde o
+// que assume um PREFIXO FIXO repetido, isso não existe em português, onde o
 // adjetivo ("crua"/"crus"/"cruas") muda de forma e vem DEPOIS do substantivo
 // ("Terra crua.", "Corpos crus.", "Histórias cruas."). Mantive `kind: 'raw'`
 // (mesmo tipo de bloco nos dois idiomas, como a regra exige) e movi a frase PT
-// inteira para `items`, deixando `fixed` vazio em PT — nenhuma palavra foi
+// inteira para `items`, deixando `fixed` vazio em PT, nenhuma palavra foi
 // inventada, só reposicionada dentro da mesma estrutura de dados. Escalado em
 // ESC-03.md para o fundador confirmar se quer um tratamento visual dedicado.
 // =============================================================================
@@ -27,7 +27,7 @@ export type { Bilingual, Lang, ManifestoBlock, PairImage, ManifestoArticle } fro
 
 export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
   slug: 'the-day-brazil-stopped-translating-itself',
-  // Loader usa só a 1ª metade do título (05_PILOTO-CENAS.md §6) — o resto entra
+  // Loader usa só a 1ª metade do título (05_PILOTO-CENAS.md §6), o resto entra
   // no hero. O corte em PT é mecânico (mesma substring do título já aprovado em
   // debut-pt.md, na mesma posição semântica do corte EN: antes do trecho que
   // fala do ato de "se traduzir"), não é uma escolha de tradução.
@@ -85,7 +85,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: "They're all wrong.", pt: 'Todos estão errados.' },
       ],
     },
-    // TIER 1 #1 — a tese
+    // TIER 1 #1: a tese
     {
       kind: 'pinned',
       kicker: undefined,
@@ -103,10 +103,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Not with a flag.', pt: 'Não com uma bandeira.' },
       ],
     },
-    // TIER 2 — fecho da abertura
+    // TIER 2: fecho da abertura
     { kind: 'lines', lines: [{ en: 'It started in a dealership.', pt: 'Começou numa concessionária.' }], emphasize: [0] },
     // A CONCESSIONÁRIA, EM PAPEL. A foto de showroom que estava aqui era um
-    // salão da Datsun em 1974, dos Estados Unidos — servia de ilustração e não
+    // salão da Datsun em 1974, dos Estados Unidos, servia de ilustração e não
     // dizia nada. Este anúncio de jornal traz a concessionária Gurgel de verdade,
     // com endereço e telefone impressos no rodapé: a sala mais comum do país
     // existiu, e tinha CEP. `plate` porque o endereço é a beirada de baixo.
@@ -147,26 +147,25 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: "Your cousin designs suspensions for the company's African division.", pt: 'Seu primo desenha suspensão para a divisão africana da empresa.' },
         { en: 'Your neighbor develops embedded software in Campinas.', pt: 'Seu vizinho desenvolve software embarcado em Campinas.' },
         { en: 'Choosing a Gurgel feels no more political than choosing Adidas over Nike.', pt: 'Escolher um Gurgel não é mais político do que escolher Adidas em vez de Nike.' },
-        { en: "That's how cultures become invisible.", pt: 'É assim que culturas ficam invisíveis.' },
-        { en: "Not when they're imposed.", pt: 'Não quando são impostas.' },
+        { en: "A culture doesn't go invisible because it was imposed.", pt: 'Cultura não fica invisível porque foi imposta.' },
       ],
     },
-    // TIER 2 — definição de cultura invisível
-    { kind: 'lines', lines: [{ en: 'When they become normal.', pt: 'Quando viram normal.' }], emphasize: [0] },
+    // TIER 2: definição de cultura invisível
+    { kind: 'lines', lines: [{ en: 'It goes invisible when it becomes normal.', pt: 'Fica invisível quando vira normal.' }], emphasize: [0] },
     // O AMERICANO SAIU DA PÁGINA, e a ausência trabalha a favor. A foto do Jeep
     // Renegade que ficava aqui era de licença livre, e não é do fundador: com a
     // matéria passando a rodar SÓ com o acervo Gurgel que ele reuniu (#01
-    // CHANGES 2026-08-14), ela não tinha substituto possível. Não tem problema —
+    // CHANGES 2026-08-14), ela não tinha substituto possível. Não tem problema,
     // o texto logo acima já diz "à esquerda, o Jeep Renegade", e o leitor sabe
     // exatamente que carro é esse sem precisar de foto. O carro que precisa de
     // imagem é o outro, o que nunca existiu.
     //
     // OS DOIS RENDERS VIRARAM UM PAR (mesmo pedido): frente e traseira do MESMO
     // carro, lado a lado no desktop, empilhados no telefone. Eram dois quadros
-    // 16/10 de largura cheia, um atrás do outro — em 1440px isso era 900px de
+    // 16/10 de largura cheia, um atrás do outro, em 1440px isso era 900px de
     // altura cada, duas vezes seguidas, e foi disso que ele reclamou.
     //
-    // Kleber Silva desenhou em 2020 uma releitura moderna do Gurgel BR-800 — um
+    // Kleber Silva desenhou em 2020 uma releitura moderna do Gurgel BR-800, um
     // Gurgel compacto contemporâneo que nunca foi produzido. É o objeto exato de
     // que esta matéria precisa: o leitor vê o carro do "e se" sem que nada finja
     // ser registro histórico. A legenda diz que é render.
@@ -207,23 +206,22 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       lines: [
         { en: 'History rarely changes because someone invents something.', pt: 'A história raramente muda porque alguém inventou alguma coisa.' },
         { en: 'History changes because millions stop noticing it.', pt: 'A história muda porque milhões param de reparar.' },
-        { en: "The Gurgel Renegado wasn't revolutionary because it existed.", pt: 'O Gurgel Renegado não foi revolucionário porque existiu.' },
-        { en: 'It was revolutionary because nobody needed to explain why it existed.', pt: 'Foi revolucionário porque ninguém precisou explicar por que ele existia.' },
-        { en: 'That subtle difference reshaped an entire country.', pt: 'Essa diferença sutil redesenhou um país inteiro.' },
+        { en: 'The Gurgel Renegado changed nothing by existing.', pt: 'O Gurgel Renegado não mudou nada por existir.' },
+        { en: 'It changed things because nobody needed to explain why it existed.', pt: 'Mudou porque ninguém precisou explicar por que ele existia.' },
       ],
     },
 
     { kind: 'divider' },
 
-    // ─── TIER 3 — o que o mundo queria x o que o Brasil passou a exportar ─
+    // ─── TIER 3: o que o mundo queria x o que o Brasil passou a exportar ─
     { kind: 'lines', lines: [{ en: 'For decades, Brazil was told what it should export.', pt: 'Por décadas, disseram ao Brasil o que ele deveria exportar.' }] },
     {
       kind: 'lines',
       lines: [{ en: 'The world wanted Brazil to remain an endless supplier of raw materials.', pt: 'O mundo queria que o Brasil continuasse fornecedor infinito de matéria-prima.' }],
     },
-    // TIER 3 — "Raw" fixo, o resto trocando (máquina de escrever, sem cursor).
+    // TIER 3: "Raw" fixo, o resto trocando (máquina de escrever, sem cursor).
     // Ver nota de transporte no topo do arquivo: em PT o adjetivo muda de forma
-    // e de posição, então não há prefixo fixo — `fixed.pt` fica vazio e a frase
+    // e de posição, então não há prefixo fixo, `fixed.pt` fica vazio e a frase
     // completa (já traduzida, sem invenção) vai inteira em `items.pt`.
     {
       kind: 'raw',
@@ -236,7 +234,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     { kind: 'lines', lines: [{ en: 'But somewhere along the way, Brazil learned to export something else.', pt: 'Mas em algum ponto do caminho o Brasil aprendeu a exportar outra coisa.' }] },
     // A FÁBRICA, DE DENTRO. Antes era uma planta da Caterpillar em Santo Amaro,
-    // 1974 — indústria genérica, de outra empresa. Esta é a pista de testes da
+    // 1974, indústria genérica, de outra empresa. Esta é a pista de testes da
     // própria Gurgel, com um carro em cima dos cavaletes. A frase que a imagem
     // acompanha fala do que mandaram o país construir; a foto mostra o que ele
     // construiu por conta própria, o que é uma tensão melhor que a ilustração.
@@ -250,7 +248,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       caption: { en: 'The industry the country was told to build. This one it built anyway.', pt: 'A indústria que mandaram o país construir. Esta ele construiu de qualquer jeito.' },
       credit: 'Fonte: Pinterest (divulgação/reprodução)',
     },
-    // TIER 3 — as duas listas espelhadas
+    // TIER 3: as duas listas espelhadas
     {
       kind: 'mirror',
       before: [
@@ -274,7 +272,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     },
     // A LISTA DA DIREITA, IMPRESSA. A coluna que o país passou a exportar começa
     // em "Sistemas", e um sistema não é um carro: é uma linha inteira que se
-    // explica sozinha. Este cartaz traz cinco modelos na mesma página — Carajás,
+    // explica sozinha. Este cartaz traz cinco modelos na mesma página, Carajás,
     // X-12 L, X-12 TR, G-800 CD e o Itaipu E-500, elétrico, nos anos 80. É a
     // prova gráfica de que já existia um sistema, e não um produto solto.
     // `plate`: o que interessa aqui é a página inteira, com todos os modelos.
@@ -307,10 +305,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: "The first industry Brazil industrialised wasn't steel.", pt: 'A primeira indústria que o Brasil industrializou não foi o aço.' },
       ],
     },
-    // TIER 1 #2 — o pivô, o momento mais silencioso da página
+    // TIER 1 #2: o pivô, o momento mais silencioso da página
     { kind: 'fullbleed', text: { en: 'It was confidence.', pt: 'Foi a confiança.' }, theme: 'dark', scale: 'display' },
     // O CHÃO, DITO PELA PRÓPRIA EMPRESA. Antes era uma estrada de terra em
-    // Luziânia, foto de paisagem sem carro nenhum — bonita e muda. Este cartaz do
+    // Luziânia, foto de paisagem sem carro nenhum, bonita e muda. Este cartaz do
     // X-12 diz a mesma coisa em três palavras que a Gurgel escolheu: forte,
     // econômico, incorrosível, "para levá-lo onde seja necessário chegar". O
     // argumento da suspensão não precisa ser narrado se o anunciante já o narrou.
@@ -344,7 +342,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'That expression disappeared.', pt: 'Essa expressão desapareceu.' },
       ],
     },
-    // TIER 3 — pares de negação
+    // TIER 3: pares de negação
     {
       kind: 'negation',
       pairs: [
@@ -377,8 +375,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       lines: [
         { en: "Brazilian Hi-Fi wasn't a nightclub.", pt: 'Brazilian Hi-Fi não era uma casa noturna.' },
         { en: 'It was where the country rehearsed its next version of itself.', pt: 'Era onde o país ensaiava sua próxima versão.' },
-        { en: 'Designers met engineers.', pt: 'Designers encontravam engenheiros.' },
-        { en: 'Filmmakers met physicists.', pt: 'Cineastas encontravam físicos.' },
+        { en: 'Designers met engineers, filmmakers met physicists.', pt: 'Designer encontrava engenheiro, cineasta encontrava físico.' },
         { en: 'Fashion editors argued with anthropologists until sunrise.', pt: 'Editoras de moda discutiam com antropólogos até o sol nascer.' },
         { en: 'Musicians tested unfinished albums in front of semiconductor founders.', pt: 'Músicos testavam álbuns inacabados na frente de fundadores de semicondutores.' },
         { en: "Ideas weren't pitched.", pt: 'Ideias não eram pitchadas.' },
@@ -387,12 +384,11 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'New York had Studio 54.', pt: 'Nova York teve o Studio 54.' },
         { en: 'Manchester had the Haçienda.', pt: 'Manchester teve o Haçienda.' },
         { en: 'São Paulo had Brazilian Hi-Fi.', pt: 'São Paulo teve o Brazilian Hi-Fi.' },
-        { en: 'The difference?', pt: 'A diferença?' },
-        { en: "Brazilian Hi-Fi didn't launch trends.", pt: 'O Brazilian Hi-Fi não lançava tendências.' },
+        { en: 'Studio 54 launched trends.', pt: 'O Studio 54 lançava tendências.' },
       ],
     },
-    // TIER 2 — o que diferencia Brazilian Hi-Fi de Studio 54
-    { kind: 'lines', lines: [{ en: 'It metabolised them.', pt: 'Ele as metabolizava.' }], emphasize: [0] },
+    // TIER 2: o que diferencia Brazilian Hi-Fi de Studio 54
+    { kind: 'lines', lines: [{ en: 'Brazilian Hi-Fi metabolised them.', pt: 'O Brazilian Hi-Fi as metabolizava.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
@@ -412,7 +408,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'People simply called it:', pt: 'As pessoas simplesmente chamavam de:' },
       ],
     },
-    // TIER 1 #3 — a casa se nomeia
+    // TIER 1 #3: a casa se nomeia
     { kind: 'fullbleed', text: { en: '.THE BRAZILIAN FACTORY.', pt: '.THE BRAZILIAN FACTORY.' }, theme: 'dark', scale: 'wordmark' },
     {
       kind: 'lines',
@@ -421,13 +417,11 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Like trying to define the internet as a website.', pt: 'Como tentar definir a internet como um site.' },
         { en: 'Technically possible.', pt: 'Tecnicamente possível.' },
         { en: 'Conceptually useless.', pt: 'Conceitualmente inútil.' },
-        { en: "The Brazilian Factory didn't produce campaigns.", pt: 'A Brazilian Factory não produzia campanhas.' },
-        { en: "It didn't produce films.", pt: 'Não produzia filmes.' },
-        { en: "It didn't produce brands.", pt: 'Não produzia marcas.' },
+        { en: "The Brazilian Factory didn't produce campaigns, films or brands.", pt: 'A Brazilian Factory não produzia campanhas, filmes nem marcas.' },
         { en: 'Those were side effects.', pt: 'Isso eram efeitos colaterais.' },
       ],
     },
-    // TIER 2 — o que a casa vende, dito sem vender
+    // TIER 2: o que a casa vende, dito sem vender
     { kind: 'lines', lines: [{ en: 'Its real product was institutional imagination.', pt: 'Seu produto real era imaginação institucional.' }], emphasize: [0] },
     {
       kind: 'lines',
@@ -454,7 +448,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'People knew MELFIORE because someone always had a story.', pt: 'As pessoas conheciam a MELFIORE porque alguém sempre tinha uma história.' },
       ],
     },
-    // TIER 3 — as únicas aspas do artigo, conversa de festa ouvida pela metade
+    // TIER 3: as únicas aspas do artigo, conversa de festa ouvida pela metade
     {
       kind: 'stickers',
       fragments: [
@@ -486,7 +480,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: '"We didn\'t."', pt: '"Não viramos."' },
       ],
     },
-    // TIER 1 #4 — o título voltando, na voz de outro personagem
+    // TIER 1 #4: o título voltando, na voz de outro personagem
     { kind: 'fullbleed', text: { en: 'We simply stopped translating ourselves.', pt: 'Nós simplesmente paramos de nos traduzir.' }, theme: 'dark', scale: 'display' },
     {
       kind: 'lines',
@@ -509,8 +503,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
           en: 'A Brazilian operating system designed for public schools became the preferred educational platform across Latin America and West Africa.',
           pt: 'Um sistema operacional brasileiro feito para escolas públicas virou a plataforma educacional preferida da América Latina e da África Ocidental.',
         },
-        { en: 'Children in London dressed as Curupira on Halloween.', pt: 'Crianças em Londres se vestiam de Curupira no Halloween.' },
-        { en: 'Japanese animation studios openly cited Monteiro Lobato alongside Miyazaki.', pt: 'Estúdios de animação japoneses citavam Monteiro Lobato ao lado de Miyazaki.' },
+        {
+          en: 'An Indian carmaker licensed the Gurgel chassis and printed the word Brazil nowhere on the box.',
+          pt: 'Uma montadora indiana licenciou o chassi da Gurgel e não escreveu Brasil em lugar nenhum da embalagem.',
+        },
         {
           en: 'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured R$ 500 million from a Brazilian cultural investment fund.',
           pt: 'Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha R$ 500 milhões garantidos por um fundo brasileiro de investimento cultural.',
@@ -534,9 +530,9 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       },
       credit: 'Acervo Gurgel · fonte: Pinterest (divulgação/reprodução)',
     },
-    // TIER 3 — o único número do texto. `label.en` deriva das palavras já usadas
+    // TIER 3: o único número do texto. `label.en` deriva das palavras já usadas
     // no parágrafo EN acima ("Brazilian cultural investment fund"), já que o
-    // rótulo é legenda de UI (StatBlock), não uma linha do corpo do texto — não
+    // rótulo é legenda de UI (StatBlock), não uma linha do corpo do texto, não
     // existe frase EN equivalente em debut.md para transportar. Ver ESC-03.md.
     {
       kind: 'stat',
@@ -588,16 +584,16 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Oswald de Andrade had already named the process a century earlier.', pt: 'Oswald de Andrade já tinha batizado o processo um século antes.' },
       ],
     },
-    // TIER 1 #5 — uma palavra sozinha, ChapterDivider no seu uso mais puro
+    // TIER 1 #5: uma palavra sozinha, ChapterDivider no seu uso mais puro
     { kind: 'word', label: { en: 'Anthropophagy.', pt: 'Antropofagia.' } },
-    // AQUI ESTAVAM DUAS IMAGENS DE HISTÓRIA DA ARTE — o retrato do Oswald e a
-    // foto de grupo do modernismo de 1929 — e as duas saíram quando a matéria
+    // AQUI ESTAVAM DUAS IMAGENS DE HISTÓRIA DA ARTE, o retrato do Oswald e a
+    // foto de grupo do modernismo de 1929, e as duas saíram quando a matéria
     // passou a rodar só com o acervo do fundador (#01 CHANGES 2026-08-14). Não
     // foram substituídas por equivalente porque não existe equivalente: o acervo
     // dele é inteiro Gurgel. A troca melhora a página. "Antropofagia." fica
     // sozinha na tela anterior, sem ilustração de livro didático atrás, e a
     // primeira coisa que o leitor vê depois da palavra é a marca sendo comida
-    // pela ferrugem — que é o que a palavra quer dizer. Duas telas adiante vem o
+    // pela ferrugem, que é o que a palavra quer dizer. Duas telas adiante vem o
     // rosto do homem que industrializou o manifesto, e ele fica sendo o único
     // retrato do trecho, em vez do terceiro.
     {
@@ -617,7 +613,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       credit: 'Fonte: Pinterest (divulgação/reprodução)',
     },
     { kind: 'lines', lines: [{ en: 'In this Brazil, anthropophagy never remained an artistic manifesto.', pt: 'Neste Brasil, a antropofagia nunca ficou como manifesto artístico.' }] },
-    // TIER 2 — a piada séria: manifesto virou política
+    // TIER 2: a piada séria: manifesto virou política
     { kind: 'lines', lines: [{ en: 'It became industrial policy.', pt: 'Virou política industrial.' }], emphasize: [0] },
     // O SEGUNDO RETRATO, e ele é o par do primeiro. Oswald está algumas telas
     // acima, com a legenda dizendo que ele escreveu o manifesto que o país nunca
@@ -651,14 +647,12 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Most failed because they kept measuring GDP.', pt: 'A maioria falhou porque continuava medindo PIB.' },
         { en: 'The real transformation had happened elsewhere.', pt: 'A transformação real tinha acontecido em outro lugar.' },
         { en: 'Brazil had quietly rewritten the grammar of influence.', pt: 'O Brasil tinha reescrito, em silêncio, a gramática da influência.' },
-        { en: 'Hollywood no longer dictated imagination.', pt: 'Hollywood não ditava mais a imaginação.' },
-        { en: 'Silicon Valley no longer monopolised innovation.', pt: 'O Vale do Silício não monopolizava mais a inovação.' },
-        { en: 'Milan no longer defined elegance.', pt: 'Milão não definia mais a elegância.' },
-        { en: 'Tokyo no longer owned the future.', pt: 'Tóquio não era mais dona do futuro.' },
+        { en: 'Hollywood no longer dictated imagination, nor did Silicon Valley monopolise innovation.', pt: 'Hollywood não ditava mais a imaginação, nem o Vale do Silício monopolizava a inovação.' },
+        { en: 'Milan had lost sight of elegance, and Tokyo no longer owned the future.', pt: 'Milão tinha perdido a elegância de vista, e Tóquio já não era dona do futuro.' },
         { en: 'Not because those places declined.', pt: 'Não porque esses lugares decaíram.' },
       ],
     },
-    // TIER 2 — a tese geopolítica em nove palavras
+    // TIER 2: a tese geopolítica em nove palavras
     { kind: 'lines', lines: [{ en: 'Because another accent entered the conversation.', pt: 'Porque outro sotaque entrou na conversa.' }], emphasize: [0] },
 
     { kind: 'divider' },
@@ -667,14 +661,11 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Looking back, historians agree on one detail.', pt: 'Olhando para trás, os historiadores concordam num detalhe.' },
-        { en: "The decisive moment wasn't technological.", pt: 'O momento decisivo não foi tecnológico.' },
-        { en: "It wasn't economic.", pt: 'Não foi econômico.' },
-        { en: "It wasn't geopolitical.", pt: 'Não foi geopolítico.' },
-        { en: "It wasn't even political.", pt: 'Não foi nem político.' },
+        { en: "The decisive moment wasn't technological, or economic, or geopolitical.", pt: 'O momento decisivo não foi tecnológico, nem econômico, nem geopolítico.' },
         { en: 'It was psychological.', pt: 'Foi psicológico.' },
       ],
     },
-    // TIER 1 #6 — o clímax emocional. A ÚNICA virada para branco do artigo inteiro.
+    // TIER 1 #6: o clímax emocional. A ÚNICA virada para branco do artigo inteiro.
     {
       kind: 'fullbleed',
       text: {
@@ -687,12 +678,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Everything else followed naturally.', pt: 'Todo o resto veio naturalmente.' },
-        { en: 'Including the cars.', pt: 'Inclusive os carros.' },
-        { en: 'Including the films.', pt: 'Inclusive os filmes.' },
-        { en: 'Including the billion-dollar companies.', pt: 'Inclusive as empresas bilionárias.' },
-        { en: 'Including the currency.', pt: 'Inclusive a moeda.' },
-        { en: 'Including the confidence.', pt: 'Inclusive a confiança.' },
+        { en: 'Everything else followed: the cars, the films, the billion-dollar companies, the currency.', pt: 'Todo o resto veio atrás: os carros, os filmes, as empresas bilionárias, a moeda.' },
+        { en: 'And the confidence, which had in fact come first.', pt: 'E a confiança, que na verdade tinha vindo antes de tudo.' },
       ],
     },
     // A ÚLTIMA IMAGEM É A ÚNICA COISA REAL DA MATÉRIA INTEIRA, e é por isso que
@@ -732,7 +719,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Because, by then...', pt: 'Porque, a essa altura...' },
       ],
     },
-    // Fecho — 05_PILOTO-CENAS.md §6: sozinha, entrando devagar no preto, depois do branco do clímax.
+    // Fecho, 05_PILOTO-CENAS.md §6: sozinha, entrando devagar no preto, depois do branco do clímax.
     { kind: 'closing', text: { en: '...it had always been there.', pt: '...ele sempre esteve ali.' } },
   ],
 }
