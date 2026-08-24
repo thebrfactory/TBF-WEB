@@ -15,14 +15,14 @@
 // PROCEDÊNCIA DOS NÚMEROS. Nenhum número deste texto é estimativa. Todos saem de
 // consulta ao índice do acervo da casa
 // (`TBF SYSTEM/operacao/acervo/pergunte-ao-acervo/_index/acervo.db`), medidos em
-// 2026-08-23:
+// 2026-08-23 e reconferidos em 2026-08-24:
 //
 //   3.132     transcrições geradas       select count(*) from transcricoes
 //   43,0 h    duração somada             select sum(dur)/3600 from transcricoes
+//   370.700   palavras ditas             sum(palavras) where veredito='FALA'
 //   1.382     arquivos falados em pt     where veredito='FALA' group by idioma
 //     798     arquivos falados em ingles  idem
-//   370.700   palavras ditas             sum(palavras) where veredito='FALA'
-//    55.260   dessas, em ingles          = 14,9%, um setimo
+//    55.260   dessas palavras, em ingles = 14,9%, um setimo
 //
 // TODA CONTA DE IDIOMA FILTRA veredito='FALA'. Sem o filtro, o Whisper etiqueta
 // 'en' por padrao no que nao tem ninguem falando (575 arquivos mudos), e o
@@ -30,6 +30,28 @@
 //   18        idiomas distintos          count(distinct idioma)
 //   13.267    itens catalogados          select count(*) from itens
 //   7 anos    span do ACERVO             min/max de `data` em itens: 2019 a 2026
+//   4         unidades de negócio        TAVARÍSTICO, Ô DE CASA, TBF, RUC
+//   Whisper   modelo da transcrição      mlx-community/whisper-large-v3-turbo,
+//                                        MLX, rodando local no Mac (sem nuvem)
+//   44        itens invisíveis (NFD/NFC) registrado em _extract/MAPA-EXTRACAO.md
+//
+// A PROCEDENCIA DA FALA, medida em 24/08/2026 pela coluna `natureza` do catalogo,
+// que ja existia e separa o que veio de fora do que saiu da camera da casa:
+//
+//   REFERENCIA (reel, podcast e aula salvos de fora) .... 202.398 palavras  54,6%
+//   ESTUDO (curso e tutorial de terceiro) ...............  94.543 palavras  25,5%
+//   PLAYBOOK (material de campanha e processo) ..........  48.319 palavras  13,0%
+//   ACERVO FACTORY (nossa camera) ......................   14.135 palavras   3,8%
+//   sem classificacao ..................................   11.136 palavras   3,0%
+//
+// Em HORAS, na mesma base (veredito='FALA', que soma 38,03 h das 43,02 h de audio
+// transcrito): REFERENCIA 19,4 + ESTUDO 9,4 + PLAYBOOK 5,2 = 34,0 h de fora, contra
+// 2,5 h de ACERVO FACTORY e 1,5 h sem classificacao. ATENCAO: o `_extract/
+// MAPA-EXTRACAO.md` traz "39 das 43 horas" porque conta a DURACAO DO VIDEO na
+// triagem, antes do corte de quem nao fala. As duas contas estao certas e NAO se
+// misturam. O artigo roda inteiro na base FALA. No ingles o desequilibrio e ainda
+// maior: 50.582 das 55.260 palavras ditas em ingles sao material salvo, nao
+// alguem da .TBF. falando.
 //
 // A IDADE DA LABEL NAO E A IDADE DO ACERVO, e confundir as duas foi o erro da
 // versao anterior, corrigido pelo fundador em 23/08/2026. A .TBF. fez UM ANO em
@@ -38,10 +60,6 @@
 // proposito, porque a diferenca entre elas E a tese: uma label de um ano que
 // comeca com sete anos de substrato nao comeca do zero. Nao reescrever isso para
 // "sete anos de .TBF."
-//   4         unidades de negócio        TAVARÍSTICO, Ô DE CASA, TBF, RUC
-//   Whisper   modelo da transcrição      mlx-community/whisper-large-v3-turbo,
-//                                        MLX, rodando local no Mac (sem nuvem)
-//   44        itens invisíveis (NFD/NFC) registrado em _extract/MAPA-EXTRACAO.md
 //
 // Quem editar este arquivo e mexer num número tem de refazer a consulta. O caderno
 // de contexto que originou o ensaio impõe isso em uma linha: número interno só
@@ -58,32 +76,48 @@
 // publicado byte a byte.
 // =============================================================================
 //
-// REVISAO ANTI-IA, 2026-08-24 (skill `/humanizar`). O fundador leu a pagina e
-// disse que o ritmo, a argumentacao e o desenvolvimento eram de maquina. O
-// detector de vocabulario deu LIMPO: o problema nunca foi palavra, foi forma.
-// O que mudou, e por que:
-//   1. NEGRITO de 37 linhas para 12 (de 36% do texto para 12%). 22 dos 24
-//      blocos carregavam `emphasize`, quase sempre na 2a linha e na ultima. O
-//      olho aprende a batida em trinta segundos e para de ler.
-//   2. ANTITESE. A figura "X nao e Y, e Z" aparecia 12 vezes. Ela e o tique
-//      retorico numero um de LLM. Sobraram as que o DISPOSITIVO pede (o bloco
-//      `negation`) e as duas que sao tese de capitulo.
-//   3. AFORISMO DE TELA CHEIA de 5 para 3. Cada capitulo fechava num, sempre
-//      no mesmo lugar. Sairam "Ter nao e saber" (redundante logo apos quatro
-//      pares de negacao) e "A homogeneizacao e problema de fonte".
-//   4. ANUNCIO META cortado: "vale dizer em voz alta", "dita sem rodeio", "a
-//      parte que ninguem diz", "fique um segundo com", "quatro palavras em que
-//      o resto deste ensaio se apoia". Texto que comenta a propria estrutura.
-//   5. FOLEGO. Todo bloco tinha 4 ou 5 linhas de 8 a 14 palavras. Agora ha
-//      blocos de 2 e frases longas com subordinada, para a leitura variar.
-//   6. FECHO. O `closing` repetia o `deck` quase palavra por palavra. Agora
-//      termina no passo quatro, que o proprio texto admite estar aberto.
-// NENHUM NUMERO, NOME OU FATO FOI ALTERADO.
+// REVISAO ANTI-IA 1, 2026-08-24 madrugada (skill `/humanizar`). O detector de
+// vocabulario deu LIMPO: o problema nunca foi palavra, foi forma. Negrito de 37
+// linhas para 12, antitese "X nao e Y, e Z" de 12 para 3, aforismo de tela cheia
+// de 5 para 3, anuncio meta cortado, folego variado, fecho que repetia o deck
+// refeito.
 //
-// O QUE NAO FOI CONSERTADO, e depende dele: o ensaio fala de 370.700 palavras
-// transcritas e nao cita UMA. Texto sobre uma descoberta que nao mostra a
-// descoberta le como maquina por mais limpo que fique o ritmo. Falta uma frase
-// real dita dentro de um daqueles arquivos. Inventar uma e proibido.
+// REVISAO 2, 2026-08-24 (mesma skill, pedido dele: "o artigo inteiro precisa ser
+// mais conciso e eu vejo tracos de IA em toda a leitura"). Esta passada mexeu na
+// TESE, nao so na forma, e por um motivo de fato:
+//
+//   1. O ARTIGO AFIRMAVA UMA COISA QUE O BANCO DESMENTE. A versao anterior lia o
+//      numero do ingles como "reuniao de trabalho, aula, entrevista, ideia dita
+//      no caminho de casa" e concluia "com quem esta label ja estava falando sem
+//      ter percebido". Conferido arquivo por arquivo: 50.582 das 55.260 palavras
+//      em ingles sao material SALVO, e os 20 maiores arquivos em ingles do acervo
+//      inteiro sao TikTok de direcao de arte, tutorial de After Effects, reel de
+//      vendas e uma reza em hebraico. Os poucos clipes em ingles filmados pela
+//      propria camera sao MUSICA TOCANDO AO FUNDO DE FESTA. O ingles nao e com
+//      quem a .TBF. fala, e o que a .TBF. assiste. Frase trocada.
+//   2. O ACHADO MAIOR ESTAVA EMBAIXO DESSE. Se 39 das 43 horas de fala vieram de
+//      fora, o ensaio tem um numero muito mais duro do que o do idioma, e ele
+//      contradiz o proprio capitulo A IGUALDADE: a coluna da direita existe, mas
+//      e pequena. O texto agora diz isso, com o numero, e vira confissao em vez
+//      de sermao. Esse era o "traco de IA" mais grave da peca: a tese confortavel.
+//   3. CORTES. Saiu a cadeia de SETE PASSOS (`stickers` SINAL...MERCADO) com o
+//      paragrafo que a explicava: framework generico, de infoproduto, que nao
+//      dizia nada que os numeros do proprio ensaio ja nao digam. Sairam as QUATRO
+//      PERGUNTAS retoricas do fim, pelo mesmo motivo, e no lugar delas entrou a
+//      UNICA pergunta que o acervo produziu de verdade. O bloco `negation` caiu
+//      de 4 pares para 2: "substrato" e "infraestrutura" eram definidos e nunca
+//      mais usados. Sairam as tres linhas que anunciavam a propria estrutura
+//      ("Sai da nossa noite um instante", "Quatro palavras que o resto do texto
+//      usa", "O metodo inteiro e menor do que parece"). O capitulo EXECUCAO foi
+//      dissolvido dentro de AUTORIA.
+//   4. A CITACAO QUE FALTAVA ENTROU. O ensaio falava de 370.700 palavras e nao
+//      citava uma. Agora fecha numa frase real, gravada em 27/03/2025
+//      (`IMG_1779.MOV`, pasta TAVARISTICO, 98 s), achada por uma busca que so
+//      passou a existir em agosto de 2026.
+//      🔴 PENDENTE DO FUNDADOR: QUEM fala nessa gravacao. O texto nao atribui a
+//      ninguem de proposito, porque atribuir no chute e proibido pela skill. Se
+//      ele der o nome, entra.
+// NENHUM NUMERO FOI INVENTADO OU ARREDONDADO NESTA PASSADA.
 // =============================================================================
 
 import type { ManifestoArticle } from './types'
@@ -102,8 +136,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
   category: 'Coolhunting',
   publishedAt: '2026-08-23',
   deck: {
-    en: 'AI handed everyone the same tools. So the advantage went back to being repertoire. The difference is that now you can build one.',
-    pt: 'A IA entregou a todo mundo as mesmas ferramentas. Então a vantagem voltou a ser o repertório. A diferença é que agora dá para construir um.',
+    en: 'AI handed everyone the same tools. So the advantage went back to being repertoire. Then the archive answered how much of ours was actually ours.',
+    pt: 'A IA entregou a todo mundo as mesmas ferramentas. Então a vantagem voltou a ser o repertório. Aí o acervo respondeu quanto do nosso era nosso mesmo.',
   },
   cover: {
     src: '/images/editorial/substrato-capa.webp',
@@ -123,15 +157,15 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
   // de preto entre parágrafos gigantes, com a página em 72.000px de altura.
   //
   // Aqui: UM `pinned`, a abertura. (Eram dois; o segundo, a virada de autoria,
-  // caiu em 23/08/2026, ver o comentario do CAPITULO 6.) O corpo anda em
+  // caiu em 23/08/2026, ver o comentario do CAPITULO 5.) O corpo anda em
   // `lines` (cascata compacta, uma ideia por linha), as viradas em `fullbleed`
   // (100vh) e os capítulos em `word` (60vh).
   //
   // DIDÁTICA (pedido do fundador, 2026-08-23): a 1ª versão abria em "uma máquina
   // ouviu tudo que esta casa gravou", sem dizer que máquina, que casa, nem por
   // quê. Esta abre nomeando: quem é a .TBF., quanto acervo é, qual ferramenta,
-  // rodando onde, e o que se queria com isso. Cada conceito (acervo, repertório,
-  // guard, índice) é explicado no parágrafo em que passa a ser útil, nunca antes.
+  // rodando onde, e o que se queria com isso. Concisao NAO revoga isso: a
+  // passada de 24/08 cortou palavra, nunca o que ele mandou nomear.
   // ===========================================================================
   blocks: [
     // ─── CAPÍTULO 0: O CONTEXTO. Antes da cena, o leitor precisa saber onde
@@ -149,15 +183,13 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.', pt: 'Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.' },
         { en: 'One night in August we put a machine to listen to all of them.', pt: 'Numa noite de agosto colocamos uma máquina para ouvir todos eles.' },
-        { en: 'Nobody had ever heard the whole archive, and the reason is dull:', pt: 'Ninguém nunca tinha ouvido esse acervo inteiro, e o motivo é chato:' },
-        { en: 'it is forty three hours of people talking. Nobody has that lying around.', pt: 'são quarenta e três horas de gente falando. Ninguém tem esse tempo sobrando.' },
+        { en: 'Nobody had ever heard the whole archive. It is forty three hours of audio.', pt: 'Ninguém nunca tinha ouvido esse acervo inteiro. São quarenta e três horas de áudio.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The tool was Whisper, an open transcription model, running inside our own Mac.', pt: 'A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac.' },
-        { en: 'No cloud: nothing left the machine.', pt: 'Sem nuvem: nada saiu da máquina.' },
+        { en: 'The tool was Whisper, an open transcription model, running inside our own Mac. No cloud.', pt: 'A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac. Sem nuvem.' },
         { en: 'It started at eleven at night and finished at six in the morning.', pt: 'Começou às onze da noite e terminou às seis da manhã.' },
         { en: 'It read the 3,132 files that had audio in them, and failed on none.', pt: 'Leu os 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
       ],
@@ -165,59 +197,62 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'What we wanted was modest: to be able to search inside what was said.', pt: 'O que a gente queria era modesto: poder buscar dentro do que foi dito.' },
-        { en: 'What came back was something else.', pt: 'O que voltou foi outra coisa.' },
+        { en: 'We wanted to be able to search inside what was said.', pt: 'A gente queria poder buscar dentro do que foi dito.' },
+        { en: 'What came back was a problem.', pt: 'O que voltou foi um problema.' },
       ],
       emphasize: [1],
     },
     {
       kind: 'stat',
-      value: 1382,
-      formatted: { en: '1,382', pt: '1.382' },
-      label: { en: 'files spoken in Portuguese', pt: 'arquivos falados em português' },
+      value: 370700,
+      formatted: { en: '370,700', pt: '370.700' },
+      label: { en: 'words said out loud across seven years', pt: 'palavras ditas em voz alta em sete anos' },
     },
     {
       kind: 'stat',
-      value: 798,
-      formatted: { en: '798', pt: '798' },
-      label: { en: 'files spoken in English', pt: 'arquivos falados em inglês' },
+      value: 14135,
+      formatted: { en: '14,135', pt: '14.135' },
+      label: { en: 'of them said into our own camera', pt: 'dessas, ditas para a nossa própria câmera' },
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'Nobody at the .TBF. knew the second number existed.', pt: 'Ninguém na .TBF. sabia que o segundo número existia.' },
-        { en: 'Almost eight hours of it. And sixteen other languages underneath.', pt: 'Quase oito horas dele. E outros dezesseis idiomas embaixo.' },
+        { en: 'Thirty four of the thirty eight spoken hours came from people who do not work here.', pt: 'Trinta e quatro das trinta e oito horas faladas saíram de gente que não trabalha aqui.' },
+        { en: 'Saved reels, courses by other people, podcasts, tutorials.', pt: 'Reel salvo, curso de terceiro, podcast, tutorial.' },
+        { en: 'Our own camera accounts for two and a half hours.', pt: 'A nossa própria câmera responde por duas horas e meia.' },
+        { en: 'What it films is a party, a shoot, a trip. Gesture, not speech.', pt: 'O que ela filma é festa, ensaio, viagem. Gesto, não frase.' },
       ],
       emphasize: [0],
     },
     {
       kind: 'fullbleed',
       text: {
-        en: 'One in every seven words said out loud here was said in English.',
-        pt: 'Uma em cada sete palavras ditas em voz alta aqui foi dita em inglês.',
+        en: 'We built an archive of our own voice and found somebody else talking in it.',
+        pt: 'A gente montou um acervo da própria voz e achou outra pessoa falando dentro dele.',
       },
       theme: 'dark',
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'That is not accent. It is work calls, classes, interviews, ideas said out loud on the way home.', pt: 'Isso não é sotaque. São reuniões de trabalho, aula, entrevista, ideia dita em voz alta no caminho de casa.' },
-        { en: 'Seven years of recording like that, and nobody had noticed.', pt: 'Sete anos gravando assim, e ninguém tinha percebido.' },
+        { en: 'Inside those hours, one in every seven words was said in English.', pt: 'Dentro dessas horas, uma em cada sete palavras foi dita em inglês.' },
+        { en: 'Nobody at the .TBF. knew that number existed.', pt: 'Ninguém na .TBF. sabia que esse número existia.' },
       ],
-      emphasize: [1],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'It changes decisions that were already on the table:', pt: 'Isso muda decisões que já estavam na mesa:' },
-        { en: 'which language a piece is born in, which market a product opens in,', pt: 'em que idioma uma peça nasce, em que mercado um produto abre,' },
-        { en: 'and who this label was already talking to without noticing.', pt: 'e com quem esta label já estava falando sem ter percebido.' },
-        { en: 'No hunch was ever going to arrive at that number.', pt: 'Nenhum palpite ia chegar nesse número.' },
+        { en: 'And the English is almost all borrowed: 50,582 of those 55,260 words are saved material.', pt: 'E o inglês é quase todo emprestado: 50.582 daquelas 55.260 palavras são material salvo.' },
+        { en: 'Art direction on TikTok, an After Effects tutorial, a sales reel, a prayer in Hebrew.', pt: 'Direção de arte no TikTok, tutorial de After Effects, reel de vendas, uma reza em hebraico.' },
+        { en: 'The few English clips our own camera shot are music playing at a party.', pt: 'Os poucos clipes em inglês que saíram da nossa câmera são música tocando numa festa.' },
+        { en: 'It is not who this label was talking to. It is what this label watches.', pt: 'Não é com quem esta label estava falando. É o que esta label assiste.' },
       ],
+      emphasize: [3],
     },
 
-    // ─── CAPÍTULO 1: ACERVO. Aqui o texto separa as quatro palavras que o resto
-    //     do ensaio usa. Nenhuma delas aparece antes deste ponto sem explicação.
+    // ─── CAPÍTULO 1: ACERVO. As duas palavras que o resto do ensaio usa como se
+    //     fossem a mesma. Eram quatro; substrato e infraestrutura sairam em
+    //     24/08/2026 porque o texto as definia e nunca mais voltava a elas.
     { kind: 'word', label: { en: 'ARCHIVE', pt: 'ACERVO' }, theme: 'dark' },
     {
       kind: 'image',
@@ -251,12 +286,6 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       ],
     },
     {
-      kind: 'lines',
-      lines: [
-        { en: 'Four words the rest of this text uses as if they were obvious, and they are not:', pt: 'Quatro palavras que o resto do texto usa como se fossem óbvias, e não são:' },
-      ],
-    },
-    {
       kind: 'negation',
       pairs: [
         [
@@ -267,25 +296,18 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
           { en: 'A repertoire is not a collection.', pt: 'Repertório não é coleção.' },
           { en: 'It is noticing a connection that is not obvious yet.', pt: 'É perceber uma conexão que ainda não está evidente.' },
         ],
-        [
-          { en: 'A substrate is not a folder.', pt: 'Substrato não é pasta.' },
-          { en: 'It is archive, memory and criteria arranged so a decision can stand on them.', pt: 'É acervo, memória e critério arrumados para uma decisão ficar de pé em cima.' },
-        ],
-        [
-          { en: 'Infrastructure is not the tool.', pt: 'Infraestrutura não é a ferramenta.' },
-          { en: 'It is what keeps that ground alive after the excitement passes.', pt: 'É o que mantém esse chão vivo depois que a empolgação passa.' },
-        ],
       ],
     },
-    // ─── CAPÍTULO 2: O DIAGNÓSTICO. A ponte entre o caso da casa e o problema
-    //     que todo mundo no mercado está vivendo.
+
+    // ─── CAPÍTULO 2: O DIAGNÓSTICO. Era o capitulo mais fraco do ensaio: a tese
+    //     de que "as ferramentas ficaram iguais" e a que todo mundo escreve. Em
+    //     24/08/2026 ele passou a ser sustentado pelo numero da propria casa, que
+    //     custa: a coluna da direita existe e e pequena.
     { kind: 'word', label: { en: 'THE SAMENESS', pt: 'A IGUALDADE' }, theme: 'dark' },
     {
       kind: 'lines',
       lines: [
-        { en: 'Step out of our night for a moment, because the point is not the night.', pt: 'Sai da nossa noite um instante, porque o ponto não é a noite.' },
-        { en: 'That the tools became the same for everyone, everyone has already said, and it is true.', pt: 'Que as ferramentas ficaram iguais para todo mundo, todo mundo já disse, e é verdade.' },
-        { en: 'The inputs became the same too, and nobody talks about that.', pt: 'Os insumos também ficaram iguais, e disso ninguém fala.' },
+        { en: 'Everyone says AI made the tools the same. It made the inputs the same too.', pt: 'Todo mundo diz que a IA igualou as ferramentas. Igualou os insumos também.' },
       ],
     },
     {
@@ -307,9 +329,11 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Everyone feeds the machine the column on the left, and the machine hands back the average.', pt: 'Todo mundo dá a coluna da esquerda de comer para a máquina, e a máquina devolve a média.' },
-        { en: 'The one on the right only we have.', pt: 'A da direita só nós temos.' },
+        { en: 'The one on the right only we have. Our own tape says it fits in 14,135 words.', pt: 'A da direita só nós temos. A nossa própria fita diz que ela cabe em 14.135 palavras.' },
+        { en: 'We spend the day on the left like everybody else. We just had it written down.', pt: 'A gente passa o dia na esquerda como todo mundo. A diferença é que ficou escrito.' },
         { en: 'Nobody escapes the average by writing a prettier prompt.', pt: 'Ninguém escapa da média escrevendo um prompt mais bonito.' },
       ],
+      emphasize: [1],
     },
 
     // ─── CAPÍTULO 3: CRITÉRIO. Da pesquisa para o pensamento. Explica o que é
@@ -328,11 +352,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'So here the rules stopped being remembered and started being run.', pt: 'Então aqui as regras deixaram de ser lembradas e passaram a ser rodadas.' },
         { en: 'A GUARD is a small script that sits between the work and the world.', pt: 'GUARD é um script pequeno que fica entre o trabalho e o mundo.' },
-        { en: 'It reads what is about to be written and refuses what breaks a house rule.', pt: 'Ele lê o que está prestes a ser escrito e recusa o que quebra uma regra.' },
         { en: 'One refuses the wrong dash. One closes the road to production.', pt: 'Um recusa o traço errado. Outro fecha o caminho para produção.' },
         { en: 'One counts how many of our rules are code, and how many are still hope.', pt: 'Outro conta quantas das nossas regras são código, e quantas ainda são só esperança.' },
       ],
-      emphasize: [4],
+      emphasize: [3],
     },
     {
       kind: 'fullbleed',
@@ -345,22 +368,19 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'With one counterweight, learned the hard way:', pt: 'Com um contrapeso, aprendido na marra:' },
-        { en: 'a guard that guesses is worse than no guard at all.', pt: 'guard que chuta é pior que guard nenhum.' },
+        { en: 'With one counterweight, learned the hard way: a guard that guesses is worse than no guard at all.', pt: 'Com um contrapeso, aprendido na marra: guard que chuta é pior que guard nenhum.' },
         { en: 'One of ours rang on a file that had only been read, not written.', pt: 'Um dos nossos tocou num arquivo que só tinha sido lido, não escrito.' },
         { en: 'An alarm that rings on the wrong file teaches everyone to ignore alarms.', pt: 'Alarme que toca no arquivo errado ensina todo mundo a ignorar alarme.' },
         { en: 'So a new rule only enters if it is born with a test, or retires another one.', pt: 'Então regra nova só entra se nascer com teste, ou se aposentar outra.' },
       ],
-      emphasize: [1],
+      emphasize: [0],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The oldest rule here is the cheapest one:', pt: 'A regra mais antiga daqui é a mais barata:' },
-        { en: 'a signal that already exists beats a new signal.', pt: 'sinal que já existe vence sinal novo.' },
+        { en: 'The oldest rule here is the cheapest: a signal that already exists beats a new signal.', pt: 'A regra mais antiga daqui é a mais barata: sinal que já existe vence sinal novo.' },
         { en: 'Cameras already write the date, the lens, the coordinates.', pt: 'A câmera já escreve a data, a lente, as coordenadas.' },
-        { en: 'Before paying a machine to invent a signal, exhaust the free one.', pt: 'Antes de pagar uma máquina para inventar sinal, esgote o que é de graça.' },
-        { en: 'And what was cut is information too.', pt: 'E o que foi cortado também é informação.' },
+        { en: 'The column that told us whose voice this was had been sitting in the catalogue the whole time.', pt: 'A coluna que disse de quem era aquela voz estava parada no catálogo o tempo todo.' },
       ],
     },
 
@@ -404,96 +424,61 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       theme: 'dark',
     },
 
-    // ─── CAPÍTULO 5: EXECUÇÃO. A cadeia, com cada passo explicado, e o ponto
-    //     exato em que as casas morrem.
-    { kind: 'word', label: { en: 'EXECUTION', pt: 'EXECUÇÃO' }, theme: 'dark' },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'From noticing something to selling something there are seven steps.', pt: 'De notar uma coisa até vender uma coisa existem sete passos.' },
-      ],
-    },
-    {
-      kind: 'stickers',
-      fragments: [
-        { en: 'SIGNAL', pt: 'SINAL' },
-        { en: 'RESEARCH', pt: 'PESQUISA' },
-        { en: 'CROSS-CHECK', pt: 'CONFERÊNCIA' },
-        { en: 'INTERPRET', pt: 'INTERPRETAÇÃO' },
-        { en: 'SYNTHESISE', pt: 'SÍNTESE' },
-        { en: 'BUILD', pt: 'CONSTRUÇÃO' },
-        { en: 'MARKET', pt: 'MERCADO' },
-      ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'Something catches the eye. You go looking. You check it against another source.', pt: 'Alguma coisa chama atenção. Você vai investigar. Você confere com outra fonte.' },
-        { en: 'You say what it means. You turn that into one hypothesis. You build a test. It circulates.', pt: 'Você diz o que aquilo significa. Vira uma hipótese. Você constrói um teste. Aquilo circula.' },
-        { en: 'Machines are good at one, two, three and six.', pt: 'A máquina é boa no um, no dois, no três e no seis.' },
-        { en: 'Labels die between four and five, where somebody has to say what the finding means.', pt: 'As labels morrem entre o quatro e o cinco, onde alguém precisa dizer o que o achado significa.' },
-      ],
-      emphasize: [3],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'Our own night is the example. Steps one to three took seven hours of machine.', pt: 'A nossa noite é o exemplo. Os passos um a três levaram sete horas de máquina.' },
-        { en: 'Step four, deciding what a bilingual archive means for this label, is still open.', pt: 'O passo quatro, decidir o que um acervo bilíngue significa para esta label, segue aberto.' },
-        { en: 'Producing got cheap. Choosing got expensive.', pt: 'Produzir ficou barato. Escolher ficou caro.' },
-        { en: 'The bottleneck moved, and most people still guard the old one.', pt: 'O gargalo mudou de lugar, e a maioria ainda vigia o antigo.' },
-      ],
-      emphasize: [1],
-    },
-
-    // ─── CAPÍTULO 6: AUTORIA.
+    // ─── CAPÍTULO 5: AUTORIA.
     //     NAO EXISTE MAIS o bloco 'VOCE ESTA DENTRO DA PROVA', que dizia que a
     //     pagina ser bilingue era consequencia do achado do acervo. Cortado pelo
     //     fundador em 23/08/2026 por sensacionalismo: o site e dual language por
     //     decisao tomada muito antes da pauta do media package, e amarrar uma
     //     coisa na outra e inventar causa. Nao reintroduzir.
+    //     Em 24/08/2026 o antigo capitulo EXECUCAO foi dissolvido aqui dentro: a
+    //     cadeia de sete passos era framework generico e as tres linhas que
+    //     sobreviveram sao as unicas que diziam alguma coisa.
     { kind: 'word', label: { en: 'AUTHORSHIP', pt: 'AUTORIA' }, theme: 'dark' },
     {
       kind: 'lines',
       lines: [
-        { en: 'The whole method is smaller than it sounds: point the machine at what is yours,', pt: 'O método inteiro é menor do que parece: apontar a máquina para o que é seu,' },
-        { en: 'write the criteria down as code, check every number before believing it,', pt: 'escrever os critérios como código, conferir todo número antes de acreditar nele,' },
-        { en: 'and spend the hours you saved on the part that is still human.', pt: 'e gastar as horas que sobraram na parte que continua humana.' },
+        { en: 'The machine did seven hours of work that night.', pt: 'A máquina fez sete horas de trabalho naquela noite.' },
+        { en: 'Deciding what thirty four hours of borrowed speech mean for this label is still open.', pt: 'Decidir o que trinta e quatro horas de fala emprestada significam para esta label segue aberto.' },
+        { en: 'Producing got cheap. Choosing got expensive.', pt: 'Produzir ficou barato. Escolher ficou caro.' },
       ],
+      emphasize: [1],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'Because the machine does not choose.', pt: 'Porque a máquina não escolhe.' },
-        { en: 'It does not know what this label refuses.', pt: 'Ela não sabe o que esta label recusa.' },
         { en: 'It has no provenance, and provenance cannot be generated.', pt: 'Ela não tem procedência, e procedência não se gera.' },
         { en: 'It widens the field. Somebody still has to frame the shot.', pt: 'Ela amplia o campo. Alguém ainda tem que enquadrar.' },
       ],
-      emphasize: [3],
+      emphasize: [2],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'What matters?', pt: 'O que importa?' },
-        { en: 'Why does it matter now?', pt: 'Por que importa agora?' },
-        { en: 'What connection is nobody seeing?', pt: 'Qual conexão ninguém está vendo?' },
-        { en: 'Which idea deserves to be built?', pt: 'Qual ideia merece virar execução?' },
+        { en: 'Recorded on 27 March 2025, inside those 370,700 words:', pt: 'Gravado em 27 de março de 2025, dentro daquelas 370.700 palavras:' },
       ],
+    },
+    {
+      kind: 'fullbleed',
+      text: {
+        en: '"People keep asking how I do my work. I just answer: by paying attention."',
+        pt: '"Muita gente pergunta como é que você faz seu trabalho. Eu simplesmente respondo: prestando atenção."',
+      },
+      theme: 'dark',
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'Four questions no model answers for you. They are the whole job.', pt: 'Quatro perguntas que modelo nenhum responde por você. Elas são o trabalho inteiro.' },
-        { en: 'Everything automated here was automated so these four would get the hours they never had.', pt: 'Tudo que foi automatizado aqui foi automatizado para que essas quatro ganhassem as horas que nunca tiveram.' },
+        { en: 'Ninety eight seconds of tape, filed under a portrait shoot, unheard for seventeen months.', pt: 'Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não ouvidos por dezessete meses.' },
+        { en: 'It took a machine reading forty three hours to hand back one sentence we already owned.', pt: 'Foi preciso uma máquina ler quarenta e três horas para devolver uma frase que já era nossa.' },
       ],
-      emphasize: [0],
+      emphasize: [1],
     },
-
     {
       kind: 'closing',
       text: {
-        en: 'The archive has answered the part it could answer. Step four is still ours.',
-        pt: 'O acervo já respondeu a parte que cabia a ele. O passo quatro continua sendo nosso.',
+        en: 'The archive answered the part that was its to answer. How much of what we say is ours is not.',
+        pt: 'O acervo respondeu a parte que cabia a ele. Quanto do que a gente fala é da gente, não.',
       },
     },
   ],

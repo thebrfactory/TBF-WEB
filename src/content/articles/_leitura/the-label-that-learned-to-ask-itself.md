@@ -29,7 +29,7 @@
 
 **Uma label de um ano apontou uma máquina para um acervo sete anos mais velho que ela. Foi isto que voltou.**
 
-> A IA entregou a todo mundo as mesmas ferramentas. Então a vantagem voltou a ser o repertório. A diferença é que agora dá para construir um.
+> A IA entregou a todo mundo as mesmas ferramentas. Então a vantagem voltou a ser o repertório. Aí o acervo respondeu quanto do nosso era nosso mesmo.
 
 `Coolhunting` · `2026-08-23` · `/pt/editorial/the-label-that-learned-to-ask-itself`
 
@@ -43,41 +43,41 @@ _SÃO PAULO, AGOSTO DE 2026_
 
 Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.
 Numa noite de agosto colocamos uma máquina para ouvir todos eles.
-Ninguém nunca tinha ouvido esse acervo inteiro, e o motivo é chato:
-são quarenta e três horas de gente falando. Ninguém tem esse tempo sobrando.
+Ninguém nunca tinha ouvido esse acervo inteiro. São quarenta e três horas de áudio.
 
-A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac.
-Sem nuvem: nada saiu da máquina.
+A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac. Sem nuvem.
 Começou às onze da noite e terminou às seis da manhã.
 Leu os 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.
 
-O que a gente queria era modesto: poder buscar dentro do que foi dito.
-**O que voltou foi outra coisa.**
+A gente queria poder buscar dentro do que foi dito.
+**O que voltou foi um problema.**
 
 `NUMERO GRANDE`
 
-> ## 1.382
-> arquivos falados em português
+> ## 370.700
+> palavras ditas em voz alta em sete anos
 
 `NUMERO GRANDE`
 
-> ## 798
-> arquivos falados em inglês
+> ## 14.135
+> dessas, ditas para a nossa própria câmera
 
-**Ninguém na .TBF. sabia que o segundo número existia.**
-Quase oito horas dele. E outros dezesseis idiomas embaixo.
+**Trinta e quatro das trinta e oito horas faladas saíram de gente que não trabalha aqui.**
+Reel salvo, curso de terceiro, podcast, tutorial.
+A nossa própria câmera responde por duas horas e meia.
+O que ela filma é festa, ensaio, viagem. Gesto, não frase.
 
 `FRASE GIGANTE, TELA INTEIRA`
 
-> # Uma em cada sete palavras ditas em voz alta aqui foi dita em inglês.
+> # A gente montou um acervo da própria voz e achou outra pessoa falando dentro dele.
 
-Isso não é sotaque. São reuniões de trabalho, aula, entrevista, ideia dita em voz alta no caminho de casa.
-**Sete anos gravando assim, e ninguém tinha percebido.**
+Dentro dessas horas, uma em cada sete palavras foi dita em inglês.
+Ninguém na .TBF. sabia que esse número existia.
 
-Isso muda decisões que já estavam na mesa:
-em que idioma uma peça nasce, em que mercado um produto abre,
-e com quem esta label já estava falando sem ter percebido.
-Nenhum palpite ia chegar nesse número.
+E o inglês é quase todo emprestado: 50.582 daquelas 55.260 palavras são material salvo.
+Direção de arte no TikTok, tutorial de After Effects, reel de vendas, uma reza em hebraico.
+Os poucos clipes em inglês que saíram da nossa câmera são música tocando numa festa.
+**Não é com quem esta label estava falando. É o que esta label assiste.**
 
 ## ACERVO
 
@@ -96,20 +96,14 @@ Antes você abria pasta e tentava lembrar nome de arquivo.
 Agora você digita "me mostra as fotos marcadas do cliente" e o acervo responde.
 Ela olha dentro do que foi dito e dentro do que está escrito na tela.
 
-Quatro palavras que o resto do texto usa como se fossem óbvias, e não são:
-
 `PARES DE NEGACAO`
 
 - Acervo não é repertório. / Acervo é o que você guardou. Repertório é conseguir relacionar.
 - Repertório não é coleção. / É perceber uma conexão que ainda não está evidente.
-- Substrato não é pasta. / É acervo, memória e critério arrumados para uma decisão ficar de pé em cima.
-- Infraestrutura não é a ferramenta. / É o que mantém esse chão vivo depois que a empolgação passa.
 
 ## A IGUALDADE
 
-Sai da nossa noite um instante, porque o ponto não é a noite.
-Que as ferramentas ficaram iguais para todo mundo, todo mundo já disse, e é verdade.
-Os insumos também ficaram iguais, e disso ninguém fala.
+Todo mundo diz que a IA igualou as ferramentas. Igualou os insumos também.
 
 `ANTES E DEPOIS`
 
@@ -124,7 +118,8 @@ Os insumos também ficaram iguais, e disso ninguém fala.
 - Nossos erros, datados e guardados.
 
 Todo mundo dá a coluna da esquerda de comer para a máquina, e a máquina devolve a média.
-A da direita só nós temos.
+**A da direita só nós temos. A nossa própria fita diz que ela cabe em 14.135 palavras.**
+A gente passa o dia na esquerda como todo mundo. A diferença é que ficou escrito.
 Ninguém escapa da média escrevendo um prompt mais bonito.
 
 ## CRITÉRIO
@@ -135,7 +130,6 @@ manifesto é memória, e memória falha a alguma taxa, sempre em silêncio.
 
 Então aqui as regras deixaram de ser lembradas e passaram a ser rodadas.
 GUARD é um script pequeno que fica entre o trabalho e o mundo.
-Ele lê o que está prestes a ser escrito e recusa o que quebra uma regra.
 Um recusa o traço errado. Outro fecha o caminho para produção.
 **Outro conta quantas das nossas regras são código, e quantas ainda são só esperança.**
 
@@ -143,17 +137,14 @@ Um recusa o traço errado. Outro fecha o caminho para produção.
 
 > # Cultura que não vira código é decoração.
 
-Com um contrapeso, aprendido na marra:
-**guard que chuta é pior que guard nenhum.**
+**Com um contrapeso, aprendido na marra: guard que chuta é pior que guard nenhum.**
 Um dos nossos tocou num arquivo que só tinha sido lido, não escrito.
 Alarme que toca no arquivo errado ensina todo mundo a ignorar alarme.
 Então regra nova só entra se nascer com teste, ou se aposentar outra.
 
-A regra mais antiga daqui é a mais barata:
-sinal que já existe vence sinal novo.
+A regra mais antiga daqui é a mais barata: sinal que já existe vence sinal novo.
 A câmera já escreve a data, a lente, as coordenadas.
-Antes de pagar uma máquina para inventar sinal, esgote o que é de graça.
-E o que foi cortado também é informação.
+A coluna que disse de quem era aquela voz estava parada no catálogo o tempo todo.
 
 ## O ERRO
 
@@ -175,52 +166,28 @@ Se não tivesse pego, a busca por esses arquivos devolveria nada, e nada se pare
 
 > # Quando executar fica barato, o erro caro é confiar num número que você não sabe explicar.
 
-## EXECUÇÃO
-
-De notar uma coisa até vender uma coisa existem sete passos.
-
-`FRAGMENTOS SOLTOS`
-
-- SINAL
-- PESQUISA
-- CONFERÊNCIA
-- INTERPRETAÇÃO
-- SÍNTESE
-- CONSTRUÇÃO
-- MERCADO
-
-Alguma coisa chama atenção. Você vai investigar. Você confere com outra fonte.
-Você diz o que aquilo significa. Vira uma hipótese. Você constrói um teste. Aquilo circula.
-A máquina é boa no um, no dois, no três e no seis.
-**As labels morrem entre o quatro e o cinco, onde alguém precisa dizer o que o achado significa.**
-
-A nossa noite é o exemplo. Os passos um a três levaram sete horas de máquina.
-**O passo quatro, decidir o que um acervo bilíngue significa para esta label, segue aberto.**
-Produzir ficou barato. Escolher ficou caro.
-O gargalo mudou de lugar, e a maioria ainda vigia o antigo.
-
 ## AUTORIA
 
-O método inteiro é menor do que parece: apontar a máquina para o que é seu,
-escrever os critérios como código, conferir todo número antes de acreditar nele,
-e gastar as horas que sobraram na parte que continua humana.
+A máquina fez sete horas de trabalho naquela noite.
+**Decidir o que trinta e quatro horas de fala emprestada significam para esta label segue aberto.**
+Produzir ficou barato. Escolher ficou caro.
 
 Porque a máquina não escolhe.
-Ela não sabe o que esta label recusa.
 Ela não tem procedência, e procedência não se gera.
 **Ela amplia o campo. Alguém ainda tem que enquadrar.**
 
-O que importa?
-Por que importa agora?
-Qual conexão ninguém está vendo?
-Qual ideia merece virar execução?
+Gravado em 27 de março de 2025, dentro daquelas 370.700 palavras:
 
-**Quatro perguntas que modelo nenhum responde por você. Elas são o trabalho inteiro.**
-Tudo que foi automatizado aqui foi automatizado para que essas quatro ganhassem as horas que nunca tiveram.
+`FRASE GIGANTE, TELA INTEIRA`
+
+> # "Muita gente pergunta como é que você faz seu trabalho. Eu simplesmente respondo: prestando atenção."
+
+Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não ouvidos por dezessete meses.
+**Foi preciso uma máquina ler quarenta e três horas para devolver uma frase que já era nossa.**
 
 `FECHO`
 
-> O acervo já respondeu a parte que cabia a ele. O passo quatro continua sendo nosso.
+> O acervo respondeu a parte que cabia a ele. Quanto do que a gente fala é da gente, não.
 
 ---
 
@@ -228,7 +195,7 @@ Tudo que foi automatizado aqui foi automatizado para que essas quatro ganhassem 
 
 **A one year old label pointed a machine at an archive seven years older than itself. This is what came back.**
 
-> AI handed everyone the same tools. So the advantage went back to being repertoire. The difference is that now you can build one.
+> AI handed everyone the same tools. So the advantage went back to being repertoire. Then the archive answered how much of ours was actually ours.
 
 `Coolhunting` · `2026-08-23` · `/en/editorial/the-label-that-learned-to-ask-itself`
 
@@ -242,41 +209,41 @@ _SAO PAULO, AUGUST 2026_
 
 Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.
 One night in August we put a machine to listen to all of them.
-Nobody had ever heard the whole archive, and the reason is dull:
-it is forty three hours of people talking. Nobody has that lying around.
+Nobody had ever heard the whole archive. It is forty three hours of audio.
 
-The tool was Whisper, an open transcription model, running inside our own Mac.
-No cloud: nothing left the machine.
+The tool was Whisper, an open transcription model, running inside our own Mac. No cloud.
 It started at eleven at night and finished at six in the morning.
 It read the 3,132 files that had audio in them, and failed on none.
 
-What we wanted was modest: to be able to search inside what was said.
-**What came back was something else.**
+We wanted to be able to search inside what was said.
+**What came back was a problem.**
 
 `NUMERO GRANDE`
 
-> ## 1,382
-> files spoken in Portuguese
+> ## 370,700
+> words said out loud across seven years
 
 `NUMERO GRANDE`
 
-> ## 798
-> files spoken in English
+> ## 14,135
+> of them said into our own camera
 
-**Nobody at the .TBF. knew the second number existed.**
-Almost eight hours of it. And sixteen other languages underneath.
+**Thirty four of the thirty eight spoken hours came from people who do not work here.**
+Saved reels, courses by other people, podcasts, tutorials.
+Our own camera accounts for two and a half hours.
+What it films is a party, a shoot, a trip. Gesture, not speech.
 
 `FRASE GIGANTE, TELA INTEIRA`
 
-> # One in every seven words said out loud here was said in English.
+> # We built an archive of our own voice and found somebody else talking in it.
 
-That is not accent. It is work calls, classes, interviews, ideas said out loud on the way home.
-**Seven years of recording like that, and nobody had noticed.**
+Inside those hours, one in every seven words was said in English.
+Nobody at the .TBF. knew that number existed.
 
-It changes decisions that were already on the table:
-which language a piece is born in, which market a product opens in,
-and who this label was already talking to without noticing.
-No hunch was ever going to arrive at that number.
+And the English is almost all borrowed: 50,582 of those 55,260 words are saved material.
+Art direction on TikTok, an After Effects tutorial, a sales reel, a prayer in Hebrew.
+The few English clips our own camera shot are music playing at a party.
+**It is not who this label was talking to. It is what this label watches.**
 
 ## ARCHIVE
 
@@ -295,20 +262,14 @@ Before, you opened folders and tried to remember filenames.
 Now you type "show me the starred photos from the client" and the archive answers.
 It looks inside what was said and inside what is written on screen.
 
-Four words the rest of this text uses as if they were obvious, and they are not:
-
 `PARES DE NEGACAO`
 
 - An archive is not a repertoire. / An archive is what you kept. A repertoire is being able to relate it.
 - A repertoire is not a collection. / It is noticing a connection that is not obvious yet.
-- A substrate is not a folder. / It is archive, memory and criteria arranged so a decision can stand on them.
-- Infrastructure is not the tool. / It is what keeps that ground alive after the excitement passes.
 
 ## THE SAMENESS
 
-Step out of our night for a moment, because the point is not the night.
-That the tools became the same for everyone, everyone has already said, and it is true.
-The inputs became the same too, and nobody talks about that.
+Everyone says AI made the tools the same. It made the inputs the same too.
 
 `ANTES E DEPOIS`
 
@@ -323,7 +284,8 @@ The inputs became the same too, and nobody talks about that.
 - Our mistakes, dated and kept.
 
 Everyone feeds the machine the column on the left, and the machine hands back the average.
-The one on the right only we have.
+**The one on the right only we have. Our own tape says it fits in 14,135 words.**
+We spend the day on the left like everybody else. We just had it written down.
 Nobody escapes the average by writing a prettier prompt.
 
 ## CRITERION
@@ -334,7 +296,6 @@ a manifesto is memory, and memory fails at some rate, always quietly.
 
 So here the rules stopped being remembered and started being run.
 A GUARD is a small script that sits between the work and the world.
-It reads what is about to be written and refuses what breaks a house rule.
 One refuses the wrong dash. One closes the road to production.
 **One counts how many of our rules are code, and how many are still hope.**
 
@@ -342,17 +303,14 @@ One refuses the wrong dash. One closes the road to production.
 
 > # Culture that does not become code is decoration.
 
-With one counterweight, learned the hard way:
-**a guard that guesses is worse than no guard at all.**
+**With one counterweight, learned the hard way: a guard that guesses is worse than no guard at all.**
 One of ours rang on a file that had only been read, not written.
 An alarm that rings on the wrong file teaches everyone to ignore alarms.
 So a new rule only enters if it is born with a test, or retires another one.
 
-The oldest rule here is the cheapest one:
-a signal that already exists beats a new signal.
+The oldest rule here is the cheapest: a signal that already exists beats a new signal.
 Cameras already write the date, the lens, the coordinates.
-Before paying a machine to invent a signal, exhaust the free one.
-And what was cut is information too.
+The column that told us whose voice this was had been sitting in the catalogue the whole time.
 
 ## THE ERROR
 
@@ -374,49 +332,25 @@ Had we not, a search for those files would have returned nothing, and nothing lo
 
 > # When execution gets cheap, the expensive mistake is trusting a number you cannot explain.
 
-## EXECUTION
-
-From noticing something to selling something there are seven steps.
-
-`FRAGMENTOS SOLTOS`
-
-- SIGNAL
-- RESEARCH
-- CROSS-CHECK
-- INTERPRET
-- SYNTHESISE
-- BUILD
-- MARKET
-
-Something catches the eye. You go looking. You check it against another source.
-You say what it means. You turn that into one hypothesis. You build a test. It circulates.
-Machines are good at one, two, three and six.
-**Labels die between four and five, where somebody has to say what the finding means.**
-
-Our own night is the example. Steps one to three took seven hours of machine.
-**Step four, deciding what a bilingual archive means for this label, is still open.**
-Producing got cheap. Choosing got expensive.
-The bottleneck moved, and most people still guard the old one.
-
 ## AUTHORSHIP
 
-The whole method is smaller than it sounds: point the machine at what is yours,
-write the criteria down, check every number before believing it,
-and spend the hours you saved on the part that is still human.
+The machine did seven hours of work that night.
+**Deciding what thirty four hours of borrowed speech mean for this label is still open.**
+Producing got cheap. Choosing got expensive.
 
 Because the machine does not choose.
-It does not know what this label refuses.
 It has no provenance, and provenance cannot be generated.
 **It widens the field. Somebody still has to frame the shot.**
 
-What matters?
-Why does it matter now?
-What connection is nobody seeing?
-Which idea deserves to be built?
+Recorded on 27 March 2025, inside those 370,700 words:
 
-**Four questions no model answers for you. They are the whole job.**
-Everything automated here was automated so these four would get the hours they never had.
+`FRASE GIGANTE, TELA INTEIRA`
+
+> # "People keep asking how I do my work. I just answer: by paying attention."
+
+Ninety eight seconds of tape, filed under a portrait shoot, unheard for seventeen months.
+**It took a machine reading forty three hours to hand back one sentence we already owned.**
 
 `FECHO`
 
-> The archive has answered the part it could answer. Step four is still ours.
+> The archive answered the part that was its to answer. How much of what we say is ours is not.
