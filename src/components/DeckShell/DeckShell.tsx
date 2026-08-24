@@ -410,7 +410,7 @@ export function DeckStyles() {
           /* AUMENTADO (pedido do fundador): o título nascia colado no kicker.
              Era clamp(1.35rem, 3.4vh, 2.1rem). O termo cresceu numa variável
              só, então as 7 cenas ganham a mesma distância de uma vez. */
-          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(2.2rem, 5.8vh, 3.3rem));
+          --p3-kicker-reserve: calc(var(--p3-kicker-top) + clamp(3.4rem, 9.2vh, 4.6rem));
 
           /* ─── RÉGUA INVISÍVEL DO DECK ──────────────────────────────────
              Pedido do fundador (#01 CHANGES): "blocos invisíveis e réguas

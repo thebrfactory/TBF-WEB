@@ -23,16 +23,16 @@ import { FOOTER_COLUMNS } from '@/lib/footer-routes'
 const SITE_VERSION = `.TBF. OS 3.0.${deployCount.deploys}`
 
 // Cidades sob gestão, agora em letreiro. A sigla do estado saiu e o nome dele
-// entrou por extenso, em thin contra a cidade em medium (#01 CHANGES
-// 2026-08-24). O separador vem do próprio componente: cada segmento fecha com
-// " · " e é isso que emenda a volta do loop consigo mesma.
+// entrou por extenso, em book contra a cidade em medium (#01 CHANGES
+// 2026-08-24). Quem separa um segmento do outro é o respiro, não pontuação:
+// ver a nota do separador no componente.
 const CITIES_TICKER: TickerSegment[] = [
   { text: 'SÃO PAULO', weight: 'medium' },
-  { text: 'BRAZIL', weight: 'thin' },
+  { text: 'BRAZIL', weight: 'book' },
   { text: 'GOIÂNIA', weight: 'medium' },
-  { text: 'GOIÁS', weight: 'thin' },
+  { text: 'GOIÁS', weight: 'book' },
   { text: 'SALVADOR', weight: 'medium' },
-  { text: 'BAHIA', weight: 'thin' },
+  { text: 'BAHIA', weight: 'book' },
 ]
 
 export function Footer({ lang }: { lang: Lang }) {

@@ -65,6 +65,9 @@
      e que nao tinha token. Espelha o canonico de _SHARED/DESIGN-SYSTEM. */
   --tbf-font-weight-raw-100: 100;
   --tbf-font-weight-raw-300: 300;
+  /* Book. O degrau entre Light (300) e Regular (400) que a Brother1816 tem em
+     woff2 (ver globals.css). Ele existe como peso de verdade, nao sintetizado. */
+  --tbf-font-weight-raw-350: 350;
   --tbf-font-weight-raw-400: 400;
   --tbf-font-weight-raw-500: 500;
   --tbf-font-weight-raw-600: 600;
@@ -540,7 +543,10 @@
   --tbf-ticker-text:      var(--tbf-color-parchment);
   --tbf-ticker-height-sm: var(--tbf-space-raw-40);
   --tbf-ticker-height-xl: var(--tbf-space-raw-48);
-  --tbf-ticker-gap:       var(--tbf-space-raw-64);
+  /* A FOLGA AGORA VALE ENTRE SEGMENTOS, não só entre cópias do letreiro (ver
+     `.ticker__seg` em components.css), então ela desceu de 64 para 40: 64px
+     entre "SÃO PAULO" e "BRAZIL" abriria buraco no meio da frase. */
+  --tbf-ticker-gap:       var(--tbf-space-raw-40);
   /* A duração base (40s) é o tempo de UMA cópia do texto atravessar. O trilho
      roda 3 cópias por volta (REPEAT em Ticker.tsx), então a duração multiplica
      por 3 para a velocidade em px/s continuar exatamente a mesma. Mudou o

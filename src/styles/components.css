@@ -1213,8 +1213,10 @@
   text-transform: var(--tbf-type-ticker-transform);
   color: var(--tbf-ticker-text);
   flex-shrink: 0;
-  /* A folga vive AQUI, não em `gap` do trilho (ver nota acima). */
-  margin-right: var(--tbf-ticker-gap);
+  /* A folga saiu daqui e foi para `.ticker__seg`: sem o ponto separador, toda
+     emenda entre segmentos precisa do mesmo respiro, e a última do item é uma
+     emenda como qualquer outra. Continua sendo margin, nunca `gap` do trilho
+     (ver a nota do loop sem costura acima). */
 }
 
 @media (min-width: 1280px) {
@@ -1224,19 +1226,28 @@
 }
 
 /* PESO POR SEGMENTO (#01 CHANGES 2026-08-24). O fundador escreveu o letreiro
-   com o peso ao lado de cada pedaço, então o contraste black/medium/thin é
+   com o peso ao lado de cada pedaço, então o contraste black/medium/book é
    CONTEÚDO, não enfeite: é o que separa o nome da casa das cidades e dos
    qualificadores. Os três pesos existem em woff2 na família Brother1816
-   (Thin 100, Medium 500, Black 900), nenhum é sintetizado pelo navegador. */
-.ticker__seg--thin   { font-weight: var(--tbf-font-weight-raw-100); }
+   (Book 350, Medium 500, Black 900), nenhum é sintetizado pelo navegador.
+
+   O LEVE SUBIU DE THIN PARA BOOK (2026-08-24, no olho dele: "pode pegar todas
+   as palavras que estão thin e aumente para uma fonte só um pouco mais bold").
+   Thin é 100, e num corpo de 14px correndo em movimento sobre preto a haste
+   quase some. Book é 350, o degrau seguinte que a família tem de verdade. */
+.ticker__seg--book   { font-weight: var(--tbf-font-weight-raw-350); }
 .ticker__seg--medium { font-weight: var(--tbf-font-weight-raw-500); }
 .ticker__seg--black  { font-weight: var(--tbf-font-weight-raw-900); }
 
-/* O ponto separador corre no peso padrão e um pouco apagado: ele é pontuação
-   entre segmentos, não um deles. */
-.ticker__sep {
-  font-weight: var(--tbf-type-ticker-weight);
-  opacity: 0.55;
+/* 🔴 O RESPIRO ENTRE SEGMENTOS MORA AQUI, e não no item, desde que o ponto
+   separador saiu (2026-08-24: "em momento nenhum pedi pra colocar esses
+   pontos"). Sem pontuação, o que separa um segmento do outro é a folga, e ela
+   precisa ser IGUAL em toda emenda: se o item guardasse a dele, a volta do loop
+   teria uma folga diferente das outras e apareceria como um soluço a cada
+   ciclo. Um valor só, em todo lugar, e a célula continua uniforme, que é o que
+   faz 50% do trilho valer exatamente uma cópia. */
+.ticker__seg {
+  margin-right: var(--tbf-ticker-gap);
 }
 
 @keyframes ticker-scroll {

@@ -6,7 +6,7 @@
 // O LETREIRO PASSOU A TER DUAS VOZES (#01 CHANGES 2026-08-24). Antes era uma
 // string só, num peso só. O fundador escreveu o conteúdo novo já com o peso ao
 // lado de cada pedaço (".THE BRAZILIAN FACTORY. em black, HOTEL & CASINO em
-// thin, ..."), então o texto deixou de ser uma frase e virou uma SEQUÊNCIA de
+// book, ..."), então o texto deixou de ser uma frase e virou uma SEQUÊNCIA de
 // segmentos com peso próprio.
 //
 // A `prop` antiga `text` continua aceita: uma string vira um segmento único no
@@ -14,7 +14,7 @@
 // =============================================================================
 
 /** Pesos disponíveis. Nomes da família Brother1816, que é a fonte da casa. */
-type TickerWeight = 'thin' | 'medium' | 'black'
+type TickerWeight = 'book' | 'medium' | 'black'
 
 export interface TickerSegment {
   text: string
@@ -37,15 +37,15 @@ interface TickerProps {
 // "ARSTIST", erro de digitação evidente contra o que o site já publicava.
 const DEFAULT_SEGMENTS: TickerSegment[] = [
   { text: '.THE BRAZILIAN FACTORY.', weight: 'black' },
-  { text: 'HOTEL & CASINO', weight: 'thin' },
+  { text: 'HOTEL & CASINO', weight: 'book' },
   { text: '.ONLY FOR ARTISTS & CHANGEMAKERS.', weight: 'medium' },
-  { text: 'THE CREATIVE NETWORK', weight: 'thin' },
+  { text: 'THE CREATIVE NETWORK', weight: 'book' },
   { text: 'SÃO PAULO', weight: 'medium' },
-  { text: 'BRAZIL', weight: 'thin' },
+  { text: 'BRAZIL', weight: 'book' },
   { text: 'GOIÂNIA', weight: 'medium' },
-  { text: 'GOIÁS', weight: 'thin' },
+  { text: 'GOIÁS', weight: 'book' },
   { text: 'SALVADOR', weight: 'medium' },
-  { text: 'BAHIA', weight: 'thin' },
+  { text: 'BAHIA', weight: 'book' },
 ]
 
 // Cópias por volta. Uma volta precisa ser MAIS LARGA que a tela, senão sobra um
@@ -71,14 +71,18 @@ export function Ticker({ text = DEFAULT_SEGMENTS, sticky = true, className = '' 
             volta, que é o que faz o loop não ter costura. */}
         {copies.map((_, i) => (
           <span className="ticker__item" key={i}>
+            {/* SEM SEPARADOR ENTRE OS SEGMENTOS (2026-08-24: "em momento nenhum
+                pedi pra colocar esses pontos"). O que separa um do outro agora é
+                só o respiro, e ele é o MESMO em toda emenda, inclusive na volta
+                do loop: cada segmento carrega a folga à direita e o item deixou
+                de carregar a dele. Cell uniforme é o que faz 50% do trilho valer
+                exatamente uma cópia, que é o que tira a costura. */}
             {segmentos.map((seg, j) => (
-              <span key={j}>
-                <span className={`ticker__seg${seg.weight ? ` ticker__seg--${seg.weight}` : ''}`}>
-                  {seg.text}
-                </span>
-                {/* O ponto separador é nó próprio: ele não pertence a nenhum dos
-                    dois pesos vizinhos e por isso corre no peso padrão. */}
-                <span className="ticker__sep"> · </span>
+              <span
+                key={j}
+                className={`ticker__seg${seg.weight ? ` ticker__seg--${seg.weight}` : ''}`}
+              >
+                {seg.text}
               </span>
             ))}
           </span>
