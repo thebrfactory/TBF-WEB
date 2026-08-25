@@ -508,7 +508,15 @@
   position: relative;
   font-family: var(--tbf-type-display-xl-family);
   font-weight: var(--tbf-font-weight-raw-800);
-  font-size: clamp(3rem, 16vw, 10rem);
+  /* O TAMANHO PRECISA OLHAR A PALAVRA, NAO SO A TELA. `clamp(3rem, 16vw, 10rem)`
+     sozinho da 430px de largura para AUTHORSHIP num telefone de 390px, e com o
+     `overflow-x: clip` abaixo a palavra fica cortada dos dois lados para sempre.
+     O segundo termo e o teto que faz a palavra caber: 92vw de espaco util
+     dividido pelo numero de letras vezes 0.70, que e a largura media de
+     caractere MEDIDA nesta fonte de display (430px / (10 letras x 62,4px) =
+     0,689, e 0.66 deixa a folga que as letras estreitas pedem). O componente passa em
+     `--sc-chars` o tamanho da MAIOR palavra do rotulo, nao o do rotulo todo. */
+  font-size: min(clamp(3rem, 16vw, 10rem), calc(92vw / (var(--sc-chars, 8) * 0.66)));
   /* O TIL PRECISA CABER. Com `line-height: 1` a caixa da linha tem a altura exata
      do corpo da fonte, e o acento de A maiusculo passa POR CIMA dessa borda. Junto
      com o `overflow: clip` (que existe por causa do deslize horizontal), o
@@ -1187,6 +1195,28 @@
   .scrolly-mirror { flex-direction: row; gap: var(--tbf-space-16); }
 }
 
+/* COLUNA DO MIRROR. O `flex: 1` que estava em `.scrolly-mirror__list` passa a ser
+   desta caixa, porque agora a lista tem um rotulo acima dela dentro da mesma
+   coluna. Sem isso as duas colunas param de dividir a largura no desktop. */
+.scrolly-mirror__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-4);
+}
+
+/* ROTULO DA LISTA. Existe porque abaixo de 768px o mirror empilha e o texto do
+   artigo nao pode mais dizer "a coluna da esquerda": nao ha esquerda no telefone. */
+.scrolly-mirror__label {
+  font-family: var(--tbf-type-eyebrow-family, var(--tbf-type-h3-family));
+  font-size: 0.7rem;
+  font-weight: var(--tbf-font-weight-raw-700);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+  margin: 0;
+}
+
 /* FRASES EMPILHADAS, pedido do fundador em #01 CHANGES 2026-08-24: "parecem
    dois textos, mas na verdade sao diversas frases escritas uma em cima da
    outra". Causa: cada `<li>`/linha e uma frase INTEIRA (as vezes duas
@@ -1196,7 +1226,7 @@
    inteiro le como um paragrafo so. Mesma construcao em `.scrolly-mirror`,
    `.scrolly-raw` e `.scrolly-negation`: consertado nos tres juntos. */
 .scrolly-mirror__list {
-  flex: 1;
+  flex: none;
   list-style: none;
   display: flex;
   flex-direction: column;

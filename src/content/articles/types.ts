@@ -24,7 +24,7 @@ export type ManifestoBlock =
   | { kind: 'word'; label: Bilingual; theme?: ScrollyTheme }
   | { kind: 'pinned'; text: Bilingual; kicker?: Bilingual }
   | { kind: 'fullbleed'; text: Bilingual; theme?: ScrollyTheme; scale?: 'display' | 'word' | 'wordmark' }
-  | { kind: 'mirror'; before: Bilingual[]; after: Bilingual[] }
+  | { kind: 'mirror'; before: Bilingual[]; after: Bilingual[]; beforeLabel?: Bilingual; afterLabel?: Bilingual }
   | { kind: 'raw'; fixed: Bilingual; items: Bilingual[] }
   | { kind: 'negation'; pairs: [Bilingual, Bilingual][] }
   | { kind: 'stickers'; fragments: Bilingual[] }

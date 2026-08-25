@@ -6,6 +6,7 @@
 // micro + um <h2> discreto (sr-only) para navegação por leitor de tela.
 // =============================================================================
 
+import type React from 'react'
 import type { ScrollyTheme } from './types'
 
 const ROMAN: Array<[number, string]> = [
@@ -46,7 +47,19 @@ export function ChapterDivider({ index, theme = 'dark', label, srLabel }: Chapte
     <section className={`scrolly-chapter scrolly-chapter--${theme}`}>
       <div className="scrolly-chapter__wipe" aria-hidden="true" />
       {label && (
-        <span className="scrolly-chapter__word" aria-hidden="true">
+        <span
+          className="scrolly-chapter__word"
+          aria-hidden="true"
+          style={
+            {
+              /* A MAIOR PALAVRA, nao o rotulo inteiro. `THE SAMENESS` quebra no
+                 espaco e cada metade cabe folgada; contar os 12 caracteres faria
+                 o capitulo encolher 30% a toa. Quem manda no teto e a palavra
+                 que nao pode quebrar. */
+              '--sc-chars': Math.max(...label.split(/\s+/).map((w) => w.length)),
+            } as React.CSSProperties
+          }
+        >
           {label}
         </span>
       )}

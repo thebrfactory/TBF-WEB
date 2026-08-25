@@ -111,6 +111,8 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
             key={key}
             before={block.before.map((b) => b[lang])}
             after={block.after.map((a) => a[lang])}
+            beforeLabel={block.beforeLabel?.[lang]}
+            afterLabel={block.afterLabel?.[lang]}
           />
         )
 
@@ -182,23 +184,39 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
 
 // ─── TIER 3 — estruturas próprias do piloto ─────────────────────────────────
 
-function MirrorLists({ before, after }: { before: string[]; after: string[] }) {
+function MirrorLists({
+  before,
+  after,
+  beforeLabel,
+  afterLabel,
+}: {
+  before: string[]
+  after: string[]
+  beforeLabel?: string
+  afterLabel?: string
+}) {
   return (
     <div className="scrolly-mirror">
-      <ul className="scrolly-mirror__list scrolly-mirror__list--before">
-        {before.map((item, i) => (
-          <li key={i} className="scrolly-mirror__item">
-            {item}
-          </li>
-        ))}
-      </ul>
-      <ul className="scrolly-mirror__list scrolly-mirror__list--after">
-        {after.map((item, i) => (
-          <li key={i} className="scrolly-mirror__item">
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div className="scrolly-mirror__col">
+        {beforeLabel ? <p className="scrolly-mirror__label">{beforeLabel}</p> : null}
+        <ul className="scrolly-mirror__list scrolly-mirror__list--before">
+          {before.map((item, i) => (
+            <li key={i} className="scrolly-mirror__item">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="scrolly-mirror__col">
+        {afterLabel ? <p className="scrolly-mirror__label">{afterLabel}</p> : null}
+        <ul className="scrolly-mirror__list scrolly-mirror__list--after">
+          {after.map((item, i) => (
+            <li key={i} className="scrolly-mirror__item">
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
