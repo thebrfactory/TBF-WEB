@@ -118,6 +118,25 @@
 //      ninguem de proposito, porque atribuir no chute e proibido pela skill. Se
 //      ele der o nome, entra.
 // NENHUM NUMERO FOI INVENTADO OU ARREDONDADO NESTA PASSADA.
+// REVISAO 3, 2026-08-25 (auditoria do artigo EM INGLES, pedido dele: "sinto que a
+// escrita esta faltando um pouco de coesao e que possui alguns tracos de IA").
+// Titulo, subtitulo e deck NAO foram tocados: sao texto dele, de 24/08.
+//   1. LAYOUT. As tres linhas depois do bloco `mirror` apontavam para "the column on
+//      the left" e "the one on the right". Abaixo de 768px o mirror e uma coluna so,
+//      entao no telefone nao existe esquerda nem direita. O bloco ganhou rotulo
+//      (EVERYONE HAS / ONLY WE HAVE) e o texto parou de depender da tela.
+//   2. INGLES. O topo tinha sido ESPELHADO do portugues, e o corpo carregava calco:
+//      "the .TBF." com artigo, "put a machine to", "running inside", "had it written
+//      down", "closes the road", "are saved material", "relate". Mais seis numeros
+//      compostos sem hifen e SAO PAULO sem til, os dois inexistentes no artigo irmao.
+//   3. NUMERO. 34 + 2,5 nao dava 38. A terceira parcela (1,5 h sem classificacao)
+//      existia no cabecalho deste arquivo e nao estava publicada. Agora esta.
+//      As 43 h contra as 38 h passaram a ser reconciliadas na propria frase.
+//   4. FECHO. O anterior retratava o achado e nao se lia de primeira. O novo entrega
+//      o numero que o deck promete: 14.135 de 370.700.
+//   5. CORTES. Caiu um par de `negation` ("collection", que contradizia a coluna da
+//      direita do mirror) e o `fullbleed` de cheap/expensive, que contava a mesma
+//      piada de "Producing got cheap. Choosing got expensive." um capitulo antes.
 // =============================================================================
 
 import type { ManifestoArticle } from './types'
@@ -177,9 +196,9 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     //     está. Nomes, números e ferramentas, sem metáfora.
     {
       kind: 'pinned',
-      kicker: { en: 'SAO PAULO, AUGUST 2026', pt: 'SÃO PAULO, AGOSTO DE 2026' },
+      kicker: { en: 'SÃO PAULO, AUGUST 2026', pt: 'SÃO PAULO, AGOSTO DE 2026' },
       text: {
-        en: 'The .TBF. is one year old. Its archive is seven. Before the company existed, there were already years of research, references and repertoire waiting to be found.',
+        en: '.TBF. is one year old. Its archive is seven. Before the company existed there were already years of research and references.',
         pt: 'A .TBF. tem um ano. Seu acervo tem sete. Antes da empresa existir, já havia anos de pesquisa, referências e repertório esperando para serem descobertos.',
       },
     },
@@ -187,23 +206,23 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Thirteen thousand files: photographs, videos, screen grabs, recorded meetings.', pt: 'Treze mil arquivos: fotografia, vídeo, print de tela, reunião gravada.' },
-        { en: 'One night in August we put a machine to listen to all of them.', pt: 'Numa noite de agosto colocamos uma máquina para ouvir todos eles.' },
-        { en: 'Nobody had ever heard the whole archive. It is forty three hours of audio.', pt: 'Ninguém nunca tinha ouvido esse acervo inteiro. São quarenta e três horas de áudio.' },
+        { en: 'One night in August we set a machine to listen to all of it.', pt: 'Numa noite de agosto colocamos uma máquina para ouvir todos eles.' },
+        { en: 'Nobody had ever heard the whole archive: forty-three hours of audio, thirty-eight of them speech.', pt: 'Ninguém nunca tinha ouvido esse acervo inteiro: quarenta e três horas de áudio, trinta e oito delas de fala.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The tool was Whisper, an open transcription model, running inside our own Mac. No cloud.', pt: 'A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac. Sem nuvem.' },
+        { en: 'The tool was Whisper, an open transcription model, running on our own Mac. No cloud.', pt: 'A ferramenta foi o Whisper, modelo aberto de transcrição, rodando dentro do nosso Mac. Sem nuvem.' },
         { en: 'It started at eleven at night and finished at six in the morning.', pt: 'Começou às onze da noite e terminou às seis da manhã.' },
-        { en: 'It read the 3,132 files that had audio in them, and failed on none.', pt: 'Leu os 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
+        { en: 'It read the 3,132 files that had audio, and failed on none.', pt: 'Leu os 3.132 arquivos que tinham áudio dentro, e não falhou em nenhum.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'We wanted to be able to search inside what was said.', pt: 'A gente queria poder buscar dentro do que foi dito.' },
-        { en: 'What came back was a problem.', pt: 'O que voltou foi um problema.' },
+        { en: 'We wanted to search inside what was said.', pt: 'A gente queria poder buscar dentro do que foi dito.' },
+        { en: "What came back was somebody else's voice.", pt: 'O que voltou foi a voz de outra pessoa.' },
       ],
       emphasize: [1],
     },
@@ -222,10 +241,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Thirty four of the thirty eight spoken hours came from people who do not work here.', pt: 'Trinta e quatro das trinta e oito horas faladas saíram de gente que não trabalha aqui.' },
-        { en: 'Saved reels, courses by other people, podcasts, tutorials.', pt: 'Reel salvo, curso de terceiro, podcast, tutorial.' },
-        { en: 'Our own camera accounts for two and a half hours.', pt: 'A nossa própria câmera responde por duas horas e meia.' },
-        { en: 'What it films is a party, a shoot, a trip. Gesture, not speech.', pt: 'O que ela filma é festa, ensaio, viagem. Gesto, não frase.' },
+        { en: 'Thirty-four of the thirty-eight spoken hours came from people who do not work here.', pt: 'Trinta e quatro das trinta e oito horas faladas saíram de gente que não trabalha aqui.' },
+        { en: "Saved reels, other people's courses, podcasts, tutorials.", pt: 'Reel salvo, curso de terceiro, podcast, tutorial.' },
+        { en: 'Our own camera accounts for two and a half. The last hour and a half was never classified.', pt: 'A nossa própria câmera responde por duas horas e meia. A última hora e meia nunca foi classificada.' },
+        { en: 'What it films is a party, a shoot, a trip. It films gesture.', pt: 'O que ela filma é festa, ensaio, viagem. Ela filma gesto.' },
       ],
       emphasize: [0],
     },
@@ -241,16 +260,16 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Inside those hours, one in every seven words was said in English.', pt: 'Dentro dessas horas, uma em cada sete palavras foi dita em inglês.' },
-        { en: 'Nobody at the .TBF. knew that number existed.', pt: 'Ninguém na .TBF. sabia que esse número existia.' },
+        { en: 'Nobody here knew that number existed.', pt: 'Ninguém na .TBF. sabia que esse número existia.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'And that English is almost all borrowed: of 55,260 words spoken in English, 50,582 are saved material.', pt: 'E esse inglês é quase todo emprestado: de 55.260 palavras ditas em inglês, 50.582 são material salvo.' },
+        { en: 'And that English is almost all borrowed: of 55,260 words spoken in English, 50,582 come from saved material.', pt: 'E esse inglês é quase todo emprestado: de 55.260 palavras ditas em inglês, 50.582 são material salvo.' },
         { en: 'Art direction on TikTok, an After Effects tutorial, a sales reel, a prayer in Hebrew.', pt: 'Direção de arte no TikTok, tutorial de After Effects, reel de vendas, uma reza em hebraico.' },
-        { en: 'The few English clips our own camera shot are music playing at a party.', pt: 'Os poucos clipes em inglês que saíram da nossa câmera são música tocando numa festa.' },
-        { en: 'It is not who this label was talking to. It is what this label watches.', pt: 'Não é com quem esta label estava falando. É o que esta label assiste.' },
+        { en: 'In the few English clips our own camera shot, the English is music at a party.', pt: 'Os poucos clipes em inglês que saíram da nossa câmera são música tocando numa festa.' },
+        { en: 'None of it was addressed to anyone. It is a record of what this label watches.', pt: 'Nada disso foi dito para alguém. É o registro do que esta label assiste.' },
       ],
       emphasize: [3],
     },
@@ -267,7 +286,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
         pt: 'Campo de 3.132 marcas, uma por arquivo com áudio, colorido pelo que foi dito dentro dele.',
       },
       caption: {
-        en: 'The finding, drawn. Every mark is one file: parchment for Portuguese, amber for English, grey for the other sixteen languages, near black for the 879 where nobody speaks. The grid is 87 by 36, which is exactly 3,132. Made by a script that reads the database.',
+        en: 'The finding, drawn. Every mark is one file: parchment for Portuguese, amber for English, grey for the other sixteen languages, near-black for the 879 where nobody speaks. The grid is 87 by 36, which is exactly 3,132. Made by a script that reads the database.',
         pt: 'O achado, desenhado. Cada marca é um arquivo: pergaminho para o português, âmbar para o inglês, cinza para os outros dezesseis idiomas, quase preto para os 879 em que ninguém fala. A grade é 87 por 36, que dá exatamente 3.132. Feito por um script que lê o banco.',
       },
       credit: '.TBF. inc',
@@ -279,7 +298,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'The files had always been there, thirteen thousand of them, across seven years and four business units.', pt: 'Os arquivos sempre estiveram ali, treze mil deles, atravessando sete anos e quatro unidades de negócio.' },
-        { en: 'That night we gained no files at all. We gained the question.', pt: 'Naquela noite não ganhamos arquivo nenhum. Ganhamos a pergunta.' },
+        { en: 'That night we gained no files. We gained a way to ask.', pt: 'Naquela noite não ganhamos arquivo nenhum. Ganhamos um jeito de perguntar.' },
       ],
     },
     {
@@ -295,11 +314,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       pairs: [
         [
           { en: 'An archive is not a repertoire.', pt: 'Acervo não é repertório.' },
-          { en: 'An archive is what you kept. A repertoire is being able to relate it.', pt: 'Acervo é o que você guardou. Repertório é conseguir relacionar.' },
-        ],
-        [
-          { en: 'A repertoire is not a collection.', pt: 'Repertório não é coleção.' },
-          { en: 'It is noticing a connection that is not obvious yet.', pt: 'É perceber uma conexão que ainda não está evidente.' },
+          { en: 'An archive is what you kept. A repertoire is what you can connect.', pt: 'Acervo é o que você guardou. Repertório é conseguir relacionar.' },
         ],
       ],
     },
@@ -317,6 +332,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     },
     {
       kind: 'mirror',
+      beforeLabel: { en: 'EVERYONE HAS', pt: 'TODO MUNDO TEM' },
+      afterLabel: { en: 'ONLY WE HAVE', pt: 'SÓ NÓS TEMOS' },
       before: [
         { en: 'The same public corpus.', pt: 'O mesmo corpus público.' },
         { en: 'The same references, three clicks deep.', pt: 'As mesmas referências, a três cliques.' },
@@ -333,9 +350,9 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Everyone feeds the machine the column on the left, and the machine hands back the average.', pt: 'Todo mundo dá a coluna da esquerda de comer para a máquina, e a máquina devolve a média.' },
-        { en: 'The one on the right only we have. Our own tape says it fits in 14,135 words.', pt: 'A da direita só nós temos. A nossa própria fita diz que ela cabe em 14.135 palavras.' },
-        { en: 'We spend the day on the left like everybody else. We just had it written down.', pt: 'A gente passa o dia na esquerda como todo mundo. A diferença é que ficou escrito.' },
+        { en: 'Everyone feeds the machine what everyone has, and the machine hands back the average.', pt: 'Todo mundo dá à máquina o que todo mundo tem, e a máquina devolve a média.' },
+        { en: 'What only we have fits in 14,135 words. Our own tape counted them.', pt: 'O que só nós temos cabe em 14.135 palavras. Foi a nossa própria fita que contou.' },
+        { en: 'We spend our days in the same corpus as everybody else. The difference is that ours got written down.', pt: 'A gente passa o dia no mesmo corpus que todo mundo. A diferença é que o nosso ficou escrito.' },
         { en: 'Nobody escapes the average by writing a prettier prompt.', pt: 'Ninguém escapa da média escrevendo um prompt mais bonito.' },
       ],
       emphasize: [1],
@@ -348,8 +365,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Feeding the machine our own archive was half the job.', pt: 'Dar o acervo de comer à máquina foi metade do trabalho.' },
-        { en: 'The other half is teaching it what this label refuses, and that is where it gets hard:', pt: 'A outra metade é ensinar a ela o que esta label recusa, e aí começa o problema:' },
-        { en: 'a manifesto is memory, and memory fails at some rate, always quietly.', pt: 'manifesto é memória, e memória falha a alguma taxa, sempre em silêncio.' },
+        { en: 'The other half was teaching it what this label refuses:', pt: 'A outra metade foi ensinar a ela o que esta label recusa:' },
+        { en: 'a manifesto is memory, and memory fails at some rate, and never out loud.', pt: 'manifesto é memória, e memória falha a alguma taxa, sempre em silêncio.' },
       ],
     },
     {
@@ -357,7 +374,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'So here the rules stopped being remembered and started being run.', pt: 'Então aqui as regras deixaram de ser lembradas e passaram a ser rodadas.' },
         { en: 'A GUARD is a small script that sits between the work and the world.', pt: 'GUARD é um script pequeno que fica entre o trabalho e o mundo.' },
-        { en: 'One refuses the wrong dash. One closes the road to production.', pt: 'Um recusa o traço errado. Outro fecha o caminho para produção.' },
+        { en: 'One refuses the dash this label does not use. One blocks the road to production.', pt: 'Um recusa o traço que esta label não usa. Outro bloqueia o caminho para produção.' },
         { en: 'One counts how many of our rules are code, and how many are still hope.', pt: 'Outro conta quantas das nossas regras são código, e quantas ainda são só esperança.' },
       ],
       emphasize: [3],
@@ -373,8 +390,8 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'With one counterweight, learned the hard way: a guard that guesses is worse than no guard at all.', pt: 'Com um contrapeso, aprendido na marra: guard que chuta é pior que guard nenhum.' },
-        { en: 'One of ours rang on a file that had only been read, not written.', pt: 'Um dos nossos tocou num arquivo que só tinha sido lido, não escrito.' },
+        { en: 'One counterweight, learned the hard way: a guard that guesses is worse than no guard at all.', pt: 'Com um contrapeso, aprendido na marra: guard que chuta é pior que guard nenhum.' },
+        { en: 'One of those guards once rang on a file that had only been read, not written.', pt: 'Um desses guards tocou num arquivo que só tinha sido lido, não escrito.' },
         { en: 'An alarm that rings on the wrong file teaches everyone to ignore alarms.', pt: 'Alarme que toca no arquivo errado ensina todo mundo a ignorar alarme.' },
         { en: 'So a new rule only enters if it is born with a test, or retires another one.', pt: 'Então regra nova só entra se nascer com teste, ou se aposentar outra.' },
       ],
@@ -385,7 +402,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       lines: [
         { en: 'The oldest rule here is the cheapest: a signal that already exists beats a new signal.', pt: 'A regra mais antiga daqui é a mais barata: sinal que já existe vence sinal novo.' },
         { en: 'Cameras already write the date, the lens, the coordinates.', pt: 'A câmera já escreve a data, a lente, as coordenadas.' },
-        { en: 'The column that told us whose voice this was had been sitting in the catalogue the whole time.', pt: 'A coluna que disse de quem era aquela voz estava parada no catálogo o tempo todo.' },
+        { en: 'The field that told us whose voice each file held had been sitting in the catalogue the whole time.', pt: 'O campo que dizia de quem era cada voz estava parado no catálogo o tempo todo.' },
       ],
     },
 
@@ -395,6 +412,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
+        { en: 'The alarm that rings on the wrong file has a twin: the one that never rings at all.', pt: 'O alarme que toca no arquivo errado tem um gêmeo: o que nunca toca.' },
         { en: 'The same night the archive learned to answer, it also lied.', pt: 'Na mesma noite em que o acervo aprendeu a responder, ele também mentiu.' },
         { en: 'A file name with an accent can be stored two different ways.', pt: 'Nome de arquivo com acento pode ser guardado de dois jeitos diferentes.' },
         { en: 'Our database used one. The script feeding it used the other.', pt: 'Nosso banco usava um. O script que o alimentava usava o outro.' },
@@ -415,18 +433,10 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'We caught it before the batch was applied, and fixed it.', pt: 'A gente pegou antes de aplicar o lote, e consertou.' },
-        { en: 'Had we not, a search for those files would have returned nothing, and nothing looks exactly like an absence.', pt: 'Se não tivesse pego, a busca por esses arquivos devolveria nada, e nada se parece exatamente com uma ausência.' },
+        { en: 'Had we not, a search for those files would have returned nothing, and an empty result looks exactly like an empty archive.', pt: 'Se não tivesse pego, a busca por esses arquivos devolveria nada, e resultado vazio é idêntico a acervo vazio.' },
         { en: 'We would have concluded the archive was empty in the place where it was fullest.', pt: 'Teríamos concluído que o acervo era vazio justo no lugar onde ele era mais cheio.' },
       ],
       emphasize: [2],
-    },
-    {
-      kind: 'fullbleed',
-      text: {
-        en: 'When execution gets cheap, the expensive mistake is trusting a number you cannot explain.',
-        pt: 'Quando executar fica barato, o erro caro é confiar num número que você não sabe explicar.',
-      },
-      theme: 'dark',
     },
 
     // ─── CAPÍTULO 5: AUTORIA.
@@ -443,7 +453,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'The machine did seven hours of work that night.', pt: 'A máquina fez sete horas de trabalho naquela noite.' },
-        { en: 'Deciding what thirty four hours of borrowed speech mean for this label is still open.', pt: 'Decidir o que trinta e quatro horas de fala emprestada significam para esta label segue aberto.' },
+        { en: 'What thirty-four hours of borrowed speech mean for this label is still open.', pt: 'O que trinta e quatro horas de fala emprestada significam para esta label segue aberto.' },
         { en: 'Producing got cheap. Choosing got expensive.', pt: 'Produzir ficou barato. Escolher ficou caro.' },
       ],
       emphasize: [1],
@@ -460,7 +470,7 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Recorded on 27 March 2025, inside those 370,700 words:', pt: 'Gravado em 27 de março de 2025, dentro daquelas 370.700 palavras:' },
+        { en: 'Inside those 370,700 words, recorded on 27 March 2025:', pt: 'Gravado em 27 de março de 2025, dentro daquelas 370.700 palavras:' },
       ],
     },
     {
@@ -474,16 +484,16 @@ export const theLabelThatLearnedToAskItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Ninety eight seconds of tape, filed under a portrait shoot, unheard for seventeen months.', pt: 'Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não ouvidos por dezessete meses.' },
-        { en: 'It took a machine reading forty three hours to hand back one sentence we already owned.', pt: 'Foi preciso uma máquina ler quarenta e três horas para devolver uma frase que já era nossa.' },
+        { en: 'Ninety-eight seconds of tape, said in Portuguese, filed under a portrait shoot, unheard for seventeen months.', pt: 'Noventa e oito segundos de fita, arquivados dentro de um ensaio de retrato, não ouvidos por dezessete meses.' },
+        { en: 'It took a machine reading forty-three hours to hand back one sentence we already owned.', pt: 'Foi preciso uma máquina ler quarenta e três horas para devolver uma frase que já era nossa.' },
       ],
       emphasize: [1],
     },
     {
       kind: 'closing',
       text: {
-        en: 'The archive answered the part that was its to answer. How much of what we say is ours is not.',
-        pt: 'O acervo respondeu a parte que cabia a ele. Quanto do que a gente fala é da gente, não.',
+        en: 'The archive answered: 14,135 of the 370,700 words are ours. What to do with the rest is not its question.',
+        pt: 'O acervo respondeu: 14.135 das 370.700 palavras são nossas. O que fazer com o resto não é pergunta dele.',
       },
     },
   ],
