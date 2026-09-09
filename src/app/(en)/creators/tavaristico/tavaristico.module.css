@@ -136,6 +136,39 @@
   .socialLink { width: 36px; height: 36px; }
 }
 
+/* ─── RETRATO DO HERO (foto enviada pelo fundador em 09/09/2026) ────────── */
+/* Mobile primeiro: o retrato entra depois do nome, largura total da coluna,
+   recorte alto para o rosto sobrar. No desktop ele senta ao lado do bloco de
+   texto, sem empurrar a tipografia do nome. */
+.heroPortrait {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin-top: var(--tbf-space-8);
+  overflow: hidden;
+  border-radius: var(--tbf-radius-lg, 12px);
+  background: var(--tbf-surface-2, #1a1a1a);
+}
+.heroPortrait img {
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+@media (min-width: 900px) {
+  .heroWithPortrait {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: var(--tbf-space-10);
+    align-items: end;
+    max-width: 76rem;
+  }
+  .heroPortrait {
+    margin-top: 0;
+    aspect-ratio: 3 / 4;
+    align-self: end;
+  }
+}
+
 /* ─── INTRO / STATEMENT (parte 09) ─────────────────────────────────────── */
 .intro { padding-block: var(--tbf-space-12); max-width: 44rem; }
 .introHeadline {

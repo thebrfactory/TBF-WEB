@@ -33,6 +33,7 @@ import { SelectedWork } from '@/components/tavaristico/SelectedWork'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { WhatIBuild } from '@/components/tavaristico/WhatIBuild'
 import { localizedPath, type Lang } from '@/lib/i18n'
+import Image from 'next/image'
 
 export default function TavaristicoView({ lang }: { lang: Lang }) {
   const t = tavaristico[lang]
@@ -50,7 +51,8 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
     <main className={styles.page}>
       {/* HERO, parte 07 do briefing: nome ocupa o espaço, ícones sociais
           reais, sem bloco tradicional de título mais parágrafo. */}
-      <header className={`${styles.hero} container`}>
+      <header className={`${styles.hero} ${styles.heroWithPortrait} container`}>
+        <div>
         <span className={styles.label}>{t.index.eyebrow}</span>
         <h1 className={styles.heroName}>
           <span className={styles.heroNameLine}>{nameParts[0]}</span>{' '}
@@ -67,6 +69,18 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           {t.index.locationOrigin}
         </p>
         <SocialIcons links={socialLinks} className={styles.heroSocial} />
+        </div>
+        {/* Retrato enviado pelo fundador em 09/09/2026. Prioridade alta: é a
+            primeira imagem da página, entra no LCP do mobile. */}
+        <div className={styles.heroPortrait}>
+          <Image
+            src="/images/creators/tavaristico-portrait.webp"
+            alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
+            fill
+            priority
+            sizes="(min-width: 900px) 34vw, 100vw"
+          />
+        </div>
       </header>
 
       {/* INTRO / STATEMENT, parte 09: curto, sem manifesto. */}

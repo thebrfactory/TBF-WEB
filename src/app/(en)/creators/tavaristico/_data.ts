@@ -55,8 +55,8 @@ export const IDENTITY = {
   bioPTProvisional: true,
   socials: {
     instagram: 'https://instagram.com/thebrfactory',
-    linkedin: 'https://www.linkedin.com/in/felipetavares', // [ECD] confirmar handle exato
-    linkedinProvisional: true,
+    linkedin: 'https://www.linkedin.com/in/tavaristico/', // confirmado pelo fundador em 09/09/2026
+    linkedinProvisional: false,
   },
 }
 
