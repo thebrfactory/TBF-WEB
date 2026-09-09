@@ -25,7 +25,7 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
-import { PressLogosCarousel } from '../PressLogosCarousel'
+import { PressLogosCarousel } from '../v1/PressLogosCarousel'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'

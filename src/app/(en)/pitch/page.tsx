@@ -1,22 +1,25 @@
-// Rota `/pitch` — o deck 1.0 em inglês, o idioma nativo do site.
-// A página em si vive em src/views/PitchView.tsx e serve os dois idiomas.
+// Rota `/pitch`: página índice que classifica todos os pitches (decks gerais
+// 1.0/2.0/3.0 e decks endereçados a uma empresa específica). Pedido do
+// fundador 2026-09-09: antes esta rota ERA o deck 1.0, que morou para
+// /pitch/v1. A página em si vive em src/views/PitchIndexView.tsx e serve os
+// dois idiomas.
 // Segue `noindex`: é documento de trabalho para investidores/parceiros, não
 // conteúdo editorial do site.
 
 import type { Metadata } from 'next'
-import PitchView from '@/views/PitchView'
+import PitchIndexView from '@/views/PitchIndexView'
 import { pitch } from '@/content/i18n/pages/pitch'
 import { languageAlternates } from '@/lib/i18n'
 
-const t = pitch.en
+const t = pitch.en.index
 
 export const metadata: Metadata = {
-  title: t.meta.title,
-  description: t.meta.description,
+  title: t.title,
+  description: t.description,
   robots: { index: false, follow: false },
   alternates: languageAlternates('/pitch'),
 }
 
 export default function Page() {
-  return <PitchView lang="en" />
+  return <PitchIndexView lang="en" />
 }

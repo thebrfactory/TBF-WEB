@@ -47,13 +47,11 @@ export const FOOTER_COLUMNS = [
       { href: '/manifesto', linkKey: 'manifesto' },
       { href: '/collective', linkKey: 'collective' },
       { href: '/access', linkKey: 'access' },
-      // Os dois decks, na ordem cronológica: a 1.0 logo acima da 2.0 (pedido
-      // 2026-07-31). A 1.0 estava publicada mas sem nenhum link no site. Os
-      // rótulos carregam a versão de propósito: sem eles não dá para distinguir
-      // um deck do outro no rodapé.
-      { href: '/pitch', linkKey: 'pitch1' },
-      { href: '/pitch/v2', linkKey: 'pitch2' },
-      { href: '/pitch/v3', linkKey: 'pitch3' },
+      // Um link só para o índice de pitches (pedido do fundador 2026-09-09).
+      // /pitch passou a ser a página que classifica TODOS os decks (1.0, 2.0,
+      // 3.0 e os endereçados a empresa, como o da Overlens): o rodapé não
+      // precisa mais listar cada deck, listar o índice já entrega os três.
+      { href: '/pitch', linkKey: 'pitch' },
     ],
   },
   {
@@ -108,8 +106,7 @@ export const FOOTER_ROUTES: readonly string[] = FOOTER_COLUMNS.flatMap((col) =>
  * simplesmente não existe.
  *
  * As sub-rotas que de fato precisam da regra já estão na lista acima, uma a uma,
- * porque o rodapé lista cada uma delas: /about/quick-facts, /press/media,
- * /pitch/v2, /pitch/v3.
+ * porque o rodapé lista cada uma delas: /about/quick-facts, /press/media.
  *
  * URL absoluta, mailto e tel não são rota deste site: devolve `false` e quem
  * chama trata o alvo como já trata hoje.

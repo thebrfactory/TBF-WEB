@@ -772,6 +772,28 @@
   padding-top: var(--tbf-space-6);
 }
 
+/* Ícone de Instagram, discreto, no estilo de site de moda: traço fino,
+   monocromático (herda `currentColor`), opacidade baixa em repouso, cheia no
+   hover. Pedido do fundador 2026-09-09: ícone, nunca modal ou popup. */
+.footer__social {
+  display: inline-flex;
+  margin-top: var(--tbf-space-4);
+  color: var(--tbf-footer-link);
+  opacity: 0.5;
+  transition: opacity var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.footer__social:hover,
+.footer__social:focus-visible {
+  opacity: 1;
+}
+
+.footer__social:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+  border-radius: var(--tbf-focus-ring-radius);
+}
+
 /* =============================================================================
    COMPONENTE 03 — ARTICLE CARD
    ============================================================================= */

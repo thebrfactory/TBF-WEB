@@ -1,8 +1,10 @@
 // =============================================================================
-// Dicionário do /pitch (deck 1.0, investidores/parceiros). Convenções: ../README.md
+// Dicionário do deck 1.0 (agora em /pitch/v1, investidores/parceiros) e da
+// página índice em /pitch. Convenções: ../README.md
 //
-// NÃO é o dicionário do /pitch/v2 — aquele deck é deliberadamente bilíngue
-// (PT + EN na mesma tela) e não passa por este sistema de i18n.
+// NÃO é o dicionário do /pitch/v2 ou /pitch/v3: aqueles decks são
+// deliberadamente bilíngues (PT + EN na mesma tela) e não passam por este
+// sistema de i18n.
 // =============================================================================
 
 import type { Lang } from '@/lib/i18n'
@@ -141,6 +143,14 @@ const en = {
     ctaInstagram: '@thebrfactory',
     legal: '.TBF. inc · CNPJ 61.360.565/0001-74 · Rua Pamplona 145, Jardim Paulista, São Paulo, SP, 01405-900',
   },
+
+  // Dicionário da página índice em `/pitch`. Ela só classifica os decks,
+  // cada deck guarda o próprio dicionário.
+  index: {
+    title: 'Pitch',
+    description: '.THE BRAZILIAN FACTORY. Index of pitch decks: general and partner specific.',
+    sectionCompany: 'For partners',
+  },
 }
 
 const pt: typeof en = {
@@ -276,6 +286,12 @@ const pt: typeof en = {
     ctaLabels: 'Labels',
     ctaInstagram: '@thebrfactory',
     legal: '.TBF. inc · CNPJ 61.360.565/0001-74 · Rua Pamplona 145, Jardim Paulista, São Paulo, SP, 01405-900',
+  },
+
+  index: {
+    title: 'Pitch',
+    description: '.THE BRAZILIAN FACTORY. Índice dos decks de pitch: gerais e endereçados a parceiros.',
+    sectionCompany: 'Para parceiros',
   },
 }
 

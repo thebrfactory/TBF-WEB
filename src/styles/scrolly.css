@@ -920,6 +920,61 @@
   color: var(--tbf-text-tertiary);
 }
 
+/* MENU DE FALLBACK DO ICONE NATIVO. Ancorado no proprio botao (position:
+   relative no wrapper), aparece so quando navigator.share nao existe (desktop
+   Chrome). Lista as mesmas opcoes da fileira mais copiar link. */
+.scrolly-share__native {
+  position: relative;
+}
+
+.scrolly-share__menu {
+  position: absolute;
+  bottom: calc(100% + var(--tbf-space-2));
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  min-width: 176px;
+  padding: var(--tbf-space-2);
+  background: var(--tbf-bg-primary);
+  border: 1px solid var(--tbf-border);
+  border-radius: var(--tbf-radius-tile);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.scrolly-share--inline .scrolly-share__menu {
+  bottom: auto;
+  top: calc(100% + var(--tbf-space-2));
+}
+
+.scrolly-share__menu-item {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  padding: var(--tbf-space-2) var(--tbf-space-3);
+  border: none;
+  background: transparent;
+  color: var(--tbf-text-primary);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  text-align: left;
+  border-radius: var(--tbf-radius-chip);
+  cursor: pointer;
+  transition: background var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.scrolly-share__menu-item:hover,
+.scrolly-share__menu-item:focus-visible {
+  background: color-mix(in srgb, var(--tbf-text-primary) 8%, transparent);
+}
+
+.scrolly-share__menu-item svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
 /* A FILEIRA NO ALTO, ao lado de quem assina (2026-08-24: "eu nao vi os icones
    de rede social"). Mesma fileira, corpo menor: ali ela acompanha uma linha de
    16px, nao fecha uma materia. O `padding-block` do bloco sai, senao a linha da

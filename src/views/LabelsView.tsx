@@ -265,7 +265,7 @@ export default function LabelsView({ lang }: { lang: Lang }) {
             {t.closing.casinoCta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
-          <Link href={path('/pitch')} className="btn btn--secondary">
+          <Link href={path('/pitch/v1')} className="btn btn--secondary">
             {t.closing.pitchCta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>

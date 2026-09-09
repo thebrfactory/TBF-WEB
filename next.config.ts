@@ -100,6 +100,17 @@ const nextConfig: NextConfig = {
         destination: '/creators/tavaristico',
         permanent: true,
       },
+      // Rota curta do perfil do TAVARÍSTICO: canoniza para /creators/tavaristico.
+      {
+        source: '/tavaristico',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/tavaristico',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
     ]
   },
 }

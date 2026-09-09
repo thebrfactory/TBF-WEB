@@ -47,6 +47,7 @@ const STATIC_ROUTES: Rota[] = [
   { path: '/press/media', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/pitch/v3', changeFrequency: 'monthly', priority: 0.4 },
   { path: '/pitch/v2', changeFrequency: 'monthly', priority: 0.4 },
+  { path: '/pitch/v1', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/pitch', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/legal/terms', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/legal/privacy', changeFrequency: 'monthly', priority: 0.3 },

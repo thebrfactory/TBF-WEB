@@ -197,3 +197,145 @@ export const WORKS: Work[] = [
 export const findWork = (slug: string): Work | undefined => WORKS.find((w) => w.slug === slug)
 export const selectedWorks = (): Work[] => WORKS.filter((w) => w.selected)
 export const isProv = (w: Work, f: ProvField): boolean => !!w.provisional?.includes(f)
+
+// -----------------------------------------------------------------------------
+// CREATOR PAGE 2.0 (redesign PRJ TAVARISTICO 2.0, briefing "TAVARISTICO /
+// CREATOR PAGE 2.0"). Listas novas, com os textos exatos do briefing. Nome,
+// categoria e descricao de cada territorio sao conteudo de portfolio, nao
+// traduzido, mesma regra do resto deste arquivo.
+//
+// VENTURES: a secao "Selected Work" (parte 10 do briefing). CRIVO, .TBF,
+// BRAND SYSTEM e .RUC sao os territorios do fundador fora da publicidade, sem
+// pagina propria neste repo, por isso o `href` fica vazio nos que nao tem
+// rota real (ver relatorio de entrega). TAVARISTICO aponta para a galeria de
+// trabalhos que ja existe nesta mesma pagina (`#work`), prova real daquele
+// territorio.
+// -----------------------------------------------------------------------------
+
+export type VentureWeight = 'primary' | 'secondary'
+
+export interface Venture {
+  index: string
+  name: string
+  category: string
+  description: string
+  /** peso visual, parte 11: nem todo territorio pesa igual */
+  weight: VentureWeight
+  /** rota interna, quando existe. Vazio: sem pagina propria neste repo. */
+  href?: string
+}
+
+export const VENTURES: Venture[] = [
+  {
+    index: '01',
+    name: 'CRIVO',
+    category: 'AI AGENTS / PRODUCT',
+    description: 'AI-powered supplier intelligence for corporate events.',
+    weight: 'primary',
+  },
+  {
+    index: '02',
+    name: '.TBF',
+    category: 'CULTURE / MEDIA / BUSINESS',
+    description: 'An independent creative company exploring new forms of culture, media and business.',
+    weight: 'primary',
+    href: '/',
+  },
+  {
+    index: '03',
+    name: 'BRAND SYSTEM',
+    category: 'AI / BRAND / PRODUCT',
+    description: "An agentic brand system that connects a company's brand knowledge to its marketing workflow.",
+    weight: 'primary',
+  },
+  {
+    index: '04',
+    name: '.RUC',
+    category: 'FASHION / CULTURE / CREATIVE DIRECTION',
+    description: 'Fashion, image and cultural production.',
+    weight: 'secondary',
+  },
+  {
+    index: '05',
+    name: 'TAVARÍSTICO',
+    category: 'CREATIVE DIRECTION / ART DIRECTION',
+    description: 'Selected work across advertising, fashion and culture.',
+    weight: 'secondary',
+    href: '#work',
+  },
+]
+
+// -----------------------------------------------------------------------------
+// CAMPAIGNS (partes 12, 13, 14): sequencia tipo "stories" navegavel,
+// reaproveitando o StoryDeck que ja existe, nascido no /pitch/v3, mesmo
+// objeto que a proposta de hospitality usa (ver src/components/StoryPlayer).
+// A parte 13 proibe inventar campanha: a unica com material real pronto para
+// virar sequencia e Ô: 18 Years, cliente @odecasahostel, Ô DE CASA, o mesmo
+// caso que o briefing pede como referencia, usando a capa e a galeria que ja
+// existem em WORKS acima. VERAOZAO / Ô DE CASA, citada literalmente no
+// briefing, nao tem asset neste repo: a lista fica pronta para receber um
+// segundo item quando o material chegar (ver relatorio de entrega).
+// -----------------------------------------------------------------------------
+
+export interface Campaign {
+  index: string
+  name: string
+  client: string
+  descriptionEN: string
+  descriptionPT: string
+  frames: { src: string; alt: string; role: string }[]
+}
+
+export const CAMPAIGNS: Campaign[] = [
+  {
+    index: '05',
+    name: 'Ô: 18 YEARS',
+    client: '@odecasahostel',
+    descriptionEN:
+      '18 years of the most awarded Brazilian hostel. A campaign showing the gen Z lifestyle of a place that is a meeting point for cultures around the globe.',
+    descriptionPT:
+      '18 anos do hostel brasileiro mais premiado. Uma campanha que mostra o estilo de vida da geracao Z num lugar que e ponto de encontro de culturas ao redor do mundo.',
+    frames: [
+      { src: `${base}/o-18-years/cover.webp`, alt: 'Ô: 18 Years, capa da campanha', role: 'Campaign key visual' },
+      { src: `${base}/o-18-years/g1.webp`, alt: 'Ô: 18 Years, frame 1', role: 'Lifestyle photography' },
+      { src: `${base}/o-18-years/g2.webp`, alt: 'Ô: 18 Years, frame 2', role: 'Lifestyle photography' },
+    ],
+  },
+]
+
+// -----------------------------------------------------------------------------
+// WHAT I BUILD (parte 15): nao e "skills". Texto exato do briefing.
+// -----------------------------------------------------------------------------
+
+export interface BuildPillar {
+  name: string
+  descriptionEN: string
+  descriptionPT: string
+}
+
+export const BUILD_PILLARS: BuildPillar[] = [
+  {
+    name: 'BRANDS',
+    descriptionEN: 'Positioning, identity, narrative and cultural systems.',
+    descriptionPT: 'Posicionamento, identidade, narrativa e sistemas culturais.',
+  },
+  {
+    name: 'PRODUCTS',
+    descriptionEN: 'Digital products, experiences and MVPs.',
+    descriptionPT: 'Produtos digitais, experiencias e MVPs.',
+  },
+  {
+    name: 'BUSINESSES',
+    descriptionEN: 'New ventures and creative businesses.',
+    descriptionPT: 'Novos negocios e empresas criativas.',
+  },
+  {
+    name: 'SYSTEMS',
+    descriptionEN: 'AI agents, brand systems and creative technology.',
+    descriptionPT: 'Agentes de IA, sistemas de marca e tecnologia criativa.',
+  },
+]
+
+// CURRENTLY EXPLORING (parte 17): texto exato do briefing, nao se traduz,
+// mesma convencao das disciplinas acima (rotulo de territorio).
+export const EXPLORING: string[] = ['CREATIVE DIRECTION', 'AI PRODUCTS', 'BRAND SYSTEMS', 'NEW VENTURES']
