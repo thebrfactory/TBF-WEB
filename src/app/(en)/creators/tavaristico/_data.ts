@@ -109,7 +109,7 @@ export const WORKS: Work[] = [
   {
     slug: 'o-18-years',
     index: '03',
-    title: 'Ô: 18 Years',
+    title: 'DEZOITÔ',
     disciplines: ['Campaign & Content'],
     role: 'Creative Director',
     client: '@odecasahostel',
@@ -221,56 +221,65 @@ export type VentureWeight = 'primary' | 'secondary'
 export interface Venture {
   index: string
   name: string
-  category: string
+  /** categoria em partes: o separador visual (ponto medio) e do componente,
+   * nunca uma barra escrita no dado (correcao do fundador, 09/09/2026). */
+  category: string[]
   description: string
-  /** peso visual, parte 11: nem todo territorio pesa igual */
+  /** peso visual. Correcao 09/09/2026: todos iguais, o 04 nao pode ficar
+   * menor que os outros. Campo mantido para uso futuro. */
   weight: VentureWeight
   /** rota interna, quando existe. Vazio: sem pagina propria neste repo. */
   href?: string
+  /** capa do circulo de story, identidade visual do proprio projeto */
+  cover: string
+  /** alt da capa */
+  coverAlt: string
 }
 
 export const VENTURES: Venture[] = [
   {
     index: '01',
     name: 'CRIVO',
-    category: 'AI AGENTS / PRODUCT',
+    category: ['AI AGENTS', 'PRODUCT'],
     description: 'AI-powered supplier intelligence for corporate events.',
     weight: 'primary',
+    cover: `${base}/ventures/crivo.svg`,
+    coverAlt: 'CRIVO',
   },
   {
     index: '02',
-    name: '.TBF',
-    category: 'CULTURE / MEDIA / BUSINESS',
-    description: 'An independent creative company exploring new forms of culture, media and business.',
+    name: 'VERÃOZÃO',
+    category: ['CAMPAIGN', 'CULTURE'],
+    description: 'A summer campaign for Ô de Casa, the most awarded Brazilian hostel.',
     weight: 'primary',
-    href: '/',
+    cover: `${base}/ventures/veraozao.webp`,
+    coverAlt: 'VERÃOZÃO, Ô de Casa',
   },
   {
     index: '03',
-    name: 'BRAND SYSTEM',
-    category: 'AI / BRAND / PRODUCT',
+    name: 'BRANDSYSTEM',
+    category: ['AI', 'BRAND', 'PRODUCT'],
     description: "An agentic brand system that connects a company's brand knowledge to its marketing workflow.",
     weight: 'primary',
+    cover: '/brand/TBF-AVATAR.webp',
+    coverAlt: 'BRANDSYSTEM, .TBF. inc',
   },
   {
     index: '04',
-    name: '.RUC',
-    category: 'FASHION / CULTURE / CREATIVE DIRECTION',
+    name: '.RUNWAY UNTD COLLECTIVE.',
+    category: ['FASHION', 'CULTURE', 'CREATIVE DIRECTION'],
     description: 'Fashion, image and cultural production.',
-    weight: 'secondary',
+    weight: 'primary',
+    cover: `${base}/ventures/runway-untd.webp`,
+    coverAlt: '.RUNWAY UNTD COLLECTIVE.',
   },
 ]
 
 // -----------------------------------------------------------------------------
 // CAMPAIGNS (partes 12, 13, 14): sequencia tipo "stories" navegavel,
-// reaproveitando o StoryDeck que ja existe, nascido no /pitch/v3, mesmo
-// objeto que a proposta de hospitality usa (ver src/components/StoryPlayer).
-// A parte 13 proibe inventar campanha: a unica com material real pronto para
-// virar sequencia e Ô: 18 Years, cliente @odecasahostel, Ô DE CASA, o mesmo
-// caso que o briefing pede como referencia, usando a capa e a galeria que ja
-// existem em WORKS acima. VERAOZAO / Ô DE CASA, citada literalmente no
-// briefing, nao tem asset neste repo: a lista fica pronta para receber um
-// segundo item quando o material chegar (ver relatorio de entrega).
+// reaproveitando o StoryDeck que ja existe (nascido no /pitch/v3).
+// Nome corrigido pelo fundador em 09/09/2026: a campanha se chama DEZOITÔ,
+// nao "Ô: 18 Years".
 // -----------------------------------------------------------------------------
 
 export interface Campaign {
@@ -285,16 +294,16 @@ export interface Campaign {
 export const CAMPAIGNS: Campaign[] = [
   {
     index: '01',
-    name: 'Ô: 18 YEARS',
+    name: 'DEZOITÔ',
     client: '@odecasahostel',
     descriptionEN:
       '18 years of the most awarded Brazilian hostel. A campaign showing the gen Z lifestyle of a place that is a meeting point for cultures around the globe.',
     descriptionPT:
       '18 anos do hostel brasileiro mais premiado. Uma campanha que mostra o estilo de vida da geracao Z num lugar que e ponto de encontro de culturas ao redor do mundo.',
     frames: [
-      { src: `${base}/o-18-years/cover.webp`, alt: 'Ô: 18 Years, capa da campanha', role: 'Campaign key visual' },
-      { src: `${base}/o-18-years/g1.webp`, alt: 'Ô: 18 Years, frame 1', role: 'Lifestyle photography' },
-      { src: `${base}/o-18-years/g2.webp`, alt: 'Ô: 18 Years, frame 2', role: 'Lifestyle photography' },
+      { src: `${base}/o-18-years/cover.webp`, alt: 'DEZOITÔ, capa da campanha', role: 'Campaign key visual' },
+      { src: `${base}/o-18-years/g1.webp`, alt: 'DEZOITÔ, frame 1', role: 'Lifestyle photography' },
+      { src: `${base}/o-18-years/g2.webp`, alt: 'DEZOITÔ, frame 2', role: 'Lifestyle photography' },
     ],
   },
 ]
