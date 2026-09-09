@@ -74,6 +74,7 @@ export const FOOTER_COLUMNS = [
       { href: '/legal/privacy', linkKey: 'privacy' },
       { href: '/legal/conduct', linkKey: 'conduct' },
       { href: '/legal/law-enforcement', linkKey: 'lawEnforcement' },
+      { href: '/compliance', linkKey: 'compliance' },
     ],
   },
 ] as const satisfies readonly {

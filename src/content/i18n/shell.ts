@@ -113,6 +113,7 @@ const en = {
       privacy: 'Privacy Policy',
       conduct: 'Code of Conduct',
       lawEnforcement: 'Law Enforcement Guidelines',
+      compliance: 'Compliance',
     },
   },
 }
@@ -224,6 +225,7 @@ const pt: typeof en = {
       privacy: 'Política de Privacidade',
       conduct: 'Código de Conduta',
       lawEnforcement: 'Diretrizes para Autoridades',
+      compliance: 'Compliance',
     },
   },
 }
