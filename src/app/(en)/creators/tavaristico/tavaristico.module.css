@@ -19,7 +19,7 @@
      competiam entre si). Um tamanho por papel, aplicado sem exceção nas
      seções abaixo. Peso é o contraste: título sempre 800, corpo e rótulo
      sempre 300 ou 400, nunca peso médio. */
-  --tav-text-display: clamp(2.75rem, 11vw, 6rem);   /* nome do hero */
+  --tav-text-display: clamp(1.6rem, 7.6vw, 6rem);   /* nome do hero, ao lado do avatar mesmo no mobile */
   --tav-text-headline: clamp(2rem, 7vw, 3.25rem);   /* título de seção: intro, about, contato */
   --tav-text-title-lg: clamp(1.7rem, 6vw, 2.75rem); /* item primário: venture ou campaign */
   --tav-text-title: clamp(1.25rem, 3.6vw, 1.75rem); /* item secundário: build, card */
@@ -63,20 +63,55 @@
   text-underline-offset: 3px;
 }
 
+/* ─── CAPA (correção 09/09/2026 parte 2) ───────────────────────────────
+   Faixa de rede social atrás do hero: vídeo em loop, baixa no mobile, um
+   pouco maior no desktop, nunca dominando a tela. Sangra até a borda da
+   viewport (largura de container é escopada à página, não ao body). */
+.heroCover {
+  position: relative;
+  width: 100%;
+  height: clamp(6.5rem, 30vw, 9rem);
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+}
+.heroCoverMedia {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* Sombra sutil na base: separa a capa do conteúdo e ajuda o anel do avatar a
+   ler contra qualquer trecho claro do vídeo. */
+.heroCoverFade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
+  pointer-events: none;
+}
+@media (min-width: 900px) {
+  .heroCover { height: 13rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .heroCoverMedia { display: none; }
+  .heroCover { background-image: url('/images/creators/tavaristico-cover-poster.webp'); background-size: cover; background-position: center; }
+}
+
 /* ─── HERO, headline e texto ──────────────────────────────────────────── */
 .hero {
-  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-20));
+  padding-top: var(--tbf-space-6);
   padding-bottom: var(--tbf-space-12);
   max-width: 60rem;
 }
-/* Avatar redondo ao lado do nome, correção 09/09/2026: substitui o retrato em
-   bloco grande. Mobile empilha (avatar acima do nome), desktop alinha lado a
-   lado, sempre na mesma linha de leitura. */
+/* Avatar redondo ao lado do nome, gesto de perfil de Instagram: mesma linha
+   também no mobile, sobreposto à borda inferior da capa (margem negativa
+   puxa a fileira para cima, como LinkedIn/Twitter). */
 .heroTop {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
   gap: var(--tbf-space-3);
+  margin-top: -32px;
 }
 .heroAvatar {
   position: relative;
@@ -86,6 +121,9 @@
   border-radius: 999px;
   overflow: hidden;
   background: var(--tbf-surface-2, #1a1a1a);
+  /* Anel preto sólido, pedido explícito do fundador: separa a foto da capa
+     atrás. box-shadow em vez de border pra não mexer no box model. */
+  box-shadow: 0 0 0 4px #000;
 }
 .heroAvatar img {
   object-fit: cover;
@@ -95,25 +133,28 @@
   font-family: var(--tbf-font-family-display);
   font-size: var(--tav-text-display);
   font-weight: 800;
-  line-height: 0.92;
+  line-height: 0.98;
   letter-spacing: var(--tbf-type-display-xl-ls);
   text-transform: uppercase;
   margin: 0;
-  display: flex;
-  flex-direction: column;
+  min-width: 0;
 }
-/* Peso extrabold no nome de pessoa, regra da casa (frontend/CLAUDE.md). */
-.heroNameLine { font-weight: 800; }
-.heroAlias {
+/* AKA + assinatura, correção 09/09/2026: branco, peso mais fino da família
+   (Thin, 100 - o único mais leve que Light já carregado em globals.css), e
+   bloco justificado. */
+.heroAkaBlock {
   margin-top: var(--tbf-space-4);
-  font-family: var(--mono);
-  font-size: var(--tav-text-meta);
-  font-weight: 400;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
+  text-align: justify;
 }
-.heroAlias b { color: var(--tbf-accent); font-weight: 800; }
+.heroAlias {
+  margin: 0;
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tav-text-body);
+  font-weight: 100;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+}
 .heroRole {
   margin-top: var(--tbf-space-2);
   font-family: var(--mono);
@@ -146,8 +187,31 @@
 .heroSocial { margin-top: var(--tbf-space-8); }
 
 @media (min-width: 900px) {
-  .heroTop { flex-direction: row; align-items: center; gap: var(--tbf-space-6); }
+  .heroTop { gap: var(--tbf-space-6); margin-top: -48px; }
   .heroAvatar { width: 96px; height: 96px; }
+}
+
+/* ─── ASSINATURA "REPRESENTED BY", inspirada em scrolly-signature
+   (AuthorSignature.tsx), versão mais discreta: círculo menor, texto menor,
+   cor secundária. Componente próprio, não reusa scrolly.css. ────────────── */
+.representedBy {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  margin-top: var(--tbf-space-2);
+}
+.representedByAvatar {
+  width: 20px;
+  height: 20px;
+  border-radius: var(--tbf-radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.representedByLabel {
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  letter-spacing: 0.08em;
+  color: var(--tbf-text-secondary);
 }
 
 /* ─── ÍCONES SOCIAIS (parte 08, correção 09/09/2026: glifo flat, sem

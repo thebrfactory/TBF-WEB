@@ -33,6 +33,7 @@ import { SocialIcons, type SocialLink } from '@/components/tavaristico/SocialIco
 import { SelectedWork } from '@/components/tavaristico/SelectedWork'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { WhatIBuild } from '@/components/tavaristico/WhatIBuild'
+import { RepresentedBy } from '@/components/tavaristico/RepresentedBy'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import Image from 'next/image'
 
@@ -47,17 +48,38 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
   ]
 
   const explorerSegments = EXPLORING.map((label) => ({ text: label, weight: 'medium' as const }))
-  const nameParts = IDENTITY.name.split(' ')
 
   return (
     <main className={styles.page}>
+      {/* CAPA, correção 09/09/2026 parte 2: faixa de rede social atrás do
+          hero, gesto de capa de perfil (LinkedIn/Twitter). Vídeo mudo em
+          loop, poster como fallback e como quadro único sob
+          prefers-reduced-motion. Fora do container: precisa sangrar até a
+          borda da tela. */}
+      <div className={styles.heroCover}>
+        <video
+          className={styles.heroCoverMedia}
+          poster="/images/creators/tavaristico-cover-poster.webp"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        >
+          <source src="/videos/tavaristico-cover.mp4" type="video/mp4" />
+        </video>
+        <div className={styles.heroCoverFade} />
+      </div>
+
       {/* HERO, parte 07 do briefing + correção 09/09/2026: sem eyebrow, avatar
-          redondo na mesma linha do nome, localização em frase única. */}
+          redondo na mesma linha do nome (também no mobile, gesto de perfil de
+          Instagram), sobreposto à borda inferior da capa, localização em
+          frase única. */}
       <header className={`${styles.hero} container`}>
         <div className={styles.heroTop}>
           {/* Retrato enviado pelo fundador em 09/09/2026, agora avatar
-              redondo. Prioridade alta: é a primeira imagem da página, entra
-              no LCP do mobile. */}
+              redondo com anel preto (separa a foto da capa atrás). Prioridade
+              alta: é a primeira imagem da página, entra no LCP do mobile. */}
           <div className={styles.heroAvatar}>
             <Image
               src="/images/creators/tavaristico-portrait.webp"
@@ -67,14 +89,14 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
               sizes="96px"
             />
           </div>
-          <h1 className={styles.heroName}>
-            <span className={styles.heroNameLine}>{nameParts[0]}</span>{' '}
-            <span className={styles.heroNameLine}>{nameParts.slice(1).join(' ')}</span>
-          </h1>
+          <h1 className={styles.heroName}>{IDENTITY.name}</h1>
         </div>
-        <p className={styles.heroAlias}>
-          {t.index.akaPrefix} <b>{IDENTITY.alias}</b>
-        </p>
+        <div className={styles.heroAkaBlock}>
+          <p className={styles.heroAlias}>
+            {t.index.akaPrefix} {IDENTITY.alias}
+          </p>
+          <RepresentedBy lang={lang} />
+        </div>
         <p className={styles.heroRole}>{t.index.role}</p>
         <p className={styles.heroStatement}>{t.index.heroStatement}</p>
         <p className={styles.heroLocation}>{t.index.location}</p>
@@ -98,6 +120,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           lang={lang}
           label={t.index.campaignsLabel}
           caseLabel={t.index.campaignsCaseLabel}
+          inviteLabel={t.index.campaignsInvite}
         />
       </RevealWrapper>
 

@@ -82,6 +82,13 @@ interface StoryDeckProps {
    * comentário em StoryPlayer.module.css.
    */
   nav?: 'thumbs' | 'dots'
+  /**
+   * Congela o avanco automatico enquanto for `true`. Existe para o gesto de
+   * segurar para pausar, que e o do Instagram: quem chama escuta o
+   * pointerdown/pointerup e alterna esta prop. Sem ela, o unico jeito de
+   * pausar de fora era mexer no intervalo interno.
+   */
+  paused?: boolean
 }
 
 export function StoryDeck({
@@ -94,6 +101,7 @@ export function StoryDeck({
   thumbsClassName = '',
   label,
   nav = 'thumbs',
+  paused = false,
 }: StoryDeckProps) {
   const [i, setI] = useState(0)
   const [running, setRunning] = useState(true)
@@ -113,6 +121,7 @@ export function StoryDeck({
       setRunning(false)
       return
     }
+    if (paused) return
     const t = setInterval(() => {
       setI((v) => (v + 1) % total)
       setCiclo((c) => c + 1)
@@ -121,7 +130,7 @@ export function StoryDeck({
     // `ciclo` no vetor de dependências de propósito: clicar numa miniatura
     // recria o intervalo, e o quadro escolhido ganha o tempo inteiro em vez do
     // que sobrou do anterior.
-  }, [total, ms, ciclo])
+  }, [total, ms, ciclo, paused])
 
   // A miniatura ativa se traz para a vista quando o avanço automático passa por
   // ela. Sem isto, a fila fica parada mostrando um trecho enquanto o quadro
@@ -154,6 +163,9 @@ export function StoryDeck({
             <span key={item.src} className={styles.bar}>
               <span
                 key={idx === i ? `on-${ciclo}` : `off-${idx}`}
+                // A barra da vez congela junto com o avanco: sem isto o
+                // cronometro continuaria correndo enquanto o dedo segura.
+                style={paused ? { animationPlayState: 'paused' } : undefined}
                 className={
                   idx < i || (idx === i && !running)
                     ? `${styles.fill} ${styles.fillDone}`

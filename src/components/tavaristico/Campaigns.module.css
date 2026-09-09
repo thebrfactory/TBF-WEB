@@ -1,0 +1,210 @@
+/* =============================================================================
+   CAMPAIGNS: gesto do Instagram, circulo de story fechado, modal 9:16 no clique
+   -----------------------------------------------------------------------------
+   Substitui o deck aberto ocupando a pagina inteira por uma grade de circulos
+   ("ainda nao visto", anel gradiente) que abre o StoryDeck existente num popup
+   modal centralizado. Todo CSS novo mora aqui, nada em tavaristico.module.css.
+   Mobile first: a grade e uma fila que rola de lado; o modal cabe na tela do
+   telefone com altura confortavel antes de crescer no desktop.
+   ============================================================================= */
+
+.wrap { margin-top: var(--tbf-space-6); }
+
+.row {
+  display: flex;
+  gap: var(--tbf-space-6);
+  overflow-x: auto;
+  padding-block: var(--tbf-space-2);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.row::-webkit-scrollbar { display: none; }
+
+.item {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--tbf-space-2);
+  width: 5.6rem;
+}
+
+/* O circulo. Botao real, sem estilo de botao: o anel e quem fala.
+   Gradiente canonico do Instagram (paradas oficiais): F58529, FEDA77,
+   DD2A7B, 8134AF, 515BD4, em diagonal 135deg. Espessura do anel 2.5px, e
+   entre o anel e a foto entra um vao de 2.5px na cor de fundo da pagina
+   (.thumbWrap.border): esse vao e o que faz o desenho ler como Instagram
+   em vez de uma borda colorida qualquer. */
+.ring {
+  appearance: none;
+  border: none;
+  box-sizing: border-box;
+  display: block;
+  padding: 2.5px;
+  border-radius: var(--tbf-radius-full);
+  width: 4.8rem;
+  height: 4.8rem;
+  cursor: pointer;
+  background: linear-gradient(
+    135deg,
+    #f58529 0%,
+    #feda77 25%,
+    #dd2a7b 50%,
+    #8134af 75%,
+    #515bd4 100%
+  );
+  transition: transform 180ms ease;
+}
+.ring:hover { transform: scale(1.04); }
+.ring:focus-visible {
+  outline: 2px solid var(--tbf-color-parchment);
+  outline-offset: 3px;
+}
+
+/* Visto: anel cinza solido, sem gradiente, mesma espessura e mesmo vao. */
+.ringSeen {
+  background: var(--tbf-color-flint);
+}
+
+.thumbWrap {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--tbf-radius-full);
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+  border: 2.5px solid var(--tbf-bg-primary);
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.name {
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tav-text-micro, 0.68rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--tbf-text-secondary);
+  max-width: 100%;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+/* Convite discreto, UMA vez para a secao inteira. Repetido embaixo de cada
+   circulo virava ruido, e o gesto do Instagram nao explica cada story. */
+.invite {
+  display: block;
+  margin-top: var(--tbf-space-3);
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tbf-font-size-raw-10, 0.625rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--tbf-text-tertiary);
+}
+
+/* MODAL. */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tbf-z-modal);
+  background: rgba(0, 0, 0, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--tbf-space-4);
+  animation: fadeIn 220ms ease;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 24rem;
+  max-height: 88dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: popIn 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .dialog { animation: none; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modalPlayer {
+  --story-h: min(78dvh, 34rem);
+}
+
+/* Envolucro do StoryDeck dentro do dialog: precisa de position:relative
+   para ancorar as zonas de toque esquerda/direita sobre o quadro. A altura
+   das zonas repete --modal-h porque e o mesmo valor de --story-h acima; sem
+   variavel compartilhada as duas medidas divergiam se uma mudasse sozinha. */
+.deckWrap {
+  --modal-h: min(78dvh, 34rem);
+  position: relative;
+}
+
+/* Toque na metade direita avanca, toque na metade esquerda volta, igual ao
+   Instagram. Cobrem so a altura do quadro (nao a fila de pontos abaixo). */
+.tapZone {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: var(--modal-h);
+  cursor: pointer;
+  /* Invisivel de verdade: sem isto o botao herda borda e fundo do agente e
+     desenha uma linha branca no meio do story. */
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.tapPrev { left: 0; }
+.tapNext { right: 0; }
+
+.close {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: -2.6rem;
+  right: 0;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: var(--tbf-radius-full);
+  background: var(--tbf-bg-secondary);
+  color: var(--tbf-text-primary);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close:focus-visible {
+  outline: 2px solid var(--tbf-color-parchment);
+  outline-offset: 2px;
+}
+
+@media (min-width: 768px) {
+  .item { width: 6.4rem; }
+  .ring { width: 5.6rem; height: 5.6rem; }
+}
