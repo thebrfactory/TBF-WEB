@@ -4,14 +4,15 @@
 // src/content/i18n/pages/tavaristico.ts). Ver src/content/i18n/README.md.
 //
 // CREATOR PAGE 2.0 (redesign a partir do briefing "TAVARÍSTICO / CREATOR PAGE
-// 2.0", CHANGES/TAVARÍSTICO.md). A página deixa de ser um portfólio
-// tradicional e passa a ter: hero editorial, ícones sociais reais, Selected
-// Work hierárquico (VENTURES), Campaigns em formato de stories (CAMPAIGNS +
-// StoryDeck), a galeria de trabalhos de publicidade que já existia (agora
-// como o item "TAVARÍSTICO" de Selected Work), What I Build, About, Currently
-// Exploring e um fechamento próprio. O nav e o footer globais do site, que já
-// envolvem toda página, não são tocados aqui: são cromo compartilhado, fora
-// do escopo de arquivos desta leva.
+// 2.0", CHANGES/TAVARÍSTICO.md, com 7 correções de leitura visual do fundador
+// em 09/09/2026). Ordem da página: hero (avatar redondo + nome, sem eyebrow),
+// Selected Work hierárquico (VENTURES), Campaigns em formato de stories
+// (CAMPAIGNS + StoryDeck), intro/statement, a galeria de trabalhos de
+// publicidade que já existia, What I Build, About, Currently Exploring e um
+// fechamento próprio. O trabalho vem antes da declaração ("I build things").
+// O nav e o footer globais do site, que já envolvem toda página, não são
+// tocados aqui: são cromo compartilhado, fora do escopo de arquivos desta
+// leva.
 
 import {
   IDENTITY,
@@ -42,6 +43,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
     { key: 'instagram', href: IDENTITY.socials.instagram, label: t.index.instagramLabel },
     { key: 'linkedin', href: IDENTITY.socials.linkedin, label: t.index.linkedinLabel },
     { key: 'email', href: 'mailto:tavaristico@thebrfactory.com', label: t.index.emailLabel },
+    { key: 'github', href: IDENTITY.socials.github, label: t.index.githubLabel },
   ]
 
   const explorerSegments = EXPLORING.map((label) => ({ text: label, weight: 'medium' as const }))
@@ -49,48 +51,39 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
 
   return (
     <main className={styles.page}>
-      {/* HERO, parte 07 do briefing: nome ocupa o espaço, ícones sociais
-          reais, sem bloco tradicional de título mais parágrafo. */}
-      <header className={`${styles.hero} ${styles.heroWithPortrait} container`}>
-        <div>
-        <span className={styles.label}>{t.index.eyebrow}</span>
-        <h1 className={styles.heroName}>
-          <span className={styles.heroNameLine}>{nameParts[0]}</span>{' '}
-          <span className={styles.heroNameLine}>{nameParts.slice(1).join(' ')}</span>
-        </h1>
+      {/* HERO, parte 07 do briefing + correção 09/09/2026: sem eyebrow, avatar
+          redondo na mesma linha do nome, localização em frase única. */}
+      <header className={`${styles.hero} container`}>
+        <div className={styles.heroTop}>
+          {/* Retrato enviado pelo fundador em 09/09/2026, agora avatar
+              redondo. Prioridade alta: é a primeira imagem da página, entra
+              no LCP do mobile. */}
+          <div className={styles.heroAvatar}>
+            <Image
+              src="/images/creators/tavaristico-portrait.webp"
+              alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
+              fill
+              priority
+              sizes="96px"
+            />
+          </div>
+          <h1 className={styles.heroName}>
+            <span className={styles.heroNameLine}>{nameParts[0]}</span>{' '}
+            <span className={styles.heroNameLine}>{nameParts.slice(1).join(' ')}</span>
+          </h1>
+        </div>
         <p className={styles.heroAlias}>
           {t.index.akaPrefix} <b>{IDENTITY.alias}</b>
         </p>
         <p className={styles.heroRole}>{t.index.role}</p>
         <p className={styles.heroStatement}>{t.index.heroStatement}</p>
-        <p className={styles.heroLocation}>
-          {t.index.location}
-          <br />
-          {t.index.locationOrigin}
-        </p>
+        <p className={styles.heroLocation}>{t.index.location}</p>
         <SocialIcons links={socialLinks} className={styles.heroSocial} />
-        </div>
-        {/* Retrato enviado pelo fundador em 09/09/2026. Prioridade alta: é a
-            primeira imagem da página, entra no LCP do mobile. */}
-        <div className={styles.heroPortrait}>
-          <Image
-            src="/images/creators/tavaristico-portrait.webp"
-            alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
-            fill
-            priority
-            sizes="(min-width: 900px) 34vw, 100vw"
-          />
-        </div>
       </header>
 
-      {/* INTRO / STATEMENT, parte 09: curto, sem manifesto. */}
-      <RevealWrapper as="section" className={`${styles.intro} container`} variant="headline">
-        <p className={styles.introHeadline}>{t.index.introHeadline}</p>
-        <p className={styles.introStatement}>{t.index.introStatement}</p>
-      </RevealWrapper>
-
       {/* SELECTED WORK, partes 10 e 11: peças editoriais com hierarquia, não
-          grade uniforme. */}
+          grade uniforme. Correção 09/09/2026: o trabalho vem antes da
+          declaração ("I build things"). */}
       <section className={`${styles.selectedWork} container`} id="selected-work">
         <span className={styles.label}>{t.index.selectedWorkLabel}</span>
         <SelectedWork ventures={VENTURES} lang={lang} />
@@ -108,9 +101,14 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         />
       </RevealWrapper>
 
-      {/* GALERIA: o corpo de trabalho de publicidade e direção de arte, lido
-          agora como a prova do território "05 TAVARÍSTICO" de Selected
-          Work. */}
+      {/* INTRO / STATEMENT, parte 09: curto, sem manifesto. */}
+      <RevealWrapper as="section" className={`${styles.intro} container`} variant="headline">
+        <p className={styles.introHeadline}>{t.index.introHeadline}</p>
+        <p className={styles.introStatement}>{t.index.introStatement}</p>
+      </RevealWrapper>
+
+      {/* GALERIA: o corpo de trabalho de publicidade e direção de arte, prova
+          do território que a Selected Work já apresentou acima. */}
       <section className={`${styles.worksSection} container`} id="work">
         <span className={styles.label}>{t.index.workLabel}</span>
         <MasonryGallery works={WORKS} disciplines={DISCIPLINES} />
@@ -127,11 +125,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         <span className={styles.label}>{t.index.aboutLabel}</span>
         <p className={styles.aboutHeadline}>{t.index.aboutHeadline}</p>
         <p className={styles.aboutBody}>{t.index.aboutBody}</p>
-        <p className={styles.aboutLocation}>
-          {t.index.location}
-          <br />
-          {t.index.locationOrigin}
-        </p>
+        <p className={styles.aboutLocation}>{t.index.location}</p>
       </section>
 
       {/* CURRENTLY EXPLORING, parte 17: movimento horizontal, reaproveitando

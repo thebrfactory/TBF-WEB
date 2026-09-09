@@ -19,12 +19,10 @@ const en = {
       'Felipe Tavares, aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
   },
   index: {
-    eyebrow: 'Creators · Portfolio',
     akaPrefix: 'aka',
     role: 'Creative Director & Founder',
     heroStatement: 'I build brands, products and businesses where creativity meets technology.',
-    location: 'São Paulo · Brazil',
-    locationOrigin: 'Originally from Bahia.',
+    location: 'Based in São Paulo. Originally from Bahia.',
     introHeadline: 'I build things.',
     introStatement:
       'My background is in advertising and creative direction. Today, I work across brands, products and businesses, exploring how technology and AI can turn ideas into new forms of value.',
@@ -43,6 +41,7 @@ const en = {
     instagramLabel: 'Instagram',
     linkedinLabel: 'LinkedIn',
     emailLabel: 'Email',
+    githubLabel: 'GitHub',
     representedByPrefix: 'Represented by',
     // ENTRADA PARA A PROPOSTA DE HOSPEDAGEM (#01 CHANGES 2026-08-14). Fica no
     // bloco de contato, e não na vitrine de obras, porque não é obra: é oferta.
@@ -75,12 +74,10 @@ const pt: typeof en = {
       'Felipe Tavares, conhecido como Tavarístico. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
   },
   index: {
-    eyebrow: 'Criadores · Portfólio',
     akaPrefix: 'conhecido como',
     role: 'Creative Director & Founder',
     heroStatement: 'Construo marcas, produtos e negócios onde criatividade encontra tecnologia.',
-    location: 'São Paulo · Brasil',
-    locationOrigin: 'Originalmente da Bahia.',
+    location: 'Baseado em São Paulo. Originalmente da Bahia.',
     introHeadline: 'Eu construo coisas.',
     introStatement:
       'Venho da publicidade e da direção de arte. Hoje trabalho entre marcas, produtos e negócios, explorando como tecnologia e IA transformam ideias em novas formas de valor.',
@@ -99,6 +96,7 @@ const pt: typeof en = {
     instagramLabel: 'Instagram',
     linkedinLabel: 'LinkedIn',
     emailLabel: 'Email',
+    githubLabel: 'GitHub',
     representedByPrefix: 'Representado pela',
     hospitalityKicker: 'Também disponível',
     hospitalityLabel: 'Fotografia para hostels, hotéis e pousadas',

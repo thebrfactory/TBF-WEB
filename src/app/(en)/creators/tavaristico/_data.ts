@@ -57,6 +57,10 @@ export const IDENTITY = {
     instagram: 'https://instagram.com/thebrfactory',
     linkedin: 'https://www.linkedin.com/in/tavaristico/', // confirmado pelo fundador em 09/09/2026
     linkedinProvisional: false,
+    // Fundador ainda não passou a URL do GitHub. Fica vazio até chegar; o
+    // ícone só renderiza com URL real (ver SocialIcons).
+    github: 'https://github.com/thebrfactory', // confirmado pelo fundador em 09/09/2026
+    githubPending: false,
   },
 }
 
@@ -207,9 +211,9 @@ export const isProv = (w: Work, f: ProvField): boolean => !!w.provisional?.inclu
 // VENTURES: a secao "Selected Work" (parte 10 do briefing). CRIVO, .TBF,
 // BRAND SYSTEM e .RUC sao os territorios do fundador fora da publicidade, sem
 // pagina propria neste repo, por isso o `href` fica vazio nos que nao tem
-// rota real (ver relatorio de entrega). TAVARISTICO aponta para a galeria de
-// trabalhos que ja existe nesta mesma pagina (`#work`), prova real daquele
-// territorio.
+// rota real (ver relatorio de entrega). O item TAVARISTICO foi removido
+// (correcao do fundador, 09/09/2026): a galeria que vem logo depois na pagina
+// ja e a prova daquele territorio, item redundante.
 // -----------------------------------------------------------------------------
 
 export type VentureWeight = 'primary' | 'secondary'
@@ -255,14 +259,6 @@ export const VENTURES: Venture[] = [
     description: 'Fashion, image and cultural production.',
     weight: 'secondary',
   },
-  {
-    index: '05',
-    name: 'TAVARÍSTICO',
-    category: 'CREATIVE DIRECTION / ART DIRECTION',
-    description: 'Selected work across advertising, fashion and culture.',
-    weight: 'secondary',
-    href: '#work',
-  },
 ]
 
 // -----------------------------------------------------------------------------
@@ -288,7 +284,7 @@ export interface Campaign {
 
 export const CAMPAIGNS: Campaign[] = [
   {
-    index: '05',
+    index: '01',
     name: 'Ô: 18 YEARS',
     client: '@odecasahostel',
     descriptionEN:

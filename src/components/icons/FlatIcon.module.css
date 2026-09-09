@@ -1,0 +1,7 @@
+/* FlatIcon: alinhamento apenas. Cor vem de currentColor no elemento pai. */
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
