@@ -9,19 +9,23 @@
 // viewer em localStorage.
 //
 // A parte 13 e taxativa: nao inventar campanha. `campaigns` vem de CAMPAIGNS
-// em _data.ts, hoje com uma unica entrada real (O: 18 Years). O componente e
+// em _data.ts, hoje com uma unica entrada real (DEZOITÔ). O componente e
 // generico para qualquer tamanho de lista: grade de circulos lado a lado,
 // rolagem horizontal se nao couber.
+//
+// EXTRACAO (09/09/2026): o circulo e o popup viraram StoryRing e StoryModal,
+// componentes proprios e genericos (sem nocao de "campanha"). Este arquivo so
+// cuida do que e especifico daqui: a lista, o estado de visto e a montagem do
+// aria-label/label a partir do dado da campanha.
 // =============================================================================
 
 'use client'
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
-import Image from 'next/image'
-import { StoryDeck } from '@/components/StoryPlayer/StoryPlayer'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Campaign } from '@/app/(en)/creators/tavaristico/_data'
 import type { Lang } from '@/lib/i18n'
+import { StoryRing } from './StoryRing'
+import { StoryModal } from './StoryModal'
 import styles from './Campaigns.module.css'
 
 const SEEN_KEY = 'tav:campaigns:seen'
@@ -52,15 +56,17 @@ export function Campaigns({
   campaigns,
   lang,
   label,
-  caseLabel,
+  caseLabel: _caseLabel,
   inviteLabel = 'Tap to open the project',
 }: {
   campaigns: Campaign[]
   lang: Lang
   label: string
+  /** Mantida por compatibilidade de chamada (o titulo com o convite passou
+   * para o view). Sem uso interno aqui. */
   caseLabel: string
-  /** Convite perto do circulo. Prop nova, valor padrao em ingles: chave de
-   * i18n ainda nao existe (arquivo em edicao paralela). */
+  /** Convite perto do circulo. String vazia = sem convite nenhum, sem
+   * espaco reservado para ele (o titulo com o convite passou para o view). */
   inviteLabel?: string
 }) {
   const [seen, setSeen] = useState<Record<string, true>>({})
@@ -97,6 +103,10 @@ export function Campaigns({
   if (campaigns.length === 0) return null
 
   const active = campaigns.find((c) => c.index === openIndex) ?? null
+  const description = active ? (lang === 'pt' ? active.descriptionPT : active.descriptionEN) : ''
+  const modalLabel = active
+    ? `${label}: ${active.name}${description ? `. ${description}` : ''}`
+    : ''
 
   return (
     <div className={styles.wrap}>
@@ -104,209 +114,40 @@ export function Campaigns({
       {campaigns.map((c) => {
         const isSeen = !!seen[c.index]
         const cover = c.frames[0]
+        const ariaLabel = inviteLabel ? `${inviteLabel}: ${c.name}` : c.name
         return (
           <div key={c.index} className={styles.item}>
-            <button
-              type="button"
-              ref={(el) => {
+            <StoryRing
+              cover={cover?.src ?? ''}
+              alt=""
+              seen={isSeen}
+              ariaLabel={ariaLabel}
+              onClick={() => open(c.index)}
+              buttonRef={(el) => {
                 triggerRefs.current[c.index] = el
               }}
-              className={`${styles.ring}${isSeen ? ` ${styles.ringSeen}` : ''}`}
-              aria-haspopup="dialog"
-              aria-expanded={openIndex === c.index}
-              aria-label={`${inviteLabel}: ${c.name}`}
-              onClick={() => open(c.index)}
-            >
-              <span className={styles.thumbWrap}>
-                {cover ? (
-                  <Image
-                    src={cover.src}
-                    alt=""
-                    width={200}
-                    height={200}
-                    sizes="120px"
-                    className={styles.thumb}
-                  />
-                ) : null}
-              </span>
-            </button>
+            />
             <span className={styles.name}>{c.name}</span>
           </div>
         )
       })}
       </div>
-      <span className={styles.invite} aria-hidden="true">
-        {inviteLabel}
-      </span>
+      {/* Sem convite (string vazia): nem o texto, nem o espaco dele. Repetir
+          o span vazio deixava uma margem morta acima. */}
+      {inviteLabel ? (
+        <span className={styles.invite} aria-hidden="true">
+          {inviteLabel}
+        </span>
+      ) : null}
 
       {active ? (
-        <CampaignModal
-          campaign={active}
-          lang={lang}
-          label={label}
-          caseLabel={caseLabel}
+        <StoryModal
+          frames={active.frames}
+          handle={active.client}
+          label={modalLabel}
           onClose={close}
         />
       ) : null}
     </div>
-  )
-}
-
-function CampaignModal({
-  campaign,
-  lang,
-  label,
-  onClose,
-}: {
-  campaign: Campaign
-  lang: Lang
-  label: string
-  caseLabel: string
-  onClose: () => void
-}) {
-  const dialogRef = useRef<HTMLDivElement>(null)
-  const deckWrapRef = useRef<HTMLDivElement>(null)
-  // Segurar pausa, soltar retoma: o gesto do Instagram. `held` so vira true
-  // depois de 180ms de pressao, senao um toque comum para o story antes de
-  // avancar. O timer morre no pointerup e no unmount.
-  const [held, setHeld] = useState(false)
-  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const cancelHold = useCallback(() => {
-    if (holdTimer.current) {
-      clearTimeout(holdTimer.current)
-      holdTimer.current = null
-    }
-    setHeld(false)
-  }, [])
-  useEffect(() => cancelHold, [cancelHold])
-  const titleId = useId()
-  const description = lang === 'pt' ? campaign.descriptionPT : campaign.descriptionEN
-
-  // Toque na metade direita avanca, toque na metade esquerda volta: o
-  // StoryDeck ja tem os botoes "Peca anterior" / "Proxima peca" (as setas
-  // discretas nas bordas do quadro), so nao ocupam a tela toda. Em vez de
-  // duplicar a logica de indice aqui (o `i`/`ir` sao internos do StoryDeck,
-  // fora do escopo editavel), a zona de toque aciona o mesmo botao real por
-  // aria-label. Reusa o componente em vez de reescrever o que ele ja faz.
-  const tap = useCallback((label: 'Peça anterior' | 'Próxima peça') => {
-    const btn = deckWrapRef.current?.querySelector<HTMLButtonElement>(
-      `button[aria-label="${label}"]`
-    )
-    btn?.click()
-  }, [])
-
-  // Trava o scroll do corpo enquanto o modal existe, destrava ao fechar e
-  // tambem se o componente desmontar direto (navegacao, troca de rota).
-  useEffect(() => {
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previous
-    }
-  }, [])
-
-  // Escape fecha; foco preso dentro do dialog enquanto aberto.
-  useEffect(() => {
-    const node = dialogRef.current
-    const focusable = node?.querySelectorAll<HTMLElement>(
-      'button:not([aria-hidden="true"]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
-    focusable?.[0]?.focus()
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        onClose()
-        return
-      }
-      if (e.key !== 'Tab' || !focusable || focusable.length === 0) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault()
-        last.focus()
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault()
-        first.focus()
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [onClose])
-
-  // 🔴 PORTAL OBRIGATORIO. A secao de campanhas vive dentro do RevealWrapper,
-  // que anima com `transform`. Um ancestral com transform vira bloco de
-  // contencao e QUEBRA `position: fixed`: o overlay parava de cobrir a pagina
-  // e o deck flutuava no meio do texto. Montar no body resolve na raiz.
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null
-
-  return createPortal(
-    <div
-      className={styles.overlay}
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        className={styles.dialog}
-      >
-        <button type="button" className={styles.close} onClick={onClose} aria-label="Close">
-          <span aria-hidden="true">&#10005;</span>
-        </button>
-        <h2 id={titleId} className="sr-only" style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)' }}>
-          {campaign.name}
-        </h2>
-        <div
-          ref={deckWrapRef}
-          className={styles.deckWrap}
-          onPointerDown={() => {
-            holdTimer.current = setTimeout(() => setHeld(true), 180)
-          }}
-          onPointerUp={cancelHold}
-          onPointerCancel={cancelHold}
-          onPointerLeave={cancelHold}
-        >
-          <StoryDeck
-            items={campaign.frames}
-            handle={campaign.client}
-            ms={3200}
-            nav="dots"
-            label={`${label}: ${campaign.name}${description ? `. ${description}` : ''}`}
-            playerClassName={styles.modalPlayer}
-            paused={held}
-          />
-          {/* Zonas de toque sobre o quadro, no espirito do Instagram: metade
-              direita avanca, metade esquerda volta. `aria-hidden` porque a
-              navegacao acessivel de verdade ja existe nos pontos/setas do
-              StoryDeck (role="tablist" + botoes rotulados); isto e so um
-              atalho de gesto para quem usa mouse ou touch. */}
-          <button
-            type="button"
-            aria-hidden="true"
-            tabIndex={-1}
-            className={`${styles.tapZone} ${styles.tapPrev}`}
-            onClick={() => {
-              if (!held) tap('Peça anterior')
-            }}
-          />
-          <button
-            type="button"
-            aria-hidden="true"
-            tabIndex={-1}
-            className={`${styles.tapZone} ${styles.tapNext}`}
-            onClick={() => {
-              if (!held) tap('Próxima peça')
-            }}
-          />
-        </div>
-      </div>
-    </div>,
-    document.body
   )
 }

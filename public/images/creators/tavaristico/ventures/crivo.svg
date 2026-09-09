@@ -1,0 +1,7 @@
+<svg viewBox="0 0 474 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="CRIVO" fill="#F3F5F8">
+  <path d="M95.826 30A50 50 0 1 0 95.826 70L69.596 70A28 28 0 1 1 69.596 30Z" />
+  <path fillRule="evenodd" clipRule="evenodd" fill-rule="evenodd" clip-rule="evenodd" d="M112 0L177 0A33 33 0 0 1 177 66L210 100L179 100L146 66L134 66L134 100L112 100ZM134 22L177 22A11 11 0 0 1 177 44L134 44Z" />
+  <path d="M228 0L250 0L250 100L228 100Z" />
+  <path d="M266 0L314 100L362 0L338 0L314 50L290 0Z" />
+  <path fillRule="evenodd" clipRule="evenodd" fill-rule="evenodd" clip-rule="evenodd" d="M374 50A50 50 0 1 0 474 50A50 50 0 1 0 374 50ZM396 50A28 28 0 1 1 452 50A28 28 0 1 1 396 50Z" />
+</svg>

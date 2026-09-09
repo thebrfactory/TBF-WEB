@@ -1,0 +1,102 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   NEXT READ, correção 09/09/2026 (item 11): gesto de "matéria relacionada"
+   de fim de artigo (referências do fundador: "Escolhas do Editor" da Forbes,
+   "Posts relacionados" da MacMagazine), não banner de marketing. Kicker
+   discreto, um card só, imagem + texto. Mobile-first: coluna no mobile,
+   imagem ao lado do texto a partir do desktop.
+   ────────────────────────────────────────────────────────────────────────── */
+
+.nextRead {
+  padding-block: var(--tbf-space-12) var(--tbf-space-20);
+}
+
+.kicker {
+  display: block;
+  margin-bottom: var(--tbf-space-4);
+  font-family: var(--mono, var(--tbf-font-family-display));
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+/* Correcao 09/09/2026 (item 5 do laudo): fundo cinza saiu, entrou degrade
+   preto com profundidade (nao preto chapado: 135deg de #050505 pra
+   #1c1c1c da uma sensacao de luz vindo de canto, "elegante" em vez de
+   caixa preta lisa). Esse fundo e FIXO (nao segue tema claro/escuro do
+   token --tbf-bg-secondary): por isso title/support/cta abaixo ganham
+   cor explicita em vez de herdar dos tokens de texto, senao em tema claro
+   o texto escuro somem sobre o preto. */
+.card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--tav-radius, 22px);
+  overflow: hidden;
+  background: linear-gradient(135deg, #050505 0%, #1c1c1c 100%);
+  transition: background 0.2s ease;
+}
+.card:hover {
+  background: linear-gradient(135deg, #0a0a0a 0%, #262626 100%);
+}
+
+.media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+}
+/* object-position sobe a pessoa no quadro: sem isso o cover corta a
+   cabeca quando a proporcao do card aperta (mobile e desktop). */
+.media img { object-fit: cover; object-position: top center; }
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: var(--tbf-space-5);
+}
+
+.title {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+.support {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 300;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 46ch;
+}
+
+.cta {
+  margin-top: 0.2rem;
+  font-family: var(--mono, var(--tbf-font-family-display));
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.2s ease;
+}
+.card:hover .cta { color: var(--tbf-accent); }
+
+@media (min-width: 768px) {
+  .card { flex-direction: row; align-items: stretch; }
+  /* Correcao 09/09/2026: "a imagem esta mal enquadrada, fica alta e
+     estreita, cortando a pessoa". `aspect-ratio: auto` deixava a altura
+     da imagem refem da altura do texto ao lado (podia esticar bem alto e
+     fino). Largura fixa maior (22rem) + aspect-ratio proprio (4/5,
+     retrato mas nao esticado) da enquadramento decente de pessoa em pe,
+     e object-position: top evita cortar a cabeca quando o corte lateral
+     aperta. */
+  .media { width: 22rem; flex: none; aspect-ratio: 4 / 5; }
+  .body { justify-content: center; padding: var(--tbf-space-6); }
+  .title { font-size: 1.3rem; }
+}

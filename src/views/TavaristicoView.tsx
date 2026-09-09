@@ -4,15 +4,17 @@
 // src/content/i18n/pages/tavaristico.ts). Ver src/content/i18n/README.md.
 //
 // CREATOR PAGE 2.0 (redesign a partir do briefing "TAVARÍSTICO / CREATOR PAGE
-// 2.0", CHANGES/TAVARÍSTICO.md, com 7 correções de leitura visual do fundador
-// em 09/09/2026). Ordem da página: hero (avatar redondo + nome, sem eyebrow),
-// Selected Work hierárquico (VENTURES), Campaigns em formato de stories
-// (CAMPAIGNS + StoryDeck), intro/statement, a galeria de trabalhos de
-// publicidade que já existia, What I Build, About, Currently Exploring e um
-// fechamento próprio. O trabalho vem antes da declaração ("I build things").
-// O nav e o footer globais do site, que já envolvem toda página, não são
-// tocados aqui: são cromo compartilhado, fora do escopo de arquivos desta
-// leva.
+// 2.0", CHANGES/TAVARÍSTICO.md, com 11 correções de leitura visual do
+// fundador em 09/09/2026, em cima de prints). Ordem da página: capa quadrada
+// dentro do container + avatar redondo e nome (sem eyebrow), A.K.A. e o
+// lockup "represented by" (com o cargo), Selected Work hierárquico
+// (VENTURES), Campaigns em formato de stories (CAMPAIGNS + StoryDeck),
+// intro/statement, a galeria de trabalhos de publicidade que já existia,
+// What I Build, Currently Exploring, About, Contato (fecha com o mesmo
+// lockup) e a proposta de hospedagem em formato de "próxima leitura"
+// (NextRead). O trabalho vem antes da declaração ("I build things"). O nav e
+// o footer globais do site, que já envolvem toda página, não são tocados
+// aqui: são cromo compartilhado, fora do escopo de arquivos desta leva.
 
 import {
   IDENTITY,
@@ -26,7 +28,6 @@ import {
 import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
-import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { RevealWrapper } from '@/components/RevealWrapper/RevealWrapper'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { SocialIcons, type SocialLink } from '@/components/tavaristico/SocialIcons'
@@ -34,6 +35,7 @@ import { SelectedWork } from '@/components/tavaristico/SelectedWork'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { WhatIBuild } from '@/components/tavaristico/WhatIBuild'
 import { RepresentedBy } from '@/components/tavaristico/RepresentedBy'
+import { NextRead } from '@/components/tavaristico/NextRead'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import Image from 'next/image'
 
@@ -47,60 +49,87 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
     { key: 'github', href: IDENTITY.socials.github, label: t.index.githubLabel },
   ]
 
-  const explorerSegments = EXPLORING.map((label) => ({ text: label, weight: 'medium' as const }))
+  // Correção 09/09/2026, item 9: interpunct "·" entre cada competência do
+  // letreiro. Sem ele as palavras corriam coladas e o fundador achou
+  // "confuso": o ticker não separa segmento por conta própria (ver
+  // Ticker.tsx, comentário "SEM SEPARADOR ENTRE OS SEGMENTOS", regra do
+  // letreiro da casa), então o ponto entra aqui como um segmento a mais.
+  const explorerSegments = EXPLORING.flatMap((label, i) => {
+    const item = { text: label, weight: 'medium' as const }
+    return i === 0 ? [item] : [{ text: '·', weight: 'book' as const }, item]
+  })
 
   return (
     <main className={styles.page}>
-      {/* CAPA, correção 09/09/2026 parte 2: faixa de rede social atrás do
-          hero, gesto de capa de perfil (LinkedIn/Twitter). Vídeo mudo em
-          loop, poster como fallback e como quadro único sob
-          prefers-reduced-motion. Fora do container: precisa sangrar até a
-          borda da tela. */}
-      <div className={styles.heroCover}>
-        <video
-          className={styles.heroCoverMedia}
-          poster="/images/creators/tavaristico-cover-poster.webp"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src="/videos/tavaristico-cover.mp4" type="video/mp4" />
-        </video>
-        <div className={styles.heroCoverFade} />
-      </div>
-
       {/* HERO, parte 07 do briefing + correção 09/09/2026: sem eyebrow, avatar
           redondo na mesma linha do nome (também no mobile, gesto de perfil de
-          Instagram), sobreposto à borda inferior da capa, localização em
-          frase única. */}
+          Instagram), sobreposto à borda inferior da capa, localização em duas
+          linhas. Correção 09/09/2026, item 1: a capa entrou para DENTRO do
+          container (não sangra mais até a borda da tela), quadrada, vídeo
+          inteiro visível. */}
       <header className={`${styles.hero} container`}>
-        <div className={styles.heroTop}>
-          {/* Retrato enviado pelo fundador em 09/09/2026, agora avatar
-              redondo com anel preto (separa a foto da capa atrás). Prioridade
-              alta: é a primeira imagem da página, entra no LCP do mobile. */}
-          <div className={styles.heroAvatar}>
-            <Image
-              src="/images/creators/tavaristico-portrait.webp"
-              alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
-              fill
-              priority
-              sizes="96px"
-            />
+        {/* CAPA: o vídeo é quadrado de origem (900x900). object-fit: contain
+            garante que ele aparece inteiro, sem corte (ver comentário em
+            tavaristico.module.css .heroCover). Poster de fallback e quadro
+            único sob prefers-reduced-motion continuam. */}
+        {/* CAPA: o vídeo é quadrado de origem (900x900), aparece inteiro.
+            Correção 09/09/2026 (rodada 2): o bloco avatar + nome + A.K.A.
+            passou para DENTRO do quadrado, sobre um degradê preto que sobe da
+            base. É o degradê que dá a perspectiva e garante a leitura do
+            texto sobre qualquer quadro do vídeo. */}
+        <div className={styles.heroCover}>
+          <video
+            className={styles.heroCoverMedia}
+            poster="/images/creators/tavaristico-cover-poster.webp"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src="/videos/tavaristico-cover.mp4" type="video/mp4" />
+          </video>
+          <div className={styles.heroCoverFade} />
+
+          <div className={styles.heroTop}>
+            {/* Avatar redondo com anel preto: separa a foto do vídeo atrás.
+                Prioridade alta, é o LCP do mobile. */}
+            <div className={styles.heroAvatar}>
+              <Image
+                src="/images/creators/tavaristico-portrait.webp"
+                alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
+                fill
+                priority
+                sizes="96px"
+              />
+            </div>
+            <div className={styles.heroIdentity}>
+              <h1 className={styles.heroName}>{IDENTITY.name}</h1>
+              <p className={styles.heroAlias}>
+                {t.index.akaPrefix} {IDENTITY.alias}
+              </p>
+            </div>
           </div>
-          <h1 className={styles.heroName}>{IDENTITY.name}</h1>
         </div>
-        <div className={styles.heroAkaBlock}>
-          <p className={styles.heroAlias}>
-            {t.index.akaPrefix} {IDENTITY.alias}
+
+        {/* COLUNA DE TEXTO. No desktop ela ocupa a outra metade da tela, ao
+            lado do quadrado (pedido do fundador). No mobile continua
+            empilhada embaixo da capa. */}
+        <div className={styles.heroBody}>
+          {/* Lockup em UMA linha só: cargo e representação na mesma frase. */}
+          <RepresentedBy lang={lang} withRole />
+
+          <p className={styles.heroStatement}>{t.index.heroStatement}</p>
+
+          {/* Localização em uma linha, mesma fonte e mesmo tamanho da linha
+              do lockup acima, e alinhada com o texto dele (por isso o recuo
+              da largura do selo). */}
+          <p className={styles.heroLocation}>
+            {t.index.locationCity} {t.index.locationOrigin}
           </p>
-          <RepresentedBy lang={lang} />
+
+          <SocialIcons links={socialLinks} className={styles.heroSocial} />
         </div>
-        <p className={styles.heroRole}>{t.index.role}</p>
-        <p className={styles.heroStatement}>{t.index.heroStatement}</p>
-        <p className={styles.heroLocation}>{t.index.location}</p>
-        <SocialIcons links={socialLinks} className={styles.heroSocial} />
       </header>
 
       {/* SELECTED WORK, partes 10 e 11: peças editoriais com hierarquia, não
@@ -112,15 +141,19 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
       </section>
 
       {/* CAMPAIGNS, partes 12, 13 e 14: lógica de stories navegável, sobre
-          material real (Ô: 18 Years). */}
+          material real (Ô: 18 Years). Correção 09/09/2026, item 6: o convite
+          entra no próprio título, em itálico e no peso mais fino da família,
+          e sai do componente (inviteLabel=""). */}
       <RevealWrapper as="section" className={`${styles.campaignsSection} container`} variant="card">
-        <span className={styles.label}>{t.index.campaignsLabel}</span>
+        <span className={styles.label}>
+          {t.index.campaignsLabel} <em className={styles.labelEm}>{t.index.campaignsParenthetical}</em>
+        </span>
         <Campaigns
           campaigns={CAMPAIGNS}
           lang={lang}
           label={t.index.campaignsLabel}
           caseLabel={t.index.campaignsCaseLabel}
-          inviteLabel={t.index.campaignsInvite}
+          inviteLabel=""
         />
       </RevealWrapper>
 
@@ -143,42 +176,53 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         <WhatIBuild pillars={BUILD_PILLARS} lang={lang} />
       </RevealWrapper>
 
-      {/* ABOUT, parte 16: curto. */}
-      <section className={`${styles.about} container`} id="about">
-        <span className={styles.label}>{t.index.aboutLabel}</span>
-        <p className={styles.aboutHeadline}>{t.index.aboutHeadline}</p>
-        <p className={styles.aboutBody}>{t.index.aboutBody}</p>
-        <p className={styles.aboutLocation}>{t.index.location}</p>
-      </section>
-
       {/* CURRENTLY EXPLORING, parte 17: movimento horizontal, reaproveitando
-          o letreiro que já existe no site. */}
+          o letreiro que já existe no site. Correção 09/09/2026, item 9: vem
+          ANTES de About agora. */}
       <section className={styles.exploring} aria-label={t.index.exploringLabel}>
         <span className={`${styles.label} container`}>{t.index.exploringLabel}</span>
         <Ticker text={explorerSegments} sticky={false} className={styles.exploringTicker} />
       </section>
 
+      {/* ABOUT, parte 16: curto. Correção 09/09/2026, item 8: a frase de
+          localização saiu (mora só no hero agora, .heroLocation). */}
+      <section className={`${styles.about} container`} id="about">
+        <span className={styles.label}>{t.index.aboutLabel}</span>
+        <p className={styles.aboutHeadline}>{t.index.aboutHeadline}</p>
+        <p className={styles.aboutBody}>{t.index.aboutBody}</p>
+      </section>
+
       {/* CONTATO / FECHAMENTO, parte 18 no nível da página: o footer global
-          do site continua fora deste arquivo. */}
+          do site continua fora deste arquivo. Correção 09/09/2026, item 10:
+          o lockup RepresentedBy (selo redondo) fecha a seção, no lugar do
+          texto solto de antes. */}
       <section className={`${styles.contact} container`} id="contact">
         <span className={styles.label}>{t.index.contactLabel}</span>
         <p className={styles.contactName}>{t.index.contactHeadline}</p>
         <SocialIcons links={socialLinks} className={styles.contactSocial} />
-        <div className={styles.links}>
-          <span className={styles.link}>{t.index.representedByPrefix} {IDENTITY.representedBy}</span>
+        <div className={styles.contactRepresented}>
+          <RepresentedBy lang={lang} />
         </div>
       </section>
 
-      {/* PROPOSTA DE HOSPEDAGEM.
-             A entrada para /creators/tavaristico/hospitality (#01 CHANGES
-             2026-08-14). Fica depois do contato, e fora da vitrine de obras,
-             porque não é obra: a vitrine olha para trás, a proposta olha para
-             frente. Posta entre os cases, ela seria lida como mais um deles. */}
-      <section className={`${styles.contact} container`}>
-        <span className={styles.label}>{t.index.hospitalityKicker}</span>
-        <Link href={localizedPath('/creators/tavaristico/hospitality', lang)} className={styles.contactName}>
-          {t.index.hospitalityLabel}
-        </Link>
+      {/* PROPOSTA DE HOSPEDAGEM, correção 09/09/2026, item 11: virou um card
+          de "próxima leitura" (NextRead), referências do fundador foram a
+          "Escolhas do Editor" da Forbes e "Posts relacionados" da
+          MacMagazine, não mais um link solto com cara de banner. A entrada
+          para /creators/tavaristico/hospitality (#01 CHANGES 2026-08-14)
+          continua depois do contato, fora da vitrine de obras: a vitrine
+          olha para trás, a proposta olha para frente. */}
+      <section className="container">
+        <NextRead
+          lang={lang}
+          kicker={t.index.hospitalityKicker}
+          title={t.index.hospitalityLabel}
+          support={t.index.hospitalitySupport}
+          cta={t.index.hospitalityCta}
+          href={localizedPath('/creators/tavaristico/hospitality', lang)}
+          imageSrc="/images/creators/tavaristico/hospitality/destaques/02-piscina.webp"
+          imageAlt={t.index.hospitalityLabel}
+        />
       </section>
     </main>
   )

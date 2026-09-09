@@ -3,7 +3,7 @@
 // ../README.md
 //
 // Portfólio do fundador. NÃO se traduzem: nomes de projeto, nomes de cliente,
-// títulos de obra e o texto de cada case (role/summary/description) — tudo
+// títulos de obra e o texto de cada case (role/summary/description): tudo
 // isso mora em `_data.ts`, fora deste dicionário, e continua igual nos dois
 // idiomas (ver observação no relatório final sobre esse corte). O que muda
 // aqui é só o cromo: rótulos, aria-labels, a bio (que já tinha bioEN/bioPT em
@@ -19,15 +19,23 @@ const en = {
       'Felipe Tavares, aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
   },
   index: {
-    akaPrefix: 'aka',
+    // A.K.A., correção 09/09/2026: "aka" virou sigla pontuada nos dois
+    // idiomas, pedido do fundador.
+    akaPrefix: 'A.K.A.',
     role: 'Creative Director & Founder',
     heroStatement: 'I build brands, products and businesses where creativity meets technology.',
-    location: 'Based in São Paulo. Originally from Bahia.',
+    // Localização quebrada em duas frases (correção 09/09/2026): cada uma
+    // vira uma linha no hero, sem depender de <br/> hardcoded no texto.
+    locationCity: 'Based in São Paulo.',
+    locationOrigin: 'Originally from Bahia.',
     introHeadline: 'I build things.',
     introStatement:
       'My background is in advertising and creative direction. Today, I work across brands, products and businesses, exploring how technology and AI can turn ideas into new forms of value.',
     selectedWorkLabel: 'Selected Work',
+    // Título de campanhas, correção 09/09/2026: o convite entra no próprio
+    // título, em itálico, e sai do componente Campaigns (inviteLabel="").
     campaignsLabel: 'Selected Campaigns',
+    campaignsParenthetical: '(tap to open)',
     campaignsCaseLabel: 'Selected Case',
     campaignsInvite: 'Tap to open the project',
     workLabel: 'Advertising, fashion & culture',
@@ -43,12 +51,15 @@ const en = {
     linkedinLabel: 'LinkedIn',
     emailLabel: 'Email',
     githubLabel: 'GitHub',
-    representedByPrefix: 'Represented by',
     // ENTRADA PARA A PROPOSTA DE HOSPEDAGEM (#01 CHANGES 2026-08-14). Fica no
     // bloco de contato, e não na vitrine de obras, porque não é obra: é oferta.
     // Na vitrine ela seria lida como mais um case e perderia o verbo.
+    // Correção 09/09/2026: vira um card de "próxima leitura" (NextRead), não
+    // mais um link solto. kicker/label continuam, + support e cta novos.
     hospitalityKicker: 'Also available',
     hospitalityLabel: 'Photography for hostels, hotels and guesthouses',
+    hospitalitySupport: 'A portfolio built for hospitality brands, shot by Tavarístico.',
+    hospitalityCta: 'See the work',
   },
   gallery: {
     filterAriaLabel: 'Filter by discipline',
@@ -75,15 +86,17 @@ const pt: typeof en = {
       'Felipe Tavares, conhecido como Tavarístico. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
   },
   index: {
-    akaPrefix: 'conhecido como',
+    akaPrefix: 'A.K.A.',
     role: 'Creative Director & Founder',
     heroStatement: 'Construo marcas, produtos e negócios onde criatividade encontra tecnologia.',
-    location: 'Baseado em São Paulo. Originalmente da Bahia.',
+    locationCity: 'Baseado em São Paulo.',
+    locationOrigin: 'Originalmente da Bahia.',
     introHeadline: 'Eu construo coisas.',
     introStatement:
       'Venho da publicidade e da direção de arte. Hoje trabalho entre marcas, produtos e negócios, explorando como tecnologia e IA transformam ideias em novas formas de valor.',
     selectedWorkLabel: 'Trabalhos Selecionados',
     campaignsLabel: 'Campanhas Selecionadas',
+    campaignsParenthetical: '(toque para abrir)',
     campaignsCaseLabel: 'Caso Selecionado',
     campaignsInvite: 'Toque para abrir o projeto',
     workLabel: 'Publicidade, moda e cultura',
@@ -99,9 +112,10 @@ const pt: typeof en = {
     linkedinLabel: 'LinkedIn',
     emailLabel: 'Email',
     githubLabel: 'GitHub',
-    representedByPrefix: 'Representado pela',
     hospitalityKicker: 'Também disponível',
     hospitalityLabel: 'Fotografia para hostels, hotéis e pousadas',
+    hospitalitySupport: 'Um portfólio feito para marcas de hospitalidade, fotografado pelo Tavarístico.',
+    hospitalityCta: 'Ver o trabalho',
   },
   gallery: {
     filterAriaLabel: 'Filtrar por disciplina',

@@ -1,0 +1,136 @@
+/* =============================================================================
+   STORY MODAL: popup 9:16 sobre a pagina, extraido de Campaigns.module.css
+   (09/09/2026) e AUMENTADO (correcao do fundador em cima de print): o quadro
+   estava pequeno demais e o (X) flutuava fora dele. Agora o quadro ocupa
+   praticamente a altura util da tela no mobile, cresce mais ainda no desktop,
+   e o (X) mora DENTRO do proprio quadro, no canto superior direito, como no
+   Instagram.
+   ============================================================================= */
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tbf-z-modal);
+  background: rgba(0, 0, 0, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--tbf-space-2);
+  animation: fadeIn 220ms ease;
+}
+
+.dialog {
+  position: relative;
+  width: 100%;
+  max-width: 26rem;
+  max-height: 97dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: popIn 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .dialog { animation: none; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* O quadro se mede pela ALTURA (ver StoryPlayer.module.css), e a largura sai
+   dela em 9/16. "Praticamente a altura util da tela" no mobile: 88dvh deixa
+   so o respiro que a fila de pontos embaixo precisa dentro dos 97dvh do
+   dialog inteiro. */
+.modalPlayer {
+  --story-h: min(88dvh, 42rem);
+}
+
+/* Envolucro do StoryDeck dentro do dialog: precisa de position:relative
+   para ancorar as zonas de toque E o botao de fechar sobre o quadro. A
+   largura deste envolucro e a mesma largura do quadro (o `.player` de
+   StoryPlayer.module.css e quem define a largura da coluna, as zonas de
+   toque e o `.close` so herdam essa largura por estarem no mesmo pai) - por
+   isso "right: 0" no `.close` cai exatamente na quina do quadro, nao na
+   quina do dialog. `--modal-h` repete `--story-h` acima porque e o mesmo
+   valor: sem variavel compartilhada as duas medidas divergiam se uma mudasse
+   sozinha. */
+.deckWrap {
+  --modal-h: min(88dvh, 42rem);
+  /* Correcao 09/09/2026 (print do fundador: "nao se esqueca das bordas
+     arredondadas aqui"). O `.frame` do StoryPlayer (compartilhado com
+     /pitch/v3 e outras paginas) usa `border-radius: var(--tbf-radius-card)`
+     (18px). Custom property herda pelo DOM: redefinindo o valor aqui, so
+     dentro do StoryModal, o quadro do story fica com raio maior sem tocar
+     no StoryPlayer.module.css, que e compartilhado. */
+  --tbf-radius-card: 22px;
+  position: relative;
+}
+
+/* Toque na metade direita avanca, toque na metade esquerda volta, igual ao
+   Instagram. Cobrem so a altura do quadro (nao a fila de pontos abaixo). */
+.tapZone {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: var(--modal-h);
+  cursor: pointer;
+  /* Invisivel de verdade: sem isto o botao herda borda e fundo do agente e
+     desenha uma linha branca no meio do story. */
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.tapPrev { left: 0; }
+.tapNext { right: 0; }
+
+/* O (X), DENTRO do quadro, como no story do Instagram: sobreposto no canto
+   superior direito, SOBRE a imagem, sem caixa nem fundo pesado por baixo -
+   so o glifo branco com sombra sutil que garante leitura em foto clara ou
+   escura. `z-index` acima das zonas de toque e da barra de tempo do
+   StoryDeck (que usa 4), senao o clique cai nelas em vez de fechar. Area de
+   toque de 44px (minimo WCAG) mesmo o glifo sendo pequeno. */
+.close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  appearance: none;
+  border: none;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 1.05rem;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
+}
+.close:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+  border-radius: var(--tbf-radius-full);
+}
+
+/* Desktop: bem maior que no mobile (pedido do fundador), ainda 9:16, ainda
+   com dvh para nao estourar viewport curta. max-width acompanha a largura
+   que 56rem de altura produz (56 * 9/16 = 31.5rem) com folga. */
+@media (min-width: 768px) {
+  .dialog { max-width: 34rem; }
+  .modalPlayer { --story-h: min(86dvh, 56rem); }
+  .deckWrap { --modal-h: min(86dvh, 56rem); }
+}

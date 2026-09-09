@@ -234,6 +234,10 @@ export interface Venture {
   cover: string
   /** alt da capa */
   coverAlt: string
+  /** quadro 9:16 do story: a marca centrada em fundo preto, com respiro. O
+   * `cover` sozinho, esticado no quadro vertical, virava um logo gigante
+   * cortado. */
+  story: string
 }
 
 export const VENTURES: Venture[] = [
@@ -243,7 +247,8 @@ export const VENTURES: Venture[] = [
     category: ['AI AGENTS', 'PRODUCT'],
     description: 'AI-powered supplier intelligence for corporate events.',
     weight: 'primary',
-    cover: `${base}/ventures/crivo.svg`,
+    cover: `${base}/ventures/crivo.webp`,
+    story: `${base}/ventures/story-crivo.webp`,
     coverAlt: 'CRIVO',
   },
   {
@@ -253,6 +258,7 @@ export const VENTURES: Venture[] = [
     description: 'A summer campaign for Ô de Casa, the most awarded Brazilian hostel.',
     weight: 'primary',
     cover: `${base}/ventures/veraozao.webp`,
+    story: `${base}/ventures/story-veraozao.webp`,
     coverAlt: 'VERÃOZÃO, Ô de Casa',
   },
   {
@@ -262,6 +268,7 @@ export const VENTURES: Venture[] = [
     description: "An agentic brand system that connects a company's brand knowledge to its marketing workflow.",
     weight: 'primary',
     cover: '/brand/TBF-AVATAR.webp',
+    story: `${base}/ventures/story-brandsystem.webp`,
     coverAlt: 'BRANDSYSTEM, .TBF. inc',
   },
   {
@@ -271,6 +278,7 @@ export const VENTURES: Venture[] = [
     description: 'Fashion, image and cultural production.',
     weight: 'primary',
     cover: `${base}/ventures/runway-untd.webp`,
+    story: `${base}/ventures/story-runway-untd.webp`,
     coverAlt: '.RUNWAY UNTD COLLECTIVE.',
   },
 ]

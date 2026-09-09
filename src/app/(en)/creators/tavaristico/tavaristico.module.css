@@ -19,7 +19,7 @@
      competiam entre si). Um tamanho por papel, aplicado sem exceção nas
      seções abaixo. Peso é o contraste: título sempre 800, corpo e rótulo
      sempre 300 ou 400, nunca peso médio. */
-  --tav-text-display: clamp(1.6rem, 7.6vw, 6rem);   /* nome do hero, ao lado do avatar mesmo no mobile */
+  --tav-text-display: clamp(1.35rem, 6vw, 4.25rem); /* nome do hero, correção 09/09/2026: menor, sem uppercase forçado */
   --tav-text-headline: clamp(2rem, 7vw, 3.25rem);   /* título de seção: intro, about, contato */
   --tav-text-title-lg: clamp(1.7rem, 6vw, 2.75rem); /* item primário: venture ou campaign */
   --tav-text-title: clamp(1.25rem, 3.6vw, 1.75rem); /* item secundário: build, card */
@@ -45,6 +45,16 @@
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
 }
+/* Trecho entre parênteses do título de Campaigns, correção 09/09/2026, item
+   6: itálico, no peso mais fino da família (100 - Thin, o mesmo recurso já
+   usado em .heroAlias antes da correção). Não uppercase: a palavra some se o
+   fundador trocar de idioma para algo com acento minúsculo específico. */
+.labelEm {
+  font-style: italic;
+  font-weight: 100;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
 
 /* índice: o separador que substitui o traço */
 .index {
@@ -63,15 +73,30 @@
   text-underline-offset: 3px;
 }
 
-/* ─── CAPA (correção 09/09/2026 parte 2) ───────────────────────────────
-   Faixa de rede social atrás do hero: vídeo em loop, baixa no mobile, um
-   pouco maior no desktop, nunca dominando a tela. Sangra até a borda da
-   viewport (largura de container é escopada à página, não ao body). */
+/* ─── CAPA E HERO (correções 09/09/2026, rodadas 1 e 2) ────────────────
+   O vídeo é quadrado de origem (900x900). A capa vive DENTRO do container,
+   com aspect-ratio 1/1 e object-fit: contain, então aparece inteira, sem
+   corte. Rodada 2: o bloco avatar + nome + A.K.A. passou para dentro do
+   quadrado, sobre um degradê preto que sobe da base; e no desktop o quadrado
+   ocupa metade da tela, com a coluna de texto na outra metade. */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-8);
+  padding-top: var(--tbf-space-6);
+  padding-bottom: var(--tbf-space-12);
+  max-width: 60rem;
+}
+
 .heroCover {
   position: relative;
   width: 100%;
-  height: clamp(6.5rem, 30vw, 9rem);
+  aspect-ratio: 1 / 1;
+  max-width: 26rem;
+  /* Alinhada à esquerda, nunca centralizada: o hero lê como um bloco só. */
+  margin-inline: 0 auto;
   overflow: hidden;
+  border-radius: var(--tav-radius);
   background: var(--tbf-bg-secondary);
 }
 .heroCoverMedia {
@@ -79,55 +104,59 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
-/* Sombra sutil na base: separa a capa do conteúdo e ajuda o anel do avatar a
-   ler contra qualquer trecho claro do vídeo. */
+/* Degradê preto subindo da base: é ele que dá a perspectiva e garante que o
+   nome leia sobre qualquer quadro do vídeo, inclusive os claros. */
 .heroCoverFade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 55%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.92) 0%,
+    rgba(0, 0, 0, 0.65) 18%,
+    rgba(0, 0, 0, 0) 46%
+  );
   pointer-events: none;
-}
-@media (min-width: 900px) {
-  .heroCover { height: 13rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .heroCoverMedia { display: none; }
-  .heroCover { background-image: url('/images/creators/tavaristico-cover-poster.webp'); background-size: cover; background-position: center; }
+  .heroCover { background-image: url('/images/creators/tavaristico-cover-poster.webp'); background-size: contain; background-repeat: no-repeat; background-position: center; }
 }
 
-/* ─── HERO, headline e texto ──────────────────────────────────────────── */
-.hero {
-  padding-top: var(--tbf-space-6);
-  padding-bottom: var(--tbf-space-12);
-  max-width: 60rem;
-}
-/* Avatar redondo ao lado do nome, gesto de perfil de Instagram: mesma linha
-   também no mobile, sobreposto à borda inferior da capa (margem negativa
-   puxa a fileira para cima, como LinkedIn/Twitter). */
+/* Avatar + nome + A.K.A., ancorados no rodapé do quadrado. */
 .heroTop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
   gap: var(--tbf-space-3);
-  margin-top: -32px;
+  padding: var(--tbf-space-4);
 }
 .heroAvatar {
   position: relative;
-  width: 64px;
-  height: 64px;
+  width: 56px;
+  height: 56px;
   flex: none;
   border-radius: 999px;
   overflow: hidden;
   background: var(--tbf-surface-2, #1a1a1a);
-  /* Anel preto sólido, pedido explícito do fundador: separa a foto da capa
-     atrás. box-shadow em vez de border pra não mexer no box model. */
-  box-shadow: 0 0 0 4px #000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.85);
 }
 .heroAvatar img {
   object-fit: cover;
   object-position: 50% 30%;
+}
+.heroIdentity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding-bottom: 2px;
 }
 .heroName {
   font-family: var(--tbf-font-family-display);
@@ -135,34 +164,27 @@
   font-weight: 800;
   line-height: 0.98;
   letter-spacing: var(--tbf-type-display-xl-ls);
-  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+  /* Caixa normal: o nome próprio decide a própria capitalização. */
   margin: 0;
   min-width: 0;
 }
-/* AKA + assinatura, correção 09/09/2026: branco, peso mais fino da família
-   (Thin, 100 - o único mais leve que Light já carregado em globals.css), e
-   bloco justificado. */
-.heroAkaBlock {
-  margin-top: var(--tbf-space-4);
-  text-align: justify;
-}
+/* A.K.A. em branco (pedido do fundador): sobre o vídeo, cinza sumia. */
 .heroAlias {
   margin: 0;
-  font-family: var(--tbf-font-family-display);
-  font-size: var(--tav-text-body);
-  font-weight: 100;
-  letter-spacing: 0.02em;
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  font-weight: 400;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--tbf-text-primary);
 }
-.heroRole {
-  margin-top: var(--tbf-space-2);
-  font-family: var(--mono);
-  font-size: var(--tav-text-meta);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--tbf-text-primary);
+
+/* Coluna de texto do hero. Os três espaços verticais (statement, localização,
+   ícones) são IGUAIS por pedido explícito dele. */
+.heroBody {
+  display: flex;
+  flex-direction: column;
 }
 .heroStatement {
   margin-top: var(--tbf-space-6);
@@ -174,21 +196,37 @@
   color: var(--tbf-text-primary);
   max-width: 32ch;
 }
+/* Mesma fonte, mesmo tamanho e mesmo recuo do texto do lockup acima: o recuo
+   é a largura do selo mais o gap, para os dois textos alinharem no mesmo x. */
 .heroLocation {
   margin-top: var(--tbf-space-6);
+  padding-left: calc(20px + var(--tbf-space-2));
   font-family: var(--mono);
-  font-size: var(--tav-text-meta);
+  font-size: var(--tav-text-micro);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
   line-height: 1.6;
 }
-.heroSocial { margin-top: var(--tbf-space-8); }
+.heroSocial { margin-top: var(--tbf-space-6); }
 
-@media (min-width: 900px) {
-  .heroTop { gap: var(--tbf-space-6); margin-top: -48px; }
-  .heroAvatar { width: 96px; height: 96px; }
+@media (min-width: 1024px) {
+  /* Desktop: quadrado numa metade, descrição na outra. */
+  .hero {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: var(--tbf-space-10);
+    max-width: 78rem;
+  }
+  .heroCover { max-width: none; }
+  .heroTop { padding: var(--tbf-space-6); gap: var(--tbf-space-4); }
+  .heroAvatar { width: 84px; height: 84px; }
+  /* Metade da tela é mais estreita que a página inteira: sem teto próprio o
+     nome quebrava em duas linhas e o avatar ficava do lado da segunda. */
+  .heroName { font-size: clamp(1.8rem, 3vw, 2.9rem); white-space: nowrap; }
+  .heroBody { padding-top: 0; }
+  .heroStatement { margin-top: var(--tbf-space-6); }
 }
 
 /* ─── ASSINATURA "REPRESENTED BY", inspirada em scrolly-signature
@@ -207,10 +245,20 @@
   object-fit: cover;
   flex-shrink: 0;
 }
+/* Correção 09/09/2026, item 4: o lockup ganhou uma segunda linha (o cargo,
+   que saiu do hero solto). Mesma tipografia nas duas linhas, só empilhadas. */
+.representedByText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
 .representedByLabel {
   font-family: var(--mono);
   font-size: var(--tav-text-micro);
   letter-spacing: 0.08em;
+  /* SEM text-transform aqui: o naming ".TBF. inc" já vem pronto do texto-fonte
+     (RepresentedBy.tsx e o dicionário), forçar caixa por CSS quebraria a regra
+     de naming da casa (vira ".TBF. INC"). */
   color: var(--tbf-text-secondary);
 }
 
@@ -218,7 +266,8 @@
    contorno nem caixinha; hover é só opacidade) ─────────────────────────── */
 .socialRow {
   display: flex;
-  gap: var(--tbf-space-5);
+  /* Correção 09/09/2026, item 5: gap maior, os ícones estavam grudados. */
+  gap: var(--tbf-space-8);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -266,6 +315,8 @@
 .worksSection { padding-block: var(--tbf-space-8) var(--tbf-space-20); }
 
 .filters {
+  /* Respiro entre o rótulo da seção e as pílulas (pedido do fundador). */
+  margin-top: var(--tbf-space-6);
   display: flex;
   flex-wrap: wrap;
   gap: var(--tbf-space-2);
@@ -433,15 +484,17 @@
 }
 
 /* ─── WHAT I BUILD, parte 15 ───────────────────────────────────────────── */
-.whatIBuildSection { padding-block: var(--tbf-space-12); }
+/* Correção 09/09/2026, item 7: "dá pra achatar", os 4 pilares continuam,
+   só com menos ar vertical entre eles e dentro de cada item. */
+.whatIBuildSection { padding-block: var(--tbf-space-10); }
 .buildGrid {
-  margin-top: var(--tbf-space-6);
+  margin-top: var(--tbf-space-4);
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--tbf-space-8);
+  gap: var(--tbf-space-4);
 }
 @media (min-width: 768px) { .buildGrid { grid-template-columns: repeat(2, 1fr); } }
-.buildItem { display: flex; flex-direction: column; gap: var(--tbf-space-2); }
+.buildItem { display: flex; flex-direction: column; gap: 0.35rem; }
 .buildIndex {
   font-family: var(--mono);
   font-weight: 400;
@@ -463,6 +516,10 @@
   max-width: 34ch;
 }
 
+/* Rótulo de seção colado demais na descrição em About e Contato: respiro. */
+.about .label,
+.contact .label { margin-bottom: var(--tbf-space-6); }
+
 /* ─── ABOUT, parte 16 ──────────────────────────────────────────────────── */
 .about { padding-block: var(--tbf-space-12); max-width: 42rem; }
 .aboutHeadline {
@@ -479,16 +536,10 @@
   font-size: var(--tav-text-body-lg);
   line-height: 1.5;
   color: var(--tbf-text-secondary);
-  margin-bottom: var(--tbf-space-6);
-}
-.aboutLocation {
-  font-family: var(--mono);
-  font-size: var(--tav-text-meta);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
-  line-height: 1.6;
+  /* Correção 09/09/2026, item 8: era a última linha da seção, mas a
+     localização agora mora só no hero (.heroLocation). margin-bottom volta a
+     zero porque não há mais irmão embaixo. */
+  margin-bottom: 0;
 }
 
 /* ─── CURRENTLY EXPLORING, parte 17 ────────────────────────────────────── */
@@ -504,19 +555,12 @@
   line-height: 1.05;
   margin-bottom: var(--tbf-space-6);
 }
+/* Correção 09/09/2026, item 10: o texto solto "Represented by .TBF. inc"
+   virou o lockup RepresentedBy (selo redondo), última peça da seção. As
+   classes .links/.link que sustentavam o texto solto saíram: nada mais as
+   usa. */
 .contactSocial { margin-bottom: var(--tbf-space-6); }
-.links { display: flex; flex-wrap: wrap; gap: var(--tbf-space-5); }
-.link {
-  font-family: var(--mono);
-  font-size: var(--tav-text-meta);
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--tbf-text-secondary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.link:hover { color: var(--tbf-accent); }
+.contactRepresented { margin-top: var(--tbf-space-2); }
 
 /* ─── PÁGINA DE OBRA ───────────────────────────────────────────────────── */
 .work { padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-16)); padding-bottom: var(--tbf-space-20); }

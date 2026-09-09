@@ -1,0 +1,110 @@
+/* ────────────────────────────────────────────────────────────────────────
+   SELECTED WORK, TAVARISTICO CREATOR PAGE 2.0 (correcao 09/09/2026)
+   ---------------------------------------------------------------------
+   Estetica de "stories": mesmo anel gradiente e mesmo espirito de
+   Campaigns.module.css, mas aqui cada item mantem nome, categoria e
+   descricao ao lado do circulo (Campaigns nao tem descricao por item).
+
+   As variaveis --tav-text-*, --mono, --tbf-accent etc. nao existem neste
+   arquivo: sao custom properties CSS, herdam de qualquer ancestral no DOM
+   (a classe .page em tavaristico.module.css as define). Por isso da para
+   usar aqui sem duplicar valor nem escrever CSS novo naquele arquivo.
+
+   Regra da casa: sem traco horizontal. A separacao entre itens e so
+   espaco (padding-block), igual a lista anterior.
+   ──────────────────────────────────────────────────────────────────── */
+
+.ventureList {
+  margin-top: var(--tbf-space-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.ventureRow {
+  display: grid;
+  /* Mobile primeiro: coluna do circulo com largura fixa pequena, corpo
+     ocupa o resto. auto-fit no circulo evita que o layout dependa de
+     media query so pra isso.
+
+     Correcao 09/09/2026 (print do fundador): `align-items` era `center`,
+     o que centralizava o BLOCO INTEIRO de texto em relacao ao circulo. Ele
+     pediu que o TITULO (nao o bloco) comece na altura do meio do circulo.
+     Por isso o alinhamento vira `start` (topo) e quem desce o texto ate a
+     metade do circulo e a margem calculada em `.ventureName` abaixo. */
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--tbf-space-4);
+  padding-block: var(--tbf-space-6);
+}
+
+.ventureBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+/* Ponto 5 do escopo: todo item pesa igual. Um tamanho so, sem variante
+   primary/secondary. */
+.ventureName {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 800;
+  font-size: var(--tav-text-title);
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  /* Correcao 09/09/2026: o titulo precisa comecar na ALTURA DO MEIO do
+     StoryRing (76px de lado, ver StoryRing.module.css, `--ring-size`
+     default), nao no topo. Meio do circulo = 38px. `.ventureRow` agora
+     alinha pelo topo (align-items: start), entao aqui empurramos so a
+     primeira linha do bloco de texto para baixo, o suficiente pra o CENTRO
+     dessa linha (metade da propria line-height) cair em 38px. Em `em`
+     porque line-height:1.05 e relativo ao proprio font-size do titulo. */
+  margin-top: calc(38px - 0.525em);
+}
+
+a.ventureName:hover,
+a.ventureName:focus-visible {
+  color: var(--tbf-accent);
+}
+
+/* Ponto 3 do escopo: categoria e descricao precisam ser obviamente
+   diferentes, nao so no peso, na familia toda. Categoria fica mono,
+   micro, caixa alta, com respiro entre letras: linguagem de "tag", nao
+   de frase. */
+.ventureCategory {
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+/* Ponto 4 do escopo: separador e ponto medio, nunca barra. Correcao
+   09/09/2026 (print do fundador: "os pontos estao quase inexistentes"):
+   opacity 0.5 sumia. Tira a opacity, usa cor de verdade (mesma da
+   descricao, mais forte que a categoria) e aumenta o tamanho um pouco
+   acima do texto da categoria, sem virar bolinha de lista (por isso
+   line-height 1 e vertical-align, nao um ponto solto flutuando). */
+.categoryDot {
+  display: inline-block;
+  color: var(--tbf-text-secondary);
+  font-size: 1.35em;
+  line-height: 1;
+  vertical-align: -0.05em;
+  margin-inline: 0.5em;
+}
+
+/* Descricao continua na familia display, peso leve, corpo maior: e a
+   frase de verdade da linha, tem que ler como texto corrido. */
+.ventureDescription {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 300;
+  font-size: var(--tav-text-body);
+  line-height: 1.4;
+  color: var(--tbf-text-secondary);
+  max-width: 42ch;
+}

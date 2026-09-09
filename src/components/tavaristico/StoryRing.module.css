@@ -1,0 +1,71 @@
+/* =============================================================================
+   STORY RING: o circulo com anel gradiente do Instagram, extraido de
+   Campaigns.module.css (09/09/2026) para virar componente compartilhado.
+   O tamanho e a UNICA coisa que muda entre quem usa: tudo o resto (gradiente,
+   vao entre anel e foto, estado visto) e desenho fixo, entao mora aqui.
+   ============================================================================= */
+
+/* O circulo. Botao real, sem estilo de botao: o anel e quem fala.
+   Gradiente canonico do Instagram (paradas oficiais): F58529, FEDA77,
+   DD2A7B, 8134AF, 515BD4, em diagonal 135deg. Espessura do anel 2.5px, e
+   entre o anel e a foto entra um vao de 2.5px na cor de fundo da pagina
+   (.thumbWrap tem a borda): esse vao e o que faz o desenho ler como
+   Instagram em vez de uma borda colorida qualquer.
+
+   `--ring-size` chega por style inline de quem usa (prop `size`, default
+   76px no componente). CSS custom property em vez de classe por tamanho
+   porque o consumo e livre (qualquer px), nao um punhado de variantes fixas. */
+.ring {
+  appearance: none;
+  border: none;
+  box-sizing: border-box;
+  display: block;
+  padding: 2.5px;
+  border-radius: var(--tbf-radius-full);
+  width: var(--ring-size, 76px);
+  height: var(--ring-size, 76px);
+  cursor: pointer;
+  /* Correcao 09/09/2026: tira o highlight cinza/azul de toque do mobile.
+     Sem isso, tocar no circulo desenhava um retangulo de selecao residual
+     por cima do botao (o mesmo sintoma que o fundador viu na linha
+     inteira, so que aqui e so no proprio circulo, onde o clique deve
+     mesmo continuar existindo). */
+  -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(
+    135deg,
+    #f58529 0%,
+    #feda77 25%,
+    #dd2a7b 50%,
+    #8134af 75%,
+    #515bd4 100%
+  );
+  transition: transform 180ms ease;
+}
+.ring:hover { transform: scale(1.04); }
+.ring:focus-visible {
+  outline: 2px solid var(--tbf-color-parchment);
+  outline-offset: 3px;
+}
+
+/* Visto: anel cinza solido, sem gradiente, mesma espessura e mesmo vao. */
+.ringSeen {
+  background: var(--tbf-color-flint);
+}
+
+.thumbWrap {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--tbf-radius-full);
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+  border: 2.5px solid var(--tbf-bg-primary);
+}
+
+.thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

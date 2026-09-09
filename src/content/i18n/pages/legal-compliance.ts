@@ -16,7 +16,7 @@ const en = {
   updated: 'Last updated: September 2026',
 
   intro:
-    'This is the code of ethics and conduct of .TBF. INC. It applies to our founder, to everyone working across our labels, and to every partner and vendor acting on our behalf. .TBF. is an independent creative company, small and in MVP stage. This document does not copy a multinational compliance manual. It states real, proportional rules: what we expect, what we do not accept, and where to report a problem.',
+    'This is the code of ethics and conduct of .TBF. inc. It applies to our founder, to everyone working across our labels, and to every partner and vendor acting on our behalf. .TBF. is an independent creative company, small and in MVP stage. This document does not copy a multinational compliance manual. It states real, proportional rules: what we expect, what we do not accept, and where to report a problem.',
 
   toc: 'On this page',
 
@@ -79,7 +79,7 @@ const en = {
       id: 'ip-ai',
       num: '10',
       title: 'Intellectual property and AI use',
-      body: 'Work produced for the house under contract belongs to .TBF. INC, unless agreed otherwise in writing. We build AI products and use generative AI daily in production. AI is a tool, never a replacement for final human judgment: AI-generated content published in our name goes through human review before it goes live, and we do not feed third-party personal data or confidential client information into third-party AI tools without checking their data retention policy.',
+      body: 'Work produced for the house under contract belongs to .TBF. inc, unless agreed otherwise in writing. We build AI products and use generative AI daily in production. AI is a tool, never a replacement for final human judgment: AI-generated content published in our name goes through human review before it goes live, and we do not feed third-party personal data or confidential client information into third-party AI tools without checking their data retention policy.',
     },
     {
       id: 'confidentiality',
@@ -127,7 +127,7 @@ const pt: typeof en = {
   updated: 'Última atualização: setembro de 2026',
 
   intro:
-    'Este é o código de ética e conduta da .TBF. INC. Ele vale para o fundador, para quem trabalha nas nossas labels e para todo parceiro e fornecedor que atua em nosso nome. A .TBF. é uma empresa criativa independente, pequena e em estágio MVP. Este documento não copia manual de compliance de multinacional. Ele fixa regra real e proporcional: o que esperamos, o que não aceitamos e onde reportar um problema.',
+    'Este é o código de ética e conduta da .TBF. inc. Ele vale para o fundador, para quem trabalha nas nossas labels e para todo parceiro e fornecedor que atua em nosso nome. A .TBF. é uma empresa criativa independente, pequena e em estágio MVP. Este documento não copia manual de compliance de multinacional. Ele fixa regra real e proporcional: o que esperamos, o que não aceitamos e onde reportar um problema.',
 
   toc: 'Nesta página',
 
@@ -190,7 +190,7 @@ const pt: typeof en = {
       id: 'ip-ai',
       num: '10',
       title: 'Propriedade intelectual e uso de IA',
-      body: 'Material produzido para a casa sob contrato pertence à .TBF. INC, salvo acordo diferente por escrito. Construímos produtos de IA e usamos IA generativa todos os dias na produção. IA é ferramenta, nunca substitui o julgamento humano final: conteúdo gerado por IA e publicado em nosso nome passa por revisão humana antes de ir ao ar, e não alimentamos dado pessoal de terceiro ou informação confidencial de cliente em ferramenta de IA de terceiro sem checar a política de retenção de dados dela.',
+      body: 'Material produzido para a casa sob contrato pertence à .TBF. inc, salvo acordo diferente por escrito. Construímos produtos de IA e usamos IA generativa todos os dias na produção. IA é ferramenta, nunca substitui o julgamento humano final: conteúdo gerado por IA e publicado em nosso nome passa por revisão humana antes de ir ao ar, e não alimentamos dado pessoal de terceiro ou informação confidencial de cliente em ferramenta de IA de terceiro sem checar a política de retenção de dados dela.',
     },
     {
       id: 'confidentiality',
