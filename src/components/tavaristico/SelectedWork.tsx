@@ -98,10 +98,10 @@ function VentureRow({
       ariaLabel={ariaLabel}
       onClick={() => onOpen(v.index)}
       buttonRef={(el) => registerRef(v.index, el)}
-      // Correcao 10/09/2026 (rodada 5, item 5): cover de venture e
-      // logotipo/glifo (CRIVO, VERAOZAO, BRANDSYSTEM, .RUNWAY), nao foto.
-      // Ver StoryRing.tsx, prop `fit`.
-      fit="contain"
+      // Correcao 10/09/2026 (rodada 6, item 4): volta pro default `cover`
+      // do StoryRing. Pedido do fundador: a imagem preenche o circulo
+      // inteiro, cortada por ele, tipo clipping mask, em vez de encolher
+      // com respiro dentro do circulo.
     />
   )
 

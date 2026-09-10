@@ -24,6 +24,10 @@
   --tav-text-title-lg: clamp(1.7rem, 6vw, 2.75rem); /* item primário: venture ou campaign */
   --tav-text-title: clamp(1.25rem, 3.6vw, 1.75rem); /* item secundário: build, card */
   --tav-text-body-lg: clamp(1.05rem, 2.2vw, 1.3rem); /* corpo principal: statement, intro, about */
+  /* Correção 10/09/2026 (rodada 6, item 3): tamanho próprio da frase de
+     entrada do hero. Antes dividia --tav-text-body-lg com o corpo das
+     outras seções; o fundador pediu ela maior, sem puxar o resto junto. */
+  --tav-text-statement: clamp(1.25rem, 2.6vw, 1.6rem);
   --tav-text-body: clamp(0.92rem, 1.6vw, 1.05rem);  /* descrição de item */
   --tav-text-meta: 0.78rem;                          /* mono: alias, role, localização */
   --tav-text-micro: 0.68rem;                         /* mono: categoria, meta de card */
@@ -82,7 +86,11 @@
 .hero {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--tbf-space-8);
+  /* Correção 10/09/2026 (rodada 6, item 1): no mobile o grid é 1 coluna, e
+     esse gap vira vão vertical entre o quadrado e o lockup RepresentedBy
+     logo abaixo. O fundador quer o lockup bem rente ao quadrado; o gap
+     largo volta só no desktop (ver @media 1024px). */
+  gap: var(--tbf-space-3);
   /* Correção 10/09/2026 (rodada 5, item 1): o nav global é fixo e sem fundo
      opaco no topo (véu em degradê, ver components.css), então sem esse
      respiro o quadrado do hero nascia POR BAIXO da barra e ela "atravessava"
@@ -196,16 +204,22 @@
   margin-top: var(--tbf-space-6);
   font-family: var(--tbf-font-family-display);
   font-weight: 300;
-  font-size: var(--tav-text-body-lg);
+  /* Correção 10/09/2026 (rodada 6, item 3): tamanho próprio (--tav-text-
+     statement), maior que o corpo comum, e letter-spacing positivo em vez
+     de negativo, pedido do fundador pra frase de entrada respirar mais. */
+  font-size: var(--tav-text-statement);
   line-height: 1.3;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   color: var(--tbf-text-primary);
   max-width: 32ch;
 }
 /* Mesma fonte, mesmo tamanho e mesmo recuo do texto do lockup acima: o recuo
    é a largura do selo mais o gap, para os dois textos alinharem no mesmo x. */
 .heroLocation {
-  margin-top: var(--tbf-space-6);
+  /* Correção 10/09/2026 (rodada 6, item 3): mais distância da frase de
+     entrada acima, só no mobile (no desktop quem abre o vão é
+     .heroBodyMiddle). */
+  margin-top: var(--tbf-space-8);
   padding-left: calc(20px + var(--tbf-space-2));
   font-family: var(--mono);
   font-size: var(--tav-text-micro);
@@ -227,6 +241,9 @@
   .hero {
     grid-template-columns: 1fr 1fr;
     align-items: center;
+    /* Correção 10/09/2026 (rodada 6, item 1): restaura o vão largo no
+       desktop, onde o gap do grid é horizontal (colunas lado a lado), não
+       vertical. */
     gap: var(--tbf-space-10);
     max-width: none;
     padding-inline: 0;
@@ -255,10 +272,16 @@
      zeram aqui pra nao somar em dobro. `.heroBodyMiddle` continua com vao
      interno entre a frase e a localizacao: as duas seguem juntas, e UM
      grupo "meio" so. */
-  .heroBodyMiddle { display: flex; flex-direction: column; gap: var(--tbf-space-4); }
-  .heroStatement { margin-top: 0; }
+  /* Correção 10/09/2026 (rodada 6, item 3): gap maior, mais distância entre
+     a frase de entrada e a linha BASED IN logo abaixo. */
+  .heroBodyMiddle { display: flex; flex-direction: column; gap: var(--tbf-space-8); }
+  /* Correção 10/09/2026 (rodada 6, item 2): estatement e social ganham o
+     mesmo recuo de .heroLocation, pra todo o texto da coluna alinhar numa
+     x só (a linha do "BASED IN"). O selo redondo do RepresentedBy continua
+     pendurado à esquerda de propósito, é gráfico, não texto. */
+  .heroStatement { margin-top: 0; padding-left: calc(20px + var(--tbf-space-2)); }
   .heroLocation { margin-top: 0; }
-  .heroSocial { margin-top: 0; }
+  .heroSocial { margin-top: 0; padding-left: calc(20px + var(--tbf-space-2)); }
 }
 
 @media (min-width: 1280px) {

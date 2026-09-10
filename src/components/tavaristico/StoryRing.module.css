@@ -70,14 +70,6 @@
   display: block;
 }
 
-/* Correcao 10/09/2026 (rodada 5, item 5): respiro pro glifo/logotipo nao
-   tocar a borda do circulo, e object-fit: contain no lugar de cover, pra
-   nao cortar a ponta da forma que fica perto do canto do quadrado de
-   origem. Sem o corte assimetrico, o glifo centrado no arquivo passa a
-   LER como centrado no circulo tambem (ver StoryRing.tsx, prop `fit`). */
-.thumbWrapContain {
-  padding: 15%;
-}
-.thumbContain {
-  object-fit: contain;
-}
+/* Correção 10/09/2026 (rodada 6, item 4): a variante contain (thumbWrapContain
+   e thumbContain) saiu. Pedido do fundador: imagem preenche o círculo
+   inteiro, cortada por ele, componente só com o comportamento cover. */
