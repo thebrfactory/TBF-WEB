@@ -91,7 +91,7 @@ export interface ManifestoArticle {
   deck: Bilingual
   /**
    * Capa. Serve a DOIS lugares ao mesmo tempo, de propósito: o fundo do hero da
-   * matéria e a miniatura dela no /editorial e na home. Um campo só, para a capa
+   * matéria e a miniatura dela no /mag e na home. Um campo só, para a capa
    * do card nunca divergir da capa que a pessoa vê ao abrir.
    */
   cover: { src: string; alt: Bilingual; credit: string }

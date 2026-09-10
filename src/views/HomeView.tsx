@@ -16,18 +16,50 @@ import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { LocalArticleCard } from '@/components/ArticleCard/LocalArticleCard'
+import { InstagramFloat } from '@/components/InstagramFloat/InstagramFloat'
 import { LOCAIS } from '@/content/articles'
 import { home } from '@/content/i18n/pages/home'
 import { localizedPath, type Lang } from '@/lib/i18n'
+import type { CarouselArticle } from '@/components/PhotoCarousel/PhotoCarousel'
 
-// Pool de matérias exibido no hover dos carrosséis quando o CMS ainda está vazio
-// (mesmos títulos/placeholder do preview editorial do site).
-// Deriva das mesmas capas de exemplo do dicionário: um título só existe uma vez.
-function fallbackCarousel(lang: Lang) {
-  return home[lang].mockCards.map((c, i) => ({
-    title: c.title,
-    href: localizedPath('/editorial/lorem-ipsum-' + (i + 1), lang),
-  }))
+// NOME E LINK DE CADA FOTO DOS DOIS CARROSSÉIS (pedido do fundador).
+// Cada foto tem, agora, nome e link próprios, 1 para 1, na mesma ordem do
+// array `photos` de cada PhotoCarousel: não é mais um pool cíclico de
+// matérias do CMS. `title` leva uma palavra por linha (quebra `\n`, aplicada
+// no CSS via white-space: pre-line em .carousel-slide__title).
+//
+// Carrossel 01, fotos slide1/01..10.webp, nesta ordem exata. Conferido foto a
+// foto contra os prints do fundador (image-25 a image-34): bateu 1 para 1,
+// sem troca de ordem.
+const SLIDE1_ARTICLES: CarouselArticle[] = [
+  { title: '.BRAZILIAN\nHIGH\nSUMMER.', href: 'https://www.instagram.com/p/DXKxoDVFdPs/' },
+  { title: '.THE\nBRAZILIAN\nBACKSTAGE.', href: 'https://www.instagram.com/p/DXaLo3CjgQm/' },
+  { title: '.THE\nBRAZILIAN\nLIFESTYLE.', href: 'https://www.instagram.com/p/DPbjzwgjbKM/' },
+  { title: '.BRAZILIAN\nRUNWAY\nLIFESTYLE.', href: 'https://www.instagram.com/p/DPpNWr7CXj0/' },
+  { title: '.THE\nFASHION\nMOOD.', href: 'https://www.instagram.com/p/DPUk0hvgn-6/' },
+  { title: '.BRAZILIAN\nRUNWAY\nCULTURE.', href: 'https://www.instagram.com/p/Da5fZDlOfoj/' },
+  { title: '.BRAZILIAN\nFASHION\nMAGAZINE.', href: 'https://www.instagram.com/p/DPUzB6BD3-9/' },
+  { title: '.THE\nBRAZILIAN\nDEBUT.', href: 'https://www.instagram.com/p/DO1wm-kD93p/' },
+  { title: '.WITH\nCULTURAL\nIMPACT.', href: 'https://www.instagram.com/p/DPKfbR6jmx_/' },
+  { title: '.BRAZILIAN\nFASHION\nREEL.', href: 'https://www.instagram.com/p/DPXO1KyDjKL/' },
+]
+
+// Carrossel 02, fotos slide2/01,02,03,04,05,06,09.webp, nesta ordem.
+// 🔴 ORDEM CONFERIDA CONTRA OS PRINTS (image-35 a image-41): NÃO bateu com a
+// ordem literal do pedido. Os prints mostram cada foto deslocada uma posição
+// para frente, então slide2/09 é a mesma foto do primeiro print, não do
+// último. A ordem abaixo segue o que os prints mostram: a foto decide, a
+// lista não.
+function slide2Articles(path: (p: string) => string): CarouselArticle[] {
+  return [
+    { title: '.THE\nBRAZILIAN\nAFTERPARTY.', href: 'https://www.instagram.com/p/DPUs4WKlG6n/' }, // 01
+    { title: '.BRAZILIAN\nFASHION\nWEEK.', href: 'https://www.instagram.com/p/DXaLo3CjgQm/' }, // 02
+    { title: '.THE\nLOST\nTAPE.', href: 'https://www.instagram.com/p/DX-b6Pbium6/' }, // 03
+    { title: '.BRAZILIAN\nFASHION\nMAGAZINE.', href: 'https://www.instagram.com/p/DPpNWr7CXj0/' }, // 04
+    { title: '.BRAZILIAN\nRUNWAY\nCULTURE.', href: 'https://www.instagram.com/p/DPbo2BBCaIB/' }, // 05
+    { title: '.BRAZILIAN\nCOUNTRY\nSIDE.', href: path('/mag/brazilian-country-side') }, // 06, matéria interna
+    { title: '.BRAZILIAN\nDEMO\nREEL.', href: 'https://www.instagram.com/p/DP-F299lK8V/' }, // 09
+  ]
 }
 
 export default async function HomeView({ lang }: { lang: Lang }) {
@@ -52,19 +84,9 @@ export default async function HomeView({ lang }: { lang: Lang }) {
     // Static fallback — non-blocking
   }
 
-  // Matérias reais (featured + latest) para o hover dos carrosséis; fallback
-  // para o placeholder editorial quando o CMS ainda não tem posts publicados.
-  const articlePool = [
-    ...(data.featuredPost
-      ? [{ title: data.featuredPost.title, href: path(`/editorial/${data.featuredPost.slug.current}`) }]
-      : []),
-    ...data.latestPosts.map((p) => ({
-      title: p.title,
-      href: path(`/editorial/${p.slug.current}`),
-    })),
-  ]
-  const carouselArticles =
-    articlePool.length > 0 ? articlePool : fallbackCarousel(lang)
+  // Nome e link de cada foto do carrossel 02 (item 17 é matéria interna, e por
+  // isso depende de `path`, com idioma).
+  const carousel2Articles = slide2Articles(path)
 
   // Vitrine da home = só matéria com capa. O critério é o MESMO que o
   // <ArticleCard /> usa para decidir se desenha a foto ou o bloco chapado
@@ -85,6 +107,10 @@ export default async function HomeView({ lang }: { lang: Lang }) {
     <>
       <LoadingScreen />
 
+      {/* Bolha flutuante do Instagram, pedido do fundador no bloco "AJUSTES
+          NA HOMEPAGE": so aqui, nunca no layout global. */}
+      <InstagramFloat />
+
       {/* ─── HERO — LOGOTYPE CENTRALIZADO ────────────────────────────────────── */}
       <HomeHero />
 
@@ -99,7 +125,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
              2026-07-31 (a medida caiu à metade em 2026-07-31, mesma sessão).
              Mexeu num dos dois? Mexa no outro. */}
       <div style={{ background: '#000000', paddingTop: 'var(--tbf-home-carousel-gap)' }}>
-        <PhotoCarousel articles={carouselArticles} fallbackLabel={t.magazine.cta} />
+        <PhotoCarousel articles={SLIDE1_ARTICLES} fallbackLabel={t.magazine.cta} />
       </div>
 
       {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────────
@@ -246,7 +272,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
 
       {/* ─── CAROUSEL 02 — acima do manifesto ──────────────────────────────── */}
       <PhotoCarousel
-        articles={carouselArticles}
+        articles={carousel2Articles}
         fallbackLabel={t.magazine.cta}
         photos={[
           '/images/slide2/01.webp','/images/slide2/02.webp','/images/slide2/03.webp',

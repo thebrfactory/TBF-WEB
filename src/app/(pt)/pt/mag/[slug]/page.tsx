@@ -1,4 +1,4 @@
-// Rota inglesa da matéria individual.
+// Rota portuguesa da matéria individual.
 // A página vive em src/views/ArticleView.tsx e serve os dois idiomas.
 
 import type { Metadata } from 'next'
@@ -9,7 +9,7 @@ import { materiaLocal, SLUGS_LOCAIS } from '@/content/articles'
 import { languageAlternates } from '@/lib/i18n'
 import { OG_IMAGE_PATH } from '@/lib/og'
 
-const LANG = 'en' as const
+const LANG = 'pt' as const
 
 export const revalidate = 3600
 
@@ -32,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const alternates = languageAlternates(`/editorial/${slug}`)
+  const alternates = languageAlternates(`/mag/${slug}`)
 
   // As matérias do motor scrolly vivem fora do Sanity, então têm o próprio ramo
   // de metadados: o texto sai do arquivo da matéria, já bilíngue.

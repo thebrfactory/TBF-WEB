@@ -18,6 +18,7 @@ export function StoryRing({
   ariaLabel,
   onClick,
   buttonRef,
+  fit = 'cover',
 }: {
   cover: string
   alt: string
@@ -27,6 +28,15 @@ export function StoryRing({
   ariaLabel: string
   onClick: () => void
   buttonRef?: (el: HTMLButtonElement | null) => void
+  /**
+   * Correcao 10/09/2026 (rodada 5, item 5): cover de foto quer `cover`
+   * (preenche o circulo, corta as bordas, e o certo pra fotografia). Cover
+   * de logotipo/glifo quer `contain` com respiro: a forma toca a borda do
+   * quadrado de origem (estrela, funil do .RUNWAY) e o crop circular corta
+   * a ponta de um jeito que descentra o olho, mesmo com o glifo centrado no
+   * arquivo. Default `cover` preserva todo uso existente (Campaigns).
+   */
+  fit?: 'cover' | 'contain'
 }) {
   return (
     <button
@@ -41,7 +51,7 @@ export function StoryRing({
       aria-label={ariaLabel}
       onClick={onClick}
     >
-      <span className={styles.thumbWrap}>
+      <span className={`${styles.thumbWrap}${fit === 'contain' ? ` ${styles.thumbWrapContain}` : ''}`}>
         {cover ? (
           <Image
             src={cover}
@@ -49,7 +59,7 @@ export function StoryRing({
             width={size * 2}
             height={size * 2}
             sizes={`${size}px`}
-            className={styles.thumb}
+            className={`${styles.thumb}${fit === 'contain' ? ` ${styles.thumbContain}` : ''}`}
           />
         ) : null}
       </span>

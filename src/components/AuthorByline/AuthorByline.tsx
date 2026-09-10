@@ -43,7 +43,7 @@ export function AuthorByline({
       <span className="byline__text">
         Por{' '}
         <Link
-          href={`/editorial?author=${author.slug.current}`}
+          href={`/mag?author=${author.slug.current}`}
           className="byline__link"
         >
           {author.name}

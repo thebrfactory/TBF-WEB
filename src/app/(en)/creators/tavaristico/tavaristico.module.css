@@ -83,7 +83,13 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--tbf-space-8);
-  padding-top: var(--tbf-space-6);
+  /* Correção 10/09/2026 (rodada 5, item 1): o nav global é fixo e sem fundo
+     opaco no topo (véu em degradê, ver components.css), então sem esse
+     respiro o quadrado do hero nascia POR BAIXO da barra e ela "atravessava"
+     o vídeo. O padding-top passa a reservar a altura do nav antes de somar o
+     respiro próprio da página. Override em 1280px abaixo acompanha o
+     breakpoint em que o próprio nav cresce (nav-height-xl). */
+  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-6));
   padding-bottom: var(--tbf-space-12);
   max-width: 60rem;
 }
@@ -212,12 +218,18 @@
 .heroSocial { margin-top: var(--tbf-space-6); }
 
 @media (min-width: 1024px) {
-  /* Desktop: quadrado numa metade, descrição na outra. */
+  /* Desktop: quadrado numa metade, descrição na outra. Correção 10/09/2026
+     (rodada 5, item 2): o hero perde o padding-inline do `.container` (que
+     vinha de fábrica) e o max-width que o centralizava na tela: esse era o
+     gutter que impedia o quadrado de chegar na borda esquerda. Sem ele, o
+     quadrado nasce em x=0 de verdade; o respiro do lado direito passa a
+     viver em `.heroBody`, que ganha o padding que a página inteira usa. */
   .hero {
     grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: var(--tbf-space-10);
-    max-width: 78rem;
+    max-width: none;
+    padding-inline: 0;
   }
   .heroCover { max-width: none; }
   .heroTop { padding: var(--tbf-space-6); gap: var(--tbf-space-4); }
@@ -225,8 +237,35 @@
   /* Metade da tela é mais estreita que a página inteira: sem teto próprio o
      nome quebrava em duas linhas e o avatar ficava do lado da segunda. */
   .heroName { font-size: clamp(1.8rem, 3vw, 2.9rem); white-space: nowrap; }
-  .heroBody { padding-top: 0; }
-  .heroStatement { margin-top: var(--tbf-space-6); }
+  /* Correção 10/09/2026 (rodada 5, item 3): a coluna de texto ganhou espaço
+     de sobra depois que o quadrado cresceu (item 2). Em vez de ficar
+     amontoada no topo com um vazio embaixo, ela estica pra altura da linha
+     inteira (o grid do `.hero` centraliza por padrão, `align-self: stretch`
+     desliga isso so aqui) e distribui os 3 grupos (selo, meio, icones) com
+     `justify-content: space-between`: um no cabecalho, um no meio, um no
+     rodape, pedido literal do fundador. */
+  .heroBody {
+    align-self: stretch;
+    justify-content: space-between;
+    padding-top: 0;
+    padding-right: var(--tbf-grid-margin-lg);
+  }
+  /* Os margin-top abaixo existiam pra abrir vao empilhando de cima pra baixo
+     (layout antigo); com space-between o vao ja vem do space-between, entao
+     zeram aqui pra nao somar em dobro. `.heroBodyMiddle` continua com vao
+     interno entre a frase e a localizacao: as duas seguem juntas, e UM
+     grupo "meio" so. */
+  .heroBodyMiddle { display: flex; flex-direction: column; gap: var(--tbf-space-4); }
+  .heroStatement { margin-top: 0; }
+  .heroLocation { margin-top: 0; }
+  .heroSocial { margin-top: 0; }
+}
+
+@media (min-width: 1280px) {
+  /* Acompanha o breakpoint em que o proprio nav global cresce pra
+     nav-height-xl (components.css, .nav). */
+  .hero { padding-top: calc(var(--tbf-nav-height-xl) + var(--tbf-space-6)); }
+  .heroBody { padding-right: var(--tbf-grid-margin-xl); }
 }
 
 /* ─── ASSINATURA "REPRESENTED BY", inspirada em scrolly-signature
@@ -495,6 +534,14 @@
 }
 @media (min-width: 768px) { .buildGrid { grid-template-columns: repeat(2, 1fr); } }
 .buildItem { display: flex; flex-direction: column; gap: 0.35rem; }
+/* Correção 10/09/2026 (rodada 5, item 4): faltava a classe. Numero e titulo
+   ficavam colados (sem gap nenhum entre os dois spans), pedido do fundador
+   foi so abrir esse vao, mantendo os dois na mesma linha. */
+.buildHead {
+  display: flex;
+  align-items: baseline;
+  gap: var(--tbf-space-4);
+}
 .buildIndex {
   font-family: var(--mono);
   font-weight: 400;

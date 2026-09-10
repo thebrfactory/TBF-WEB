@@ -1,4 +1,4 @@
-// Rota `/pt/editorial` — o mesmo arquivo editorial, em português.
+// Rota `/pt/mag`, o mesmo arquivo editorial, em português.
 // A página em si vive em src/views/EditorialView.tsx e serve os dois idiomas.
 
 import type { Metadata } from 'next'
@@ -12,7 +12,7 @@ const t = editorial.pt
 export const metadata: Metadata = {
   title: t.meta.title,
   description: t.meta.description,
-  alternates: languageAlternates('/editorial'),
+  alternates: languageAlternates('/mag'),
   openGraph: openGraphMeta({ title: t.meta.ogTitle, description: t.meta.ogDescription }),
 }
 

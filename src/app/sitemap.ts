@@ -27,7 +27,7 @@ type Rota = {
 // Fora de propósito: `/access` (noindex) e `/studio` (CMS, não é página pública).
 const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
-  { path: '/editorial', changeFrequency: 'daily', priority: 0.9 },
+  { path: '/mag', changeFrequency: 'daily', priority: 0.9 },
   { path: '/consulting', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/manifesto', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/labels', changeFrequency: 'weekly', priority: 0.8 },
@@ -90,7 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const slugs = await sanityFetch<{ slug: string }[]>(ARTICLE_SLUGS_QUERY)
     for (const { slug } of slugs) {
-      rotas.push({ path: `/editorial/${slug}`, changeFrequency: 'weekly', priority: 0.8 })
+      rotas.push({ path: `/mag/${slug}`, changeFrequency: 'weekly', priority: 0.8 })
     }
   } catch (erro) {
     // Sanity fora do ar: sobem só as rotas estáticas, e o sitemap perde TODAS as

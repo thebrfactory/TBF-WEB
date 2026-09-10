@@ -1,5 +1,5 @@
 // =============================================================================
-// Dicionário da MATÉRIA (/editorial/[slug]). Convenções: ../README.md
+// Dicionário da MATÉRIA (/mag/[slug]). Convenções: ../README.md
 //
 // Só o cromo da página vive aqui. O texto das matérias de verdade vem do Sanity
 // e o do piloto scrolly vem de content/articles/, os dois já bilíngues.

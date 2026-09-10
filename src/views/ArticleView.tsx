@@ -1,5 +1,5 @@
 // =============================================================================
-// /editorial/[slug] — ARTIGO INDIVIDUAL
+// /mag/[slug]: ARTIGO INDIVIDUAL
 // Hero full-bleed + corpo editorial + sidebar sticky + créditos + relacionados
 // CTAs: Also from the ecosystem · Enter the Collective · Access the system
 // =============================================================================
@@ -210,7 +210,7 @@ export default async function ArticleView({
           </div>
         </div>
         <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBlock: 'var(--tbf-space-12)', display: 'flex', gap: 'var(--tbf-space-4)' }}>
-          <a href={path('/editorial')} className="btn btn--secondary">{t.backToMagazine}</a>
+          <a href={path('/mag')} className="btn btn--secondary">{t.backToMagazine}</a>
         </div>
       </article>
     )

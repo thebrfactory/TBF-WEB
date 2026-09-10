@@ -4,7 +4,7 @@
 // tone="manifesto" é o único implementado neste ciclo (é o que o piloto usa —
 // narrativa/jornalismo/ensaio entram quando houver matéria real desses tons).
 //
-// BILÍNGUE: cada idioma é uma ROTA (`/editorial/x` e `/pt/editorial/x`), então
+// BILÍNGUE: cada idioma é uma ROTA (`/mag/x` e `/pt/mag/x`), então
 // o servidor já sabe qual servir e renderiza SÓ ele. Antes as duas versões iam
 // juntas no HTML e um script escondia uma delas antes do primeiro paint, porque
 // a rota era a mesma para os dois idiomas. Agora isso é desperdício: o HTML da
@@ -48,7 +48,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
       {/* A capa deixou de ser `null`. O void preto existia porque o piloto
           nasceu sem foto, e forçar uma imagem ali teria sido mentira visual;
           agora existe foto de licença livre, e é a MESMA que vira miniatura no
-          /editorial e na home. */}
+          /mag e na home. */}
       <HeroCinema
         title={article.heroTitle[lang]}
         subtitle={article.heroSubtitle[lang]}

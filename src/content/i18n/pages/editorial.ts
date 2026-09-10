@@ -1,9 +1,9 @@
 // =============================================================================
-// Dicionário do /editorial. Convenções: ../README.md
+// Dicionário do /mag. Convenções: ../README.md
 //
 // O conteúdo dos artigos vem do Sanity e NÃO mora aqui — só o cromo da página
 // (categorias fixas, filtros, estados vazios, os cards de exemplo exibidos
-// enquanto o CMS ainda está vazio). Rota /editorial/[slug] é de outro executor:
+// enquanto o CMS ainda está vazio). Rota /mag/[slug] é de outro executor:
 // nada aqui altera aquela árvore.
 // =============================================================================
 

@@ -501,7 +501,7 @@ const PORTFOLIO = [
     name: '.THE BRAZILIAN FACTORY.',
     rolePt: 'Holding, camada de pesquisa e de venture',
     roleEn: 'Holding, research and venture layer',
-    href: '/editorial',
+    href: '/mag',
   },
   {
     name: '.RUNWAY UNTD COLLECTIVE.',

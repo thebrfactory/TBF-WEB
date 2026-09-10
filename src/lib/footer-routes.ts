@@ -22,7 +22,7 @@
 //
 // 🔴 UMA EXCEÇÃO, E ELA É DELIBERADA: a navegação principal do topo
 // (`Navigation.tsx`) continua abrindo na MESMA guia. MAGAZINE aponta para
-// /editorial, que é uma rota de rodapé — aplicar a regra ali faria o menu
+// /mag, que é uma rota de rodapé: aplicar a regra ali faria o menu
 // principal do site abrir guia nova a cada clique, que não é navegação, é
 // vazamento. Para mudar isso basta trocar `<Link>` por `<TbfLink>` no
 // Navigation; nada mais precisa ser tocado.
@@ -42,7 +42,7 @@ export const FOOTER_COLUMNS = [
   {
     headingKey: 'pages',
     links: [
-      { href: '/editorial', linkKey: 'magazine' },
+      { href: '/mag', linkKey: 'magazine' },
       { href: '/labels', linkKey: 'labels' },
       { href: '/manifesto', linkKey: 'manifesto' },
       { href: '/collective', linkKey: 'collective' },
@@ -99,7 +99,7 @@ export const FOOTER_ROUTES: readonly string[] = FOOTER_COLUMNS.flatMap((col) =>
  *
  * 🔴 IGUALDADE EXATA, e a decisão importa. A regra é sobre "páginas que se
  * encontram no rodapé" — e uma MATÉRIA não se encontra no rodapé; o que se
- * encontra lá é o /editorial. Se filhas contassem, todo card de matéria da
+ * encontra lá é o /mag. Se filhas contassem, todo card de matéria da
  * revista e toda peça do portfólio do TAVARÍSTICO abririam guia nova, e a
  * navegação de leitura do site viraria uma pilha de abas. Pior: o card de
  * matéria não é um link comum, é o `ArticleMorphLink`, que faz a capa da revista

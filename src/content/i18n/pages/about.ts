@@ -49,7 +49,7 @@ const en = {
     sectionLabel: 'The Ecosystem',
     h2: 'Our labels',
     items: [
-      { code: '.TBF.', name: '.THE BRAZILIAN FACTORY.', desc: 'Editorial label and cultural backbone of the ecosystem. Stories, essays, photography.', href: '/editorial' },
+      { code: '.TBF.', name: '.THE BRAZILIAN FACTORY.', desc: 'Editorial label and cultural backbone of the ecosystem. Stories, essays, photography.', href: '/mag' },
       { code: '.TFD.', name: '.THE FIORE DAILY.', desc: 'Wellness, intimacy, ritual and feminine expression. Presence as a practice.', href: '/labels/thefioredaily' },
       { code: '.RUC.', name: '.RUNWAY UNTD COLLECTIVE.', desc: 'Fashion film, editorial, SPFW, creative direction. Fashion as cultural memory.', href: '/labels/runwayunited' },
       { code: '.TGF.', name: '.THE GROWTH FACTORY.', desc: 'Growth strategy, business development and scalable innovation.', href: '/labels/factoryofgrowth' },
@@ -98,7 +98,7 @@ const pt: typeof en = {
     sectionLabel: 'O Ecossistema',
     h2: 'Nossas labels',
     items: [
-      { code: '.TBF.', name: '.THE BRAZILIAN FACTORY.', desc: 'Label editorial e espinha dorsal cultural do ecossistema. Histórias, ensaios, fotografia.', href: '/editorial' },
+      { code: '.TBF.', name: '.THE BRAZILIAN FACTORY.', desc: 'Label editorial e espinha dorsal cultural do ecossistema. Histórias, ensaios, fotografia.', href: '/mag' },
       { code: '.TFD.', name: '.THE FIORE DAILY.', desc: 'Bem-estar, intimidade, ritual e expressão feminina. Presença como prática.', href: '/labels/thefioredaily' },
       { code: '.RUC.', name: '.RUNWAY UNTD COLLECTIVE.', desc: 'Fashion film, editorial, SPFW, direção criativa. Moda como memória cultural.', href: '/labels/runwayunited' },
       { code: '.TGF.', name: '.THE GROWTH FACTORY.', desc: 'Estratégia de growth, desenvolvimento de negócios e inovação escalável.', href: '/labels/factoryofgrowth' },

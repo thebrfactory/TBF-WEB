@@ -1373,6 +1373,9 @@
   text-align: center;
   text-transform: uppercase;
   color: #ffffff;
+  /* Cada palavra do nome em sua própria linha (pedido do fundador): o título
+     chega com quebra `\n` entre palavras, e este white-space é quem aplica. */
+  white-space: pre-line;
   opacity: 0;
   transform: translateY(8px);
   transition:

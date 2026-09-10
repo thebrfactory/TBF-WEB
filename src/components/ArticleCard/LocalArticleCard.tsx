@@ -11,7 +11,7 @@
 // prop: a lista de quem aparece é do registro (src/content/articles), não daqui.
 //
 // UM LUGAR SÓ, de propósito (regra 4: apontar, não copiar). É usado na home E no
-// arquivo do /editorial. Capa, título e data saem do próprio artigo, então nunca
+// arquivo do /mag. Capa, título e data saem do próprio artigo, então nunca
 // há como o card mostrar uma coisa e a matéria mostrar outra.
 // =============================================================================
 
@@ -35,7 +35,7 @@ export function LocalArticleCard({ article, lang, variant = 'standard' }: LocalA
   const titulo = article.heroTitle[lang]
 
   // A data é formatada no locale da ROTA, não no do navegador: a mesma matéria
-  // em /editorial e em /pt/editorial mostra a data no idioma da página.
+  // em /mag e em /pt/mag mostra a data no idioma da página.
   //
   // O MEIO-DIA NÃO É ENFEITE. `new Date('2026-08-01')` é lido como meia-noite em
   // UTC; formatado no fuso de Brasília (UTC-3) isso volta três horas e vira 31
@@ -50,7 +50,7 @@ export function LocalArticleCard({ article, lang, variant = 'standard' }: LocalA
 
   return (
     <ArticleMorphLink
-      href={localizedPath(`/editorial/${article.slug}`, lang)}
+      href={localizedPath(`/mag/${article.slug}`, lang)}
       className={`card ${isFeatured ? 'card--featured' : 'card--standard'}`}
       aria-label={titulo}
     >

@@ -10,8 +10,11 @@ const SLIDE1 = [
   '/images/slide1/10.webp',
 ]
 
-// Matéria associada a cada slide — usada para o link + o título que aparece no
-// hover/toque. Um pool de matérias é distribuído (cíclico) sobre as fotos.
+// Matéria/link associado a cada slide, usada para o link + o título que
+// aparece no hover/toque. Hoje é 1 para 1: cada foto tem seu próprio nome e
+// destino, na mesma ordem do array `photos` (ver HomeView.tsx).
+// `title` leva `\n` entre palavras: cada palavra em sua própria linha no
+// overlay (pedido do fundador), via `white-space: pre-line` em components.css.
 export interface CarouselArticle {
   title: string
   href: string
@@ -61,28 +64,50 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial', 
           style={{ '--tbf-carousel-duration': duration } as CSSProperties}
         >
           {loop.map((slide, i) => {
-            const isArticle = slide.href.startsWith('/editorial/')
-            const LinkTag = isArticle ? ArticleMorphLink : Link
+            // Link externo (Instagram etc.) nunca passa por ArticleMorphLink
+            // nem por next/link: sai de todo o roteamento do Next, com <a>
+            // simples em nova aba. Matéria interna continua no morph.
+            const isExternal = slide.href.startsWith('http')
+            const isArticle = !isExternal && (slide.href.startsWith('/editorial/') || slide.href.startsWith('/mag/'))
+            // aria-label é o nome em UMA linha: troca a quebra `\n` por espaço.
+            const ariaLabel = (slide.title ?? fallbackLabel).replace(/\n/g, ' ')
+            const content = (
+              <>
+                <Image
+                  src={slide.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 1024px) 18vw, 58vw"
+                  style={{ objectFit: 'cover', filter: 'grayscale(15%)' }}
+                />
+                <span className="carousel-slide__overlay" aria-hidden="true">
+                  {slide.title && (
+                    <span className="carousel-slide__title">{slide.title}</span>
+                  )}
+                </span>
+              </>
+            )
             return (
               <li key={i} className="carousel-slide">
-                <LinkTag
-                  href={slide.href}
-                  className="carousel-slide__link"
-                  aria-label={slide.title ?? fallbackLabel}
-                >
-                  <Image
-                    src={slide.src}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 18vw, 58vw"
-                    style={{ objectFit: 'cover', filter: 'grayscale(15%)' }}
-                  />
-                  <span className="carousel-slide__overlay" aria-hidden="true">
-                    {slide.title && (
-                      <span className="carousel-slide__title">{slide.title}</span>
-                    )}
-                  </span>
-                </LinkTag>
+                {isExternal ? (
+                  <a
+                    href={slide.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="carousel-slide__link"
+                    aria-label={ariaLabel}
+                  >
+                    {content}
+                  </a>
+                ) : isArticle ? (
+                  <ArticleMorphLink href={slide.href} className="carousel-slide__link" aria-label={ariaLabel}>
+                    {content}
+                  </ArticleMorphLink>
+                ) : (
+                  <Link href={slide.href} className="carousel-slide__link" aria-label={ariaLabel}>
+                    {content}
+                  </Link>
+                )}
               </li>
             )
           })}

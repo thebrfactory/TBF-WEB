@@ -22,7 +22,7 @@ import styles from './Navigation.module.css'
 // `labelKey` aponta pra chave em `shell.nav`; `/brandsystem/login` é outra
 // aplicação (zona .AURA.) e por isso fica de fora do localizedPath().
 const NAV_LINKS: { href: string; labelKey: 'magazine' | 'login'; external?: boolean }[] = [
-  { href: '/editorial', labelKey: 'magazine' },
+  { href: '/mag', labelKey: 'magazine' },
   // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
   { href: '/brandsystem/login', labelKey: 'login', external: true },
 ]
@@ -170,13 +170,13 @@ export function Navigation() {
     <>
       <header className={navClasses} role="banner">
         {/* Left: abaixo de 1024px o nav de desktop (com Magazine) some, então o
-            slot vira MAG → /editorial; a partir de 1024px volta a ser Home,
+            slot vira MAG → /mag; a partir de 1024px volta a ser Home,
             porque o Magazine já está na lista de links. Duas classes CSS
             alternam por breakpoint (sem JS/matchMedia, evita hydration mismatch). */}
         <Link
-          href={localizedPath('/editorial', lang)}
+          href={localizedPath('/mag', lang)}
           className={`${styles.nav__link} ${styles['nav__left--mobile']}`}
-          aria-current={pathname === '/editorial' ? 'page' : undefined}
+          aria-current={pathname === '/mag' ? 'page' : undefined}
         >
           {t.magazineShort}
         </Link>

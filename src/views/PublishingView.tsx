@@ -231,7 +231,7 @@ export default function PublishingView({ lang }: { lang: Lang }) {
       <section className="section container">
         <span style={SECTION_LABEL}>{t.explore.sectionLabel}</span>
         <h2 style={H2}>{t.explore.h2}</h2>
-        <Link href={path('/editorial')} className="btn btn--primary">
+        <Link href={path('/mag')} className="btn btn--primary">
           {t.explore.cta}
           <span className="btn__arrow" aria-hidden="true">→</span>
         </Link>

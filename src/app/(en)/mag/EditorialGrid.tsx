@@ -122,7 +122,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
       ) : (
         /* Mock articles — preview visual enquanto Sanity está vazio.
            O destaque saiu daqui: a imagem de capa agora é o fundo do header
-           da página (ver app/editorial/page.tsx). */
+           da página (ver app/mag/page.tsx). */
         <>
           <div className="editorial-grid container" role="feed" aria-label={t.grid.previewAriaLabel}>
             {/* As matérias de verdade abrem o arquivo, com CAPA DE VERDADE. Os
@@ -139,7 +139,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
 
             {t.mockArticles.slice(2).map((mock, idx) => {
               const i = idx + 2
-              const href = path(`/editorial/lorem-ipsum-${i + 1}`)
+              const href = path(`/mag/lorem-ipsum-${i + 1}`)
               return (
                 <ArticleMorphLink key={i} href={href} className="card card--standard" style={{ textDecoration: 'none' }}>
                   {/* Placeholder/mock: sem imagem real (não existe matéria de

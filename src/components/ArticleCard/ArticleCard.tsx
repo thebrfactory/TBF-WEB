@@ -39,7 +39,7 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
     // ArticleMorphLink e não Link: abrir a matéria entra PELA capa (a imagem
     // cresce até o lugar dela na página da matéria). Ver PageTransition/.
     <ArticleMorphLink
-      href={`/editorial/${post.slug.current}`}
+      href={`/mag/${post.slug.current}`}
       className={cardClass}
       aria-label={post.title}
     >

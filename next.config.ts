@@ -80,13 +80,35 @@ const nextConfig: NextConfig = {
     return [
       // Garante canonical URLs sem trailing slash
       {
-        source: '/editorial/',
-        destination: '/editorial',
+        source: '/mag/',
+        destination: '/mag',
         permanent: true,
       },
       {
         source: '/factory/',
         destination: '/factory',
+        permanent: true,
+      },
+      // /editorial virou /mag (pedido do fundador, 10/09/2026). Link antigo
+      // com matéria não perde a matéria: o slug segue no redirect.
+      {
+        source: '/editorial/:slug*',
+        destination: '/mag/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/editorial',
+        destination: '/mag',
+        permanent: true,
+      },
+      {
+        source: '/pt/editorial/:slug*',
+        destination: '/pt/mag/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/pt/editorial',
+        destination: '/pt/mag',
         permanent: true,
       },
       {

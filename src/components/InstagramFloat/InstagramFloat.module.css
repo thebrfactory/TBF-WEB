@@ -1,0 +1,60 @@
+/* Bolha flutuante do Instagram, so na home (pedido do fundador). Padrao FAB
+   de e-commerce: circular, preenchido, fixo, com sombra, sobre o conteudo.
+   Estetica .TBF.: preto e pergaminho, tokens do design system. Sem gradiente
+   roxo/rosa da marca Instagram.
+   Mobile-first: alvo minimo de 44px, ancorado no canto sem cobrir CTA nem
+   rodape (nao entra no fluxo do layout, so soma altura ao viewport). */
+.fab {
+  position: fixed;
+  right: var(--tbf-space-4);
+  bottom: calc(var(--tbf-space-4) + env(safe-area-inset-bottom));
+  z-index: var(--tbf-z-sticky);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--tbf-radius-full);
+  background-color: var(--tbf-color-obsidian);
+  color: var(--tbf-color-parchment);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.5),
+    0 2px 8px rgba(0, 0, 0, 0.4);
+  transition:
+    transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+.fab:hover,
+.fab:focus-visible {
+  background-color: var(--tbf-color-amber);
+  color: var(--tbf-color-obsidian);
+  transform: translateY(-2px);
+}
+
+.fab:active {
+  transform: scale(0.96);
+}
+
+.icon {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fab {
+    transition: none;
+  }
+
+  .fab:hover,
+  .fab:focus-visible {
+    transform: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fab {
+    right: var(--tbf-space-6);
+    bottom: var(--tbf-space-6);
+  }
+}

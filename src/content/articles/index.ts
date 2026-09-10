@@ -8,17 +8,19 @@
 // link que abre em 404.
 //
 // Aqui a lista mora em UM lugar. Publicar a próxima é acrescentar uma linha em
-// LOCAIS: a rota, os metadados, o card da home e o arquivo do /editorial passam a
+// LOCAIS: a rota, os metadados, o card da home e o arquivo do /mag passam a
 // enxergá-la sozinhos.
 //
-// ORDEM. Da mais nova para a mais velha, que é a ordem em que o /editorial mostra.
+// ORDEM. Da mais nova para a mais velha, que é a ordem em que o /mag mostra.
 // =============================================================================
 
 import type { ManifestoArticle } from './types'
+import { brazilianCountrySide } from './brazilian-country-side'
 import { theLabelThatLearnedToAskItself } from './the-label-that-learned-to-ask-itself'
 import { theDayBrazilStoppedTranslatingItself } from './the-day-brazil-stopped-translating-itself'
 
 export const LOCAIS: ManifestoArticle[] = [
+  brazilianCountrySide,
   theLabelThatLearnedToAskItself,
   theDayBrazilStoppedTranslatingItself,
 ]
