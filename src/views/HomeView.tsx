@@ -106,12 +106,25 @@ export default async function HomeView({ lang }: { lang: Lang }) {
   // rebaixada a standard — ela simplesmente não entra.
   const featuredWithCover = data.featuredPost?.heroImage ? data.featuredPost : undefined
   const postsWithCover = data.latestPosts.filter((p) => p.heroImage)
-  // Quantos cards a grade vai realmente desenhar. Quando é UM, a grade
+  // Quando o Sanity nao devolve NENHUMA materia com capa, quem desenha a grade
+  // e a lista LOCAL (as materias que vivem no repo). Isso esta escrito la
+  // embaixo, no JSX, com esta mesma condicao.
+  const usandoLocais = !featuredWithCover && postsWithCover.length === 0
+
+  // Quantos cards a grade vai realmente desenhar. Quando e UM, a grade
   // multi-coluna precisa saber (ver `.editorial-grid--solo` em components.css):
-  // sem isso, o card único fica do tamanho de um terço da tela.
-  const homeCardCount =
-    (featuredWithCover ? 1 : 0) + postsWithCover.length ||
-    1 /* fallback do piloto: também é um card */
+  // sem isso, o card unico fica do tamanho de um terco da tela.
+  //
+  // 🔴 A CONTA OLHAVA SO O SANITY, e por isso mentia. Com o Sanity vazio ela
+  // dava 1 (o `|| 1` do fallback), a grade entrava em `--solo`, e as TRES
+  // materias locais empilhavam numa coluna de 66% de largura, com o resto da
+  // tela vazio. Foi o que o fundador viu em 10/09/2026 e leu como "muito espaco
+  // sobrando": nao era falta do layout Pinterest, era o Pinterest DESLIGADO por
+  // uma contagem que nao contava quem estava na tela. A conta agora conta quem
+  // e desenhado, que e a unica versao dela que nao volta a mentir.
+  const homeCardCount = usandoLocais
+    ? LOCAIS.length
+    : (featuredWithCover ? 1 : 0) + postsWithCover.length
 
   return (
     <>
@@ -173,8 +186,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
           {/* Sanity vazio (ou sem nenhum post com capa): as matérias reais que
               vivem no repo abrem a grade. Cada uma tem capa própria, vinda do
               próprio artigo. A mais nova entra em destaque. */}
-          {!featuredWithCover &&
-            postsWithCover.length === 0 &&
+          {usandoLocais &&
             LOCAIS.map((a, i) => (
               <LocalArticleCard
                 key={a.slug}
