@@ -9,6 +9,7 @@ import type { Metadata } from 'next'
 import PitchView from '@/views/PitchView'
 import { pitch } from '@/content/i18n/pages/pitch'
 import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 
 const t = pitch.pt
 
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
   description: t.meta.description,
   robots: { index: false, follow: false },
   alternates: languageAlternates('/pitch/v1'),
+  openGraph: openGraphMeta({ title: t.meta.title, description: t.meta.description }),
 }
 
 export default function Page() {

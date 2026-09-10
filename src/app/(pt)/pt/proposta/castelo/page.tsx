@@ -8,12 +8,19 @@
 
 import type { Metadata } from 'next'
 import { PropostaCasteloClient } from '@/app/(en)/proposta/castelo/PropostaCasteloClient'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
+
+const TITLE = 'Proposta · Hostel Castelo'
+const DESCRIPTION =
+  'Proposta de fotografia comercial para o Hostel Castelo, Pampulha, Belo Horizonte. Quinze imagens finais para os canais onde a reserva acontece.'
 
 export const metadata: Metadata = {
-  title: 'Proposta · Hostel Castelo',
-  description:
-    'Proposta de fotografia comercial para o Hostel Castelo, Pampulha, Belo Horizonte. Quinze imagens finais para os canais onde a reserva acontece.',
+  title: TITLE,
+  description: DESCRIPTION,
   robots: { index: false, follow: false },
+  alternates: languageAlternates('/proposta/castelo'),
+  openGraph: openGraphMeta({ title: TITLE, description: DESCRIPTION }),
 }
 
 export default function PropostaCasteloPagePT() {

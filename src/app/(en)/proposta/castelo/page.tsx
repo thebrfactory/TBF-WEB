@@ -12,12 +12,19 @@
 
 import type { Metadata } from 'next'
 import { PropostaCasteloClient } from './PropostaCasteloClient'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
+
+const TITLE = 'Proposta · Hostel Castelo'
+const DESCRIPTION =
+  'Commercial photography proposal for Hostel Castelo, Pampulha, Belo Horizonte. Fifteen final images for the channels where booking happens.'
 
 export const metadata: Metadata = {
-  title: 'Proposta · Hostel Castelo',
-  description:
-    'Commercial photography proposal for Hostel Castelo, Pampulha, Belo Horizonte. Fifteen final images for the channels where booking happens.',
+  title: TITLE,
+  description: DESCRIPTION,
   robots: { index: false, follow: false },
+  alternates: languageAlternates('/proposta/castelo'),
+  openGraph: openGraphMeta({ title: TITLE, description: DESCRIPTION }),
 }
 
 export default function PropostaCasteloPage() {

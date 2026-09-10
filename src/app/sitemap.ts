@@ -26,7 +26,9 @@ type Rota = {
 // linha nova aqui.
 // Fora de propósito: `/access` (noindex), `/studio` (CMS, não é página pública),
 // `/pitch*` e `/proposta/castelo` (material de cliente, `robots: { index: false }`
-// na própria página. Sitemap não anuncia página noindex ao buscador).
+// na própria página, sitemap não anuncia página noindex ao buscador),
+// `/ecosystem` e `/factory` (páginas de puro redirecionamento, sem conteúdo
+// próprio, também `robots: { index: false }`: quem deve indexar é o destino).
 const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
   { path: '/mag', changeFrequency: 'daily', priority: 0.9 },
@@ -36,13 +38,11 @@ const STATIC_ROUTES: Rota[] = [
   { path: '/labels/factoryofgrowth', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/labels/thefioredaily', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/labels/runwayunited', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/ecosystem', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/about', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/creators/tavaristico', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/contact-us', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/publishing', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/press', changeFrequency: 'monthly', priority: 0.6 },
-  { path: '/factory', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/collective', changeFrequency: 'monthly', priority: 0.6 },
   { path: '/careers', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/about/quick-facts', changeFrequency: 'monthly', priority: 0.5 },

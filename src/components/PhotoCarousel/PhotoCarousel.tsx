@@ -42,7 +42,7 @@ const SECONDS_PER_SLIDE = 2.4
 // `fallbackLabel` chega por propriedade, e não de useLang(), para este
 // componente seguir sendo de SERVIDOR: chamar um hook de cliente aqui derruba a
 // pré-renderização da home inteira (custou um build quebrado na Vercel).
-export function PhotoCarousel({ photos = SLIDE1, articles, href = '/editorial', fallbackLabel = 'Enter the Magazine' }: Props) {
+export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallbackLabel = 'Enter the Magazine' }: Props) {
   const hasArticles = !!articles && articles.length > 0
   const duration = `${(photos.length * SECONDS_PER_SLIDE).toFixed(2)}s`
 

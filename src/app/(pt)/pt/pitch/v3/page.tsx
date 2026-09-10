@@ -12,12 +12,19 @@
 
 import type { Metadata } from 'next'
 import { PitchV3Client } from '@/app/(en)/pitch/v3/PitchV3Client'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
+
+const TITLE = 'Pitch 3.0'
+const DESCRIPTION =
+  '.THE BRAZILIAN FACTORY. Um cultural venture studio para ideias brasileiras com alcance global. Deck de trabalho.'
 
 export const metadata: Metadata = {
-  title: 'Pitch 3.0',
-  description:
-    '.THE BRAZILIAN FACTORY. Um cultural venture studio para ideias brasileiras com alcance global. Deck de trabalho.',
+  title: TITLE,
+  description: DESCRIPTION,
   robots: { index: false, follow: false },
+  alternates: languageAlternates('/pitch/v3'),
+  openGraph: openGraphMeta({ title: TITLE, description: DESCRIPTION }),
 }
 
 export default function PitchV3PagePT() {

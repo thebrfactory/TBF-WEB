@@ -176,7 +176,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
         </div>
 
         <div className="container" style={{ marginTop: 'var(--tbf-space-8)' }}>
-          <Link href={path('/editorial')} className="btn btn--secondary">
+          <Link href={path('/mag')} className="btn btn--secondary">
             {t.magazine.cta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>

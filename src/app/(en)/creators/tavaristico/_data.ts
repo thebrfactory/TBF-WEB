@@ -421,10 +421,23 @@ export const VENTURES: Venture[] = [
     // Nao ha fotografia de um sistema de marca: os quatro quadros sao pecas
     // desenhadas com os proprios ativos da `.TBF.` (`public/brand/`), na
     // paleta da casa.
+    // PECAS REAIS, a partir de 10/09/2026. Ate aqui os 4 quadros do BRANDSYSTEM
+    // eram as unicas pecas INVENTADAS do lote: nao existe foto de um sistema de
+    // marca, entao foram desenhadas com os ativos de `public/brand`. O fundador
+    // mandou as telas do proprio .TBF.AURA e elas entraram no lugar.
+    // As desenhadas estao inteiras em `public/_ARQUIVO/.../stories/brandsystem/`.
+    //
+    // O QUE FICOU DE FORA, e por que: das 7 telas de celular que ele mandou, 3
+    // nao entraram. A de OVERVIEW traz CNPJ e endereco da sede; a de
+    // POSICIONAMENTO traz os ICPs por vertical, que e inteligencia de negocio.
+    // Nenhuma das duas ganha nada em ser publicada. A terceira, a Prompt
+    // Library, ENTROU com os dois blocos de prompt BORRADOS: a tela conta que o
+    // sistema tem uma biblioteca, sem entregar os prompts, que sao ativo da
+    // casa. Autorizacao dele: "coloque um blur nas informacoes sensiveis".
     frames: [
       {
         src: `${stories}/brandsystem/01-marca.webp`,
-        alt: 'A marca .TBF. isolada em fundo preto.',
+        alt: 'Tela do .TBF.AURA no celular: o índice dos capítulos do sistema de marca.',
         role: 'The brand',
         overlay: {
           kickerEN: 'AI · BRAND · PRODUCT',
@@ -435,7 +448,7 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/brandsystem/02-conhecimento.webp`,
-        alt: 'Grade com os ativos gráficos da marca, repetidos como prancha de sistema.',
+        alt: 'Capítulo de introdução do .TBF.AURA, com o livro de branding da casa aberto.',
         role: 'The knowledge',
         overlay: {
           kickerEN: 'THE KNOWLEDGE',
@@ -446,7 +459,7 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/brandsystem/03-agente.webp`,
-        alt: 'Diagrama abstrato do agente: nós ligados em esteira.',
+        alt: 'Biblioteca de prompts do sistema, com o conteúdo dos prompts borrado.',
         role: 'The agent',
         overlay: {
           kickerEN: 'THE AGENT',
@@ -457,7 +470,7 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/brandsystem/04-fluxo.webp`,
-        alt: 'A mesma peça em variações, sugerindo produção em série.',
+        alt: 'Capítulo do pacote cultural: as referências que formam o DNA da marca.',
         role: 'The output',
         overlay: {
           kickerEN: 'THE OUTPUT',

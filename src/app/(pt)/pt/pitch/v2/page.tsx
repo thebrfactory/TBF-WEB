@@ -12,12 +12,19 @@
 
 import type { Metadata } from 'next'
 import { PitchV2Client } from '@/app/(en)/pitch/v2/PitchV2Client'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
+
+const TITLE = 'Pitch 2.0'
+const DESCRIPTION =
+  '.THE BRAZILIAN FACTORY. Um cultural venture studio para ideias brasileiras com alcance global. Deck de trabalho.'
 
 export const metadata: Metadata = {
-  title: 'Pitch 2.0',
-  description:
-    '.THE BRAZILIAN FACTORY. Um cultural venture studio para ideias brasileiras com alcance global. Deck de trabalho.',
+  title: TITLE,
+  description: DESCRIPTION,
   robots: { index: false, follow: false },
+  alternates: languageAlternates('/pitch/v2'),
+  openGraph: openGraphMeta({ title: TITLE, description: DESCRIPTION }),
 }
 
 export default function PitchV2PagePT() {
