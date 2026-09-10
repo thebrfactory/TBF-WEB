@@ -645,3 +645,37 @@ export const BUILD_PILLARS: BuildPillar[] = [
 // CURRENTLY EXPLORING (parte 17): texto exato do briefing, nao se traduz,
 // mesma convencao das disciplinas acima (rotulo de territorio).
 export const EXPLORING: string[] = ['CREATIVE DIRECTION', 'AI PRODUCTS', 'BRAND SYSTEMS', 'NEW VENTURES']
+
+// =============================================================================
+// CARREIRA (10/09/2026). Pedido do fundador: "coloque alguns blocos ao lado de
+// ABOUT com minha carreira profissional seguindo minhas posicoes no LinkedIn".
+// FONTE: linkedin.com/in/tavaristico, aba Experiencia, lida em 10/09/2026 com
+// a sessao dele. As dez posicoes estao aqui na mesma ORDEM do LinkedIn, que
+// nao e cronologica pura (ele mantem o freelance no meio da lista): a ordem e
+// dele, nao minha.
+//
+// Periodo em ANO, nao em mes: a coluna vive ao lado do About, estreita, e
+// "Jun 2025" em dez linhas vira ruido. Cargo e empresa ficam em ingles nos
+// dois idiomas, pela mesma regra que ja vale para nome de obra e de cliente no
+// resto desta pagina: nome proprio nao se traduz. So o periodo troca ("Atual").
+// =============================================================================
+
+export interface CareerEntry {
+  role: string
+  org: string
+  periodEN: string
+  periodPT: string
+}
+
+export const CAREER: CareerEntry[] = [
+  { role: 'Founder & Creative Director', org: '.TBF. inc', periodEN: '2025 - Present', periodPT: '2025 - Atual' },
+  { role: 'Marketing Analyst', org: 'Ô de Casa Hostel & Bar', periodEN: '2024 - 2026', periodPT: '2024 - 2026' },
+  { role: 'Art Director & Brand Strategist', org: 'Freelance', periodEN: '2019 - 2025', periodPT: '2019 - 2025' },
+  { role: 'Art Director & Media Strategist', org: 'Lauda Brand Store', periodEN: '2023 - 2024', periodPT: '2023 - 2024' },
+  { role: 'Junior Marketing Analyst', org: 'BOAH', periodEN: '2022 - 2023', periodPT: '2022 - 2023' },
+  { role: 'Community Manager', org: 'Meats Espeteria', periodEN: '2019 - 2022', periodPT: '2019 - 2022' },
+  { role: 'Marketing Intern', org: 'Soul Dila', periodEN: '2021', periodPT: '2021' },
+  { role: 'Graphic Designer', org: 'Ouzar Comunicação', periodEN: '2020 - 2021', periodPT: '2020 - 2021' },
+  { role: 'Design Intern', org: 'Agência Yellowmelon', periodEN: '2019 - 2020', periodPT: '2019 - 2020' },
+  { role: 'Marketing', org: 'Ammi Express Hotels', periodEN: '2019', periodPT: '2019' },
+]

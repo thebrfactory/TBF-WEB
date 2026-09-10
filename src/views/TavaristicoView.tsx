@@ -24,6 +24,7 @@ import {
   CAMPAIGNS,
   BUILD_PILLARS,
   EXPLORING,
+  CAREER,
 } from '@/app/(en)/creators/tavaristico/_data'
 import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
@@ -196,10 +197,32 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
 
       {/* ABOUT, parte 16: curto. Correção 09/09/2026, item 8: a frase de
           localização saiu (mora só no hero agora, .heroLocation). */}
+      {/* Correção 10/09/2026 (rodada 8): a carreira entra AO LADO do About,
+          pedido dele. As dez posições vêm do LinkedIn (ver CAREER em _data.ts,
+          que carrega a procedência). No mobile a coluna desce para baixo do
+          texto, que é a ordem de leitura certa: primeiro quem ele é, depois
+          por onde passou. */}
       <section className={`${styles.about} container`} id="about">
-        <span className={styles.label}>{t.index.aboutLabel}</span>
-        <p className={styles.aboutHeadline}>{t.index.aboutHeadline}</p>
-        <p className={styles.aboutBody}>{t.index.aboutBody}</p>
+        <div className={styles.aboutText}>
+          <span className={styles.label}>{t.index.aboutLabel}</span>
+          <p className={styles.aboutHeadline}>{t.index.aboutHeadline}</p>
+          <p className={styles.aboutBody}>{t.index.aboutBody}</p>
+        </div>
+
+        <div className={styles.career}>
+          <span className={styles.label}>{t.index.careerLabel}</span>
+          <ul className={styles.careerList}>
+            {CAREER.map((job) => (
+              <li key={`${job.org}-${job.role}`} className={styles.careerItem}>
+                <span className={styles.careerPeriod}>
+                  {lang === 'pt' ? job.periodPT : job.periodEN}
+                </span>
+                <span className={styles.careerRole}>{job.role}</span>
+                <span className={styles.careerOrg}>{job.org}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
       {/* CONTATO / FECHAMENTO, parte 18 no nível da página: o footer global

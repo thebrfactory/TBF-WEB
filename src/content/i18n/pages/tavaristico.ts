@@ -46,6 +46,7 @@ const en = {
     workLabel: 'Advertising, fashion & culture',
     whatIBuildLabel: 'What I Build',
     aboutLabel: 'About',
+    careerLabel: 'Career',
     aboutHeadline: 'I came from advertising.',
     aboutBody:
       "I built my career through creative direction, branding, fashion and culture. Today I'm exploring what happens when that creative practice meets product, business and AI.",
@@ -108,6 +109,7 @@ const pt: typeof en = {
     workLabel: 'Publicidade, moda e cultura',
     whatIBuildLabel: 'O Que Eu Construo',
     aboutLabel: 'Sobre',
+    careerLabel: 'Carreira',
     aboutHeadline: 'Vim da publicidade.',
     aboutBody:
       'Construí minha carreira através da direção de arte, branding, moda e cultura. Hoje exploro o que acontece quando essa prática criativa encontra produto, negócio e IA.',

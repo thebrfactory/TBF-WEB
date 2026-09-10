@@ -630,8 +630,67 @@
 .about .label,
 .contact .label { margin-bottom: var(--tbf-space-6); }
 
-/* ─── ABOUT, parte 16 ──────────────────────────────────────────────────── */
-.about { padding-block: var(--tbf-space-12); max-width: 42rem; }
+/* ─── ABOUT + CARREIRA (rodada 8, 10/09/2026) ──────────────────────────────
+   O About era uma coluna só de 42rem. Agora ele divide a faixa com a lista de
+   carreira: mobile empilha (texto primeiro, carreira embaixo), e a partir de
+   1024px viram duas colunas, com a carreira ocupando a metade que estava vazia
+   no desktop. O teto de 42rem sai do bloco e passa a valer só para o TEXTO,
+   que é quem precisa de medida de leitura. */
+.about {
+  padding-block: var(--tbf-space-12);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-10);
+  align-items: start;
+}
+.aboutText { max-width: 42rem; }
+
+/* Uma posição por linha, três informações em escada: período (mono, micro,
+   terciário), cargo (display 800) e empresa (display leve). Sem traço
+   horizontal entre elas, como manda a regra da casa: separa o espaço. */
+.careerList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-5);
+}
+.careerItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.careerPeriod {
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+.careerRole {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 800;
+  font-size: var(--tav-text-body);
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+}
+.careerOrg {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 300;
+  font-size: var(--tav-text-body);
+  line-height: 1.3;
+  color: var(--tbf-text-secondary);
+}
+
+@media (min-width: 1024px) {
+  .about {
+    grid-template-columns: minmax(0, 42rem) minmax(0, 1fr);
+    gap: var(--tbf-space-16);
+  }
+}
 .aboutHeadline {
   font-family: var(--tbf-font-family-display);
   font-weight: 800;
