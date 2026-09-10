@@ -188,6 +188,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'A bandeira abre o caminho. Tudo o mais em Posse vem depois dela.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     // ─── CAPÍTULO 1: PRODUÇÃO.
     { kind: 'word', label: { en: 'PRODUCTION', pt: 'PRODUÇÃO' }, theme: 'dark' },
@@ -203,6 +206,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'A festa é feita à mão, um tocador por vez.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',
@@ -249,6 +255,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'A máscara ali não esconde ninguém. Ela anuncia.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',
@@ -304,6 +313,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'O carro é o palco, e o som é a segunda fantasia.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',
@@ -452,6 +464,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     },
     {
       kind: 'pair',
+      ratio: '2 / 3',
       items: [
         {
           src: '/images/editorial/country-side/06-mouro-azul-montado.webp',
@@ -500,6 +513,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'O gesto que começa tudo: vestir o rosto.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',
@@ -567,6 +583,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     { kind: 'word', label: { en: 'APPROPRIATION', pt: 'APROPRIAÇÃO' }, theme: 'dark' },
     {
       kind: 'pair',
+      ratio: '2 / 3',
       items: [
         {
           src: '/images/editorial/country-side/09-cristao-vermelho-frente.webp',
@@ -656,6 +673,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     },
     {
       kind: 'pair',
+      ratio: '2 / 3',
       items: [
         {
           src: '/images/editorial/country-side/11-cristaos-retrato.webp',
@@ -744,6 +762,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'Tênis por baixo da fantasia. Ninguém ali vê contradição.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',
@@ -798,6 +819,9 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'A última luz, e a festa ainda de pé.',
       },
       credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1365,
+      height: 2048,
     },
     {
       kind: 'lines',

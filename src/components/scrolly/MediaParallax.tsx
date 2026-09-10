@@ -93,12 +93,22 @@ export interface MediaPairItem {
   caption?: string
 }
 
-export function MediaPair({ items }: { items: [MediaPairItem, MediaPairItem] }) {
+export function MediaPair({
+  items,
+  ratio,
+}: {
+  items: [MediaPairItem, MediaPairItem]
+  /** Proporcao do quadro de cada metade. Default 4/3, ver scrolly.css. */
+  ratio?: string
+}) {
   return (
     <div className="scrolly-pair">
       {items.map((item) => (
         <figure key={item.src} className="scrolly-media scrolly-pair__item">
-          <div className="scrolly-media__frame scrolly-pair__frame">
+          <div
+            className="scrolly-media__frame scrolly-pair__frame"
+            style={ratio ? ({ ['--pair-ratio']: ratio } as React.CSSProperties) : undefined}
+          >
             <Image
               src={item.src}
               alt={item.alt}

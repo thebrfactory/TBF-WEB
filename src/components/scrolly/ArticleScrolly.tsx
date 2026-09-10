@@ -170,6 +170,7 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
                 caption: [it.caption?.[lang], it.credit].filter(Boolean).join(' · '),
               })) as [MediaPairItem, MediaPairItem]
             }
+            ratio={block.ratio}
           />
         )
 

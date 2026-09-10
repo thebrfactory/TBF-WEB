@@ -72,6 +72,14 @@ export type ManifestoBlock =
   | {
       kind: 'pair'
       items: [PairImage, PairImage]
+      /**
+       * Proporcao do quadro de cada metade, em sintaxe de `aspect-ratio`
+       * ('2 / 3'). Sem ela o par usa 4/3, que e a proporcao nativa dos dois
+       * renders do Gurgel e nasceu com o recurso. Retrato vertical num quadro
+       * 4/3 perde cabeca e pe, entao todo par de foto em pe passa a sua
+       * propria proporcao aqui (ver .scrolly-pair__frame em scrolly.css).
+       */
+      ratio?: string
     }
 
 export interface PairImage {
