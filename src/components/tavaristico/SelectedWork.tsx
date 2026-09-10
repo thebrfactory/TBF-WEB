@@ -176,6 +176,21 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
 
   const active = ventures.find((v) => v.index === openIndex) ?? null
 
+  // Escolhe o idioma do overlay aqui (pedido do fundador 10/09/2026: "PT/EN
+  // de tudo, inclusive stories"). `StoryFrame.overlay` chega bilingue do
+  // dado; o StoryPlayer so recebe string pronta, sem nocao de idioma.
+  const activeFrames = active
+    ? active.frames.map((f) => ({
+        ...f,
+        overlay: f.overlay
+          ? {
+              title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
+              kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
+            }
+          : undefined,
+      }))
+    : []
+
   return (
     <div className={styles.ventureList}>
       {ventures.map((v) => (
@@ -195,8 +210,9 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
         <StoryModal
           // Correcao 10/09/2026: era UM quadro so (a marca em fundo preto).
           // Agora e a sequencia que o proprio dado carrega, com a sobreposicao
-          // de texto de cada quadro. Ver `Venture.frames` em _data.ts.
-          frames={active.frames}
+          // de texto de cada quadro no idioma da pagina. Ver `Venture.frames`
+          // em _data.ts e `activeFrames` acima.
+          frames={activeFrames}
           handle={active.name}
           label={`${OPEN_LABEL[lang]}: ${active.name}. ${active.description}`}
           onClose={close}

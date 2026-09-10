@@ -230,7 +230,14 @@ export interface StoryFrame {
   src: string
   alt: string
   role: string
-  overlay?: { title: string; kicker?: string }
+  /**
+   * Bilíngue desde 10/09/2026: o pedido do fundador foi "PT/EN de tudo,
+   * inclusive stories", e o overlay tinha nascido só em inglês na leva da
+   * noite anterior. Mesmo par EN/PT de `Campaign.descriptionEN/PT` acima.
+   * Quem escolhe o idioma é o componente que monta os frames (`lang` já
+   * chega até ele); o StoryPlayer continua recebendo string pronta.
+   */
+  overlay?: { titleEN: string; titlePT: string; kickerEN?: string; kickerPT?: string }
 }
 
 export interface Venture {
@@ -282,8 +289,10 @@ export const VENTURES: Venture[] = [
         alt: 'CRIVO, capa do deck: Autopilot de Eventos.',
         role: 'Deck cover',
         overlay: {
-          kicker: 'AI AGENTS · PRODUCT',
-          title: 'An autopilot for corporate events. It researches, verifies and ranks suppliers, and hands back the decision.',
+          kickerEN: 'AI AGENTS · PRODUCT',
+          kickerPT: 'AGENTES DE IA · PRODUTO',
+          titleEN: 'An autopilot for corporate events. It researches, verifies and ranks suppliers, and hands back the decision.',
+          titlePT: 'Piloto automático para eventos corporativos. Pesquisa, verifica, ranqueia fornecedor e devolve a decisão pronta.',
         },
       },
       {
@@ -291,8 +300,10 @@ export const VENTURES: Venture[] = [
         alt: 'Slide do problema: R$ 400 mil desaparecidos com uma produtora.',
         role: 'The problem',
         overlay: {
-          kicker: 'THE PROBLEM',
-          title: 'Hiring an event supplier in Brazil is still an act of faith. R$400k once vanished with one producer.',
+          kickerEN: 'THE PROBLEM',
+          kickerPT: 'O PROBLEMA',
+          titleEN: 'Hiring an event supplier in Brazil is still an act of faith. R$400k once vanished with one producer.',
+          titlePT: 'Contratar fornecedor de evento no Brasil ainda é ato de fé. Uma vez, R$400 mil sumiram com uma produtora.',
         },
       },
       {
@@ -300,8 +311,10 @@ export const VENTURES: Venture[] = [
         alt: 'Slide da arquitetura: quatro agentes, uma chave de API.',
         role: 'How it works',
         overlay: {
-          kicker: 'HOW IT WORKS',
-          title: 'Four agents, one API key. The score is deterministic code, not a model guessing a number.',
+          kickerEN: 'HOW IT WORKS',
+          kickerPT: 'COMO FUNCIONA',
+          titleEN: 'Four agents, one API key. The score is deterministic code, not a model guessing a number.',
+          titlePT: 'Quatro agentes, uma chave de API. A nota sai de código determinístico, não de um modelo chutando número.',
         },
       },
       {
@@ -309,8 +322,10 @@ export const VENTURES: Venture[] = [
         alt: 'Slide dos vereditos: verificado, atencao, evitar.',
         role: 'The verdict',
         overlay: {
-          kicker: 'THE VERDICT',
-          title: 'Every supplier leaves with a verdict, and with the honest list of what could not be checked.',
+          kickerEN: 'THE VERDICT',
+          kickerPT: 'O VEREDITO',
+          titleEN: 'Every supplier leaves with a verdict, and with the honest list of what could not be checked.',
+          titlePT: 'Todo fornecedor sai com um veredito, e com a lista honesta do que não deu para checar.',
         },
       },
       {
@@ -318,8 +333,10 @@ export const VENTURES: Venture[] = [
         alt: 'Slide de valor: de 20 a 40 horas para cerca de 15 minutos.',
         role: 'The value',
         overlay: {
-          kicker: 'WINNER · ATON PRAXIS HACKATHON, 2026',
-          title: 'From forty hours of WhatsApp to fifteen minutes of decision, with clickable evidence on every line.',
+          kickerEN: 'WINNER · ATON PRAXIS HACKATHON, 2026',
+          kickerPT: 'VENCEDOR · ATON PRAXIS HACKATHON, 2026',
+          titleEN: 'From forty hours of WhatsApp to fifteen minutes of decision, with clickable evidence on every line.',
+          titlePT: 'De quarenta horas de WhatsApp a quinze minutos de decisão, com prova clicável em cada linha.',
         },
       },
     ],
@@ -341,8 +358,10 @@ export const VENTURES: Venture[] = [
         alt: 'Peça de abertura da campanha VERÃOZÃO, com o estandarte e a identidade do ÔÀSIS.',
         role: 'Key visual',
         overlay: {
-          kicker: 'Ô DE CASA HOSTEL · SUMMER 2026',
-          title: 'When a season stops being a campaign and becomes a scene.',
+          kickerEN: 'Ô DE CASA HOSTEL · SUMMER 2026',
+          kickerPT: 'Ô DE CASA HOSTEL · VERÃO 2026',
+          titleEN: 'When a season stops being a campaign and becomes a scene.',
+          titlePT: 'Quando uma temporada para de ser campanha e vira cena.',
         },
       },
       {
@@ -350,8 +369,10 @@ export const VENTURES: Venture[] = [
         alt: 'Story com o estandarte do Ô de Casa levantado na rua, em dia de sol.',
         role: 'The street',
         overlay: {
-          kicker: 'THE STREET',
-          title: 'The banner left the hostel and took the block with it.',
+          kickerEN: 'THE STREET',
+          kickerPT: 'A RUA',
+          titleEN: 'The banner left the hostel and took the block with it.',
+          titlePT: 'O estandarte saiu do hostel e levou o quarteirão junto.',
         },
       },
       {
@@ -359,8 +380,10 @@ export const VENTURES: Venture[] = [
         alt: 'Story do público de braços erguidos na ativação de rua.',
         role: 'Audience',
         overlay: {
-          kicker: 'THE CROWD',
-          title: 'Nobody was invited to watch. They were invited to be in it.',
+          kickerEN: 'THE CROWD',
+          kickerPT: 'A GALERA',
+          titleEN: 'Nobody was invited to watch. They were invited to be in it.',
+          titlePT: 'Ninguém foi chamado para assistir. Foi chamado para estar dentro.',
         },
       },
       {
@@ -368,8 +391,10 @@ export const VENTURES: Venture[] = [
         alt: 'Story da festa de espuma dentro do hostel.',
         role: 'Experience',
         overlay: {
-          kicker: 'THE EXPERIENCE',
-          title: 'Foam, bass and a February that ran every single day.',
+          kickerEN: 'THE EXPERIENCE',
+          kickerPT: 'A EXPERIÊNCIA',
+          titleEN: 'Foam, bass and a February that ran every single day.',
+          titlePT: 'Espuma, grave e um fevereiro que não parou um dia sequer.',
         },
       },
       {
@@ -377,8 +402,10 @@ export const VENTURES: Venture[] = [
         alt: 'Story de fecho, com duas pessoas rindo dentro do hostel.',
         role: 'What remains',
         overlay: {
-          kicker: 'WHAT REMAINS',
-          title: 'It reached open TV in January. It reached the hallway every night.',
+          kickerEN: 'WHAT REMAINS',
+          kickerPT: 'O QUE FICOU',
+          titleEN: 'It reached open TV in January. It reached the hallway every night.',
+          titlePT: 'Chegou na TV aberta em janeiro. Chegou no corredor todas as noites.',
         },
       },
     ],
@@ -400,8 +427,10 @@ export const VENTURES: Venture[] = [
         alt: 'A marca .TBF. isolada em fundo preto.',
         role: 'The brand',
         overlay: {
-          kicker: 'AI · BRAND · PRODUCT',
-          title: 'A brand always knows more than it manages to repeat.',
+          kickerEN: 'AI · BRAND · PRODUCT',
+          kickerPT: 'IA · MARCA · PRODUTO',
+          titleEN: 'A brand always knows more than it manages to repeat.',
+          titlePT: 'Toda marca sabe mais do que consegue repetir.',
         },
       },
       {
@@ -409,8 +438,10 @@ export const VENTURES: Venture[] = [
         alt: 'Grade com os ativos gráficos da marca, repetidos como prancha de sistema.',
         role: 'The knowledge',
         overlay: {
-          kicker: 'THE KNOWLEDGE',
-          title: 'Voice, rules and assets stop living inside a PDF nobody opens.',
+          kickerEN: 'THE KNOWLEDGE',
+          kickerPT: 'O CONHECIMENTO',
+          titleEN: 'Voice, rules and assets stop living inside a PDF nobody opens.',
+          titlePT: 'Voz, regra e ativo param de morar dentro de um PDF que ninguém abre.',
         },
       },
       {
@@ -418,8 +449,10 @@ export const VENTURES: Venture[] = [
         alt: 'Diagrama abstrato do agente: nós ligados em esteira.',
         role: 'The agent',
         overlay: {
-          kicker: 'THE AGENT',
-          title: 'The system reads the brand before it writes a single line.',
+          kickerEN: 'THE AGENT',
+          kickerPT: 'O AGENTE',
+          titleEN: 'The system reads the brand before it writes a single line.',
+          titlePT: 'O sistema lê a marca antes de escrever a primeira linha.',
         },
       },
       {
@@ -427,8 +460,10 @@ export const VENTURES: Venture[] = [
         alt: 'A mesma peça em variações, sugerindo produção em série.',
         role: 'The output',
         overlay: {
-          kicker: 'THE OUTPUT',
-          title: 'Marketing that comes out on brand because it could not come out any other way.',
+          kickerEN: 'THE OUTPUT',
+          kickerPT: 'O RESULTADO',
+          titleEN: 'Marketing that comes out on brand because it could not come out any other way.',
+          titlePT: 'Marketing que nasce dentro da marca, porque não sabe nascer de outro jeito.',
         },
       },
     ],
@@ -452,8 +487,10 @@ export const VENTURES: Venture[] = [
         alt: 'Desfile em andamento, a fila de modelos na passarela.',
         role: 'Runway',
         overlay: {
-          kicker: 'FASHION · CULTURE · CREATIVE DIRECTION',
-          title: 'Every runway tells a story. Every collection carries a vision.',
+          kickerEN: 'FASHION · CULTURE · CREATIVE DIRECTION',
+          kickerPT: 'MODA · CULTURA · DIREÇÃO CRIATIVA',
+          titleEN: 'Every runway tells a story. Every collection carries a vision.',
+          titlePT: 'Toda passarela conta uma história. Toda coleção carrega uma visão.',
         },
       },
       {
@@ -461,8 +498,10 @@ export const VENTURES: Venture[] = [
         alt: 'Bastidor do desfile, grupo de pessoas em looks de estampa.',
         role: 'Backstage',
         overlay: {
-          kicker: 'THE COLLECTIVE',
-          title: 'Fashion is not an industry. Fashion is a language.',
+          kickerEN: 'THE COLLECTIVE',
+          kickerPT: 'O COLETIVO',
+          titleEN: 'Fashion is not an industry. Fashion is a language.',
+          titlePT: 'Moda não é indústria. Moda é linguagem.',
         },
       },
       {
@@ -470,8 +509,10 @@ export const VENTURES: Venture[] = [
         alt: 'Retrato em luz azul, perfil de um convidado no evento.',
         role: 'The people',
         overlay: {
-          kicker: 'WHAT WE DOCUMENT',
-          title: 'The people, the movements and the stories shaping the next generation.',
+          kickerEN: 'WHAT WE DOCUMENT',
+          kickerPT: 'O QUE DOCUMENTAMOS',
+          titleEN: 'The people, the movements and the stories shaping the next generation.',
+          titlePT: 'As pessoas, os movimentos e as histórias que moldam a próxima geração.',
         },
       },
       {
@@ -479,8 +520,10 @@ export const VENTURES: Venture[] = [
         alt: 'Silhuetas em luz azul, a festa depois do desfile.',
         role: 'The night',
         overlay: {
-          kicker: 'SÃO PAULO, MADE FOR THE WORLD',
-          title: 'Music. Fashion. Film. In Brazilian Bass.',
+          kickerEN: 'SÃO PAULO, MADE FOR THE WORLD',
+          kickerPT: 'SÃO PAULO, FEITA PARA O MUNDO',
+          titleEN: 'Music. Fashion. Film. In Brazilian Bass.',
+          titlePT: 'Música. Moda. Filme. Em Brazilian Bass.',
         },
       },
     ],
@@ -521,8 +564,10 @@ export const CAMPAIGNS: Campaign[] = [
         alt: 'DEZOITÔ, capa da campanha',
         role: 'Campaign key visual',
         overlay: {
-          kicker: '@ODECASAHOSTEL · 18 YEARS',
-          title: 'Eighteen years of the most awarded hostel in Brazil.',
+          kickerEN: '@ODECASAHOSTEL · 18 YEARS',
+          kickerPT: '@ODECASAHOSTEL · 18 ANOS',
+          titleEN: 'Eighteen years of the most awarded hostel in Brazil.',
+          titlePT: 'Dezoito anos do hostel mais premiado do Brasil.',
         },
       },
       {
@@ -530,8 +575,10 @@ export const CAMPAIGNS: Campaign[] = [
         alt: 'DEZOITÔ, frame 1',
         role: 'Lifestyle photography',
         overlay: {
-          kicker: 'GEN Z LIFESTYLE',
-          title: 'A meeting point for cultures, told by the people who slept there.',
+          kickerEN: 'GEN Z LIFESTYLE',
+          kickerPT: 'ESTILO DE VIDA GERAÇÃO Z',
+          titleEN: 'A meeting point for cultures, told by the people who slept there.',
+          titlePT: 'Um ponto de encontro de culturas, contado por quem dormiu lá.',
         },
       },
       {
@@ -539,8 +586,10 @@ export const CAMPAIGNS: Campaign[] = [
         alt: 'DEZOITÔ, frame 2',
         role: 'Lifestyle photography',
         overlay: {
-          kicker: 'THE CAMPAIGN',
-          title: 'DEZOITÔ. A birthday that became a season.',
+          kickerEN: 'THE CAMPAIGN',
+          kickerPT: 'A CAMPANHA',
+          titleEN: 'DEZOITÔ. A birthday that became a season.',
+          titlePT: 'DEZOITÔ. Um aniversário que virou temporada.',
         },
       },
     ],

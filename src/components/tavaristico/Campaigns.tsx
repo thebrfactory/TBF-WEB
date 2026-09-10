@@ -108,6 +108,20 @@ export function Campaigns({
     ? `${label}: ${active.name}${description ? `. ${description}` : ''}`
     : ''
 
+  // Mesma escolha de idioma do overlay que o SelectedWork faz (pedido do
+  // fundador 10/09/2026: "PT/EN de tudo, inclusive stories").
+  const activeFrames = active
+    ? active.frames.map((f) => ({
+        ...f,
+        overlay: f.overlay
+          ? {
+              title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
+              kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
+            }
+          : undefined,
+      }))
+    : []
+
   return (
     <div className={styles.wrap}>
       <div className={styles.row}>
@@ -142,7 +156,7 @@ export function Campaigns({
 
       {active ? (
         <StoryModal
-          frames={active.frames}
+          frames={activeFrames}
           handle={active.client}
           label={modalLabel}
           onClose={close}
