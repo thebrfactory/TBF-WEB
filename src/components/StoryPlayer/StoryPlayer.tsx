@@ -49,6 +49,24 @@ export interface StoryItem {
   alt: string
   /** O que a peça prova. Vira `alt`/`title` da miniatura, nunca tarja na foto. */
   role: string
+  /**
+   * 🔴 EXCEÇÃO AO "QUADRO LISO", ABERTA PELO FUNDADOR EM 10/09/2026, com a
+   * referência na mão: o mesmo tratamento do nome no hero do Tavarístico,
+   * texto branco sobre um degradê preto que sobe da base. O que ele proibiu
+   * em 14/08 foi a TARJA AUTOMÁTICA de legenda (o `role` impresso em toda
+   * foto, que ele chamou de poluição). Isto aqui é o contrário: é opcional,
+   * é por quadro, e é COMPOSIÇÃO, o texto que o story existe para dizer.
+   * Quadro sem `overlay` continua liso, exatamente como antes.
+   *
+   * Só aparece no quadro grande. A miniatura nunca recebe texto: lá o espaço
+   * é de 60px e a frase viraria borrão.
+   */
+  overlay?: {
+    /** A frase. Uma ideia por quadro, curta o bastante para 2 linhas. */
+    title: string
+    /** Linha de apoio, em caixa alta e miúda, acima do título. Opcional. */
+    kicker?: string
+  }
 }
 
 interface StoryDeckProps {
@@ -211,6 +229,27 @@ export function StoryDeck({
               encostava direto no fim do quadro sem assentar. */}
           <span className={styles.shadeTop} aria-hidden="true" />
           <span className={styles.shadeBottom} aria-hidden="true" />
+
+          {/* SOBREPOSIÇÃO DE TEXTO, quando o quadro pede (ver StoryItem.overlay).
+              Fica dentro do `.frame` para herdar o recorte e o raio, e some
+              junto com a foto na mesma transição de opacidade: sem isso o
+              texto do quadro anterior atravessaria a troca. `aria-hidden`
+              porque a mesma frase já está no `alt` da peça e no rótulo da
+              miniatura: lida duas vezes, viraria eco no leitor de tela. */}
+          {items.map((item, idx) =>
+            item.overlay ? (
+              <span
+                key={`ov-${item.src}`}
+                aria-hidden="true"
+                className={`${styles.overlay}${idx === i ? ` ${styles.overlayOn}` : ''}`}
+              >
+                {item.overlay.kicker ? (
+                  <span className={styles.overlayKicker}>{item.overlay.kicker}</span>
+                ) : null}
+                <span className={styles.overlayTitle}>{item.overlay.title}</span>
+              </span>
+            ) : null
+          )}
         </div>
 
         {/* PASSADORES (pedido do fundador 2026-08-14). Ficam sobre as beiradas

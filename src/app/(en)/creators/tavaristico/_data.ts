@@ -40,6 +40,8 @@ export interface Work {
 }
 
 const base = '/images/creators/tavaristico'
+// Quadros de story, produzidos em 10/09/2026 (1080x1920 nativos).
+const stories = '/images/creators/tavaristico/stories'
 
 export const IDENTITY = {
   name: 'Felipe Tavares',
@@ -218,6 +220,19 @@ export const isProv = (w: Work, f: ProvField): boolean => !!w.provisional?.inclu
 
 export type VentureWeight = 'primary' | 'secondary'
 
+/**
+ * Um quadro de story. Mesma forma do `StoryItem` do StoryPlayer, declarada
+ * aqui para o arquivo de dados nao importar componente (regra: dado nao
+ * depende de tela). `overlay` e a sobreposicao de texto branco sobre degrade
+ * preto, aberta pelo fundador em 10/09/2026; quadro sem ela continua liso.
+ */
+export interface StoryFrame {
+  src: string
+  alt: string
+  role: string
+  overlay?: { title: string; kicker?: string }
+}
+
 export interface Venture {
   index: string
   name: string
@@ -234,10 +249,18 @@ export interface Venture {
   cover: string
   /** alt da capa */
   coverAlt: string
-  /** quadro 9:16 do story: a marca centrada em fundo preto, com respiro. O
-   * `cover` sozinho, esticado no quadro vertical, virava um logo gigante
-   * cortado. */
-  story: string
+  /**
+   * A SEQUENCIA de quadros 9:16 do story (10/09/2026). Antes era UM quadro so,
+   * a marca centrada em fundo preto: abria o story e nao dizia nada. Pedido do
+   * fundador: "para cada projeto elabore uma sequencia curta de stories falando
+   * sobre e com imagens". Cada quadro leva imagem propria e uma frase branca
+   * sobre degrade, no mesmo tratamento do nome no hero desta pagina.
+   *
+   * Texto em ingles nos dois idiomas, seguindo o que ja valia para `name`,
+   * `category` e `description` deste mesmo dado: nome de projeto e territorio
+   * nao se traduzem aqui.
+   */
+  frames: StoryFrame[]
 }
 
 export const VENTURES: Venture[] = [
@@ -248,8 +271,58 @@ export const VENTURES: Venture[] = [
     description: 'AI-powered supplier intelligence for corporate events.',
     weight: 'primary',
     cover: `${base}/ventures/crivo.webp`,
-    story: `${base}/ventures/story-crivo.webp`,
     coverAlt: 'CRIVO',
+    // Os cinco quadros saem do DECK V3 do proprio projeto (repo privado
+    // `thebrfactory/crivo-pitch`, o link que ele ja tinha): cada frame e um
+    // slide real da apresentacao, montado no formato vertical. Nenhum numero
+    // aqui e meu: todos estao no deck, com fonte declarada la.
+    frames: [
+      {
+        src: `${stories}/crivo/01-capa.webp`,
+        alt: 'CRIVO, capa do deck: Autopilot de Eventos.',
+        role: 'Deck cover',
+        overlay: {
+          kicker: 'AI AGENTS · PRODUCT',
+          title: 'An autopilot for corporate events. It researches, verifies and ranks suppliers, and hands back the decision.',
+        },
+      },
+      {
+        src: `${stories}/crivo/02-dor.webp`,
+        alt: 'Slide do problema: R$ 400 mil desaparecidos com uma produtora.',
+        role: 'The problem',
+        overlay: {
+          kicker: 'THE PROBLEM',
+          title: 'Hiring an event supplier in Brazil is still an act of faith. R$400k once vanished with one producer.',
+        },
+      },
+      {
+        src: `${stories}/crivo/03-agentes.webp`,
+        alt: 'Slide da arquitetura: quatro agentes, uma chave de API.',
+        role: 'How it works',
+        overlay: {
+          kicker: 'HOW IT WORKS',
+          title: 'Four agents, one API key. The score is deterministic code, not a model guessing a number.',
+        },
+      },
+      {
+        src: `${stories}/crivo/04-veredito.webp`,
+        alt: 'Slide dos vereditos: verificado, atencao, evitar.',
+        role: 'The verdict',
+        overlay: {
+          kicker: 'THE VERDICT',
+          title: 'Every supplier leaves with a verdict, and with the honest list of what could not be checked.',
+        },
+      },
+      {
+        src: `${stories}/crivo/05-valor.webp`,
+        alt: 'Slide de valor: de 20 a 40 horas para cerca de 15 minutos.',
+        role: 'The value',
+        overlay: {
+          kicker: 'WINNER · ATON PRAXIS HACKATHON, 2026',
+          title: 'From forty hours of WhatsApp to fifteen minutes of decision, with clickable evidence on every line.',
+        },
+      },
+    ],
   },
   {
     index: '02',
@@ -258,8 +331,57 @@ export const VENTURES: Venture[] = [
     description: 'A summer campaign for Ô de Casa, the most awarded Brazilian hostel.',
     weight: 'primary',
     cover: `${base}/ventures/veraozao.webp`,
-    story: `${base}/ventures/story-veraozao.webp`,
     coverAlt: 'VERÃOZÃO, Ô de Casa',
+    // As pecas sao as MESMAS do case do /pitch (`/images/pitch/veraozao/`),
+    // apontadas, nao copiadas (regra 4). Sao stories nativos 1080x1920 que a
+    // .TBF. publicou em fevereiro: ja nasceram neste formato.
+    frames: [
+      {
+        src: '/images/pitch/veraozao/story-01-chave.webp',
+        alt: 'Peça de abertura da campanha VERÃOZÃO, com o estandarte e a identidade do ÔÀSIS.',
+        role: 'Key visual',
+        overlay: {
+          kicker: 'Ô DE CASA HOSTEL · SUMMER 2026',
+          title: 'When a season stops being a campaign and becomes a scene.',
+        },
+      },
+      {
+        src: '/images/pitch/veraozao/story-03-rua.webp',
+        alt: 'Story com o estandarte do Ô de Casa levantado na rua, em dia de sol.',
+        role: 'The street',
+        overlay: {
+          kicker: 'THE STREET',
+          title: 'The banner left the hostel and took the block with it.',
+        },
+      },
+      {
+        src: '/images/pitch/veraozao/story-06-publico.webp',
+        alt: 'Story do público de braços erguidos na ativação de rua.',
+        role: 'Audience',
+        overlay: {
+          kicker: 'THE CROWD',
+          title: 'Nobody was invited to watch. They were invited to be in it.',
+        },
+      },
+      {
+        src: '/images/pitch/veraozao/story-07-experiencia.webp',
+        alt: 'Story da festa de espuma dentro do hostel.',
+        role: 'Experience',
+        overlay: {
+          kicker: 'THE EXPERIENCE',
+          title: 'Foam, bass and a February that ran every single day.',
+        },
+      },
+      {
+        src: '/images/pitch/veraozao/story-12-fecho.webp',
+        alt: 'Story de fecho, com duas pessoas rindo dentro do hostel.',
+        role: 'What remains',
+        overlay: {
+          kicker: 'WHAT REMAINS',
+          title: 'It reached open TV in January. It reached the hallway every night.',
+        },
+      },
+    ],
   },
   {
     index: '03',
@@ -268,8 +390,48 @@ export const VENTURES: Venture[] = [
     description: "An agentic brand system that connects a company's brand knowledge to its marketing workflow.",
     weight: 'primary',
     cover: '/brand/TBF-AVATAR.webp',
-    story: `${base}/ventures/story-brandsystem.webp`,
     coverAlt: 'BRANDSYSTEM, .TBF. inc',
+    // Nao ha fotografia de um sistema de marca: os quatro quadros sao pecas
+    // desenhadas com os proprios ativos da `.TBF.` (`public/brand/`), na
+    // paleta da casa.
+    frames: [
+      {
+        src: `${stories}/brandsystem/01-marca.webp`,
+        alt: 'A marca .TBF. isolada em fundo preto.',
+        role: 'The brand',
+        overlay: {
+          kicker: 'AI · BRAND · PRODUCT',
+          title: 'A brand always knows more than it manages to repeat.',
+        },
+      },
+      {
+        src: `${stories}/brandsystem/02-conhecimento.webp`,
+        alt: 'Grade com os ativos gráficos da marca, repetidos como prancha de sistema.',
+        role: 'The knowledge',
+        overlay: {
+          kicker: 'THE KNOWLEDGE',
+          title: 'Voice, rules and assets stop living inside a PDF nobody opens.',
+        },
+      },
+      {
+        src: `${stories}/brandsystem/03-agente.webp`,
+        alt: 'Diagrama abstrato do agente: nós ligados em esteira.',
+        role: 'The agent',
+        overlay: {
+          kicker: 'THE AGENT',
+          title: 'The system reads the brand before it writes a single line.',
+        },
+      },
+      {
+        src: `${stories}/brandsystem/04-fluxo.webp`,
+        alt: 'A mesma peça em variações, sugerindo produção em série.',
+        role: 'The output',
+        overlay: {
+          kicker: 'THE OUTPUT',
+          title: 'Marketing that comes out on brand because it could not come out any other way.',
+        },
+      },
+    ],
   },
   {
     index: '04',
@@ -278,8 +440,50 @@ export const VENTURES: Venture[] = [
     description: 'Fashion, image and cultural production.',
     weight: 'primary',
     cover: `${base}/ventures/runway-untd.webp`,
-    story: `${base}/ventures/story-runway-untd.webp`,
     coverAlt: '.RUNWAY UNTD COLLECTIVE.',
+    // Imagem: o corpo de trabalho do SPFW · THE PARADISE, que o proprio WORKS
+    // ja declara ser "o mesmo corpo de trabalho de Runway Untd Collective".
+    // Texto: a base e o site da label, `/labels/runwayunited`, dicionario em
+    // src/content/i18n/pages/labels/runwayunited.ts. Nada foi inventado aqui:
+    // as frases sao as da propria label, encurtadas para caber num quadro.
+    frames: [
+      {
+        src: `${stories}/runway-untd/01-passarela.webp`,
+        alt: 'Desfile em andamento, a fila de modelos na passarela.',
+        role: 'Runway',
+        overlay: {
+          kicker: 'FASHION · CULTURE · CREATIVE DIRECTION',
+          title: 'Every runway tells a story. Every collection carries a vision.',
+        },
+      },
+      {
+        src: `${stories}/runway-untd/02-bastidor.webp`,
+        alt: 'Bastidor do desfile, grupo de pessoas em looks de estampa.',
+        role: 'Backstage',
+        overlay: {
+          kicker: 'THE COLLECTIVE',
+          title: 'Fashion is not an industry. Fashion is a language.',
+        },
+      },
+      {
+        src: `${stories}/runway-untd/03-retrato.webp`,
+        alt: 'Retrato em luz azul, perfil de um convidado no evento.',
+        role: 'The people',
+        overlay: {
+          kicker: 'WHAT WE DOCUMENT',
+          title: 'The people, the movements and the stories shaping the next generation.',
+        },
+      },
+      {
+        src: `${stories}/runway-untd/04-noite.webp`,
+        alt: 'Silhuetas em luz azul, a festa depois do desfile.',
+        role: 'The night',
+        overlay: {
+          kicker: 'SÃO PAULO, MADE FOR THE WORLD',
+          title: 'Music. Fashion. Film. In Brazilian Bass.',
+        },
+      },
+    ],
   },
 ]
 
@@ -296,7 +500,7 @@ export interface Campaign {
   client: string
   descriptionEN: string
   descriptionPT: string
-  frames: { src: string; alt: string; role: string }[]
+  frames: StoryFrame[]
 }
 
 export const CAMPAIGNS: Campaign[] = [
@@ -308,10 +512,37 @@ export const CAMPAIGNS: Campaign[] = [
       '18 years of the most awarded Brazilian hostel. A campaign showing the gen Z lifestyle of a place that is a meeting point for cultures around the globe.',
     descriptionPT:
       '18 anos do hostel brasileiro mais premiado. Uma campanha que mostra o estilo de vida da geracao Z num lugar que e ponto de encontro de culturas ao redor do mundo.',
+    // Sobreposicao de texto tambem aqui, por pedido de 10/09/2026 ("aproveite
+    // para fazer isso em todos os outros stories tambem, incluindo das
+    // campanhas").
     frames: [
-      { src: `${base}/o-18-years/cover.webp`, alt: 'DEZOITÔ, capa da campanha', role: 'Campaign key visual' },
-      { src: `${base}/o-18-years/g1.webp`, alt: 'DEZOITÔ, frame 1', role: 'Lifestyle photography' },
-      { src: `${base}/o-18-years/g2.webp`, alt: 'DEZOITÔ, frame 2', role: 'Lifestyle photography' },
+      {
+        src: `${base}/o-18-years/cover.webp`,
+        alt: 'DEZOITÔ, capa da campanha',
+        role: 'Campaign key visual',
+        overlay: {
+          kicker: '@ODECASAHOSTEL · 18 YEARS',
+          title: 'Eighteen years of the most awarded hostel in Brazil.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/g1.webp`,
+        alt: 'DEZOITÔ, frame 1',
+        role: 'Lifestyle photography',
+        overlay: {
+          kicker: 'GEN Z LIFESTYLE',
+          title: 'A meeting point for cultures, told by the people who slept there.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/g2.webp`,
+        alt: 'DEZOITÔ, frame 2',
+        role: 'Lifestyle photography',
+        overlay: {
+          kicker: 'THE CAMPAIGN',
+          title: 'DEZOITÔ. A birthday that became a season.',
+        },
+      },
     ],
   },
 ]

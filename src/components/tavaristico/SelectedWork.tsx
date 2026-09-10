@@ -193,7 +193,10 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
 
       {active ? (
         <StoryModal
-          frames={[{ src: active.story, alt: active.coverAlt, role: active.category.join(' · ') }]}
+          // Correcao 10/09/2026: era UM quadro so (a marca em fundo preto).
+          // Agora e a sequencia que o proprio dado carrega, com a sobreposicao
+          // de texto de cada quadro. Ver `Venture.frames` em _data.ts.
+          frames={active.frames}
           handle={active.name}
           label={`${OPEN_LABEL[lang]}: ${active.name}. ${active.description}`}
           onClose={close}
