@@ -116,23 +116,26 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
             lado do quadrado (pedido do fundador). No mobile continua
             empilhada embaixo da capa. */}
         <div className={styles.heroBody}>
-          {/* Lockup em UMA linha só: cargo e representação na mesma frase.
-              Correção 10/09/2026 (rodada 5, item 3): a coluna virou 3 grupos
-              (topo, meio, base) distribuídos por justify-content:
-              space-between em desktop (ver tavaristico.module.css,
-              .heroBody). Frase e localização seguem juntas, formando o
-              grupo do meio. */}
-          <RepresentedBy lang={lang} withRole />
-
+          {/* Correção 10/09/2026 (rodada 7): a coluna virou DOIS grupos. Em
+              cima a entrada no contraste da referência que ele mandou (bold
+              caixa alta + thin minúsculo embaixo); embaixo o lockup
+              "represented by" colado na linha de localização, que era onde
+              ele queria ver o cargo. */}
           <div className={styles.heroBodyMiddle}>
-            <p className={styles.heroStatement}>{t.index.heroStatement}</p>
+            <div>
+              <p className={styles.heroHeadline}>{t.index.heroHeadline}</p>
+              <p className={styles.heroStatement}>{t.index.heroStatement}</p>
+            </div>
 
-            {/* Localização em uma linha, mesma fonte e mesmo tamanho da linha
-                do lockup acima, e alinhada com o texto dele (por isso o recuo
-                da largura do selo). */}
-            <p className={styles.heroLocation}>
-              {t.index.locationCity} {t.index.locationOrigin}
-            </p>
+            <div className={styles.heroCredit}>
+              <RepresentedBy lang={lang} withRole />
+              {/* Localização em uma linha, mesma fonte e mesmo tamanho da linha
+                  do lockup acima, e alinhada com o texto dele (por isso o recuo
+                  da largura do selo). */}
+              <p className={styles.heroLocation}>
+                {t.index.locationCity} {t.index.locationOrigin}
+              </p>
+            </div>
           </div>
 
           <SocialIcons links={socialLinks} className={styles.heroSocial} />

@@ -36,8 +36,8 @@
 
    O reel corre de ponta a ponta, fora do `.container`, logo abaixo da migalha.
    RÁPIDO de propósito (18s contra os 42s da esteira do rodapé da página): a
-   velocidade é o argumento, ela diz que existe volume de material. Ele para no
-   hover, que é o que deixa alguém olhar um quadro específico.
+   velocidade é o argumento, ela diz que existe volume de material. NÃO para no
+   hover desde 10/09/2026 (ver StoryPlayer.module.css, `.belt`).
 
    Quadro 4/5, não 9/16: aqui as peças são FOTOGRAFIA, e as catorze têm
    proporções nativas diferentes. O 4/5 é o recorte que trata retrato e paisagem

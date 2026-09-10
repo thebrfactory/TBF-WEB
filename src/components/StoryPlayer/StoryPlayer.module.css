@@ -468,8 +468,10 @@
   to   { transform: translateX(-50%); }
 }
 
-/* Parar no hover é o que deixa alguém OLHAR uma miniatura específica. */
-.belt:hover .beltTrack { animation-play-state: paused; }
+/* SEM PAUSA NO HOVER (ordem do fundador, 10/09/2026). A esteira parava quando
+   o mouse passava por cima, e no desktop o mouse passa por cima o tempo todo:
+   a esteira vivia congelada, que é o oposto do que ela existe para dizer. Quem
+   quer olhar um quadro específico abre a matéria, não a tira. */
 
 .beltItem {
   flex: 0 0 auto;

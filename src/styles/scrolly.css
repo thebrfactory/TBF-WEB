@@ -650,6 +650,27 @@
    MEDIA PARALLAX
    ============================================================================= */
 
+/* =============================================================================
+   ESTEIRA DE ABERTURA DA MATÉRIA (10/09/2026)
+   -----------------------------------------------------------------------------
+   Mesma peça do reel de /creators/tavaristico/hospitality (componente MediaBelt,
+   StoryPlayer.module.css). Aqui ela é do MOTOR, não de uma matéria: entra logo
+   depois da capa em toda matéria que tenha foto suficiente.
+
+   Quadro 4/5 e não 9/16, pelo mesmo motivo do reel da proposta: as fotos têm
+   proporções nativas diferentes, e o 4/5 trata retrato e paisagem com o mesmo
+   respeito. Rápida (18s), e sem pausa no hover.
+   ============================================================================= */
+.scrolly-reel {
+  --belt-w: clamp(9rem, 26vw, 15rem);
+  --belt-s: 18s;
+  margin-block: var(--tbf-space-10) var(--tbf-space-16);
+}
+
+.scrolly-reel img {
+  aspect-ratio: 4 / 5;
+}
+
 .scrolly-media {
   margin-block: var(--tbf-space-16);
 }

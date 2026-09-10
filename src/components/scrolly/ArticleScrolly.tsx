@@ -27,6 +27,7 @@ import {
   MediaPair,
 } from '@/components/scrolly'
 import type { MediaPairItem } from '@/components/scrolly'
+import { MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import type { Lang } from '@/lib/i18n'
 
@@ -56,6 +57,20 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
         image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
         lang={lang}
       />
+      {/* ESTEIRA DE ABERTURA (10/09/2026, pedido do fundador com a referência
+          na mão: o reel de /creators/tavaristico/hospitality). Vive AQUI, na
+          raiz do motor, e não numa matéria: toda matéria que tiver foto ganha
+          a tira, sem ninguém ter que lembrar de montá-la. As fotos são as da
+          própria matéria, colhidas dos blocos `image` e `pair`, então a tira
+          nunca mostra imagem que a matéria não tenha.
+          Ela também responde ao que ele viu: as fotos do corpo carregam
+          preguiçosamente, uma dobra por vez, e quem abria a matéria não via
+          nenhuma. A tira entrega o material logo depois da capa. */}
+      {(() => {
+        const strip = collectPhotos(article.blocks, lang)
+        return strip.length >= 4 ? <MediaBelt className="scrolly-reel" items={strip} /> : null
+      })()}
+
       {renderBlocks(article.blocks, lang)}
 
       {/* O seletor PT|EN não mora mais aqui: virou a pílula da navegação
@@ -66,6 +81,18 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
       <ShareRow title={article.heroTitle[lang]} />
     </div>
   )
+}
+
+// Fotos da matéria, na ordem em que ela as usa: alimenta a esteira de
+// abertura. `plate` entra junto (é foto também); a capa não, porque ela acabou
+// de aparecer em tela cheia logo acima.
+function collectPhotos(blocks: ManifestoBlock[], lang: Lang) {
+  const out: { src: string; alt: string; role: string }[] = []
+  for (const block of blocks) {
+    if (block.kind === 'image') out.push({ src: block.src, alt: block.alt[lang], role: '' })
+    if (block.kind === 'pair') for (const it of block.items) out.push({ src: it.src, alt: it.alt[lang], role: '' })
+  }
+  return out
 }
 
 // ─── Motor: uma única função de render, chamada 1x por idioma ──────────────

@@ -23,7 +23,12 @@ const en = {
     // idiomas, pedido do fundador.
     akaPrefix: 'A.K.A.',
     role: 'Creative Director & Founder',
-    heroStatement: 'I build brands, products and businesses where creativity meets technology.',
+    // Correção 10/09/2026 (rodada 7, item 4): a frase de entrada virou o par
+    // da referência que ele mandou (bold caixa alta em cima, thin minúsculo
+    // embaixo). Mesmas palavras de antes, partidas em duas linhas: nada de
+    // copy nova, só o contraste tipográfico que ele aprovou.
+    heroHeadline: 'I build brands, products and businesses',
+    heroStatement: 'where creativity meets technology.',
     // Localização quebrada em duas frases (correção 09/09/2026): cada uma
     // vira uma linha no hero, sem depender de <br/> hardcoded no texto.
     locationCity: 'Based in São Paulo.',
@@ -88,7 +93,8 @@ const pt: typeof en = {
   index: {
     akaPrefix: 'A.K.A.',
     role: 'Creative Director & Founder',
-    heroStatement: 'Construo marcas, produtos e negócios onde criatividade encontra tecnologia.',
+    heroHeadline: 'Construo marcas, produtos e negócios',
+    heroStatement: 'onde criatividade encontra tecnologia.',
     locationCity: 'Baseado em São Paulo.',
     locationOrigin: 'Originalmente da Bahia.',
     introHeadline: 'Eu construo coisas.',

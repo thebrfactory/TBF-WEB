@@ -330,12 +330,13 @@
 .menu-scrim {
   position: fixed;
   inset: 0;
-  /* 62%, nao 82%. Ele viu rodando e pediu menos opaco: a graca da camada e a
-     pagina continuar LA ATRAS, e a 82% ela praticamente sumia, o que fazia a
-     coisa voltar a parecer a gaveta opaca que acabou de morrer. O desfoque
-     tambem afinou (14px), porque com menos tinta por cima e o desfoque que
-     segura a legibilidade sem apagar a pagina. */
-  background-color: color-mix(in srgb, var(--tbf-bg-primary) 62%, transparent);
+  /* 42%, terceira descida (10/09/2026: "pode reduzir mais ate ficar meio
+     translucido"). Foi 82%, depois 62%, agora 42%. A graca da camada e a
+     pagina continuar LA ATRAS: a 82% ela sumia e a coisa voltava a parecer a
+     gaveta opaca que acabou de morrer. O desfoque tambem afinou (14px), porque
+     com menos tinta por cima e o desfoque que segura a legibilidade sem apagar
+     a pagina. Abaixo disso o menu deixa de ler sobre foto clara. */
+  background-color: color-mix(in srgb, var(--tbf-bg-primary) 42%, transparent);
   backdrop-filter: blur(14px) saturate(0.8);
   -webkit-backdrop-filter: blur(14px) saturate(0.8);
   opacity: 0;

@@ -28,6 +28,10 @@
      entrada do hero. Antes dividia --tav-text-body-lg com o corpo das
      outras seções; o fundador pediu ela maior, sem puxar o resto junto. */
   --tav-text-statement: clamp(1.25rem, 2.6vw, 1.6rem);
+  /* Correção 10/09/2026 (rodada 7, item 4): título da entrada do hero, no
+     contraste da referência (bold caixa alta). Teto menor que
+     --tav-text-headline porque no desktop ele vive em MEIA tela. */
+  --tav-text-hero-headline: clamp(1.75rem, 3.4vw, 2.75rem);
   --tav-text-body: clamp(0.92rem, 1.6vw, 1.05rem);  /* descrição de item */
   --tav-text-meta: 0.78rem;                          /* mono: alias, role, localização */
   --tav-text-micro: 0.68rem;                         /* mono: categoria, meta de card */
@@ -200,26 +204,41 @@
   display: flex;
   flex-direction: column;
 }
+/* Entrada do hero no contraste da referência de 10/09/2026: bold caixa alta
+   em cima, thin minúsculo embaixo. O par é um grupo só. */
+.heroHeadline {
+  margin: 0;
+  font-family: var(--tbf-font-family-display);
+  font-weight: 800;
+  font-size: var(--tav-text-hero-headline);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--tbf-text-primary);
+  max-width: 18ch;
+}
 .heroStatement {
-  margin-top: var(--tbf-space-6);
+  margin-top: var(--tbf-space-3);
   font-family: var(--tbf-font-family-display);
   font-weight: 300;
-  /* Correção 10/09/2026 (rodada 6, item 3): tamanho próprio (--tav-text-
-     statement), maior que o corpo comum, e letter-spacing positivo em vez
-     de negativo, pedido do fundador pra frase de entrada respirar mais. */
   font-size: var(--tav-text-statement);
-  line-height: 1.3;
+  line-height: 1.4;
   letter-spacing: 0.01em;
-  color: var(--tbf-text-primary);
+  color: var(--tbf-text-secondary);
   max-width: 32ch;
 }
+/* Lockup + localização: um grupo só, colados, porque o cargo passou a viver
+   em cima da linha "BASED IN" (pedido de 10/09/2026). */
+.heroCredit {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-1);
+}
+
 /* Mesma fonte, mesmo tamanho e mesmo recuo do texto do lockup acima: o recuo
    é a largura do selo mais o gap, para os dois textos alinharem no mesmo x. */
 .heroLocation {
-  /* Correção 10/09/2026 (rodada 6, item 3): mais distância da frase de
-     entrada acima, só no mobile (no desktop quem abre o vão é
-     .heroBodyMiddle). */
-  margin-top: var(--tbf-space-8);
+  margin-top: 0;
   padding-left: calc(20px + var(--tbf-space-2));
   font-family: var(--mono);
   font-size: var(--tav-text-micro);
@@ -228,6 +247,12 @@
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
   line-height: 1.6;
+}
+.heroBodyMiddle {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-8);
+  margin-top: var(--tbf-space-6);
 }
 .heroSocial { margin-top: var(--tbf-space-6); }
 
@@ -246,9 +271,17 @@
        vertical. */
     gap: var(--tbf-space-10);
     max-width: none;
-    padding-inline: 0;
+    /* Correção 10/09/2026 (rodada 7, item 1): margem pequena na esquerda em
+       vez de colar o quadrado na borda da tela. */
+    padding-inline: var(--tbf-space-4) 0;
   }
-  .heroCover { max-width: none; }
+  /* Correção 10/09/2026 (rodada 7, item 1): a capa é quadrada, então limitar
+     a LARGURA limita a altura junto. O teto é a altura da janela menos o nav
+     e os respiros do hero: assim ela cabe na página inteira, nunca sobra pra
+     fora. */
+  .heroCover {
+    max-width: min(100%, calc(100svh - var(--tbf-nav-height-xl) - var(--tbf-space-6) - var(--tbf-space-12)));
+  }
   .heroTop { padding: var(--tbf-space-6); gap: var(--tbf-space-4); }
   .heroAvatar { width: 84px; height: 84px; }
   /* Metade da tela é mais estreita que a página inteira: sem teto próprio o
@@ -263,7 +296,12 @@
      rodape, pedido literal do fundador. */
   .heroBody {
     align-self: stretch;
-    justify-content: space-between;
+    /* Correção 10/09/2026 (rodada 7): com o lockup descendo pra junto da
+       localização a coluna tem 2 grupos, não 3. space-between jogava os dois
+       nos extremos e abria um buraco no meio; centralizado, o bloco lê como
+       uma coluna só ao lado do quadrado. */
+    justify-content: center;
+    gap: var(--tbf-space-10);
     padding-top: 0;
     padding-right: var(--tbf-grid-margin-lg);
   }
@@ -274,13 +312,13 @@
      grupo "meio" so. */
   /* Correção 10/09/2026 (rodada 6, item 3): gap maior, mais distância entre
      a frase de entrada e a linha BASED IN logo abaixo. */
-  .heroBodyMiddle { display: flex; flex-direction: column; gap: var(--tbf-space-8); }
+  .heroBodyMiddle { margin-top: 0; }
   /* Correção 10/09/2026 (rodada 6, item 2): estatement e social ganham o
      mesmo recuo de .heroLocation, pra todo o texto da coluna alinhar numa
      x só (a linha do "BASED IN"). O selo redondo do RepresentedBy continua
      pendurado à esquerda de propósito, é gráfico, não texto. */
-  .heroStatement { margin-top: 0; padding-left: calc(20px + var(--tbf-space-2)); }
-  .heroLocation { margin-top: 0; }
+  .heroHeadline,
+  .heroStatement { padding-left: calc(20px + var(--tbf-space-2)); }
   .heroSocial { margin-top: 0; padding-left: calc(20px + var(--tbf-space-2)); }
 }
 
@@ -306,6 +344,11 @@
   border-radius: var(--tbf-radius-full);
   object-fit: cover;
   flex-shrink: 0;
+  /* Correção 10/09/2026 (rodada 7, item 2): o selo colorido virava um ponto
+     escuro e sujo a 20px, fora da paleta do texto. O filtro derruba a cor e
+     joga o disco pro branco, com a marca vazada em preto: mesmo desenho,
+     agora na cor da tipografia ao lado. */
+  filter: grayscale(1) brightness(1.35) contrast(2.4);
 }
 /* Correção 09/09/2026, item 4: o lockup ganhou uma segunda linha (o cargo,
    que saiu do hero solto). Mesma tipografia nas duas linhas, só empilhadas. */
