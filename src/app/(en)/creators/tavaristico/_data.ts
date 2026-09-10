@@ -476,7 +476,7 @@ export const VENTURES: Venture[] = [
           kickerEN: 'THE OUTPUT',
           kickerPT: 'O RESULTADO',
           titleEN: 'Marketing that comes out on brand because it could not come out any other way.',
-          titlePT: 'Marketing que nasce dentro da marca, porque não sabe nascer de outro jeito.',
+          titlePT: 'Marketing que nasce on brand, porque não aprendeu outro jeito.',
         },
       },
     ],
