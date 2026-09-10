@@ -3148,91 +3148,82 @@ html[data-morphing] ::view-transition-new(root) {
    Cards de categoria estilo revista: foto de fundo + overlay + nome + botão.
    ============================================================================= */
 
-/* Linha de categorias em ESTÉTICA DE STORY: foto circular + nome embaixo
-   (pedido do fundador 2026-07-31). Os cards retangulares 3:4 anteriores não
-   funcionavam — cinco retângulos escuros com texto por cima, sem hierarquia
-   nenhuma. O círculo é pequeno o bastante para as cinco categorias caberem numa
-   linha só até no 390px, sem rolagem horizontal. */
-/* Mobile-first: a fila ROLA na horizontal, como a barra de stories. Com as
-   cinco espremidas em 390px o círculo caía para 62px e nomes longos
-   ("COLABORAÇÃO", "COOLHUNTING") passavam por cima do vizinho. Rolando, o
-   círculo respira e o nome cabe. Do 768px pra cima cabem as cinco centradas e a
-   rolagem some. */
-/* 🔴 O RESPIRO DO ANEL, e não é margem estética: é correção de corte.
-   `overflow-x: auto` RECORTA `box-shadow` e `outline` dos descendentes, e o
-   `.category-card__frame` lá embaixo desenha um anel de 3px que sai da caixa.
-   Sem folga reservada aqui, o topo do anel era decepado nos CINCO círculos e as
-   laterais sumiam no primeiro e no último. Só acontecia no telefone, porque a
-   partir de 768px esta fila deixa de rolar.
-   O comentário que já existia no `.category-card` protege o anel do overflow do
-   próprio botão; o que faltava era proteger do overflow do AVÔ, que é quem de
-   fato rola. A margem negativa devolve o alinhamento da fila com o resto da
-   página. Achado na varredura de sombras cortadas de 2026-08-14. */
+/* LISTA de categorias, uma embaixo da outra, no MESMO desenho do Selected
+   Work do portfolio do Tavaristico (pedido do fundador, 10/09/2026, com os
+   dois prints lado a lado).
+
+   O que muda em relacao ao desenho anterior (fileira horizontal com o nome
+   EMBAIXO do circulo): a fila virou COLUNA, o nome foi para o LADO do
+   circulo, e o anel deixou de ser um fio branco de 3px para virar o anel
+   gradiente do Instagram, que e o anel que o site ja usa em Selected Work e
+   em Campaigns. A fonte do desenho e `StoryRing.module.css`: gradiente
+   135deg com as cinco paradas oficiais, anel de 2,5px e um vao de 2,5px na
+   cor do fundo entre o anel e a foto. Aqui ele e reescrito em classe propria
+   porque a linha inteira e um botao, e o StoryRing ja e um botao.
+
+   Some junto a rolagem horizontal e o `scroll-snap`: em coluna nao ha o que
+   rolar de lado, e com ela some tambem o recorte de anel que obrigava o
+   respiro de 4px de antes. */
 .category-row {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: clamp(0.75rem, 3vw, 2rem);
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch;
-  padding: 4px 4px var(--tbf-space-2);
-  margin-inline: -4px;
-  margin-top: -4px;
-}
-
-.category-row > * {
-  scroll-snap-align: start;
-}
-
-@media (min-width: 768px) {
-  .category-row {
-    justify-content: center;
-    overflow-x: visible;
-    padding-bottom: 0;
-  }
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--tbf-space-2);
 }
 
 .category-card {
-  flex: 0 0 auto;
-  /* O teto de 132px é o que impede o círculo de virar planeta no 1440; o piso
-     de 80px é o que faz o nome caber embaixo do círculo no telefone. */
-  width: clamp(80px, 16vw, 132px);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: var(--tbf-space-2);
+  gap: var(--tbf-space-4);
+  width: 100%;
   background: none;
   border: none;
-  padding: 0;
+  padding: var(--tbf-space-3) 0;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
   font: inherit;
   color: inherit;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* A moldura redonda. O `overflow: hidden` mora aqui e não no botão, senão o
-   anel externo (box-shadow) seria decepado por ele mesmo. */
+/* O ANEL. Gradiente canonico do Instagram, as mesmas paradas de
+   StoryRing.module.css: se um dia mudar la, muda aqui junto. */
+.category-card__ring {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  display: block;
+  width: clamp(64px, 17vw, 76px);
+  aspect-ratio: 1 / 1;
+  padding: 2.5px;
+  border-radius: var(--tbf-radius-full);
+  background: linear-gradient(
+    135deg,
+    #f58529 0%,
+    #feda77 25%,
+    #dd2a7b 50%,
+    #8134af 75%,
+    #515bd4 100%
+  );
+  transition: transform 180ms ease;
+}
+
+.category-card:hover .category-card__ring {
+  transform: scale(1.04);
+}
+
+/* A moldura redonda. O vao de 2,5px na cor do fundo entre o anel e a foto e
+   o que faz o desenho ler como story, e nao como borda colorida qualquer. */
 .category-card__frame {
   position: relative;
+  box-sizing: border-box;
   display: block;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   border-radius: var(--tbf-radius-full);
   overflow: hidden;
   background: var(--tbf-bg-secondary);
-  /* Anel do story: um fio de fundo separando a foto do anel, e o anel. */
-  box-shadow:
-    0 0 0 2px var(--tbf-bg-primary),
-    0 0 0 3px rgba(240, 237, 230, 0.35);
-  transition: box-shadow var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
-}
-
-.category-card:hover .category-card__frame,
-.category-card:focus-visible .category-card__frame {
-  box-shadow:
-    0 0 0 2px var(--tbf-bg-primary),
-    0 0 0 3px var(--tbf-accent);
+  border: 2.5px solid var(--tbf-bg-primary);
 }
 
 .category-card__image {
@@ -3254,12 +3245,15 @@ html[data-morphing] ::view-transition-new(root) {
     radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,0.35) 100%);
 }
 
+/* O NOME, agora ao lado do circulo e no corpo de titulo do Selected Work
+   (--tav-text-title vale so dentro da pagina do Tavaristico, entao o clamp
+   e escrito aqui com os mesmos numeros). */
 .category-card__label {
   font-family: var(--tbf-font-family-display);
-  font-size: clamp(0.6rem, 1.4vw, 0.85rem);
+  font-size: clamp(1.25rem, 3.6vw, 1.75rem);
   font-weight: 800;
   line-height: 1.1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--tbf-text-primary);
   text-transform: uppercase;
   transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
@@ -3270,7 +3264,7 @@ html[data-morphing] ::view-transition-new(root) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .category-card__frame,
+  .category-card__ring,
   .category-card__image,
   .category-card__label {
     transition: none;

@@ -92,7 +92,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           <div className={styles.heroCoverFade} />
 
           <div className={styles.heroTop}>
-            {/* Avatar redondo com anel preto: separa a foto do vídeo atrás.
+            {/* Avatar redondo com anel branco: separa a foto do vídeo atrás.
                 Prioridade alta, é o LCP do mobile. */}
             <div className={styles.heroAvatar}>
               <Image

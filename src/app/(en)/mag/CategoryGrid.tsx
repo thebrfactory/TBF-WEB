@@ -43,19 +43,25 @@ export function CategoryGrid({ onSelect }: CategoryGridProps) {
                 onClick={() => onSelect(cat.value)}
                 aria-label={t.categoryCardAriaLabel(label)}
               >
-                {/* Círculo + nome embaixo, estética de story do Instagram (pedido
-                    do fundador 2026-07-31). O nome saiu de DENTRO da foto: em
-                    moldura redonda ele brigava com o recorte e as cinco fotos
-                    são escuras demais para segurar texto por cima. */}
-                <span className="category-card__frame">
-                  <Image
-                    src={cat.image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 140px, 20vw"
-                    className="category-card__image"
-                  />
-                  <span className="category-card__overlay" aria-hidden="true" />
+                {/* Anel de story + nome AO LADO, um item embaixo do outro
+                    (10/09/2026). O desenho e o mesmo do Selected Work do
+                    portfolio: anel gradiente do Instagram, vao de 2,5px na cor
+                    do fundo entre o anel e a foto, nome em display 800 caixa
+                    alta. A fonte do desenho e StoryRing.module.css; aqui ele e
+                    reescrito em classes proprias porque a linha inteira e UM
+                    botao, e o StoryRing ja e um botao (botao dentro de botao
+                    nao existe em HTML). */}
+                <span className="category-card__ring">
+                  <span className="category-card__frame">
+                    <Image
+                      src={cat.image}
+                      alt=""
+                      fill
+                      sizes="76px"
+                      className="category-card__image"
+                    />
+                    <span className="category-card__overlay" aria-hidden="true" />
+                  </span>
                 </span>
                 <span className="category-card__label">{label}</span>
               </button>

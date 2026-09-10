@@ -163,7 +163,9 @@
   border-radius: 999px;
   overflow: hidden;
   background: var(--tbf-surface-2, #1a1a1a);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.85);
+  /* Correcao 10/09/2026 (rodada 7): o anel era preto e ele viu como mancha
+     escura atras da foto. Branco, na cor da tipografia do nome ao lado. */
+  box-shadow: 0 0 0 3px var(--tbf-text-primary);
 }
 .heroAvatar img {
   object-fit: cover;
@@ -344,11 +346,6 @@
   border-radius: var(--tbf-radius-full);
   object-fit: cover;
   flex-shrink: 0;
-  /* Correção 10/09/2026 (rodada 7, item 2): o selo colorido virava um ponto
-     escuro e sujo a 20px, fora da paleta do texto. O filtro derruba a cor e
-     joga o disco pro branco, com a marca vazada em preto: mesmo desenho,
-     agora na cor da tipografia ao lado. */
-  filter: grayscale(1) brightness(1.35) contrast(2.4);
 }
 /* Correção 09/09/2026, item 4: o lockup ganhou uma segunda linha (o cargo,
    que saiu do hero solto). Mesma tipografia nas duas linhas, só empilhadas. */
