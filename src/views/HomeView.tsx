@@ -31,9 +31,19 @@ import type { CarouselArticle } from '@/components/PhotoCarousel/PhotoCarousel'
 // Carrossel 01, fotos slide1/01..10.webp, nesta ordem exata. Conferido foto a
 // foto contra os prints do fundador (image-25 a image-34): bateu 1 para 1,
 // sem troca de ordem.
+// 🔴 CONFERIDO NO INSTAGRAM EM 10/09/2026, e o resultado inverteu o diagnostico
+// que a auditoria tinha feito. Havia dois links repetidos entre os carrosseis, e
+// a suspeita era de copia e cola na SLIDE2. Abrindo os posts, o errado era o da
+// SLIDE1:
+//   . `DXaLo3CjgQm` e o post do PALCO NEON, que e a foto slide2/02. A slide1/02
+//     e o GRUPO DE BONES, e agora aponta para `DPeM0mBDEPa`, o post certo dela.
+//   . `DPpNWr7CXj0` (.BORN IN RUNWAY.) continua repetido de proposito: slide1/04
+//     e slide2/04 sao a MESMA foto em recortes diferentes, entao o mesmo post nos
+//     dois esta certo. Nao "consertar" isso: e duplicacao de FOTO, nao de link.
+// Quem quiser mexer aqui de novo: abra o post antes, a foto decide.
 const SLIDE1_ARTICLES: CarouselArticle[] = [
   { title: '.BRAZILIAN\nHIGH\nSUMMER.', href: 'https://www.instagram.com/p/DXKxoDVFdPs/' },
-  { title: '.THE\nBRAZILIAN\nBACKSTAGE.', href: 'https://www.instagram.com/p/DXaLo3CjgQm/' },
+  { title: '.THE\nBRAZILIAN\nBACKSTAGE.', href: 'https://www.instagram.com/p/DPeM0mBDEPa/' },
   { title: '.THE\nBRAZILIAN\nLIFESTYLE.', href: 'https://www.instagram.com/p/DPbjzwgjbKM/' },
   { title: '.BRAZILIAN\nRUNWAY\nLIFESTYLE.', href: 'https://www.instagram.com/p/DPpNWr7CXj0/' },
   { title: '.THE\nFASHION\nMOOD.', href: 'https://www.instagram.com/p/DPUk0hvgn-6/' },
