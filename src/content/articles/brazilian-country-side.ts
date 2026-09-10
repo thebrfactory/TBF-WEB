@@ -101,8 +101,8 @@ export const brazilianCountrySide: ManifestoArticle = {
   cover: {
     src: '/images/editorial/country-side/capa.webp',
     alt: {
-      en: 'Typographic cover on black: the headline THE HOLY, THE HORSEPOWER & THE CLOWN. Provisional, no photograph.',
-      pt: 'Capa tipográfica em fundo preto: o título THE HOLY, THE HORSEPOWER & THE CLOWN. Provisória, sem fotografia.',
+      en: 'Provisional cover: a dark field with an amber rule. No text, no photograph.',
+      pt: 'Capa provisória: campo escuro com um filete âmbar. Sem texto, sem fotografia.',
     },
     credit: '.TBF. inc (capa gerada, provisória)',
   },

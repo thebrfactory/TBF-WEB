@@ -2,14 +2,19 @@
 
 ## capa.webp
 
-O que é: capa TIPOGRÁFICA provisória. Fundo preto, o título ("THE HOLY, THE
-HORSEPOWER & THE CLOWN"), o kicker da série ("BRAZILIAN DEEP SEEK / FIELD
-RESEARCH / 001") e a localização ("POSSE, GOIAS, BRAZIL") em Arial Black e
-Arial Regular, cores do token da casa (`--tbf-color-parchment` #F0EDE6 e
-`--tbf-color-amber` #FF6500).
+O que é: capa provisória SEM TEXTO. Campo escuro em gradiente (#1A1816 a
+#0A0A0A), um filete âmbar (`--tbf-color-amber` #FF6500) e uma régua fina cinza.
+1600 × 2100 px, 7 KB.
 
-Gerada por script local (ImageMagick), 1600 × 2100 px, sem foto, sem banco de
-imagem de terceiro.
+🔴 **O TEXTO SAIU DA CAPA em 10/09/2026, no QA visual.** A primeira versão trazia
+o título em corpo grande, e o hero da matéria desenha o `<h1>` POR CIMA da capa:
+o resultado era o mesmo título duas vezes, sobreposto e ilegível, no mobile e no
+desktop. A segunda versão trocou o título pela marca da série, e o choque
+continuou, menor. Capa de hero não carrega texto nenhum: quem escreve o título
+é o hero.
+
+Gerada por comando local (ImageMagick), sem foto e sem banco de imagem de
+terceiro.
 
 **NÃO é fotografia. NÃO é a capa final.** É placeholder para a matéria não subir
 sem capa nenhuma.

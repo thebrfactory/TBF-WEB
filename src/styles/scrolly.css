@@ -1019,8 +1019,16 @@
   position: absolute;
   /* Base subiu de 10% para 15% em 24/08/2026: com a fonte maior, a linha girada
      18deg balanca a primeira palavra para fora pela esquerda e o "C" de
-     "Conheci" encostava na borda da janela. */
-  left: calc(15% + (var(--i, 0) * 13%) % 70%);
+     "Conheci" encostava na borda da janela.
+     🔴 CORRIGIDO em 10/09/2026, no QA visual da materia de Posse: a regra era
+     `calc(15% + (var(--i) * 13%) % 70%)`, e `%` NAO e operador de `calc()` (so
+     + - * / sao). A declaracao inteira era invalida e o navegador a descartava:
+     TODO sticker caia em `left: 0`, empilhado na borda, e a linha girada cortava
+     a primeira letra fora da tela. Medido em iPhone 13 (390px): `left` computado
+     `0px` nos 60 fragmentos da materia. O espalhamento agora e um ciclo de seis
+     posicoes por `nth-child`, sem aritmetica: valor fixo nao tem como ser
+     descartado. Teto de 42%, porque `max-width: 52vw` somado a isso ainda cabe. */
+  left: 10%;
   top: calc(8vh + (var(--i, 0) * 22vh));
   /* REGRA DO MOTOR, pedido do fundador em 24/08/2026: os fragmentos soltos
      precisam ser MAIORES. Estavam em 14px (body-sm-size-sm) fixo, girados 18deg
@@ -1037,6 +1045,12 @@
   color: var(--tbf-text-secondary);
   opacity: 0;
 }
+
+.scrolly-stickers__item:nth-child(6n + 2) { left: 34%; }
+.scrolly-stickers__item:nth-child(6n + 3) { left: 18%; }
+.scrolly-stickers__item:nth-child(6n + 4) { left: 42%; }
+.scrolly-stickers__item:nth-child(6n + 5) { left: 26%; }
+.scrolly-stickers__item:nth-child(6n + 6) { left: 14%; }
 
 @supports (animation-timeline: view()) {
   .scrolly-stickers__item {
