@@ -39,6 +39,7 @@ export async function generateMetadata({
   const local = materiaLocal(slug)
   if (local) {
     const a = local
+    const og = a.ogImage ?? OG_IMAGE_PATH
     return {
       title: a.heroTitle[LANG],
       description: a.deck[LANG],
@@ -46,7 +47,7 @@ export async function generateMetadata({
       openGraph: {
         title: a.heroTitle[LANG],
         description: a.deck[LANG],
-        images: [{ url: OG_IMAGE_PATH, width: 1200, height: 630 }],
+        images: [{ url: og, width: 1200, height: 630 }],
         type: 'article',
         publishedTime: a.publishedAt,
       },
@@ -54,7 +55,7 @@ export async function generateMetadata({
         card: 'summary_large_image',
         title: a.heroTitle[LANG],
         description: a.deck[LANG],
-        images: [OG_IMAGE_PATH],
+        images: [og],
       },
     }
   }

@@ -95,5 +95,13 @@ export interface ManifestoArticle {
    * do card nunca divergir da capa que a pessoa vê ao abrir.
    */
   cover: { src: string; alt: Bilingual; credit: string }
+  /**
+   * Capa de compartilhamento (OpenGraph), 1200x630. O que aparece quando o link
+   * e colado no WhatsApp, LinkedIn ou Slack. Campo separado da `cover` de
+   * proposito: a capa do card e 3:2 e o recorte de 1,91:1 cortaria a peca.
+   * Sem este campo a materia cai na capa generica do site (`OG_IMAGE_PATH`),
+   * igual a de qualquer outra pagina.
+   */
+  ogImage?: string
   blocks: ManifestoBlock[]
 }
