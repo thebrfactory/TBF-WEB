@@ -57,10 +57,23 @@ export function CustomCursor() {
       cursor.classList.remove('cursor--link', 'cursor--image')
     }
 
+    // Referências para o cleanup remover exatamente o que este efeito
+    // prendeu. Sem isso, links e imagens que SOBREVIVEM à troca de rota
+    // (nav, footer, tudo que mora no layout) acumulavam um novo par de
+    // listeners a cada navegação client-side, sessão afora.
+    // Começam VAZIAS, como array literal. A tentação é iniciar com um
+    // querySelectorAll que não casa nada, mas seletor vazio é inválido em CSS:
+    // `document.querySelectorAll('')` LANÇA, e como isso roda dentro do efeito
+    // do cursor (que só monta no desktop), a exceção derrubava a hidratação da
+    // página inteira em tela grande, deixando o site em branco. Custou uma
+    // rodada de QA para achar, porque no celular nada disso executa.
+    let links: Element[] = []
+    let images: Element[] = []
+
     // Pequeno delay para garantir que o DOM da nova página já renderizou
     const timer = setTimeout(() => {
-      const links = document.querySelectorAll('a, button')
-      const images = document.querySelectorAll('img, .figure__img, .card__image')
+      links = Array.from(document.querySelectorAll('a, button'))
+      images = Array.from(document.querySelectorAll('img, .figure__img, .card__image'))
 
       links.forEach((el) => {
         el.addEventListener('mouseenter', handleMouseEnterLink)
@@ -72,7 +85,17 @@ export function CustomCursor() {
       })
     }, 100)
 
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      links.forEach((el) => {
+        el.removeEventListener('mouseenter', handleMouseEnterLink)
+        el.removeEventListener('mouseleave', handleMouseLeave)
+      })
+      images.forEach((el) => {
+        el.removeEventListener('mouseenter', handleMouseEnterImage)
+        el.removeEventListener('mouseleave', handleMouseLeave)
+      })
+    }
   }, [pathname])
 
   return null

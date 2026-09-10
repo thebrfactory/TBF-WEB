@@ -15,17 +15,13 @@ import { localizedPath } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
 import styles from './Navigation.module.css'
 
-// Labels saiu da navegação principal (por pedido): a entrada para as divisões
-// vive agora só no final da página /pitch — "labels só aparecem pra quem está dentro".
-// Pitch também saiu da navegação principal (pedido do fundador): o deck vive
-// agora só no rodapé, em Pages. Mesma lógica de Labels, entrada discreta.
-// `labelKey` aponta pra chave em `shell.nav`; `/brandsystem/login` é outra
-// aplicação (zona .AURA.) e por isso fica de fora do localizedPath().
-const NAV_LINKS: { href: string; labelKey: 'magazine' | 'login'; external?: boolean }[] = [
-  { href: '/mag', labelKey: 'magazine' },
-  // Login do brandsystem (.AURA. — auth Supabase). Outra zona → hard nav via <a>.
-  { href: '/brandsystem/login', labelKey: 'login', external: true },
-]
+// O topo não carrega mais lista de links. Labels e Pitch já tinham saído por
+// pedido dele (Labels vive no fim do /pitch, Pitch vive no rodapé); em
+// 10/09/2026 saíram também Magazine e Login, que eram os dois últimos. Todos os
+// destinos moram no menu agora, e o menu os desenha um a um porque cada um tem
+// tratamento próprio: Magazine é lista, Login é pílula de acesso.
+// `/brandsystem/login` é outra aplicação (zona .AURA.), então é <a> de verdade
+// e fica fora do localizedPath().
 
 export function Navigation() {
   const lang = useLang()
@@ -45,22 +41,35 @@ export function Navigation() {
   // ─── Scroll behavior ──────────────────────────────────────────────────────
 
   useEffect(() => {
+    // Throttle por rAF: o scroll nativo dispara muito mais rápido do que a
+    // tela repinta, e cada disparo lia window.scrollY e escrevia estado na
+    // hora. Agrupar num único cálculo por frame (`ticking`) corta esse
+    // trabalho redundante sem mudar o resultado: mesmo comportamento, menos
+    // vezes por segundo.
+    let ticking = false
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
+      if (ticking) return
+      ticking = true
 
-      if (currentScrollY > 80) {
-        setScrolled(true)
-      } else {
-        setScrolled(false)
-      }
+      requestAnimationFrame(() => {
+        const currentScrollY = window.scrollY
 
-      if (currentScrollY > 300 && currentScrollY > lastScrollY.current) {
-        setHidden(true)
-      } else if (currentScrollY < lastScrollY.current) {
-        setHidden(false)
-      }
+        if (currentScrollY > 80) {
+          setScrolled(true)
+        } else {
+          setScrolled(false)
+        }
 
-      lastScrollY.current = currentScrollY
+        if (currentScrollY > 300 && currentScrollY > lastScrollY.current) {
+          setHidden(true)
+        } else if (currentScrollY < lastScrollY.current) {
+          setHidden(false)
+        }
+
+        lastScrollY.current = currentScrollY
+        ticking = false
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -169,24 +178,39 @@ export function Navigation() {
   return (
     <>
       <header className={navClasses} role="banner">
-        {/* Left: abaixo de 1024px o nav de desktop (com Magazine) some, então o
-            slot vira MAG → /mag; a partir de 1024px volta a ser Home,
-            porque o Magazine já está na lista de links. Duas classes CSS
-            alternam por breakpoint (sem JS/matchMedia, evita hydration mismatch). */}
-        <Link
-          href={localizedPath('/mag', lang)}
-          className={`${styles.nav__link} ${styles['nav__left--mobile']}`}
-          aria-current={pathname === '/mag' ? 'page' : undefined}
+        {/* Left: O SANDUÍCHE, em TODA largura de tela (pedido do fundador
+            10/09/2026). Antes este slot era MAG no celular e Home no desktop, e
+            o Magazine também vivia como link solto no topo em telas grandes.
+            Agora o topo não carrega destino nenhum: ele carrega a PORTA. MAG
+            virou item do menu, e o menu é o mesmo no celular e no computador.
+
+            É o arranjo de A24, 032c e HBO: sanduíche na ponta esquerda,
+            marca no centro, e nada mais competindo com os dois. O logotipo
+            centralizado continua sendo o caminho para a home, então nenhum
+            destino se perdeu. */}
+        <button
+          ref={burgerRef}
+          className={styles.nav__burger}
+          aria-expanded={drawerOpen}
+          aria-controls="site-menu"
+          aria-label={drawerOpen ? t.closeMenu : t.openMenu}
+          onClick={() => setDrawerOpen(!drawerOpen)}
         >
-          {t.magazineShort}
-        </Link>
-        <Link
-          href={localizedPath('/', lang)}
-          className={`${styles.nav__link} ${styles['nav__left--desktop']}`}
-          aria-current={pathname === '/' ? 'page' : undefined}
-        >
-          {t.home}
-        </Link>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            aria-hidden="true"
+          >
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
 
         {/* Center: Logo — absolutamente centralizado */}
         <Link
@@ -208,33 +232,12 @@ export function Navigation() {
           </svg>
         </Link>
 
-        {/* Right: Desktop nav + Search + Language + Burger */}
+        {/* Right: Busca e o lugar da pílula de idioma.
+            A lista de links de desktop (Magazine, Login) saiu daqui: os dois
+            moram no menu agora, junto com tudo mais. Ver o comentário do
+            sanduíche acima. */}
         <div className={styles.nav__right}>
-          <nav aria-label={t.mainNav}>
-            <ul className={styles.nav__links} role="list">
-              {NAV_LINKS.map((link) =>
-                link.external ? (
-                  <li key={link.href}>
-                    <a href={link.href} className={styles.nav__link}>
-                      {t[link.labelKey]}
-                    </a>
-                  </li>
-                ) : (
-                  <li key={link.href}>
-                    <Link
-                      href={localizedPath(link.href, lang)}
-                      className={`${styles.nav__link} ${pathname.startsWith(link.href) ? styles['nav__link--active'] : ''}`}
-                      aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
-                    >
-                      {t[link.labelKey]}
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </nav>
-
-          {/* Search icon — desktop only */}
+          {/* Ícone de busca, só no desktop. */}
           <button
             className={styles.nav__icon}
             aria-label={t.search}
@@ -246,40 +249,6 @@ export function Navigation() {
             </svg>
           </button>
 
-
-          {/* Burger button — mobile */}
-          <button
-            ref={burgerRef}
-            className={styles.nav__burger}
-            aria-expanded={drawerOpen}
-            aria-controls="mobile-drawer"
-            aria-label={drawerOpen ? t.closeMenu : t.openMenu}
-            onClick={() => setDrawerOpen(!drawerOpen)}
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              aria-hidden="true"
-            >
-              {drawerOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18" />
-                  <line x1="6" y1="6" x2="18" y2="18" />
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </>
-              )}
-            </svg>
-          </button>
 
           {/* Lugar da pílula PT|EN — ÚLTIMO da fila, porque a pílula é o
               elemento mais à direita do topo. Ela é renderizada FORA do header
@@ -296,24 +265,64 @@ export function Navigation() {
           não filho: um filho não escapa do transform do pai. */}
       <LanguageSwitch />
 
-      {/* Overlay */}
+      {/* =====================================================================
+          MENU DO SITE
+          Antes era uma gaveta OPACA que entrava deslizando da direita e tapava
+          a página inteira. Virou uma camada por cima da página, que continua
+          visível atrás, escurecida e desfocada (pedido do fundador 10/09/2026:
+          "o fundo fica escuro, opacidade mais baixa, e na frente os elementos
+          em texto branco"). Quem abre o menu não sai da página onde estava.
+
+          A GEOMETRIA, e o porquê de cada canto:
+          . o X fica no alto à DIREITA, no mesmo lugar em que a pílula de idioma
+            vive, para o polegar não ter que aprender um destino novo;
+          . o LOGIN fica no alto à ESQUERDA, no canto OPOSTO ao X (pedido dele).
+            Não é item da lista e não se parece com um: é pílula com contorno,
+            em letra miúda, com uma linha abaixo dizendo para quem ela é. É o
+            desenho do "SIGN IN" da HBO, onde o acesso é botão e não link;
+          . a lista fica embaixo, alinhada à esquerda, em corpo grande, com um
+            rótulo pequeno em cima do grupo. Esse é o desenho do 032c e da A24.
+          ===================================================================== */}
       <div
-        className={`drawer-overlay ${drawerOpen ? 'drawer-overlay--open' : ''}`}
+        className={`menu-scrim ${drawerOpen ? 'menu-scrim--open' : ''}`}
         onClick={() => setDrawerOpen(false)}
         aria-hidden="true"
       />
 
-      {/* Mobile Drawer */}
       <div
-        id="mobile-drawer"
+        id="site-menu"
         ref={drawerRef}
-        className={`drawer ${drawerOpen ? 'drawer--open' : ''}`}
+        className={`menu ${drawerOpen ? 'menu--open' : ''}`}
         role="dialog"
         aria-modal="true"
         aria-label={t.navMenu}
+        inert={!drawerOpen}
       >
+        {/* Canto superior esquerdo: a porta dos assinantes. */}
+        <a href="/brandsystem/login" className="menu__access">
+          <span className="menu__access-pill">
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="11" width="16" height="10" rx="2" />
+              <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+            </svg>
+            {t.login}
+          </span>
+          <span className="menu__access-note">{t.loginNote}</span>
+        </a>
+
+        {/* Canto superior direito: sair. */}
         <button
-          className="drawer__close"
+          className="menu__close"
           onClick={() => {
             setDrawerOpen(false)
             burgerRef.current?.focus()
@@ -335,18 +344,11 @@ export function Navigation() {
           </svg>
         </button>
 
-        <nav className="drawer__nav" aria-label={t.mobileMenu}>
-          {NAV_LINKS.map((link) =>
-            link.external ? (
-              <a key={link.href} href={link.href} className="drawer__link">
-                {t[link.labelKey]}
-              </a>
-            ) : (
-              <Link key={link.href} href={localizedPath(link.href, lang)} className="drawer__link">
-                {t[link.labelKey]}
-              </Link>
-            )
-          )}
+        <nav className="menu__nav" aria-label={t.mobileMenu}>
+          <p className="menu__group">{t.menuGroupRead}</p>
+          <Link href={localizedPath('/mag', lang)} className="menu__link">
+            {t.magazine}
+          </Link>
         </nav>
       </div>
 

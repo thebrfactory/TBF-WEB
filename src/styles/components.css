@@ -143,11 +143,9 @@
   transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
 }
 
-@media (min-width: 1024px) {
-  .nav__burger {
-    display: none;
-  }
-}
+/* O sanduiche NAO some mais no desktop. Ele era mobile-only porque o topo
+   grande tinha lista de links propria; a lista morreu em 10/09/2026 e o menu
+   virou o mesmo nas duas larguras. Um caminho so para aprender. */
 
 .nav__burger:hover {
   color: var(--tbf-nav-link-hover);
@@ -194,9 +192,23 @@
   }
 }
 
+/* O CONTINENTE SUMIU. Antes a pilula tinha fundo escuro translucido, borda e
+   desfoque: tres camadas de detalhe escuro empilhadas em cima de um site que ja
+   e escuro, o que a fazia ler como uma mancha em vez de um controle. Reclamacao
+   do fundador em 10/09/2026: "possui muitas cores escuras e detalhes, preciso
+   que seja mais minimalista e com mais elementos brancos".
+
+   Sobraram DUAS coisas: os dois rotulos e uma pastilha BRANCA solida embaixo do
+   ativo. Sem fundo, sem borda, sem blur.
+
+   E O QUE FAZ ELE PARECER UM BOTAO, para quem ve pela primeira vez: os dois
+   idiomas ficam SEMPRE na tela, um aceso e um apagado. Um rotulo sozinho seria
+   lido como etiqueta de estado ("voce esta em PT"); dois lado a lado, com um so
+   preenchido, so podem ser uma escolha. O contraste alto do branco cheio contra
+   o apagado e o que torna a escolha visivel de longe. */
 .lang-switch {
   position: fixed;
-  /* Centrada na altura da barra de navegação, não colada no topo. */
+  /* Centrada na altura da barra de navegacao, nao colada no topo. */
   top: calc((var(--tbf-nav-height-sm) - var(--tbf-lang-switch-h)) / 2);
   right: var(--tbf-grid-margin-sm);
   z-index: calc(var(--tbf-nav-z) + 1);
@@ -206,11 +218,10 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 3px;
-  background: color-mix(in srgb, var(--tbf-bg-primary) 72%, transparent);
-  border: 1px solid var(--tbf-border);
+  padding: 0;
+  background: none;
+  border: none;
   border-radius: var(--tbf-radius-full);
-  backdrop-filter: blur(8px);
 }
 
 @media (min-width: 1280px) {
@@ -220,33 +231,27 @@
   }
 }
 
-/* A BOLINHA. Antes o estado ativo era o fundo do próprio botão: ele acendia num
-   lado e apagava no outro, sem nada atravessando o meio. Agora existe UM
-   elemento, e ele viaja.
-
-   A medida sai da própria pílula, não de número mágico: metade do espaço útil
-   (largura menos os 3px de padding de cada lado) menos metade do vão de 2px
-   entre os dois botões. Mudar --tbf-lang-switch-w continua acertando sozinho.
-
-   Fica ATRÁS dos rótulos (z-index) — os botões sobem para z-index 1, senão a
-   bolinha cobre o texto e some com o "PT". */
+/* A PASTILHA. Continua sendo UM elemento que viaja entre as duas pontas, que e
+   o que transmite que os dois lados sao o mesmo controle e nao dois botoes.
+   Mudou a cor: era cinza de fundo secundario, virou branco cheio.
+   A conta perdeu os 3px de padding que o continente tinha: agora ela ocupa
+   metade cheia do controle, menos metade do vao de 2px. */
 .lang-switch__thumb {
   position: absolute;
-  top: 3px;
-  left: 3px;
+  top: 0;
+  left: 0;
   z-index: 0;
-  width: calc((100% - 6px - 2px) / 2);
-  height: calc(100% - 6px);
-  background: var(--tbf-bg-secondary);
+  width: calc((100% - 2px) / 2);
+  height: 100%;
+  background: var(--tbf-text-primary);
   border-radius: var(--tbf-radius-full);
   transform: translateX(0);
-  /* Desaceleração longa da casa: a bolinha sai rápido e CHEGA devagar, que é o
-     que faz o movimento parecer peso e não animação. Duração acima da micro
-     (150ms) de propósito — o percurso é longo e a 150ms vira teleporte. */
+  /* Desaceleracao longa da casa: sai rapido e CHEGA devagar, que e o que faz o
+     movimento parecer peso e nao animacao. Acima da micro (150ms) de proposito,
+     porque o percurso e longo e a 150ms vira teleporte. */
   transition: transform var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
-/* O deslocamento é a largura da própria bolinha mais o vão. */
 .lang-switch[data-lang='en'] .lang-switch__thumb {
   transform: translateX(calc(100% + 2px));
 }
@@ -263,31 +268,33 @@
   text-decoration: none;
   font-family: var(--tbf-type-micro-family);
   font-size: var(--tbf-type-micro-size);
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
+  /* O apagado e BRANCO rebaixado, nao cinza de paleta: assim os dois rotulos
+     sao a mesma tinta em duas intensidades, e o controle inteiro le como uma
+     coisa so. 55% e o piso que ainda passa em contraste sobre o fundo escuro. */
+  color: color-mix(in srgb, var(--tbf-text-primary) 55%, transparent);
   background: transparent;
   border: none;
   box-shadow: none;
   border-radius: var(--tbf-radius-full);
   cursor: pointer;
-  /* Mesma duração e mesma curva da bolinha: o texto acende no ritmo em que ela
-     chega, em vez de trocar antes e denunciar duas animações separadas. */
-  transition:
-    color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out),
-    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+  transition: color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
-/* O fundo saiu daqui: quem pinta o estado ativo agora é a bolinha. Sobrou a
-   cor do texto, que troca junto com a viagem dela. */
+/* O ativo fica sobre a pastilha branca, entao inverte para o preto da pagina. */
 .lang-switch__btn[data-active='true'] {
-  color: var(--tbf-text-primary);
+  color: var(--tbf-bg-primary);
   background: transparent;
 }
 
 .lang-switch__btn:hover {
   color: var(--tbf-text-primary);
+}
+
+.lang-switch__btn[data-active='true']:hover {
+  color: var(--tbf-bg-primary);
 }
 
 .lang-switch__btn:focus-visible {
@@ -303,100 +310,238 @@
 }
 
 /* =============================================================================
-   COMPONENTE 01B — MOBILE DRAWER
+   COMPONENTE 01B — MENU DO SITE
+
+   Substituiu a gaveta opaca que entrava da direita (`.drawer`). Ela tapava a
+   pagina inteira com um retangulo cheio; esta aqui e uma CAMADA: a pagina fica
+   atras, escurecida e desfocada, e o texto branco vem na frente. Pedido do
+   fundador em 10/09/2026, com A24, 032c e HBO na mesa como referencia.
+
+   O QUE NAO VEIO DAS REFERENCIAS, de proposito: as reguas finas que o 032c usa
+   para separar grupos. O `frontend/CLAUDE.md` proibe traco horizontal em
+   qualquer pagina do site. Quem separa os grupos aqui e o espaco e a escala de
+   tipo, que era o trabalho real da regua.
    ============================================================================= */
 
-.drawer-overlay {
+/* O VEU. Nao e preto chapado: e a propria pagina, escurecida e fora de foco.
+   Por isso `backdrop-filter` em vez de um fundo opaco. O desfoque e o que
+   permite descer a opacidade sem o texto de tras brigar com o de cima. */
+.menu-scrim {
   position: fixed;
   inset: 0;
-  background-color: var(--tbf-bg-primary);
+  background-color: color-mix(in srgb, var(--tbf-bg-primary) 82%, transparent);
+  backdrop-filter: blur(20px) saturate(0.7);
+  -webkit-backdrop-filter: blur(20px) saturate(0.7);
   opacity: 0;
   pointer-events: none;
-  z-index: calc(var(--tbf-drawer-z) - 1);
+  /* ACIMA do toast, nao do drawer. O menu e modal (`aria-modal`), entao nada
+     transitorio pode ficar por cima dele. Enquanto ele era gaveta estreita
+     entrando pela direita isso nao aparecia; virou tela cheia e o aviso de
+     cookies, que e `--tbf-z-toast`, passou a boiar em cima do menu. */
+  /* O VEU precisa subir junto, nao so a camada de texto: a `.menu` nao tem
+     fundo proprio, entao com o veu empatado em `--tbf-z-toast` o aviso de
+     cookies ganhava por ordem de DOM e aparecia ATRAVES do menu transparente. */
+  z-index: calc(var(--tbf-z-toast) + 1);
+  transition: opacity var(--tbf-drawer-duration-close) var(--tbf-drawer-easing-close);
+}
+
+.menu-scrim--open {
+  opacity: 1;
+  pointer-events: auto;
   transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
 }
 
-.drawer-overlay--open {
-  opacity: var(--tbf-drawer-overlay-opacity);
-  pointer-events: auto;
-}
-
-.drawer {
+/* A CAMADA. Sem fundo proprio: o veu ja pinta. Ela so posiciona.
+   Nao desliza da lateral, aparece no lugar: deslizar era o gesto de uma gaveta
+   que existia como objeto, e aqui nao ha objeto, ha uma troca de estado da
+   propria pagina. */
+.menu {
   position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  max-width: 100%;
-  background-color: var(--tbf-drawer-bg);
-  transform: translateX(100%);
-  z-index: var(--tbf-drawer-z);
+  inset: 0;
+  z-index: calc(var(--tbf-z-toast) + 2);
   display: flex;
   flex-direction: column;
-  padding: var(--tbf-nav-height-sm) var(--tbf-grid-margin-sm) var(--tbf-space-12);
-  transition: transform var(--tbf-drawer-duration-close) var(--tbf-drawer-easing-close);
+  padding: var(--tbf-grid-margin-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity var(--tbf-drawer-duration-close) var(--tbf-drawer-easing-close),
+    visibility 0s linear var(--tbf-drawer-duration-close);
+  visibility: hidden;
 }
 
-.drawer--open {
-  transform: translateX(0);
-  transition: transform var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+.menu--open {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  transition:
+    opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
+    visibility 0s;
 }
 
-.drawer__nav {
+@media (min-width: 1280px) {
+  .menu {
+    padding: var(--tbf-grid-margin-xl);
+  }
+}
+
+/* ─── A PORTA DOS ASSINANTES, canto superior ESQUERDO ──────────────────────
+   No canto oposto ao X, por pedido dele. Nao se parece com item de lista de
+   proposito: e pilula contornada, em letra miuda, com o cadeado pequeno e uma
+   linha abaixo dizendo para quem ela e. Quem chega pela primeira vez entende
+   que ali atras tem coisa fechada sem precisar clicar para descobrir.
+   Desenho vindo do "SIGN IN" da HBO, onde o acesso e botao e nao link. */
+.menu__access {
+  position: absolute;
+  top: var(--tbf-grid-margin-sm);
+  left: var(--tbf-grid-margin-sm);
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: var(--tbf-space-8);
-  flex: 1;
+  align-items: flex-start;
+  gap: 6px;
+  text-decoration: none;
 }
 
-.drawer__link {
-  font-family: var(--tbf-type-h2-family);
-  font-size: var(--tbf-type-h2-size-sm);
-  font-weight: var(--tbf-type-h2-weight);
+@media (min-width: 1280px) {
+  .menu__access {
+    top: var(--tbf-grid-margin-xl);
+    left: var(--tbf-grid-margin-xl);
+  }
+}
+
+.menu__access-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: var(--tbf-lang-switch-h);
+  padding-inline: 14px;
+  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 45%, transparent);
+  border-radius: var(--tbf-radius-full);
+  color: var(--tbf-text-primary);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+    border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+/* No hover a pilula INVERTE: branca cheia, texto preto. E o unico elemento do
+   menu que faz isso, e e assim que ele diz "eu sou a acao daqui". */
+.menu__access:hover .menu__access-pill {
+  background-color: var(--tbf-text-primary);
+  border-color: var(--tbf-text-primary);
+  color: var(--tbf-bg-primary);
+}
+
+.menu__access:focus-visible .menu__access-pill {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+}
+
+.menu__access-note {
+  padding-left: 2px;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tbf-text-primary) 38%, transparent);
+}
+
+/* ─── SAIR, canto superior DIREITO ───────────────────────────────────────── */
+.menu__close {
+  position: absolute;
+  top: var(--tbf-grid-margin-sm);
+  right: var(--tbf-grid-margin-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--tbf-lang-switch-h);
+  width: var(--tbf-lang-switch-h);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: var(--tbf-text-primary);
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+
+@media (min-width: 1280px) {
+  .menu__close {
+    top: var(--tbf-grid-margin-xl);
+    right: var(--tbf-grid-margin-xl);
+  }
+}
+
+.menu__close:hover {
+  color: var(--tbf-accent);
+}
+
+.menu__close:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+  border-radius: var(--tbf-radius-full);
+}
+
+/* ─── A LISTA ──────────────────────────────────────────────────────────────
+   Alinhada a esquerda, comecando abaixo dos dois cantos, em corpo grande. O
+   `margin-top` sai da altura da pilula de acesso mais respiro, para a lista
+   nunca encostar nela. */
+.menu__nav {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: calc(var(--tbf-lang-switch-h) + var(--tbf-space-12));
+}
+
+@media (min-width: 1024px) {
+  .menu__nav {
+    margin-top: calc(var(--tbf-lang-switch-h) + var(--tbf-space-12) * 1.5);
+  }
+}
+
+/* Rotulo do grupo: pequeno, apagado, em caixa alta. Faz o trabalho que a regua
+   do 032c fazia, sem desenhar traco nenhum. */
+.menu__group {
+  margin-bottom: var(--tbf-space-3);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--tbf-text-primary) 34%, transparent);
+}
+
+.menu__link {
+  font-family: var(--tbf-type-h1-family);
+  font-size: clamp(2.25rem, 11vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.02;
   letter-spacing: var(--tbf-letter-spacing-raw-tight-2);
   text-transform: uppercase;
-  color: var(--tbf-drawer-text);
+  color: var(--tbf-text-primary);
   text-decoration: none;
-  padding-block: var(--tbf-space-4);
+  padding-block: var(--tbf-space-2);
   transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
-  display: block;
 }
 
-.drawer__link:hover {
-  color: var(--tbf-drawer-link-hover);
+.menu__link:hover {
+  color: var(--tbf-accent);
 }
 
-.drawer__link:focus-visible {
+.menu__link:focus-visible {
   outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
   outline-offset: var(--tbf-focus-ring-offset);
   border-radius: var(--tbf-focus-ring-radius);
 }
 
-.drawer__close {
-  position: absolute;
-  top: var(--tbf-space-3);
-  right: var(--tbf-grid-margin-sm);
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  color: var(--tbf-drawer-text);
-  cursor: pointer;
-  padding: var(--tbf-space-2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: var(--tbf-nav-height-sm);
-  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
-}
-
-.drawer__close:hover {
-  color: var(--tbf-drawer-link-hover);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .drawer,
-  .drawer-overlay {
+  .menu,
+  .menu-scrim {
     transition: none;
   }
 }
@@ -1318,6 +1463,20 @@
   display: block;
   width: 57.6vw; /* mobile-first: card grande */
   margin-right: 4px;
+  /* O trilho é `width: max-content` (todas as fotos numa linha só, ver
+     .carousel-track) e só o `.carousel` (ancestral) corta visualmente com
+     overflow:hidden. O IntersectionObserver do next/image não enxerga esse
+     corte: ele olha a posição geométrica do slide, não o que está visível de
+     verdade, e por isso baixava as 10 (ou 7) fotos do carrossel inteiro de
+     uma vez, mesmo as que só apareceriam depois de girar a animação (medido
+     em produção: 19 imagens, 596 KB, na carga inicial da home mobile,
+     10/09/2026). `content-visibility:auto` resolve na raiz: o navegador só
+     paga o custo de layout/paint/decode de imagem de um slide quando ele
+     está perto de aparecer de verdade. `contain-intrinsic-size` mantém a
+     altura reservada (mesma proporção do aspect-ratio) para nada pular
+     quando o slide ainda não foi pintado. */
+  content-visibility: auto;
+  contain-intrinsic-size: 57.6vw calc(57.6vw * 4 / 3);
 }
 
 .carousel-slide__link {
@@ -1398,11 +1557,11 @@
 }
 
 @media (min-width: 768px) {
-  .carousel-slide { width: 33.6vw; }
+  .carousel-slide { width: 33.6vw; contain-intrinsic-size: 33.6vw calc(33.6vw * 4 / 3); }
 }
 
 @media (min-width: 1024px) {
-  .carousel-slide { width: 17.6vw; }
+  .carousel-slide { width: 17.6vw; contain-intrinsic-size: 17.6vw calc(17.6vw * 4 / 3); }
 }
 
 @keyframes carouselInfiniteScroll {
@@ -3135,21 +3294,21 @@ html[data-morphing] ::view-transition-new(root) {
   transform: scaleX(1);
 }
 
-/* Drawer links (menu mobile) — deslize sutil no hover/toque */
-.drawer__link {
+/* Itens do menu: deslize sutil no hover e no toque. */
+.menu__link {
   transition:
     color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
     transform var(--tbf-motion-duration-element) var(--tbf-motion-easing-element);
 }
 
-.drawer__link:hover,
-.drawer__link:active {
+.menu__link:hover,
+.menu__link:active {
   transform: translateX(var(--tbf-space-2));
 }
 
 /* Botões-ícone (busca, hambúrguer, fechar) — escala tátil no hover/press */
 .nav__burger,
-.drawer__close,
+.menu__close,
 .newsletter-popup__close {
   transition:
     color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
@@ -3157,13 +3316,13 @@ html[data-morphing] ::view-transition-new(root) {
 }
 
 .nav__burger:hover,
-.drawer__close:hover,
+.menu__close:hover,
 .newsletter-popup__close:hover {
   transform: scale(1.12);
 }
 
 .nav__burger:active,
-.drawer__close:active,
+.menu__close:active,
 .newsletter-popup__close:active {
   transform: scale(0.92);
 }
@@ -3172,18 +3331,18 @@ html[data-morphing] ::view-transition-new(root) {
   .nav__link::after {
     transition: none;
   }
-  .drawer__link,
+  .menu__link,
   .nav__burger,
-  .drawer__close,
+  .menu__close,
   .newsletter-popup__close {
     transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
   }
-  .drawer__link:hover,
-  .drawer__link:active,
+  .menu__link:hover,
+  .menu__link:active,
   .nav__burger:hover,
   .nav__burger:active,
-  .drawer__close:hover,
-  .drawer__close:active,
+  .menu__close:hover,
+  .menu__close:active,
   .newsletter-popup__close:hover,
   .newsletter-popup__close:active {
     transform: none;

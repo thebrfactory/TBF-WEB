@@ -24,7 +24,9 @@ type Rota = {
 // Toda rota daqui TEM de existir em app/(en) e app/(pt): o sitemap é uma promessa
 // ao buscador, e anunciar 404 custa confiança de domínio. Rota nova na árvore,
 // linha nova aqui.
-// Fora de propósito: `/access` (noindex) e `/studio` (CMS, não é página pública).
+// Fora de propósito: `/access` (noindex), `/studio` (CMS, não é página pública),
+// `/pitch*` e `/proposta/castelo` (material de cliente, `robots: { index: false }`
+// na própria página. Sitemap não anuncia página noindex ao buscador).
 const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
   { path: '/mag', changeFrequency: 'daily', priority: 0.9 },
@@ -45,10 +47,6 @@ const STATIC_ROUTES: Rota[] = [
   { path: '/careers', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/about/quick-facts', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/press/media', changeFrequency: 'monthly', priority: 0.5 },
-  { path: '/pitch/v3', changeFrequency: 'monthly', priority: 0.4 },
-  { path: '/pitch/v2', changeFrequency: 'monthly', priority: 0.4 },
-  { path: '/pitch/v1', changeFrequency: 'monthly', priority: 0.3 },
-  { path: '/pitch', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/legal/terms', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/legal/privacy', changeFrequency: 'monthly', priority: 0.3 },
   { path: '/legal/conduct', changeFrequency: 'monthly', priority: 0.3 },

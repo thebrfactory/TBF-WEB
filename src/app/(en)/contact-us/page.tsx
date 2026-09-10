@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import ContactUsView from '@/views/ContactUsView'
 import { contactUs } from '@/content/i18n/pages/contact-us'
 import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 
 const t = contactUs.en
 
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
   title: t.meta.title,
   description: t.meta.description,
   alternates: languageAlternates('/contact-us'),
+  openGraph: openGraphMeta({ title: t.meta.title, description: t.meta.description }),
 }
 
 export default function Page() {

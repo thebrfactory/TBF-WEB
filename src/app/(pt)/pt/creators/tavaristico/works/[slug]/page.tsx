@@ -7,6 +7,8 @@
 import type { Metadata } from 'next'
 import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 import TavaristicoWorkView from '@/views/TavaristicoWorkView'
 
 export function generateStaticParams() {
@@ -22,9 +24,12 @@ export async function generateMetadata({
   const w = findWork(slug)
   const t = tavaristico.pt.work
   if (!w) return { title: t.fallbackTitle }
+  const title = `${w.title} · ${t.metaTitleSuffix}`
   return {
-    title: `${w.title} · ${t.metaTitleSuffix}`,
+    title,
     description: w.summary,
+    alternates: languageAlternates(`/creators/tavaristico/works/${slug}`),
+    openGraph: openGraphMeta({ title, description: w.summary }),
   }
 }
 

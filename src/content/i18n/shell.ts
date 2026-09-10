@@ -20,6 +20,12 @@ const en = {
     magazineShort: 'MAG',
     magazine: 'Magazine',
     login: 'Login',
+    // Linha sob o LOGIN dentro do menu. O acesso ao brandsystem nao e um item
+    // de lista como os outros: e porta de assinante, e diz isso em voz baixa.
+    loginNote: 'Members only',
+    // Rotulo do grupo dentro do menu, no desenho do 032c: rotulo pequeno em
+    // cima, itens grandes embaixo.
+    menuGroupRead: 'Read',
     logoAriaLabel: '.THE BRAZILIAN FACTORY.',
     mainNav: 'Main navigation',
     mobileMenu: 'Mobile menu',
@@ -142,6 +148,8 @@ const pt: typeof en = {
     magazineShort: 'MAG',
     magazine: 'Revista',
     login: 'Entrar',
+    loginNote: 'Só para assinantes',
+    menuGroupRead: 'Leitura',
     logoAriaLabel: '.THE BRAZILIAN FACTORY.',
     mainNav: 'Navegação principal',
     mobileMenu: 'Menu mobile',

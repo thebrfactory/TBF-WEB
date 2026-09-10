@@ -1,6 +1,9 @@
 // =============================================================================
 // ROBOTS.TXT — TBF WEB 2026
-// /access, /api/* e /studio (painel admin do Sanity) são noindex
+// /access, /api/*, /studio (painel admin do Sanity), /pitch* e /proposta/castelo
+// (material de cliente) são noindex. A página já leva `robots: { index: false }`
+// na própria metadata. O disallow aqui é a segunda camada, contra crawler que
+// ignora meta tag e contra o link cair em algum lugar fora do nosso controle.
 // =============================================================================
 
 import type { MetadataRoute } from 'next'
@@ -11,7 +14,19 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/access', '/api/', '/studio'],
+        disallow: [
+          '/access',
+          '/api/',
+          '/studio',
+          '/pitch',
+          '/pitch/',
+          '/proposta/',
+          '/pt/access',
+          '/pt/studio',
+          '/pt/pitch',
+          '/pt/pitch/',
+          '/pt/proposta/',
+        ],
       },
     ],
     sitemap: 'https://thebrfactory.com/sitemap.xml',

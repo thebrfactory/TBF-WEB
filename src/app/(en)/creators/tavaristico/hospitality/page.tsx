@@ -5,11 +5,18 @@
 
 import type { Metadata } from 'next'
 import { hospitality } from '@/content/i18n/pages/hospitality'
+import { languageAlternates } from '@/lib/i18n'
+import { openGraphMeta } from '@/lib/og'
 import HospitalityView from '@/views/HospitalityView'
 
 export const metadata: Metadata = {
   title: hospitality.en.meta.title,
   description: hospitality.en.meta.description,
+  alternates: languageAlternates('/creators/tavaristico/hospitality'),
+  openGraph: openGraphMeta({
+    title: hospitality.en.meta.title,
+    description: hospitality.en.meta.description,
+  }),
 }
 
 export default function HospitalityPage() {

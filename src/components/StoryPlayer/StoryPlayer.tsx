@@ -206,18 +206,29 @@ export function StoryDeck({
         </div>
 
         <div className={styles.frame}>
-          {items.map((item, idx) => (
-            <Image
-              key={item.src}
-              src={item.src}
-              alt={item.alt}
-              width={720}
-              height={1280}
-              sizes="(max-width: 767px) 60vw, 26vw"
-              priority={idx === 0}
-              className={`${styles.img}${idx === i ? ` ${styles.imgOn}` : ''}`}
-            />
-          ))}
+          {/* Só o quadro atual e o próximo entram no DOM (correção QA
+              10/09/2026): antes o mapa renderizava os N quadros da sequência
+              de uma vez, e o navegador buscava todos ao abrir o story (CRIVO
+              sozinho já eram 5 req simultâneas, a pagina inteira soma 21). O
+              próximo pré-carrega para a transição de avanço não esperar
+              rede; o anterior não fica no DOM, mas o navegador já cacheou o
+              que foi visto, então voltar não busca de novo. */}
+          {items.map((item, idx) => {
+            const proximo = (i + 1) % total
+            if (idx !== i && idx !== proximo) return null
+            return (
+              <Image
+                key={item.src}
+                src={item.src}
+                alt={item.alt}
+                width={720}
+                height={1280}
+                sizes="(max-width: 767px) 60vw, 26vw"
+                priority={idx === i && i === 0}
+                className={`${styles.img}${idx === i ? ` ${styles.imgOn}` : ''}`}
+              />
+            )
+          })}
 
           {/* O SOMBREADO DE CIMA é um nó próprio, e não o fundo do cabeçalho.
               Como fundo do cabeçalho ele tinha a largura do cabeçalho, que
