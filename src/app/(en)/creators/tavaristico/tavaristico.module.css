@@ -163,9 +163,11 @@
   border-radius: 999px;
   overflow: hidden;
   background: var(--tbf-surface-2, #1a1a1a);
-  /* Correcao 10/09/2026 (rodada 7): o anel era preto e ele viu como mancha
-     escura atras da foto. Branco, na cor da tipografia do nome ao lado. */
-  box-shadow: 0 0 0 3px var(--tbf-text-primary);
+  /* Correcao 10/09/2026 (rodada 8): era preto (mancha escura atras da foto),
+     virou branco cheio de 3px (forte demais, ele pediu bem mais suave), e
+     agora e um fio de 1,5px em branco a 30%: separa a foto do video sem
+     desenhar um anel. */
+  box-shadow: 0 0 0 1.5px rgba(240, 237, 230, 0.3);
 }
 .heroAvatar img {
   object-fit: cover;

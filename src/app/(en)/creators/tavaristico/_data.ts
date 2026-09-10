@@ -605,6 +605,73 @@ export const CAMPAIGNS: Campaign[] = [
           titlePT: 'DEZOITÔ. Um aniversário que virou temporada.',
         },
       },
+
+      // CURADORIA 10/09/2026. O story tinha só o ensaio do merch (as três
+      // acima). Estes cinco são a PEÇA GRÁFICA da campanha, tirados de
+      // `Ô | 04 | Abril 25/GRID` no TAV05, que é a grade publicada em abril de
+      // 2025: 1080x1920 de origem, formato de story, convertidos para webp
+      // sem redimensionar (já estão no teto de 1920 da spec de imagem).
+      // O que ficou de fora, de propósito: as outras cinco peças da grade
+      // (18+, FERIADOU, e três variações do mesmo letreiro) repetem lockup
+      // ou pertencem a outro momento de abril, e story que repete cansa; as
+      // 24 imagens da pasta DEZOITOU são referência de terceiro baixada de
+      // rede social, não peça nossa; e a pasta STORIES do mês é cobertura da
+      // Expotel, outra história.
+      {
+        src: `${base}/o-18-years/k1-dezoitou.webp`,
+        alt: 'DEZOITÔ, o letreiro pintado no muro do hostel',
+        role: 'Campaign key visual',
+        overlay: {
+          kickerEN: 'THE ANNOUNCEMENT',
+          kickerPT: 'O ANÚNCIO',
+          titleEN: 'DEZOITOU. The house comes of age, and everyone is invited.',
+          titlePT: 'DEZOITOU. A casa fez idade, e a maioridade chega para todos.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/k2-18-de-casa.webp`,
+        alt: 'DEZOITÔ, lockup 18 de casa sobre laranja',
+        role: 'Campaign key visual',
+        overlay: {
+          kickerEN: 'THE MARK',
+          kickerPT: 'A MARCA',
+          titleEN: 'Eighteen, written the way the house writes everything.',
+          titlePT: 'Dezoito, escrito do jeito que a casa escreve tudo.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/k3-hostel-18.webp`,
+        alt: 'DEZOITÔ, fachada do hostel com hóspedes',
+        role: 'Campaign key visual',
+        overlay: {
+          kickerEN: 'THE HOUSE',
+          kickerPT: 'A CASA',
+          titleEN: 'The address is the campaign. It always was.',
+          titlePT: 'O endereço é a campanha. Sempre foi.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/k4-staff.webp`,
+        alt: 'DEZOITÔ, equipe da casa na piscina',
+        role: 'Campaign key visual',
+        overlay: {
+          kickerEN: 'THE STAFF',
+          kickerPT: 'A EQUIPE',
+          titleEN: 'Eighteen years of people who make the place a place.',
+          titlePT: 'Dezoito anos de gente que faz o lugar ser um lugar.',
+        },
+      },
+      {
+        src: `${base}/o-18-years/k5-efervescente.webp`,
+        alt: 'DEZOITÔ, fitas coloridas e a palavra EFERVESCENTE',
+        role: 'Campaign key visual',
+        overlay: {
+          kickerEN: 'THE SEASON',
+          kickerPT: 'A TEMPORADA',
+          titleEN: 'EFERVESCENTE. A month of parties instead of one night.',
+          titlePT: 'EFERVESCENTE. Um mês de festa no lugar de uma noite.',
+        },
+      },
     ],
   },
 ]
