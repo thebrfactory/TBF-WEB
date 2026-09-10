@@ -14,9 +14,18 @@
 // TRADUÇÃO. O texto fonte é só em português. O inglês de todo bloco é
 // TRADUÇÃO EDITORIAL (registro VICE/DAZED), não tradução literal palavra por
 // palavra. Nenhum fato, nome, lugar ou número foi adicionado: o texto fonte
-// não tem nenhum número, e este artigo também não tem nenhum (por isso não
-// há bloco `stat` nem `image`: não existe foto de Posse no acervo do repo,
-// ver PENDÊNCIA DE CAPA abaixo).
+// não tem nenhum número, e este artigo também não tem nenhum (por isso não há
+// bloco `stat`).
+//
+// FOTOGRAFIA (10/09/2026). As 15 fotos entraram: são do próprio fundador, do
+// mesmo dia e do mesmo campo que o texto descreve, entregues em
+// `TBF GOIÁS COOLHUNTING PACK/SAÍDA`. Ritmo: uma foto por capítulo logo depois
+// da palavra-título, e `pair` só onde as duas peças são a MESMA coisa vista de
+// dois jeitos (o mouro montado e a pé, o cristão de frente e de costas, a
+// companhia parada e com os cavalos), que é a regra escrita em types.ts. O
+// panorama é o único `plate`: 1920x783 sangrando viraria uma tira de 300 px de
+// altura. Procedência e conversão em
+// `public/images/editorial/country-side/_CREDITOS.md`.
 //
 // 🔴 PASSADA `/humanizar` (10/09/2026, ordem direta do fundador: "tem MUITO
 // pra melhorar isso ainda, conserta todos os vícios"). O detector da skill deu
@@ -167,8 +176,34 @@ export const brazilianCountrySide: ManifestoArticle = {
       theme: 'dark',
     },
 
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/01-bandeira-do-divino.webp',
+      alt: {
+        en: 'A man in a red shirt carries the ribboned banner of the Folia do Divino.',
+        pt: 'Homem de camisa vermelha carrega a bandeira de fitas da Folia do Divino.',
+      },
+      caption: {
+        en: 'The banner opens the way. Everything else in Posse comes after it.',
+        pt: 'A bandeira abre o caminho. Tudo o mais em Posse vem depois dela.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     // ─── CAPÍTULO 1: PRODUÇÃO.
     { kind: 'word', label: { en: 'PRODUCTION', pt: 'PRODUÇÃO' }, theme: 'dark' },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/02-sanfona.webp',
+      alt: {
+        en: 'An accordion player in a cap, mid tune, inside the crowd of the feast.',
+        pt: 'Sanfoneiro de boné toca no meio da multidão da festa.',
+      },
+      caption: {
+        en: 'The feast is made by hand, one player at a time.',
+        pt: 'A festa é feita à mão, um tocador por vez.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     {
       kind: 'lines',
       lines: [
@@ -202,6 +237,19 @@ export const brazilianCountrySide: ManifestoArticle = {
 
     // ─── CAPÍTULO 2: O PALHAÇO.
     { kind: 'word', label: { en: 'THE CLOWN', pt: 'O PALHAÇO' }, theme: 'dark' },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/03-palhaco-ao-volante.webp',
+      alt: {
+        en: 'A masked clown at the wheel of a pink car, giving a thumbs up.',
+        pt: 'Palhaço mascarado ao volante de um carro rosa, com o polegar erguido.',
+      },
+      caption: {
+        en: 'The mask does not hide anyone here. It announces.',
+        pt: 'A máscara ali não esconde ninguém. Ela anuncia.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     {
       kind: 'lines',
       lines: [
@@ -244,6 +292,19 @@ export const brazilianCountrySide: ManifestoArticle = {
 
     // ─── CAPÍTULO 3: CAVALO-VAPOR.
     { kind: 'word', label: { en: 'HORSEPOWER', pt: 'CAVALO-VAPOR' }, theme: 'dark' },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/04-palhaco-no-rallye.webp',
+      alt: {
+        en: 'A clown in a polka dot costume standing on the door of a white car with the sound system open.',
+        pt: 'Palhaço de fantasia de bolinhas em pé na porta de um carro branco com o som aberto.',
+      },
+      caption: {
+        en: 'The car is the stage, and the sound system is the second costume.',
+        pt: 'O carro é o palco, e o som é a segunda fantasia.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     {
       kind: 'lines',
       lines: [
@@ -305,6 +366,35 @@ export const brazilianCountrySide: ManifestoArticle = {
     // ─── CAPÍTULO 4: TRADIÇÃO VIVA.
     { kind: 'word', label: { en: 'LIVING TRADITION', pt: 'TRADIÇÃO VIVA' }, theme: 'dark' },
     {
+      kind: 'image',
+      src: '/images/editorial/country-side/08-cavalhada-panorama.webp',
+      alt: {
+        en: 'The full line of riders drawn up on the field before the charge.',
+        pt: 'A fila inteira de cavaleiros formada no campo antes da investida.',
+      },
+      caption: {
+        en: 'The field is not a stage set. It is a street with a fence around it.',
+        pt: 'O campo não é cenário. É rua com cerca em volta.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+      variant: 'plate',
+      width: 1920,
+      height: 783,
+    },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/05-cavaleiro-silhueta.webp',
+      alt: {
+        en: 'A rider in plumed helmet silhouetted against a blue sky, lance raised.',
+        pt: 'Cavaleiro de elmo com penacho em silhueta contra o céu azul, lança erguida.',
+      },
+      caption: {
+        en: 'Moors and Christians, at the exact hour the light gives in.',
+        pt: 'Mouros e cristãos, na hora exata em que a luz cede.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
+    {
       kind: 'lines',
       lines: [
         { en: 'This is the hard part to explain from the outside.', pt: 'Essa é a parte difícil de explicar de fora.' },
@@ -361,6 +451,35 @@ export const brazilianCountrySide: ManifestoArticle = {
       theme: 'light',
     },
     {
+      kind: 'pair',
+      items: [
+        {
+          src: '/images/editorial/country-side/06-mouro-azul-montado.webp',
+          alt: {
+            en: 'A Moor rider in blue and silver, mounted, seen from the front.',
+            pt: 'Cavaleiro mouro de azul e prata, montado, visto de frente.',
+          },
+          caption: {
+            en: 'The Moor, mounted.',
+            pt: 'O mouro, montado.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+        {
+          src: '/images/editorial/country-side/07-mouro-azul-cavalo.webp',
+          alt: {
+            en: 'The same blue rider on foot, beside the decorated horse.',
+            pt: 'O mesmo cavaleiro azul a pé, ao lado do cavalo ornamentado.',
+          },
+          caption: {
+            en: 'The same Moor, on foot.',
+            pt: 'O mesmo mouro, a pé.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+      ],
+    },
+    {
       kind: 'lines',
       lines: [
         { en: 'They live both.', pt: 'Vivem os dois.' },
@@ -369,6 +488,19 @@ export const brazilianCountrySide: ManifestoArticle = {
 
     // ─── CAPÍTULO 5: A MÁSCARA.
     { kind: 'word', label: { en: 'THE MASK', pt: 'A MÁSCARA' }, theme: 'dark' },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/13-mascara-no-carro.webp',
+      alt: {
+        en: 'A young man pulls an orange devil mask over his face, leaning on a car.',
+        pt: 'Jovem puxa uma máscara laranja de diabo sobre o rosto, encostado num carro.',
+      },
+      caption: {
+        en: 'The gesture that starts everything: putting the face on.',
+        pt: 'O gesto que começa tudo: vestir o rosto.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     {
       kind: 'lines',
       lines: [
@@ -434,6 +566,35 @@ export const brazilianCountrySide: ManifestoArticle = {
     //     capítulo só, sem `word` duplicado no meio.
     { kind: 'word', label: { en: 'APPROPRIATION', pt: 'APROPRIAÇÃO' }, theme: 'dark' },
     {
+      kind: 'pair',
+      items: [
+        {
+          src: '/images/editorial/country-side/09-cristao-vermelho-frente.webp',
+          alt: {
+            en: 'A Christian rider in red and gold on a white horse, seen from the front.',
+            pt: 'Cavaleiro cristão de vermelho e dourado sobre cavalo branco, visto de frente.',
+          },
+          caption: {
+            en: 'Red and gold, from the front.',
+            pt: 'Vermelho e dourado, de frente.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+        {
+          src: '/images/editorial/country-side/10-cristao-vermelho-costas.webp',
+          alt: {
+            en: 'The same costume from behind, the cape open over the shoulders.',
+            pt: 'A mesma fantasia por trás, com a capa aberta sobre os ombros.',
+          },
+          caption: {
+            en: 'And the same costume, from behind.',
+            pt: 'E a mesma fantasia, por trás.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+      ],
+    },
+    {
       kind: 'lines',
       lines: [
         { en: 'There is a word for this: appropriation.', pt: 'Tem uma palavra para isso: apropriação.' },
@@ -494,6 +655,35 @@ export const brazilianCountrySide: ManifestoArticle = {
       theme: 'dark',
     },
     {
+      kind: 'pair',
+      items: [
+        {
+          src: '/images/editorial/country-side/11-cristaos-retrato.webp',
+          alt: {
+            en: 'A group of Christian riders in red, standing together before the charge.',
+            pt: 'Grupo de cavaleiros cristãos de vermelho, reunidos antes da investida.',
+          },
+          caption: {
+            en: 'The company, waiting.',
+            pt: 'A companhia, esperando.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+        {
+          src: '/images/editorial/country-side/12-cristaos-cavalos.webp',
+          alt: {
+            en: 'The same group with the horses, harnesses and plumes at close range.',
+            pt: 'O mesmo grupo com os cavalos, arreios e penachos de perto.',
+          },
+          caption: {
+            en: 'The company, with the horses.',
+            pt: 'A companhia, com os cavalos.',
+          },
+          credit: 'Felipe Tavares / .TBF. inc',
+        },
+      ],
+    },
+    {
       kind: 'lines',
       lines: [
         { en: 'This is not medieval Europe.', pt: 'Isso não é Europa medieval.' },
@@ -543,6 +733,19 @@ export const brazilianCountrySide: ManifestoArticle = {
     // ─── CAPÍTULO 7: O ENQUADRAMENTO.
     { kind: 'word', label: { en: 'THE FRAME', pt: 'O ENQUADRAMENTO' }, theme: 'dark' },
     {
+      kind: 'image',
+      src: '/images/editorial/country-side/14-calca-de-bolinhas.webp',
+      alt: {
+        en: 'Close on red polka dot trousers, one leg wrapped in a bandage, sneakers on the dirt.',
+        pt: 'Detalhe de calça vermelha de bolinhas, uma perna enfaixada, tênis na terra.',
+      },
+      caption: {
+        en: 'Sneakers under the costume. Nobody there sees a contradiction.',
+        pt: 'Tênis por baixo da fantasia. Ninguém ali vê contradição.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
+    {
       kind: 'lines',
       lines: [
         { en: 'That is what the photographs showed.', pt: 'Foi isso que as fotos mostraram.' },
@@ -583,6 +786,19 @@ export const brazilianCountrySide: ManifestoArticle = {
 
     // ─── CAPÍTULO 8: CULTURA VIVA. Fecho.
     { kind: 'word', label: { en: 'LIVING CULTURE', pt: 'CULTURA VIVA' }, theme: 'dark' },
+    {
+      kind: 'image',
+      src: '/images/editorial/country-side/15-entardecer.webp',
+      alt: {
+        en: 'The procession of riders under a wide blue sky at the end of the day.',
+        pt: 'A procissão de cavaleiros sob um céu azul largo no fim do dia.',
+      },
+      caption: {
+        en: 'The last light, and the feast still going.',
+        pt: 'A última luz, e a festa ainda de pé.',
+      },
+      credit: 'Felipe Tavares / .TBF. inc',
+    },
     {
       kind: 'lines',
       lines: [
