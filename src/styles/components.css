@@ -271,10 +271,11 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  /* O apagado e BRANCO rebaixado, nao cinza de paleta: assim os dois rotulos
-     sao a mesma tinta em duas intensidades, e o controle inteiro le como uma
-     coisa so. 55% e o piso que ainda passa em contraste sobre o fundo escuro. */
-  color: color-mix(in srgb, var(--tbf-text-primary) 55%, transparent);
+  /* BRANCO CHEIO nos dois, e negrito nos dois. Antes o inativo vinha rebaixado
+     a 55%, e ele pediu o PT solido em 10/09/2026. Quem separa ativo de inativo
+     passa a ser SO a pastilha branca por baixo, nunca a intensidade da tinta:
+     um rotulo apagado convida a ler "desligado" em vez de "a outra opcao". */
+  color: var(--tbf-text-primary);
   background: transparent;
   border: none;
   box-shadow: none;
@@ -329,9 +330,14 @@
 .menu-scrim {
   position: fixed;
   inset: 0;
-  background-color: color-mix(in srgb, var(--tbf-bg-primary) 82%, transparent);
-  backdrop-filter: blur(20px) saturate(0.7);
-  -webkit-backdrop-filter: blur(20px) saturate(0.7);
+  /* 62%, nao 82%. Ele viu rodando e pediu menos opaco: a graca da camada e a
+     pagina continuar LA ATRAS, e a 82% ela praticamente sumia, o que fazia a
+     coisa voltar a parecer a gaveta opaca que acabou de morrer. O desfoque
+     tambem afinou (14px), porque com menos tinta por cima e o desfoque que
+     segura a legibilidade sem apagar a pagina. */
+  background-color: color-mix(in srgb, var(--tbf-bg-primary) 62%, transparent);
+  backdrop-filter: blur(14px) saturate(0.8);
+  -webkit-backdrop-filter: blur(14px) saturate(0.8);
   opacity: 0;
   pointer-events: none;
   /* ACIMA do toast, nao do drawer. O menu e modal (`aria-modal`), entao nada
@@ -342,13 +348,13 @@
      fundo proprio, entao com o veu empatado em `--tbf-z-toast` o aviso de
      cookies ganhava por ordem de DOM e aparecia ATRAVES do menu transparente. */
   z-index: calc(var(--tbf-z-toast) + 1);
-  transition: opacity var(--tbf-drawer-duration-close) var(--tbf-drawer-easing-close);
+  transition: opacity var(--tbf-duration-raw-150) var(--tbf-easing-raw-ease-out);
 }
 
 .menu-scrim--open {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+  transition: opacity var(--tbf-duration-raw-200) var(--tbf-easing-raw-ease-out);
 }
 
 /* A CAMADA. Sem fundo proprio: o veu ja pinta. Ela so posiciona.
@@ -365,8 +371,8 @@
   opacity: 0;
   pointer-events: none;
   transition:
-    opacity var(--tbf-drawer-duration-close) var(--tbf-drawer-easing-close),
-    visibility 0s linear var(--tbf-drawer-duration-close);
+    opacity var(--tbf-duration-raw-150) var(--tbf-easing-raw-ease-out),
+    visibility 0s linear var(--tbf-duration-raw-150);
   visibility: hidden;
 }
 
@@ -375,7 +381,7 @@
   pointer-events: auto;
   visibility: visible;
   transition:
-    opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
+    opacity var(--tbf-duration-raw-200) var(--tbf-easing-raw-ease-out),
     visibility 0s;
 }
 
@@ -920,9 +926,15 @@
 /* Ícone de Instagram, discreto, no estilo de site de moda: traço fino,
    monocromático (herda `currentColor`), opacidade baixa em repouso, cheia no
    hover. Pedido do fundador 2026-09-09: ícone, nunca modal ou popup. */
+.footer__socials {
+  display: flex;
+  align-items: center;
+  gap: var(--tbf-space-3);
+  margin-top: var(--tbf-space-4);
+}
+
 .footer__social {
   display: inline-flex;
-  margin-top: var(--tbf-space-4);
   color: var(--tbf-footer-link);
   opacity: 0.5;
   transition: opacity var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);

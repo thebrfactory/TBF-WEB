@@ -66,19 +66,41 @@ export function Footer({ lang }: { lang: Lang }) {
               <br />
               {t.tagline[2]}
             </p>
-            <a
-              href="https://instagram.com/thebrfactory"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="footer__social"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="5" />
-                <circle cx="12" cy="12" r="4" />
-                <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
-              </svg>
-            </a>
+            {/* Redes da casa. O LinkedIn entrou em 10/09/2026, ao lado do
+                Instagram. Os dois icones partem do MESMO quadrado arredondado
+                (rect 3,3 18x18 rx5, traco 1.3) de proposito: sao duas marcas de
+                terceiros com desenhos oficiais muito diferentes, e igualar a
+                moldura e o que impede o par de parecer dois adesivos colados. */}
+            <div className="footer__socials">
+              <a
+                href="https://instagram.com/thebrfactory"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="footer__social"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/company/tbf.inc"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="footer__social"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <line x1="8" y1="11" x2="8" y2="16.4" />
+                  <circle cx="8" cy="7.9" r="0.7" fill="currentColor" stroke="none" />
+                  <path d="M12 16.4V11" />
+                  <path d="M12 13.4a2.3 2.3 0 0 1 4.6 0v3" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
 

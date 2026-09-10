@@ -79,13 +79,15 @@
 // (ex.: apropriação e o mecanismo de fricção cultural são o mesmo argumento
 // em duas seções do fonte, e viraram um capítulo só aqui).
 //
-// PENDÊNCIA DE CAPA (🔴 do fundador). Não existe, em `public/images/editorial/`,
-// nenhuma foto de Posse, da Folia do Divino ou das Cavalhadas: as únicas
-// pastas eram `gurgel/` e o arquivo solto `substrato-capa.webp`, nenhum do
-// assunto. A capa publicada é TIPOGRÁFICA, gerada por script local
-// (ImageMagick, sem IA generativa de imagem, sem banco de terceiro), fundo
-// preto com o título. Ver `public/images/editorial/country-side/_CREDITOS.md`.
-// Trocar pela foto real quando ela existir.
+// CAPA RESOLVIDA em 10/09/2026. Era tipográfica e provisória (fundo preto com
+// um filete âmbar, gerada por script), porque nenhuma foto de Posse existia no
+// repositório na época. O fundador desenhou as duas pranchetas em
+// `/Volumes/TAV05/0. TBF inc/DOPAMINE ARTICLE thumbs.psd`, canvas 3940x1280 com
+// dois quadros de 1920x1280 (o segundo começa em x=2020; a faixa entre eles não
+// é vão vazio, é sangria dos dois, por isso não dá para achar o corte
+// procurando coluna preta). Quadro 1 virou a capa, quadro 2 virou o card
+// social, recortado no centro para 1200x630 porque WhatsApp e Telegram cortam
+// o card pelo meio. A provisória está em `public/_ARQUIVO/`.
 // =============================================================================
 
 import type { ManifestoArticle } from './types'
@@ -110,11 +112,16 @@ export const brazilianCountrySide: ManifestoArticle = {
   cover: {
     src: '/images/editorial/country-side/capa.webp',
     alt: {
-      en: 'Provisional cover: a dark field with an amber rule. No text, no photograph.',
-      pt: 'Capa provisória: campo escuro com um filete âmbar. Sem texto, sem fotografia.',
+      en: 'Masked revellers on a pink car during the feast in Posse: clown, skull and bull masks, hands raised, a storm sky behind.',
+      pt: 'Foliões mascarados sobre um carro rosa na festa de Posse: máscaras de palhaço, caveira e boi, mãos erguidas, céu de tempestade atrás.',
     },
-    credit: '.TBF. inc (capa gerada, provisória)',
+    credit: '.TBF. inc',
   },
+
+  // Card social próprio. Vem do segundo quadro do mesmo PSD, composto para
+  // sobreviver ao corte central: o campo `cover` acima é 3:2 e ficaria decepado
+  // no preview de mensageiro.
+  ogImage: '/images/editorial/country-side/og-capa.jpg',
 
   blocks: [
     // ─── ABERTURA. O dateline do próprio texto fonte entra no kicker do
