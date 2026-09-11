@@ -212,6 +212,10 @@
    em cima, thin minúsculo embaixo. O par é um grupo só. */
 .heroHeadline {
   margin: 0;
+  /* Recuo do texto do lockup: TUDO na coluna alinha numa x so, e a unica coisa
+     fora do alinhamento e a esfera da identidade .TBF., que e grafico, nao
+     texto (pedido dele, 11/09/2026). Mobile-first: nasce aqui. */
+  padding-left: calc(20px + var(--tbf-space-2));
   font-family: var(--tbf-font-family-display);
   font-weight: 800;
   font-size: var(--tav-text-hero-headline);
@@ -222,7 +226,10 @@
   max-width: 18ch;
 }
 .heroStatement {
-  margin-top: var(--tbf-space-3);
+  /* Mais perto do titulo (11/09/2026): os dois sao UM grupo, a entrada. O que
+     separa grupo de grupo e o gap do .heroBodyMiddle, nao este espaco aqui. */
+  margin-top: var(--tbf-space-2);
+  padding-left: calc(20px + var(--tbf-space-2));
   font-family: var(--tbf-font-family-display);
   font-weight: 300;
   font-size: var(--tav-text-statement);
@@ -263,8 +270,21 @@
    e o mobile ficava com os icones soltos meio passo a esquerda do texto, que
    foi o que ele viu em 11/09. Mobile-first: nasce aqui, o desktop so ajusta a
    margem de cima. */
-.heroSocial {
-  margin-top: var(--tbf-space-6);
+/* 🔴 `.socialRow.heroSocial`, com as DUAS classes, e nao so `.heroSocial`.
+   O elemento recebe as duas (SocialIcons.tsx concatena), `.socialRow` zera
+   `margin` e `padding` no atacado e mora MAIS ABAIXO neste mesmo arquivo:
+   com especificidade igual, quem vem depois ganha. Entre 10 e 11/09 duas
+   correcoes foram escritas aqui e nasceram mortas por isso, sem erro nenhum
+   no console. Modificador de componente precisa vencer o reset do componente.
+
+   O afastamento: os icones sao um agrupamento diferente do "represented by",
+   e o espaco tem que dizer isso. Maior que o gap interno do .heroBodyMiddle,
+   senao os tres grupos leem como um so.
+
+   O recuo: alinha os icones com o TEXTO do lockup, 20px da esfera mais o gap.
+   Assim tudo na coluna cai na mesma x e so a esfera fica fora. */
+.socialRow.heroSocial {
+  margin-top: var(--tbf-space-10);
   padding-left: calc(20px + var(--tbf-space-2));
 }
 
@@ -329,9 +349,9 @@
      mesmo recuo de .heroLocation, pra todo o texto da coluna alinhar numa
      x só (a linha do "BASED IN"). O selo redondo do RepresentedBy continua
      pendurado à esquerda de propósito, é gráfico, não texto. */
-  .heroHeadline,
-  .heroStatement { padding-left: calc(20px + var(--tbf-space-2)); }
-  .heroSocial { margin-top: 0; }
+  /* O recuo agora nasce no mobile (ver .heroHeadline). Aqui sobra o que so
+     vale no desktop: a coluna ja esta ao lado do quadrado, sem margem de cima. */
+  .socialRow.heroSocial { margin-top: 0; }
 }
 
 @media (min-width: 1280px) {

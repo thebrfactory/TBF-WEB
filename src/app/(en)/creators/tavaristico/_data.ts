@@ -493,7 +493,11 @@ export const VENTURES: Venture[] = [
     index: '04',
     name: '.RUNWAY UNTD COLLECTIVE.',
     category: ['FASHION', 'CULTURE', 'CREATIVE DIRECTION'],
-    description: 'Fashion, image and cultural production.',
+    // Legenda tirada da PROPRIA label (11/09/2026): `intro.line1` de
+    // src/content/i18n/pages/labels/runwayunited.ts. Nao e a bio literal do
+    // @runwayunited: o Instagram recusou a sessao e nao deu para ler. Trocar
+    // por ela quando ele mandar o texto.
+    description: 'A platform dedicated to fashion films, visual essays and contemporary runway culture.',
     weight: 'primary',
     cover: `${base}/ventures/runway-untd.webp`,
     coverAlt: '.RUNWAY UNTD COLLECTIVE.',

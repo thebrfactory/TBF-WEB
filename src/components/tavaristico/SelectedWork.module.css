@@ -47,6 +47,12 @@
 /* Ponto 5 do escopo: todo item pesa igual. Um tamanho so, sem variante
    primary/secondary. */
 .ventureName {
+  /* QUEBRA POR PALAVRA (pedido dele, 11/09/2026): ".RUNWAY UNTD COLLECTIVE."
+     quebrava como ".RUNWAY UNTD" / "COLLECTIVE.", partindo o nome em lugar
+     que o nome nao tem. `min-content` faz a caixa valer a palavra mais larga,
+     entao nome de varias palavras desce uma por linha. Nome de uma palavra so
+     (CRIVO, VERAOZAO, BRANDSYSTEM) nao muda: min-content ja e a linha inteira. */
+  max-width: min-content;
   font-family: var(--tbf-font-family-display);
   font-weight: 800;
   font-size: var(--tav-text-title);
