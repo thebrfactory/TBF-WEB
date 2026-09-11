@@ -40,7 +40,7 @@ await page.waitForTimeout(2500);           // fontes + blobs do fundo
 await page.addStyleTag({ content: `
   .navb, .hint { display:none !important; }
   .slide { transition:none !important; }
-  .mark .ctx { display:none !important; }
+  .mark .ctx, .hud-right { display:none !important; }
   .marker::after { content:none !important; }
   .lockup .descr { border-top:0 !important; padding-top:0 !important; }
 ` });
