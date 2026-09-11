@@ -33,8 +33,22 @@ const page = await browser.newPage({
 await page.goto('file://' + tmp, { waitUntil: 'networkidle' });
 await page.waitForTimeout(2500);           // fontes + blobs do fundo
 
-// chrome de interacao nao existe em story estatico
-await page.addStyleTag({ content: '.navb,.hint{display:none!important} .slide{transition:none!important}' });
+// chrome de interacao nao existe em story estatico, e a casa nao usa traco horizontal
+// (CLAUDE.md do TBF-WEB). O que sai, pedido dele em 11/09: o rotulo "DECK V3" do topo,
+// o eyebrow "ATON PRAXIS - DESAFIO 39" e a linha "V3 - 2 apresentadores" da capa, e as
+// duas reguas (a de baixo do wordmark e a que sai do eyebrow).
+await page.addStyleTag({ content: `
+  .navb, .hint { display:none !important; }
+  .slide { transition:none !important; }
+  .mark .ctx { display:none !important; }
+  .marker::after { content:none !important; }
+  .lockup .descr { border-top:0 !important; padding-top:0 !important; }
+` });
+await page.evaluate(() => {
+  const capa = document.querySelectorAll('.slide')[0];
+  capa?.querySelector('.marker')?.remove();
+  capa?.querySelector('.fine')?.remove();
+});
 
 // `br.lb{display:none}` abaixo de 860px cola as palavras ("rankeiafornecedores",
 // "ganha,medido"), porque nao ha espaco em volta da quebra no HTML. Troca por espaco.
