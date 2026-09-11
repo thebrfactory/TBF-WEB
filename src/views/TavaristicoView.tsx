@@ -214,11 +214,17 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           <ul className={styles.careerList}>
             {CAREER.map((job) => (
               <li key={`${job.org}-${job.role}`} className={styles.careerItem}>
+                {/* O ponto e decoracao da linha do tempo: quem le por leitor de
+                    tela ja tem periodo, cargo e empresa em texto. */}
+                <span className={styles.careerDot} aria-hidden="true" />
                 <span className={styles.careerPeriod}>
                   {lang === 'pt' ? job.periodPT : job.periodEN}
                 </span>
                 <span className={styles.careerRole}>{job.role}</span>
-                <span className={styles.careerOrg}>{job.org}</span>
+                <span className={styles.careerOrg}>
+                  {job.org}
+                  {job.city ? <span className={styles.careerCity}>{job.city}</span> : null}
+                </span>
               </li>
             ))}
           </ul>
@@ -253,7 +259,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           support={t.index.hospitalitySupport}
           cta={t.index.hospitalityCta}
           href={localizedPath('/creators/tavaristico/hospitality', lang)}
-          imageSrc="/images/creators/tavaristico/hospitality/destaques/02-piscina.webp"
+          imageSrc="/images/creators/tavaristico/hospitality/08-area-externa.webp"
           imageAlt={t.index.hospitalityLabel}
         />
       </section>

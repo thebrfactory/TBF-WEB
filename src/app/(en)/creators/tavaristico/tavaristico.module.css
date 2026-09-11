@@ -153,7 +153,12 @@
   flex-direction: row;
   align-items: flex-end;
   gap: var(--tbf-space-3);
-  padding: var(--tbf-space-4);
+  /* A foto entra na MESMA x do texto da pagina (11/09/2026): o quadrado comeca
+     na margem de 20px e o recuo de 28px poe a foto em 48, onde ja caem
+     headline, statement, lockup e icones. E mais folga embaixo, para a foto
+     nao encostar na base do quadrado. */
+  padding: var(--tbf-space-4) var(--tbf-space-4) var(--tbf-space-6)
+           calc(20px + var(--tbf-space-2));
 }
 .heroAvatar {
   position: relative;
@@ -221,7 +226,10 @@
   font-size: var(--tav-text-hero-headline);
   line-height: 1;
   letter-spacing: -0.01em;
-  text-transform: uppercase;
+  /* SEM caixa alta (11/09/2026, pedido dele): a frase volta ao maiusculo e
+     minusculo do texto-fonte ("I build brands..."). O peso 800 ja e o
+     contraste com o statement thin embaixo; a caixa alta era contraste a
+     mais sobre o mesmo par. */
   color: var(--tbf-text-primary);
   max-width: 18ch;
 }
@@ -678,6 +686,11 @@
 /* Uma posição por linha, três informações em escada: período (mono, micro,
    terciário), cargo (display 800) e empresa (display leve). Sem traço
    horizontal entre elas, como manda a regra da casa: separa o espaço. */
+/* LINHA DO TEMPO (11/09/2026, pedido dele): um fio reto bem fino descendo a
+   coluna e um ponto em cada posicao, na altura do cargo, que e o que esta em
+   negrito. O fio e VERTICAL: a regra da casa proibe traco/divider horizontal,
+   e aqui ele nao separa nada, ele liga. Nasce e morre no primeiro e no ultimo
+   ponto (por isso o `top`/`bottom` recuados), senao sobra fio solto nas pontas. */
 .careerList {
   list-style: none;
   margin: 0;
@@ -685,11 +698,34 @@
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-5);
+  position: relative;
+}
+.careerList::before {
+  content: '';
+  position: absolute;
+  left: 2.5px;
+  top: 0.7em;
+  bottom: 0.7em;
+  width: 1px;
+  background: var(--tbf-border, rgba(240, 237, 230, 0.14));
 }
 .careerItem {
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
+  position: relative;
+  padding-left: var(--tbf-space-5);
+}
+/* O ponto cai na linha de base do PERIODO, que e a primeira linha do item, e
+   o fio passa pelo centro dele. 6px: menor some, maior vira bolinha. */
+.careerDot {
+  position: absolute;
+  left: 0;
+  top: 0.45em;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--tbf-text-tertiary);
 }
 .careerPeriod {
   font-family: var(--mono);
@@ -714,6 +750,13 @@
   line-height: 1.3;
   color: var(--tbf-text-secondary);
 }
+/* A cidade entra depois da empresa, separada por um ponto medio, na tinta
+   mais apagada: e contexto, nao e o nome do lugar onde ele trabalhou. */
+.careerCity::before {
+  content: ' · ';
+  color: var(--tbf-text-tertiary);
+}
+.careerCity { color: var(--tbf-text-tertiary); }
 
 @media (min-width: 1024px) {
   .about {

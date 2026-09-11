@@ -772,6 +772,14 @@ export interface CareerEntry {
   org: string
   periodEN: string
   periodPT: string
+  /**
+   * Cidade da posicao. Pedido dele em 11/09/2026, com o motivo: "e importante
+   * mostrar que sou de Salvador". Fica em branco enquanto ele nao mandar a
+   * lista: o LinkedIn devolveu HTTP 999 (authwall) nas duas tentativas, e
+   * cidade de emprego e fato dele, nao coisa que se deduz. Entrada sem
+   * `city` simplesmente nao imprime a linha.
+   */
+  city?: string
 }
 
 export const CAREER: CareerEntry[] = [

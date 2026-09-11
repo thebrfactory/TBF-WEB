@@ -45,11 +45,17 @@
 .media {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  /* 3/2 e a proporcao da PROPRIA foto (1500x1000): corte zero, em vez de
+     espremer um retrato 9/16 dentro de uma caixa deitada, que foi o que ele
+     viu ("a imagem nao esta encaixada"). */
+  aspect-ratio: 3 / 2;
 }
 /* object-position sobe a pessoa no quadro: sem isso o cover corta a
    cabeca quando a proporcao do card aperta (mobile e desktop). */
-.media img { object-fit: cover; object-position: top center; }
+/* `center`, nao `top`: o `top` existia para nao decapitar a pessoa da foto
+   vertical antiga. Com foto deitada na mesma proporcao da caixa nao ha corte
+   para compensar, e o `top` so desequilibrava o quadro. */
+.media img { object-fit: cover; object-position: center; }
 
 .body {
   display: flex;
@@ -96,7 +102,7 @@
      retrato mas nao esticado) da enquadramento decente de pessoa em pe,
      e object-position: top evita cortar a cabeca quando o corte lateral
      aperta. */
-  .media { width: 22rem; flex: none; aspect-ratio: 4 / 5; }
+  .media { width: 22rem; flex: none; aspect-ratio: 3 / 2; }
   .body { justify-content: center; padding: var(--tbf-space-6); }
   .title { font-size: 1.3rem; }
 }
