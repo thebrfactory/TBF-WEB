@@ -238,6 +238,14 @@ export interface StoryFrame {
    * chega até ele); o StoryPlayer continua recebendo string pronta.
    */
   overlay?: { titleEN: string; titlePT: string; kickerEN?: string; kickerPT?: string }
+  /**
+   * QUADRO EM MOVIMENTO (11/09/2026). `src` continua sendo o poster e a
+   * miniatura; isto aqui e o filme que entra por cima. Par AV1 + H.264, a
+   * mesma escada do HeroVideo. Quadro sem `video` segue foto parada.
+   */
+  video?: { av1: string; h264: string }
+  /** Tempo do quadro em ms. Sem ele, vale o do deck (2800). Video pede o seu. */
+  ms?: number
 }
 
 export interface Venture {
@@ -489,6 +497,14 @@ export const VENTURES: Venture[] = [
     weight: 'primary',
     cover: `${base}/ventures/runway-untd.webp`,
     coverAlt: '.RUNWAY UNTD COLLECTIVE.',
+    // 🔴 OS QUATRO QUADROS VIRARAM FILME EM 11/09/2026, a pedido dele: passarela
+    // e movimento, e provar moda com foto parada prova pela metade. A fonte sao
+    // quatro pecas reais do proprio .RUNWAY UNTD COLLECTIVE. (TAV05, Instagram:
+    // RUC-24, RUC-22, RUC-09, RUC-12-V2), cortadas em 6s e recodificadas em
+    // 720x1280. O poster de cada quadro e um frame DO PROPRIO filme, para o
+    // quadro nao piscar uma foto que nao e a do video. As fotos antigas estao
+    // em public/_ARQUIVO, nao foram apagadas.
+    //
     // Imagem: o corpo de trabalho do SPFW · THE PARADISE, que o proprio WORKS
     // ja declara ser "o mesmo corpo de trabalho de Runway Untd Collective".
     // Texto: a base e o site da label, `/labels/runwayunited`, dicionario em
@@ -497,7 +513,12 @@ export const VENTURES: Venture[] = [
     frames: [
       {
         src: `${stories}/runway-untd/01-passarela.webp`,
-        alt: 'Desfile em andamento, a fila de modelos na passarela.',
+        video: {
+          av1: '/videos/runway-untd/01-passarela.av1.mp4',
+          h264: '/videos/runway-untd/01-passarela.mp4',
+        },
+        ms: 6000,
+        alt: 'Desfile em andamento: a fila de modelos desce a passarela.',
         role: 'Runway',
         overlay: {
           kickerEN: 'FASHION · CULTURE · CREATIVE DIRECTION',
@@ -508,7 +529,12 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/runway-untd/02-bastidor.webp`,
-        alt: 'Bastidor do desfile, grupo de pessoas em looks de estampa.',
+        video: {
+          av1: '/videos/runway-untd/02-bastidor.av1.mp4',
+          h264: '/videos/runway-untd/02-bastidor.mp4',
+        },
+        ms: 6000,
+        alt: 'Brazilian Fashion Edit: o grupo em looks de estampa, entre o bastidor e a rua.',
         role: 'Backstage',
         overlay: {
           kickerEN: 'THE COLLECTIVE',
@@ -519,7 +545,12 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/runway-untd/03-retrato.webp`,
-        alt: 'Retrato em luz azul, perfil de um convidado no evento.',
+        video: {
+          av1: '/videos/runway-untd/03-retrato.av1.mp4',
+          h264: '/videos/runway-untd/03-retrato.mp4',
+        },
+        ms: 6000,
+        alt: 'Modelo em primeiro plano na passarela, look azul e branco.',
         role: 'The people',
         overlay: {
           kickerEN: 'WHAT WE DOCUMENT',
@@ -530,7 +561,12 @@ export const VENTURES: Venture[] = [
       },
       {
         src: `${stories}/runway-untd/04-noite.webp`,
-        alt: 'Silhuetas em luz azul, a festa depois do desfile.',
+        video: {
+          av1: '/videos/runway-untd/04-noite.av1.mp4',
+          h264: '/videos/runway-untd/04-noite.mp4',
+        },
+        ms: 6000,
+        alt: 'Cartela do coletivo, THE VHS LOST TAPE, sobre fundo escuro.',
         role: 'The night',
         overlay: {
           kickerEN: 'SÃO PAULO, MADE FOR THE WORLD',

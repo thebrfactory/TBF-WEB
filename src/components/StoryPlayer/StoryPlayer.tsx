@@ -67,6 +67,23 @@ export interface StoryItem {
     /** Linha de apoio, em caixa alta e miúda, acima do título. Opcional. */
     kicker?: string
   }
+  /**
+   * QUADRO EM MOVIMENTO, aberto em 11/09/2026 para o .RUNWAY UNTD COLLECTIVE.:
+   * passarela é movimento, e provar moda com foto parada é provar pela metade.
+   *
+   * `src` CONTINUA obrigatório e vira o poster: é o que a miniatura mostra, o
+   * que cobre o quadro enquanto o vídeo carrega, e o que sobra se o vídeo
+   * falhar. Quadro sem `video` segue sendo foto, exatamente como antes.
+   *
+   * Dois arquivos por quadro, na ordem em que o navegador tenta: AV1 (menor)
+   * e H.264 (universal). Mesmo par que o HeroVideo já usa na home.
+   */
+  video?: { av1: string; h264: string }
+  /**
+   * Tempo deste quadro, em ms. Sem ele, vale o `ms` do deck. Existe porque
+   * vídeo tem duração própria: 2,8s cortaria a passarela no meio do passo.
+   */
+  ms?: number
 }
 
 interface StoryDeckProps {
@@ -140,15 +157,17 @@ export function StoryDeck({
       return
     }
     if (paused) return
-    const t = setInterval(() => {
+    // `setTimeout`, nao `setInterval`: cada quadro pode ter o proprio tempo
+    // (video tem duracao propria), entao o relogio se remarca a cada troca.
+    const t = setTimeout(() => {
       setI((v) => (v + 1) % total)
       setCiclo((c) => c + 1)
-    }, ms)
-    return () => clearInterval(t)
+    }, items[i]?.ms ?? ms)
+    return () => clearTimeout(t)
     // `ciclo` no vetor de dependências de propósito: clicar numa miniatura
     // recria o intervalo, e o quadro escolhido ganha o tempo inteiro em vez do
     // que sobrou do anterior.
-  }, [total, ms, ciclo, paused])
+  }, [total, ms, ciclo, paused, items, i])
 
   // A miniatura ativa se traz para a vista quando o avanço automático passa por
   // ela. Sem isto, a fila fica parada mostrando um trecho enquanto o quadro
@@ -170,7 +189,7 @@ export function StoryDeck({
     <div className={`${styles.deck}${deckClassName ? ` ${deckClassName}` : ''}`}>
       <div
         className={`${styles.player}${playerClassName ? ` ${playerClassName}` : ''}${nav === 'dots' ? ` ${styles.playerDots}` : ''}`}
-        style={{ ['--story-ms' as string]: `${ms}ms` }}
+        style={{ ['--story-ms' as string]: `${items[i]?.ms ?? ms}ms` }}
         role="group"
         aria-label={label}
       >
@@ -216,6 +235,35 @@ export function StoryDeck({
           {items.map((item, idx) => {
             const proximo = (i + 1) % total
             if (idx !== i && idx !== proximo) return null
+            const ligado = idx === i
+            // QUADRO EM MOVIMENTO. O poster e o mesmo `src` da foto, entao o
+            // quadro ja nasce com a imagem certa e o video entra por cima sem
+            // piscar preto. `preload` so no quadro da vez: o proximo fica com
+            // os metadados, que e o bastante para comecar rapido sem baixar o
+            // arquivo inteiro de um quadro que talvez ninguem veja.
+            if (item.video) {
+              return (
+                <video
+                  key={item.src}
+                  ref={(el) => {
+                    if (!el) return
+                    if (ligado) { el.currentTime = 0; void el.play().catch(() => {}) }
+                    else el.pause()
+                  }}
+                  poster={item.src}
+                  muted
+                  playsInline
+                  loop
+                  autoPlay={ligado}
+                  preload={ligado ? 'auto' : 'metadata'}
+                  aria-label={item.alt}
+                  className={`${styles.img}${ligado ? ` ${styles.imgOn}` : ''}`}
+                >
+                  <source src={item.video.av1} type="video/mp4; codecs=av01.0.05M.08" />
+                  <source src={item.video.h264} type="video/mp4" />
+                </video>
+              )
+            }
             return (
               <Image
                 key={item.src}
@@ -224,8 +272,8 @@ export function StoryDeck({
                 width={720}
                 height={1280}
                 sizes="(max-width: 767px) 60vw, 26vw"
-                priority={idx === i && i === 0}
-                className={`${styles.img}${idx === i ? ` ${styles.imgOn}` : ''}`}
+                priority={ligado && i === 0}
+                className={`${styles.img}${ligado ? ` ${styles.imgOn}` : ''}`}
               />
             )
           })}

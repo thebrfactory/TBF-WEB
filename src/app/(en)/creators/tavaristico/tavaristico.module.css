@@ -258,7 +258,15 @@
   gap: var(--tbf-space-8);
   margin-top: var(--tbf-space-6);
 }
-.heroSocial { margin-top: var(--tbf-space-6); }
+/* O recuo alinha os icones com o TEXTO do lockup "represented by", nao com o
+   avatar: 20px do circulo mais o gap do flex. Vinha so no desktop desde 10/09
+   e o mobile ficava com os icones soltos meio passo a esquerda do texto, que
+   foi o que ele viu em 11/09. Mobile-first: nasce aqui, o desktop so ajusta a
+   margem de cima. */
+.heroSocial {
+  margin-top: var(--tbf-space-6);
+  padding-left: calc(20px + var(--tbf-space-2));
+}
 
 @media (min-width: 1024px) {
   /* Desktop: quadrado numa metade, descrição na outra. Correção 10/09/2026
@@ -323,7 +331,7 @@
      pendurado à esquerda de propósito, é gráfico, não texto. */
   .heroHeadline,
   .heroStatement { padding-left: calc(20px + var(--tbf-space-2)); }
-  .heroSocial { margin-top: 0; padding-left: calc(20px + var(--tbf-space-2)); }
+  .heroSocial { margin-top: 0; }
 }
 
 @media (min-width: 1280px) {
