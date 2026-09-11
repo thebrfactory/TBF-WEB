@@ -45,9 +45,10 @@ await page.addStyleTag({ content: `
   .lockup .descr { border-top:0 !important; padding-top:0 !important; }
 ` });
 await page.evaluate(() => {
-  const capa = document.querySelectorAll('.slide')[0];
-  capa?.querySelector('.marker')?.remove();
-  capa?.querySelector('.fine')?.remove();
+  // O eyebrow ("ATON PRAXIS - DESAFIO 39", "ATO 2 - DOR Nº 1", "ATO 4 - VALOR") e
+  // numeracao de ato de apresentacao: situa quem assiste ao pitch, nao quem ve story.
+  document.querySelectorAll('.slide .marker').forEach((m) => m.remove());
+  document.querySelectorAll('.slide')[0]?.querySelector('.fine')?.remove();
 });
 
 // `br.lb{display:none}` abaixo de 860px cola as palavras ("rankeiafornecedores",
