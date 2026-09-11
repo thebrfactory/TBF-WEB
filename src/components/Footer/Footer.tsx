@@ -7,6 +7,7 @@ import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import Image from 'next/image'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
 import { Ticker, type TickerSegment } from '@/components/Ticker/Ticker'
+import { FlatIcon } from '@/components/icons/FlatIcon'
 import deployCount from '@/data/deploy-count.json'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
@@ -92,13 +93,10 @@ export function Footer({ lang }: { lang: Lang }) {
                 aria-label="LinkedIn"
                 className="footer__social"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <line x1="8" y1="11" x2="8" y2="16.4" />
-                  <circle cx="8" cy="7.9" r="0.7" fill="currentColor" stroke="none" />
-                  <path d="M12 16.4V11" />
-                  <path d="M12 13.4a2.3 2.3 0 0 1 4.6 0v3" />
-                </svg>
+                {/* Mesmo glifo do hero do Tavaristico (11/09/2026, pedido dele):
+                    o `in` cheio do FlatIcon, e nao o desenho de contorno que
+                    existia so aqui. Uma marca, um icone, no site inteiro. */}
+                <FlatIcon name="linkedin" size={18} />
               </a>
             </div>
           </div>

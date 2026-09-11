@@ -775,10 +775,15 @@
   text-align: left;
 }
 
+/* O BLOCO LEGAL (11/09/2026, "o primeiro esta ok, o segundo precisamos
+   ajustar"): duas colunas em que um item quebra em duas linhas e o vizinho
+   nao, entao as linhas ficavam desencontradas. `align-items: start` e folga
+   vertical maior deixam cada celula comecar na mesma altura. */
 .footer__grid--nav > :last-child .footer__nav-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--tbf-space-3) var(--tbf-space-6);
+  align-items: start;
+  gap: var(--tbf-space-5) var(--tbf-space-6);
 }
 
 @media (min-width: 1024px) {
@@ -834,11 +839,14 @@
    bloco no rodapé. */
 
 /* Copyright row */
+/* As tres frases finais (CNPJ, endereco, versao) ganharam ar (11/09/2026):
+   space-6 colava o bloco no LEGAL logo acima e as quatro coisas liam como uma
+   lista so. */
 .footer__copyright {
   display: flex;
   flex-direction: column;
   gap: var(--tbf-space-2);
-  margin-top: var(--tbf-space-6);
+  margin-top: var(--tbf-space-12);
 }
 
 /* As três linhas do copyright na MESMA cor, um degrau mais clara que o resto do
@@ -1369,8 +1377,11 @@
    A classe continua existindo como ponto de encaixe: a diferença entre os dois
    letreiros passa a ser só uma, o de cima é pinado e o de baixo corre no fluxo
    (`.ticker--flow`). */
+/* O letreiro de cidades usa o fundo do RODAPE, nao o preto do letreiro pinado
+   (11/09/2026): ele mora dentro do rodape, e a faixa preta cortava o bloco em
+   dois. As reguas pontilhadas continuam, sao elas que o delimitam agora. */
 .ticker--cities {
-  background-color: var(--tbf-ticker-bg);
+  background-color: var(--tbf-footer-bg);
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).
@@ -1415,8 +1426,11 @@
    as palavras que estão thin e aumente para uma fonte só um pouco mais bold").
    Thin é 100, e num corpo de 14px correndo em movimento sobre preto a haste
    quase some. Book é 350, o degrau seguinte que a família tem de verdade. */
-.ticker__seg--book   { font-weight: var(--tbf-font-weight-raw-350); }
-.ticker__seg--medium { font-weight: var(--tbf-font-weight-raw-500); }
+/* CONTRASTE MAIOR ENTRE OS DOIS PESOS (11/09/2026): o que era bold vira
+   extrabold e o que era thin vira light. 350/500 era um degrau pequeno demais
+   para ler correndo; 300/800 separa estado de cidade a um olhar. */
+.ticker__seg--book   { font-weight: var(--tbf-font-weight-raw-300); }
+.ticker__seg--medium { font-weight: var(--tbf-font-weight-raw-800); }
 .ticker__seg--black  { font-weight: var(--tbf-font-weight-raw-900); }
 
 /* 🔴 O RESPIRO ENTRE SEGMENTOS MORA AQUI, e não no item, desde que o ponto
@@ -3383,11 +3397,15 @@ html[data-morphing] ::view-transition-new(root) {
    `display: inline-block` com `translate` no lugar de `vertical-align`: assenta
    a ponta da seta na altura da maiúscula sem mexer na altura da linha.
    ============================================================================= */
+/* A SETA NAO DESCE SOZINHA (11/09/2026): "LAW ENFORCEMENT GUIDELINES" quebrava
+   em duas linhas e a seta caia orfa na terceira. O espaco antes dela passa a
+   ser um NBSP no ::before, que nao e ponto de quebra: a seta fica colada na
+   ultima palavra sem precisar de `white-space: nowrap`, que a casa proibe. */
+.newtab-icon::before { content: '\00a0'; }
 .newtab-icon {
   display: inline-block;
   font-size: 0.72em;
   line-height: 1;
-  margin-left: 0.22em;
   transform: translateY(-0.06em);
   /* A seta é decoração do link, não do texto: sublinhado dela sai. */
   text-decoration: none;

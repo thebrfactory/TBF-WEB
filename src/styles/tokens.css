@@ -134,6 +134,7 @@
   --tbf-duration-raw-900:  900ms;
   --tbf-duration-raw-1200: 1200ms;
   --tbf-duration-raw-2000: 2000ms;
+  --tbf-duration-raw-26s:  26s;
   --tbf-duration-raw-40s:  40s;
 
   /* ─── 1.5 Easing Primitives ─── */
@@ -152,7 +153,9 @@
      fundador: "bordas arredondadas, sempre", então há um degrau para cada
      tamanho de caixa, e ninguém mais chuta um px cru. */
   --tbf-radius-raw-8:    8px;
+  --tbf-radius-raw-10:   10px;
   --tbf-radius-raw-12:   12px;
+  --tbf-radius-raw-14:   14px;
   --tbf-radius-raw-18:   18px;
   --tbf-radius-raw-full: 9999px;
 
@@ -416,7 +419,10 @@
   --tbf-motion-easing-loading-enter:   var(--tbf-easing-raw-ease-out);
   --tbf-motion-easing-loading-exit:    var(--tbf-easing-raw-ease-in);
 
-  --tbf-motion-duration-ticker: var(--tbf-duration-raw-40s);
+  /* Letreiro mais rapido (11/09/2026, pedido dele nos dois: o de CURRENTLY
+     EXPLORING e o de cidades do rodape). 40s -> 26s por volta, uns 35% mais
+     veloz. O REPEAT do Ticker continua multiplicando isto por 3. */
+  --tbf-motion-duration-ticker: var(--tbf-duration-raw-26s);
   --tbf-motion-easing-ticker:   var(--tbf-easing-raw-linear);
 
   --tbf-motion-duration-form-focus:   var(--tbf-duration-raw-200);
@@ -435,8 +441,11 @@
      marcadores do /pitch). Tile = miniatura/quadro de imagem. Card = cartão,
      popup, banner. */
   --tbf-radius-chip:   var(--tbf-radius-raw-8);
-  --tbf-radius-tile:   var(--tbf-radius-raw-12);
-  --tbf-radius-card:   var(--tbf-radius-raw-18);
+  /* CANTOS UM POUCO MENOS REDONDOS (11/09/2026): "tô achando eles arredondados
+     DEMAIS e eu gosto, mas não precisa de tanto". Card 18 -> 14, tile 12 -> 10.
+     Mexer AQUI e nao em cada componente: o raio e token, e quem usa herda. */
+  --tbf-radius-tile:   var(--tbf-radius-raw-10);
+  --tbf-radius-card:   var(--tbf-radius-raw-14);
 
   /* ─── 2.10 Z-Index Semantic ─── */
   --tbf-z-below:   var(--tbf-z-raw-below);
