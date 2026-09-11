@@ -1,13 +1,17 @@
-// Gerador dos quadros de story do CRIVO (1080x1920) a partir de ~/Desktop/CRIVO/deck-v3.html.
+// Gerador dos quadros de story do CRIVO (1080x1920). A fonte vem em DECK_SRC.
 // Viewport mobile REAL (540x960 @2x): o deck e responsivo, entao a slide PREENCHE o quadro.
 // Print de desktop colado no meio de tela vertical foi o erro que isto conserta (10/09/2026).
-// uso: node scripts/capture-deck-story.mjs <pasta-de-saida> <indice da slide>...
+// FONTE DE VERDADE: index.html do repo vitorthelobo/crivo-pitch, 16 slides. NAO o
+// deck-v3.html do Desktop, que e de 30/08, parou em 15 slides e ja rendeu uma leva errada.
+//   gh api repos/vitorthelobo/crivo-pitch/contents/index.html \
+//     -H 'Accept: application/vnd.github.raw' > /tmp/crivo-index.html
+// uso: DECK_SRC=/tmp/crivo-index.html node scripts/capture-deck-story.mjs <saida> <indice>...
 
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const SRC = process.env.HOME + '/Desktop/CRIVO/deck-v3.html';
+const SRC = process.env.DECK_SRC || (process.env.HOME + '/Desktop/CRIVO/deck-v3.html');
 const OUT = process.argv[2];
 const SLIDES = process.argv.slice(3).map(Number);
 
@@ -31,6 +35,13 @@ await page.waitForTimeout(2500);           // fontes + blobs do fundo
 
 // chrome de interacao nao existe em story estatico
 await page.addStyleTag({ content: '.navb,.hint{display:none!important} .slide{transition:none!important}' });
+
+// `br.lb{display:none}` abaixo de 860px cola as palavras ("rankeiafornecedores",
+// "ganha,medido"), porque nao ha espaco em volta da quebra no HTML. Troca por espaco.
+// Defeito da fonte, nao da captura: o deck no celular mostra o mesmo.
+await page.evaluate(() => {
+  document.querySelectorAll('br.lb').forEach((b) => b.replaceWith(' '));
+});
 
 for (const n of SLIDES) {
   const label = await page.evaluate((i) => {
