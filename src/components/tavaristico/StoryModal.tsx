@@ -128,6 +128,10 @@ export function StoryModal({
           onPointerCancel={cancelHold}
           onPointerLeave={cancelHold}
         >
+          {/* O X DE FECHAR MORA DENTRO DO StoryDeck (pedido do fundador
+              2026-09-16), no `.head` do quadro, mesma linha do avatar e do
+              handle. Antes vivia aqui, sobre o `.deckWrap`: ver o porque da
+              mudanca no comentario de `onClose` em StoryPlayer.tsx. */}
           <StoryDeck
             items={frames}
             handle={handle}
@@ -136,6 +140,7 @@ export function StoryModal({
             label={label}
             playerClassName={styles.modalPlayer}
             paused={held}
+            onClose={onClose}
           />
           {/* Zonas de toque sobre o quadro, no espirito do Instagram: metade
               direita avanca, metade esquerda volta. `aria-hidden` porque a
@@ -160,23 +165,6 @@ export function StoryModal({
               if (!held) tap('Próxima peça')
             }}
           />
-          {/* X DENTRO DO QUADRO, igual ao Instagram (correcao do fundador
-              09/09/2026 em cima de print: o (X) estava fora, flutuando acima
-              do quadro). Fica no MESMO invólucro das zonas de toque, que tem
-              exatamente a largura do quadro (ver StoryModal.module.css), por
-              isso "right: 0" aqui cai na quina certa em vez de na quina do
-              dialog (que pode ser mais largo). z-index acima das zonas de
-              toque e da barra de tempo, senao o clique cairia nelas. Sem
-              fundo: so o glifo branco com sombra sutil, area de toque de
-              44px, o mesmo tratamento discreto do story real. */}
-          <button
-            type="button"
-            className={styles.close}
-            onClick={onClose}
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&#10005;</span>
-          </button>
         </div>
       </div>
     </div>,

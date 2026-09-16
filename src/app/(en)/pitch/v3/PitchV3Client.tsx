@@ -324,6 +324,14 @@ function CaseStoryModal({
           onPointerCancel={cancelHold}
           onPointerLeave={cancelHold}
         >
+          {/* O X DE FECHAR MORA DENTRO DO StoryDeck (pedido do fundador
+              2026-09-16), no `.head` do quadro, mesma linha do avatar e do
+              handle. Antes vivia aqui, sobre o `deckWrap` (StoryModal.module.css,
+              importado por cima): esse invólucro não tem largura própria, mede
+              pelo maior filho, e a esteira de pontos/miniaturas do case
+              VERAOZAO (12 peças, sem quebra) podia ficar mais larga que o
+              quadro, empurrando o X para fora dele no celular. Ver o
+              comentário de `onClose` em StoryPlayer.tsx. */}
           <StoryDeck
             items={frames}
             handle={handle}
@@ -333,6 +341,7 @@ function CaseStoryModal({
             label={label}
             playerClassName={modalStyles.modalPlayer}
             paused={held}
+            onClose={onClose}
           />
           <button
             type="button"
@@ -352,14 +361,6 @@ function CaseStoryModal({
               if (!held) tap('Próxima peça')
             }}
           />
-          <button
-            type="button"
-            className={modalStyles.close}
-            onClick={onClose}
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&#10005;</span>
-          </button>
         </div>
       </div>
     </div>,
@@ -813,9 +814,15 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
               2026-08-14): o avatar do modal é a foto de perfil real do
               @odecasahostel, e o handle é "Ô De Casa". */}
           <div className="p3-case-story-trigger">
+            {/* CAPA = IDENTIDADE DO Ô, NÃO A PRIMEIRA PEÇA (pedido do fundador
+                2026-09-16). Era `CASE.media[0].src`, a primeira foto da
+                campanha; virou o avatar real do @odecasahostel, o mesmo já
+                usado no cabeçalho do modal (`avatarSrc` do CaseStoryModal
+                abaixo). Um story no Instagram mostra o perfil de quem posta,
+                nunca a primeira peça do carrossel. */}
             <StoryRing
-              cover={CASE.media[0].src}
-              alt={CASE.media[0].alt.pt}
+              cover="/images/pitch/veraozao/o-avatar.webp"
+              alt="Ô De Casa"
               size={88}
               ariaLabel={`Abrir ${caseStoryLabel}`}
               onClick={() => setCaseStoryOpen(true)}

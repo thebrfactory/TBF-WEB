@@ -192,16 +192,20 @@
   }
 }
 
-/* PILULA ESCURA COM ICONES (pedido do fundador 2026-09-16, referencia iOS
-   switch). O texto "PT | EN" virou dois selos circulares (bandeira do Brasil,
-   globo) dentro de um trilho grafite quase preto com borda sutil. O trilho
-   volta a existir (tinha sumido em 10/09/2026): a diferenca e que agora ele
-   nao e decoracao escura em cima de site escuro, e o corpo do controle, como
-   o trilho de um switch de verdade.
+/* O CONTINENTE SUMIU. Antes a pilula tinha fundo escuro translucido, borda e
+   desfoque: tres camadas de detalhe escuro empilhadas em cima de um site que ja
+   e escuro, o que a fazia ler como uma mancha em vez de um controle. Reclamacao
+   do fundador em 10/09/2026: "possui muitas cores escuras e detalhes, preciso
+   que seja mais minimalista e com mais elementos brancos".
 
-   O que separa ativo de inativo continua sendo SO a pastilha (thumb) que
-   desliza por baixo do icone aceso: os dois selos ficam sempre cheios, sem
-   opacidade rebaixada (licao do desenho anterior, ver o historico do arquivo). */
+   Sobraram DUAS coisas: os dois rotulos e uma pastilha BRANCA solida embaixo do
+   ativo. Sem fundo, sem borda, sem blur.
+
+   E O QUE FAZ ELE PARECER UM BOTAO, para quem ve pela primeira vez: os dois
+   idiomas ficam SEMPRE na tela, um aceso e um apagado. Um rotulo sozinho seria
+   lido como etiqueta de estado ("voce esta em PT"); dois lado a lado, com um so
+   preenchido, so podem ser uma escolha. O contraste alto do branco cheio contra
+   o apagado e o que torna a escolha visivel de longe. */
 .lang-switch {
   position: fixed;
   /* Centrada na altura da barra de navegacao, nao colada no topo. */
@@ -214,9 +218,9 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  padding: 3px;
-  background: var(--tbf-color-smoke);
-  border: 1px solid color-mix(in srgb, var(--tbf-color-parchment) 14%, transparent);
+  padding: 0;
+  background: none;
+  border: none;
   border-radius: var(--tbf-radius-full);
 }
 
@@ -227,25 +231,25 @@
   }
 }
 
-/* A PASTILHA. Mist (--tbf-color-mist) por cima de smoke (--tbf-color-smoke):
-   um degrau mais clara que o trilho, nunca branca (o branco ficou so para o
-   selo do Brasil). O inset de 3px repete o padding do trilho, entao ela nunca
-   toca a borda. */
+/* A PASTILHA. Continua sendo UM elemento que viaja entre as duas pontas, que e
+   o que transmite que os dois lados sao o mesmo controle e nao dois botoes.
+   Mudou a cor: era cinza de fundo secundario, virou branco cheio.
+   A conta perdeu os 3px de padding que o continente tinha: agora ela ocupa
+   metade cheia do controle, menos metade do vao de 2px. */
 .lang-switch__thumb {
   position: absolute;
-  top: 3px;
-  left: 3px;
+  top: 0;
+  left: 0;
   z-index: 0;
-  width: calc((100% - 6px - 2px) / 2);
-  height: calc(100% - 6px);
-  background: var(--tbf-color-mist);
+  width: calc((100% - 2px) / 2);
+  height: 100%;
+  background: var(--tbf-text-primary);
   border-radius: var(--tbf-radius-full);
   transform: translateX(0);
-  /* ~200ms, pedido explicito do fundador (referencia iOS): mais curta que a
-     desaceleracao longa do desenho anterior, porque agora o trilho ja mostra
-     as duas paradas (os dois selos), entao o olho nao precisa do peso extra
-     para achar o destino. */
-  transition: transform var(--tbf-duration-raw-200) var(--tbf-easing-raw-ease-out);
+  /* Desaceleracao longa da casa: sai rapido e CHEGA devagar, que e o que faz o
+     movimento parecer peso e nao animacao. Acima da micro (150ms) de proposito,
+     porque o percurso e longo e a 150ms vira teleporte. */
+  transition: transform var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
 .lang-switch[data-lang='en'] .lang-switch__thumb {
@@ -262,52 +266,36 @@
   align-items: center;
   justify-content: center;
   text-decoration: none;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  /* BRANCO CHEIO nos dois, e negrito nos dois. Antes o inativo vinha rebaixado
+     a 55%, e ele pediu o PT solido em 10/09/2026. Quem separa ativo de inativo
+     passa a ser SO a pastilha branca por baixo, nunca a intensidade da tinta:
+     um rotulo apagado convida a ler "desligado" em vez de "a outra opcao". */
+  color: var(--tbf-text-primary);
   background: transparent;
   border: none;
   box-shadow: none;
   border-radius: var(--tbf-radius-full);
   cursor: pointer;
+  transition: color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
-.lang-switch__btn svg {
-  display: block;
-  width: 20px;
-  height: 20px;
+/* O ativo fica sobre a pastilha branca, entao inverte para o preto da pagina. */
+.lang-switch__btn[data-active='true'] {
+  color: var(--tbf-bg-primary);
+  background: transparent;
 }
 
-@media (min-width: 1024px) {
-  .lang-switch__btn svg {
-    width: 22px;
-    height: 22px;
-  }
+.lang-switch__btn:hover {
+  color: var(--tbf-text-primary);
 }
 
-@media (hover: hover) {
-  .lang-switch__btn:hover svg {
-    opacity: 0.85;
-  }
-}
-
-/* ALVO DE TOQUE MINIMO (WCAG 2.5.5), 44px. O desenho da pilula e compacto de
-   proposito (28px/30px de altura), entao o alvo clicavel estica alem do
-   desenho, nunca por cima do vizinho: so para fora, cada um para o seu lado.
-   first-child/last-child bastam, sao sempre dois botoes, PT e EN. */
-.lang-switch__btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  height: 44px;
-  transform: translateY(-50%);
-}
-
-.lang-switch__btn:first-child::before {
-  left: -12px;
-  right: 0;
-}
-
-.lang-switch__btn:last-child::before {
-  left: 0;
-  right: -12px;
+.lang-switch__btn[data-active='true']:hover {
+  color: var(--tbf-bg-primary);
 }
 
 .lang-switch__btn:focus-visible {
@@ -316,6 +304,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .lang-switch__btn,
   .lang-switch__thumb {
     transition: none;
   }
@@ -3097,19 +3086,11 @@ html[data-morphing] ::view-transition-new(root) {
    MONOGRAM DIVIDER
    ============================================================================= */
 
-/* Respiro extra do glifo (ver MonogramDivider) quando ele separa o carrossel
-   de fotos da grade de materias na home: layout ficava colado, "sobrecarregado"
-   (pedido do fundador 2026-09-16). Mobile-first: cresce no desktop. O glifo em
-   si nao muda de estilo em lugar nenhum, so o espaco ao redor dele aqui. */
-.monogram-divider--carousel-gap {
-  margin-block: var(--tbf-space-2);
-}
-
-@media (min-width: 1024px) {
-  .monogram-divider--carousel-gap {
-    margin-block: var(--tbf-space-6);
-  }
-}
+/* A classe de margem extra (.monogram-divider--carousel-gap) saiu (pedido do
+   fundador 2026-09-16, mesmo dia): somada ao paddingBlock do proprio glifo e
+   ao paddingTop da grade logo depois, o vao entre carrossel e materias ficava
+   ENORME. O paddingBlock do MonogramDivider.tsx ja basta, igual acima e
+   abaixo, mobile-first. */
 
 /* =============================================================================
    ARTICLE BODY TYPOGRAPHY

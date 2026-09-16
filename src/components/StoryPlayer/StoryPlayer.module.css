@@ -171,7 +171,23 @@
   z-index: 4;
   display: flex;
   align-items: center;
+  /* `space-between` empurra o X para a quina direita do próprio `.head`, que
+     é a largura real do quadro (herdada do `.player`). É o que garante o
+     pedido do fundador 2026-09-16: X dentro do quadro, mesma linha do
+     avatar e do handle. */
+  justify-content: space-between;
   gap: 0.4rem;
+}
+
+/* Avatar + handle andam juntos, com o mesmo respiro que o `.head` tinha
+   antes. `min-width: 0` deixa o `.handle` cortar com reticências em vez de
+   empurrar o X para fora quando o nome é comprido. */
+.headInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 /* O avatar é uma FOTO DE PERFIL, e é tratado como tal: recortada no círculo,
@@ -216,6 +232,43 @@
   font-size: clamp(0.56rem, 1.4vh, 0.7rem);
   letter-spacing: 0.02em;
   color: #f0ede6;
+}
+
+/* O (X) DE FECHAR, DENTRO DO CABEÇALHO (pedido do fundador 2026-09-16). Vive
+   dentro do `.head`, mesma linha do avatar e do handle, alinhado à direita
+   pelo `justify-content: space-between` do pai: é o desenho do Instagram, e
+   herda a largura real do quadro em vez da largura de um invólucro externo.
+
+   Antes o X morava no modal que chama (StoryModal/CaseStoryModal),
+   posicionado sobre o `.deckWrap`. Esse invólucro não tem largura própria:
+   mede pelo maior filho, e a fila de miniaturas/pontos sem quebra (12 peças
+   no case VERAOZAO) podia ficar mais larga que o quadro, empurrando o X
+   para fora dele no celular. Aqui dentro não tem como acontecer: o `.head`
+   é sempre a largura do `.player`.
+
+   Sem fundo, só o glifo com sombra sutil: o mesmo tratamento discreto que
+   os passadores e o story real do Instagram usam. */
+.close {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #f0ede6;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.close:focus-visible {
+  outline: 2px solid rgba(240, 237, 230, 0.85);
+  outline-offset: 2px;
+  border-radius: var(--tbf-radius-full);
 }
 
 /* ─── PASSADORES ──────────────────────────────────────────────────────────

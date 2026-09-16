@@ -152,10 +152,12 @@ export default async function HomeView({ lang }: { lang: Lang }) {
 
       {/* ─── GLIFO ENTRE CARROSSEL E MATÉRIAS ────────────────────────────────────
              Layout ficava sobrecarregado com o carrossel colado na grade
-             (pedido do fundador 2026-09-16). O respiro do próprio glifo já
-             separa as duas seções; a classe abaixo soma um pouco mais,
-             crescendo no desktop (mobile-first). */}
-      <MonogramDivider className="monogram-divider--carousel-gap" />
+             (pedido do fundador 2026-09-16). O respiro do proprio glifo
+             (paddingBlock) ja separa as duas secoes, igual acima e abaixo:
+             sem classe extra de margem, que criava vao grande demais somado
+             ao paddingTop da grade logo depois (pedido do fundador
+             2026-09-16, correcao no mesmo dia). */}
+      <MonogramDivider />
 
       {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────────
              O rótulo "MAGAZINE" saiu (pedido do fundador 2026-07-31): as capas

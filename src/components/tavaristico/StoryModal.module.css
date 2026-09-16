@@ -2,9 +2,15 @@
    STORY MODAL: popup 9:16 sobre a pagina, extraido de Campaigns.module.css
    (09/09/2026) e AUMENTADO (correcao do fundador em cima de print): o quadro
    estava pequeno demais e o (X) flutuava fora dele. Agora o quadro ocupa
-   praticamente a altura util da tela no mobile, cresce mais ainda no desktop,
-   e o (X) mora DENTRO do proprio quadro, no canto superior direito, como no
-   Instagram.
+   praticamente a altura util da tela no mobile, cresce mais ainda no
+   desktop.
+
+   O (X), a partir de 2026-09-16, nao mora mais aqui: mudou para dentro do
+   `.head` do StoryDeck (ver StoryPlayer.module.css), na mesma linha do
+   avatar e do handle, porque o `.deckWrap` deste arquivo nao tem largura
+   propria (mede pelo maior filho) e podia empurrar o X para fora do quadro
+   quando a fila de pontos/miniaturas era mais larga. Ver o comentario de
+   `onClose` em StoryPlayer.tsx para o raciocinio completo.
    ============================================================================= */
 
 .overlay {
@@ -93,38 +99,6 @@
 }
 .tapPrev { left: 0; }
 .tapNext { right: 0; }
-
-/* O (X), DENTRO do quadro, como no story do Instagram: sobreposto no canto
-   superior direito, SOBRE a imagem, sem caixa nem fundo pesado por baixo -
-   so o glifo branco com sombra sutil que garante leitura em foto clara ou
-   escura. `z-index` acima das zonas de toque e da barra de tempo do
-   StoryDeck (que usa 4), senao o clique cai nelas em vez de fechar. Area de
-   toque de 44px (minimo WCAG) mesmo o glifo sendo pequeno. */
-.close {
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  z-index: 10;
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  appearance: none;
-  border: none;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-  color: #ffffff;
-  font-size: 1.05rem;
-  line-height: 1;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
-  -webkit-tap-highlight-color: transparent;
-}
-.close:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.85);
-  outline-offset: 2px;
-  border-radius: var(--tbf-radius-full);
-}
 
 /* Desktop: bem maior que no mobile (pedido do fundador), ainda 9:16, ainda
    com dvh para nao estourar viewport curta. max-width acompanha a largura

@@ -124,6 +124,21 @@ interface StoryDeckProps {
    * pausar de fora era mexer no intervalo interno.
    */
   paused?: boolean
+  /**
+   * O (X) de fechar (pedido do fundador 2026-09-16). Sem prop, sem botão: o
+   * deck sozinho, fora de modal, não tem o que fechar. Renderiza DENTRO do
+   * `.head`, na mesma linha do avatar e do handle, porque é lá que o
+   * Instagram põe o dele.
+   *
+   * ANTES morava no modal (StoryModal/CaseStoryModal), posicionado sobre o
+   * `.deckWrap`. O `.deckWrap` não tem largura própria: ele se mede pelo
+   * maior filho, e a fila de miniaturas/pontos sem quebra (12 peças no case
+   * VERAOZAO) podia ficar mais larga que o quadro. O X herdava essa largura
+   * errada e sobrava fora do quadro, à direita, no celular. Aqui dentro do
+   * `.head` ele herda a largura do `.player`, que é sempre a largura real do
+   * quadro, calculada pela altura, nunca pela fila: não tem como sobrar.
+   */
+  onClose?: () => void
 }
 
 export function StoryDeck({
@@ -137,6 +152,7 @@ export function StoryDeck({
   label,
   nav = 'thumbs',
   paused = false,
+  onClose,
 }: StoryDeckProps) {
   const [i, setI] = useState(0)
   const [running, setRunning] = useState(true)
@@ -215,13 +231,28 @@ export function StoryDeck({
           ))}
         </div>
 
-        <div className={styles.head} aria-hidden="true">
-          {avatarSrc ? (
-            <Image src={avatarSrc} alt="" width={160} height={160} className={styles.avatar} />
-          ) : (
-            <span className={styles.dot} />
-          )}
-          <span className={styles.handle}>{handle}</span>
+        <div className={styles.head}>
+          {/* Avatar + handle continuam decorativos (a informação real já
+              está no `label` do dialog que chama). O X, logo abaixo, não
+              entra no `aria-hidden`: ele é o botão de fechar de verdade. */}
+          <span className={styles.headInfo} aria-hidden="true">
+            {avatarSrc ? (
+              <Image src={avatarSrc} alt="" width={160} height={160} className={styles.avatar} />
+            ) : (
+              <span className={styles.dot} />
+            )}
+            <span className={styles.handle}>{handle}</span>
+          </span>
+          {onClose ? (
+            <button
+              type="button"
+              className={styles.close}
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&#10005;</span>
+            </button>
+          ) : null}
         </div>
 
         <div className={styles.frame}>
