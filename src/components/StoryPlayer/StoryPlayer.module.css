@@ -13,16 +13,25 @@
 
 /* O conjunto: quadro em cima, fila de miniaturas embaixo.
 
-   `align-items: stretch` no conjunto e `align-self: flex-start` no quadro, e a
-   combinação não é redundante: sem ela o conjunto encolhia até a largura do
-   QUADRO, que é 9/16 e portanto estreito, e a fila de miniaturas ficava presa
-   nesses 270px rolando num túnel. Com stretch, a fila recebe a largura inteira
-   da coluna em que o conjunto foi posto, enquanto o quadro continua com a
-   largura que a própria altura dele determina. */
+   GRID, não flex (correção QA 16/09/2026, bug do case VERAOZAO no modal do
+   pitch v3). `display: flex` + `align-items: stretch` tinha um furo: quando
+   o conjunto mora dentro de um popup que se mede pelo próprio conteúdo (o
+   StoryModal genérico, `align-items: center` no dialog), a largura do `.deck`
+   passa a ser calculada a partir da MAIOR largura entre os filhos, e a fila
+   de pontos/miniaturas SEM QUEBRA (12 peças, caso do VERAOZAO) é mais larga
+   que o quadro. O conjunto inteiro inchava para a largura da fila e saía
+   fora do popup, deslocado para a esquerda. Coluna única de grid com
+   `minmax(0, 1fr)` corta esse contágio: o track nunca herda o max-content da
+   fila, então o quadro manda na largura de novo, do jeito que era o desenho
+   original.
+   `justify-self: start` no quadro é o equivalente, em grid, do antigo
+   `align-self: flex-start`: ele sai do stretch e assume só a própria
+   largura (calculada pela altura, ver comentário do topo do arquivo). Fila
+   de pontos e de miniaturas continuam esticando full width, que é o padrão
+   de `justify-items` em grid quando nada o sobrescreve. */
 .deck {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0.6rem;
   min-width: 0;
   max-width: 100%;
@@ -30,7 +39,7 @@
 
 .player {
   --story-h: 20rem;
-  align-self: flex-start;
+  justify-self: start;
   position: relative;
   display: flex;
   flex-direction: column;
