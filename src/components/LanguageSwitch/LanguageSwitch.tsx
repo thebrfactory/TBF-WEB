@@ -41,6 +41,37 @@ const ORDER: readonly Lang[] = ['pt', 'en']
  */
 const SEM_GEMEO = ['/studio']
 
+/** Nome falado de cada idioma, para o aria-label do link (o rotulo visual e
+ * so o icone). */
+const NOME: Record<Lang, string> = { pt: 'Português', en: 'English' }
+
+/** Selo circular da bandeira do Brasil. SVG proprio, cores fixas da bandeira:
+ * nao sao token de marca, sao cor de pais. */
+function BandeiraBrasil() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="12" fill="#009C3B" />
+      <path d="M12 4L21 12L12 20L3 12Z" fill="#FFDF00" />
+      <circle cx="12" cy="12" r="5" fill="#002776" />
+    </svg>
+  )
+}
+
+/** Selo circular de globo, para o idioma sem bandeira propria (ingles como
+ * lingua franca). Cores dos tokens de superficie/texto, entao seguem o tema. */
+function Globo() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="12" fill="var(--tbf-color-quartz)" />
+      <g fill="none" stroke="var(--tbf-color-parchment)" strokeWidth="1.4">
+        <circle cx="12" cy="12" r="8.5" />
+        <ellipse cx="12" cy="12" rx="3.6" ry="8.5" />
+        <path d="M4 9.5h16M4 14.5h16" />
+      </g>
+    </svg>
+  )
+}
+
 export function LanguageSwitch() {
   const pathname = usePathname() || '/'
   const { lang, path } = splitLang(pathname)
@@ -85,10 +116,11 @@ export function LanguageSwitch() {
             className="lang-switch__btn"
             data-active={code === mostrado}
             hrefLang={code}
+            aria-label={NOME[code]}
             aria-current={real ? 'true' : undefined}
             onClick={() => setIndo(code)}
           >
-            {code.toUpperCase()}
+            {code === 'pt' ? <BandeiraBrasil /> : <Globo />}
           </Link>
         )
       })}
