@@ -791,9 +791,12 @@
     grid-template-columns: repeat(3, 1fr);
     gap: var(--tbf-space-8);
   }
+  /* JURIDICO alinhado a esquerda igual PAGINAS e EMPRESA (pedido do fundador,
+     16/09/2026). O `text-align: right` daqui alinhava o titulo curto perto da
+     borda direita da coluna enquanto os links, mais longos, ainda pareciam a
+     esquerda: a mesma regra deixava titulo e lista com leitura desencontrada. */
   .footer__grid--nav > :last-child {
     grid-column: auto;
-    text-align: right;
   }
   .footer__grid--nav > :last-child .footer__nav-list {
     display: flex;
@@ -1382,6 +1385,13 @@
    dois. As reguas pontilhadas continuam, sao elas que o delimitam agora. */
 .ticker--cities {
   background-color: var(--tbf-footer-bg);
+}
+
+/* Letreiro de cidades 3x mais rapido que o do topo (pedido do fundador,
+   16/09/2026): 78s vira 26s por volta. So o seletor do rodape muda; o
+   letreiro pinado do topo continua em --tbf-ticker-duration cheio. */
+.ticker--cities .ticker__track {
+  animation-duration: var(--tbf-motion-duration-ticker);
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).
