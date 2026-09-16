@@ -773,24 +773,84 @@ export interface CareerEntry {
   periodEN: string
   periodPT: string
   /**
-   * Cidade da posicao. Pedido dele em 11/09/2026, com o motivo: "e importante
-   * mostrar que sou de Salvador". Fica em branco enquanto ele nao mandar a
-   * lista: o LinkedIn devolveu HTTP 999 (authwall) nas duas tentativas, e
-   * cidade de emprego e fato dele, nao coisa que se deduz. Entrada sem
-   * `city` simplesmente nao imprime a linha.
+   * Cidade da posicao. Pedido dele em 11/09/2026: "e importante mostrar que
+   * sou de Salvador". Decisao do fundador em 16/09/2026, resolvendo o LinkedIn
+   * (authwall HTTP 999 nas duas tentativas de leitura direta): tudo da Lauda
+   * pra frente e Sao Paulo, tudo antes da Lauda e Salvador, Bahia. Freelance
+   * atravessa a fronteira (2019-2025) e por isso leva as duas cidades.
    */
   city?: string
 }
 
 export const CAREER: CareerEntry[] = [
-  { role: 'Founder & Creative Director', org: '.TBF. inc', periodEN: '2025 - Present', periodPT: '2025 - Atual' },
-  { role: 'Marketing Analyst', org: 'Ô de Casa Hostel & Bar', periodEN: '2024 - 2026', periodPT: '2024 - 2026' },
-  { role: 'Art Director & Brand Strategist', org: 'Freelance', periodEN: '2019 - 2025', periodPT: '2019 - 2025' },
-  { role: 'Art Director & Media Strategist', org: 'Lauda Brand Store', periodEN: '2023 - 2024', periodPT: '2023 - 2024' },
-  { role: 'Junior Marketing Analyst', org: 'BOAH', periodEN: '2022 - 2023', periodPT: '2022 - 2023' },
-  { role: 'Community Manager', org: 'Meats Espeteria', periodEN: '2019 - 2022', periodPT: '2019 - 2022' },
-  { role: 'Marketing Intern', org: 'Soul Dila', periodEN: '2021', periodPT: '2021' },
-  { role: 'Graphic Designer', org: 'Ouzar Comunicação', periodEN: '2020 - 2021', periodPT: '2020 - 2021' },
-  { role: 'Design Intern', org: 'Agência Yellowmelon', periodEN: '2019 - 2020', periodPT: '2019 - 2020' },
-  { role: 'Marketing', org: 'Ammi Express Hotels', periodEN: '2019', periodPT: '2019' },
+  {
+    role: 'Founder & Creative Director',
+    org: '.TBF. inc',
+    periodEN: '2025 - Present',
+    periodPT: '2025 - Atual',
+    city: 'São Paulo',
+  },
+  {
+    role: 'Marketing Analyst',
+    org: 'Ô de Casa Hostel & Bar',
+    periodEN: '2024 - 2026',
+    periodPT: '2024 - 2026',
+    city: 'São Paulo',
+  },
+  {
+    role: 'Art Director & Brand Strategist',
+    org: 'Freelance',
+    periodEN: '2019 - 2025',
+    periodPT: '2019 - 2025',
+    city: 'Salvador e São Paulo',
+  },
+  {
+    role: 'Art Director & Media Strategist',
+    org: 'Lauda Brand Store',
+    periodEN: '2023 - 2024',
+    periodPT: '2023 - 2024',
+    city: 'São Paulo',
+  },
+  {
+    role: 'Junior Marketing Analyst',
+    org: 'BOAH',
+    periodEN: '2022 - 2023',
+    periodPT: '2022 - 2023',
+    city: 'Salvador, Bahia',
+  },
+  {
+    role: 'Community Manager',
+    org: 'Meats Espeteria',
+    periodEN: '2019 - 2022',
+    periodPT: '2019 - 2022',
+    city: 'Salvador, Bahia',
+  },
+  {
+    role: 'Marketing Intern',
+    org: 'Soul Dila',
+    periodEN: '2021',
+    periodPT: '2021',
+    city: 'Salvador, Bahia',
+  },
+  {
+    role: 'Graphic Designer',
+    org: 'Ouzar Comunicação',
+    periodEN: '2020 - 2021',
+    periodPT: '2020 - 2021',
+    city: 'Salvador, Bahia',
+  },
+  {
+    role: 'Design Intern',
+    org: 'Agência Yellowmelon',
+    periodEN: '2019 - 2020',
+    periodPT: '2019 - 2020',
+    city: 'Salvador, Bahia',
+  },
+  {
+    role: 'Marketing',
+    org: 'Ammi Express Hotels',
+    periodEN: '2019',
+    periodPT: '2019',
+    city: 'Salvador, Bahia',
+  },
 ]
