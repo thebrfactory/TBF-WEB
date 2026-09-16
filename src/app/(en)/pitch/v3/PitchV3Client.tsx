@@ -40,7 +40,8 @@
 // em TbfWordmark.tsx desde a 2.1, para o corpo do deck caber na cabeça.
 // =============================================================================
 
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { Fragment, useCallback, useEffect, useId, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { PressLogosCarousel } from '../v1/PressLogosCarousel'
@@ -48,7 +49,18 @@ import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
-import { StoryDeck } from '@/components/StoryPlayer/StoryPlayer'
+import { StoryDeck, type StoryItem } from '@/components/StoryPlayer/StoryPlayer'
+// O ANEL E O CROMO DO MODAL SAO REUSO POR IMPORT, NAO COPIA (regra 4 do
+// ecossistema). StoryRing e o CSS de StoryModal nasceram na pagina do
+// Tavaristico para a secao Selected Work (circulo que abre o story de cada
+// projeto); aqui e o mesmo padrao pedido pelo fundador para o case VERAOZAO.
+// Nao editamos nada em src/components/tavaristico/: so importamos. A logica
+// do modal (foco, escape, portal, gesto de segurar) mora em
+// CaseStoryModal abaixo, copiada de StoryModal.tsx e com uma variacao que o
+// componente generico nao tem (avatarSrc do cliente): e o "crie wrapper"
+// do proprio pedido.
+import { StoryRing } from '@/components/tavaristico/StoryRing'
+import modalStyles from '@/components/tavaristico/StoryModal.module.css'
 import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
 // ─── O casco do formato mora fora deste arquivo ──────────────────────────────
@@ -201,6 +213,160 @@ function useDotsNav() {
   return dots
 }
 
+// ─── Modal do case VERAOZAO (cena 05) ────────────────────────────────────────
+// Copia de src/components/tavaristico/StoryModal.tsx (09/09/2026), com uma
+// variacao: recebe `avatarSrc` e repassa ao StoryDeck, porque o quadro deste
+// case precisa mostrar a foto de perfil real do @odecasahostel (pedido do
+// fundador 2026-08-14), coisa que o StoryModal generico nao carrega. O cromo
+// (overlay, dialog, zonas de toque, botao de fechar) usa o MESMO CSS module
+// do StoryModal por import, entao os dois modais tem a cara identica sem
+// duplicar folha de estilo.
+function CaseStoryModal({
+  frames,
+  handle,
+  avatarSrc,
+  label,
+  nav,
+  onClose,
+}: {
+  frames: StoryItem[]
+  handle: string
+  avatarSrc?: string
+  label: string
+  nav: 'thumbs' | 'dots'
+  onClose: () => void
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const deckWrapRef = useRef<HTMLDivElement>(null)
+  const [held, setHeld] = useState(false)
+  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const cancelHold = useCallback(() => {
+    if (holdTimer.current) {
+      clearTimeout(holdTimer.current)
+      holdTimer.current = null
+    }
+    setHeld(false)
+  }, [])
+  useEffect(() => cancelHold, [cancelHold])
+  const titleId = useId()
+
+  const tap = useCallback((btnLabel: 'Peça anterior' | 'Próxima peça') => {
+    const btn = deckWrapRef.current?.querySelector<HTMLButtonElement>(
+      `button[aria-label="${btnLabel}"]`
+    )
+    btn?.click()
+  }, [])
+
+  useEffect(() => {
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
+    }
+  }, [])
+
+  useEffect(() => {
+    const node = dialogRef.current
+    const focusable = node?.querySelectorAll<HTMLElement>(
+      'button:not([aria-hidden="true"]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    focusable?.[0]?.focus()
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab' || !focusable || focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [onClose])
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  if (!mounted) return null
+
+  return createPortal(
+    <div
+      className={modalStyles.overlay}
+      onMouseDown={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+    >
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        className={modalStyles.dialog}
+      >
+        <h2 id={titleId} className="sr-only">
+          {label}
+        </h2>
+        <div
+          ref={deckWrapRef}
+          className={modalStyles.deckWrap}
+          onPointerDown={() => {
+            holdTimer.current = setTimeout(() => setHeld(true), 180)
+          }}
+          onPointerUp={cancelHold}
+          onPointerCancel={cancelHold}
+          onPointerLeave={cancelHold}
+        >
+          <StoryDeck
+            items={frames}
+            handle={handle}
+            avatarSrc={avatarSrc}
+            ms={3200}
+            nav={nav}
+            label={label}
+            playerClassName={modalStyles.modalPlayer}
+            paused={held}
+          />
+          <button
+            type="button"
+            aria-hidden="true"
+            tabIndex={-1}
+            className={`${modalStyles.tapZone} ${modalStyles.tapPrev}`}
+            onClick={() => {
+              if (!held) tap('Peça anterior')
+            }}
+          />
+          <button
+            type="button"
+            aria-hidden="true"
+            tabIndex={-1}
+            className={`${modalStyles.tapZone} ${modalStyles.tapNext}`}
+            onClick={() => {
+              if (!held) tap('Próxima peça')
+            }}
+          />
+          <button
+            type="button"
+            className={modalStyles.close}
+            onClick={onClose}
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&#10005;</span>
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  )
+}
+
 // ─── Página ──────────────────────────────────────────────────────────────────
 
 /**
@@ -217,6 +383,8 @@ function useDotsNav() {
  */
 export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
   const dotsNav = useDotsNav()
+  const [caseStoryOpen, setCaseStoryOpen] = useState(false)
+  const caseStoryLabel = 'Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces'
   return (
     <div className="p3-deck">
       <DeckNav scenes={SCENES} total="07" />
@@ -631,39 +799,47 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             cliente. O `alt` carrega o texto, então o título da cena continua
             existindo para leitor de tela e para o sumário da página. */}
         <div className="p3-case-layout">
-          {/* SEM PitchReveal em volta, e a razão é estrutural, não estética: o
-              invólucro do reveal é um <div> de verdade, e um <div> no meio anula
-              o `display: contents` do StoryDeck. Com ele aqui, o quadro e a fila
-              continuavam empacotados numa coluna só, e a coluna inchava para os
-              790px que a fila queria (medido) — foi o buraco entre o story e o
-              texto que apareceu na conferência.
-              A peça não perde entrada por isso: o story já anima sozinho, com a
-              barra correndo desde o primeiro quadro. */}
-          <StoryDeck
-              deckClassName="p3-deck-flat"
-              playerClassName="p3-story"
-              thumbsClassName="p3-thumbs"
-              items={CASE.media.map((m) => ({
+          {/* O QUADRO SEMPRE LIGADO VIROU ÍCONE (pedido do fundador
+              2026-09-16: "vire um stories dinâmico como em
+              thebrfactory.com/tavaristico, com um ícone de stories como em
+              selected works"). Antes o StoryDeck tocava sozinho, em tela
+              cheia, o tempo todo que a cena ficava visível. Agora é um
+              StoryRing (o mesmo círculo com anel gradiente do Instagram que
+              abre cada projeto em Selected Work) com a capa da campanha; o
+              toque abre o CaseStoryModal com as doze peças, autoplay e
+              esteira de miniaturas iguais ao que já existia, só que sob
+              demanda em vez de sempre em execução.
+              O STORY CONTINUA DO Ô, NÃO DA .TBF. (pedido do fundador
+              2026-08-14): o avatar do modal é a foto de perfil real do
+              @odecasahostel, e o handle é "Ô De Casa". */}
+          <div className="p3-case-story-trigger">
+            <StoryRing
+              cover={CASE.media[0].src}
+              alt={CASE.media[0].alt.pt}
+              size={88}
+              ariaLabel={`Abrir ${caseStoryLabel}`}
+              onClick={() => setCaseStoryOpen(true)}
+            />
+            <span className="p3-label p3-case-story-label">
+              Ver stories
+              <En>View stories</En>
+            </span>
+          </div>
+
+          {caseStoryOpen ? (
+            <CaseStoryModal
+              frames={CASE.media.map((m) => ({
                 src: m.src,
                 alt: m.alt.pt,
                 role: m.role.pt,
               }))}
-              // O STORY É DO Ô, NÃO DA .TBF. (pedido do fundador 2026-08-14:
-              // "o quadro de story preciso que tenha nome Ô e a foto do ícone
-              // coloque a mesma foto do perfil do instagram deles"). E ele está
-              // certo pelo motivo que importa: estas peças foram publicadas no
-              // perfil do CLIENTE. Assinar o quadro com a marca da agência
-              // trocaria o autor da publicação, que é exatamente o tipo de
-              // detalhe que uma pessoa da área percebe num deck.
-              //
-              // O avatar é a foto de perfil real do @odecasahostel, e ela ainda
-              // por cima está na mesma paleta da campanha: Ô ciano sobre azul.
-              // NOME COMPLETO (pedido do fundador): "Ô" virou "Ô De Casa".
               handle="Ô De Casa"
               avatarSrc="/images/pitch/veraozao/o-avatar.webp"
               nav={dotsNav ? 'dots' : 'thumbs'}
-            label="Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces"
-          />
+              label={caseStoryLabel}
+              onClose={() => setCaseStoryOpen(false)}
+            />
+          ) : null}
 
           <div className="p3-case-copy">
             <PitchReveal delay={100}>
@@ -708,11 +884,13 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </div>
         </div>
 
-        {/* A ESTEIRA SEPARADA SAIU DAQUI. As miniaturas viraram o SELETOR do
-            story e passaram a viver dentro do próprio StoryDeck, logo abaixo do
-            quadro (pedido do fundador 2026-08-14: "quero poder selecionar
-            outras miniaturas embaixo e quando clicar nelas, ver na tela").
-            Esteira que anda sozinha é bonita e impossível de clicar. */}
+        {/* A ESTEIRA DE MINIATURAS SAIU DA CENA E FOI PARA DENTRO DO MODAL
+            (2026-09-16, com o quadro virando ícone). Continua sendo o
+            SELETOR do story, logo abaixo do quadro grande, só que agora
+            dentro do CaseStoryModal, aberto sob demanda (pedido original do
+            fundador 2026-08-14: "quero poder selecionar outras miniaturas
+            embaixo e quando clicar nelas, ver na tela"). Esteira que anda
+            sozinha é bonita e impossível de clicar. */}
 
         {/* O CRÉDITO DA MÍDIA SAIU DA CENA (pedido do fundador 2026-08-14).
             Ele dizia "Peças da campanha VERÃOZÃO, fevereiro de 2026, .TBF. para

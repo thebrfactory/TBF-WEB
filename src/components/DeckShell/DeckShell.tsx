@@ -1228,6 +1228,30 @@ export function DeckStyles() {
           min-width: 0;
         }
 
+        /* ÍCONE DE STORIES DO CASE (pitch v3, cena 05), aberto em 2026-09-16:
+           pedido do fundador para o quadro sempre-ligado virar um StoryRing
+           que abre o modal sob demanda, igual ao círculo de cada projeto em
+           Selected Work (/creators/tavaristico). Classe NOVA, sem tocar em
+           .p3-story: aquela carrega o tamanho medido do quadro 9/16 em
+           cada breakpoint, e um ícone pequeno não deveria herdar nada disso.
+           Ocupa o MESMO lugar na grade (coluna 1, as duas linhas) que o
+           quadro ocupava, mas mede pelo próprio conteúdo, então a coluna
+           encolhe para o tamanho do anel e sobra largura para a copy. */
+        .p3-case-story-trigger {
+          grid-column: 1;
+          grid-row: 1 / -1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+          align-self: start;
+          padding-top: 0.15rem;
+        }
+        .p3-case-story-label {
+          text-align: center;
+          max-width: 6.5rem;
+        }
+
         /* Faixa horizontal com as nove imagens do case, na ordem do arco
            narrativo. Rola de lado: é a faixa que tem overflow, não a cena. */
         /* O CSS do player e da esteira mora em StoryPlayer.module.css. O que
