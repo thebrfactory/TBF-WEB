@@ -3032,7 +3032,11 @@ html[data-morphing] ::view-transition-new(root) {
    grades separadas. Cantos arredondados escopados aqui via --home-card-radius,
    sem alterar o design system global (cantos retos). */
 .editorial-grid {
-  --home-card-radius: 20px;
+  /* Era 20px fixo (cantos "MUITO arredondados", pedido do fundador
+     2026-09-16). Metade disso bate com o token de raio existente pra
+     thumbnail (--tbf-radius-tile, 10px): trocado pelo token em vez de
+     outro numero solto. */
+  --home-card-radius: var(--tbf-radius-tile);
   column-count: 2;
   column-gap: var(--tbf-space-4);
 }
@@ -3073,6 +3077,38 @@ html[data-morphing] ::view-transition-new(root) {
 
 .editorial-grid .card__content {
   padding: var(--tbf-space-3) var(--tbf-space-1) 0;
+}
+
+/* Titulo do card featured vinha maior que o dos standard SO dentro da grade
+   masonry (pedido do fundador 2026-09-16: "tamanho diferente" entre as
+   thumbs). Causa: `.card--featured .card__title` (COMPONENTE 03 ARTICLE CARD,
+   acima) sobe o tamanho pra um grid real de 8/4 colunas que essa grade nao usa
+   mais (column-count desde 2026-08-12); a regra de origem fica, ela so nao
+   atravessa pra dentro do masonry. Aqui os tres cards leem como vitrine igual:
+   mesmo tamanho, peso e entrelinha do card standard. */
+@media (min-width: 1280px) {
+  .editorial-grid .card--featured .card__title {
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    letter-spacing: var(--tbf-type-h3-ls);
+  }
+}
+
+/* =============================================================================
+   MONOGRAM DIVIDER
+   ============================================================================= */
+
+/* Respiro extra do glifo (ver MonogramDivider) quando ele separa o carrossel
+   de fotos da grade de materias na home: layout ficava colado, "sobrecarregado"
+   (pedido do fundador 2026-09-16). Mobile-first: cresce no desktop. O glifo em
+   si nao muda de estilo em lugar nenhum, so o espaco ao redor dele aqui. */
+.monogram-divider--carousel-gap {
+  margin-block: var(--tbf-space-2);
+}
+
+@media (min-width: 1024px) {
+  .monogram-divider--carousel-gap {
+    margin-block: var(--tbf-space-6);
+  }
 }
 
 /* =============================================================================

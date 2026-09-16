@@ -16,6 +16,7 @@ import { PhotoCarousel } from '@/components/PhotoCarousel/PhotoCarousel'
 import { LoadingScreen } from '@/components/LoadingScreen/LoadingScreen'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { LocalArticleCard } from '@/components/ArticleCard/LocalArticleCard'
+import { MonogramDivider } from '@/components/MonogramDivider/MonogramDivider'
 import { InstagramFloat } from '@/components/InstagramFloat/InstagramFloat'
 import { LOCAIS } from '@/content/articles'
 import { home } from '@/content/i18n/pages/home'
@@ -141,15 +142,20 @@ export default async function HomeView({ lang }: { lang: Lang }) {
       <Ticker />
 
       {/* ─── PHOTO CAROUSEL ──────────────────────────────────────────────────────
-             O carrossel tem o MESMO respiro em cima e embaixo: acima é este
-             paddingTop, abaixo é o paddingTop da grade editorial logo a seguir.
-             Ele nasce centrado entre o letreiro e a primeira fileira de cards,
-             em vez de colado num dos dois. Gestalt, pedido do fundador
-             2026-07-31 (a medida caiu à metade em 2026-07-31, mesma sessão).
-             Mexeu num dos dois? Mexa no outro. */}
+             Acima do trilho, o respiro é este paddingTop: nasce centrado entre
+             o letreiro e o trilho, em vez de colado nele. Gestalt, pedido do
+             fundador 2026-07-31 (a medida caiu à metade em 2026-07-31, mesma
+             sessão). Mexeu neste respiro? Confira o de baixo também. */}
       <div style={{ background: '#000000', paddingTop: 'var(--tbf-home-carousel-gap)' }}>
         <PhotoCarousel articles={SLIDE1_ARTICLES} fallbackLabel={t.magazine.cta} />
       </div>
+
+      {/* ─── GLIFO ENTRE CARROSSEL E MATÉRIAS ────────────────────────────────────
+             Layout ficava sobrecarregado com o carrossel colado na grade
+             (pedido do fundador 2026-09-16). O respiro do próprio glifo já
+             separa as duas seções; a classe abaixo soma um pouco mais,
+             crescendo no desktop (mobile-first). */}
+      <MonogramDivider className="monogram-divider--carousel-gap" />
 
       {/* ─── EDITORIAL GRID ──────────────────────────────────────────────────────
              O rótulo "MAGAZINE" saiu (pedido do fundador 2026-07-31): as capas
@@ -206,31 +212,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
       </section>
 
       {/* ─── MONOGRAM DIVIDER ─────────────────────────────────────────────────── */}
-      <div
-        aria-hidden="true"
-        style={{
-          width: '100%',
-          paddingBlock: 'var(--tbf-space-8)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 'var(--tbf-space-6)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Monogram central */}
-        <svg
-          viewBox="100 336 396 170"
-          width="120"
-          height="51"
-          style={{ opacity: 0.6, fill: 'var(--tbf-text-tertiary)', flexShrink: 0 }}
-        >
-          <path d="M441.35,346c20.76,19.49,25.61,51.77,45.16,74.54-19.55,22.77-24.4,55.04-45.16,74.54-8.31-2.7-20.68,2.39-29.85.8,20.99-19.08,26.96-53.89,43.38-75.33-16.42-21.45-22.39-56.26-43.38-75.33,9.16-1.59,21.54,3.5,29.85.8Z"/>
-          <path d="M154.73,346c-20.76,19.49-25.61,51.77-45.16,74.54,19.55,22.77,24.4,55.04,45.16,74.54,8.31-2.7,20.68,2.39,29.85.8-20.99-19.08-26.96-53.89-43.38-75.33,16.42-21.45,22.39-56.26,43.38-75.33-9.16-1.59-21.54,3.5-29.85.8Z"/>
-          <path d="M245.75,428.67c7.24-.24,14.35-.73,21.13-1.91-1.88,10.84-1.6,23.14,0,36.34,4.86-5.21,9.45-10.51,13.35-16.05,6.32,8.98,15.19,17.47,25.62,25.65-.27-6.85-.78-13.59-1.91-20.04,11.02,1.87,23.52,1.53,36.91-.14-5.22-4.86-10.53-9.46-16.1-13.36,8.96-6.36,17.42-15.23,25.57-25.64-6.89.27-13.68.79-20.18,1.92,1.91-11.03,1.59-23.55-.07-36.96-4.77,5.13-9.27,10.36-13.11,15.83-6.41-9.09-15.41-17.67-25.97-25.92.25,7.13.77,14.14,1.94,20.84-10.87-1.87-23.19-1.59-36.39,0,5.06,4.67,10.2,9.08,15.57,12.85-9.25,6.53-17.97,15.76-26.37,26.58Z"/>
-        </svg>
-      </div>
+      <MonogramDivider />
 
       {/* ─── SÃO PAULO MANIFESTO QUOTE ──────────────────────────────────────── */}
       <section
