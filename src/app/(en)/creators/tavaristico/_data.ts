@@ -98,15 +98,24 @@ export const WORKS: Work[] = [
     title: 'Cápsula Brasilidade',
     disciplines: ['Branding'],
     role: 'Art Director / Designer',
-    client: 'Projeto autoral',
+    // Cliente corrigido pelo fundador em 16/09/2026: "e um projeto de minha
+    // autoria para o cliente BOAH (da epoca que trabalhei la)". Nao era
+    // projeto autoral solto, era autoral DENTRO da BOAH.
+    client: 'BOAH',
     summary: 'Uma cápsula que traduz brasilidade em conceito, produto e identidade.',
     description:
-      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade: do folder ao produto, uma leitura contemporânea de repertório brasileiro.',
+      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade para a BOAH: do folder ao produto, uma leitura contemporânea de repertório brasileiro. Projeto autoral seu, do período em que trabalhava na marca.',
     media: {
       cover: `${base}/capsula-brasilidade/cover.webp`,
-      gallery: [`${base}/capsula-brasilidade/g1.webp`, `${base}/capsula-brasilidade/g2.webp`, `${base}/capsula-brasilidade/g3.webp`],
+      gallery: [
+        `${base}/capsula-brasilidade/g1.webp`,
+        `${base}/capsula-brasilidade/g2.webp`,
+        `${base}/capsula-brasilidade/g3.webp`,
+        `${base}/behance/capsula-brasilidade-boah/04.webp`,
+        `${base}/behance/capsula-brasilidade-boah/10.webp`,
+      ],
     },
-    provisional: ['role', 'client', 'summary', 'description'],
+    provisional: ['role', 'summary', 'description'],
   },
   {
     slug: 'o-18-years',
@@ -151,7 +160,12 @@ export const WORKS: Work[] = [
     description: 'Construção de linguagem visual e direção de arte para Blackboah.',
     media: {
       cover: `${base}/blackboah/cover.webp`,
-      gallery: [`${base}/blackboah/g1.webp`, `${base}/blackboah/g2.webp`, `${base}/blackboah/g3.webp`],
+      gallery: [
+        `${base}/blackboah/g1.webp`,
+        `${base}/blackboah/g2.webp`,
+        `${base}/blackboah/g3.webp`,
+        `${base}/behance/black-boah/06.webp`,
+      ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
   },
@@ -168,7 +182,13 @@ export const WORKS: Work[] = [
       'Direção de arte e sistema gráfico de Arquiloucura. Uma celebração visual da magia do Farol da Barra, em Salvador.',
     media: {
       cover: `${base}/arquiloucura/cover.webp`,
-      gallery: [`${base}/arquiloucura/g1.webp`, `${base}/arquiloucura/g2.webp`, `${base}/arquiloucura/g3.webp`],
+      gallery: [
+        `${base}/arquiloucura/g1.webp`,
+        `${base}/arquiloucura/g2.webp`,
+        `${base}/arquiloucura/g3.webp`,
+        `${base}/behance/arquiloucura/06.webp`,
+        `${base}/behance/arquiloucura/07.webp`,
+      ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
   },
@@ -181,9 +201,19 @@ export const WORKS: Work[] = [
     client: 'Crush Coins',
     summary: 'Direção de arte e identidade: cultura pop e meme em linguagem visual.',
     description: 'Direção de arte de Crush Coins: colisão de cultura pop, retrato e tipografia.',
-    media: { cover: `${base}/crush-coins/cover.webp` },
+    media: {
+      // Cover trocado pelo original do Behance (16/09/2026): a versão
+      // screenshot-grade que aguardava fonte hi-res (`lowRes`) foi
+      // substituída, flag removida.
+      cover: `${base}/behance/crush-coins/01.webp`,
+      gallery: [
+        `${base}/behance/crush-coins/03.webp`,
+        `${base}/behance/crush-coins/04.webp`,
+        `${base}/behance/crush-coins/05.webp`,
+        `${base}/behance/crush-coins/06.webp`,
+      ],
+    },
     provisional: ['role', 'client', 'summary', 'description'],
-    lowRes: true,
   },
   {
     slug: 'charlotte',
@@ -194,9 +224,172 @@ export const WORKS: Work[] = [
     client: 'Charlotte',
     summary: 'Identidade e logotipo: branding de assinatura.',
     description: 'Branding e construção de logotipo para Charlotte.',
-    media: { cover: `${base}/charlotte/cover.webp` },
+    media: {
+      // Mesma troca do Crush Coins: cover screenshot-grade sai, original do
+      // Behance entra, flag `lowRes` removida (16/09/2026).
+      cover: `${base}/behance/charlotte/01.webp`,
+      gallery: [
+        `${base}/behance/charlotte/05.webp`,
+        `${base}/behance/charlotte/08.webp`,
+        `${base}/behance/charlotte/26.webp`,
+        `${base}/behance/charlotte/31.webp`,
+        `${base}/behance/charlotte/33.webp`,
+        `${base}/behance/charlotte/34.webp`,
+      ],
+    },
     provisional: ['role', 'client', 'summary', 'description'],
-    lowRes: true,
+  },
+  {
+    slug: 'branded-content-boah',
+    index: '09',
+    title: 'Branded Content | BOAH',
+    disciplines: ['Campaign & Content', 'Fashion'],
+    role: 'Art Director',
+    client: 'BOAH',
+    summary: 'Branded content e campanhas sazonais para a BOAH.',
+    description:
+      'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
+    media: {
+      cover: `${base}/behance/branded-content-boah/01.webp`,
+      gallery: [
+        `${base}/behance/branded-content-boah/02.webp`,
+        `${base}/behance/branded-content-boah/24.webp`,
+        `${base}/behance/branded-content-boah/30.webp`,
+      ],
+    },
+  },
+  {
+    slug: 'arquimeats-o-baile-de-mascaras',
+    index: '10',
+    title: 'ArquiMeats: O baile de máscaras',
+    disciplines: ['Graphic & Motion', 'Campaign & Content'],
+    role: 'Art Director',
+    client: 'Meats Espeteria',
+    summary: 'Identidade e cobertura do baile de máscaras da Meats Espeteria.',
+    description:
+      'Identidade gráfica, peças de divulgação e cobertura do ArquiMeats, baile de máscaras da Meats Espeteria.',
+    media: {
+      cover: `${base}/behance/arquimeats-o-baile-de-mascaras/01.webp`,
+      gallery: [
+        `${base}/behance/arquimeats-o-baile-de-mascaras/03.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/06.webp`,
+      ],
+    },
+  },
+  {
+    slug: 'promomeats',
+    index: '11',
+    title: 'PromoMeats',
+    disciplines: ['Campaign & Content'],
+    role: 'Community Manager',
+    client: 'Meats Espeteria',
+    summary: 'Peças promocionais para redes sociais da Meats Espeteria.',
+    description: 'Peças gráficas e stories promocionais para o Instagram da Meats Espeteria.',
+    media: {
+      cover: `${base}/behance/promomeats/01.webp`,
+      gallery: [`${base}/behance/promomeats/04.webp`, `${base}/behance/promomeats/06.webp`],
+    },
+  },
+  {
+    slug: 'meats-content',
+    index: '12',
+    title: 'Meats Content',
+    disciplines: ['Campaign & Content'],
+    role: 'Community Manager',
+    client: 'Meats Espeteria',
+    summary: 'Conteúdo de redes sociais da Meats Espeteria.',
+    description:
+      'Produção de peças para stories e feed da Meats Espeteria, no período como Community Manager da marca.',
+    media: {
+      cover: `${base}/behance/meats-content/01.webp`,
+      gallery: [`${base}/behance/meats-content/04.webp`, `${base}/behance/meats-content/08.webp`],
+    },
+  },
+  {
+    slug: 'max-vidros',
+    index: '13',
+    title: 'Max Vidros',
+    disciplines: ['Branding'],
+    role: 'Designer',
+    client: 'Max Vidros',
+    summary: 'Identidade visual e logotipo da Max Vidros.',
+    description: 'Construção de conceito, logotipo e aplicações de identidade visual para a Max Vidros.',
+    media: {
+      cover: `${base}/behance/max-vidros/09.webp`,
+      gallery: [`${base}/behance/max-vidros/05.webp`, `${base}/behance/max-vidros/01.webp`],
+    },
+  },
+  {
+    slug: 'festival-de-arte-e-gastronomia',
+    index: '14',
+    title: 'Festival de Arte e Gastronomia',
+    disciplines: ['Graphic & Motion', 'Campaign & Content'],
+    role: 'Art Director',
+    summary: 'Identidade e peças de divulgação do Festival de Arte e Gastronomia.',
+    description:
+      'Key visual e peças de divulgação para a 5ª edição do Festival de Arte e Gastronomia, com o tema do cacau ao chocolate.',
+    media: {
+      cover: `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
+      gallery: [
+        `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/12.webp`,
+      ],
+    },
+  },
+  {
+    slug: 'cores-e-sabores',
+    index: '15',
+    title: 'Cores e Sabores',
+    disciplines: ['Art Direction'],
+    role: 'Photographer',
+    summary: 'Still de produto em cores vibrantes.',
+    description: 'Ensaio still-life de picolés e frutas, em paleta de cores vibrantes.',
+    media: {
+      cover: `${base}/behance/cores-e-sabores/01.webp`,
+      gallery: [`${base}/behance/cores-e-sabores/05.webp`, `${base}/behance/cores-e-sabores/09.webp`],
+    },
+  },
+  {
+    slug: 'grocery-store',
+    index: '16',
+    title: 'Grocery Store',
+    disciplines: ['Fashion'],
+    role: 'Photographer',
+    summary: 'Ensaio de moda e beleza num mercadinho.',
+    description: 'Ensaio de moda e beleza fotografado nos corredores de um mercadinho.',
+    media: {
+      cover: `${base}/behance/grocery-store/04.webp`,
+      gallery: [`${base}/behance/grocery-store/01.webp`, `${base}/behance/grocery-store/07.webp`],
+    },
+  },
+  {
+    slug: 'bw-mood',
+    index: '17',
+    title: 'B&W Mood',
+    disciplines: ['Fashion'],
+    role: 'Photographer',
+    summary: 'Ensaio de retrato em preto e branco.',
+    description: 'Ensaio de retrato e casal em preto e branco, luz natural de fim de tarde.',
+    media: {
+      cover: `${base}/behance/bw-mood/05.webp`,
+      gallery: [`${base}/behance/bw-mood/01.webp`, `${base}/behance/bw-mood/09.webp`],
+    },
+  },
+  {
+    slug: 'bahia-em-cores-quentes',
+    index: '18',
+    title: 'Bahia em cores quentes',
+    disciplines: ['Fashion'],
+    role: 'Photographer',
+    summary: 'Ensaio de moda e retrato em Salvador, Bahia.',
+    description: 'Ensaio de moda e retrato ao ar livre, nas paisagens de Salvador, Bahia.',
+    media: {
+      cover: `${base}/behance/bahia-em-cores-quentes/01.webp`,
+      gallery: [
+        `${base}/behance/bahia-em-cores-quentes/08.webp`,
+        `${base}/behance/bahia-em-cores-quentes/14.webp`,
+      ],
+    },
   },
 ]
 
