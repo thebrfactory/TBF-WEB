@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
+import { InstagramLink } from '@/components/PhotoCarousel/InstagramLink'
 
 const SLIDE1 = [
   '/images/slide1/01.webp', '/images/slide1/02.webp', '/images/slide1/03.webp',
@@ -33,7 +34,7 @@ interface Props {
 // mesma duração, distâncias diferentes. Para os dois terem a MESMA velocidade,
 // a duração é proporcional ao número de fotos. A referência é o primeiro
 // carrossel da home (10 fotos em 24s, ver --tbf-carousel-duration), o que dá
-// 2.4s por foto — e é essa cadência que todos herdam.
+// 2.4s por foto, e é essa cadência que todos herdam.
 const SECONDS_PER_SLIDE = 2.4
 
 // Carrossel ÚNICO (mobile = desktop): auto-scroll contínuo (NÃO pausa no hover)
@@ -66,7 +67,10 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallba
           {loop.map((slide, i) => {
             // Link externo (Instagram etc.) nunca passa por ArticleMorphLink
             // nem por next/link: sai de todo o roteamento do Next, com <a>
-            // simples em nova aba. Matéria interna continua no morph.
+            // simples em nova aba (via InstagramLink, que tenta abrir o app
+            // nativo quando clicado de dentro do navegador in-app do
+            // Instagram, ver src/lib/instagram.ts). Matéria interna continua
+            // no morph.
             const isExternal = slide.href.startsWith('http')
             const isArticle = !isExternal && (slide.href.startsWith('/editorial/') || slide.href.startsWith('/mag/'))
             // aria-label é o nome em UMA linha: troca a quebra `\n` por espaço.
@@ -90,7 +94,7 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallba
             return (
               <li key={i} className="carousel-slide">
                 {isExternal ? (
-                  <a
+                  <InstagramLink
                     href={slide.href}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -98,7 +102,7 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallba
                     aria-label={ariaLabel}
                   >
                     {content}
-                  </a>
+                  </InstagramLink>
                 ) : isArticle ? (
                   <ArticleMorphLink href={slide.href} className="carousel-slide__link" aria-label={ariaLabel}>
                     {content}
