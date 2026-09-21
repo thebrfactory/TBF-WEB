@@ -50,25 +50,36 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
           nasceu sem foto, e forçar uma imagem ali teria sido mentira visual;
           agora existe foto de licença livre, e é a MESMA que vira miniatura no
           /mag e na home. */}
-      <HeroCinema
-        title={article.heroTitle[lang]}
-        subtitle={article.heroSubtitle[lang]}
-        eyebrow={article.category}
-        image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
-        lang={lang}
-      />
-      {/* ESTEIRA DE ABERTURA (10/09/2026, pedido do fundador com a referência
-          na mão: o reel de /creators/tavaristico/hospitality). Vive AQUI, na
-          raiz do motor, e não numa matéria: toda matéria que tiver foto ganha
-          a tira, sem ninguém ter que lembrar de montá-la. As fotos são as da
-          própria matéria, colhidas dos blocos `image` e `pair`, então a tira
-          nunca mostra imagem que a matéria não tenha.
-          Ela também responde ao que ele viu: as fotos do corpo carregam
-          preguiçosamente, uma dobra por vez, e quem abria a matéria não via
-          nenhuma. A tira entrega o material logo depois da capa. */}
       {(() => {
+        // ESTEIRA DE ABERTURA (10/09/2026, pedido do fundador com a referência
+        // na mão: o reel de /creators/tavaristico/hospitality). As fotos são
+        // as da própria matéria, colhidas dos blocos `image` e `pair`, então a
+        // tira nunca mostra imagem que a matéria não tenha. Toda matéria com
+        // foto suficiente ganha a tira, sem ninguém ter que lembrar de montá-la.
+        //
+        // POSIÇÃO (21/09/2026, pedido do fundador): por padrão ela roda logo
+        // depois da capa. Matéria com `heroBelt` preenchido pede a tira AINDA
+        // NO CABEÇALHO (dentro do HeroCinema, antes do título, igual à
+        // referência), então aqui ela entra como prop do Hero em vez de
+        // section à parte. Opt-in por matéria: sem o campo, nada muda.
         const strip = collectPhotos(article.blocks, lang)
-        return strip.length >= 4 ? <MediaBelt className="scrolly-reel" items={strip} /> : null
+        const hasBelt = strip.length >= 4
+        const beltInHeader = hasBelt && Boolean(article.heroBelt)
+
+        return (
+          <>
+            <HeroCinema
+              title={article.heroTitle[lang]}
+              subtitle={article.heroSubtitle[lang]}
+              eyebrow={article.category}
+              image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
+              lang={lang}
+              belt={beltInHeader ? strip : undefined}
+              beltLabel={beltInHeader ? article.heroBelt?.[lang] : undefined}
+            />
+            {hasBelt && !beltInHeader && <MediaBelt className="scrolly-reel" items={strip} />}
+          </>
+        )
       })()}
 
       {renderBlocks(article.blocks, lang)}

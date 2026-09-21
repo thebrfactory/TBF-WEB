@@ -123,6 +123,16 @@ export const brazilianCountrySide: ManifestoArticle = {
   // no preview de mensageiro.
   ogImage: '/images/editorial/country-side/og-capa.jpg',
 
+  // ESTEIRA NO CABEÇALHO (21/09/2026, pedido do fundador: o reel do
+  // hospitality, mas sem sair do cabeçalho). Liga a esteira dentro do
+  // HeroCinema, com as mesmas 12 fotos que os blocos `image`/`pair` abaixo já
+  // usam (ver `collectPhotos` em ArticleScrolly.tsx). Legenda no mesmo tom do
+  // `reelLabel` do hospitality: lugar, contagem, tese em uma linha.
+  heroBelt: {
+    en: 'Posse, Goiás. Fifteen frames from the same field the words describe.',
+    pt: 'Posse, Goiás. Quinze quadros do mesmo campo que o texto descreve.',
+  },
+
   blocks: [
     // ─── ABERTURA. O dateline do próprio texto fonte entra no kicker do
     //     `pinned`, então o hero não precisa repeti-lo.

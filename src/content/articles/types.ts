@@ -111,5 +111,19 @@ export interface ManifestoArticle {
    * igual a de qualquer outra pagina.
    */
   ogImage?: string
+  /**
+   * LEGENDA DA ESTEIRA NO CABEÇALHO, opt-in por matéria (pedido do fundador,
+   * 21/09/2026: o reel de fotos do corpo, no estilo do
+   * /creators/tavaristico/hospitality, mas sem sair do cabeçalho).
+   *
+   * As FOTOS não vêm daqui: o motor já coleta as mesmas fotos dos blocos
+   * `image`/`pair` (ver `collectPhotos` em ArticleScrolly.tsx) e reaproveita a
+   * fila, para nunca existir foto na esteira que a matéria não tenha. Este
+   * campo só liga a legenda, e move essa esteira para DENTRO do HeroCinema:
+   * sem ele, a matéria mantém o comportamento padrão (esteira depois do
+   * Hero). Presença do campo é o interruptor, nenhuma outra matéria muda de
+   * lugar por causa disto.
+   */
+  heroBelt?: Bilingual
   blocks: ManifestoBlock[]
 }
