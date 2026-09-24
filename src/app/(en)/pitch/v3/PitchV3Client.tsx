@@ -807,7 +807,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
               cheia, o tempo todo que a cena ficava visível. Agora é um
               StoryRing (o mesmo círculo com anel gradiente do Instagram que
               abre cada projeto em Selected Work) com a capa da campanha; o
-              toque abre o CaseStoryModal com as doze peças, autoplay e
+              toque abre o CaseStoryModal com as onze peças, autoplay e
               esteira de miniaturas iguais ao que já existia, só que sob
               demanda em vez de sempre em execução.
               O STORY CONTINUA DO Ô, NÃO DA .TBF. (pedido do fundador

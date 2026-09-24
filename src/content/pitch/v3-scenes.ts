@@ -384,27 +384,30 @@ export const CASE = {
   // a que o deck precisa: que existiu um sistema visual rodando todo dia, em
   // fevereiro inteiro, no formato em que a audiência consome.
   //
-  // Fonte: TAV05 → TBF .Ô De Casa → 00. VERÃOZÃO 26 → 01. PEÇAS →
-  // stories-ôàsis-fevereiro. Nativas em 1080x1920, reduzidas a 720x1280 (o teto
-  // de exibição no deck é ~300px, então 720 cobre retina com folga).
+  // Fonte: TAV05 → TBF .Ô De Casa → 00. VERÃOZÃO 26, montados a 1080x1920 e
+  // reduzidos a 720x1280 (o teto de exibição no deck é ~300px, então 720 cobre
+  // retina com folga). A origem exata de cada card está em
+  // `TBF SYSTEM/operacao/veraozao/stories-selecao.md`.
   //
-  // A ordem é de ARCO, não cronológica: abre no visual-chave, atravessa
-  // atmosfera, rua, marca, gente, público, experiência, programação e
-  // comunidade, e fecha em duas pessoas rindo. É a curva que a fala do deck
-  // acompanha.
+  // A ORDEM É DE ARCO, EM CINCO ATOS (2026-09-24, primeiro teste do pipeline
+  // criativo: plano do diretor-criativo, seleção do diretor-arte, em
+  // `TBF SYSTEM/operacao/veraozao/`). Marca (01, 02), sistema (03 a 05),
+  // objeto (06, 07), rua (08, 09), prova e assinatura (10, 11). A versão de
+  // doze stories do ÔÀSIS repetia o mesmo selo e o estandarte três vezes: era
+  // feed de festa, não campanha. Os `story-*.webp` antigos seguem na pasta
+  // porque /creators/tavaristico ainda aponta para cinco deles.
   media: [
-    { src: '/images/pitch/veraozao/story-01-chave.webp', role: { pt: 'Visual-chave', en: 'Key visual' } as Bi, alt: { pt: 'Peça de abertura da campanha VERÃOZÃO, com o estandarte e a identidade do ÔÀSIS.', en: 'Opening piece of the VERÃOZÃO campaign, with the banner and the ÔÀSIS identity.' } as Bi },
-    { src: '/images/pitch/veraozao/story-02-atmosfera.webp', role: { pt: 'Atmosfera', en: 'Atmosphere' } as Bi, alt: { pt: 'Story da campanha com a estrela de espelhos e o público embaixo.', en: 'Campaign story with the mirror star and the crowd beneath it.' } as Bi },
-    { src: '/images/pitch/veraozao/story-03-rua.webp', role: { pt: 'A rua', en: 'The street' } as Bi, alt: { pt: 'Story com o estandarte do Ô de Casa levantado na rua, em dia de sol.', en: 'Story with the Ô de Casa banner raised in the street on a sunny day.' } as Bi },
-    { src: '/images/pitch/veraozao/story-04-marca.webp', role: { pt: 'Marca no corpo', en: 'Brand on the body' } as Bi, alt: { pt: 'Story com duas hóspedes diante do mural da marca.', en: 'Story with two guests in front of the brand mural.' } as Bi },
-    { src: '/images/pitch/veraozao/story-05-pessoas.webp', role: { pt: 'Pessoas', en: 'People' } as Bi, alt: { pt: 'Story com hóspede maquiada com a identidade da campanha.', en: 'Story with a guest wearing the campaign identity as make-up.' } as Bi },
-    { src: '/images/pitch/veraozao/story-06-publico.webp', role: { pt: 'Público', en: 'Audience' } as Bi, alt: { pt: 'Story do público de braços erguidos na ativação de rua.', en: 'Story of the crowd with raised arms at the street activation.' } as Bi },
-    { src: '/images/pitch/veraozao/story-07-experiencia.webp', role: { pt: 'Experiência', en: 'Experience' } as Bi, alt: { pt: 'Story da festa de espuma dentro do hostel.', en: 'Story of the foam party inside the hostel.' } as Bi },
-    { src: '/images/pitch/veraozao/story-08-programacao.webp', role: { pt: 'Programação', en: 'Programming' } as Bi, alt: { pt: 'Story do DJ na cabine, sob luz azul.', en: 'Story of the DJ in the booth under blue light.' } as Bi },
-    { src: '/images/pitch/veraozao/story-09-comunidade.webp', role: { pt: 'Comunidade', en: 'Community' } as Bi, alt: { pt: 'Story com um grupo de hóspedes posando junto na rua.', en: 'Story with a group of guests posing together in the street.' } as Bi },
-    { src: '/images/pitch/veraozao/story-10-retrato.webp', role: { pt: 'Retrato', en: 'Portrait' } as Bi, alt: { pt: 'Story com retrato de hóspede de óculos vermelhos.', en: 'Story with a portrait of a guest in red sunglasses.' } as Bi },
-    { src: '/images/pitch/veraozao/story-11-noite.webp', role: { pt: 'A noite', en: 'The night' } as Bi, alt: { pt: 'Story da fachada à noite com o estandarte iluminado.', en: 'Story of the façade at night with the banner lit.' } as Bi },
-    { src: '/images/pitch/veraozao/story-12-fecho.webp', role: { pt: 'O que fica', en: 'What remains' } as Bi, alt: { pt: 'Story de fecho, com duas pessoas rindo dentro do hostel.', en: 'Closing story, two people laughing inside the hostel.' } as Bi },
+    { src: '/images/pitch/veraozao/case-01-chave.webp', role: { pt: 'Chave', en: 'Key' } as Bi, alt: { pt: 'A marca da campanha VERÃOZÃO 26, do Ô De Casa Hostel & Bar.', en: 'The VERÃOZÃO 26 campaign wordmark, for Ô De Casa Hostel & Bar.' } as Bi },
+    { src: '/images/pitch/veraozao/case-02-arquitetura.webp', role: { pt: 'Arquitetura', en: 'Architecture' } as Bi, alt: { pt: 'Os logotipos das duas sub-marcas, ÔÀSIS e gringolÔco, empilhados.', en: 'The two sub-brand logos, ÔÀSIS and gringolÔco, stacked.' } as Bi },
+    { src: '/images/pitch/veraozao/case-03-janeiro.webp', role: { pt: 'Janeiro', en: 'January' } as Bi, alt: { pt: 'Peça da agenda de janeiro: samba do VERÃOZÃO, 24 de janeiro.', en: 'January schedule piece: VERÃOZÃO samba, January 24.' } as Bi },
+    { src: '/images/pitch/veraozao/case-04-sistema.webp', role: { pt: 'Sistema', en: 'System' } as Bi, alt: { pt: 'Mosaico de quatro posts de fevereiro com a mesma faixa de data e o mesmo rodapé.', en: 'Grid of four February posts sharing the same date band and footer.' } as Bi },
+    { src: '/images/pitch/veraozao/case-05-lancamento.webp', role: { pt: 'Lançamento', en: 'Launch' } as Bi, alt: { pt: 'Visual-chave do lançamento do carnaval, 02/02, com chapéu e chevrons.', en: 'Carnival launch key visual, 02/02, with hat and chevrons.' } as Bi },
+    { src: '/images/pitch/veraozao/case-06-ventarola.webp', role: { pt: 'Objeto', en: 'Object' } as Bi, alt: { pt: 'Arte final da ventarola da campanha, com o sistema de chevrons.', en: 'Final artwork of the campaign hand fan, with the chevron system.' } as Bi },
+    { src: '/images/pitch/veraozao/case-07-tattoo.webp', role: { pt: 'No corpo', en: 'On the body' } as Bi, alt: { pt: 'Tatuagem temporária gringolÔco aplicada na coxa, sobre meia arrastão.', en: 'gringolÔco temporary tattoo on a thigh, over fishnet tights.' } as Bi },
+    { src: '/images/pitch/veraozao/case-08-oasis.webp', role: { pt: 'A rua', en: 'The street' } as Bi, alt: { pt: 'Público em cadeiras de praia na ativação ÔÀSIS.', en: 'Crowd on beach chairs at the ÔÀSIS activation.' } as Bi },
+    { src: '/images/pitch/veraozao/case-09-espuma.webp', role: { pt: 'O bloco', en: 'The block party' } as Bi, alt: { pt: 'Festa de espuma do bloco gringolÔco na rua.', en: 'gringolÔco block party foam in the street.' } as Bi },
+    { src: '/images/pitch/veraozao/case-10-globo.webp', role: { pt: 'Prova', en: 'Proof' } as Bi, alt: { pt: 'Câmera da TV Globo gravando dentro do hostel, com a marca do Ô ao fundo.', en: 'TV Globo camera filming inside the hostel, with the Ô sign behind it.' } as Bi },
+    { src: '/images/pitch/veraozao/case-11-assinatura.webp', role: { pt: 'Assinatura', en: 'Signature' } as Bi, alt: { pt: 'Fecho: estratégia, identidade, peças, rua, circulação. .TBF.', en: 'Close: strategy, identity, pieces, street, circulation. .TBF.' } as Bi },
   ],
   /** Prova de circulação. É fato datado e conferível, não número de vaidade. */
   press: {
