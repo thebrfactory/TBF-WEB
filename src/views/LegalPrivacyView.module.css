@@ -1,0 +1,131 @@
+/* Política de privacidade. Mobile-first: parte de 390px e escala. Sem dividers. */
+
+.page {
+  background: #000;
+  color: #fff;
+  min-height: 100dvh;
+}
+
+.wrap {
+  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-12));
+  padding-bottom: var(--tbf-space-20);
+  max-width: 72ch;
+}
+
+.tag {
+  display: block;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: var(--tbf-space-4);
+}
+
+.title {
+  font-family: var(--tbf-type-display-xl-family);
+  font-size: clamp(2rem, 9vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  color: #fff;
+  margin: 0 0 var(--tbf-space-4);
+  overflow-wrap: break-word;
+}
+
+.updated {
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.lead {
+  margin-top: var(--tbf-space-8);
+}
+
+.section {
+  margin-top: var(--tbf-space-12);
+}
+
+.h2 {
+  font-family: var(--tbf-type-h2-family);
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #fff;
+  margin: 0 0 var(--tbf-space-4);
+}
+
+.num {
+  color: rgba(255, 255, 255, 0.4);
+  margin-right: 0.5em;
+}
+
+.body {
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-body-size-sm);
+  line-height: var(--tbf-type-body-lh);
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0 0 var(--tbf-space-4);
+}
+
+.strong {
+  font-weight: 800;
+  color: #fff;
+}
+
+.list {
+  list-style: none;
+  margin: var(--tbf-space-6) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--tbf-space-3);
+}
+
+.item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: var(--tbf-space-4);
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-body-size-sm);
+  line-height: var(--tbf-type-body-lh);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.itemLabel {
+  display: block;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: var(--tbf-space-1);
+}
+
+.link {
+  color: #fff;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .wrap {
+    padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-20));
+  }
+
+  .title {
+    font-size: clamp(3rem, 6vw, 5rem);
+  }
+
+  .section {
+    margin-top: var(--tbf-space-16);
+  }
+
+  .h2 {
+    font-size: 1.5rem;
+  }
+
+  .item {
+    padding: var(--tbf-space-5) var(--tbf-space-6);
+  }
+}
