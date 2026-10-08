@@ -1,7 +1,7 @@
 'use client'
 
 // =============================================================================
-// COLLECTIVE FORM — Client Component
+// COLLECTIVE FORM: Client Component
 // Formulário de candidatura inline com voz TBF
 // CTAs: Submit your presence · Read the Manifesto first
 // =============================================================================
@@ -24,6 +24,8 @@ export function CollectiveForm() {
     portfolioLink: '',
     howDidYouFind: '',
   })
+  const [lookingFor, setLookingFor] = useState('')
+  const [bring, setBring] = useState('')
   const [state, setState] = useState<ContactFormState>({ status: 'idle' })
   const [errors, setErrors] = useState<Partial<Record<keyof CollectiveFormData, string>>>({})
 
@@ -60,6 +62,8 @@ export function CollectiveForm() {
           intent: 'tbf',
           message: [
             `Área de atuação: ${form.role}`,
+            lookingFor ? `Procura: ${lookingFor}` : '',
+            bring ? `Traz para o Collective: ${bring}` : '',
             form.portfolioLink ? `Portfolio/Link: ${form.portfolioLink}` : '',
             '',
             `Como chegou até aqui: ${form.howDidYouFind}`,
@@ -197,6 +201,34 @@ export function CollectiveForm() {
             {errors.role}
           </span>
         )}
+      </div>
+
+      {/* O que procura */}
+      <div className="field">
+        <label className="field__label" htmlFor={`${formId}-looking`}>
+          {t.lookingLabel}
+        </label>
+        <input
+          id={`${formId}-looking`}
+          type="text"
+          className="field__input"
+          value={lookingFor}
+          onChange={(e) => setLookingFor(e.target.value)}
+        />
+      </div>
+
+      {/* O que traz */}
+      <div className="field">
+        <label className="field__label" htmlFor={`${formId}-bring`}>
+          {t.bringLabel}
+        </label>
+        <input
+          id={`${formId}-bring`}
+          type="text"
+          className="field__input"
+          value={bring}
+          onChange={(e) => setBring(e.target.value)}
+        />
       </div>
 
       {/* Portfolio / Link */}

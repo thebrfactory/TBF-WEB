@@ -6,19 +6,39 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Collective Hotel Casino',
+    title: 'Collective',
     description:
-      'Collective Hotel Casino. Only for artists & changemakers. Apply to join the .THE BRAZILIAN FACTORY. collective.',
-    ogTitle: 'Collective Hotel Casino | .THE BRAZILIAN FACTORY.',
-    ogDescription: 'Only for artists & changemakers.',
+      "The .TBF. Collective. Artists, makers, thinkers and founders who make culture move. Apply with what you're building.",
+    ogTitle: 'Collective | .THE BRAZILIAN FACTORY.',
+    ogDescription: 'The Factory has a floor.',
   },
 
   hero: {
-    eyebrow: '.TBF. inc',
-    titleLine1: 'Collective',
-    titleLine2: 'Hotel Casino.',
-    // A tagline de marca não se traduz nos dois idiomas.
-    deck: 'Only for artists & changemakers. A collective of creative agents who operate with intention. Selective access. Real belonging.',
+    eyebrow: '.TBF. Collective',
+    titleLine1: 'The Factory',
+    titleLine2: 'has a floor.',
+    deck: 'Artists, makers, thinkers, founders and changemakers building what comes next.',
+  },
+
+  floor: {
+    body: "Warhol's Factory had silver walls. What people remember is who came through the door.",
+    line: 'The Labels build worlds. The Collective fills them with people.',
+  },
+
+  who: {
+    heading: 'Who walks in',
+    list: 'Artists. Makers. Thinkers. Founders. Changemakers. Allies.',
+    line: "We don't count followers. We look at what you move.",
+  },
+
+  inside: {
+    items: [
+      { name: 'Access', desc: 'People, projects and closed calls before they go public.' },
+      { name: 'Collaboration', desc: 'Work with each other and with the Labels.' },
+      { name: 'Visibility', desc: 'Your work documented and published by the Zine.' },
+      { name: 'Signals', desc: "Field research and references while they're still early." },
+    ],
+    closing: 'Clubs sell access. The Collective asks what you bring. Belonging is earned by contribution.',
   },
 
   members: {
@@ -26,7 +46,7 @@ const en = {
   },
 
   application: {
-    heading: 'Application',
+    heading: 'What are you building?',
     closedTitle: 'Applications closed for now.',
     closedLine: 'We reply when it makes sense.',
   },
@@ -34,12 +54,14 @@ const en = {
   form: {
     beforeApplyingPre: 'Before applying, ',
     beforeApplyingLink: 'read the manifesto',
-    beforeApplyingPost: '. Whoever arrives without context, leaves without an answer.',
+    beforeApplyingPost: '. Whoever arrives without context leaves without an answer.',
     nameLabel: 'Name',
     namePlaceholder: 'Your name',
-    roleLabel: 'Field of work',
+    roleLabel: 'What do you make?',
     rolePlaceholder: 'Photography, art direction, styling, music...',
-    portfolioLabel: 'Portfolio or Link',
+    lookingLabel: 'What are you looking for?',
+    bringLabel: 'What can you bring to the Collective?',
+    portfolioLabel: 'Where can we see your work?',
     portfolioOptional: '(optional)',
     portfolioPlaceholder: 'https://... or @handle',
     howLabel: 'How did you find us?',
@@ -49,7 +71,7 @@ const en = {
     submitLoading: 'Sending…',
     errors: {
       nameRequired: 'Name is required.',
-      roleRequired: 'Field of work is required.',
+      roleRequired: 'Tell us what you make.',
       howRequired: 'How did you find us? It matters.',
       howMin: 'Tell us a bit more.',
       generic: 'Something failed.',
@@ -58,25 +80,48 @@ const en = {
     success: {
       title: 'Presence registered.',
       line: 'We review and reply when it makes sense.',
-      tag: '.TBF. Collective Hotel Casino',
+      tag: '.TBF. Collective',
     },
   },
+
+  closing: 'The Factory has a floor. We\'re filling it with people.',
 }
 
 const pt: typeof en = {
   meta: {
-    title: 'Collective Hotel Casino',
+    title: 'Collective',
     description:
-      'Collective Hotel Casino. Somente para artistas e agentes de mudança. Candidature-se ao coletivo da .THE BRAZILIAN FACTORY.',
-    ogTitle: 'Collective Hotel Casino | .THE BRAZILIAN FACTORY.',
-    ogDescription: 'Only for artists & changemakers.',
+      'O .TBF. Collective. Artistas, makers, pensadores e founders que fazem a cultura andar. Entre com o que você está construindo.',
+    ogTitle: 'Collective | .THE BRAZILIAN FACTORY.',
+    ogDescription: 'A Factory tem um chão.',
   },
 
   hero: {
-    eyebrow: '.TBF. inc',
-    titleLine1: 'Collective',
-    titleLine2: 'Hotel Casino.',
-    deck: 'Only for artists & changemakers. Um coletivo de agentes criativos que operam com intenção. Acesso seletivo. Pertencimento real.',
+    eyebrow: '.TBF. Collective',
+    titleLine1: 'A Factory',
+    titleLine2: 'tem um chão.',
+    deck: 'Artistas, makers, pensadores, founders e changemakers construindo o que vem depois.',
+  },
+
+  floor: {
+    body: 'A Factory de Warhol tinha paredes prateadas. O que ficou foi quem entrou pela porta.',
+    line: 'As Labels constroem mundos. O Collective enche esses mundos de gente.',
+  },
+
+  who: {
+    heading: 'Quem entra',
+    list: 'Artists. Makers. Thinkers. Founders. Changemakers. Allies.',
+    line: 'A gente não conta seguidor. Olha o que você move.',
+  },
+
+  inside: {
+    items: [
+      { name: 'Access', desc: 'Gente, projetos e chamadas fechadas antes de virarem públicos.' },
+      { name: 'Collaboration', desc: 'Trabalho entre membros e com as Labels.' },
+      { name: 'Visibility', desc: 'Seu trabalho documentado e publicado pelo Zine.' },
+      { name: 'Signals', desc: 'Pesquisa de campo e referências enquanto ainda é cedo.' },
+    ],
+    closing: 'Clube vende acesso. O Collective pergunta o que você traz. Pertencimento se ganha contribuindo.',
   },
 
   members: {
@@ -84,30 +129,32 @@ const pt: typeof en = {
   },
 
   application: {
-    heading: 'Candidatura',
-    closedTitle: 'Candidaturas encerradas por ora.',
-    closedLine: 'Retornamos quando faz sentido.',
+    heading: 'O que você está construindo?',
+    closedTitle: 'Candidaturas fechadas por ora.',
+    closedLine: 'A gente responde quando faz sentido.',
   },
 
   form: {
-    beforeApplyingPre: 'Antes de candidatar-se, ',
+    beforeApplyingPre: 'Antes de se candidatar, ',
     beforeApplyingLink: 'leia o manifesto',
-    beforeApplyingPost: '. Quem chega sem contexto, sai sem resposta.',
+    beforeApplyingPost: '. Quem chega sem contexto sai sem resposta.',
     nameLabel: 'Nome',
     namePlaceholder: 'Seu nome',
-    roleLabel: 'Área de atuação',
+    roleLabel: 'O que você faz?',
     rolePlaceholder: 'Fotografia, direção de arte, styling, música...',
-    portfolioLabel: 'Portfolio ou Link',
+    lookingLabel: 'O que você procura?',
+    bringLabel: 'O que você traz para o Collective?',
+    portfolioLabel: 'Onde a gente vê seu trabalho?',
     portfolioOptional: '(opcional)',
     portfolioPlaceholder: 'https://... ou @handle',
     howLabel: 'Como você chegou até aqui?',
     howPlaceholder: 'Essa resposta diz tudo. Seja honesto.',
     formAriaLabel: 'Formulário de candidatura ao coletivo',
-    submitCta: 'Manda sua presença',
+    submitCta: 'Registrar presença',
     submitLoading: 'Enviando…',
     errors: {
       nameRequired: 'Nome é obrigatório.',
-      roleRequired: 'Área de atuação é obrigatória.',
+      roleRequired: 'Diga o que você faz.',
       howRequired: 'Como você chegou aqui? Isso importa.',
       howMin: 'Elabore um pouco mais.',
       generic: 'Algo falhou.',
@@ -115,10 +162,12 @@ const pt: typeof en = {
     },
     success: {
       title: 'Presença registrada.',
-      line: 'Avaliamos e retornamos quando faz sentido.',
-      tag: '.TBF. Collective Hotel Casino',
+      line: 'A gente lê e responde quando faz sentido.',
+      tag: '.TBF. Collective',
     },
   },
+
+  closing: 'A Factory tem um chão. A gente está enchendo de gente.',
 }
 
 export const collective: Record<Lang, typeof en> = { en, pt }

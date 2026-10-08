@@ -1,6 +1,6 @@
 // =============================================================================
-// /collective — COLLECTIVE HOTEL CASINO
-// Membros do coletivo + formulário de candidatura
+// /collective: O CHÃO DA FACTORY
+// Chão, quem entra, o que circula, membros e formulário de candidatura
 // CTAs: Submit your presence · Read the Manifesto first
 //
 // Uma página, dois idiomas: o texto vem do dicionário e os links passam por
@@ -94,6 +94,79 @@ export default async function CollectiveView({ lang }: { lang: Lang }) {
           </p>
         </div>
       </header>
+
+      {/* ─── O CHÃO, QUEM ENTRA, O QUE CIRCULA ─────────────────────────── */}
+      <section
+        aria-label={t.who.heading}
+        style={{
+          paddingInline: 'var(--tbf-grid-margin-sm)',
+          paddingBottom: 'var(--tbf-space-20)',
+        }}
+      >
+        <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
+          <p style={{ fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)', marginBottom: 'var(--tbf-space-4)' }}>{t.floor.body}</p>
+          <p style={{ fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              letterSpacing: 'var(--tbf-type-h2-ls)',
+              color: 'var(--tbf-text-primary)', marginBottom: 'var(--tbf-space-16)' }}>{t.floor.line}</p>
+
+          <h2
+            style={{
+              fontFamily: 'var(--tbf-type-micro-family)',
+              fontSize: 'var(--tbf-type-micro-size)',
+              letterSpacing: 'var(--tbf-type-micro-ls)',
+              color: 'var(--tbf-text-tertiary)',
+              textTransform: 'uppercase',
+              marginBottom: 'var(--tbf-space-4)',
+            }}
+          >
+            {t.who.heading}
+          </h2>
+          <p style={{ fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              letterSpacing: 'var(--tbf-type-h2-ls)',
+              color: 'var(--tbf-text-primary)', marginBottom: 'var(--tbf-space-4)' }}>{t.who.list}</p>
+          <p style={{ fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)', marginBottom: 'var(--tbf-space-16)' }}>{t.who.line}</p>
+
+          <dl style={{ display: 'flex', flexDirection: 'column', gap: 'var(--tbf-space-6)', marginBottom: 'var(--tbf-space-8)' }}>
+            {t.inside.items.map((item) => (
+              <div key={item.name}>
+                <dt
+                  style={{
+                    fontFamily: 'var(--tbf-type-h4-family)',
+                    fontSize: 'var(--tbf-type-h4-size-sm)',
+                    fontWeight: 'var(--tbf-type-h4-weight)',
+                    color: 'var(--tbf-text-primary)',
+                    marginBottom: 'var(--tbf-space-1)',
+                  }}
+                >
+                  {item.name}
+                </dt>
+                <dd style={{ fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)', }}>{item.desc}</dd>
+              </div>
+            ))}
+          </dl>
+          <p style={{ fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              letterSpacing: 'var(--tbf-type-h2-ls)',
+              color: 'var(--tbf-text-primary)', }}>{t.inside.closing}</p>
+        </div>
+      </section>
 
       {/* ─── MEMBROS FEATURED ──────────────────────────────────────────── */}
       {members.length > 0 && (
@@ -216,19 +289,20 @@ export default async function CollectiveView({ lang }: { lang: Lang }) {
         >
           <div className="layout-d">
             <div>
-              <p
+              <h2
                 id="application-heading"
                 style={{
-                  fontFamily: 'var(--tbf-type-micro-family)',
-                  fontSize: 'var(--tbf-type-micro-size)',
-                  letterSpacing: 'var(--tbf-type-micro-ls)',
-                  color: 'var(--tbf-text-tertiary)',
-                  textTransform: 'uppercase',
+                  fontFamily: 'var(--tbf-type-h2-family)',
+                  fontSize: 'var(--tbf-type-h2-size-sm)',
+                  fontWeight: 'var(--tbf-type-h2-weight)',
+                  lineHeight: 'var(--tbf-type-h2-lh)',
+                  letterSpacing: 'var(--tbf-type-h2-ls)',
+                  color: 'var(--tbf-text-primary)',
                   marginBottom: 'var(--tbf-space-6)',
                 }}
               >
                 {t.application.heading}
-              </p>
+              </h2>
 
               {collectiveOpen ? (
                 <CollectiveForm />
@@ -262,6 +336,24 @@ export default async function CollectiveView({ lang }: { lang: Lang }) {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* ─── FECHO ─────────────────────────────────────────────────────── */}
+      <section style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBottom: 'var(--tbf-space-32)' }}>
+        <p
+          style={{
+            maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)',
+            marginInline: 'auto',
+            fontFamily: 'var(--tbf-type-display-lg-family)',
+            fontSize: 'var(--tbf-type-display-lg-size-sm)',
+            fontWeight: 'var(--tbf-font-weight-raw-800)',
+            lineHeight: 'var(--tbf-type-display-lg-lh-sm)',
+            letterSpacing: 'var(--tbf-type-display-lg-ls)',
+            color: 'var(--tbf-text-primary)',
+          }}
+        >
+          {t.closing}
+        </p>
       </section>
     </div>
   )
