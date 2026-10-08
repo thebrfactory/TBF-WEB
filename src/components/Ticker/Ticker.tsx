@@ -29,6 +29,9 @@ interface TickerProps {
   sticky?: boolean
   /** Classe extra no invólucro, para variantes de escala/altura. */
   className?: string
+  /** Cópias por metade do trilho. Metade do trilho precisa ser MAIS LARGA que a
+   *  tela: conteúdo curto (cidades) pede mais cópias. Padrão 3. */
+  repeat?: number
 }
 
 // O LETREIRO DA CASA, escrito pelo fundador em #01 CHANGES 2026-08-24. Ele vale
@@ -56,8 +59,8 @@ const DEFAULT_SEGMENTS: TickerSegment[] = [
 // manter a MESMA velocidade em px/s. Os dois números andam juntos.
 const REPEAT = 3
 
-export function Ticker({ text = DEFAULT_SEGMENTS, sticky = true, className = '' }: TickerProps) {
-  const copies = Array.from({ length: REPEAT * 2 })
+export function Ticker({ text = DEFAULT_SEGMENTS, sticky = true, className = '', repeat = REPEAT }: TickerProps) {
+  const copies = Array.from({ length: repeat * 2 })
   const segmentos: TickerSegment[] = typeof text === 'string' ? [{ text }] : text
 
   return (
@@ -65,6 +68,7 @@ export function Ticker({ text = DEFAULT_SEGMENTS, sticky = true, className = '' 
       className={`ticker${sticky ? '' : ' ticker--flow'}${className ? ` ${className}` : ''}`}
       aria-hidden="true"
       role="presentation"
+      style={repeat === REPEAT ? undefined : ({ '--ticker-scale': repeat / REPEAT } as React.CSSProperties)}
     >
       <div className="ticker__track">
         {/* Sequência repetida e depois duplicada: 50% do trilho é exatamente uma

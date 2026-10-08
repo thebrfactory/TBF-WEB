@@ -1391,7 +1391,8 @@
    16/09/2026): 78s vira 26s por volta. So o seletor do rodape muda; o
    letreiro pinado do topo continua em --tbf-ticker-duration cheio. */
 .ticker--cities .ticker__track {
-  animation-duration: var(--tbf-motion-duration-ticker);
+  /* --ticker-scale = cópias / 3: mais cópias por volta, mesma velocidade. */
+  animation-duration: calc(var(--tbf-motion-duration-ticker) * var(--ticker-scale, 1));
 }
 
 /* LOOP SEM COSTURA (correção 2026-07-30, mesma da .press-carousel-track).
@@ -1402,6 +1403,13 @@
    50% valer exatamente uma cópia. */
 .ticker__track {
   display: flex;
+  /* 🔴 BURACO NO LOOP (08/10/2026): sem largura própria, o trilho tinha a largura
+     do invólucro e -50% andava metade da TELA, não metade do CONTEÚDO. O resto
+     é conteúdo idêntico nas duas metades, então a volta só fecha sem lacuna se
+     o trilho medir o conteúdo. max-content + flex:none garante isso em
+     qualquer largura. */
+  width: max-content;
+  flex: none;
   white-space: nowrap;
   animation: ticker-scroll var(--tbf-ticker-duration) var(--tbf-ticker-easing) infinite;
 }

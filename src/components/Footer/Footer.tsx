@@ -107,7 +107,7 @@ export function Footer({ lang }: { lang: Lang }) {
             construção do letreiro do topo (pedido do fundador) — mesmo
             componente, só que no fluxo em vez de pinado. */}
         <div className="footer__cities">
-          <Ticker text={CITIES_TICKER} sticky={false} className="ticker--cities" />
+          <Ticker text={CITIES_TICKER} sticky={false} className="ticker--cities" repeat={6} />
         </div>
 
         {/* Nav: pages + company 2-col mobile / 3-col desktop; legal full-width on mobile */}
