@@ -214,8 +214,8 @@ export const PROOF = {
 // =============================================================================
 export const AUTHOR = {
   headline: { pt: 'Quem assina.', en: 'Who signs it.' } as Bi,
-  name: 'Felipe Tavares',
-  alias: 'Tavarístico',
+  name: 'TAVARÍSTICO',
+  alias: 'Felipe Tavares',
   role: {
     pt: 'Diretor de arte e diretor criativo associado. Representado pela .TBF. inc.',
     en: 'Art director and associate creative director. Represented by .TBF. inc.',

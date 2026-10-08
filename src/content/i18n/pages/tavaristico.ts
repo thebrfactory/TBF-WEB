@@ -14,7 +14,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'Felipe Tavares (Tavarístico) · Portfolio',
+    title: 'TAVARÍSTICO · Portfolio',
     description:
       'Felipe Tavares, aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
   },
@@ -87,7 +87,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Felipe Tavares (Tavarístico) · Portfólio',
+    title: 'TAVARÍSTICO · Portfólio',
     description:
       'Felipe Tavares, conhecido como Tavarístico. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
   },

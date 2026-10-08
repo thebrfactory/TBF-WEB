@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     'label brasileira',
     'cultura brasileira',
   ],
-  authors: [{ name: 'Felipe Tavares', url: 'https://thebrfactory.com' }],
+  authors: [{ name: 'TAVARÍSTICO', url: 'https://thebrfactory.com' }],
   creator: '.THE BRAZILIAN FACTORY.',
   publisher: '.TBF. inc',
   robots: {

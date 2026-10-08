@@ -127,9 +127,9 @@ const en = {
     headingLine1: 'Built by someone',
     headingLine2: 'who lives the culture.',
     initials: 'FT',
-    name: 'Felipe Tavares',
+    name: 'TAVARÍSTICO',
     role: 'Founder · CEO · Creative Director',
-    project: 'Tavarístico',
+    project: 'Felipe Tavares',
     bio: 'Creative director, entrepreneur, and cultural operator based in São Paulo. Founder of the .TBF. universe, building the infrastructure Brazilian culture always deserved.',
   },
 
@@ -271,9 +271,9 @@ const pt: typeof en = {
     headingLine1: 'Construído por alguém',
     headingLine2: 'que vive a cultura.',
     initials: 'FT',
-    name: 'Felipe Tavares',
+    name: 'TAVARÍSTICO',
     role: 'Fundador · CEO · Diretor Criativo',
-    project: 'Tavarístico',
+    project: 'Felipe Tavares',
     bio: 'Diretor criativo, empreendedor e operador cultural baseado em São Paulo. Fundador do universo .TBF., construindo a infraestrutura que a cultura brasileira sempre mereceu.',
   },
 

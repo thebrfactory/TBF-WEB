@@ -25,9 +25,9 @@ Quando ela sair, substituir `capa.webp` e ligar o campo `ogImage`.
 
 ## 01 a 15: fotografia de campo (10/09/2026)
 
-**Autor: Felipe Tavares (.TBF. inc).** Fotografia própria, feita em Posse (GO)
+**Autor: TAVARÍSTICO (.TBF. inc).** Fotografia própria, feita em Posse (GO)
 em 24 de maio, no mesmo campo que o texto descreve. Não há licença de terceiro
-envolvida: o crédito `Felipe Tavares / .TBF. inc` em cada bloco é autoria, não
+envolvida: o crédito `TAVARÍSTICO / .TBF. inc` em cada bloco é autoria, não
 atribuição obrigatória de CC.
 
 Origem dos arquivos: `/Volumes/TAV05/0. TBF inc/RAW/TBF GOIÁS COOLHUNTING
