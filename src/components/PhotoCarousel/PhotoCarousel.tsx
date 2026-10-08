@@ -43,7 +43,7 @@ const SECONDS_PER_SLIDE = 2.4
 // `fallbackLabel` chega por propriedade, e não de useLang(), para este
 // componente seguir sendo de SERVIDOR: chamar um hook de cliente aqui derruba a
 // pré-renderização da home inteira (custou um build quebrado na Vercel).
-export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallbackLabel = 'Enter the Magazine' }: Props) {
+export function PhotoCarousel({ photos = SLIDE1, articles, href = '/zine', fallbackLabel = 'Enter the Zine' }: Props) {
   const hasArticles = !!articles && articles.length > 0
   const duration = `${(photos.length * SECONDS_PER_SLIDE).toFixed(2)}s`
 
@@ -72,7 +72,7 @@ export function PhotoCarousel({ photos = SLIDE1, articles, href = '/mag', fallba
             // Instagram, ver src/lib/instagram.ts). Matéria interna continua
             // no morph.
             const isExternal = slide.href.startsWith('http')
-            const isArticle = !isExternal && (slide.href.startsWith('/editorial/') || slide.href.startsWith('/mag/'))
+            const isArticle = !isExternal && (slide.href.startsWith('/editorial/') || slide.href.startsWith('/zine/'))
             // aria-label é o nome em UMA linha: troca a quebra `\n` por espaço.
             const ariaLabel = (slide.title ?? fallbackLabel).replace(/\n/g, ' ')
             const content = (

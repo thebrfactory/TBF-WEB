@@ -1,4 +1,4 @@
-// Rota `/mag`, o arquivo editorial em inglês, o idioma nativo do site.
+// Rota `/pt/zine`, o mesmo arquivo editorial, em português.
 // A página em si vive em src/views/EditorialView.tsx e serve os dois idiomas.
 
 import type { Metadata } from 'next'
@@ -7,17 +7,17 @@ import { editorial } from '@/content/i18n/pages/editorial'
 import { languageAlternates } from '@/lib/i18n'
 import { openGraphMeta } from '@/lib/og'
 
-const t = editorial.en
+const t = editorial.pt
 
 export const metadata: Metadata = {
   title: t.meta.title,
   description: t.meta.description,
-  alternates: languageAlternates('/mag'),
+  alternates: languageAlternates('/zine'),
   openGraph: openGraphMeta({ title: t.meta.ogTitle, description: t.meta.ogDescription }),
 }
 
 export const revalidate = 3600
 
 export default function Page() {
-  return <EditorialView lang="en" />
+  return <EditorialView lang="pt" />
 }

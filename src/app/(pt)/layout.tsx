@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     template: '%s | .THE BRAZILIAN FACTORY.',
   },
   description:
-    'Culture™ feita em São Paulo. Consumida no mundo inteiro. Revista · Labels · Collective.',
+    'Culture™ feita em São Paulo. Consumida no mundo inteiro. Zine · Labels · Collective.',
   keywords: [
     'The Brazilian Factory',
     'TBF',

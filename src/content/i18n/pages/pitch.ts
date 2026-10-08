@@ -51,7 +51,7 @@ const en = {
     labelsEyebrow: 'Labels / Divisions',
     labelsHeading: '“One organism. Four labels.”',
     labels: [
-      { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/mag' },
+      { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/zine' },
       { tag: '.TFD.', name: 'The Fiore Daily', desc: 'Intimacy-Wellness Community', href: '/labels/thefioredaily' },
       { tag: '.RUC.', name: 'Runway Untd Collective', desc: 'Fashion Film Magazine', href: '/labels/runwayunited' },
       { tag: '.TGF.', name: 'The Growth Factory', desc: 'Worldwide Brazilian Support', href: '/labels/factoryofgrowth' },
@@ -195,7 +195,7 @@ const pt: typeof en = {
     labels: [
       // `Collective Hotel Casino` é o nome da entidade (ver /collective), não
       // descrição: não se traduz, nem aqui nem no site em português.
-      { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/mag' },
+      { tag: '.TBF.', name: 'The Brazilian Factory', desc: 'Collective Hotel Casino', href: '/zine' },
       { tag: '.TFD.', name: 'The Fiore Daily', desc: 'Comunidade de Intimidade e Bem-estar', href: '/labels/thefioredaily' },
       { tag: '.RUC.', name: 'Runway Untd Collective', desc: 'Revista de Fashion Film', href: '/labels/runwayunited' },
       { tag: '.TGF.', name: 'The Growth Factory', desc: 'Suporte Brasileiro no Mundo', href: '/labels/factoryofgrowth' },

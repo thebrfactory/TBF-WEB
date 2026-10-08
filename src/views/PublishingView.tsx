@@ -99,7 +99,7 @@ export default function PublishingView({ lang }: { lang: Lang }) {
           </div>
           <div>
             <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>
-              <strong style={{ fontWeight: 800 }}>.TBF. Magazine</strong>{' '}
+              <strong style={{ fontWeight: 800 }}>.TBF. Zine</strong>{' '}
               {t.whatWePublish.p1Mid}{' '}
               <strong style={{ fontWeight: 800 }}>.THE BRAZILIAN FACTORY.</strong>{' '}
               {t.whatWePublish.p1End}
@@ -231,7 +231,7 @@ export default function PublishingView({ lang }: { lang: Lang }) {
       <section className="section container">
         <span style={SECTION_LABEL}>{t.explore.sectionLabel}</span>
         <h2 style={H2}>{t.explore.h2}</h2>
-        <Link href={path('/mag')} className="btn btn--primary">
+        <Link href={path('/zine')} className="btn btn--primary">
           {t.explore.cta}
           <span className="btn__arrow" aria-hidden="true">→</span>
         </Link>

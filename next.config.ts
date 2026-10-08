@@ -80,8 +80,8 @@ const nextConfig: NextConfig = {
     return [
       // Garante canonical URLs sem trailing slash
       {
-        source: '/mag/',
-        destination: '/mag',
+        source: '/zine/',
+        destination: '/zine',
         permanent: true,
       },
       {
@@ -89,26 +89,47 @@ const nextConfig: NextConfig = {
         destination: '/factory',
         permanent: true,
       },
-      // /editorial virou /mag (pedido do fundador, 10/09/2026). Link antigo
-      // com matéria não perde a matéria: o slug segue no redirect.
+      // MAG virou ZINE (pedido do fundador, 08/10/2026). Link antigo de
+      // matéria não perde a matéria: o slug segue no redirect.
+      {
+        source: '/mag/:slug*',
+        destination: '/zine/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/mag',
+        destination: '/zine',
+        permanent: true,
+      },
+      {
+        source: '/pt/mag/:slug*',
+        destination: '/pt/zine/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/pt/mag',
+        destination: '/pt/zine',
+        permanent: true,
+      },
+      // /editorial (nome ainda mais antigo) aponta direto para o destino final.
       {
         source: '/editorial/:slug*',
-        destination: '/mag/:slug*',
+        destination: '/zine/:slug*',
         permanent: true,
       },
       {
         source: '/editorial',
-        destination: '/mag',
+        destination: '/zine',
         permanent: true,
       },
       {
         source: '/pt/editorial/:slug*',
-        destination: '/pt/mag/:slug*',
+        destination: '/pt/zine/:slug*',
         permanent: true,
       },
       {
         source: '/pt/editorial',
-        destination: '/pt/mag',
+        destination: '/pt/zine',
         permanent: true,
       },
       {

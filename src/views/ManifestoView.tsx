@@ -365,7 +365,7 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
           }}
         >
           {/* CTA 1 primário: Enter the Editorial */}
-          <Link href={path('/mag')} className="btn btn--primary">
+          <Link href={path('/zine')} className="btn btn--primary">
             {t.ctaEditorial}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>

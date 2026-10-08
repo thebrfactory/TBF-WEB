@@ -233,7 +233,7 @@ export const BUSINESS = {
   portfolio: [
     {
       name: '.THE BRAZILIAN FACTORY.',
-      href: '/mag',
+      href: '/zine',
       role: { pt: 'Holding, camada de pesquisa e de venture', en: 'Holding, research and venture layer' },
       why: { pt: 'Cria a leitura cultural e define o ponto de vista da casa.', en: 'Creates the cultural reading and sets the house point of view.' },
       forms: { pt: 'Editorial, manifesto, curadoria, projetos autorais e narrativas de marca.', en: 'Editorial, manifesto, curation, authored projects and brand narratives.' },

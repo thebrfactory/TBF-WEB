@@ -346,7 +346,7 @@ export function Navigation() {
 
         <nav className="menu__nav" aria-label={t.mobileMenu}>
           <p className="menu__group">{t.menuGroupRead}</p>
-          <Link href={localizedPath('/mag', lang)} className="menu__link">
+          <Link href={localizedPath('/zine', lang)} className="menu__link">
             {t.magazine}
           </Link>
         </nav>

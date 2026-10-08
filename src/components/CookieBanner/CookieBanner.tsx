@@ -15,7 +15,7 @@
 // ainda trazia a categoria `marketing`, morta no site desde então.
 //
 // ATRASO EM ROTA DE ARTIGO (2026-08-01, DOPAMINE ARTICLE ORD-02): em
-// /mag/[slug] o pico de entrada (loader → hero) tem prioridade: o banner
+// /zine/[slug] o pico de entrada (loader → hero) tem prioridade: o banner
 // só aparece depois de ARTICLE_BANNER_DELAY_MS. Nas demais rotas, imediato,
 // como sempre foi. O atraso é só de EXIBIÇÃO: nada não essencial é coletado
 // antes do opt-in, com ou sem atraso, em nenhuma rota. Regra dura do pedido:
@@ -35,7 +35,7 @@ import { localizedPath } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
 
 const ARTICLE_BANNER_DELAY_MS = 5000
-const ARTICLE_ROUTE_PATTERN = /^\/mag\/[^/]+\/?$/
+const ARTICLE_ROUTE_PATTERN = /^\/zine\/[^/]+\/?$/
 
 export function CookieBanner() {
   const pathname = usePathname()

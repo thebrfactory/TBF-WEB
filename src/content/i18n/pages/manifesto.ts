@@ -36,7 +36,7 @@ const pt: typeof en = {
   heading: 'Manifesto',
   bodyPtLabel: 'Manifesto em português',
   nextStepsLabel: 'Próximos passos',
-  ctaEditorial: 'Entrar na revista',
+  ctaEditorial: 'Entrar no Zine',
   ctaAccess: 'Pedir acesso',
 }
 

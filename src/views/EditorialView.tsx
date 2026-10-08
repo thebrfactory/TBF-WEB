@@ -1,11 +1,11 @@
 // =============================================================================
-// /mag: FEED EDITORIAL
+// /zine: FEED EDITORIAL
 // Grid assimétrico + filtros por categoria (client component)
 // CTAs: Read the piece (grid) · Expand the archive (paginação)
 //
 // Uma página, dois idiomas: o texto vem do dicionário e os links passam por
 // localizedPath. Ver src/content/i18n/README.md. EditorialGrid e CategoryGrid
-// continuam em app/(en)/mag/ (não são rota, não precisam mudar de
+// continuam em app/(en)/zine/ (não são rota, não precisam mudar de
 // pasta) e leem o idioma via useLang()/useT(), herdado do LangProvider da
 // árvore em que a página está montada.
 // =============================================================================
@@ -13,7 +13,7 @@
 import Image from 'next/image'
 import { sanityFetch, EDITORIAL_LIST_QUERY } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
-import { EditorialGrid } from '@/app/(en)/mag/EditorialGrid'
+import { EditorialGrid } from '@/app/(en)/zine/EditorialGrid'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { editorial } from '@/content/i18n/pages/editorial'

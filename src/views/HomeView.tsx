@@ -68,7 +68,7 @@ function slide2Articles(path: (p: string) => string): CarouselArticle[] {
     { title: '.THE\nLOST\nTAPE.', href: 'https://www.instagram.com/p/DX-b6Pbium6/' }, // 03
     { title: '.BRAZILIAN\nFASHION\nMAGAZINE.', href: 'https://www.instagram.com/p/DPpNWr7CXj0/' }, // 04
     { title: '.BRAZILIAN\nRUNWAY\nCULTURE.', href: 'https://www.instagram.com/p/DPbo2BBCaIB/' }, // 05
-    { title: '.BRAZILIAN\nCOUNTRY\nSIDE.', href: path('/mag/brazilian-country-side') }, // 06, matéria interna
+    { title: '.BRAZILIAN\nCOUNTRY\nSIDE.', href: path('/zine/brazilian-country-side') }, // 06, matéria interna
     { title: '.BRAZILIAN\nDEMO\nREEL.', href: 'https://www.instagram.com/p/DP-F299lK8V/' }, // 09
   ]
 }
@@ -206,7 +206,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
         </div>
 
         <div className="container" style={{ marginTop: 'var(--tbf-space-8)' }}>
-          <Link href={path('/mag')} className="btn btn--secondary">
+          <Link href={path('/zine')} className="btn btn--secondary">
             {t.magazine.cta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>

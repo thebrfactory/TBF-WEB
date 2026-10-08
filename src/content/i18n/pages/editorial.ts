@@ -1,9 +1,9 @@
 // =============================================================================
-// Dicionário do /mag. Convenções: ../README.md
+// Dicionário do /zine. Convenções: ../README.md
 //
 // O conteúdo dos artigos vem do Sanity e NÃO mora aqui — só o cromo da página
 // (categorias fixas, filtros, estados vazios, os cards de exemplo exibidos
-// enquanto o CMS ainda está vazio). Rota /mag/[slug] é de outro executor:
+// enquanto o CMS ainda está vazio). Rota /zine/[slug] é de outro executor:
 // nada aqui altera aquela árvore.
 // =============================================================================
 
@@ -18,7 +18,7 @@ const en = {
     ogDescription: 'Brazilian fashion and culture editorial archive.',
   },
 
-  heroImageAlt: '.TBF. SÃO PAULO · Magazine',
+  heroImageAlt: '.TBF. SÃO PAULO · Zine',
 
   // Rótulos das categorias fixas — usados no filtro (EditorialGrid) e na
   // grade de categorias (CategoryGrid). O `value` é o slug técnico
@@ -65,7 +65,7 @@ const pt: typeof en = {
     ogDescription: 'Arquivo editorial de moda e cultura brasileira.',
   },
 
-  heroImageAlt: '.TBF. SÃO PAULO · Revista',
+  heroImageAlt: '.TBF. SÃO PAULO · Zine',
 
   categories: {
     all: 'Tudo',

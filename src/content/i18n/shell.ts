@@ -17,8 +17,8 @@ const en = {
 
   nav: {
     home: 'Home',
-    magazineShort: 'MAG',
-    magazine: 'Magazine',
+    magazineShort: 'ZINE',
+    magazine: 'Zine',
     login: 'Login',
     // Linha sob o LOGIN dentro do menu. O acesso ao brandsystem nao e um item
     // de lista como os outros: e porta de assinante, e diz isso em voz baixa.
@@ -101,7 +101,7 @@ const en = {
       legal: 'Legal',
     },
     links: {
-      magazine: 'Magazine',
+      magazine: 'Zine',
       labels: 'Labels',
       manifesto: 'Manifesto',
       collective: 'Collective',
@@ -145,8 +145,8 @@ const pt: typeof en = {
 
   nav: {
     home: 'Início',
-    magazineShort: 'MAG',
-    magazine: 'Revista',
+    magazineShort: 'ZINE',
+    magazine: 'Zine',
     login: 'Entrar',
     loginNote: 'Só para assinantes',
     menuGroupRead: 'Leitura',
@@ -215,7 +215,7 @@ const pt: typeof en = {
       legal: 'Jurídico',
     },
     links: {
-      magazine: 'Revista',
+      magazine: 'Zine',
       labels: 'Labels',
       manifesto: 'Manifesto',
       collective: 'Collective',

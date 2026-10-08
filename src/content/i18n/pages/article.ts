@@ -1,5 +1,5 @@
 // =============================================================================
-// Dicionário da MATÉRIA (/mag/[slug]). Convenções: ../README.md
+// Dicionário da MATÉRIA (/zine/[slug]). Convenções: ../README.md
 //
 // Só o cromo da página vive aqui. O texto das matérias de verdade vem do Sanity
 // e o do piloto scrolly vem de content/articles/, os dois já bilíngues.
@@ -8,7 +8,7 @@
 import type { Lang } from '@/lib/i18n'
 
 const en = {
-  backToMagazine: '← Back to Magazine',
+  backToMagazine: '← Back to Zine',
   articleInfo: 'Article information',
   alsoFrom: 'Also from the ecosystem .TBF.',
   enterCollective: 'Enter the Collective',
@@ -61,7 +61,7 @@ const en = {
 }
 
 const pt: typeof en = {
-  backToMagazine: '← Voltar para a revista',
+  backToMagazine: '← Voltar para o Zine',
   articleInfo: 'Informações do artigo',
   alsoFrom: 'Também do ecossistema .TBF.',
   enterCollective: 'Entrar no Collective',

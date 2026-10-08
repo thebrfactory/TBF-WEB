@@ -23,7 +23,7 @@ const en = {
   whatWePublish: {
     sectionLabel: 'What We Publish',
     h2: 'Culture, told well.',
-    // <strong>.TBF. Magazine</strong> + " is the editorial arm of " + <strong>.THE BRAZILIAN FACTORY.</strong> + p1End
+    // <strong>.TBF. Zine</strong> + " is the editorial arm of " + <strong>.THE BRAZILIAN FACTORY.</strong> + p1End
     p1Mid: 'is the editorial arm of',
     p1End: 'We publish long-form editorial content, photography, interviews and cultural essays, all rooted in the São Paulo creative scene and connected to a broader global conversation.',
     p2: 'Our publishing extends across all four labels: each label contributes content from its own specific cultural territory. Everything we publish is made with intention and produced to a high standard.',
@@ -53,8 +53,8 @@ const en = {
 
   explore: {
     sectionLabel: 'Explore',
-    h2: 'Read the Magazine',
-    cta: 'Go to Magazine',
+    h2: 'Read the Zine',
+    cta: 'Go to Zine',
   },
 }
 
@@ -104,8 +104,8 @@ const pt: typeof en = {
 
   explore: {
     sectionLabel: 'Explore',
-    h2: 'Leia a Revista',
-    cta: 'Ir para a Revista',
+    h2: 'Leia o Zine',
+    cta: 'Ir para o Zine',
   },
 }
 

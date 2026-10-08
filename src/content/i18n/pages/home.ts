@@ -13,8 +13,8 @@ const en = {
   },
 
   magazine: {
-    sectionLabel: 'Magazine',
-    cta: 'Enter the Magazine',
+    sectionLabel: 'Zine',
+    cta: 'Enter the Zine',
   },
 
   // Capas de exemplo, exibidas só enquanto o CMS não tem matéria publicada.
@@ -45,13 +45,13 @@ const pt: typeof en = {
   meta: {
     title: '.THE BRAZILIAN FACTORY.',
     description:
-      'Culture™ feita em São Paulo. Consumida no mundo inteiro. Uma label brasileira. Revista · Labels · Collective.',
+      'Culture™ feita em São Paulo. Consumida no mundo inteiro. Uma label brasileira. Zine · Labels · Collective.',
     ogDescription: 'Culture™ feita em São Paulo. Consumida no mundo inteiro.',
   },
 
   magazine: {
-    sectionLabel: 'Revista',
-    cta: 'Entrar na revista',
+    sectionLabel: 'Zine',
+    cta: 'Entrar no Zine',
   },
 
   mockCards: [
