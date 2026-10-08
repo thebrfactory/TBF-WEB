@@ -33,6 +33,7 @@ const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
   { path: '/zine', changeFrequency: 'daily', priority: 0.9 },
   { path: '/consulting', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/brand-tech', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/manifesto', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/labels', changeFrequency: 'weekly', priority: 0.8 },
   { path: '/labels/factoryofgrowth', changeFrequency: 'weekly', priority: 0.8 },
