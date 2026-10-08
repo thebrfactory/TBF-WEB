@@ -1,6 +1,6 @@
 // =============================================================================
 // CONTEÚDO: "THE HOLY, THE HORSEPOWER & THE CLOWN" /
-// "O SAGRADO, O CAVALO-VAPOR E O PALHAÇO"
+// "O SAGRADO, O POSSANTE E O PALHAÇO"
 // 3ª matéria local do motor scrolly. Slug `brazilian-country-side`, escolhido
 // pelo fundador de propósito: não precisa bater com o título.
 //
@@ -94,10 +94,10 @@ import type { ManifestoArticle } from './types'
 
 export const brazilianCountrySide: ManifestoArticle = {
   slug: 'brazilian-country-side',
-  loaderTitle: { en: 'THE HOLY, THE HORSEPOWER', pt: 'O SAGRADO, O CAVALO-VAPOR' },
+  loaderTitle: { en: 'THE HOLY, THE HORSEPOWER', pt: 'O SAGRADO, O POSSANTE' },
   heroTitle: {
     en: 'THE HOLY, THE HORSEPOWER & THE CLOWN.',
-    pt: 'O SAGRADO, O CAVALO-VAPOR E O PALHAÇO.',
+    pt: 'O SAGRADO, O POSSANTE E O PALHAÇO.',
   },
   heroSubtitle: {
     en: 'Field notes from Posse, Goiás: a religious procession, a horseback battle between Moors and Christians, and a lowered car with the bass turned all the way up.',
@@ -316,8 +316,8 @@ export const brazilianCountrySide: ManifestoArticle = {
       emphasize: [2],
     },
 
-    // ─── CAPÍTULO 3: CAVALO-VAPOR.
-    { kind: 'word', label: { en: 'HORSEPOWER', pt: 'CAVALO-VAPOR' }, theme: 'dark' },
+    // ─── CAPÍTULO 3: POSSANTE (PT) / HORSEPOWER (EN).
+    { kind: 'word', label: { en: 'HORSEPOWER', pt: 'POSSANTE' }, theme: 'dark' },
     {
       kind: 'image',
       src: '/images/editorial/country-side/04-palhaco-no-rallye.webp',
