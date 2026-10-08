@@ -1,5 +1,6 @@
 // =============================================================================
 // /zine/[slug]: ARTIGO INDIVIDUAL
+// Coluna central (42.5rem, a mesma de --sc-column em scrolly.css) para cabeçalho e corpo.
 // Hero full-bleed + corpo editorial + sidebar sticky + créditos + relacionados
 // CTAs: Also from the ecosystem · Enter the Collective · Access the system
 // =============================================================================
@@ -176,7 +177,7 @@ export default async function ArticleView({
     return (
       <article>
         <header style={{ paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-16))', paddingBottom: 'var(--tbf-space-12)', paddingInline: 'var(--tbf-grid-margin-sm)' }}>
-          <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
+          <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
             <div style={{ display: 'flex', gap: 'var(--tbf-space-4)', alignItems: 'center', marginBottom: 'var(--tbf-space-6)', flexWrap: 'wrap' }}>
               <span className="tag tag--category">{mock.category}</span>
               <time dateTime={mock.date} style={{ fontFamily: 'var(--tbf-type-micro-family)', fontSize: 'var(--tbf-type-micro-size)', letterSpacing: 'var(--tbf-type-micro-ls)', color: 'var(--tbf-text-tertiary)', textTransform: 'uppercase', marginLeft: 'auto' }}>
@@ -201,8 +202,8 @@ export default async function ArticleView({
           <Image src={mock.img} alt={mock.title} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
         </div>
         <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBottom: 'var(--tbf-space-20)' }}>
-          <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
-            <div className="article-body" style={{ maxWidth: 'var(--tbf-type-body-max-width)' }}>
+          <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
+            <div className="article-body" style={{ maxWidth: 'var(--tbf-type-body-max-width)', marginInline: 'auto' }}>
               {BODY.split('. ').map((s, i, arr) => (
                 <p key={i} style={{ marginBottom: 'var(--tbf-type-body-mb)' }}>{s}{i < arr.length - 1 ? '.' : ''}</p>
               ))}
@@ -236,7 +237,7 @@ export default async function ArticleView({
       >
         <div
           style={{
-            maxWidth: 'var(--tbf-grid-max-xl)',
+            maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)',
             marginInline: 'auto',
           }}
         >
@@ -396,7 +397,7 @@ export default async function ArticleView({
       >
         <div
           style={{
-            maxWidth: 'var(--tbf-grid-max-xl)',
+            maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)',
             marginInline: 'auto',
             display: 'grid',
             gridTemplateColumns: '1fr',
@@ -406,7 +407,7 @@ export default async function ArticleView({
           {/* Corpo */}
           <div
             className="article-body"
-            style={{ maxWidth: 'var(--tbf-type-body-max-width)' }}
+            style={{ maxWidth: 'var(--tbf-type-body-max-width)', marginInline: 'auto', width: '100%' }}
           >
             {renderPortableText(post.body)}
           </div>

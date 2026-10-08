@@ -30,6 +30,7 @@ import type { MediaPairItem } from '@/components/scrolly'
 import { MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import type { Lang } from '@/lib/i18n'
+import { withTbf } from '@/lib/tbf-text'
 
 interface ArticleScrollyProps {
   tone: 'manifesto' | 'narrativa' | 'jornalismo' | 'ensaio'
@@ -188,7 +189,8 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
             key={key}
             src={block.src}
             alt={block.alt[lang]}
-            caption={[block.caption?.[lang], block.credit].filter(Boolean).join(' · ')}
+            caption={block.caption?.[lang]}
+            credit={block.credit}
             variant={block.variant}
             width={block.variant === 'plate' ? block.width : undefined}
             height={block.variant === 'plate' ? block.height : undefined}
@@ -205,7 +207,8 @@ function renderBlocks(blocks: ManifestoBlock[], lang: Lang) {
               block.items.map((it) => ({
                 src: it.src,
                 alt: it.alt[lang],
-                caption: [it.caption?.[lang], it.credit].filter(Boolean).join(' · '),
+                caption: it.caption?.[lang],
+                credit: it.credit,
               })) as [MediaPairItem, MediaPairItem]
             }
             ratio={block.ratio}
@@ -237,21 +240,21 @@ function MirrorLists({
   return (
     <div className="scrolly-mirror">
       <div className="scrolly-mirror__col">
-        {beforeLabel ? <p className="scrolly-mirror__label">{beforeLabel}</p> : null}
+        {beforeLabel ? <p className="scrolly-mirror__label">{withTbf(beforeLabel)}</p> : null}
         <ul className="scrolly-mirror__list scrolly-mirror__list--before">
           {before.map((item, i) => (
             <li key={i} className="scrolly-mirror__item">
-              {item}
+              {withTbf(item)}
             </li>
           ))}
         </ul>
       </div>
       <div className="scrolly-mirror__col">
-        {afterLabel ? <p className="scrolly-mirror__label">{afterLabel}</p> : null}
+        {afterLabel ? <p className="scrolly-mirror__label">{withTbf(afterLabel)}</p> : null}
         <ul className="scrolly-mirror__list scrolly-mirror__list--after">
           {after.map((item, i) => (
             <li key={i} className="scrolly-mirror__item">
-              {item}
+              {withTbf(item)}
             </li>
           ))}
         </ul>
@@ -265,8 +268,8 @@ function RawCascade({ fixed, items }: { fixed: string; items: string[] }) {
     <div className="scrolly-raw">
       {items.map((item, i) => (
         <p key={i} className="scrolly-raw__row">
-          <span className="scrolly-raw__fixed">{fixed}</span>
-          <span className="scrolly-raw__variable">{item}</span>
+          <span className="scrolly-raw__fixed">{withTbf(fixed)}</span>
+          <span className="scrolly-raw__variable">{withTbf(item)}</span>
         </p>
       ))}
     </div>
@@ -278,8 +281,8 @@ function NegationPairs({ pairs }: { pairs: [string, string][] }) {
     <div className="scrolly-negation">
       {pairs.map(([no, yes], i) => (
         <div key={i} className="scrolly-negation__pair">
-          <p className="scrolly-negation__no">{no}</p>
-          <p className="scrolly-negation__yes">{yes}</p>
+          <p className="scrolly-negation__no">{withTbf(no)}</p>
+          <p className="scrolly-negation__yes">{withTbf(yes)}</p>
         </div>
       ))}
     </div>

@@ -6,6 +6,8 @@
 // pequeno delay extra por posição para acentuar a cascata.
 // =============================================================================
 
+import { withTbf } from '@/lib/tbf-text'
+
 interface LineCascadeProps {
   lines: string[]
   /** Índices (0-based) que ganham destaque de escala média — TIER 2 do roteiro. */
@@ -21,7 +23,7 @@ export function LineCascade({ lines, emphasize = [] }: LineCascadeProps) {
           className={`scrolly-cascade__line${emphasize.includes(i) ? ' scrolly-cascade__line--emphasis' : ''}`}
           style={{ ['--i' as string]: i % 6 }}
         >
-          {line}
+          {withTbf(line)}
         </p>
       ))}
     </div>

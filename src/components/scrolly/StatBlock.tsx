@@ -7,6 +7,7 @@
 // =============================================================================
 
 import { useEffect, useRef, useState } from 'react'
+import { withTbf } from '@/lib/tbf-text'
 
 interface StatBlockProps {
   value: number
@@ -61,7 +62,7 @@ export function StatBlock({ value, label, prefix = '', suffix = '', formatted }:
         {suffix}
       </p>
       <div className="scrolly-stat__bar" aria-hidden="true" />
-      <p className="scrolly-stat__label">{label}</p>
+      <p className="scrolly-stat__label">{withTbf(label)}</p>
     </div>
   )
 }

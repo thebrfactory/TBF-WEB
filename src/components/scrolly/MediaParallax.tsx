@@ -20,11 +20,30 @@
 
 import type React from 'react'
 import Image from 'next/image'
+import { withTbf } from '@/lib/tbf-text'
+
+// LEGENDA (08/10/2026, CHANGES #01): a frase em light, o crédito em bold, e as
+// duas sempre dentro do `figcaption`, que mora no MESMO `figure` da imagem. A
+// legenda herda a largura da imagem, então a borda esquerda dela é a borda
+// esquerda da foto, em qualquer variante. Antes o `figure` ocupava a tela
+// inteira e a prancha ficava centralizada dentro dele: a legenda começava fora
+// do alinhamento da imagem. O crédito continua obrigatório (licenças CC).
+function MediaCaption({ caption, credit }: { caption?: string; credit?: string }) {
+  if (!caption && !credit) return null
+  return (
+    <figcaption className="scrolly-media__caption">
+      {caption && <span className="scrolly-media__caption-text">{withTbf(caption)}</span>}
+      {caption && credit && ' · '}
+      {credit && <strong className="scrolly-media__credit">{withTbf(credit)}</strong>}
+    </figcaption>
+  )
+}
 
 interface MediaParallaxProps {
   src: string
   alt: string
   caption?: string
+  credit?: string
   variant?: 'bleed' | 'plate'
   /** Obrigatórios em `plate`: é a proporção nativa que define a altura. */
   width?: number
@@ -35,25 +54,29 @@ export function MediaParallax({
   src,
   alt,
   caption,
+  credit,
   variant = 'bleed',
   width,
   height,
 }: MediaParallaxProps) {
   if (variant === 'plate') {
     return (
-      <figure className="scrolly-media scrolly-media--plate">
+      <figure
+        className="scrolly-media scrolly-media--plate"
+        // Proporção nativa entregue ao CSS, que a usa para converter o teto de
+        // altura (80svh) em largura da PRÓPRIA figura (e não só da imagem), para a
+        // legenda acompanhar a borda da foto. Ver scrolly.css §PRANCHA.
+        style={{ '--plate-ratio': width && height ? width / height : 1 } as React.CSSProperties}
+      >
         <Image
           src={src}
           alt={alt}
           width={width}
           height={height}
-          sizes="(min-width: 768px) 60vw, 100vw"
+          sizes="(min-width: 768px) 680px, 100vw"
           className="scrolly-media__plate-img"
-          // Proporção nativa entregue ao CSS, que a usa para converter o teto de
-          // altura (80svh) em largura. Ver scrolly.css §PRANCHA.
-          style={{ '--plate-ratio': width && height ? width / height : 1 } as React.CSSProperties}
         />
-        {caption && <figcaption className="scrolly-media__caption">{caption}</figcaption>}
+        <MediaCaption caption={caption} credit={credit} />
       </figure>
     )
   }
@@ -61,9 +84,9 @@ export function MediaParallax({
   return (
     <figure className="scrolly-media">
       <div className="scrolly-media__frame">
-        <Image src={src} alt={alt} fill sizes="100vw" style={{ objectFit: 'cover' }} className="scrolly-media__img" />
+        <Image src={src} alt={alt} fill sizes="(min-width: 768px) 680px, 100vw" style={{ objectFit: 'cover' }} className="scrolly-media__img" />
       </div>
-      {caption && <figcaption className="scrolly-media__caption">{caption}</figcaption>}
+      <MediaCaption caption={caption} credit={credit} />
     </figure>
   )
 }
@@ -91,6 +114,7 @@ export interface MediaPairItem {
   src: string
   alt: string
   caption?: string
+  credit?: string
 }
 
 export function MediaPair({
@@ -113,13 +137,13 @@ export function MediaPair({
               src={item.src}
               alt={item.alt}
               fill
-              // Meia largura a partir de 768px; largura cheia abaixo disso.
-              sizes="(min-width: 768px) 50vw, 100vw"
+              // Meia coluna (340px) a partir de 768px; largura cheia abaixo disso.
+              sizes="(min-width: 768px) 340px, 100vw"
               style={{ objectFit: 'cover' }}
               className="scrolly-media__img"
             />
           </div>
-          {item.caption && <figcaption className="scrolly-media__caption">{item.caption}</figcaption>}
+          <MediaCaption caption={item.caption} credit={item.credit} />
         </figure>
       ))}
     </div>

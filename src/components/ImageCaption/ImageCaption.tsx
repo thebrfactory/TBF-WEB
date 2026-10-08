@@ -1,12 +1,13 @@
 // =============================================================================
 // IMAGE + CAPTION — TBF WEB 2026
 // Variantes: full-bleed (Layout E) / contained
-// ZERO border-radius em imagens — regra absoluta
+// Cantos levemente arredondados (token de raio `tile`), pedido do fundador em 08/10/2026
 // =============================================================================
 
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity'
 import type { SanityImage } from '@/types'
+import { withTbf } from '@/lib/tbf-text'
 
 interface ImageCaptionProps {
   image: SanityImage
@@ -38,14 +39,16 @@ export function ImageCaption({
           fill
           priority={priority}
           sizes={sizes}
-          style={{ objectFit: 'cover', borderRadius: 0 }}
+          style={{ objectFit: 'cover', borderRadius: 'var(--tbf-radius-tile)' }}
         />
       </div>
       {(image.caption || image.credit) && (
         <figcaption className="figure__caption">
-          {image.caption}
+          {image.caption && (
+            <span style={{ fontWeight: 'var(--tbf-font-weight-raw-300)' }}>{withTbf(image.caption)}</span>
+          )}
           {image.caption && image.credit && ' · '}
-          {image.credit}
+          {image.credit && <strong style={{ fontWeight: 'var(--tbf-font-weight-raw-700)' }}>{withTbf(image.credit)}</strong>}
         </figcaption>
       )}
     </figure>

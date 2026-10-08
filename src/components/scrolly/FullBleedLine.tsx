@@ -5,6 +5,7 @@
 // =============================================================================
 
 import type { ScrollyTheme } from './types'
+import { withTbf } from '@/lib/tbf-text'
 
 interface FullBleedLineProps {
   text: string
@@ -18,7 +19,7 @@ export function FullBleedLine({ text, theme = 'dark', scale = 'display', eyebrow
   return (
     <section className={`scrolly-fullbleed scrolly-fullbleed--${theme}`} aria-label={eyebrow}>
       <div className="scrolly-fullbleed__wipe" aria-hidden="true" />
-      <p className={`scrolly-fullbleed__text scrolly-fullbleed__text--${scale}`}>{text}</p>
+      <p className={`scrolly-fullbleed__text scrolly-fullbleed__text--${scale}`}>{withTbf(text)}</p>
     </section>
   )
 }

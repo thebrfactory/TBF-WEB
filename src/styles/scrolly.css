@@ -713,8 +713,37 @@
   aspect-ratio: 4 / 5;
 }
 
+/* =============================================================================
+   COLUNA CENTRAL (08/10/2026, CHANGES #01: "padrão feed do Facebook/Instagram")
+   Texto, foto e legenda moram numa coluna só, centrada, com a medida do mobile
+   levemente aberta. `--sc-column` é a ÚNICA medida: foto solta, par, prancha e
+   legenda leem dela. O texto corrido já é uma coluna centrada (65ch).
+   Mobile-first: no telefone a coluna é a tela menos o respiro lateral
+   (`--sc-gutter`, o mesmo do texto), então foto, texto e legenda compartilham a
+   mesma borda esquerda. Os cantos arredondados só são visíveis com esse respiro,
+   por isso a foto deixou de sangrar de ponta a ponta (decisão registrada no
+   relatório, aguarda OK do fundador).
+   ============================================================================= */
+.scrolly-article {
+  --sc-column: 42.5rem; /* 680px */
+  --sc-gutter: var(--tbf-grid-margin-sm);
+  --sc-media-gap: var(--tbf-space-3);
+  --sc-media-radius: var(--tbf-radius-tile); /* 10px */
+}
+
+@media (min-width: 768px) {
+  .scrolly-article { --sc-gutter: var(--tbf-grid-margin-md); }
+}
+
+/* Peso extrabold da marca, ver `withTbf` em lib/tbf-text.tsx. */
+.tbf-mark { font-weight: var(--tbf-font-weight-raw-800); }
+
+/* O `figure` É a coluna: a largura dele é a largura da foto, e a legenda (filha
+   dele) começa exatamente na borda esquerda da foto. */
 .scrolly-media {
   margin-block: var(--tbf-space-16);
+  margin-inline: auto;
+  max-width: min(var(--sc-column), calc(100% - 2 * var(--sc-gutter)));
 }
 
 .scrolly-media__frame {
@@ -722,99 +751,70 @@
   aspect-ratio: 16 / 10;
   overflow: clip;
   contain: layout paint;
-}
-
-/* TETO DA FOTO SOLTA NO DESKTOP (pedido do fundador, #01 CHANGES 2026-08-14):
-   "no mobile a imagem de ponta a ponta da tela fica bom, mas no desktop fica
-   muito grande e fica estourado".
-
-   O quadro 16/10 de largura cheia em 1440px dá 900px de altura: a foto sozinha
-   ocupa a janela inteira, e uma imagem que preenche a tela toda em matéria longa
-   lê como interrupção, não como ilustração. O teto é de LARGURA e vem do mesmo
-   token de coluna do texto, então a foto passa a respirar na mesma medida do
-   corpo em vez de ter uma medida própria inventada.
-
-   No telefone nada muda — lá o sangramento de ponta a ponta é o que ele aprovou,
-   e é por isso que a regra vive dentro do media query e não fora dele. */
-@media (min-width: 768px) {
-  .scrolly-media__frame {
-    max-width: min(100%, 68rem);
-    margin-inline: auto;
-  }
+  border-radius: var(--sc-media-radius);
 }
 
 .scrolly-media__img { transform: translateY(0); }
 
-/* ─── PAR LADO A LADO ────────────────────────────────────────────────────────
-   A outra metade da mesma correção. Ver o cabeçalho de MediaPair em
-   MediaParallax.tsx para o porquê de o par existir e de o quadro ser 4/5.
-
-   Mobile-first: no telefone é uma coluna e cada peça continua sangrando de ponta
-   a ponta, exatamente como a foto solta. A partir de 768px viram duas colunas
-   iguais. `align-items: start` para que a legenda mais curta não estique a
-   figura dela até a altura da mais longa. */
+/* ─── PAR ────────────────────────────────────────────────────────────────────
+   Ver o cabeçalho de MediaPair em MediaParallax.tsx para o porquê de o par
+   existir. Mobile: uma coluna, mesmo respiro da foto solta. A partir de 768px,
+   duas colunas iguais DENTRO da mesma coluna central, com o mesmo vão (`--sc-media-gap`)
+   do empilhado, então a grade fica alinhada com a foto solta de cima e de baixo.
+   `align-items: start` para a legenda mais curta não esticar a figura. */
 .scrolly-pair {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--tbf-space-8);
+  gap: var(--tbf-space-6) var(--sc-media-gap);
   margin-block: var(--tbf-space-16);
+  margin-inline: auto;
+  max-width: min(var(--sc-column), calc(100% - 2 * var(--sc-gutter)));
 }
 
-/* A margem do par é do container, não de cada figura: sem isto as duas peças
-   empilhadas no telefone ganham o respiro de bloco duas vezes. */
-.scrolly-pair__item { margin-block: 0; }
+/* Margem e teto são do container; cada peça só preenche a célula dela. */
+.scrolly-pair__item {
+  margin: 0;
+  max-width: none;
+}
 
 @media (min-width: 768px) {
   .scrolly-pair {
     grid-template-columns: 1fr 1fr;
     align-items: start;
-    gap: var(--tbf-space-6);
-    max-width: min(100%, 68rem);
-    margin-inline: auto;
   }
 
-  /* 4/3, e o número não é de gosto: é a proporção NATIVA dos dois renders
-     (1280 × 960). Em `cover`, quadro e arquivo com a mesma proporção significa
-     recorte ZERO — o carro aparece inteiro, com as duas pontas.
-
-     O 16/10 do quadro solto não serve aqui: em meia largura vira uma tira baixa
-     demais para um carro. E o 4/5 que este quadro teve por uma passada era pior
-     ainda — retrato aplicado a arquivo deitado come um quarto da largura de
-     cada lado, e o que sobrava na tela era roda (visto na conferência de
-     2026-08-14).
-
-     Se um par futuro trouxer arquivos de outra proporção, é ESTE número que
+  /* 4/3 é a proporção NATIVA dos renders do Gurgel (1280 x 960): recorte zero.
+     Par de foto em pé manda a própria proporção por `--pair-ratio`, inline, vinda
+     do bloco. Se um par trouxer arquivos de outra proporção, é este número que
      muda junto. */
   .scrolly-pair__frame {
-    /* 4/3 continua o default (os renders do Gurgel). Par de foto em pe manda a
-       propria proporcao por `--pair-ratio`, inline, vinda do bloco. */
     aspect-ratio: var(--pair-ratio, 4 / 3);
-    max-width: 100%;
   }
 }
 
-/* PRANCHA (variante `plate`) — folheto, anúncio, retrato vertical.
-   Mobile-first: no celular a peça ocupa a largura toda e cresce em altura, que é
-   o jeito natural de ler material vertical num aparelho vertical. No desktop ela
-   é centrada e limitada pela ALTURA da tela, não pela largura, para um folheto em
-   pé nunca passar de uma tela de altura. Sem cover, sem scale: nada é recortado. */
+/* PRANCHA (variante `plate`): folheto, retrato vertical, panorama. A imagem
+   aparece INTEIRA, na proporção nativa, sem cover e sem scale.
+   A coluna vale para a prancha também, então um panorama 1920x783 deixa de
+   esticar até a borda da tela: ocupa a coluna, com a altura que a proporção dá.
+   No desktop, a FIGURA (não só a imagem) tem teto de 80svh de altura, escrito em
+   largura (`width: auto` + `max-height` colapsaria a figura, medido em
+   2026-08-14: 29px de altura). `--plate-ratio` (largura / altura do arquivo) vem
+   inline do MediaParallax. Como o teto está na figura, uma prancha vertical mais
+   estreita que a coluna fica centrada e a legenda acompanha a borda dela. */
 .scrolly-media--plate .scrolly-media__plate-img {
   display: block;
   width: 100%;
   height: auto;
-  margin-inline: auto;
+  border-radius: var(--sc-media-radius);
 }
 
 @media (min-width: 768px) {
-  .scrolly-media--plate .scrolly-media__plate-img {
-    /* O TETO É DE ALTURA, MAS ESCRITO EM LARGURA, e isso não é preciosismo:
-       `width: auto` + `max-height` deixa a largura sem valor resolvido e a figura
-       colapsa (medido: 29px de altura no desktop, só a legenda sobrava). Aqui a
-       largura é sempre um número — o menor entre a coluna e a largura que a peça
-       teria se tivesse exatamente 80svh de altura. `--plate-ratio` (largura ÷
-       altura do arquivo) vem inline do MediaParallax, então a conta usa a
-       proporção NATIVA da imagem, não um palpite. */
-    width: min(100%, calc(80svh * var(--plate-ratio, 1)));
+  .scrolly-media--plate {
+    max-width: min(
+      var(--sc-column),
+      calc(100% - 2 * var(--sc-gutter)),
+      calc(80svh * var(--plate-ratio, 1))
+    );
   }
 }
 
@@ -847,8 +847,15 @@
   font-family: var(--tbf-type-caption-family);
   font-size: clamp(0.8125rem, 1.15vw, 0.9375rem);
   line-height: 1.5;
-  max-width: 78ch;
   color: var(--tbf-text-secondary);
+}
+
+/* Frase em light, crédito em bold (08/10/2026). Sem `max-width`: a legenda
+   ocupa a largura da imagem, que já é a coluna. */
+.scrolly-media__caption-text { font-weight: var(--tbf-font-weight-raw-300); }
+.scrolly-media__credit {
+  font-weight: var(--tbf-font-weight-raw-700);
+  color: var(--tbf-text-primary);
 }
 
 @media (prefers-reduced-motion: reduce) {
