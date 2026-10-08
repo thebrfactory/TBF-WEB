@@ -288,30 +288,6 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
           )}
         </div>
 
-        {/* Handle / Link (opcional) */}
-        <div className="field">
-          <label className="field__label" htmlFor={`${formId}-handle`}>
-            {t.handleLabel}{' '}
-            <span
-              style={{
-                color: 'var(--tbf-text-tertiary)',
-                fontWeight: 'var(--tbf-font-weight-raw-300)',
-              }}
-            >
-              {t.handleOptional}
-            </span>
-          </label>
-          <input
-            id={`${formId}-handle`}
-            type="text"
-            className="field__input"
-            value={form.handle ?? ''}
-            onChange={(e) => setForm((f) => ({ ...f, handle: e.target.value }))}
-            placeholder={t.handlePlaceholder}
-            autoComplete="url"
-          />
-        </div>
-
         {/* Mensagem */}
         <div className={`field${errors.message ? ' field--error' : ''}`}>
           <label className="field__label" htmlFor={`${formId}-message`}>
@@ -364,6 +340,30 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
             value={bring}
             onChange={(e) => setBring(e.target.value)}
             rows={3}
+          />
+        </div>
+
+        {/* Handle / Link (opcional) */}
+        <div className="field">
+          <label className="field__label" htmlFor={`${formId}-handle`}>
+            {t.handleLabel}{' '}
+            <span
+              style={{
+                color: 'var(--tbf-text-tertiary)',
+                fontWeight: 'var(--tbf-font-weight-raw-300)',
+              }}
+            >
+              {t.handleOptional}
+            </span>
+          </label>
+          <input
+            id={`${formId}-handle`}
+            type="text"
+            className="field__input"
+            value={form.handle ?? ''}
+            onChange={(e) => setForm((f) => ({ ...f, handle: e.target.value }))}
+            placeholder={t.handlePlaceholder}
+            autoComplete="url"
           />
         </div>
 
