@@ -222,6 +222,32 @@ export function Cards({ items, numbered = false, min = 240 }: { items: Item[]; n
   )
 }
 
+/** Cartão com título e lista de frases curtas. */
+export function Checklist({ items }: { items: { title: string; points: string[] }[] }) {
+  return (
+    <div
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
+        gap: 'var(--tbf-space-4)',
+      }}
+    >
+      {items.map((it) => (
+        <div key={it.title} style={CARD}>
+          <h3 style={{ ...CARD_TITLE, marginBottom: 'var(--tbf-space-4)' }}>{it.title}</h3>
+          <ul style={{ margin: 0, paddingLeft: '1.1em', display: 'flex', flexDirection: 'column', gap: 'var(--tbf-space-3)' }}>
+            {it.points.map((p) => (
+              <li key={p} style={{ ...BODY, color: 'rgba(255,255,255,0.7)' }}>
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** Cartões que levam a outra página. */
 export function LinkCards({ items }: { items: { title: string; desc: string; href: string }[] }) {
   return (
