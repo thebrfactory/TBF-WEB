@@ -24,7 +24,8 @@ type Rota = {
 // Toda rota daqui TEM de existir em app/(en) e app/(pt): o sitemap é uma promessa
 // ao buscador, e anunciar 404 custa confiança de domínio. Rota nova na árvore,
 // linha nova aqui.
-// Fora de propósito: `/access` (noindex), `/studio` (CMS, não é página pública),
+// Fora de propósito: `/shop`, `/talks` e `/agency` (portas de membros, noindex),
+// `/access` (noindex), `/studio` (CMS, não é página pública),
 // `/pitch*` e `/proposta/castelo` (material de cliente, `robots: { index: false }`
 // na própria página, sitemap não anuncia página noindex ao buscador),
 // `/ecosystem` e `/factory` (páginas de puro redirecionamento, sem conteúdo

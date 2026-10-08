@@ -23,15 +23,15 @@ import styles from './Navigation.module.css'
 // `/brandsystem/login` é outra aplicação (zona .AURA.), então é <a> de verdade
 // e fica fora do localizedPath().
 
-// Itens do menu overlay (08/10/2026). SHOP, TALKS e AGENCY ainda nao tem
-// pagina: apontam ao destino mais proximo que existe, e as mesmas entradas
-// vivem no mapa do rodape (lib/footer-routes.ts). Rota propria: trocar o href.
+// Itens do menu overlay (08/10/2026). SHOP, TALKS e AGENCY sao portas
+// fechadas, so para membros (components/MembersGate), e as mesmas entradas
+// vivem no mapa do rodape (lib/footer-routes.ts).
 const MENU_LINKS = [
   { key: 'magazine', href: '/zine' },
   { key: 'menuAbout', href: '/about' },
-  { key: 'menuShop', href: '/labels' },
-  { key: 'menuTalks', href: '/collective' },
-  { key: 'menuAgency', href: '/consulting' },
+  { key: 'menuShop', href: '/shop' },
+  { key: 'menuTalks', href: '/talks' },
+  { key: 'menuAgency', href: '/agency' },
 ] as const
 
 export function Navigation() {

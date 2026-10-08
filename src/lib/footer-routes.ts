@@ -52,11 +52,11 @@ export const FOOTER_COLUMNS = [
       // 3.0 e os endereçados a empresa, como o da Overlens): o rodapé não
       // precisa mais listar cada deck, listar o índice já entrega os três.
       { href: '/pitch', linkKey: 'pitch' },
-      // Entradas do menu overlay (08/10/2026). SHOP, TALKS e AGENCY ainda nao
-      // tem pagina propria: apontam ao destino mais proximo que existe.
-      { href: '/labels', linkKey: 'shop' },
-      { href: '/collective', linkKey: 'talks' },
-      { href: '/consulting', linkKey: 'agency' },
+      // Entradas do menu overlay (08/10/2026). SHOP, TALKS e AGENCY sao portas
+      // fechadas, so para membros (components/MembersGate).
+      { href: '/shop', linkKey: 'shop' },
+      { href: '/talks', linkKey: 'talks' },
+      { href: '/agency', linkKey: 'agency' },
     ],
   },
   {
