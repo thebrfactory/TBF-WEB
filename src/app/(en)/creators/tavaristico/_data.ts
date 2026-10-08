@@ -82,7 +82,7 @@ export const WORKS: Work[] = [
     index: '01',
     title: 'SPFW · The Paradise',
     disciplines: ['Art Direction', 'Fashion'],
-    role: 'Art Director',
+    role: 'Multidisciplinary Creative Director',
     client: 'São Paulo Fashion Week',
     summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
     description:
@@ -94,7 +94,7 @@ export const WORKS: Work[] = [
       cover: `${base}/spfw-the-paradise/cover.webp`,
       gallery: [`${base}/spfw-the-paradise/g1.webp`, `${base}/spfw-the-paradise/g2.webp`, `${base}/spfw-the-paradise/g3.webp`],
     },
-    provisional: ['role', 'summary'],
+    provisional: ['summary'],
   },
   {
     slug: 'capsula-brasilidade',
