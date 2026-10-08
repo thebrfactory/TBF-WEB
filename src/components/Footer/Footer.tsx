@@ -5,6 +5,7 @@
 
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import Image from 'next/image'
+import NextLink from 'next/link'
 import { CookiePrefsButton } from '@/components/CookiePrefs/CookiePrefsButton'
 import { Ticker, type TickerSegment } from '@/components/Ticker/Ticker'
 import { FlatIcon } from '@/components/icons/FlatIcon'
@@ -49,7 +50,7 @@ export function Footer({ lang }: { lang: Lang }) {
         {/* Top: selo da marca (.TBF. SÃO PAULO) — reduzido a um selo, no mesmo
             lugar. Blocos Labels + Instagram removidos (pedido). */}
         <div className="footer__grid--top">
-          <div>
+          <div className="footer__brand">
             <Link href={localizedPath('/', lang)} aria-label={logoAriaLabel} style={{ display: 'block', maxWidth: 110 }}>
               <Image
                 src="/brand/TBF-SAO-PAULO.svg"
@@ -100,6 +101,24 @@ export function Footer({ lang }: { lang: Lang }) {
               </a>
             </div>
           </div>
+
+          {/* Fechamento (era secao solta entre a newsletter e o rodape; 08/10/2026
+              veio para ca): a direita no desktop, na altura do selo, com a mesma
+              margem lateral do selo. No celular empilha abaixo dele. */}
+          <section className="footer__closing" aria-label={shell[lang].closing.headline.join(' ')}>
+            <p className="footer__closing-eyebrow">{shell[lang].closing.eyebrow}</p>
+            <p className="footer__closing-headline">
+              {shell[lang].closing.headline[0]}
+              <br />
+              {shell[lang].closing.headline[1]}
+            </p>
+            <NextLink href={localizedPath('/contact-us', lang)} className="btn btn--primary">
+              {shell[lang].closing.cta}
+              <span className="btn__arrow" aria-hidden="true">
+                →
+              </span>
+            </NextLink>
+          </section>
         </div>
 
         {/* Cidades .TBF.: logo abaixo de "Consumed Worldwide." e ACIMA das colunas

@@ -12,7 +12,6 @@
 // ponto: nada de manter dois sites.
 // =============================================================================
 
-import Link from 'next/link'
 import { Navigation } from '@/components/Navigation/Navigation'
 import { Footer } from '@/components/Footer/Footer'
 import { MailingList } from '@/components/MailingList/MailingList'
@@ -23,12 +22,11 @@ import { ConsentedAnalytics } from '@/components/Analytics/ConsentedAnalytics'
 import { AnalyticsGate } from '@/components/Analytics/AnalyticsGate'
 import { ViewTransitionBridge } from '@/components/PageTransition/ViewTransitionBridge'
 import { LangProvider } from '@/lib/LangProvider'
-import { HTML_LANG, LANG_PREFIX, type Lang } from '@/lib/i18n'
+import { HTML_LANG, type Lang } from '@/lib/i18n'
 import { shell } from '@/content/i18n/shell'
 
 export function SiteShell({ lang, children }: { lang: Lang; children: React.ReactNode }) {
   const t = shell[lang]
-  const home = LANG_PREFIX[lang] || '/'
 
   return (
     <html lang={HTML_LANG[lang]}>
@@ -63,60 +61,8 @@ export function SiteShell({ lang, children }: { lang: Lang; children: React.Reac
           {/* Popup sitewide de captura de e-mail — uma vez por sessão */}
           <NewsletterPopup />
 
-          {/* Assinatura de fechamento — abaixo da newsletter, em todas as páginas */}
-          <section
-            aria-label={t.closing.headline.join(' ')}
-            style={{ background: '#000', paddingBottom: 'var(--tbf-space-16)' }}
-          >
-            <div
-              className="container"
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                gap: 'var(--tbf-space-6)',
-              }}
-            >
-              <div>
-                <p
-                  style={{
-                    fontFamily: 'var(--tbf-font-family-ui)',
-                    fontSize: 'var(--tbf-type-micro-size)',
-                    letterSpacing: 'var(--tbf-type-micro-ls)',
-                    color: 'var(--tbf-text-tertiary)',
-                    textTransform: 'uppercase',
-                    margin: '0 0 var(--tbf-space-4)',
-                  }}
-                >
-                  {t.closing.eyebrow}
-                </p>
-                <p
-                  style={{
-                    fontFamily: 'var(--tbf-font-family-display)',
-                    // Mesma hierarquia visual do headline da mailing list (MailingList.tsx)
-                    fontSize: 'clamp(1.75rem, 5vw, 3rem)',
-                    fontWeight: 700,
-                    lineHeight: 1.1,
-                    letterSpacing: '-0.02em',
-                    color: 'var(--tbf-text-primary)',
-                    margin: 0,
-                  }}
-                >
-                  {t.closing.headline[0]}
-                  <br />
-                  {t.closing.headline[1]}
-                </p>
-              </div>
-              <Link href={`${home === '/' ? '' : home}/contact-us`} className="btn btn--primary">
-                {t.closing.cta}
-                <span className="btn__arrow" aria-hidden="true">
-                  →
-                </span>
-              </Link>
-            </div>
-          </section>
-
+          {/* A assinatura de fechamento ("We are here to make an impact") mora
+              DENTRO do rodape desde 08/10/2026, ao lado do selo .TBF. */}
           <Footer lang={lang} />
 
           {/* Aviso de cookies LGPD — primeira visita, persiste a escolha */}
