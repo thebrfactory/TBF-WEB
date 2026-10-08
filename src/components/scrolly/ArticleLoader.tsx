@@ -31,12 +31,13 @@ function getInitialVisible(enabled: boolean): boolean {
 }
 
 interface ArticleLoaderProps {
-  /** Metade do título (roteiro §6: título longo usa só a 1ª metade aqui, o resto entra no hero) */
-  title: string
   enabled?: boolean
 }
 
-export function ArticleLoader({ title, enabled = ARTICLE_LOADER_ENABLED }: ArticleLoaderProps) {
+// O loader não carrega mais o título da matéria (08/10/2026, pedido do fundador):
+// mostra "LOADING..." em inglês nas duas línguas, discreto, com os três pontos
+// animados. Marca de loading é padrão da casa, não texto editorial.
+export function ArticleLoader({ enabled = ARTICLE_LOADER_ENABLED }: ArticleLoaderProps) {
   // Sempre nasce fechado (idêntico em SSR e no 1º render do cliente — evita
   // mismatch de hidratação, já que sessionStorage/matchMedia só existem no
   // browser). A decisão real de mostrar acontece 1 tick depois, no effect.
@@ -74,7 +75,14 @@ export function ArticleLoader({ title, enabled = ARTICLE_LOADER_ENABLED }: Artic
         <span className="scrolly-loader__plane scrolly-loader__plane--2">.TBF.</span>
         <span className="scrolly-loader__plane scrolly-loader__plane--3">.TBF.</span>
       </div>
-      <p className="scrolly-loader__title">{title}</p>
+      <p className="scrolly-loader__title">
+        LOADING
+        <span className="scrolly-loader__dots" aria-hidden="true">
+          <span>.</span>
+          <span>.</span>
+          <span>.</span>
+        </span>
+      </p>
     </div>
   )
 }

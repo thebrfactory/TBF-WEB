@@ -43,7 +43,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
     // `data-article` existe para a Camada 3 poder afinar UMA materia sem
     // reescrever o motor de todas. Ver a alternancia de peso em scrolly.css.
     <div className="scrolly-article" id="scrolly-article-root" data-article={article.slug}>
-      <ArticleLoader title={article.loaderTitle[lang]} />
+      <ArticleLoader />
       <ScrollProgress />
 
       {/* A capa deixou de ser `null`. O void preto existia porque o piloto
