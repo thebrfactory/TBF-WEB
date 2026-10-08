@@ -56,7 +56,7 @@ const en = {
     h2: 'Four people hold the structure.',
     founder: {
       title: 'Founder / Creative Chair',
-      tag: 'Felipe Tavares',
+      tag: 'TAVARÍSTICO',
       desc: 'Protect the thesis. Define direction. Build the future.',
     },
   },
@@ -219,7 +219,7 @@ const pt: typeof en = {
     h2: 'Quatro pessoas sustentam a estrutura.',
     founder: {
       title: 'Founder / Creative Chair',
-      tag: 'Felipe Tavares',
+      tag: 'TAVARÍSTICO',
       desc: 'Proteger a tese. Definir a direção. Construir o futuro.',
     },
   },

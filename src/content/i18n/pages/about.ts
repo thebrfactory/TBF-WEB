@@ -94,9 +94,9 @@ const en = {
 
   founder: {
     sectionLabel: 'The people',
-    // "Founded by " + <strong>Felipe Tavares</strong> + "."
+    // "Founded by " + <strong>TAVARÍSTICO</strong> + "."
     foundedBy: 'Founded by',
-    name: 'Felipe Tavares',
+    name: 'TAVARÍSTICO',
     p1: 'Creative Director and entrepreneur building brands, products and businesses where creativity meets technology.',
     p2: 'From advertising and fashion to cultural ventures, his work sits between creative direction, brand strategy, technology and new business.',
     cta: 'Press Room',
@@ -193,7 +193,7 @@ const pt: typeof en = {
   founder: {
     sectionLabel: 'As pessoas',
     foundedBy: 'Fundada por',
-    name: 'Felipe Tavares',
+    name: 'TAVARÍSTICO',
     p1: 'Diretor criativo e empreendedor, constrói marcas, produtos e negócios onde criatividade encontra tecnologia.',
     p2: 'Da publicidade e da moda a empreendimentos culturais, seu trabalho está entre direção criativa, estratégia de marca, tecnologia e novos negócios.',
     cta: 'Press Room',

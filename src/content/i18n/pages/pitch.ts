@@ -129,7 +129,7 @@ const en = {
     initials: 'FT',
     name: 'TAVARÍSTICO',
     role: 'Founder · CEO · Creative Director',
-    project: 'Felipe Tavares',
+    project: 'TAVARÍSTICO',
     bio: 'Creative director, entrepreneur, and cultural operator based in São Paulo. Founder of the .TBF. universe, building the infrastructure Brazilian culture always deserved.',
   },
 
@@ -273,7 +273,7 @@ const pt: typeof en = {
     initials: 'FT',
     name: 'TAVARÍSTICO',
     role: 'Fundador · CEO · Diretor Criativo',
-    project: 'Felipe Tavares',
+    project: 'TAVARÍSTICO',
     bio: 'Diretor criativo, empreendedor e operador cultural baseado em São Paulo. Fundador do universo .TBF., construindo a infraestrutura que a cultura brasileira sempre mereceu.',
   },
 

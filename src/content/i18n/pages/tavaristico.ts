@@ -16,7 +16,7 @@ const en = {
   meta: {
     title: 'TAVARÍSTICO · Portfolio',
     description:
-      'Felipe Tavares, aka Tavarístico. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
+      'TAVARÍSTICO. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
   },
   index: {
     // A.K.A., correção 09/09/2026: "aka" virou sigla pontuada nos dois
@@ -89,7 +89,7 @@ const pt: typeof en = {
   meta: {
     title: 'TAVARÍSTICO · Portfólio',
     description:
-      'Felipe Tavares, conhecido como Tavarístico. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
+      'TAVARÍSTICO. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
   },
   index: {
     akaPrefix: 'A.K.A.',

@@ -46,7 +46,7 @@ const base = '/images/creators/tavaristico'
 const stories = '/images/creators/tavaristico/stories'
 
 export const IDENTITY = {
-  name: 'Felipe Tavares',
+  name: 'TAVARÍSTICO',
   alias: 'Tavarístico',
   role: 'Associate Creative Director / Art Director',
   representedBy: '.TBF. inc',
@@ -55,7 +55,7 @@ export const IDENTITY = {
     'Advertising, Graphic Design & Branded Content. I came from sacred and profane soil, the capital of axé: Salvador, Bahia. My essence is my enthusiasm in collaborating with causes that I truly believe in, the curiosity to discover the new and the versatility to adapt to new environments.',
   // PT provisório — redator/ECD confirma.
   bioPT:
-    'Felipe Tavares, conhecido como Tavarístico, é Associate Creative Director e Art Director. Vindo do solo sagrado e profano de Salvador, Bahia, traduz cultura brasileira em trabalho que viaja. Representado pela .TBF. inc.',
+    'TAVARÍSTICO é Associate Creative Director e Art Director. Vindo do solo sagrado e profano de Salvador, Bahia, traduz cultura brasileira em trabalho que viaja. Representado pela .TBF. inc.',
   bioPTProvisional: true,
   socials: {
     instagram: 'https://instagram.com/thebrfactory',

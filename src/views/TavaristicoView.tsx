@@ -98,7 +98,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
             <div className={styles.heroAvatar}>
               <Image
                 src="/images/creators/tavaristico-portrait.webp"
-                alt={`${IDENTITY.name}, ${IDENTITY.alias}`}
+                alt={IDENTITY.name}
                 fill
                 priority
                 sizes="96px"
@@ -107,7 +107,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
             <div className={styles.heroIdentity}>
               <h1 className={styles.heroName}>{IDENTITY.name}</h1>
               <p className={styles.heroAlias}>
-                {t.index.akaPrefix} {IDENTITY.alias}
+                {IDENTITY.role}
               </p>
             </div>
           </div>
