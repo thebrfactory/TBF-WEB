@@ -6,15 +6,16 @@
 // o conteudo, com sombra. Isto NAO e o icone discreto do rodape (Footer.tsx):
 // aquele ficou onde esta, este e um componente novo, so montado na HomeView.
 //
-// Sem hook de cliente: link puro com hover em CSS, entao continua seguro
-// dentro de arvore de servidor.
+// InstagramLink e o unico pedaco de cliente: dentro do navegador in-app do
+// Instagram tenta abrir o perfil no app nativo (src/lib/instagram.ts).
 
+import { InstagramLink } from '@/components/PhotoCarousel/InstagramLink'
 import { FlatIcon } from '@/components/icons/FlatIcon'
 import styles from './InstagramFloat.module.css'
 
 export function InstagramFloat() {
   return (
-    <a
+    <InstagramLink
       href="https://instagram.com/thebrfactory"
       target="_blank"
       rel="noopener noreferrer"
@@ -22,6 +23,6 @@ export function InstagramFloat() {
       aria-label="Abrir o Instagram da .TBF. em uma nova aba"
     >
       <FlatIcon name="instagram" size={24} className={styles.icon} />
-    </a>
+    </InstagramLink>
   )
 }

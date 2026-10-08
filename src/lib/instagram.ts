@@ -38,7 +38,7 @@
 //
 // ESTRATEGIA: no clique, dentro do navegador in-app do Instagram (detectado
 // pela User-Agent, que so existe no cliente), tenta o deep link certo pra
-// plataforma. Se o app nao assumir a aba em ~1s (a pagina nao ficou oculta),
+// plataforma. Se o app nao assumir a aba em ~1,5s (a pagina nao ficou oculta),
 // cai no https:// de sempre. Fora do in-app browser do Instagram, o link
 // nunca muda de comportamento.
 //
@@ -86,18 +86,31 @@ export function isInstagramInAppBrowser(): boolean {
   return /Instagram/i.test(navigator.userAgent)
 }
 
-// Tenta abrir o post/reel no APP nativo do Instagram, cai no https:// de
-// sempre se o app nao assumir a aba em ~1s. Chamar so depois de confirmar
-// `isInstagramInAppBrowser()`, fora dele o link segue como link normal.
+// Extrai o username de um link de perfil (`instagram.com/<user>`), ignorando
+// as rotas de conteudo (p, reel, explore etc.).
+export function extractUsername(href: string): string | null {
+  const match = href.match(/instagram\.com\/([A-Za-z0-9._]+)\/?(?:[?#].*)?$/)
+  if (!match) return null
+  return /^(p|reel|reels|explore|stories|accounts|tv)$/i.test(match[1]) ? null : match[1]
+}
+
+// Tenta abrir o post/reel/perfil no APP nativo do Instagram, cai no https://
+// de sempre se o app nao assumir a aba em ~1,5s. Chamar so depois de
+// confirmar `isInstagramInAppBrowser()`, fora dele o link segue normal.
+//   iOS:     instagram://media?id=<id> (post/reel) ou instagram://user?username=
+//   Android: intent:// com o proprio https do Instagram e package fixo, o
+//            app resolve o path sozinho (so precisa do shortcode); se o app
+//            nao existir, o Chromium segue S.browser_fallback_url.
 export function smartOpenInstagram(href: string): void {
   const shortcode = extractShortcode(href)
   const mediaId = shortcode ? shortcodeToMediaId(shortcode) : null
+  const username = shortcode ? null : extractUsername(href)
 
   const fallback = () => {
     window.location.href = href
   }
 
-  if (!mediaId) {
+  if (!mediaId && !username) {
     fallback()
     return
   }
@@ -120,15 +133,16 @@ export function smartOpenInstagram(href: string): void {
   window.setTimeout(() => {
     document.removeEventListener('visibilitychange', onVisibilityChange)
     if (!deepLinkAssumiu) fallback()
-  }, 1000)
+  }, 1500)
 
   if (isAndroid) {
-    // Intent URI oficial do Chromium: package fixa o app, scheme e o
-    // fallback embutido cobrem o caso de o mecanismo nao pegar.
+    const path = mediaId ? `p/${shortcode}/` : `${username}/`
     window.location.href =
-      `intent://media?id=${mediaId}#Intent;package=com.instagram.android;` +
-      `scheme=instagram;S.browser_fallback_url=${encodeURIComponent(href)};end`
+      `intent://instagram.com/${path}#Intent;package=com.instagram.android;` +
+      `scheme=https;S.browser_fallback_url=${encodeURIComponent(href)};end`
   } else {
-    window.location.href = `instagram://media?id=${mediaId}`
+    window.location.href = mediaId
+      ? `instagram://media?id=${mediaId}`
+      : `instagram://user?username=${username}`
   }
 }
