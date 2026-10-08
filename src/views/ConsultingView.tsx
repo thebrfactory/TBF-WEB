@@ -1,19 +1,16 @@
 // =============================================================================
-// /consulting — .TBF. CONSULTING
-// Branding & Business Development. Página institucional construída no MESMO
-// sistema das páginas de label (/labels/*): herói com o nome sobre o vídeo,
-// ticker, blocos full-bleed com imagem de fundo e blocos de texto em layout-b.
+// /consulting: .TBF. CONSULTING
+// Brand. Business. Structure.
 //
-// Conteúdo derivado do TBF BUSINESS OS 3.0 (SISTEMA 3.0), não inventado:
-//   · direcao/tese-de-valor/tese-tbf-parceiro-que-entendeu-antes.md
-//   · direcao/perfil-ideal-de-cliente/icp-tbf-larissa-viana.md
-//   · validacao/oferta/oferta-tbf-projeto-estruturado.md
-//   · direcao/tese-de-valor/tese-tgf-confianca-do-rogerio.md (business dev)
+// Nova arquitetura (08/10/2026): hero, problema, tese, quatro movimentos,
+// programa e método, entregáveis, Factory como vantagem, compromisso, briefing
+// mínimo e CTA. Corpo na coluna de leitura central e cartões arredondados, como
+// o template de matéria (ArticleView). Herói e blocos full-bleed seguem o
+// sistema das páginas de label (/labels/*).
 //
-// O QUE FICOU DE FORA, DE PROPÓSITO: ticket, margem, LTV e metas de 12 meses.
-// Estão nas mesmas fichas do OS, mas são números INTERNOS. A oferta do OS ainda
-// diz, com todas as letras, "portfólio antes de qualquer proposta" — publicar
-// preço aqui contraria a própria tese. Preço se combina na conversa.
+// FICOU DE FORA, DE PROPÓSITO: prova (cases, números, depoimentos) e preço. Os
+// dados ainda não existem e nada foi inventado. Ticket, margem e LTV são
+// internos e não entram aqui.
 //
 // Uma página, dois idiomas: o texto vem do dicionário e os links passam por
 // localizedPath. Ver src/content/i18n/README.md.
@@ -24,31 +21,27 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { Ticker } from '@/components/Ticker/Ticker'
+import {
+  B800,
+  BODY,
+  CardGrid,
+  DECK,
+  H2,
+  KICKER,
+  PlainList,
+  READING,
+  Section,
+} from '@/components/Institutional/Institutional'
 import { consulting } from '@/content/i18n/pages/consulting'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
-// Subtítulos de seção: medium, entre título e corpo (padrão das páginas de label)
-const SUBTITLE: CSSProperties = {
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: '0.9rem',
-  fontWeight: 500,
-  letterSpacing: '0.1em',
-  textTransform: 'uppercase',
-  color: '#ffffff',
-  lineHeight: 1.3,
-  marginBottom: 'var(--tbf-space-6)',
-}
-
-// Extrabold wrapper para nomes de marca dentro de texto
-const B800: CSSProperties = { fontWeight: 800 }
-
-// Marca dentro do lockup do herói — peso mais forte da Brother1816 (Black).
+// Marca dentro do lockup do herói: peso mais forte da Brother1816 (Black).
 const B900: CSSProperties = { fontWeight: 900 }
 
 // Largura de ".CONSULTING." em ems na Brother1816 ExtraBold com ls -0.04em,
 // MEDIDA no browser (6.860) + 1% de folga contra arredondamento. É o divisor
 // que faz o título preencher a linha do herói sem quebrar. Mudou o nome? Meça
-// de novo, não estime. (".CONSULTING." não se traduz — é lockup de marca.)
+// de novo, não estime. (".CONSULTING." não se traduz: é lockup de marca.)
 const TITLE_FIT = '6.93'
 
 const HERO_LOCKUP: CSSProperties = {
@@ -72,38 +65,20 @@ const HERO_TAGLINE: CSSProperties = {
   margin: 0,
 }
 
-const BODY: CSSProperties = {
-  fontFamily: 'var(--tbf-type-body-family)',
-  fontSize: 'var(--tbf-type-body-size-sm)',
-  lineHeight: 'var(--tbf-type-body-lh)',
-  color: 'rgba(255,255,255,0.75)',
-}
-
-const DECK: CSSProperties = {
-  fontFamily: 'var(--tbf-type-deck-family)',
-  fontSize: 'var(--tbf-type-deck-size-sm)',
-  fontWeight: 'var(--tbf-type-deck-weight)',
-  lineHeight: 'var(--tbf-type-deck-lh)',
-  color: 'rgba(255,255,255,0.7)',
-}
-
-const H2: CSSProperties = {
-  fontFamily: 'var(--tbf-type-h2-family)',
-  fontSize: 'var(--tbf-type-h2-size-sm)',
-  fontWeight: 800,
-  lineHeight: 'var(--tbf-type-h2-lh)',
-  letterSpacing: 'var(--tbf-type-h2-ls)',
-  color: '#ffffff',
-  marginBottom: 'var(--tbf-space-6)',
-}
-
 const DISPLAY: CSSProperties = {
   fontFamily: 'var(--tbf-type-display-xl-family)',
-  fontSize: 'var(--tbf-type-h1-size-sm)',
+  fontSize: 'clamp(2rem, 7vw, 3.5rem)',
   fontWeight: 800,
-  lineHeight: 1.1,
+  lineHeight: 1.05,
   letterSpacing: 'var(--tbf-type-display-xl-ls)',
   color: '#ffffff',
+}
+
+const CTA_ROW: CSSProperties = {
+  display: 'flex',
+  flexWrap: 'wrap',
+  gap: 'var(--tbf-space-4)',
+  marginTop: 'var(--tbf-space-8)',
 }
 
 export default function ConsultingView({ lang }: { lang: Lang }) {
@@ -130,9 +105,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
           <p style={HERO_LOCKUP}>
             {t.hero.lockupLine1}
             <br />
-            {t.hero.lockupLine2}
-            <br />
-            {t.hero.lockupOf} <span style={B900}>.THE BRAZILIAN FACTORY.</span>
+            {t.hero.lockupLine2} {t.hero.lockupOf} <span style={B900}>.THE BRAZILIAN FACTORY.</span>
           </p>
 
           <p style={HERO_TAGLINE}>
@@ -148,48 +121,33 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
 
       {/* ─── INTRO ───────────────────────────────────────────────────────── */}
       <section className="section container">
-        <p style={{ ...DECK, maxWidth: '48ch', marginBottom: 'var(--tbf-space-4)' }}>
-          {t.intro.line1}
-        </p>
-        <p style={{ ...DECK, maxWidth: '48ch', marginBottom: 'var(--tbf-space-10)' }}>
-          {t.intro.line2Prefix} <span style={B800}>.THE BRAZILIAN FACTORY.</span>
-        </p>
-
-        <Link href={path('/contact-us')} className="btn btn--primary">
-          {t.intro.startConversation}
-          <span className="btn__arrow" aria-hidden="true">→</span>
-        </Link>
-      </section>
-
-      {/* ─── OVERVIEW ────────────────────────────────────────────────────── */}
-      <section className="section container" aria-labelledby="consulting-overview">
-        <div className="layout-b">
-          <div>
-            <p style={SUBTITLE}>{t.overview.subtitle}</p>
-            <h2 id="consulting-overview" style={H2}>
-              {t.overview.headingPrefix} <span style={B800}>.TBF. CONSULTING</span>{t.overview.headingSuffix}
-            </h2>
-          </div>
-
-          <div>
-            <p style={{ ...BODY, marginBottom: 'var(--tbf-space-6)' }}>
-              {t.overview.p1}
-            </p>
-            <p style={{ ...BODY, marginBottom: 'var(--tbf-space-6)' }}>
-              {t.overview.p2Prefix}{' '}
-              <span style={B800}>.RUC.</span>{t.overview.p2Middle}
-              <span style={B800}>.MELFIORE.</span>{' '}
-              {t.overview.p2And} <span style={B800}>.TGF.</span>
-            </p>
-            <p style={BODY}>{t.overview.p3}</p>
+        <div style={READING}>
+          <p style={DECK}>{t.intro.line1}</p>
+          <p style={{ ...BODY, marginBottom: 0 }}>{t.intro.line2}</p>
+          <div style={CTA_ROW}>
+            <Link href={path('/contact-us')} className="btn btn--primary">
+              {t.intro.cta}
+              <span className="btn__arrow" aria-hidden="true">→</span>
+            </Link>
+            <a href="#program" className="btn btn--secondary">
+              {t.intro.ctaSecondary}
+            </a>
           </div>
         </div>
       </section>
 
-      {/* ─── WHY IT EXISTS — full-bleed ──────────────────────────────────── */}
+      {/* ─── THE PROBLEM ─────────────────────────────────────────────────── */}
+      <Section id="consulting-problem" kicker={t.problem.kicker} heading={t.problem.heading}>
+        <p style={DECK}>{t.problem.lead}</p>
+        <p style={BODY}>{t.problem.p1}</p>
+        <p style={BODY}>{t.problem.p2}</p>
+        <p style={{ ...BODY, color: '#fff', fontWeight: 700, marginBottom: 0 }}>{t.problem.p3}</p>
+      </Section>
+
+      {/* ─── THE THESIS: full-bleed ──────────────────────────────────────── */}
       <section
         className="label-fullbleed"
-        aria-labelledby="consulting-why"
+        aria-labelledby="consulting-thesis"
         style={{
           position: 'relative',
           width: '100vw',
@@ -210,7 +168,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to bottom, #000000 0%, transparent 25%, transparent 70%, #000000 100%)',
+              background: 'linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.35) 25%, rgba(0,0,0,0.35) 70%, #000000 100%)',
             }}
           />
         </div>
@@ -219,142 +177,73 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
           className="container"
           style={{ position: 'relative', zIndex: 3, paddingBlock: 'var(--tbf-space-20)' }}
         >
-          <div className="layout-b" style={{ alignItems: 'start' }}>
-            <div>
-              <p style={SUBTITLE}>{t.why.subtitle}</p>
-
-              <h2 id="consulting-why" style={{ ...DISPLAY, marginBottom: 'var(--tbf-space-10)' }}>
-                {t.why.heading}
-              </h2>
-
-              <p style={{ ...DECK, color: '#ffffff', marginBottom: 'var(--tbf-space-2)' }}>
-                {t.why.lines[0]}
-              </p>
-              <p style={{ ...DECK, color: '#ffffff', marginBottom: 'var(--tbf-space-2)' }}>
-                {t.why.lines[1]}
-              </p>
-              <p style={{ ...DECK, color: '#ffffff', marginBottom: 'var(--tbf-space-10)' }}>
-                {t.why.lines[2]}
-              </p>
-
-              <p style={BODY}>{t.why.body}</p>
-            </div>
-
-            <div>
-              <p style={SUBTITLE}>{t.why.philosophySubtitle}</p>
-              <p style={{ ...DISPLAY, lineHeight: 1.05, marginBottom: 'var(--tbf-space-8)' }}>
-                {t.why.philosophyQuote[0]}
-                <br />
-                {t.why.philosophyQuote[1]}
-              </p>
-              <p style={BODY}>{t.why.philosophyBody}</p>
-            </div>
+          <div style={READING}>
+            <span style={KICKER}>{t.thesis.kicker}</span>
+            <h2 id="consulting-thesis" style={{ ...DISPLAY, marginBottom: 'var(--tbf-space-6)' }}>
+              {t.thesis.heading}
+            </h2>
+            <p style={{ ...DECK, color: '#fff' }}>{t.thesis.deck}</p>
+            <p style={{ ...BODY, marginBottom: 0 }}>{t.thesis.body}</p>
           </div>
         </div>
       </section>
 
-      {/* ─── METHOD ──────────────────────────────────────────────────────── */}
-      <section className="section container" aria-labelledby="consulting-method">
-        <p style={SUBTITLE}>{t.method_section.subtitle}</p>
-        <h2 id="consulting-method" style={{ ...H2, marginBottom: 'var(--tbf-space-10)' }}>
-          {t.method_section.heading}
+      {/* ─── WHAT WE SOLVE ───────────────────────────────────────────────── */}
+      <Section
+        id="consulting-work"
+        kicker={t.work.kicker}
+        heading={t.work.heading}
+        wide={<CardGrid items={t.work.items} />}
+      />
+
+      {/* ─── THE PROGRAM + METHOD ────────────────────────────────────────── */}
+      <Section
+        id="program"
+        kicker={t.program.kicker}
+        heading={t.program.heading}
+      >
+        <p style={DECK}>{t.program.deck}</p>
+        <p style={{ ...BODY, marginBottom: 0 }}>{t.program.body}</p>
+      </Section>
+
+      <Section
+        id="consulting-method"
+        kicker={t.program.methodKicker}
+        heading={t.program.methodHeading}
+        wide={<CardGrid items={t.program.steps} />}
+      />
+
+      {/* ─── WHAT YOU TAKE AWAY ──────────────────────────────────────────── */}
+      <Section id="consulting-deliverables" kicker={t.deliverables.kicker}>
+        <h2 id="consulting-deliverables-h" style={H2}>
+          {t.deliverables.heading}
         </h2>
+        <p style={DECK}>{t.deliverables.deck}</p>
+        <PlainList items={t.deliverables.items} numbered />
+      </Section>
 
-        {/* Pilha de cartões arredondados. Sem divisores horizontais: proibidos
-            no repo (ver frontend/CLAUDE.md). */}
-        <ul
-          role="list"
-          style={{
-            listStyle: 'none',
-            padding: 0,
-            margin: 0,
-            display: 'grid',
-            gridTemplateColumns: '1fr',
-            gap: 'var(--tbf-space-4)',
-          }}
-        >
-          {t.method.map((step) => (
-            <li
-              key={step.n}
-              style={{
-                border: '1px solid rgba(255,255,255,0.16)',
-                borderRadius: '18px',
-                padding: 'var(--tbf-space-6)',
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: 'var(--tbf-type-micro-family)',
-                  fontSize: 'var(--tbf-type-micro-size)',
-                  letterSpacing: 'var(--tbf-type-micro-ls)',
-                  color: 'rgba(255,255,255,0.4)',
-                  textTransform: 'uppercase',
-                  marginBottom: 'var(--tbf-space-3)',
-                }}
-              >
-                {step.n}
-              </p>
-              <h3 style={{ ...H2, marginBottom: 'var(--tbf-space-3)' }}>{step.title}</h3>
-              <p style={{ ...BODY, maxWidth: '60ch' }}>{step.body}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* ─── DOMAINS ─────────────────────────────────────────────────────── */}
-      <section className="section container" aria-labelledby="consulting-domains">
-        <p style={SUBTITLE}>{t.domainsSection.subtitle}</p>
-        <h2 id="consulting-domains" style={{ ...H2, marginBottom: 'var(--tbf-space-10)' }}>
-          {t.domainsSection.heading}
-        </h2>
-
-        <ul
-          role="list"
-          style={{
-            listStyle: 'none',
-            padding: 0,
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 'var(--tbf-space-3)',
-          }}
-        >
-          {t.domains.map((domain) => (
-            <li key={domain}>
-              <span
-                style={{
-                  display: 'inline-block',
-                  fontFamily: 'var(--tbf-type-micro-family)',
-                  fontSize: 'var(--tbf-type-micro-size)',
-                  letterSpacing: 'var(--tbf-type-micro-ls)',
-                  textTransform: 'uppercase',
-                  color: '#ffffff',
-                  border: '1px solid rgba(255,255,255,0.3)',
-                  borderRadius: '999px',
-                  paddingBlock: 'var(--tbf-space-2)',
-                  paddingInline: 'var(--tbf-space-4)',
-                }}
-              >
-                {domain}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* ─── THE FACTORY AS ADVANTAGE ────────────────────────────────────── */}
+      <Section
+        id="consulting-factory"
+        kicker={t.factory.kicker}
+        heading={t.factory.heading}
+        wide={<CardGrid items={t.factory.items} />}
+      >
+        <p style={{ ...BODY, marginBottom: 0 }}>{t.factory.body}</p>
+      </Section>
 
       {/* ─── COMMITMENT ──────────────────────────────────────────────────── */}
-      <section className="section container" aria-labelledby="consulting-commitment">
-        <p style={SUBTITLE}>{t.commitment.subtitle}</p>
-        <h2 id="consulting-commitment" style={{ ...H2, marginBottom: 'var(--tbf-space-8)' }}>
-          {t.commitment.heading}
-        </h2>
+      <Section id="consulting-commitment" kicker={t.commitment.kicker} heading={t.commitment.heading}>
+        <p style={BODY}>{t.commitment.p1}</p>
+        <p style={{ ...BODY, marginBottom: 0 }}>{t.commitment.p2}</p>
+      </Section>
 
-        <div className="layout-b">
-          <p style={BODY}>{t.commitment.p1}</p>
-          <p style={BODY}>{t.commitment.p2}</p>
-        </div>
-      </section>
+      {/* ─── BEFORE WE TALK ──────────────────────────────────────────────── */}
+      <Section id="consulting-briefing" kicker={t.briefing.kicker} heading={t.briefing.heading}>
+        <PlainList items={t.briefing.questions} numbered />
+      </Section>
 
-      {/* ─── CLOSING BLOCK — full-bleed ──────────────────────────────────── */}
+      {/* ─── CLOSING: full-bleed ─────────────────────────────────────────── */}
       <section
         className="label-fullbleed"
         aria-labelledby="consulting-closing"
@@ -378,7 +267,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
             style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to bottom, #000000 0%, transparent 30%, transparent 65%, #000000 100%)',
+              background: 'linear-gradient(to bottom, #000000 0%, rgba(0,0,0,0.4) 30%, rgba(0,0,0,0.4) 65%, #000000 100%)',
             }}
           />
         </div>
@@ -387,7 +276,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
           className="container"
           style={{ position: 'relative', zIndex: 3, paddingBlock: 'var(--tbf-space-20)' }}
         >
-          <div style={{ maxWidth: '50ch' }}>
+          <div style={READING}>
             <p id="consulting-closing" style={{ ...DISPLAY, marginBottom: 'var(--tbf-space-10)' }}>
               {t.closing.lines[0]}
               <br />
@@ -402,7 +291,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
                 fontSize: '0.75rem',
                 fontWeight: 500,
                 letterSpacing: '0.1em',
-                color: 'rgba(255,255,255,0.5)',
+                color: 'rgba(255,255,255,0.7)',
                 textTransform: 'uppercase',
                 marginBottom: 'var(--tbf-space-8)',
               }}
@@ -413,7 +302,7 @@ export default function ConsultingView({ lang }: { lang: Lang }) {
             </p>
 
             <Link href={path('/contact-us')} className="btn btn--primary">
-              {t.closing.startConversation}
+              {t.closing.cta}
               <span className="btn__arrow" aria-hidden="true">→</span>
             </Link>
           </div>
