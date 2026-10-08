@@ -1,7 +1,7 @@
 // =============================================================================
 // Dicionário do /zine. Convenções: ../README.md
 //
-// O conteúdo dos artigos vem do Sanity e NÃO mora aqui — só o cromo da página
+// O conteúdo dos artigos vem do Sanity e NÃO mora aqui, só o cromo da página
 // (categorias fixas, filtros, estados vazios, os cards de exemplo exibidos
 // enquanto o CMS ainda está vazio). Rota /zine/[slug] é de outro executor:
 // nada aqui altera aquela árvore.
@@ -20,7 +20,7 @@ const en = {
 
   heroImageAlt: '.TBF. SÃO PAULO · Zine',
 
-  // Rótulos das categorias fixas — usados no filtro (EditorialGrid) e na
+  // Rótulos das categorias fixas, usados no filtro (EditorialGrid) e na
   // grade de categorias (CategoryGrid). O `value` é o slug técnico
   // (ArticleCategory), que nunca muda entre idiomas.
   categories: {

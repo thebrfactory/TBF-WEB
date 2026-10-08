@@ -1,5 +1,5 @@
 // =============================================================================
-// PROPOSTA · HOSTEL CASTELO — conteúdo das 8 telas
+// PROPOSTA · HOSTEL CASTELO: conteúdo das 8 telas
 // -----------------------------------------------------------------------------
 // O QUE ESTA PEÇA É. Uma proposta ENDEREÇADA, de fotografia comercial, do
 // Tavarístico para o Hostel Castelo (Pampulha, Belo Horizonte), ligada à estadia
@@ -65,7 +65,7 @@ export const SCENES = [
 ] as const
 
 // =============================================================================
-// CENA 00 — CAPA
+// CENA 00: CAPA
 // A foto de capa é do Ô de Casa, não do Castelo, e isso é dito na tela. Abrir
 // com a piscina do trabalho anterior faz a promessa no idioma da própria casa
 // que está lendo: o Castelo também tem piscina, e é ali que a proposta mira.
@@ -91,7 +91,7 @@ export const COVER = {
 }
 
 // =============================================================================
-// CENA 01 — O PROBLEMA
+// CENA 01: O PROBLEMA
 // Copy transportada de `content/i18n/pages/hospitality.ts` (a oferta aberta).
 // Uma proposta endereçada não inventa argumento novo: ela chega com o mesmo.
 // =============================================================================
@@ -115,7 +115,7 @@ export const PROBLEM = {
 }
 
 // =============================================================================
-// CENA 02 — O QUE OS MOTORES PREMIAM
+// CENA 02: O QUE OS MOTORES PREMIAM
 // Os quatro pontos são os da oferta aberta. Os três números são novos e existem
 // para tirar a conversa do gosto pessoal: fotografia aqui é variável comercial,
 // e variável comercial se mede. Fonte de cada um em `SOURCES`.
@@ -180,7 +180,7 @@ export const ENGINES = {
 }
 
 // =============================================================================
-// CENA 03 — A PROVA
+// CENA 03: A PROVA
 // As catorze do Ô de Casa, as mesmas de /creators/tavaristico/hospitality. A
 // ordem é a ordem de anúncio (chegada, espaço, gente, noite), não a ordem em que
 // foram tiradas. Quem escreve a função de cada quadro é o dicionário de lá.
@@ -208,7 +208,7 @@ export const PROOF = {
 }
 
 // =============================================================================
-// CENA 04 — QUEM ASSINA
+// CENA 04: QUEM ASSINA
 // A cena que vende a pessoa. Sem inventar currículo: cargo, origem, quem
 // representa e as frentes de trabalho, com o portfólio a um clique.
 // =============================================================================
@@ -233,7 +233,7 @@ export const AUTHOR = {
 }
 
 // =============================================================================
-// CENA 05 — O CASTELO VISTO DE FORA
+// CENA 05: O CASTELO VISTO DE FORA
 // A cena que prova que a casa foi estudada antes da conversa, e a única com
 // dados sobre eles. Tudo o que está aqui é público e datado. O que ficou de fora
 // de propósito: qualquer leitura de fraqueza do negócio deles. A tela diz o que
@@ -280,7 +280,7 @@ export const CASTELO = {
 }
 
 // =============================================================================
-// CENA 06 — A PROPOSTA
+// CENA 06: A PROPOSTA
 // Quinze imagens, e a lógica delas. A lista NÃO é a shotlist final: a shotlist
 // se escreve com a casa, depois do reconhecimento. O que a tela promete é a
 // COBERTURA, que é o que o cliente precisa saber para dizer sim.
@@ -302,7 +302,7 @@ export const OFFER = {
 }
 
 // =============================================================================
-// CENA 07 — O COMBINADO E O FECHO
+// CENA 07: O COMBINADO E O FECHO
 // O escopo escrito é parte da oferta, não letra miúda: é ele que protege as duas
 // partes de expectativa diferente. O que NÃO entra aqui é a negociação (o que
 // pedir, como conduzir, o que aceitar): isso é do fundador, fica fora da tela.

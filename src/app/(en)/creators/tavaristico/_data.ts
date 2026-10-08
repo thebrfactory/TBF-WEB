@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// PORTFÓLIO TAVARÍSTICO — modelo de dados (curadoria V1)
+// PORTFÓLIO TAVARÍSTICO: modelo de dados (curadoria V1)
 // Fonte: PRJ-20260626-01 (direção ORD-01 + UX ORD-02, ambas aprovadas).
-// Regras: SEM ano como padrão (year opcional). Card sem border-top — separação por
+// Regras: SEM ano como padrão (year opcional). Card sem border-top, separação por
 // número-índice. Papel do Tavarístico obrigatório por obra.
 // `provisional`: campos escritos pelo PM (placeholder) → renderizados SUBLINHADOS
 // para o redator substituir. Ô:18 Years é copy real (não provisória).
@@ -21,21 +21,21 @@ export interface Work {
   index: string
   title: string
   disciplines: Discipline[]
-  /** papel do Tavarístico — OBRIGATÓRIO (credibilidade) */
+  /** papel do Tavarístico, OBRIGATÓRIO (credibilidade) */
   role: string
   client?: string
   /** ano é opcional por decisão do ECD (entra só onde faz sentido) */
   year?: string
-  /** 1 linha — card da vitrine */
+  /** 1 linha, card da vitrine */
   summary: string
-  /** narrativa do case — página de obra */
+  /** narrativa do case, página de obra */
   description?: string
   /** versão EN da narrativa; sem ela, a página EN mostra `description` */
   descriptionEn?: string
   /** entra no bloco Selected Work (alta densidade) do index */
   selected?: boolean
   media: { cover: string; gallery?: string[] }
-  /** campos provisórios (sublinhar) — aguardam redator/ECD */
+  /** campos provisórios (sublinhar), aguardam redator/ECD */
   provisional?: ProvField[]
   /** capa screenshot-grade (aguarda fonte hi-res) */
   lowRes?: boolean
@@ -53,7 +53,7 @@ export const IDENTITY = {
   origin: 'Salvador, Bahia',
   bioEN:
     'Advertising, Graphic Design & Branded Content. I came from sacred and profane soil, the capital of axé: Salvador, Bahia. My essence is my enthusiasm in collaborating with causes that I truly believe in, the curiosity to discover the new and the versatility to adapt to new environments.',
-  // PT provisório — redator/ECD confirma.
+  // PT provisório, redator/ECD confirma.
   bioPT:
     'TAVARÍSTICO é Associate Creative Director e Art Director. Vindo do solo sagrado e profano de Salvador, Bahia, traduz cultura brasileira em trabalho que viaja. Representado pela .TBF. inc.',
   bioPTProvisional: true,
@@ -499,9 +499,9 @@ export const WORKS: Work[] = [
     title: 'Cores e Sabores',
     disciplines: ['Art Direction'],
     role: 'Photographer',
-    summary: 'Still de produto em cores vibrantes.',
+    summary: 'Still de produto em cor forte.',
     description:
-      'Ensaio still-life de picolés e frutas, em paleta de cores vibrantes.',
+      'Ensaio still-life de picolés e frutas, em cor saturada.',
     descriptionEn:
       'Still-life shoot of popsicles and fruit, in a vivid color palette.',
     media: {

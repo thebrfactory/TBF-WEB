@@ -1,5 +1,5 @@
 // =============================================================================
-// PITCH 3.0 — CONTEÚDO DAS 7 CENAS
+// PITCH 3.0: CONTEÚDO DAS 7 CENAS
 // -----------------------------------------------------------------------------
 // FONTE ÚNICA DO TEXTO, DOS DADOS E DOS PATHS DE MÍDIA do deck 3.0.
 // Direcionamento do fundador: `~/Desktop/CHANGES/TBF_PITCH_3.0_DIRECIONAMENTO_CLAUDE_CODE.md`
@@ -61,7 +61,7 @@ export const SCENES = [
 ] as const
 
 // =============================================================================
-// CENA 01 — CAPA · 15 a 20 s
+// CENA 01: CAPA · 15 a 20 s
 // A capa do V2/V3 era DUAS telas (o hero da home + a Abertura). Como o deck
 // agora tem sete telas contadas, as duas viraram uma: o vídeo editorial dá a
 // presença, o letreiro do fundador dá a frase, e `Culture™` volta para a capa,
@@ -94,7 +94,7 @@ export const COVER = {
 }
 
 // =============================================================================
-// CENA 02 — CAMPO DE REFERÊNCIA · 25 a 30 s
+// CENA 02: CAMPO DE REFERÊNCIA · 25 a 30 s
 // Os cinco retratos e os papéis são os mesmos do V3 (não se reescreve o que já
 // foi aprovado em voz). O que mudou é o enquadramento: a frase de fecho do V3
 // dizia que essas pessoas "capturaram o espírito do momento", e essa ideia subiu
@@ -133,7 +133,7 @@ export const REFERENCE = {
 }
 
 // =============================================================================
-// CENA 03 — A PERGUNTA, O CONTEXTO E A TESE · 45 a 55 s
+// CENA 03: A PERGUNTA, O CONTEXTO E A TESE · 45 a 55 s
 // UMA composição em TRÊS TEMPOS, não três telas coladas (instrução 5 do
 // direcionamento). A pergunta abre a tensão, o contexto mostra onde o valor
 // vaza, a tese resolve. Os três tempos são revelados em sequência dentro da
@@ -186,7 +186,7 @@ export const ARGUMENT = {
 }
 
 // =============================================================================
-// CENA 04 — DA CULTURA AO NEGÓCIO · 60 a 70 s
+// CENA 04: DA CULTURA AO NEGÓCIO · 60 a 70 s
 // A tela mais longa do deck, e a única com dois níveis de leitura: a linha de
 // raciocínio (o método) e o portfólio (as propriedades).
 //
@@ -295,7 +295,7 @@ export const BUSINESS = {
 }
 
 // =============================================================================
-// CENA 05 — CASE SELECIONADO · 45 a 55 s
+// CENA 05: CASE SELECIONADO · 45 a 55 s
 // A prova comercial da tese. Texto mínimo, mídia protagonista.
 //
 // 🔴 POR QUE NÃO HÁ MÉTRICA DE CAMPANHA AQUI. O direcionamento manda usar
@@ -433,7 +433,7 @@ export const CASE = {
 }
 
 // =============================================================================
-// CENA 06 — A CENA DO PARCEIRO · 55 a 65 s
+// CENA 06: A CENA DO PARCEIRO · 55 a 65 s
 // Dois territórios que convergem. Nenhum dos dois é "cliente" do outro: a cena
 // resolve no centro, onde está o objetivo comum, e é o objetivo que recebe o
 // maior peso visual.
@@ -449,7 +449,7 @@ export const CASE = {
 //                           empresa específica, com o nome dela na tela.
 //
 // Ele foi explícito sobre o porquê: a cena com nome de empresa "é muito bom",
-// mas ela não pode morar no deck público — proposta endereçada a alguém não é
+// mas ela não pode morar no deck público, proposta endereçada a alguém não é
 // deck de apresentação, é carta. A regra que fica: toda nova proposta para
 // empresa específica nasce como uma rota-filha de /pitch/v3, com o slug da
 // empresa, reusando este mesmo formato. NÃO editar a cena aberta para encaixar
@@ -526,13 +526,13 @@ export const PARTNERSHIP_OVERLENS: PartnerScene = {
 //
 // A pergunta é a que ele escreveu: "Por que a .TBF. está a procura de novos
 // parceiros estratégicos?". O lado esquerdo deixa de ser uma empresa e passa a
-// ser o PERFIL de quem a .TBF. procura — que é o que uma proposta aberta pode
+// ser o PERFIL de quem a .TBF. procura, que é o que uma proposta aberta pode
 // dizer sem mentir. O lado direito é o mesmo: o que a .TBF. traz não muda com
 // quem está do outro lado da mesa.
 //
 // O objetivo também mudou, e tinha de mudar: "transformar educação em cultura"
 // só faz sentido conversando com uma empresa de educação. Aqui ele volta a ser o
-// que a casa faz com qualquer parceiro — transformar cultura em propriedade, que
+// que a casa faz com qualquer parceiro, transformar cultura em propriedade, que
 // é a tese da cena 03 e fecha o circuito do deck.
 export const PARTNERSHIP_OPEN: PartnerScene = {
   kicker: { pt: 'Novos Parceiros', en: 'New Partners' },
@@ -550,7 +550,7 @@ export const PARTNERSHIP_OPEN: PartnerScene = {
         { pt: 'Execução em alto padrão.', en: 'High-quality execution.' },
         { pt: 'Capacidade de operar e escalar com consistência.', en: 'The ability to operate and scale with consistency.' },
         // TRÊS LINHAS, não quatro. A quarta ("um mercado onde cultura ainda não
-        // virou linguagem") estourava a cena 05 em 31px no iPhone 13 — medido — e
+        // virou linguagem") estourava a cena 05 em 31px no iPhone 13, medido, e
         // num deck com overflow: hidden isso come conteúdo sem avisar. O lado
         // esquerdo nasceu com três por causa dessa conta; quem tem quatro é o
         // lado da .TBF., e é assim nas duas versões da cena.
@@ -582,7 +582,7 @@ export const PARTNERSHIP_OPEN: PartnerScene = {
 }
 
 // =============================================================================
-// CENA 07 — FECHO · 20 a 25 s
+// CENA 07: FECHO · 20 a 25 s
 // Fim definitivo. Sem CTA de venda, sem oitava tela, sem "obrigado".
 //
 // A frase do fecho MUDOU em relação ao V3, e a troca é deliberada. O V3 fechava
@@ -600,7 +600,7 @@ export const CLOSE = {
   },
   culture: 'Culture™',
   // A ASSINATURA DO FECHO SAIU DAQUI (#02, 2026-08-14). Ela dizia "uma conversa
-  // de trabalho com a Overlens" — quem é o destinatário é decisão da CENA 06,
+  // de trabalho com a Overlens", quem é o destinatário é decisão da CENA 06,
   // não do fecho, senão o deck aberto fecharia com o nome de uma empresa
   // específica. Agora vem de `PartnerScene.closeEyebrow`.
   site: 'thebrfactory.com',

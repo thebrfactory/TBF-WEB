@@ -1,5 +1,5 @@
 // =============================================================================
-// Dicionário do CROMO do site — o que aparece em toda página.
+// Dicionário do CROMO do site, o que aparece em toda página.
 // Layout, navegação, rodapé, newsletter, popup e aviso de cookies.
 // Convenções e regras: ./README.md
 // =============================================================================
@@ -47,12 +47,12 @@ const en = {
   },
 
   // Rodapé no chamado da newsletter (MailingList). Mesmas frases de fundo do
-  // popup sitewide (NewsletterPopup) — chaves separadas de propósito: os dois
+  // popup sitewide (NewsletterPopup), chaves separadas de propósito: os dois
   // textos podem divergir no futuro sem se atrapalhar.
   mailing: {
     eyebrow: 'Join our mailing list',
     headlineLine1: 'Get the best stories',
-    // Contém o literal ".TBF." de propósito — o componente separa a frase
+    // Contém o literal ".TBF." de propósito, o componente separa a frase
     // nesse ponto pra deixar só a marca em negrito, sem markup no dicionário.
     headlineLine2: 'from .TBF. community.',
     successMessage: "You're in. Welcome to the factory.",
@@ -63,7 +63,7 @@ const en = {
     genericError: 'Something went wrong. Please try again.',
   },
 
-  // Popup sitewide de captura de e-mail (NewsletterPopup) — 20s de permanência.
+  // Popup sitewide de captura de e-mail (NewsletterPopup), 20s de permanência.
   popup: {
     closeAriaLabel: 'Close',
     headlineLine1: 'Get the best stories',
@@ -79,7 +79,7 @@ const en = {
   },
 
   // Aviso de cookies (CookieBanner) + botão de reabertura no rodapé
-  // (CookiePrefsButton). O inglês aqui foi ESCRITO agora (2026-08-02) — o
+  // (CookiePrefsButton). O inglês aqui foi ESCRITO agora (2026-08-02), o
   // banner vivia inteiro em português, inclusive no site em inglês. Ver README
   // desta pasta e o relato da leva de i18n do cromo.
   cookies: {
@@ -133,7 +133,7 @@ const en = {
   },
 }
 
-// O português repete as MESMAS chaves — o tipo abaixo obriga.
+// O português repete as MESMAS chaves, o tipo abaixo obriga.
 const pt: typeof en = {
   skipNav: 'Pular para o conteúdo',
 
@@ -202,7 +202,7 @@ const pt: typeof en = {
     newTabNotice: '(nova guia)',
   },
 
-  // Texto ORIGINAL do banner, só movido pro dicionário — nenhuma palavra
+  // Texto ORIGINAL do banner, só movido pro dicionário, nenhuma palavra
   // mudou (pedido explícito: manter o PT como está).
   cookies: {
     dialogAriaLabel: 'Aviso de cookies',
