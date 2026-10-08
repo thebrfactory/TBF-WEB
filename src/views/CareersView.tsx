@@ -1,5 +1,5 @@
 // =============================================================================
-// CAREERS — serve `/careers` (inglês) e `/pt/careers` (português)
+// CAREERS: serve `/careers` (inglês) e `/pt/careers` (português)
 // =============================================================================
 
 import { careers } from '@/content/i18n/pages/careers'

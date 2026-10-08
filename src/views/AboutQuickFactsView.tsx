@@ -1,5 +1,5 @@
 // =============================================================================
-// ABOUT/QUICK-FACTS — serve `/about/quick-facts` (inglês) e
+// ABOUT/QUICK-FACTS: serve `/about/quick-facts` (inglês) e
 // `/pt/about/quick-facts` (português)
 // =============================================================================
 

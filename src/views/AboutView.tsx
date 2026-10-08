@@ -1,5 +1,5 @@
 // =============================================================================
-// ABOUT — serve `/about` (inglês) e `/pt/about` (português)
+// ABOUT: serve `/about` (inglês) e `/pt/about` (português)
 // =============================================================================
 
 import Link from 'next/link'
