@@ -122,7 +122,7 @@ export function Footer({ lang }: { lang: Lang }) {
               </p>
               <ul className="footer__nav-list" role="list">
                 {col.links.map((link) => (
-                  <li key={link.href}>
+                  <li key={link.linkKey}>
                     <Link href={localizedPath(link.href, lang)} className="footer__link">
                       {t.links[link.linkKey]}
                     </Link>

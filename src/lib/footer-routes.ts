@@ -52,6 +52,11 @@ export const FOOTER_COLUMNS = [
       // 3.0 e os endereçados a empresa, como o da Overlens): o rodapé não
       // precisa mais listar cada deck, listar o índice já entrega os três.
       { href: '/pitch', linkKey: 'pitch' },
+      // Entradas do menu overlay (08/10/2026). SHOP, TALKS e AGENCY ainda nao
+      // tem pagina propria: apontam ao destino mais proximo que existe.
+      { href: '/labels', linkKey: 'shop' },
+      { href: '/collective', linkKey: 'talks' },
+      { href: '/consulting', linkKey: 'agency' },
     ],
   },
   {
@@ -62,7 +67,8 @@ export const FOOTER_COLUMNS = [
       { href: '/about', linkKey: 'about' },
       { href: '/about/quick-facts', linkKey: 'quickFacts' },
       { href: '/press/media', linkKey: 'media' },
-      { href: '/creators/tavaristico', linkKey: 'founders' },
+      { href: '/creators/tavaristico', linkKey: 'creators' },
+      { href: '/brand-tech', linkKey: 'brandTech' },
       { href: '/careers', linkKey: 'careers' },
       { href: '/publishing', linkKey: 'publishing' },
     ],

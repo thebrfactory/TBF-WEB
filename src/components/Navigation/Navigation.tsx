@@ -23,6 +23,17 @@ import styles from './Navigation.module.css'
 // `/brandsystem/login` é outra aplicação (zona .AURA.), então é <a> de verdade
 // e fica fora do localizedPath().
 
+// Itens do menu overlay (08/10/2026). SHOP, TALKS e AGENCY ainda nao tem
+// pagina: apontam ao destino mais proximo que existe, e as mesmas entradas
+// vivem no mapa do rodape (lib/footer-routes.ts). Rota propria: trocar o href.
+const MENU_LINKS = [
+  { key: 'magazine', href: '/zine' },
+  { key: 'menuAbout', href: '/about' },
+  { key: 'menuShop', href: '/labels' },
+  { key: 'menuTalks', href: '/collective' },
+  { key: 'menuAgency', href: '/consulting' },
+] as const
+
 export function Navigation() {
   const lang = useLang()
   const t = shell[lang].nav
@@ -206,9 +217,9 @@ export function Navigation() {
             strokeLinecap="round"
             aria-hidden="true"
           >
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="18" x2="21" y2="18" />
+            {/* DUAS linhas, nao tres (pedido do fundador, 08/10/2026). */}
+            <line x1="3" y1="9" x2="21" y2="9" />
+            <line x1="3" y1="15" x2="21" y2="15" />
           </svg>
         </button>
 
@@ -346,9 +357,11 @@ export function Navigation() {
 
         <nav className="menu__nav" aria-label={t.mobileMenu}>
           <p className="menu__group">{t.menuGroupRead}</p>
-          <Link href={localizedPath('/zine', lang)} className="menu__link">
-            {t.magazine}
-          </Link>
+          {MENU_LINKS.map((item) => (
+            <Link key={item.key} href={localizedPath(item.href, lang)} className="menu__link">
+              {t[item.key]}
+            </Link>
+          ))}
         </nav>
       </div>
 
