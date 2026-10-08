@@ -3,242 +3,65 @@
 // `/pt/about/quick-facts` (português)
 // =============================================================================
 
-import type { CSSProperties } from 'react'
+import Link from 'next/link'
 import { aboutQuickFacts } from '@/content/i18n/pages/about-quick-facts'
-import type { Lang } from '@/lib/i18n'
-
-const TAG: CSSProperties = {
-  display: 'block',
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 600,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.45)',
-  marginBottom: 'var(--tbf-space-4)',
-}
-
-const TITLE: CSSProperties = {
-  fontFamily: 'var(--tbf-type-display-xl-family)',
-  fontSize: 'clamp(2.5rem, 8vw, 7rem)',
-  fontWeight: 800,
-  lineHeight: 0.95,
-  letterSpacing: 'var(--tbf-type-display-xl-ls)',
-  color: '#fff',
-  marginBottom: 'var(--tbf-space-8)',
-}
-
-const DECK: CSSProperties = {
-  fontFamily: 'var(--tbf-type-deck-family)',
-  fontSize: 'var(--tbf-type-deck-size-sm)',
-  lineHeight: 'var(--tbf-type-deck-lh)' as CSSProperties['lineHeight'],
-  color: 'rgba(255,255,255,0.65)',
-  maxWidth: '58ch',
-}
-
-const SECTION_LABEL: CSSProperties = {
-  display: 'block',
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 600,
-  letterSpacing: '0.12em',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.4)',
-  marginBottom: 'var(--tbf-space-6)',
-}
-
-const FACT_LABEL: CSSProperties = {
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 600,
-  letterSpacing: '0.1em',
-  textTransform: 'uppercase',
-  color: 'rgba(255,255,255,0.4)',
-  marginBottom: 'var(--tbf-space-2)',
-  display: 'block',
-}
-
-const FACT_VALUE: CSSProperties = {
-  fontFamily: 'var(--tbf-type-display-xl-family)',
-  fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-  fontWeight: 800,
-  color: '#fff',
-  lineHeight: 1.1,
-  letterSpacing: '-0.01em',
-}
-
-const FACT_BODY: CSSProperties = {
-  fontFamily: 'var(--tbf-type-body-family)',
-  fontSize: 'var(--tbf-type-body-size-sm)',
-  lineHeight: 'var(--tbf-type-body-lh)' as CSSProperties['lineHeight'],
-  color: 'rgba(255,255,255,0.6)',
-}
+import { localizedPath, type Lang } from '@/lib/i18n'
+import { B800, Block, Cards, Closing, Facts, Hero, Lines, LinkCards, Page, Paragraphs, PILL } from './institutional'
 
 export default function AboutQuickFactsView({ lang }: { lang: Lang }) {
   const t = aboutQuickFacts[lang]
+  const path = (p: string) => localizedPath(p, lang)
 
   return (
-    <div style={{ background: '#000', color: '#fff', minHeight: '100dvh' }}>
+    <Page>
+      <Hero tag={t.hero.tag} title={t.hero.title} deck={t.hero.deck} />
 
-      {/* ─── HERO ─────────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          paddingTop: 'calc(var(--tbf-nav-height-sm) + var(--tbf-space-20))',
-          paddingBottom: 'var(--tbf-space-20)',
-        }}
-      >
-        <div className="container">
-          <span style={TAG}>{t.hero.tag}</span>
-          <h1 style={TITLE}>{t.hero.title}</h1>
-          <p style={DECK}>
-            {t.hero.deckPrefix}{' '}
-            <strong style={{ fontWeight: 800 }}>.THE BRAZILIAN FACTORY.</strong>
-          </p>
-        </div>
-      </section>
+      <Block label={t.what.sectionLabel}>
+        <Paragraphs
+          items={[
+            <>
+              <span style={B800}>.THE BRAZILIAN FACTORY.</span> {t.what.intro}
+            </>,
+            t.what.nots,
+          ]}
+        />
+      </Block>
 
+      <Block label={t.why.sectionLabel} wide>
+        <Cards items={t.why.items} min={220} />
+      </Block>
 
-      {/* ─── OVERVIEW NUMBERS ─────────────────────────────────────────────── */}
-      <section className="section container">
-        <span style={SECTION_LABEL}>{t.overview.sectionLabel}</span>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 'var(--tbf-space-8)',
-          }}
-        >
-          {t.overview.items.map((f) => (
-            <div key={f.label}>
-              <span style={FACT_LABEL}>{f.label}</span>
-              <span style={FACT_VALUE}>{f.value}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Block label={t.think.sectionLabel} title={t.think.h2} wide>
+        <Cards items={t.think.items} numbered />
+      </Block>
 
+      <Block label={t.operate.sectionLabel} title={t.operate.h2} wide>
+        <Cards items={t.operate.items} numbered min={200} />
+      </Block>
 
-      {/* ─── LABELS ───────────────────────────────────────────────────────── */}
-      <section className="section container">
-        <span style={SECTION_LABEL}>{t.activeLabels.sectionLabel}</span>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {t.activeLabels.items.map((l) => (
-            <div
-              key={l.code}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '80px 1fr',
-                gap: 'var(--tbf-space-6)',
-                alignItems: 'start',
-                padding: 'var(--tbf-space-5) 0',
-                borderTop: '1px solid rgba(255,255,255,0.07)',
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: 'var(--tbf-type-micro-family)',
-                  fontSize: 'var(--tbf-type-micro-size)',
-                  fontWeight: 700,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.4)',
-                  paddingTop: '3px',
-                }}
-              >
-                {l.code}
-              </span>
-              <div>
-                <span
-                  style={{
-                    display: 'block',
-                    fontFamily: 'var(--tbf-type-micro-family)',
-                    fontWeight: 800,
-                    fontSize: '0.85rem',
-                    letterSpacing: '0.06em',
-                    textTransform: 'uppercase',
-                    color: '#fff',
-                    marginBottom: 'var(--tbf-space-1)',
-                  }}
-                >
-                  {l.name}
-                </span>
-                <span style={FACT_BODY}>{l.focus}</span>
-              </div>
-            </div>
-          ))}
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }} />
-        </div>
-      </section>
+      <Block label={t.build.sectionLabel}>
+        <Lines items={t.build.items} />
+      </Block>
 
+      <Block label={t.architecture.sectionLabel} title={t.architecture.h2} wide>
+        <LinkCards items={t.architecture.items.map((i) => ({ ...i, href: path(i.href) }))} />
+      </Block>
 
-      {/* ─── COMPANY INFO ─────────────────────────────────────────────────── */}
-      <section className="section container">
-        <span style={SECTION_LABEL}>{t.company.sectionLabel}</span>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-          {t.company.items.map((f) => (
-            <div
-              key={f.label}
-              style={{
-                display: 'grid',
-                gridTemplateColumns: '160px 1fr',
-                gap: 'var(--tbf-space-6)',
-                alignItems: 'start',
-                padding: 'var(--tbf-space-5) 0',
-              }}
-            >
-              <span style={FACT_LABEL}>{f.label}</span>
-              <span
-                style={{
-                  fontFamily: 'var(--tbf-type-body-family)',
-                  fontSize: 'var(--tbf-type-body-size-sm)',
-                  color: '#fff',
-                  whiteSpace: 'pre-line',
-                  lineHeight: 1.6,
-                }}
-              >
-                {f.value}
-              </span>
-            </div>
-          ))}
-          <div style={{ borderTop: '1px solid rgba(255,255,255,0.07)' }} />
-        </div>
-      </section>
+      <Block label={t.facts.sectionLabel} wide>
+        <Facts items={t.facts.items} />
+      </Block>
 
-      {/* ─── SOCIAL ───────────────────────────────────────────────────────── */}
-      <section className="section container">
-        <span style={SECTION_LABEL}>{t.social.sectionLabel}</span>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: 'var(--tbf-space-6)',
-          }}
-        >
-          {t.social.items.map((s) => (
-            <a
-              key={s.handle}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ textDecoration: 'none', color: 'inherit' }}
-            >
-              <span style={FACT_LABEL}>{s.platform}</span>
-              <span
-                style={{
-                  fontFamily: 'var(--tbf-type-micro-family)',
-                  fontSize: '1rem',
-                  fontWeight: 700,
-                  color: '#fff',
-                  letterSpacing: '0.02em',
-                }}
-              >
-                {s.handle}
-              </span>
-            </a>
-          ))}
-        </div>
-      </section>
+      <Block label={t.legal.sectionLabel} wide>
+        <Facts items={t.legal.items} />
+      </Block>
 
-    </div>
+      <Closing line={t.thesis}>
+        {t.cta.items.map((c) => (
+          <Link key={c.href} href={path(c.href)} style={{ ...PILL, textDecoration: 'none' }}>
+            {c.title} →
+          </Link>
+        ))}
+      </Closing>
+    </Page>
   )
 }
