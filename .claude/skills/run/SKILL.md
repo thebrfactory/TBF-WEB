@@ -12,7 +12,7 @@ Project root: `/Users/factory/0. TBF | CODE SYSTEM STARTUP/1. TBF.COM/frontend`
    ```bash
    lsof -ti:3000
    ```
-   If a PID is returned, the server is already up — skip to step 3.
+   If a PID is returned, the server is already up, skip to step 3.
 
 2. Start the dev server in the background:
    ```bash
@@ -34,5 +34,5 @@ Project root: `/Users/factory/0. TBF | CODE SYSTEM STARTUP/1. TBF.COM/frontend`
 ## Notes
 
 - Port is always 3000 (Next.js default, no `.env.local` override)
-- `.env.local` is required for Sanity and Resend — it's gitignored and should already exist locally
+- `.env.local` is required for Sanity and Resend, it's gitignored and should already exist locally
 - If port 3000 is in use by another process, kill it first: `kill $(lsof -ti:3000)`

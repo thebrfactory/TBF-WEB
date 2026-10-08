@@ -8,9 +8,9 @@ Creates a new route page at `src/app/<route>/page.tsx` with all TBF brand conven
 
 ## Brand conventions (mandatory)
 
-- Background always `#000`, color always `#fff` — `data-theme="inverse"` on root div
-- **Names and brand marks always extrabold** — `.TBF.`, `.TFD.`, `.RUC.`, `.TGF.` use `fontWeight: 800`
-- **No dividers, no `<hr>`, no border separators** between sections — ever
+- Background always `#000`, color always `#fff`: `data-theme="inverse"` on root div
+- **Names and brand marks always extrabold**: `.TBF.`, `.TFD.`, `.RUC.`, `.TGF.` use `fontWeight: 800`
+- **No dividers, no `<hr>`, no border separators** between sections, ever
 - **No `white-space: nowrap`** anywhere
 - Layout two-column: use `className="layout-b"` (left narrower, right wider)
 - Section spacing: `className="section container"` for padded sections

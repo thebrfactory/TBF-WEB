@@ -1,5 +1,5 @@
-# 01 — Setup Guide
-## TBF WEB 2026 — Como rodar localmente
+# 01: Setup Guide
+## TBF WEB 2026: Como rodar localmente
 
 > Stack: Next.js 15 · React 19 · Sanity.io · TypeScript 5 · Resend
 
@@ -62,7 +62,7 @@ npm run dev
 # → http://localhost:3000
 ```
 
-O site funciona sem conteúdo no Sanity — todas as páginas têm fallbacks estáticos elegantes.
+O site funciona sem conteúdo no Sanity, todas as páginas têm fallbacks estáticos elegantes.
 
 ---
 
@@ -104,7 +104,7 @@ npm run build
 npm run start
 ```
 
-O build usa Next.js ISR (Incremental Static Regeneration) — páginas são regeneradas a cada 3600s (1h) automaticamente.
+O build usa Next.js ISR (Incremental Static Regeneration): páginas são regeneradas a cada 3600s (1h) automaticamente.
 
 ---
 

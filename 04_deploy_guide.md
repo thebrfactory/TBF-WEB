@@ -1,11 +1,11 @@
-# 04 — Deploy Guide
-## TBF WEB 2026 — thebrfactory.com
+# 04: Deploy Guide
+## TBF WEB 2026: thebrfactory.com
 ### Do código ao ar: o manual completo de deploy
 
-> Produzido por: ORCHESTRATOR (F08 — direct)
-> Depende de: F07 QA Final APROVADO (qa/laudos/f07_final.md — 13/13 PASS)
+> Produzido por: ORCHESTRATOR (F08, direct)
+> Depende de: F07 QA Final APROVADO (qa/laudos/f07_final.md, 13/13 PASS)
 > Data: 2026-06-01
-> Alvo: thebrfactory.com via Vercel → Cloudflare Pages (migração recomendada após 3–6 meses)
+> Alvo: thebrfactory.com via Vercel → Cloudflare Pages (migração recomendada após 3-6 meses)
 
 ---
 
@@ -28,17 +28,17 @@ Antes de executar qualquer passo de deploy, valide cada item desta lista:
 
 Estes arquivos NÃO estão no repositório e precisam ser criados manualmente antes do deploy:
 
-- [ ] `/public/favicon.ico` — favicon principal (32×32, formato ICO)
-- [ ] `/public/favicon-16x16.png` — (16×16 PNG)
-- [ ] `/public/favicon-32x32.png` — (32×32 PNG)
-- [ ] `/public/apple-touch-icon.png` — (180×180 PNG)
-- [ ] `/public/site.webmanifest` — manifest para PWA básico
-- [ ] `/public/og-default.jpg` — imagem Open Graph padrão (1200×630, fundo Obsidiana `#0D0C0B`, logotipo TBF em Pergaminho)
-- [ ] `/public/og-factory.jpg` — OG específica para /factory (1200×630, tema inverse — fundo Pergaminho)
+- [ ] `/public/favicon.ico`: favicon principal (32×32, formato ICO)
+- [ ] `/public/favicon-16x16.png`: (16×16 PNG)
+- [ ] `/public/favicon-32x32.png`: (32×32 PNG)
+- [ ] `/public/apple-touch-icon.png`: (180×180 PNG)
+- [ ] `/public/site.webmanifest`: manifest para PWA básico
+- [ ] `/public/og-default.jpg`: imagem Open Graph padrão (1200×630, fundo Obsidiana `#0D0C0B`, logotipo TBF em Pergaminho)
+- [ ] `/public/og-factory.jpg`: OG específica para /factory (1200×630, tema inverse, fundo Pergaminho)
 
-**Referência visual para favicons e OG:** usar a identidade visual definida em `design/01_visual_identity.md` — paleta Obsidiana + Pergaminho + Âmbar Exposto. Nunca usar fundo branco puro (`#FFFFFF`) ou preto puro (`#000000`).
+**Referência visual para favicons e OG:** usar a identidade visual definida em `design/01_visual_identity.md`: paleta Obsidiana + Pergaminho + Âmbar Exposto. Nunca usar fundo branco puro (`#FFFFFF`) ou preto puro (`#000000`).
 
-**Ferramenta recomendada para gerar favicons:** [realfavicongenerator.net](https://realfavicongenerator.net) — upload de SVG ou PNG em alta resolução, gera todos os formatos.
+**Ferramenta recomendada para gerar favicons:** [realfavicongenerator.net](https://realfavicongenerator.net): upload de SVG ou PNG em alta resolução, gera todos os formatos.
 
 **Conteúdo do `site.webmanifest`:**
 ```json
@@ -58,7 +58,7 @@ Estes arquivos NÃO estão no repositório e precisam ser criados manualmente an
 ### 1.3 Conteúdo mínimo no Sanity (para primeiro deploy não ficar vazio)
 
 - [ ] 1 documento `siteSettings` publicado (tickerText, siteTitle, collectiveApplicationOpen)
-- [ ] 1 artigo editorial publicado (status: "published", featured: true) — para homepage não ficar em estado de fallback
+- [ ] 1 artigo editorial publicado (status: "published", featured: true): para homepage não ficar em estado de fallback
 - [ ] 1 programa TGF publicado (para /factory não ficar vazio)
 
 Sem estes dados, o site funciona via fallbacks estáticos, mas a experiência é incompleta.
@@ -171,7 +171,7 @@ Secret: <valor do SANITY_WEBHOOK_SECRET>
 HTTP Headers: Content-Type: application/json
 ```
 
-Nota: O route handler `/api/revalidate` deve ser implementado pré-produção para aceitar este webhook. Está referenciado na arquitetura (`01_sitemap.md` §04) mas não foi implementado na F06 — pendência pré-launch de alta prioridade.
+Nota: O route handler `/api/revalidate` deve ser implementado pré-produção para aceitar este webhook. Está referenciado na arquitetura (`01_sitemap.md` §04) mas não foi implementado na F06, pendência pré-launch de alta prioridade.
 
 **Implementação básica do route handler:**
 
@@ -233,7 +233,7 @@ Após o deploy, verificar:
 - [ ] `/editorial` carrega (pode estar vazia se não há conteúdo no Sanity)
 - [ ] `/factory` carrega com tema inverse (fundo claro)
 - [ ] `/manifesto` carrega com scrollytelling
-- [ ] `/access` carrega (noindex — não precisa de conteúdo Sanity)
+- [ ] `/access` carrega (noindex: não precisa de conteúdo Sanity)
 - [ ] Formulário de `/access` submete e exibe estado de sucesso
 - [ ] Console do browser sem erros críticos
 
@@ -244,11 +244,11 @@ No Vercel Dashboard → Project → Settings → Domains:
 1. Adicionar `thebrfactory.com`
 2. Adicionar `www.thebrfactory.com` (Vercel sugere automaticamente)
 3. Vercel exibe os registros DNS necessários (Seção 5)
-4. Aguardar propagação DNS (geralmente 5–30 minutos com Cloudflare)
+4. Aguardar propagação DNS (geralmente 5-30 minutos com Cloudflare)
 
 ---
 
-## 5. DNS — Configuração do domínio thebrfactory.com
+## 5. DNS: Configuração do domínio thebrfactory.com
 
 ### 5.1 Assumindo DNS gerenciado no Cloudflare (recomendado)
 
@@ -267,7 +267,7 @@ Acessar Cloudflare Dashboard → thebrfactory.com → DNS → Records:
 ### 5.2 Verificar SSL
 
 Com Cloudflare como proxy:
-- SSL/TLS Mode: **Full (strict)** — garante HTTPS ponta a ponta
+- SSL/TLS Mode: **Full (strict)**: garante HTTPS ponta a ponta
 - Always Use HTTPS: **On**
 - Minimum TLS Version: **TLS 1.2**
 
@@ -300,7 +300,7 @@ curl -I https://thebrfactory.com/access
 # → deve conter: X-Robots-Tag: noindex (se configurado via next.config)
 ```
 
-**Open Graph Tags — verificação manual:**
+**Open Graph Tags, verificação manual:**
 - Acessar [opengraph.xyz](https://www.opengraph.xyz) ou [metatags.io](https://metatags.io)
 - Testar URL: `https://thebrfactory.com`
 - Verificar: título, descrição, imagem OG aparecem corretamente
@@ -330,7 +330,7 @@ Setup:
 ```
 4. Verificar no dashboard Plausible após o primeiro visitante
 
-**Alternativa gratuita:** Vercel Analytics (integrado ao dashboard Vercel, zero setup adicional) — útil para primeiros 30 dias antes de decidir sobre Plausible.
+**Alternativa gratuita:** Vercel Analytics (integrado ao dashboard Vercel, zero setup adicional): útil para primeiros 30 dias antes de decidir sobre Plausible.
 
 ### 6.3 Testar formulário /access
 
@@ -347,7 +347,7 @@ Se o email não chegar:
 
 ### 6.4 Pendências pré-launch identificadas no QA (OB-F01 e OB-F02)
 
-**OB-F01 — JSON-LD Schema.org em `/editorial/[slug]`:**
+**OB-F01, JSON-LD Schema.org em `/editorial/[slug]`:**
 
 Implementar antes de indexação significativa. Adicionar em `src/app/editorial/[slug]/page.tsx`:
 
@@ -381,13 +381,13 @@ const jsonLd = {
 />
 ```
 
-**OB-F02 — Favicon assets:**
+**OB-F02, Favicon assets:**
 
 Criar os arquivos listados na Seção 1.2 e colocar em `/frontend/public/`. Commit + push → Vercel fará re-deploy automático.
 
 ---
 
-## 7. MANUTENÇÃO — Operação diária
+## 7. MANUTENÇÃO: Operação diária
 
 ### 7.1 Publicar um novo artigo editorial
 
@@ -410,13 +410,13 @@ Criar os arquivos listados na Seção 1.2 e colocar em `/frontend/public/`. Comm
 ### 7.2 Atualizar o ticker
 
 1. Sanity Studio → Site Settings
-2. Campo "Texto do ticker" — separar itens com ` · `
+2. Campo "Texto do ticker": separar itens com ` · `
 3. Publicar
 4. Aguardar revalidação ISR (até 1h) ou usar webhook
 
 Exemplo:
 ```
-.THE BRAZILIAN FACTORY. · COLLECTIVE HOTEL CASINO · SPFW N59 — NOW STREAMING · ONLY FOR ARTISTS & CHANGEMAKERS · EST. 2025 ·
+.THE BRAZILIAN FACTORY. · COLLECTIVE HOTEL CASINO · SPFW N59, NOW STREAMING · ONLY FOR ARTISTS & CHANGEMAKERS · EST. 2025 ·
 ```
 
 ### 7.3 Abrir/fechar candidaturas ao Collective
@@ -444,7 +444,7 @@ Exemplo:
 
 ---
 
-## 8. MIGRAÇÃO CLOUDFLARE PAGES (recomendada após 3–6 meses)
+## 8. MIGRAÇÃO CLOUDFLARE PAGES (recomendada após 3-6 meses)
 
 ### 8.1 Por que migrar
 
@@ -454,7 +454,7 @@ Conforme recomendação do `tech-scout-agent` em `research/03_tech_recommendatio
 |----------|--------|-----------------|
 | Edge compute global | CDN padrão (edge em PoPs Vercel) | Edge native em 300+ PoPs globais |
 | Custo a escala | Cresce com uso (serverless functions) | Mais previsível para tráfego constante |
-| Analytics | Pago acima do free tier | Workers Analytics — incluído |
+| Analytics | Pago acima do free tier | Workers Analytics, incluído |
 | Integração com Cloudflare | Via CNAME proxy | Nativa |
 | Cold starts | Existentes (serverless) | Mínimos (edge workers) |
 | App Router (Next.js) | Suporte completo oficial | Suporte via `@cloudflare/next-on-pages` |
@@ -504,11 +504,11 @@ wrangler pages deploy .vercel/output/static --project-name tbf-web-2026
 - Route handlers (`/api/contact`, `/api/revalidate`) precisam ser compatíveis com Cloudflare Workers runtime
 - `next/font` funciona normalmente
 - `next/image` requer configuração de Image Resizing no Cloudflare (ou usar `unoptimized: true` como fallback)
-- ISR `revalidate` é substituído por Cache-Control no edge — testar comportamento
+- ISR `revalidate` é substituído por Cache-Control no edge, testar comportamento
 
 ---
 
-## APÊNDICE — Stack de ferramentas de terceiros
+## APÊNDICE: Stack de ferramentas de terceiros
 
 | Ferramenta | Função | Tier inicial | Upgrade quando |
 |-----------|--------|-------------|---------------|
@@ -521,6 +521,6 @@ wrangler pages deploy .vercel/output/static --project-name tbf-web-2026
 
 ---
 
-*04_deploy_guide.md | TBF WEB 2026 | Fase 08 — Deploy*
+*04_deploy_guide.md | TBF WEB 2026 | Fase 08, Deploy*
 *Produzido por: ORCHESTRATOR (direct) | 2026-06-01*
-*Base: qa/laudos/f07_final.md APROVADO — Sistema pronto para launch*
+*Base: qa/laudos/f07_final.md APROVADO, Sistema pronto para launch*

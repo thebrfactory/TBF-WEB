@@ -74,13 +74,13 @@ Crédito pronto: Foto: roger4336 / Wikimedia Commons, CC BY-SA 2.0.
 
 ---
 
-# SEGUNDA LEVA — imagens fornecidas pelo fundador (2026-08-12, #01 CHANGES)
+# SEGUNDA LEVA: imagens fornecidas pelo fundador (2026-08-12, #01 CHANGES)
 
 🔴 **LEIA ISTO ANTES DE PUBLICAR.** As 8 imagens acima passaram por verificação de
 licença arquivo a arquivo, com página de licença explícita. **Estas cinco não.**
 Elas vieram da pasta `~/Desktop/GURGEL`, entregues pelo fundador com autorização
 de uso ("você pode usar"), e a procedência de cada uma está declarada abaixo com
-o que é possível afirmar — nada mais. Os arquivos têm largura de 736px a 1280px,
+o que é possível afirmar, nada mais. Os arquivos têm largura de 736px a 1280px,
 marca de material salvo de rede social (Pinterest), sem página de origem para a
 maioria. Portanto:
 
@@ -90,20 +90,20 @@ maioria. Portanto:
 - Resolução: são de baixa resolução para uso em sangria. As duas peças de arte
   impressa entram como `variant: 'plate'` (proporção nativa, sem recorte nem
   zoom), o que também evita esticar pixel que não existe. Os dois renders e o
-  chassi entram em sangria e ficam macios em tela retina — é o que o arquivo dá.
+  chassi entram em sangria e ficam macios em tela retina, é o que o arquivo dá.
   **Nada foi upscalado: nitidez inventada é pior que imagem macia.**
 
 ## 10-renegado-frente.webp · 11-renegado-traseira.webp
 
 O que mostram: render de um SUV compacto Gurgel moderno, amarelo, três quartos
-frontal e três quartos traseiro. **Não é um carro que existiu** — é releitura
+frontal e três quartos traseiro. **Não é um carro que existiu**: é releitura
 autoral do Gurgel BR-800.
 Autor: **Kleber Silva** (designer), trabalho de 2020.
 Fonte declarada pelo fundador: https://www.autoo.com.br/lembra-da-gurgel-designer-atualiza-alguns-modelos-da-marca/
 Licença: não declarada. Uso editorial com crédito ao autor.
 Crédito em uso no artigo: `Render: Kleber Silva`.
 Onde entram: no par do corredor da concessionária, como "o brasileiro". Foi por
-causa deles que a vaga 02 (Carajás) saiu de lá — ver nota no fim deste arquivo.
+causa deles que a vaga 02 (Carajás) saiu de lá, ver nota no fim deste arquivo.
 Arquivo original: 1280 × 960 px, o melhor da leva.
 
 ## 12-joao-gurgel.webp
@@ -114,7 +114,7 @@ Autor: não identificado.
 Licença: não declarada.
 Crédito em uso: `Autor não identificado · procedência não verificada`.
 Onde entra: logo depois de "Virou política industrial", fazendo par com o retrato
-do Oswald de Andrade. `variant: 'plate'` — em sangria 16/10 o recorte cortaria a
+do Oswald de Andrade. `variant: 'plate'`: em sangria 16/10 o recorte cortaria a
 cabeça do retratado.
 Arquivo: 736 × 1122 px.
 
@@ -125,7 +125,7 @@ montadas, sob a marca Gurgel. Provável foto de museu ou exposição.
 Autor: não identificado. Licença: não declarada.
 Crédito em uso: `Acervo Gurgel · procedência não verificada`.
 Onde entra: depois do parágrafo em que a suspensão desenvolvida para estradas de
-terra em Goiás vira padrão global — o argumento é de engenharia, e esta é a peça.
+terra em Goiás vira padrão global, o argumento é de engenharia, e esta é a peça.
 Arquivo: 735 × 479 px (proporção 1,53, quase o 16/10 do quadro; recorte mínimo).
 
 ## 14-nossa-terra.webp
@@ -136,7 +136,7 @@ Nosso carro"** e a marca `GURGEL G-15 L` no rodapé.
 Autor: departamento de publicidade da Gurgel Motores (empresa encerrada em 1994).
 Licença: não declarada. Material publicitário histórico.
 Crédito em uso: `Folheto Gurgel, 1981 · acervo, procedência não verificada`.
-Onde entra: **é a última imagem do artigo**, e de propósito — depois de uma
+Onde entra: **é a última imagem do artigo**, e de propósito, depois de uma
 matéria inteira de especulação declarada, é a única peça real, e ela traz a tese
 do texto impressa pela própria empresa, em três palavras, em 1981.
 `variant: 'plate'`: o slogan é a beirada de cima e a marca é a de baixo; em
@@ -154,11 +154,11 @@ Renegado" no corredor da concessionária, com uma legenda que precisava desmenti
 a própria imagem ("o Renegado desta história nunca existiu"). Com os renders do
 Kleber Silva o problema desapareceu: agora o leitor vê um Gurgel compacto moderno
 que de fato foi desenhado por alguém, a legenda diz que é render, e nada finge ser
-registro histórico. O Carajás real não saiu da matéria — **é ele na capa.**
+registro histórico. O Carajás real não saiu da matéria, **é ele na capa.**
 
 ---
 
-# TERCEIRA LEVA — a matéria passou a rodar SÓ com o acervo do fundador (2026-08-14, #01 CHANGES)
+# TERCEIRA LEVA: a matéria passou a rodar SÓ com o acervo do fundador (2026-08-14, #01 CHANGES)
 
 🔴 **LEIA ISTO ANTES DE MEXER NAS IMAGENS DESTE ARTIGO.**
 
@@ -169,7 +169,7 @@ na matéria**.
 
 Crédito padrão, escolhido por ele (*"as minhas imagens eu peguei todas no
 Pinterest, pode colocar essa a fonte"*): `Fonte: Pinterest (divulgação/reprodução)`.
-Onde há autor conhecido, o autor vem primeiro e a fonte depois — é o caso dos dois
+Onde há autor conhecido, o autor vem primeiro e a fonte depois, é o caso dos dois
 renders do Kleber Silva.
 
 ## O que saiu de uso, e por quê
@@ -186,9 +186,9 @@ pelo commit anterior a essa limpeza. Não repor nenhum sem falar com o fundador.
 | Arquivo | Era | Por que saiu |
 |---|---|---|
 | `01-capa.webp` | capa (Carajás real) | a capa agora é a X-15 dele, `18` |
-| `02-gurgel-renegado.webp` | já estava fora desde a 2ª leva | — |
+| `02-gurgel-renegado.webp` | já estava fora desde a 2ª leva |, |
 | `03-jeep-renegade.webp` | "à esquerda, o americano" | **não tem substituto**: o acervo dele é inteiro Gurgel. O texto continua dizendo que o Jeep está à esquerda, e o leitor sabe que carro é esse sem foto |
-| `04-fabrica.jpg` | vaga que nunca foi preenchida | — |
+| `04-fabrica.jpg` | vaga que nunca foi preenchida |, |
 | `05-oswald.webp` | retrato do Oswald | **não tem substituto.** Ver nota abaixo |
 | `06-estrada-goias.webp` | estrada de terra / suspensão | trocado pelo cartaz do X-12, `17` |
 | `07-modernismo.webp` | foto de grupo de 1929 | **não tem substituto.** Ver nota abaixo |
@@ -199,7 +199,7 @@ pelo commit anterior a essa limpeza. Não repor nenhum sem falar com o fundador.
 substituídas por equivalente, porque equivalente não existe neste acervo. A troca
 melhora a página: "Antropofagia." fica sozinha na tela, sem ilustração de livro
 didático atrás dela, e a primeira coisa depois da palavra é a marca sendo comida
-pela ferrugem (`20`) — que é o que a palavra quer dizer. O retrato do João Gurgel
+pela ferrugem (`20`): que é o que a palavra quer dizer. O retrato do João Gurgel
 (`12`) passa a ser o único retrato do trecho em vez do terceiro.
 
 ## As seis imagens novas
@@ -209,7 +209,7 @@ Nenhuma foi upscalada: nitidez inventada é pior que imagem macia.
 
 | Arquivo | Origem na pasta | Nativo | Variante | Onde entra |
 |---|---|---|---|---|
-| `15-anuncio-supermini.webp` | `Gurgel Supermini - 1993.jpeg` | 550 × 622 | `plate` | a concessionária, em papel — o anúncio traz endereço e telefone impressos |
+| `15-anuncio-supermini.webp` | `Gurgel Supermini - 1993.jpeg` | 550 × 622 | `plate` | a concessionária, em papel, o anúncio traz endereço e telefone impressos |
 | `16-pista-de-testes.webp` | `_ (1).jpeg` | 735 × 488 | `bleed` | "a indústria que mandaram o país construir" |
 | `17-x12-utilitarios.webp` | `The 1979 Gurgel X-12 of Brazil…jpeg` | 736 × 1011 | `plate` | o argumento da suspensão, dito pela própria empresa |
 | `18-x15-estrada.webp` | `_ (2).jpeg` | 736 × 519 | capa | hero da matéria + miniatura no /editorial e na home |
@@ -226,7 +226,7 @@ quiser trocar alguma.
 
 ## Formato dos blocos
 
-A matéria ganhou um bloco novo, `kind: 'pair'` — duas peças lado a lado no
+A matéria ganhou um bloco novo, `kind: 'pair'`: duas peças lado a lado no
 desktop, empilhadas no telefone. Os dois renders do Kleber Silva (`10` e `11`)
 são o primeiro e único par: frente e traseira do mesmo carro. Foi a resposta ao
 outro pedido do mesmo dia, *"no desktop fica muito grande e fica estourado"*.

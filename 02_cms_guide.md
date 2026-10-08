@@ -1,5 +1,5 @@
-# 02 — CMS Guide
-## TBF WEB 2026 — Como criar e publicar conteúdo no Sanity Studio
+# 02: CMS Guide
+## TBF WEB 2026: Como criar e publicar conteúdo no Sanity Studio
 
 > Acesse o Studio em: `thebrfactory.com/studio` (produção) ou `localhost:3000/studio` (dev)
 
@@ -23,17 +23,17 @@
 
 1. No Studio → **Editorial Posts** → **Create new**
 2. Preencher:
-   - **Título (PT)** — obrigatório, máx. 120 caracteres
-   - **Slug** — gerado do `titleEn`, edite se necessário
-   - **Deck (PT)** — subtítulo editorial, máx. 160 caracteres
-   - **Categoria** — `fashion-film` / `editorial` / `manifesto` / `coolhunting` / `collaboration`
-   - **BU** — `tbf` / `melfiore` / `ruc` / `tgf`
-   - **Hero Image** — obrigatório; adicione `alt`, `caption` e `credit`
-   - **Corpo (Body)** — editor rico com suporte a parágrafos, h2, h3, blockquote, imagens
-   - **Créditos** — array de `role + name + handle`
-   - **Autor** — referência a `collectiveMember`
-   - **Tags** — referências a `tag[]`
-   - **Data de publicação** — `publishedAt`
+   - **Título (PT)**: obrigatório, máx. 120 caracteres
+   - **Slug**: gerado do `titleEn`, edite se necessário
+   - **Deck (PT)**: subtítulo editorial, máx. 160 caracteres
+   - **Categoria**: `fashion-film` / `editorial` / `manifesto` / `coolhunting` / `collaboration`
+   - **BU**: `tbf` / `melfiore` / `ruc` / `tgf`
+   - **Hero Image**: obrigatório; adicione `alt`, `caption` e `credit`
+   - **Corpo (Body)**: editor rico com suporte a parágrafos, h2, h3, blockquote, imagens
+   - **Créditos**: array de `role + name + handle`
+   - **Autor**: referência a `collectiveMember`
+   - **Tags**: referências a `tag[]`
+   - **Data de publicação**: `publishedAt`
 3. Alterar **Status** de `draft` → `published`
 4. Salvar → conteúdo aparece em produção em até 1h (ISR)
 
@@ -81,11 +81,11 @@ O CTA "Enter the Collective" em `/editorial/[slug]` também é controlado por es
 
 1. **Melfiore Entries** → **Create new**
 2. Campos:
-   - **Title** — máx. 100 caracteres
-   - **Entry Type** — `fragment` / `curation` / `collection` / `ritual`
-   - **Body** — conteúdo rico
-   - **Hero Image** — opcional
-   - **Product Name** + **Product Status** + **Product Link** — para itens comercializáveis
+   - **Title**: máx. 100 caracteres
+   - **Entry Type**: `fragment` / `curation` / `collection` / `ritual`
+   - **Body**: conteúdo rico
+   - **Hero Image**: opcional
+   - **Product Name** + **Product Status** + **Product Link**: para itens comercializáveis
 3. Se `productStatus = 'available'` + `productLink` preenchido → botão "Acquire" aparece
 4. Se `productStatus = 'coming-soon'` → aparece texto "Soon" sem link
 
@@ -95,27 +95,27 @@ O CTA "Enter the Collective" em `/editorial/[slug]` também é controlado por es
 
 1. **Fashion Films** → **Create new**
 2. Campos:
-   - **Content Type** — `fashion-film` / `backstage` / `collaboration` / `spfw`
-   - **Cloudflare Stream ID** — ID do vídeo (não URL YouTube)
-   - **Thumbnail Image** — obrigatório, com `alt`
-   - **Credits** — array de `role + name + handle + brand`
-   - **Featured** — toggle para destaque
+   - **Content Type**: `fashion-film` / `backstage` / `collaboration` / `spfw`
+   - **Cloudflare Stream ID**: ID do vídeo (não URL YouTube)
+   - **Thumbnail Image**: obrigatório, com `alt`
+   - **Credits**: array de `role + name + handle + brand`
+   - **Featured**: toggle para destaque
 
 ---
 
 ## 7. Gerenciar programas TGF
 
-1. **TGF Programs** → **Create new** (máx. 3 programas — ordem 1, 2, 3)
+1. **TGF Programs** → **Create new** (máx. 3 programas, ordem 1, 2, 3)
 2. Campos:
-   - **Name** — nome do programa
-   - **Tagline** — máx. 120 caracteres
-   - **Description** — editor rico
-   - **Target Audience** — quem é o público
-   - **Deliverables** — lista de entregáveis (máx. 5)
-   - **Pricing** — texto de preço (ex: "R$ 3.500/mês")
-   - **CTA Label** — texto do botão (vocabulário TBF: "Start the Program")
-   - **CTA URL** — link de conversão (Calendly, Cal.com, etc.)
-   - **Active** — toggle para exibir/ocultar
+   - **Name**: nome do programa
+   - **Tagline**: máx. 120 caracteres
+   - **Description**: editor rico
+   - **Target Audience**: quem é o público
+   - **Deliverables**: lista de entregáveis (máx. 5)
+   - **Pricing**: texto de preço (ex: "R$ 3.500/mês")
+   - **CTA Label**: texto do botão (vocabulário TBF: "Start the Program")
+   - **CTA URL**: link de conversão (Calendly, Cal.com, etc.)
+   - **Active**: toggle para exibir/ocultar
 
 ---
 
@@ -131,7 +131,7 @@ Todos os schemas têm campos `EN` opcionais (`titleEn`, `deckEn`, `bodyEn`):
 ## Boas práticas
 
 - **Hero Images**: mínimo 1200×630px, preferência 3:2 para artigos featured
-- **Alt text**: sempre descritivo — nunca "imagem de moda" ou vazio
+- **Alt text**: sempre descritivo: nunca "imagem de moda" ou vazio
 - **Slugs**: em inglês, hifenizados, sem caracteres especiais
 - **Créditos**: obrigatórios em fashion films e editoriais de moda
 - **publishedAt**: use a data real de publicação, não hoje automático

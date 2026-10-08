@@ -1,5 +1,5 @@
-# CLAUDE.md — TBF-WEB
-> thebrfactory.com — sede digital da `.TBF. inc`. Site **em produção** (modo manutenção).
+# CLAUDE.md: TBF-WEB
+> thebrfactory.com, sede digital da `.TBF. inc`. Site **em produção** (modo manutenção).
 > Este arquivo é autossuficiente: contém o crítico para mexer neste código com segurança.
 
 ## Stack e comandos
@@ -24,13 +24,13 @@
 
 ## Regras de código e brand (obrigatórias)
 
-- **Mobile-first** — layout, componentes e tipografia partem do mobile e escalam para desktop. Nunca o contrário. (espelhada da raiz do ecossistema)
+- **Mobile-first**: layout, componentes e tipografia partem do mobile e escalam para desktop. Nunca o contrário. (espelhada da raiz do ecossistema)
 - Nomes de pessoas e marcas em destaque: peso **extrabold**
 - Toda imagem com texto sobreposto recebe **overlay** para legibilidade
 - Seções com variantes de layout usam **layout-b no mobile**
 - Nunca usar `white-space: nowrap` em texto
 - **Sem traços/dividers horizontais** em nenhuma página
-- Referência operacional: 032c.com — princípio editorial, nunca cópia estética
+- Referência operacional: 032c.com: princípio editorial, nunca cópia estética
 
 ## Docs sob demanda
 

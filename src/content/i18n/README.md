@@ -6,7 +6,7 @@
 
 O site existe **inteiro em inglês** e **inteiro em português**. O inglês é o
 nativo e mora na raiz (`/manifesto`); o português mora sob prefixo
-(`/pt/manifesto`). Quem chega cai **sempre em inglês** — não há redirecionamento
+(`/pt/manifesto`). Quem chega cai **sempre em inglês**: não há redirecionamento
 por idioma do navegador. O brasileiro troca pela pílula do topo, e a escolha é
 lembrada.
 
@@ -33,7 +33,7 @@ Três peças por rota:
 ## Regras duras
 
 - **Chaves iguais nos dois idiomas.** O tipo do dicionário é derivado do inglês,
-  então uma chave faltando no português quebra o `type-check` — de propósito.
+  então uma chave faltando no português quebra o `type-check`: de propósito.
 - **Todo link interno passa por `localizedPath()`.** Um `href="/about"` cru leva
   o leitor de português de volta ao site em inglês, sem aviso. Em componente de
   servidor use o `lang` recebido; em componente de cliente use `useLang()`.

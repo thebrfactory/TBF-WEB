@@ -8,7 +8,7 @@ Converts images from any format (PNG, JPG, JPEG) to WebP at **quality 100** usin
 
 ## Tool
 
-`cwebp` — available at `/opt/homebrew/bin/cwebp`
+`cwebp`: available at `/opt/homebrew/bin/cwebp`
 
 ## Folder structure
 
@@ -53,5 +53,5 @@ cwebp -q 100 input.png -o output.webp && rm input.png
 ## Notes
 
 - Always confirm the target folder exists before converting
-- Never place images outside `public/images/` — Next.js `Image` component requires files to be under `public/`
+- Never place images outside `public/images/`: Next.js `Image` component requires files to be under `public/`
 - After converting, verify with `ls -lh` that the webp files landed correctly before removing originals
