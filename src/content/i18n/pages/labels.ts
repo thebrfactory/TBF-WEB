@@ -1,5 +1,6 @@
 // =============================================================================
-// Dicionário da /labels — as 4 divisões do organismo .TBF. Convenções: ../README.md
+// Dicionário da /labels: os 4 mundos da Factory. Convenções: ../README.md
+// Os `keywords` e o `territory` ficam em inglês nas duas línguas (código de marca).
 // =============================================================================
 
 import type { Lang } from '@/lib/i18n'
@@ -8,29 +9,22 @@ const en = {
   meta: {
     title: 'Labels',
     description:
-      'The labels of .THE BRAZILIAN FACTORY. Four divisions of one cultural organism: .TBF. · .TFD. · .RUC. · .TGF.',
+      'The Labels of .THE BRAZILIAN FACTORY. Four worlds built inside one factory: .TBF. · .TFD. · .RUC. · .TGF.',
     ogTitle: 'Labels | .THE BRAZILIAN FACTORY.',
-    ogDescription: 'One organism. Four labels. One frequency.',
+    ogDescription: 'One factory. Four worlds.',
   },
 
   hero: {
     title: 'Labels',
     // Frase principal do idioma da página, mais o eco dela no outro idioma
-    // logo abaixo, em itálico — mesmo gesto bilíngue em ambas as rotas.
-    lead: 'One organism. Four labels. One shared frequency between editorial, desire, fashion, and growth.',
-    echo: 'Um organismo. Quatro divisões. Uma frequência compartilhada entre editorial, desejo, moda e crescimento.',
+    // logo abaixo, em itálico: mesmo gesto bilíngue em ambas as rotas.
+    lead: 'One factory. Four worlds.',
+    echo: 'Uma Factory. Quatro mundos.',
+    intro:
+      'Labels are how the Factory becomes culture. Each one starts from a cultural tension. Its own language, its own audience, its own point of view.',
   },
 
-  sectionAriaLabel: 'Labels, divisions of .TBF. inc',
-
-  // Rótulos dos pontos de cada label (dt do <dl>). Ordem fixa: category,
-  // purpose, forWho, deliverables — usada por todas as 4 labels abaixo.
-  pointLabels: {
-    category: 'Category',
-    purpose: 'Purpose',
-    forWho: "Who it's for",
-    deliverables: 'Deliverables',
-  },
+  sectionAriaLabel: 'Labels of .TBF. inc',
 
   // Nota interna sobre o placeholder de mídia: não é copy de marca, é aviso
   // de produção para quando a arte real entrar. Fica em inglês nos dois
@@ -39,54 +33,61 @@ const en = {
 
   labels: [
     {
+      index: '01',
       tag: '.TBF.',
       name: 'The Brazilian Factory',
-      subtitle: 'Collective Hotel Casino',
+      territory: 'CULTURE',
+      line: 'The cultural factory.',
+      keywords: 'Editorial. Research. Ideas.',
+      note: 'The layer that gives every other world context, repertoire and legitimacy.',
       href: '/zine',
-      cta: '→ Enter .TBF. Editorial',
-      category: 'Cultural editorial label. Core identity of the .TBF. inc organism.',
-      purpose: 'Produces narrative, manifesto and curation for those who already read the cultural code.',
-      forWho: 'Creators, cultural consumers, investors and strategic partners.',
-      deliverables: 'Editorial articles · Manifesto · Interviews · Reference curation',
+      cta: '→ Enter the Zine',
     },
     {
+      index: '02',
       tag: '.TFD.',
-      name: 'Melfiore',
-      subtitle: 'Intimacy-Wellness Community',
+      name: 'The Fiore Daily',
+      territory: 'INTIMACY',
+      line: 'Intimacy as culture.',
+      keywords: 'Wellness. Ritual. Community.',
+      note: 'Care and desire turned into behavior, product and community.',
       href: '/labels/thefioredaily',
       cta: '→ Enter The Fiore Daily',
-      category: 'Lifestyle and wellness label with its own visual identity.',
-      purpose: 'Creates wellness rituals and intimacy narratives with its own aesthetic and identity.',
-      forWho: 'Women who build their routines with intention, beauty and personal care.',
-      deliverables: 'Ritual guides · Product curation · Lifestyle content · Collaborations',
     },
     {
+      index: '03',
       tag: '.RUC.',
       name: 'Runway Untd Collective',
-      subtitle: 'Fashion Film Magazine',
+      territory: 'FASHION',
+      line: 'Fashion as cultural memory.',
+      keywords: 'Film. Image. Archive.',
+      note: "Part media, part studio, part archive. It films Brazilian fashion so it doesn't disappear.",
       href: '/labels/runwayunited',
       cta: '→ Explore the Archive',
-      category: 'Visual fashion archive with a cinematic language.',
-      purpose: 'Documents and produces the visual language of emerging Brazilian fashion.',
-      forWho: 'Designers, models, photographers, stylists and admirers of contemporary fashion.',
-      deliverables: 'Fashion films · Photo editorials · SPFW coverage · Digital archive',
     },
     {
+      index: '04',
       tag: '.TGF.',
       name: 'The Growth Factory',
-      subtitle: 'Worldwide Brazilian Support',
+      territory: 'GROWTH',
+      line: 'Cultural capital into business value.',
+      keywords: 'Strategy. Technology. Expansion.',
+      note: 'Where what the other worlds accumulate meets the market.',
       href: '/labels/factoryofgrowth',
       cta: '→ Explore .TGF.',
-      category: 'Performance and business growth consultancy.',
-      purpose: 'Delivers real growth for Brazilian businesses in the US with technical authority.',
-      forWho: 'Brazilian entrepreneurs in the US with active businesses who want to scale with premium positioning.',
-      deliverables: 'Digital strategy · Performance marketing · Positioning · Mentorship',
     },
   ],
 
+  born: {
+    heading: 'How a label is born',
+    body: "A real cultural tension. An audience that recognizes itself in it. A language of its own. Room for IP. A business that doesn't kill the idea.",
+    verdict: "Miss one, and it's a project.",
+  },
+
   closing: {
-    ariaLabel: 'Enter the collective',
-    casinoCta: 'Enter the Casino',
+    line: 'Culture. Intimacy. Fashion. Growth. Different territories, same frequency.',
+    ariaLabel: 'Enter the Collective',
+    collectiveCta: 'Enter the Collective',
     pitchCta: 'See our Pitch',
   },
 }
@@ -95,79 +96,81 @@ const pt: typeof en = {
   meta: {
     title: 'Labels',
     description:
-      'As labels da .THE BRAZILIAN FACTORY. Quatro divisões de um único organismo cultural: .TBF. · .TFD. · .RUC. · .TGF.',
+      'As Labels da .THE BRAZILIAN FACTORY. Quatro mundos construídos dentro de uma Factory: .TBF. · .TFD. · .RUC. · .TGF.',
     ogTitle: 'Labels | .THE BRAZILIAN FACTORY.',
-    ogDescription: 'Um organismo. Quatro labels. Uma frequência.',
+    ogDescription: 'Uma Factory. Quatro mundos.',
   },
 
   hero: {
     title: 'Labels',
-    lead: 'Um organismo. Quatro divisões. Uma frequência compartilhada entre editorial, desejo, moda e crescimento.',
-    echo: 'One organism. Four labels. One shared frequency between editorial, desire, fashion, and growth.',
+    lead: 'Uma Factory. Quatro mundos.',
+    echo: 'One factory. Four worlds.',
+    intro:
+      'As Labels são o jeito de a Factory virar cultura. Cada uma nasce de uma tensão cultural. Linguagem própria, público próprio, ponto de vista próprio.',
   },
 
-  sectionAriaLabel: 'Labels, divisões da .TBF. inc',
-
-  pointLabels: {
-    category: 'Categoria',
-    purpose: 'Propósito',
-    forWho: 'Para quem',
-    deliverables: 'Entregas',
-  },
+  sectionAriaLabel: 'Labels da .TBF. inc',
 
   previewPlaceholder: 'ADD-PREVIEW-MATERIAL',
 
   labels: [
     {
+      index: '01',
       tag: '.TBF.',
       name: 'The Brazilian Factory',
-      subtitle: 'Collective Hotel Casino',
+      territory: 'CULTURE',
+      line: 'A fábrica cultural.',
+      keywords: 'Editorial. Research. Ideas.',
+      note: 'A camada que dá contexto, repertório e legitimidade a todos os outros mundos.',
       href: '/zine',
-      cta: '→ Entrar no .TBF. Editorial',
-      category: 'Label editorial cultural. Identidade central do organismo .TBF. inc.',
-      purpose: 'Produz narrativas, manifesto e curadoria para quem já entende o código cultural.',
-      forWho: 'Criadores, consumidores culturais, investidores e parceiros estratégicos.',
-      deliverables: 'Artigos editoriais · Manifesto · Entrevistas · Curadoria de referências',
+      cta: '→ Entrar no Zine',
     },
     {
+      index: '02',
       tag: '.TFD.',
-      name: 'Melfiore',
-      subtitle: 'Intimacy-Wellness Community',
+      name: 'The Fiore Daily',
+      territory: 'INTIMACY',
+      line: 'Intimidade como cultura.',
+      keywords: 'Wellness. Ritual. Community.',
+      note: 'Cuidado e desejo transformados em comportamento, produto e comunidade.',
       href: '/labels/thefioredaily',
       cta: '→ Entrar na The Fiore Daily',
-      category: 'Label de lifestyle e wellness com identidade visual própria.',
-      purpose: 'Cria rituais de bem-estar e narrativas de intimidade com estética e identidade próprias.',
-      forWho: 'Mulheres que constroem suas rotinas com intenção, beleza e cuidado pessoal.',
-      deliverables: 'Guias de ritual · Curadoria de produtos · Conteúdo de lifestyle · Colaborações',
     },
     {
+      index: '03',
       tag: '.RUC.',
       name: 'Runway Untd Collective',
-      subtitle: 'Fashion Film Magazine',
+      territory: 'FASHION',
+      line: 'Moda como memória cultural.',
+      keywords: 'Film. Image. Archive.',
+      note: 'Parte mídia, parte estúdio, parte arquivo. Filma a moda brasileira para ela não sumir.',
       href: '/labels/runwayunited',
       cta: '→ Explorar o Arquivo',
-      category: 'Arquivo visual de moda com linguagem cinematográfica.',
-      purpose: 'Documenta e produz a linguagem visual da moda brasileira emergente.',
-      forWho: 'Designers, modelos, fotógrafos, stylists e admiradores de moda contemporânea.',
-      deliverables: 'Fashion films · Editoriais fotográficos · Cobertura SPFW · Arquivo digital',
     },
     {
+      index: '04',
       tag: '.TGF.',
       name: 'The Growth Factory',
-      subtitle: 'Worldwide Brazilian Support',
+      territory: 'GROWTH',
+      line: 'Capital cultural em valor de negócio.',
+      keywords: 'Strategy. Technology. Expansion.',
+      note: 'Onde o que os outros mundos acumulam encontra o mercado.',
       href: '/labels/factoryofgrowth',
       cta: '→ Explorar a .TGF.',
-      category: 'Consultoria de performance e crescimento de negócios.',
-      purpose: 'Entrega crescimento real para negócios brasileiros nos EUA com autoridade técnica.',
-      forWho: 'Empreendedores brasileiros nos EUA com negócios ativos que querem escalar com posicionamento premium.',
-      deliverables: 'Estratégia digital · Marketing de performance · Posicionamento · Mentoria',
     },
   ],
 
+  born: {
+    heading: 'Como nasce uma Label',
+    body: 'Uma tensão cultural real. Um público que se reconhece nela. Uma linguagem própria. Espaço para IP. Um negócio que não mata a ideia.',
+    verdict: 'Faltou uma, é projeto.',
+  },
+
   closing: {
+    line: 'Culture. Intimacy. Fashion. Growth. Territórios diferentes, a mesma frequência.',
     ariaLabel: 'Entrar no Collective',
-    casinoCta: 'Entrar no Casino',
-    pitchCta: 'Veja nosso Pitch',
+    collectiveCta: 'Entrar no Collective',
+    pitchCta: 'Ver o Pitch',
   },
 }
 

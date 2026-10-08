@@ -1,6 +1,6 @@
 // =============================================================================
-// /labels — AS 4 DIVISÕES DO ORGANISMO TBF
-// One organism. Four labels. Uma frequência.
+// /labels: OS 4 MUNDOS DA FACTORY
+// One factory. Four worlds. Uma frequência.
 //
 // Uma página, dois idiomas: o texto vem do dicionário e os links passam por
 // localizedPath. Ver src/content/i18n/README.md.
@@ -58,7 +58,7 @@ export default function LabelsView({ lang }: { lang: Lang }) {
           >
             {t.hero.lead}
           </p>
-          {/* Eco bilíngue: a mesma frase no outro idioma, em itálico — o
+          {/* Eco bilíngue: a mesma frase no outro idioma, em itálico, o
               mesmo gesto que já existia aqui antes da divisão em duas rotas. */}
           <p
             style={{
@@ -71,6 +71,18 @@ export default function LabelsView({ lang }: { lang: Lang }) {
             }}
           >
             {t.hero.echo}
+          </p>
+          <p
+            style={{
+              fontFamily: 'var(--tbf-font-family-body)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)',
+              maxWidth: '55ch',
+              marginTop: 'var(--tbf-space-8)',
+            }}
+          >
+            {t.hero.intro}
           </p>
         </div>
       </header>
@@ -153,22 +165,21 @@ export default function LabelsView({ lang }: { lang: Lang }) {
                         marginBottom: 'var(--tbf-space-3)',
                       }}
                     >
-                      {label.tag}
+                      {label.index} · {label.territory}
                     </p>
                     <h2
                       id={`label-${label.tag.replace(/\./g, '')}`}
                       style={{
                         fontFamily: 'var(--tbf-font-family-display)',
-                        fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                        fontSize: 'clamp(1.75rem, 6vw, 3rem)',
                         fontWeight: 800,
                         lineHeight: 1.0,
                         letterSpacing: '-0.025em',
                         color: 'var(--tbf-text-primary)',
                         marginBottom: 'var(--tbf-space-2)',
-                        textTransform: 'uppercase',
                       }}
                     >
-                      {label.name}
+                      {label.line}
                     </h2>
                     <p
                       style={{
@@ -180,56 +191,32 @@ export default function LabelsView({ lang }: { lang: Lang }) {
                         marginBottom: 'var(--tbf-space-6)',
                       }}
                     >
-                      {label.subtitle}
+                      <strong style={{ fontWeight: 800 }}>{label.tag}</strong> · {label.name}
                     </p>
-                    <dl
+                    <p
                       style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 'var(--tbf-space-4)',
+                        fontFamily: 'var(--tbf-font-family-ui)',
+                        fontSize: 'var(--tbf-type-micro-size)',
+                        letterSpacing: 'var(--tbf-type-micro-ls)',
+                        color: 'var(--tbf-text-primary)',
+                        textTransform: 'uppercase',
+                        marginBottom: 'var(--tbf-space-4)',
+                      }}
+                    >
+                      {label.keywords}
+                    </p>
+                    <p
+                      style={{
+                        fontFamily: 'var(--tbf-font-family-body)',
+                        fontSize: 'var(--tbf-type-body-size-sm)',
+                        lineHeight: 'var(--tbf-type-body-lh)',
+                        color: 'var(--tbf-text-secondary)',
+                        maxWidth: '55ch',
                         marginBottom: 'var(--tbf-space-10)',
                       }}
                     >
-                      {[
-                        { label: t.pointLabels.category, value: label.category },
-                        { label: t.pointLabels.purpose, value: label.purpose },
-                        { label: t.pointLabels.forWho, value: label.forWho },
-                        { label: t.pointLabels.deliverables, value: label.deliverables },
-                      ].map((p) => (
-                        <div
-                          key={p.label}
-                          style={{
-                            display: 'grid',
-                            gridTemplateColumns: '100px 1fr',
-                            gap: 'var(--tbf-space-5)',
-                            alignItems: 'baseline',
-                            paddingBottom: 'var(--tbf-space-3)',
-                          }}
-                        >
-                          <dt
-                            style={{
-                              fontFamily: 'var(--tbf-font-family-ui)',
-                              fontSize: 'var(--tbf-type-micro-size)',
-                              letterSpacing: 'var(--tbf-type-micro-ls)',
-                              color: 'var(--tbf-text-tertiary)',
-                              textTransform: 'uppercase',
-                            }}
-                          >
-                            {p.label}
-                          </dt>
-                          <dd
-                            style={{
-                              fontFamily: 'var(--tbf-font-family-body)',
-                              fontSize: 'clamp(0.8rem, 2.2vw, 0.95rem)',
-                              lineHeight: 1.55,
-                              color: 'var(--tbf-text-secondary)',
-                            }}
-                          >
-                            {p.value}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
+                      {label.note}
+                    </p>
 
                     <Link href={path(label.href)} className="btn btn--secondary">
                       {label.cta}
@@ -240,6 +227,54 @@ export default function LabelsView({ lang }: { lang: Lang }) {
             ))}
 
           </div>
+        </div>
+      </section>
+
+      {/* ─── COMO NASCE UMA LABEL ──────────────────────────────────────── */}
+      <section
+        aria-labelledby="label-born"
+        style={{
+          paddingInline: 'var(--tbf-grid-margin-sm)',
+          paddingBlock: 'var(--tbf-space-12)',
+        }}
+      >
+        <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
+          <h2
+            id="label-born"
+            style={{
+              fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              letterSpacing: 'var(--tbf-type-h2-ls)',
+              color: 'var(--tbf-text-primary)',
+              marginBottom: 'var(--tbf-space-4)',
+            }}
+          >
+            {t.born.heading}
+          </h2>
+          <p
+            style={{
+              fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)',
+              marginBottom: 'var(--tbf-space-4)',
+            }}
+          >
+            {t.born.body}
+          </p>
+          <p
+            style={{
+              fontFamily: 'var(--tbf-type-h2-family)',
+              fontSize: 'var(--tbf-type-h2-size-sm)',
+              fontWeight: 'var(--tbf-type-h2-weight)',
+              lineHeight: 'var(--tbf-type-h2-lh)',
+              color: 'var(--tbf-accent)',
+            }}
+          >
+            {t.born.verdict}
+          </p>
         </div>
       </section>
 
@@ -261,8 +296,21 @@ export default function LabelsView({ lang }: { lang: Lang }) {
             alignItems: 'center',
           }}
         >
+          <p
+            style={{
+              flexBasis: '100%',
+              fontFamily: 'var(--tbf-type-body-family)',
+              fontSize: 'var(--tbf-type-body-size-sm)',
+              lineHeight: 'var(--tbf-type-body-lh)',
+              color: 'var(--tbf-text-secondary)',
+              maxWidth: '55ch',
+              marginBottom: 'var(--tbf-space-4)',
+            }}
+          >
+            {t.closing.line}
+          </p>
           <Link href={path('/collective')} className="btn btn--primary">
-            {t.closing.casinoCta}
+            {t.closing.collectiveCta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
           <Link href={path('/pitch/v1')} className="btn btn--secondary">
