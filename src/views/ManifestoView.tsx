@@ -1,118 +1,65 @@
 // =============================================================================
-// /manifesto — O MANIFESTO FUNDADOR
-// Texto estático · Scrollytelling via CSS animation-timeline
+// /manifesto: O MANIFESTO FUNDADOR
+// Corpo no dicionário · Coluna de leitura · Reveal via CSS animation-timeline
 // CTAs APENAS após texto completo (regra sagrada)
 // Zero sidebar · Zero distração
 // =============================================================================
 
+import type { CSSProperties } from 'react'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { manifesto } from '@/content/i18n/pages/manifesto'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
-// ─── Fragmentos do Manifesto ──────────────────────────────────────────────────
+// ─── Estrofes: ritmo denso, uma voz por tom ───────────────────────────────────
 
-const FRAGMENTS_PT = [
-  {
-    key: 'f01',
-    text: 'O site da .THE BRAZILIAN FACTORY. não é um website.',
-    emphasis: true,
-  },
-  {
-    key: 'f02',
-    text: 'É uma sede digital de uma infraestrutura cultural. Um ponto de gravidade. Um sistema de prestígio operando como publicação, manifesto, plataforma de autoridade e ponto de encontro para agentes criativos que já sabem quem são, e estão procurando onde pertencer.',
-    emphasis: false,
-  },
-  {
-    key: 'f03',
-    text: 'A gente não copia Paris, imprime por cima.',
-    emphasis: true,
-  },
-  {
-    key: 'f04',
-    text: 'A diferença é que a TBF carrega brasilidade não-literal: não é tropical decorativo. É energia, contraste, excesso e sensualidade crua. É o Manifesto Antropofágico do Oswald de Andrade interpretado pela geração Z e codificado em produto digital.',
-    emphasis: false,
-  },
-  {
-    key: 'f05',
-    text: 'Fala com quem já sabe. Não explica. Nunca.',
-    emphasis: true,
-  },
-  {
-    key: 'f06',
-    text: 'O que é "projetos" vira games, simulations e rituals. O que é "portfólio" vira track record of presence. O que é "contato" vira acesso. Onde uma empresa diria "clientes", a TBF diz players.',
-    emphasis: false,
-  },
-  {
-    key: 'f07',
-    text: 'Mais silêncio que explicação. O espaço em branco fala.',
-    emphasis: true,
-  },
-  {
-    key: 'f08',
-    text: 'AESTHETIKA (n.): A coded system of perception. The invisible syntax of presence, form and resonance. A field where frequency becomes identity, and beauty is a consequence, not the goal.',
-    emphasis: false,
-    isAesthetika: true,
-  },
-  {
-    key: 'f09',
-    text: 'Presence Is The Currency.',
-    emphasis: true,
-  },
-  {
-    key: 'f10',
-    text: 'Quando alguém chegar em thebrfactory.com e sentir que está entrando em algum lugar, não apenas navegando, o trabalho estará feito.',
-    emphasis: false,
-  },
-  {
-    key: 'f11',
-    isClimax: true,
-    text: 'TÊBÊÉFHI',
-    emphasis: true,
-  },
-]
+const BODY: CSSProperties = {
+  fontFamily: 'var(--tbf-type-body-family)',
+  fontSize: 'var(--tbf-type-body-size-sm)',
+  lineHeight: 'var(--tbf-type-body-lh)',
+  color: 'var(--tbf-text-secondary)',
+  marginBottom: 'var(--tbf-space-8)',
+}
 
-const FRAGMENTS_EN = [
-  {
-    key: 'en01',
-    text: 'The .THE BRAZILIAN FACTORY. website is not a website.',
-    emphasis: true,
+const H2: CSSProperties = {
+  fontFamily: 'var(--tbf-type-h2-family)',
+  fontSize: 'var(--tbf-type-h2-size-sm)',
+  fontWeight: 'var(--tbf-type-h2-weight)',
+  lineHeight: 'var(--tbf-type-h2-lh)',
+  letterSpacing: 'var(--tbf-type-h2-ls)',
+  color: 'var(--tbf-text-primary)',
+}
+
+const STANZA_STYLE: Record<'mark' | 'lead' | 'hit' | 'beat' | 'body' | 'sign', CSSProperties> = {
+  mark: {
+    fontFamily: 'var(--tbf-type-tag-family)',
+    fontSize: 'var(--tbf-type-tag-size)',
+    letterSpacing: 'var(--tbf-type-tag-ls)',
+    color: 'var(--tbf-text-tertiary)',
+    fontWeight: 'var(--tbf-font-weight-raw-800)',
+    marginBottom: 'var(--tbf-space-6)',
   },
-  {
-    key: 'en02',
-    text: 'It is the digital headquarters of a cultural infrastructure. A center of gravity. A prestige system operating as publication, manifesto, authority platform and meeting point for creative agents who already know who they are, and are looking for where to belong.',
-    emphasis: false,
+  lead: {
+    fontFamily: 'var(--tbf-type-display-lg-family)',
+    fontSize: 'var(--tbf-type-display-lg-size-sm)',
+    fontWeight: 'var(--tbf-font-weight-raw-800)',
+    lineHeight: 'var(--tbf-type-display-lg-lh-sm)',
+    letterSpacing: 'var(--tbf-type-display-lg-ls)',
+    color: 'var(--tbf-text-primary)',
+    marginBottom: 'var(--tbf-space-12)',
   },
-  {
-    key: 'en03',
-    text: "We don't copy Paris, we print on top.",
-    emphasis: true,
+  hit: { ...H2, marginTop: 'var(--tbf-space-8)', marginBottom: 'var(--tbf-space-8)' },
+  beat: { ...H2, color: 'var(--tbf-accent)', marginBottom: 'var(--tbf-space-8)' },
+  body: BODY,
+  sign: {
+    fontFamily: 'var(--tbf-type-tag-family)',
+    fontSize: 'var(--tbf-type-tag-size)',
+    letterSpacing: 'var(--tbf-type-tag-ls)',
+    color: 'var(--tbf-text-tertiary)',
+    textTransform: 'uppercase',
+    marginTop: 'var(--tbf-space-12)',
+    marginBottom: 'var(--tbf-space-12)',
   },
-  {
-    key: 'en04',
-    text: 'The difference is that TBF carries a non-literal Brazilian essence: not decorative tropicalism. It is energy, contrast, excess and raw sensuality. It is the Manifesto Antropofágico by Oswald de Andrade interpreted by Generation Z and coded into digital product.',
-    emphasis: false,
-  },
-  {
-    key: 'en05',
-    text: 'Speaks to those who already know. Never explains.',
-    emphasis: true,
-  },
-  {
-    key: 'en06',
-    text: "What is a 'project' becomes a game, simulation or ritual. What is a 'portfolio' becomes a track record of presence. Where a company would say 'clients', TBF says players.",
-    emphasis: false,
-  },
-  {
-    key: 'en07',
-    text: 'More silence than explanation. The white space speaks.',
-    emphasis: true,
-  },
-  {
-    key: 'en08',
-    text: 'Presence Is The Currency.',
-    emphasis: true,
-  },
-]
+}
 
 export default function ManifestoView({ lang }: { lang: Lang }) {
   const t = manifesto[lang]
@@ -128,12 +75,12 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
       <header
         style={{
           paddingInline: 'var(--tbf-grid-margin-sm)',
-          marginBottom: 'var(--tbf-space-32)',
+          marginBottom: 'var(--tbf-space-12)',
         }}
       >
         <div
           style={{
-            maxWidth: 'var(--tbf-grid-max-xl)',
+            maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)',
             marginInline: 'auto',
           }}
         >
@@ -147,7 +94,7 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
               marginBottom: 'var(--tbf-space-6)',
             }}
           >
-            .TBF. inc · Documento Fundador
+            {t.kicker}
           </p>
           <h1
             style={{
@@ -164,190 +111,30 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
         </div>
       </header>
 
-      {/* ─── CORPO PT — FRAGMENTOS ─────────────────────────────────────── */}
+      {/* ─── CORPO: estrofes do dicionário, coluna de leitura ─────────── */}
       <section
-        aria-label={t.bodyPtLabel}
-        style={{
-          paddingInline: 'var(--tbf-grid-margin-sm)',
-        }}
+        aria-label={t.bodyLabel}
+        style={{ paddingInline: 'var(--tbf-grid-margin-sm)' }}
       >
-        <div
-          style={{
-            maxWidth: 'var(--tbf-grid-max-xl)',
-            marginInline: 'auto',
-          }}
-        >
-          <div className="layout-d">
-            <div>
-              {FRAGMENTS_PT.map((frag) => {
-                if (frag.isClimax) {
-                  return (
-                    <p
-                      key={frag.key}
-                      className="manifesto-fragment"
-                      lang="pt-BR"
-                      style={{
-                        fontFamily: 'var(--tbf-type-display-lg-family)',
-                        fontSize: 'var(--tbf-type-display-lg-size-sm)',
-                        fontWeight: 'var(--tbf-font-weight-raw-800)',
-                        lineHeight: 'var(--tbf-type-display-lg-lh-sm)',
-                        letterSpacing: 'var(--tbf-type-display-lg-ls)',
-                        color: 'var(--tbf-accent)',
-                        marginBottom: 'var(--tbf-space-32)',
-                        marginTop: 'var(--tbf-space-32)',
-                      }}
-                    >
-                      {frag.text}
-                    </p>
-                  )
-                }
-
-                if (frag.isAesthetika) {
-                  return (
-                    <blockquote
-                      key={frag.key}
-                      className="manifesto-fragment"
-                      lang="en"
-                      style={{
-                        fontFamily: 'var(--tbf-type-body-family)',
-                        fontSize: 'var(--tbf-type-body-size-sm)',
-                        fontStyle: 'italic',
-                        lineHeight: 'var(--tbf-type-body-lh)',
-                        color: 'var(--tbf-text-secondary)',
-                        paddingLeft: 'var(--tbf-space-6)',
-                        marginBottom: 'var(--tbf-space-32)',
-                      }}
-                    >
-                      {frag.text}
-                    </blockquote>
-                  )
-                }
-
-                if (frag.emphasis) {
-                  return (
-                    <p
-                      key={frag.key}
-                      className="manifesto-fragment"
-                      lang="pt-BR"
-                      style={{
-                        fontFamily: 'var(--tbf-type-h2-family)',
-                        fontSize: 'var(--tbf-type-h2-size-sm)',
-                        fontWeight: 'var(--tbf-type-h2-weight)',
-                        lineHeight: 'var(--tbf-type-h2-lh)',
-                        letterSpacing: 'var(--tbf-type-h2-ls)',
-                        color: 'var(--tbf-text-primary)',
-                        marginBottom: 'var(--tbf-space-32)',
-                      }}
-                    >
-                      {frag.text}
-                    </p>
-                  )
-                }
-
-                return (
-                  <p
-                    key={frag.key}
-                    className="manifesto-fragment"
-                    lang="pt-BR"
-                    style={{
-                      fontFamily: 'var(--tbf-type-body-family)',
-                      fontSize: 'var(--tbf-type-body-size-sm)',
-                      lineHeight: 'var(--tbf-type-body-lh)',
-                      color: 'var(--tbf-text-secondary)',
-                      maxWidth: '60ch',
-                      marginBottom: 'var(--tbf-space-32)',
-                    }}
-                  >
-                    {frag.text}
-                  </p>
-                )
-              })}
-
-              {/* Separador PT / EN */}
-              <div
-                className="manifesto-fragment"
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--tbf-space-4)',
-                  marginBottom: 'var(--tbf-space-32)',
-                }}
-                aria-hidden="true"
-              >
-                <span
-                  style={{
-                    fontFamily: 'var(--tbf-type-micro-family)',
-                    fontSize: 'var(--tbf-type-micro-size)',
-                    letterSpacing: 'var(--tbf-type-micro-ls)',
-                    color: 'var(--tbf-text-tertiary)',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  pt · en
+        <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
+          {t.body.map((stanza, i) => (
+            <p
+              key={i}
+              className="manifesto-fragment"
+              lang={lang === 'pt' ? 'pt-BR' : 'en'}
+              style={STANZA_STYLE[stanza.tone]}
+            >
+              {stanza.lines.map((line, j) => (
+                <span key={j} style={{ display: 'block' }}>
+                  {line}
                 </span>
-              </div>
-
-              {/* Versão EN */}
-              {FRAGMENTS_EN.map((frag) => {
-                if (frag.emphasis) {
-                  return (
-                    <p
-                      key={frag.key}
-                      className="manifesto-fragment"
-                      lang="en"
-                      style={{
-                        fontFamily: 'var(--tbf-type-h2-family)',
-                        fontSize: 'var(--tbf-type-h2-size-sm)',
-                        fontWeight: 'var(--tbf-type-h2-weight)',
-                        lineHeight: 'var(--tbf-type-h2-lh)',
-                        letterSpacing: 'var(--tbf-type-h2-ls)',
-                        color: 'var(--tbf-text-primary)',
-                        marginBottom: 'var(--tbf-space-32)',
-                      }}
-                    >
-                      {frag.text}
-                    </p>
-                  )
-                }
-                return (
-                  <p
-                    key={frag.key}
-                    className="manifesto-fragment"
-                    lang="en"
-                    style={{
-                      fontFamily: 'var(--tbf-type-body-family)',
-                      fontSize: 'var(--tbf-type-body-size-sm)',
-                      lineHeight: 'var(--tbf-type-body-lh)',
-                      color: 'var(--tbf-text-secondary)',
-                      maxWidth: '60ch',
-                      marginBottom: 'var(--tbf-space-32)',
-                    }}
-                  >
-                    {frag.text}
-                  </p>
-                )
-              })}
-
-              {/* Assinatura */}
-              <p
-                className="manifesto-fragment"
-                style={{
-                  fontFamily: 'var(--tbf-type-tag-family)',
-                  fontSize: 'var(--tbf-type-tag-size)',
-                  letterSpacing: 'var(--tbf-type-tag-ls)',
-                  color: 'var(--tbf-text-tertiary)',
-                  textTransform: 'uppercase',
-                  marginBottom: 'var(--tbf-space-32)',
-                }}
-              >
-                .TBF. inc · São Paulo, 2025
-              </p>
-            </div>
-          </div>
+              ))}
+            </p>
+          ))}
         </div>
       </section>
 
-      {/* ─── CTAs — SÓ APÓS TEXTO COMPLETO (regra sagrada) ─────────────── */}
+      {/* ─── CTAs : SÓ APÓS TEXTO COMPLETO (regra sagrada) ─────────────── */}
       <section
         aria-label={t.nextStepsLabel}
         style={{
@@ -357,21 +144,21 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
       >
         <div
           style={{
-            maxWidth: 'var(--tbf-grid-max-xl)',
+            maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)',
             marginInline: 'auto',
             display: 'flex',
             gap: 'var(--tbf-space-4)',
             flexWrap: 'wrap',
           }}
         >
-          {/* CTA 1 primário: Enter the Editorial */}
+          {/* CTA 1 primário: Entrar no Zine */}
           <Link href={path('/zine')} className="btn btn--primary">
             {t.ctaEditorial}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
 
-          {/* CTA 2: Apply for Access */}
-          <Link href={path('/collective')} className="btn btn--ghost">
+          {/* CTA 2: Open a channel */}
+          <Link href={path('/access')} className="btn btn--ghost">
             {t.ctaAccess}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>
