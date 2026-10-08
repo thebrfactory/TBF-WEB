@@ -12,11 +12,12 @@ import { useLang } from '@/lib/LangProvider'
 import { access } from '@/content/i18n/pages/access'
 import { localizedPath } from '@/lib/i18n'
 
+// `join` não abre este formulário: leva ao Collective (href).
 interface EntryPoint {
-  value: ContactIntent
-  tag: string
+  value: ContactIntent | 'join'
   name: string
   desc: string
+  href?: string
 }
 
 interface AccessFormProps {
@@ -36,6 +37,8 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
     message: '',
     handle: '',
   })
+  const [why, setWhy] = useState('')
+  const [bring, setBring] = useState('')
   const [state, setState] = useState<ContactFormState>({ status: 'idle' })
   const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({})
 
@@ -69,7 +72,19 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
       const res = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, intent }),
+        // O campo `intent` carrega a intenção escolhida (build, create, publish,
+        // collaborate). Os dois campos novos entram no corpo da mensagem.
+        body: JSON.stringify({
+          ...form,
+          message: [
+            form.message,
+            why.trim() ? `\nPor que a .TBF.: ${why.trim()}` : '',
+            bring.trim() ? `\nO que traz para a mesa: ${bring.trim()}` : '',
+          ]
+            .filter(Boolean)
+            .join('\n'),
+          intent,
+        }),
       })
 
       if (res.ok) {
@@ -151,36 +166,46 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
           {t.entryLegend}
         </legend>
 
+        <p
+          style={{
+            fontFamily: 'var(--tbf-type-body-family)',
+            fontSize: 'var(--tbf-type-body-size-sm)',
+            lineHeight: 'var(--tbf-type-body-lh)',
+            color: 'var(--tbf-text-secondary)',
+            marginBottom: 'var(--tbf-space-4)',
+          }}
+        >
+          {t.helper}
+        </p>
+
         <ul className="intent-group" role="list">
           {entryPoints.map((ep) => (
             <li key={ep.value}>
-              <label className="intent-option">
-                <input
-                  type="radio"
-                  name="intent"
-                  value={ep.value}
-                  checked={intent === ep.value}
-                  onChange={() => setIntent(ep.value)}
-                  aria-label={`${ep.tag}, ${ep.name}`}
-                />
-                <span className="intent-option__indicator" aria-hidden="true" />
-                <span className="intent-option__label">
-                  <span className="intent-option__name">
-                    <span
-                      style={{
-                        fontFamily: 'var(--tbf-type-tag-family)',
-                        letterSpacing: 'var(--tbf-type-tag-ls)',
-                        textTransform: 'uppercase',
-                        marginRight: 'var(--tbf-space-2)',
-                      }}
-                    >
-                      {ep.tag}
-                    </span>
-                    {ep.name}
+              {ep.value === 'join' ? (
+                <Link href={localizedPath(ep.href ?? '/collective', lang)} className="intent-option">
+                  <span className="intent-option__indicator" aria-hidden="true" />
+                  <span className="intent-option__label">
+                    <span className="intent-option__name">{ep.name}</span>
+                    <span className="intent-option__desc">{ep.desc}</span>
                   </span>
-                  <span className="intent-option__desc">{ep.desc}</span>
-                </span>
-              </label>
+                </Link>
+              ) : (
+                <label className="intent-option">
+                  <input
+                    type="radio"
+                    name="intent"
+                    value={ep.value}
+                    checked={intent === ep.value}
+                    onChange={() => setIntent(ep.value as ContactIntent)}
+                    aria-label={ep.name}
+                  />
+                  <span className="intent-option__indicator" aria-hidden="true" />
+                  <span className="intent-option__label">
+                    <span className="intent-option__name">{ep.name}</span>
+                    <span className="intent-option__desc">{ep.desc}</span>
+                  </span>
+                </label>
+              )}
             </li>
           ))}
         </ul>
@@ -312,6 +337,34 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
               {errors.message}
             </span>
           )}
+        </div>
+
+        {/* Por que a .TBF. */}
+        <div className="field">
+          <label className="field__label" htmlFor={`${formId}-why`}>
+            {t.whyLabel}
+          </label>
+          <textarea
+            id={`${formId}-why`}
+            className="field__input"
+            value={why}
+            onChange={(e) => setWhy(e.target.value)}
+            rows={3}
+          />
+        </div>
+
+        {/* O que traz para a mesa */}
+        <div className="field">
+          <label className="field__label" htmlFor={`${formId}-bring`}>
+            {t.bringLabel}
+          </label>
+          <textarea
+            id={`${formId}-bring`}
+            className="field__input"
+            value={bring}
+            onChange={(e) => setBring(e.target.value)}
+            rows={3}
+          />
         </div>
 
         {/* Erro global */}

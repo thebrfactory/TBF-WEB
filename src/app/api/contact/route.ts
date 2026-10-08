@@ -9,6 +9,10 @@ import type { ContactFormData } from '@/types'
 
 // Intent labels para log / email subject
 const INTENT_LABELS: Record<string, string> = {
+  build: 'BUILD',
+  create: 'CREATE',
+  publish: 'PUBLISH',
+  collaborate: 'COLLABORATE',
   tbf: '.TBF. Editorial',
   melfiore: '.MELFIORE.',
   ruc: '.RUC. Runway Untd Collective',

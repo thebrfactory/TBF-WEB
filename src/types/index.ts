@@ -260,7 +260,17 @@ export interface NavigationProps {
 
 // ─── Form Types ───────────────────────────────────────────────────────────────
 
-export type ContactIntent = 'tbf' | 'melfiore' | 'ruc' | 'tgf'
+// Intenções atuais: build, create, publish, collaborate. Os quatro valores por label
+// seguem válidos para links antigos (ex.: /access?intent=tgf).
+export type ContactIntent =
+  | 'build'
+  | 'create'
+  | 'publish'
+  | 'collaborate'
+  | 'tbf'
+  | 'melfiore'
+  | 'ruc'
+  | 'tgf'
 
 export interface ContactFormData {
   name: string
