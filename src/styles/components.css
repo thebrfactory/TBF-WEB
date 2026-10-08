@@ -182,13 +182,13 @@
      clique dele (40px com padding): a pílula é preenchida e com borda, então
      pesa mais que um ícone vazado do mesmo tamanho. A largura fica onde está —
      estreitar espremeria os rótulos de 10px até a ilegibilidade. */
-  --tbf-lang-switch-h: 28px;
+  --tbf-lang-switch-h: 32px;
 }
 
 @media (min-width: 1024px) {
   :root {
     --tbf-lang-switch-w: 88px;
-    --tbf-lang-switch-h: 30px;
+    --tbf-lang-switch-h: 34px;
   }
 }
 
@@ -217,11 +217,19 @@
   height: var(--tbf-lang-switch-h);
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 0;
   padding: 0;
   background: none;
-  border: none;
+  /* CONTORNO FINO (08/10/2026): 1px, tinta do texto a 55% de opacidade. Envolve
+     PT e EN e faz os dois lerem como UM controle. A opacidade evita o branco
+     duro contra o fundo escuro, sem perder legibilidade. */
+  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 55%, transparent);
   border-radius: var(--tbf-radius-full);
+  transition: border-color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
+}
+
+.lang-switch:hover {
+  border-color: var(--tbf-text-primary);
 }
 
 @media (min-width: 1280px) {
@@ -237,23 +245,27 @@
    A conta perdeu os 3px de padding que o continente tinha: agora ela ocupa
    metade cheia do controle, menos metade do vao de 2px. */
 .lang-switch__thumb {
+  /* UM CIRCULO perfeito (largura = altura, raio 50%), nao pilula. O diametro e a
+     altura interna menos 2px de folga em cima e embaixo; ele nasce centrado no
+     rotulo da esquerda (25% da largura interna) e viaja ate o da direita. */
+  --lang-thumb-d: calc(var(--tbf-lang-switch-h) - 2px - 4px);
   position: absolute;
-  top: 0;
-  left: 0;
+  top: calc(50% - var(--lang-thumb-d) / 2);
+  left: calc(25% - var(--lang-thumb-d) / 2);
   z-index: 0;
-  width: calc((100% - 2px) / 2);
-  height: 100%;
+  width: var(--lang-thumb-d);
+  height: var(--lang-thumb-d);
   background: var(--tbf-text-primary);
-  border-radius: var(--tbf-radius-full);
+  border-radius: 50%;
   transform: translateX(0);
   /* Desaceleracao longa da casa: sai rapido e CHEGA devagar, que e o que faz o
-     movimento parecer peso e nao animacao. Acima da micro (150ms) de proposito,
-     porque o percurso e longo e a 150ms vira teleporte. */
+     movimento parecer peso e nao animacao. */
   transition: transform var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
+/* Percurso = metade da largura interna (largura total menos as 2 bordas de 1px). */
 .lang-switch[data-lang='en'] .lang-switch__thumb {
-  transform: translateX(calc(100% + 2px));
+  transform: translateX(calc((var(--tbf-lang-switch-w) - 2px) / 2));
 }
 
 .lang-switch__btn {
@@ -757,8 +769,57 @@
 /* Topo do rodapé — apenas o selo da marca (.TBF. SÃO PAULO). Alinhado à
    esquerda em qualquer viewport. */
 .footer__grid--top {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-10);
   text-align: left;
+}
+
+/* Fechamento dentro do rodape: mobile empilhado e a esquerda, sob o selo. */
+.footer__closing {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--tbf-space-4);
+}
+
+.footer__closing-eyebrow {
+  margin: 0;
+  font-family: var(--tbf-font-family-ui);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  color: var(--tbf-text-tertiary);
+  text-transform: uppercase;
+}
+
+.footer__closing-headline {
+  margin: 0;
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(1.375rem, 6vw, 1.75rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--tbf-text-primary);
+}
+
+/* Desktop: selo a esquerda, fechamento a direita, topo alinhado. A margem
+   direita e a lateral do rodape, a mesma que o selo tem a esquerda. */
+@media (min-width: 768px) {
+  .footer__grid--top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer__closing {
+    align-items: flex-end;
+    text-align: right;
+    max-width: 24rem;
+  }
+
+  .footer__closing-headline {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+  }
 }
 
 /* Nav section: pages + company side-by-side, legal full-width below */
