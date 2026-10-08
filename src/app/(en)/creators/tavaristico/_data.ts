@@ -30,6 +30,8 @@ export interface Work {
   summary: string
   /** narrativa do case — página de obra */
   description?: string
+  /** versão EN da narrativa; sem ela, a página EN mostra `description` */
+  descriptionEn?: string
   /** entra no bloco Selected Work (alta densidade) do index */
   selected?: boolean
   media: { cover: string; gallery?: string[] }
@@ -84,13 +86,15 @@ export const WORKS: Work[] = [
     client: 'São Paulo Fashion Week',
     summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
     description:
-      'Direção de arte para a São Paulo Fashion Week. Construção de um universo visual que traduz a passarela em narrativa de marca. (Mesmo corpo de trabalho de Runway Untd Collective.)',
+      'Runway United Collective: um coletivo de profissionais unidos para viabilizar filmes de moda de forma autoral e independente. Ato I, São Paulo Fashion Week N58, 16 de outubro de 2024, credenciado e representado por The Paradise. Ato II, Casa de Criadores 55, de 5 a 10 de dezembro de 2024. Ato III, Brasil Eco Fashion Week, de 13 a 15 de dezembro de 2024.',
+    descriptionEn:
+      'Runway United Collective: a collective of professionals united to make fashion films possible in an authorial and independent way. Act I, São Paulo Fashion Week N58, October 16, 2024, accredited and represented by The Paradise. Act II, Casa de Criadores 55, December 5 to 10, 2024. Act III, Brasil Eco Fashion Week, December 13 to 15, 2024.',
     selected: true,
     media: {
       cover: `${base}/spfw-the-paradise/cover.webp`,
       gallery: [`${base}/spfw-the-paradise/g1.webp`, `${base}/spfw-the-paradise/g2.webp`, `${base}/spfw-the-paradise/g3.webp`],
     },
-    provisional: ['role', 'summary', 'description'],
+    provisional: ['role', 'summary'],
   },
   {
     slug: 'capsula-brasilidade',
@@ -104,14 +108,22 @@ export const WORKS: Work[] = [
     client: 'BOAH',
     summary: 'Uma cápsula que traduz brasilidade em conceito, produto e identidade.',
     description:
-      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade para a BOAH: do folder ao produto, uma leitura contemporânea de repertório brasileiro. Projeto autoral seu, do período em que trabalhava na marca.',
+      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade para a BOAH: do folder ao produto, uma leitura contemporânea de repertório brasileiro. Projeto autoral, do período na marca.',
+    descriptionEn:
+      'Concept, packaging and identity system for a Brazilianness capsule for BOAH: from the folder to the product, a contemporary reading of Brazilian repertoire. An authorial project from the period at the brand.',
     media: {
-      cover: `${base}/capsula-brasilidade/cover.webp`,
+      cover: `${base}/behance/capsula-brasilidade-boah/01.webp`,
       gallery: [
-        `${base}/capsula-brasilidade/g1.webp`,
-        `${base}/capsula-brasilidade/g2.webp`,
-        `${base}/capsula-brasilidade/g3.webp`,
+        `${base}/behance/capsula-brasilidade-boah/02.gif`,
+        `${base}/behance/capsula-brasilidade-boah/03.webp`,
         `${base}/behance/capsula-brasilidade-boah/04.webp`,
+        `${base}/behance/capsula-brasilidade-boah/05.webp`,
+        `${base}/behance/capsula-brasilidade-boah/06.webp`,
+        `${base}/behance/capsula-brasilidade-boah/07.webp`,
+        `${base}/behance/capsula-brasilidade-boah/08.webp`,
+        `${base}/behance/capsula-brasilidade-boah/09.webp`,
+        `${base}/capsula-brasilidade/pp-bottle-1.webp`,
+        `${base}/capsula-brasilidade/pp-bottle-2.webp`,
         `${base}/behance/capsula-brasilidade-boah/10.webp`,
       ],
     },
@@ -141,11 +153,17 @@ export const WORKS: Work[] = [
     role: 'Art Director',
     client: 'Virtuosa',
     summary: 'Direção de arte e campanha de drop de moda.',
-    description: 'Direção de arte, styling e linguagem de campanha para o drop da Virtuosa.',
+    description:
+      'Direção de arte, styling e linguagem de campanha para o drop da Virtuosa.',
+    descriptionEn:
+      'Art direction, styling and campaign language for the Virtuosa drop.',
     selected: true,
     media: {
-      cover: `${base}/virtuosa/cover.webp`,
-      gallery: [`${base}/virtuosa/g1.webp`, `${base}/virtuosa/g2.webp`],
+      cover: `${base}/virtuosa/pp-01.webp`,
+      gallery: [
+        `${base}/virtuosa/pp-02.webp`,
+        `${base}/virtuosa/pp-drop2.gif`,
+      ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
   },
@@ -157,13 +175,17 @@ export const WORKS: Work[] = [
     role: 'Art Director',
     client: 'Blackboah',
     summary: 'Direção de arte e identidade visual.',
-    description: 'Construção de linguagem visual e direção de arte para Blackboah.',
+    description:
+      'Construção de linguagem visual e direção de arte para Blackboah.',
+    descriptionEn:
+      'Visual language and art direction for Blackboah.',
     media: {
-      cover: `${base}/blackboah/cover.webp`,
+      cover: `${base}/behance/black-boah/01.webp`,
       gallery: [
-        `${base}/blackboah/g1.webp`,
-        `${base}/blackboah/g2.webp`,
-        `${base}/blackboah/g3.webp`,
+        `${base}/behance/black-boah/02.gif`,
+        `${base}/behance/black-boah/03.webp`,
+        `${base}/behance/black-boah/04.webp`,
+        `${base}/behance/black-boah/05.gif`,
         `${base}/behance/black-boah/06.webp`,
       ],
     },
@@ -179,18 +201,22 @@ export const WORKS: Work[] = [
     year: '2023',
     summary: 'A magia do Farol da Barra traduzida em sistema visual.',
     description:
-      'Direção de arte e sistema gráfico de Arquiloucura. Uma celebração visual da magia do Farol da Barra, em Salvador.',
+      'Direção de arte e sistema gráfico do Bloco Arquiloucura para o Carnaval de Salvador de 2023, com o tema "A Magia do Farol da Barra". Camisa, caneca e peças para redes sociais. O bloco foi fundado em 2011 por estudantes de arquitetura da UFBA e desfila no circuito Sérgio Bezerra, na Barra.',
+    descriptionEn:
+      'Art direction and graphic system for Bloco Arquiloucura at the 2023 Salvador Carnival, themed "The Magic of Farol da Barra". Shirt, mug and social media pieces. The bloco was founded in 2011 by architecture students at UFBA and parades on the Sérgio Bezerra circuit, in Barra.',
     media: {
-      cover: `${base}/arquiloucura/cover.webp`,
+      cover: `${base}/behance/arquiloucura/01.webp`,
       gallery: [
-        `${base}/arquiloucura/g1.webp`,
-        `${base}/arquiloucura/g2.webp`,
-        `${base}/arquiloucura/g3.webp`,
+        `${base}/behance/arquiloucura/02.webp`,
+        `${base}/behance/arquiloucura/03.webp`,
+        `${base}/behance/arquiloucura/04.webp`,
+        `${base}/behance/arquiloucura/05.gif`,
         `${base}/behance/arquiloucura/06.webp`,
         `${base}/behance/arquiloucura/07.webp`,
+        `${base}/behance/arquiloucura/08.webp`,
       ],
     },
-    provisional: ['role', 'client', 'summary', 'description'],
+    provisional: ['role', 'client', 'summary'],
   },
   {
     slug: 'crush-coins',
@@ -200,20 +226,22 @@ export const WORKS: Work[] = [
     role: 'Art Director',
     client: 'Crush Coins',
     summary: 'Direção de arte e identidade: cultura pop e meme em linguagem visual.',
-    description: 'Direção de arte de Crush Coins: colisão de cultura pop, retrato e tipografia.',
+    description:
+      'O cliente precisava de uma estratégia de bonificação em consumação para aniversariantes e ocasiões específicas. O resultado é a CrushCoin, moeda própria do Crush Hall: notas com personalidades do empoderamento feminino, cores vivas e traços das notas do real.',
+    descriptionEn:
+      'The client needed a strategy for consumption bonuses for birthdays and other specific occasions. The result is the CrushCoin, the own currency of Crush Hall: notes featuring figures of female empowerment, vivid colors and traits of the Brazilian real banknotes.',
     media: {
-      // Cover trocado pelo original do Behance (16/09/2026): a versão
-      // screenshot-grade que aguardava fonte hi-res (`lowRes`) foi
-      // substituída, flag removida.
       cover: `${base}/behance/crush-coins/01.webp`,
       gallery: [
+        `${base}/behance/crush-coins/02.gif`,
         `${base}/behance/crush-coins/03.webp`,
         `${base}/behance/crush-coins/04.webp`,
         `${base}/behance/crush-coins/05.webp`,
         `${base}/behance/crush-coins/06.webp`,
+        `${base}/behance/crush-coins/07.webp`,
       ],
     },
-    provisional: ['role', 'client', 'summary', 'description'],
+    provisional: ['role', 'client', 'summary'],
   },
   {
     slug: 'charlotte',
@@ -223,18 +251,47 @@ export const WORKS: Work[] = [
     role: 'Art Director / Designer',
     client: 'Charlotte',
     summary: 'Identidade e logotipo: branding de assinatura.',
-    description: 'Branding e construção de logotipo para Charlotte.',
+    description:
+      'Branding e construção de logotipo para Charlotte.',
+    descriptionEn:
+      'Branding and logo construction for Charlotte.',
     media: {
-      // Mesma troca do Crush Coins: cover screenshot-grade sai, original do
-      // Behance entra, flag `lowRes` removida (16/09/2026).
       cover: `${base}/behance/charlotte/01.webp`,
       gallery: [
+        `${base}/behance/charlotte/02.webp`,
+        `${base}/behance/charlotte/03.webp`,
+        `${base}/behance/charlotte/04.gif`,
         `${base}/behance/charlotte/05.webp`,
+        `${base}/behance/charlotte/06.webp`,
+        `${base}/behance/charlotte/07.webp`,
         `${base}/behance/charlotte/08.webp`,
+        `${base}/behance/charlotte/09.webp`,
+        `${base}/behance/charlotte/10.webp`,
+        `${base}/behance/charlotte/11.webp`,
+        `${base}/behance/charlotte/12.webp`,
+        `${base}/behance/charlotte/13.webp`,
+        `${base}/behance/charlotte/14.webp`,
+        `${base}/behance/charlotte/15.webp`,
+        `${base}/behance/charlotte/16.webp`,
+        `${base}/behance/charlotte/17.webp`,
+        `${base}/behance/charlotte/18.webp`,
+        `${base}/behance/charlotte/19.webp`,
+        `${base}/behance/charlotte/20.webp`,
+        `${base}/behance/charlotte/21.webp`,
+        `${base}/behance/charlotte/22.webp`,
+        `${base}/behance/charlotte/23.webp`,
+        `${base}/behance/charlotte/24.webp`,
+        `${base}/behance/charlotte/25.webp`,
         `${base}/behance/charlotte/26.webp`,
+        `${base}/behance/charlotte/27.webp`,
+        `${base}/behance/charlotte/28.webp`,
+        `${base}/behance/charlotte/29.webp`,
+        `${base}/behance/charlotte/30.webp`,
         `${base}/behance/charlotte/31.webp`,
+        `${base}/behance/charlotte/32.webp`,
         `${base}/behance/charlotte/33.webp`,
         `${base}/behance/charlotte/34.webp`,
+        `${base}/behance/charlotte/35.webp`,
       ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
@@ -249,12 +306,47 @@ export const WORKS: Work[] = [
     summary: 'Branded content e campanhas sazonais para a BOAH.',
     description:
       'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
+    descriptionEn:
+      'Art direction of branded content for BOAH: seasonal campaigns, product still and lifestyle content for social media.',
     media: {
       cover: `${base}/behance/branded-content-boah/01.webp`,
       gallery: [
         `${base}/behance/branded-content-boah/02.webp`,
+        `${base}/behance/branded-content-boah/03.webp`,
+        `${base}/behance/branded-content-boah/04.webp`,
+        `${base}/behance/branded-content-boah/05.webp`,
+        `${base}/behance/branded-content-boah/06.webp`,
+        `${base}/behance/branded-content-boah/07.gif`,
+        `${base}/behance/branded-content-boah/08.webp`,
+        `${base}/behance/branded-content-boah/09.webp`,
+        `${base}/behance/branded-content-boah/10.webp`,
+        `${base}/behance/branded-content-boah/11.webp`,
+        `${base}/behance/branded-content-boah/12.webp`,
+        `${base}/behance/branded-content-boah/13.webp`,
+        `${base}/behance/branded-content-boah/14.webp`,
+        `${base}/behance/branded-content-boah/15.webp`,
+        `${base}/behance/branded-content-boah/16.webp`,
+        `${base}/behance/branded-content-boah/17.webp`,
+        `${base}/behance/branded-content-boah/18.webp`,
+        `${base}/behance/branded-content-boah/19.webp`,
+        `${base}/behance/branded-content-boah/20.webp`,
+        `${base}/behance/branded-content-boah/21.webp`,
+        `${base}/behance/branded-content-boah/22.webp`,
+        `${base}/behance/branded-content-boah/23.webp`,
         `${base}/behance/branded-content-boah/24.webp`,
+        `${base}/behance/branded-content-boah/25.webp`,
+        `${base}/behance/branded-content-boah/26.webp`,
+        `${base}/behance/branded-content-boah/27.webp`,
+        `${base}/behance/branded-content-boah/28.webp`,
+        `${base}/behance/branded-content-boah/29.webp`,
         `${base}/behance/branded-content-boah/30.webp`,
+        `${base}/behance/branded-content-boah/31.webp`,
+        `${base}/behance/branded-content-boah/32.webp`,
+        `${base}/behance/branded-content-boah/33.webp`,
+        `${base}/behance/branded-content-boah/34.webp`,
+        `${base}/behance/branded-content-boah/35.webp`,
+        `${base}/behance/branded-content-boah/36.webp`,
+        `${base}/behance/branded-content-boah/37.webp`,
       ],
     },
   },
@@ -267,12 +359,18 @@ export const WORKS: Work[] = [
     client: 'Meats Espeteria',
     summary: 'Identidade e cobertura do baile de máscaras da Meats Espeteria.',
     description:
-      'Identidade gráfica, peças de divulgação e cobertura do ArquiMeats, baile de máscaras da Meats Espeteria.',
+      'Identidade e peças do ArquiMeats, baile de máscaras da Meats Espeteria no circuito Sérgio Bezerra, em Salvador. O desafio foi criar algo que lembrasse um bloquinho de rua tradicional, estilo marchinha: tipografia de tom retrô e o vermelho como cor de energia e ação.',
+    descriptionEn:
+      'Identity and pieces for ArquiMeats, the masquerade ball of Meats Espeteria on the Sérgio Bezerra circuit, in Salvador. The challenge was to create something that recalled a traditional street bloco, marchinha style: retro-toned typography and red as the color of energy and action.',
     media: {
       cover: `${base}/behance/arquimeats-o-baile-de-mascaras/01.webp`,
       gallery: [
+        `${base}/behance/arquimeats-o-baile-de-mascaras/02.webp`,
         `${base}/behance/arquimeats-o-baile-de-mascaras/03.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/04.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/05.gif`,
         `${base}/behance/arquimeats-o-baile-de-mascaras/06.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/07.webp`,
       ],
     },
   },
@@ -284,10 +382,20 @@ export const WORKS: Work[] = [
     role: 'Community Manager',
     client: 'Meats Espeteria',
     summary: 'Peças promocionais para redes sociais da Meats Espeteria.',
-    description: 'Peças gráficas e stories promocionais para o Instagram da Meats Espeteria.',
+    description:
+      'Peças gráficas e stories promocionais para o Instagram da Meats Espeteria.',
+    descriptionEn:
+      'Graphic pieces and promotional stories for the Instagram of Meats Espeteria.',
     media: {
       cover: `${base}/behance/promomeats/01.webp`,
-      gallery: [`${base}/behance/promomeats/04.webp`, `${base}/behance/promomeats/06.webp`],
+      gallery: [
+        `${base}/behance/promomeats/02.webp`,
+        `${base}/behance/promomeats/03.webp`,
+        `${base}/behance/promomeats/04.webp`,
+        `${base}/behance/promomeats/05.webp`,
+        `${base}/behance/promomeats/06.webp`,
+        `${base}/behance/promomeats/07.webp`,
+      ],
     },
   },
   {
@@ -300,9 +408,21 @@ export const WORKS: Work[] = [
     summary: 'Conteúdo de redes sociais da Meats Espeteria.',
     description:
       'Produção de peças para stories e feed da Meats Espeteria, no período como Community Manager da marca.',
+    descriptionEn:
+      'Production of pieces for stories and feed of Meats Espeteria, during the period as the brand Community Manager.',
     media: {
       cover: `${base}/behance/meats-content/01.webp`,
-      gallery: [`${base}/behance/meats-content/04.webp`, `${base}/behance/meats-content/08.webp`],
+      gallery: [
+        `${base}/behance/meats-content/02.webp`,
+        `${base}/behance/meats-content/03.webp`,
+        `${base}/behance/meats-content/04.webp`,
+        `${base}/behance/meats-content/05.webp`,
+        `${base}/behance/meats-content/06.webp`,
+        `${base}/behance/meats-content/07.webp`,
+        `${base}/behance/meats-content/08.webp`,
+        `${base}/behance/meats-content/09.webp`,
+        `${base}/behance/meats-content/10.webp`,
+      ],
     },
   },
   {
@@ -313,10 +433,25 @@ export const WORKS: Work[] = [
     role: 'Designer',
     client: 'Max Vidros',
     summary: 'Identidade visual e logotipo da Max Vidros.',
-    description: 'Construção de conceito, logotipo e aplicações de identidade visual para a Max Vidros.',
+    description:
+      'Construção de conceito, logotipo e aplicações de identidade visual para a Max Vidros.',
+    descriptionEn:
+      'Concept, logo and visual identity applications for Max Vidros.',
     media: {
       cover: `${base}/behance/max-vidros/09.webp`,
-      gallery: [`${base}/behance/max-vidros/05.webp`, `${base}/behance/max-vidros/01.webp`],
+      gallery: [
+        `${base}/behance/max-vidros/01.webp`,
+        `${base}/behance/max-vidros/02.webp`,
+        `${base}/behance/max-vidros/03.webp`,
+        `${base}/behance/max-vidros/04.webp`,
+        `${base}/behance/max-vidros/05.webp`,
+        `${base}/behance/max-vidros/06.webp`,
+        `${base}/behance/max-vidros/07.webp`,
+        `${base}/behance/max-vidros/08.webp`,
+        `${base}/behance/max-vidros/10.webp`,
+        `${base}/behance/max-vidros/11.webp`,
+        `${base}/behance/max-vidros/12.webp`,
+      ],
     },
   },
   {
@@ -328,11 +463,33 @@ export const WORKS: Work[] = [
     summary: 'Identidade e peças de divulgação do Festival de Arte e Gastronomia.',
     description:
       'Key visual e peças de divulgação para a 5ª edição do Festival de Arte e Gastronomia, com o tema do cacau ao chocolate.',
+    descriptionEn:
+      'Key visual and promotional pieces for the 5th edition of the Festival de Arte e Gastronomia, themed from cocoa to chocolate.',
     media: {
       cover: `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
       gallery: [
         `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/02.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/03.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/04.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/06.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/07.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/08.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/09.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/10.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/11.webp`,
         `${base}/behance/festival-de-arte-e-gastronomia/12.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/13.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/14.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/15.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/16.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/17.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/18.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/19.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/20.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/21.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/22.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/23.webp`,
       ],
     },
   },
@@ -343,10 +500,25 @@ export const WORKS: Work[] = [
     disciplines: ['Art Direction'],
     role: 'Photographer',
     summary: 'Still de produto em cores vibrantes.',
-    description: 'Ensaio still-life de picolés e frutas, em paleta de cores vibrantes.',
+    description:
+      'Ensaio still-life de picolés e frutas, em paleta de cores vibrantes.',
+    descriptionEn:
+      'Still-life shoot of popsicles and fruit, in a vivid color palette.',
     media: {
       cover: `${base}/behance/cores-e-sabores/01.webp`,
-      gallery: [`${base}/behance/cores-e-sabores/05.webp`, `${base}/behance/cores-e-sabores/09.webp`],
+      gallery: [
+        `${base}/behance/cores-e-sabores/02.webp`,
+        `${base}/behance/cores-e-sabores/03.webp`,
+        `${base}/behance/cores-e-sabores/04.webp`,
+        `${base}/behance/cores-e-sabores/05.webp`,
+        `${base}/behance/cores-e-sabores/06.webp`,
+        `${base}/behance/cores-e-sabores/07.webp`,
+        `${base}/behance/cores-e-sabores/08.webp`,
+        `${base}/behance/cores-e-sabores/09.webp`,
+        `${base}/behance/cores-e-sabores/10.webp`,
+        `${base}/behance/cores-e-sabores/11.webp`,
+        `${base}/behance/cores-e-sabores/12.webp`,
+      ],
     },
   },
   {
@@ -356,10 +528,21 @@ export const WORKS: Work[] = [
     disciplines: ['Fashion'],
     role: 'Photographer',
     summary: 'Ensaio de moda e beleza num mercadinho.',
-    description: 'Ensaio de moda e beleza fotografado nos corredores de um mercadinho.',
+    description:
+      'Ensaio de moda e beleza fotografado nos corredores de um mercadinho.',
+    descriptionEn:
+      'Fashion and beauty shoot photographed in the aisles of a grocery store.',
     media: {
       cover: `${base}/behance/grocery-store/04.webp`,
-      gallery: [`${base}/behance/grocery-store/01.webp`, `${base}/behance/grocery-store/07.webp`],
+      gallery: [
+        `${base}/behance/grocery-store/01.webp`,
+        `${base}/behance/grocery-store/02.webp`,
+        `${base}/behance/grocery-store/03.webp`,
+        `${base}/behance/grocery-store/05.webp`,
+        `${base}/behance/grocery-store/06.webp`,
+        `${base}/behance/grocery-store/07.webp`,
+        `${base}/behance/grocery-store/08.webp`,
+      ],
     },
   },
   {
@@ -369,10 +552,23 @@ export const WORKS: Work[] = [
     disciplines: ['Fashion'],
     role: 'Photographer',
     summary: 'Ensaio de retrato em preto e branco.',
-    description: 'Ensaio de retrato e casal em preto e branco, luz natural de fim de tarde.',
+    description:
+      'Ensaio de retrato e casal em preto e branco, luz natural de fim de tarde.',
+    descriptionEn:
+      'Portrait and couple shoot in black and white, natural late-afternoon light.',
     media: {
       cover: `${base}/behance/bw-mood/05.webp`,
-      gallery: [`${base}/behance/bw-mood/01.webp`, `${base}/behance/bw-mood/09.webp`],
+      gallery: [
+        `${base}/behance/bw-mood/01.webp`,
+        `${base}/behance/bw-mood/02.webp`,
+        `${base}/behance/bw-mood/03.webp`,
+        `${base}/behance/bw-mood/04.webp`,
+        `${base}/behance/bw-mood/06.webp`,
+        `${base}/behance/bw-mood/07.webp`,
+        `${base}/behance/bw-mood/08.webp`,
+        `${base}/behance/bw-mood/09.webp`,
+        `${base}/behance/bw-mood/10.webp`,
+      ],
     },
   },
   {
@@ -382,12 +578,31 @@ export const WORKS: Work[] = [
     disciplines: ['Fashion'],
     role: 'Photographer',
     summary: 'Ensaio de moda e retrato em Salvador, Bahia.',
-    description: 'Ensaio de moda e retrato ao ar livre, nas paisagens de Salvador, Bahia.',
+    description:
+      'Ensaio de moda e retrato ao ar livre, nas paisagens de Salvador, Bahia.',
+    descriptionEn:
+      'Outdoor fashion and portrait shoot in the landscapes of Salvador, Bahia.',
     media: {
       cover: `${base}/behance/bahia-em-cores-quentes/01.webp`,
       gallery: [
+        `${base}/behance/bahia-em-cores-quentes/02.webp`,
+        `${base}/behance/bahia-em-cores-quentes/03.webp`,
+        `${base}/behance/bahia-em-cores-quentes/04.webp`,
+        `${base}/behance/bahia-em-cores-quentes/05.webp`,
+        `${base}/behance/bahia-em-cores-quentes/06.webp`,
+        `${base}/behance/bahia-em-cores-quentes/07.webp`,
         `${base}/behance/bahia-em-cores-quentes/08.webp`,
+        `${base}/behance/bahia-em-cores-quentes/09.webp`,
+        `${base}/behance/bahia-em-cores-quentes/10.webp`,
+        `${base}/behance/bahia-em-cores-quentes/11.webp`,
+        `${base}/behance/bahia-em-cores-quentes/12.webp`,
+        `${base}/behance/bahia-em-cores-quentes/13.webp`,
         `${base}/behance/bahia-em-cores-quentes/14.webp`,
+        `${base}/behance/bahia-em-cores-quentes/15.webp`,
+        `${base}/behance/bahia-em-cores-quentes/16.webp`,
+        `${base}/behance/bahia-em-cores-quentes/17.webp`,
+        `${base}/behance/bahia-em-cores-quentes/18.webp`,
+        `${base}/behance/bahia-em-cores-quentes/19.webp`,
       ],
     },
   },

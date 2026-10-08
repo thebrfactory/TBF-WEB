@@ -839,7 +839,7 @@
   max-width: 60ch;
   margin-bottom: var(--tbf-space-12);
 }
-.cover { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--tav-radius); background: var(--tbf-bg-secondary); margin-bottom: var(--tbf-space-6); }
+.cover { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--tav-radius-sm); background: var(--tbf-bg-secondary); margin-bottom: var(--tbf-space-6); }
 .cover img { object-fit: cover; }
 .lowResTag {
   display: inline-block;
@@ -851,7 +851,7 @@
   color: var(--tbf-color-warning);
 }
 .gallery { display: flex; flex-direction: column; gap: var(--tbf-space-4); }
-.galleryItem { position: relative; width: 100%; overflow: hidden; border-radius: var(--tav-radius); background: var(--tbf-bg-secondary); }
+.galleryItem { position: relative; width: 100%; overflow: hidden; border-radius: var(--tav-radius-sm); background: var(--tbf-bg-secondary); }
 .workNav {
   display: flex;
   justify-content: space-between;
@@ -865,8 +865,11 @@
 
 /* ─── desktop ──────────────────────────────────────────────────────────── */
 @media (min-width: 768px) {
-  .gallery { display: grid; grid-template-columns: repeat(2, 1fr); }
-  .galleryItem:first-child { grid-column: 1 / -1; }
+  /* mosaico: duas colunas com altura natural, mesma calha nos dois eixos;
+     faixa larga atravessa as duas */
+  .gallery { display: block; column-count: 2; column-gap: var(--tbf-space-4); }
+  .galleryItem { break-inside: avoid; margin-bottom: var(--tbf-space-4); }
+  .galleryWide { column-span: all; }
 
   .ventureRow { grid-template-columns: 5rem 1fr; align-items: baseline; }
   .campaignBody { flex-direction: row; align-items: flex-start; gap: var(--tbf-space-10); }

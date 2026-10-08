@@ -12,6 +12,7 @@ import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { notFound } from 'next/navigation'
 import { WORKS, findWork, isProv } from '@/app/(en)/creators/tavaristico/_data'
+import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
 import { localizedPath, type Lang } from '@/lib/i18n'
@@ -27,6 +28,11 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
   const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length]
   const next = WORKS[(i + 1) % WORKS.length]
   const gallery = w.media.gallery ?? []
+  const text = lang === 'en' ? (w.descriptionEn ?? w.description) : w.description
+  // Capa com a proporção da própria peça quando é paisagem; o resto (retrato,
+  // quadrado) segue em 16:9 como nos cards.
+  const [cw, ch] = DIMS[w.media.cover] ?? [16, 9]
+  const coverRatio = cw / ch >= 1.2 && cw / ch <= 2.4 ? `${cw} / ${ch}` : '16 / 9'
 
   return (
     <main className={styles.page}>
@@ -65,14 +71,12 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           )}
         </div>
 
-        {w.description && (
-          <p className={`${styles.workIntro} ${isProv(w, 'description') ? styles.prov : ''}`}>
-            {w.description}
-          </p>
+        {text && (
+          <p className={`${styles.workIntro} ${isProv(w, 'description') ? styles.prov : ''}`}>{text}</p>
         )}
 
-        <div className={styles.cover}>
-          <Image src={w.media.cover} alt={w.title} fill sizes="100vw" priority />
+        <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
+          <Image src={w.media.cover} alt={w.title} fill sizes="100vw" quality={90} priority />
         </div>
         {w.lowRes && (
           <span className={styles.lowResTag}>{t.lowResTag}</span>
@@ -80,18 +84,26 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
 
         {gallery.length > 0 && (
           <div className={styles.gallery}>
-            {gallery.map((src, idx) => (
-              <div key={src} className={styles.galleryItem}>
-                <Image
-                  src={src}
-                  alt={`${w.title} ${idx + 1}`}
-                  width={1600}
-                  height={1000}
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  style={{ width: '100%', height: 'auto' }}
-                />
-              </div>
-            ))}
+            {gallery.map((src, idx) => {
+              const [iw, ih] = DIMS[src] ?? [1600, 1000]
+              return (
+                <div
+                  key={src}
+                  className={`${styles.galleryItem} ${iw / ih >= 2.2 ? styles.galleryWide : ''}`}
+                >
+                  <Image
+                    src={src}
+                    alt={`${w.title} ${idx + 2}`}
+                    width={iw}
+                    height={ih}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    quality={90}
+                    unoptimized={src.endsWith('.gif')}
+                    style={{ width: '100%', height: 'auto', display: 'block' }}
+                  />
+                </div>
+              )
+            })}
           </div>
         )}
 
