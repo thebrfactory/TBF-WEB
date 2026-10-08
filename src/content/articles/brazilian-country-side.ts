@@ -407,8 +407,8 @@ export const brazilianCountrySide: ManifestoArticle = {
       },
       credit: 'TAVARÍSTICO / .TBF. inc',
       variant: 'plate',
-      width: 1920,
-      height: 783,
+      width: 2400,
+      height: 980,
     },
     {
       kind: 'image',

@@ -49,7 +49,7 @@ nativos (1365 px de largura), só o `_MG_0645` e o panorama foram reduzidos.
 | `05-cavaleiro-silhueta.webp` | `_MG_0731` | cavaleiro em silhueta contra o céu |
 | `06-mouro-azul-montado.webp` | `_MG_0737` | mouro de azul, montado (par) |
 | `07-mouro-azul-cavalo.webp` | `_MG_0774` | o mesmo mouro, a pé (par) |
-| `08-cavalhada-panorama.webp` | `_MG_0783` | panorama da fila de cavaleiros (`plate`) |
+| `08-cavalhada-panorama.webp` | `_MG_0783.CR2` (revelado do RAW em 08/10/2026, sem o HDR da SAÍDA; recorte na faixa dos cavaleiros) | panorama da fila de cavaleiros (`plate`) |
 | `09-cristao-vermelho-frente.webp` | `_MG_0748` | cristão de vermelho, de frente (par) |
 | `10-cristao-vermelho-costas.webp` | `_MG_0747` | a mesma fantasia, por trás (par) |
 | `11-cristaos-retrato.webp` | `_MG_0771` | a companhia esperando (par) |
