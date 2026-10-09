@@ -244,7 +244,7 @@ export const HIGHLIGHT_PROFILE = {
 
 const en = {
   meta: {
-    title: 'Hospitality Photography · Tavarístico',
+    title: 'Where Brazil Stays · Tavarístico',
     description:
       'Commercial photography for hostels, hotels and guesthouses, made for Booking, Airbnb and the other booking engines. Selected work: Ô de Casa Hostel, São Paulo.',
   },
@@ -331,7 +331,7 @@ const en = {
 
 const pt: typeof en = {
   meta: {
-    title: 'Fotografia de Hospedagem · Tavarístico',
+    title: 'Onde o Brasil se hospeda · Tavarístico',
     description:
       'Fotografia comercial para hostels, hotéis e pousadas, feita para o Booking, o Airbnb e os outros motores de reserva. Trabalho selecionado: Ô de Casa Hostel, São Paulo.',
   },

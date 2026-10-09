@@ -64,7 +64,7 @@ const en = {
     // Correção 09/09/2026: vira um card de "próxima leitura" (NextRead), não
     // mais um link solto. kicker/label continuam, + support e cta novos.
     hospitalityKicker: 'Also available',
-    hospitalityLabel: 'Photography for hostels, hotels and guesthouses',
+    hospitalityLabel: 'Where Brazil Stays',
     hospitalitySupport: 'A portfolio built for hospitality brands, shot by Tavarístico.',
     hospitalityCta: 'See the work',
   },
@@ -122,7 +122,7 @@ const pt: typeof en = {
     emailLabel: 'Email',
     githubLabel: 'GitHub',
     hospitalityKicker: 'Também disponível',
-    hospitalityLabel: 'Fotografia para hostels, hotéis e pousadas',
+    hospitalityLabel: 'Onde o Brasil se hospeda',
     hospitalitySupport: 'Um portfólio feito para marcas de hospitalidade, fotografado pelo Tavarístico.',
     hospitalityCta: 'Ver o trabalho',
   },
