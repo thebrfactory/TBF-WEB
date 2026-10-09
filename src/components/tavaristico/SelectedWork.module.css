@@ -98,7 +98,7 @@ a.ventureName:focus-visible {
 .tickerTrack {
   display: flex;
   width: max-content;
-  animation: tickerMove calc(var(--ticker-n, 2) * 3 * 3.5s) linear infinite;
+  animation: tickerMove calc(var(--ticker-n, 2) * 3 * 2.19s) linear infinite;
 }
 .ticker:hover .tickerTrack { animation-play-state: paused; }
 .tickerHalf { display: flex; flex: 0 0 auto; }
