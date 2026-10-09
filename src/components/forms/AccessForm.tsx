@@ -148,7 +148,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
     >
       {/* ─── PONTOS DE ENTRADA ─────────────────────────────────────────── */}
       <fieldset
-        style={{ padding: 0, margin: 0 }}
+        className="intent-fieldset"
         aria-labelledby={`${formId}-intent-legend`}
       >
         <legend

@@ -163,18 +163,8 @@ export function NewsletterPopup() {
                 required
                 aria-label={t.emailAriaLabel}
                 disabled={status === 'loading'}
-                style={{
-                  flex: 1,
-                  minWidth: '180px',
-                  background: 'transparent',
-                  border: '1px solid var(--tbf-border)',
-                  color: 'var(--tbf-text-primary)',
-                  fontFamily: 'var(--tbf-font-family-body)',
-                  fontSize: '0.9rem',
-                  padding: '0.5rem 1.1rem',
-                  outline: 'none',
-                  borderRadius: '999px',
-                }}
+                className="field__input"
+                style={{ flex: 1, minWidth: '180px', width: 'auto' }}
               />
               <button
                 type="submit"

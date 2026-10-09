@@ -104,18 +104,7 @@ export function MailingList() {
               required
               aria-label={t.emailAriaLabel}
               disabled={status === 'loading'}
-              style={{
-                width: '100%',
-                background: 'transparent',
-                border: '1px solid var(--tbf-border)',
-                color: 'var(--tbf-text-primary)',
-                fontFamily: 'var(--tbf-font-family-body)',
-                fontSize: '1rem',
-                padding: '1rem 1.5rem',
-                outline: 'none',
-                borderRadius: '999px',
-                boxSizing: 'border-box',
-              }}
+              className="field__input"
             />
 
             <button

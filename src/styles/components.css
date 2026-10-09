@@ -1964,35 +1964,39 @@
 }
 
 .field__input {
+  /* Padrão da caixa de e-mail (NewsletterPopup/MailingList): pílula, borda sutil, ar. */
   background-color: var(--tbf-input-bg);
   color: var(--tbf-input-text);
-  border-radius: var(--tbf-input-radius);
-  padding: var(--tbf-input-padding-y) var(--tbf-input-padding-x) var(--tbf-input-padding-y) 0;
-  font-family: var(--tbf-type-body-family);
-  font-size: var(--tbf-type-body-sm-size-sm);
+  border: 1px solid var(--tbf-input-border);
+  border-radius: var(--tbf-radius-full);
+  padding: var(--tbf-space-raw-12) var(--tbf-space-raw-24);
+  min-height: 48px;
+  font-family: var(--tbf-font-family-body);
+  font-size: 1rem; /* 16px: evita zoom do iOS */
   font-weight: var(--tbf-type-body-weight);
-  line-height: var(--tbf-type-body-sm-lh);
+  line-height: 1.4;
   width: 100%;
-  transition: border-color var(--tbf-input-duration) var(--tbf-motion-easing-element);
+  box-sizing: border-box;
+  transition: border-color var(--tbf-input-duration) var(--tbf-motion-easing-element),
+    box-shadow var(--tbf-input-duration) var(--tbf-motion-easing-element);
   -webkit-appearance: none;
   appearance: none;
 }
 
-@media (min-width: 1280px) {
-  .field__input {
-    font-size: var(--tbf-type-body-sm-size);
-  }
-}
-
 .field__input::placeholder {
   color: var(--tbf-input-placeholder);
+  opacity: 0.8;
 }
 
-.field__input:focus {
+.field__input:focus,
+.field__input:focus-visible {
   outline: none;
+  border-color: var(--tbf-input-border-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tbf-accent) 28%, transparent);
 }
 
 .field--error .field__input {
+  border-color: var(--tbf-input-border-error);
   animation: field-shake var(--tbf-input-shake-duration) var(--tbf-motion-easing-element);
 }
 
@@ -2017,13 +2021,14 @@
 }
 
 textarea.field__input {
+  border-radius: 24px;
+  padding: var(--tbf-space-raw-16) var(--tbf-space-raw-24);
   resize: vertical;
   min-height: var(--tbf-space-raw-128);
 }
 
 /* =============================================================================
-   CONTACT FORM — variante minimalista tipo Typeform (só na página /contact-us)
-   Campos sem caixa: underline que acende no accent · tipografia grande · ar.
+   CONTACT FORM (/contact-us): mesmos campos em pílula do padrão .field__input.
    ============================================================================= */
 .contact-form {
   display: flex;
@@ -2042,40 +2047,6 @@ textarea.field__input {
   letter-spacing: var(--tbf-type-micro-ls);
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
-}
-
-.contact-form .field__input {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid var(--tbf-border);
-  border-radius: 0;
-  padding: var(--tbf-space-3) 0;
-  font-family: var(--tbf-font-family-display);
-  font-size: clamp(1.35rem, 4.5vw, 1.9rem);
-  font-weight: 300;
-  line-height: 1.3;
-  color: var(--tbf-text-primary);
-  transition: border-color var(--tbf-input-duration) var(--tbf-motion-easing-element);
-}
-
-.contact-form .field__input::placeholder {
-  color: var(--tbf-text-tertiary);
-  font-weight: 300;
-  opacity: 0.55;
-}
-
-.contact-form .field__input:focus {
-  outline: none;
-  border-bottom-color: var(--tbf-accent);
-}
-
-.contact-form .field--error .field__input {
-  border-bottom-color: var(--tbf-color-status-error);
-}
-
-.contact-form textarea.field__input {
-  min-height: var(--tbf-space-raw-96, 6rem);
-  resize: vertical;
 }
 
 .contact-form .btn {
@@ -2300,25 +2271,27 @@ textarea.field__input {
 .select {
   background-color: var(--tbf-select-bg);
   color: var(--tbf-select-text);
-  border-radius: var(--tbf-radius-none);
-  padding: var(--tbf-input-padding-y) var(--tbf-space-8) var(--tbf-input-padding-y) 0;
-  font-family: var(--tbf-type-body-family);
-  font-size: var(--tbf-type-body-sm-size-sm);
+  border: 1px solid var(--tbf-select-border);
+  border-radius: var(--tbf-radius-full);
+  padding: var(--tbf-space-raw-12) var(--tbf-space-8) var(--tbf-space-raw-12) var(--tbf-space-raw-24);
+  min-height: 48px;
+  font-family: var(--tbf-font-family-body);
+  font-size: 1rem;
   font-weight: var(--tbf-type-body-weight);
   width: 100%;
+  box-sizing: border-box;
   cursor: pointer;
   -webkit-appearance: none;
   appearance: none;
-  transition: border-color var(--tbf-select-duration) var(--tbf-motion-easing-element);
+  transition: border-color var(--tbf-select-duration) var(--tbf-motion-easing-element),
+    box-shadow var(--tbf-select-duration) var(--tbf-motion-easing-element);
 }
 
-.select:focus {
-  outline: none;
-}
-
+.select:focus,
 .select:focus-visible {
-  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
-  outline-offset: var(--tbf-focus-ring-offset);
+  outline: none;
+  border-color: var(--tbf-select-border-focus);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tbf-accent) 28%, transparent);
 }
 
 .select:disabled {
