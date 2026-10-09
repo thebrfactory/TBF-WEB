@@ -36,7 +36,7 @@ import { SelectedWork } from '@/components/tavaristico/SelectedWork'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { WhatIBuild } from '@/components/tavaristico/WhatIBuild'
 import { RepresentedBy } from '@/components/tavaristico/RepresentedBy'
-import { NextRead } from '@/components/tavaristico/NextRead'
+import { BasedInShadow } from '@/components/tavaristico/BasedInShadow'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import Image from 'next/image'
 
@@ -62,6 +62,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
 
   return (
     <main className={styles.page}>
+      <BasedInShadow text={`${t.index.locationCity} ${t.index.locationOrigin}`} />
       {/* HERO, parte 07 do briefing + correção 09/09/2026: sem eyebrow, avatar
           redondo na mesma linha do nome (também no mobile, gesto de perfil de
           Instagram), sobreposto à borda inferior da capa, localização em duas
@@ -130,12 +131,6 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
 
             <div className={styles.heroCredit}>
               <RepresentedBy lang={lang} withRole />
-              {/* Localização em uma linha, mesma fonte e mesmo tamanho da linha
-                  do lockup acima, e alinhada com o texto dele (por isso o recuo
-                  da largura do selo). */}
-              <p className={styles.heroLocation}>
-                {t.index.locationCity} {t.index.locationOrigin}
-              </p>
             </div>
           </div>
 
@@ -178,7 +173,16 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           do território que a Selected Work já apresentou acima. */}
       <section className={`${styles.worksSection} container`} id="work">
         <span className={styles.label}>{t.index.workLabel}</span>
-        <MasonryGallery works={WORKS} disciplines={DISCIPLINES} />
+        <MasonryGallery
+          works={WORKS}
+          disciplines={DISCIPLINES}
+          extraCard={{
+            href: localizedPath('/creators/tavaristico/hospitality', lang),
+            image: '/images/creators/tavaristico/hospitality/08-area-externa.webp',
+            title: t.index.hospitalityLabel,
+            meta: t.index.hospitalityKicker,
+          }}
+        />
       </section>
 
       {/* WHAT I BUILD, parte 15: sistema visual, não lista de skills. */}
@@ -242,26 +246,6 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         <div className={styles.contactRepresented}>
           <RepresentedBy lang={lang} />
         </div>
-      </section>
-
-      {/* PROPOSTA DE HOSPEDAGEM, correção 09/09/2026, item 11: virou um card
-          de "próxima leitura" (NextRead), referências do fundador foram a
-          "Escolhas do Editor" da Forbes e "Posts relacionados" da
-          MacMagazine, não mais um link solto com cara de banner. A entrada
-          para /creators/tavaristico/hospitality (#01 CHANGES 2026-08-14)
-          continua depois do contato, fora da vitrine de obras: a vitrine
-          olha para trás, a proposta olha para frente. */}
-      <section className="container">
-        <NextRead
-          lang={lang}
-          kicker={t.index.hospitalityKicker}
-          title={t.index.hospitalityLabel}
-          support={t.index.hospitalitySupport}
-          cta={t.index.hospitalityCta}
-          href={localizedPath('/creators/tavaristico/hospitality', lang)}
-          imageSrc="/images/creators/tavaristico/hospitality/08-area-externa.webp"
-          imageAlt={t.index.hospitalityLabel}
-        />
       </section>
     </main>
   )

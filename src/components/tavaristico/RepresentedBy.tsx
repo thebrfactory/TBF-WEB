@@ -23,18 +23,25 @@ const LABEL_WITH_ROLE: Record<Lang, string> = {
 }
 
 export function RepresentedBy({ lang, withRole = false }: { lang: Lang; withRole?: boolean }) {
+  const [before, after] = (withRole ? LABEL_WITH_ROLE : LABEL)[lang].split('.TBF.')
   return (
     <div className={styles.representedBy}>
-      <Image
-        className={styles.representedByAvatar}
-        src="/brand/TBF-AVATAR.webp"
-        alt=""
-        width={32}
-        height={32}
-        aria-hidden="true"
-      />
+      {/* Brilho amarelo (escuro para claro) que pulsa atrás do selo: mesma
+          técnica do farol da logo no pop-up de e-mail (tbf-brand-beacon),
+          recolorida. Ver .representedByOrb em tavaristico.module.css. */}
+      <span className={styles.representedByOrb} aria-hidden="true">
+        <Image
+          className={styles.representedByAvatar}
+          src="/brand/TBF-AVATAR.webp"
+          alt=""
+          width={32}
+          height={32}
+        />
+      </span>
       <span className={styles.representedByLabel}>
-        {(withRole ? LABEL_WITH_ROLE : LABEL)[lang]}
+        {before}
+        <strong className={styles.representedByBrand}>.TBF.</strong>
+        {after}
       </span>
     </div>
   )

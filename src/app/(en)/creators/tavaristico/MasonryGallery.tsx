@@ -18,9 +18,12 @@ const RATIOS = ['3 / 4', '1 / 1', '4 / 5', '3 / 4', '4 / 3', '1 / 1', '4 / 5', '
 export function MasonryGallery({
   works,
   disciplines,
+  extraCard,
 }: {
   works: Work[]
   disciplines: Discipline[]
+  /** Card extra no fim da grade (ex.: hospitalidade). Só aparece em "All". */
+  extraCard?: { href: string; image: string; title: string; meta: string }
 }) {
   const lang = useLang()
   const t = tavaristico[lang].gallery
@@ -100,6 +103,26 @@ export function MasonryGallery({
             </span>
           </Link>
         ))}
+        {extraCard && (
+          <Link
+            href={extraCard.href}
+            className={`${styles.card} ${active === ALL ? '' : styles.cardHidden}`}
+          >
+            <span className={styles.cardMedia} style={{ aspectRatio: RATIOS[works.length % RATIOS.length] }}>
+              <Image
+                src={extraCard.image}
+                alt={extraCard.title}
+                fill
+                sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
+              />
+              <span className={styles.cardOverlay} aria-hidden="true" />
+            </span>
+            <span className={styles.cardCaption}>
+              <span className={styles.cardTitle}>{extraCard.title}</span>
+              <span className={styles.cardMeta}>{extraCard.meta}</span>
+            </span>
+          </Link>
+        )}
       </div>
     </>
   )

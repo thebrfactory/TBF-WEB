@@ -254,19 +254,6 @@
   gap: var(--tbf-space-1);
 }
 
-/* Mesma fonte, mesmo tamanho e mesmo recuo do texto do lockup acima: o recuo
-   é a largura do selo mais o gap, para os dois textos alinharem no mesmo x. */
-.heroLocation {
-  margin-top: 0;
-  padding-left: calc(20px + var(--tbf-space-2));
-  font-family: var(--mono);
-  font-size: var(--tav-text-micro);
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--tbf-text-tertiary);
-  line-height: 1.6;
-}
 .heroBodyMiddle {
   display: flex;
   flex-direction: column;
@@ -384,6 +371,41 @@
   border-radius: var(--tbf-radius-full);
   object-fit: cover;
   flex-shrink: 0;
+}
+/* Brilho do selo (pedido 09/10/2026): a mesma batida de farol do pop-up de
+   e-mail (1700ms, luz subindo e caindo), em degradê de amarelo escuro para
+   claro. O degradê gira atrás do selo e o halo respira. */
+.representedByOrb {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: var(--tbf-radius-full);
+}
+.representedByOrb::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--tbf-radius-full);
+  background: linear-gradient(135deg, #a87400 0%, #e0a800 45%, #ffe680 100%);
+  filter: blur(3px);
+  opacity: 0.9;
+  animation: tav-orb-beacon 1700ms ease-in-out infinite;
+}
+.representedByOrb > img { position: relative; }
+@keyframes tav-orb-beacon {
+  0%, 100% { opacity: 1; transform: scale(1.25) rotate(0deg); }
+  50% { opacity: 0.35; transform: scale(1) rotate(180deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .representedByOrb::before { animation: none; opacity: 0.8; transform: scale(1.15); }
+}
+/* ".TBF." no peso mais alto da família. */
+.representedByBrand {
+  font-family: var(--tbf-font-family-display);
+  font-weight: 900;
+  letter-spacing: 0.02em;
 }
 /* Correção 09/09/2026, item 4: o lockup ganhou uma segunda linha (o cargo,
    que saiu do hero solto). Mesma tipografia nas duas linhas, só empilhadas. */
@@ -874,4 +896,47 @@
   .ventureRow { grid-template-columns: 5rem 1fr; align-items: baseline; }
   .campaignBody { flex-direction: row; align-items: flex-start; gap: var(--tbf-space-10); }
   .campaignText { padding-top: var(--tbf-space-4); }
+}
+
+/* ─── SOMBRA INFERIOR "BASED IN" (pedido 09/10/2026): o mesmo véu do header
+   (.nav::before), invertido, mais forte, fixo na base da viewport. Some ao
+   chegar na seção de contato. Não captura toque. ─────────────────────────── */
+.basedInShadow {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--tbf-space-10, 2.5rem) var(--tbf-grid-margin-sm) calc(var(--tbf-space-3) + env(safe-area-inset-bottom));
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 96%, #000) 0%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 88%, transparent) 40%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 50%, transparent) 72%,
+    transparent 100%
+  );
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.basedInShadowHidden { opacity: 0; }
+.basedInText {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #fff;
+  line-height: 1.6;
+}
+@media (min-width: 1280px) {
+  .basedInShadow { padding-inline: var(--tbf-grid-margin-xl); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .basedInShadow { transition: none; }
 }
