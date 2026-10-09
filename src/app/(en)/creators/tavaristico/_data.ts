@@ -695,7 +695,7 @@ export const VENTURES: Venture[] = [
   {
     index: '01',
     name: 'CRIVO',
-    category: ['AI AGENTS', 'PRODUCT'],
+    category: ['AI AGENTS', 'PRODUCT DEVELOPMENT'],
     description: 'AI-powered supplier intelligence for corporate events.',
     weight: 'primary',
     cover: `${base}/ventures/crivo.webp`,
@@ -765,7 +765,7 @@ export const VENTURES: Venture[] = [
   {
     index: '02',
     name: 'VERÃOZÃO',
-    category: ['CAMPAIGN', 'CULTURE'],
+    category: ['CAMPAIGN', 'ART DIRECTION'],
     description: 'A summer campaign for Ô de Casa, the most awarded Brazilian hostel.',
     weight: 'primary',
     cover: `${base}/ventures/veraozao.webp`,
@@ -834,7 +834,7 @@ export const VENTURES: Venture[] = [
   {
     index: '03',
     name: 'BRANDSYSTEM',
-    category: ['AI', 'BRAND', 'PRODUCT'],
+    category: ['AI AGENTS', 'PRODUCT DEVELOPMENT', 'BRANDING'],
     description: "An agentic brand system that connects a company's brand knowledge to its marketing workflow.",
     weight: 'primary',
     cover: '/brand/TBF-AVATAR.webp',
@@ -905,7 +905,7 @@ export const VENTURES: Venture[] = [
   {
     index: '04',
     name: '.RUNWAY UNTD COLLECTIVE.',
-    category: ['FASHION', 'CULTURE', 'CREATIVE DIRECTION'],
+    category: ['FASHION FILM', 'CULTURE', 'CREATIVE DIRECTION'],
     // A BIO LITERAL do @runwayunited, passada por ele em 11/09/2026 (o
     // gallery-dl nao conseguiu ler: o Instagram derrubou a sessao). Fica em
     // ingles nos dois idiomas, como `name` e `category`: bio de perfil e texto

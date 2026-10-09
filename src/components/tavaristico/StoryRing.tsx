@@ -14,7 +14,7 @@ export function StoryRing({
   cover,
   alt,
   seen = false,
-  size = 76,
+  size = 66,
   ariaLabel,
   onClick,
   buttonRef,

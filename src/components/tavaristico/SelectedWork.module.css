@@ -62,13 +62,13 @@
   text-decoration: none;
   transition: color 0.2s ease;
   /* Correcao 09/09/2026: o titulo precisa comecar na ALTURA DO MEIO do
-     StoryRing (76px de lado, ver StoryRing.module.css, `--ring-size`
-     default), nao no topo. Meio do circulo = 38px. `.ventureRow` agora
+     StoryRing (66px de lado, ver StoryRing.module.css, `--ring-size`
+     default), nao no topo. Meio do circulo = 33px. `.ventureRow` agora
      alinha pelo topo (align-items: start), entao aqui empurramos so a
      primeira linha do bloco de texto para baixo, o suficiente pra o CENTRO
-     dessa linha (metade da propria line-height) cair em 38px. Em `em`
+     dessa linha (metade da propria line-height) cair em 33px. Em `em`
      porque line-height:1.05 e relativo ao proprio font-size do titulo. */
-  margin-top: calc(38px - 0.525em);
+  margin-top: calc(33px - 0.525em);
 }
 
 a.ventureName:hover,
@@ -76,17 +76,41 @@ a.ventureName:focus-visible {
   color: var(--tbf-accent);
 }
 
-/* Ponto 3 do escopo: categoria e descricao precisam ser obviamente
-   diferentes, nao so no peso, na familia toda. Categoria fica mono,
-   micro, caixa alta, com respiro entre letras: linguagem de "tag", nao
-   de frase. */
-.ventureCategory {
+/* Tags em letreiro (09/10/2026): entram pela direita, saem pela esquerda
+   com fade nas duas bordas. Sem white-space: nowrap: cada item e flex
+   0 0 auto, largura = max-content, entao nao quebra. Trilho = duas metades
+   iguais, anda -50%. Duracao proporcional ao numero de tags (lento). */
+.ticker {
+  display: block;
+  overflow: hidden;
   font-family: var(--mono);
   font-size: var(--tav-text-micro);
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.tickerTrack {
+  display: flex;
+  width: max-content;
+  animation: tickerMove calc(var(--ticker-n, 2) * 3 * 7s) linear infinite;
+}
+.ticker:hover .tickerTrack { animation-play-state: paused; }
+.tickerHalf { display: flex; flex: 0 0 auto; }
+.tickerItem { flex: 0 0 auto; }
+@keyframes tickerMove {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker { -webkit-mask-image: none; mask-image: none; }
+  .tickerTrack { animation: none; width: auto; flex-wrap: wrap; }
+  .tickerHalf { flex-wrap: wrap; }
+  .tickerHalf:nth-child(n + 2) { display: none; }
+  /* so a primeira repeticao das tags aparece, sem duplicata */
+  .tickerRep { display: none; }
 }
 
 /* Ponto 4 do escopo: separador e ponto medio, nunca barra. Correcao
@@ -113,4 +137,80 @@ a.ventureName:focus-visible {
   line-height: 1.4;
   color: var(--tbf-text-secondary);
   max-width: 42ch;
+}
+
+/* Descricao recolhida por padrao (09/10/2026). Altura anima via grid
+   0fr -> 1fr; opacidade acompanha. Botao com alvo de toque de 44px. */
+.moreBtn {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--mono);
+  font-size: var(--tav-text-micro);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tbf-text-secondary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s ease;
+}
+.moreBtn::before {
+  content: '';
+  position: absolute;
+  inset: -14px -8px;
+}
+.moreBtn:hover,
+.moreBtn:focus-visible { color: var(--tbf-accent); }
+.moreBtn:focus-visible { outline: 2px solid var(--tbf-color-parchment); outline-offset: 4px; }
+
+.moreIcon {
+  position: relative;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: var(--tbf-radius-full);
+  border: 1px solid currentColor;
+  flex: 0 0 auto;
+}
+.moreIcon::before,
+.moreIcon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.6rem;
+  height: 1px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform 0.3s ease;
+}
+.moreIcon::after { transform: translate(-50%, -50%) rotate(90deg); }
+.moreBtn[aria-expanded='true'] .moreIcon::after { transform: translate(-50%, -50%) rotate(0deg); }
+
+.descWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.35s ease, opacity 0.3s ease;
+}
+.descWrapOpen {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.descInner {
+  display: block;
+  overflow: hidden;
+  min-height: 0;
+}
+.descWrapOpen .descInner { padding-top: 0.35rem; }
+@media (prefers-reduced-motion: reduce) {
+  .descWrap,
+  .moreIcon::before,
+  .moreIcon::after { transition: none; }
 }

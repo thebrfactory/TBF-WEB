@@ -13,7 +13,7 @@
    Instagram em vez de uma borda colorida qualquer.
 
    `--ring-size` chega por style inline de quem usa (prop `size`, default
-   76px no componente). CSS custom property em vez de classe por tamanho
+   66px no componente). CSS custom property em vez de classe por tamanho
    porque o consumo e livre (qualquer px), nao um punhado de variantes fixas. */
 .ring {
   appearance: none;
@@ -22,8 +22,8 @@
   display: block;
   padding: 2.5px;
   border-radius: var(--tbf-radius-full);
-  width: var(--ring-size, 76px);
-  height: var(--ring-size, 76px);
+  width: var(--ring-size, 66px);
+  height: var(--ring-size, 66px);
   cursor: pointer;
   /* Correcao 09/09/2026: tira o highlight cinza/azul de toque do mobile.
      Sem isso, tocar no circulo desenhava um retangulo de selecao residual

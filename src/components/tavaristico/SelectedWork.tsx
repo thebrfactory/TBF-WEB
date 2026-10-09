@@ -25,7 +25,7 @@
 
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Venture } from '@/app/(en)/creators/tavaristico/_data'
 import { localizedPath, type Lang } from '@/lib/i18n'
@@ -44,6 +44,38 @@ const SEEN_KEY = 'tav:ventures:seen'
 const OPEN_LABEL: Record<Lang, string> = {
   pt: 'Abrir projeto',
   en: 'Open project',
+}
+
+const MORE_LABEL: Record<Lang, string> = {
+  pt: 'Sobre o projeto',
+  en: 'About the project',
+}
+
+// Letreiro de tags: a lista se repete ate encher a faixa e o trilho anda 50%
+// (duas metades identicas), loop sem costura. Metade 2 e so decoracao.
+function TagTicker({ tags }: { tags: string[] }) {
+  const group = (hidden: boolean, key: number) => (
+    <span className={styles.tickerHalf} key={key} aria-hidden={hidden || undefined}>
+      {[0, 1, 2].map((rep) =>
+        tags.map((t) => (
+          <span className={`${styles.tickerItem}${rep > 0 ? ` ${styles.tickerRep}` : ''}`} key={`${rep}-${t}`}>
+            {t}
+            <span className={styles.categoryDot} aria-hidden="true">
+              &middot;
+            </span>
+          </span>
+        )),
+      )}
+    </span>
+  )
+  return (
+    <span className={styles.ticker} style={{ ['--ticker-n' as string]: tags.length }}>
+      <span className={styles.tickerTrack}>
+        {group(false, 0)}
+        {group(true, 1)}
+      </span>
+    </span>
+  )
 }
 
 function readSeen(): Record<string, true> {
@@ -89,6 +121,8 @@ function VentureRow({
   registerRef: (index: string, el: HTMLButtonElement | null) => void
 }) {
   const ariaLabel = `${OPEN_LABEL[lang]}: ${v.name}`
+  const [open, setOpen] = useState(false)
+  const descId = useId()
 
   const ring = (
     <StoryRing
@@ -114,19 +148,22 @@ function VentureRow({
       ) : (
         <span className={styles.ventureName}>{v.name}</span>
       )}
-      <span className={styles.ventureCategory}>
-        {v.category.map((part, i) => (
-          <span key={part}>
-            {i > 0 ? (
-              <span className={styles.categoryDot} aria-hidden="true">
-                &middot;
-              </span>
-            ) : null}
-            {part}
-          </span>
-        ))}
+      <TagTicker tags={v.category} />
+      <button
+        type="button"
+        className={styles.moreBtn}
+        aria-expanded={open}
+        aria-controls={descId}
+        onClick={() => setOpen((o) => !o)}
+      >
+        <span className={styles.moreIcon} aria-hidden="true" />
+        {MORE_LABEL[lang]}
+      </button>
+      <span id={descId} className={`${styles.descWrap}${open ? ` ${styles.descWrapOpen}` : ''}`}>
+        <span className={styles.descInner}>
+          <span className={styles.ventureDescription}>{v.description}</span>
+        </span>
       </span>
-      <span className={styles.ventureDescription}>{v.description}</span>
     </span>
   )
 
