@@ -23,7 +23,16 @@ export function MasonryGallery({
   works: Work[]
   disciplines: Discipline[]
   /** Card extra no fim da grade (ex.: hospitalidade). Só aparece em "All". */
-  extraCard?: { href: string; image: string; title: string; meta: string }
+  extraCard?: {
+    href: string
+    image: string
+    title: string
+    meta: string
+    /** proporção fixa do card (sem ela, segue o ritmo da grade) */
+    ratio?: string
+    /** object-position da thumb, para rosto e corpo não cortarem */
+    position?: string
+  }
 }) {
   const lang = useLang()
   const t = tavaristico[lang].gallery
@@ -108,11 +117,12 @@ export function MasonryGallery({
             href={extraCard.href}
             className={`${styles.card} ${active === ALL ? '' : styles.cardHidden}`}
           >
-            <span className={styles.cardMedia} style={{ aspectRatio: RATIOS[works.length % RATIOS.length] }}>
+            <span className={styles.cardMedia} style={{ aspectRatio: extraCard.ratio ?? RATIOS[works.length % RATIOS.length] }}>
               <Image
                 src={extraCard.image}
                 alt={extraCard.title}
                 fill
+                style={extraCard.position ? { objectPosition: extraCard.position } : undefined}
                 sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
               />
               <span className={styles.cardOverlay} aria-hidden="true" />

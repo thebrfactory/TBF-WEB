@@ -189,7 +189,9 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           disciplines={DISCIPLINES}
           extraCard={{
             href: localizedPath('/creators/tavaristico/hospitality', lang),
-            image: '/images/creators/tavaristico/hospitality/08-area-externa.webp',
+            image: '/images/creators/tavaristico/hospitality/01-engradados.webp',
+            ratio: '3 / 4',
+            position: '50% 30%',
             title: t.index.hospitalityLabel,
             meta: t.index.hospitalityKicker,
           }}
