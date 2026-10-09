@@ -190,7 +190,6 @@
 
 @media (min-width: 1024px) {
   :root {
-    --tbf-lang-switch-w: 88px;
     --tbf-lang-switch-h: 34px;
   }
 }
