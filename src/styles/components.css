@@ -177,7 +177,10 @@
      o logotipo, que é centralizado em position:absolute. Larga demais, ela
      empurra o sanduíche para cima do logotipo. Estas medidas são o que sobra
      de folga real, não gosto. Do desktop em diante o espaço volta a existir. */
-  --tbf-lang-switch-w: 72px;
+  /* Largura derivada: a pilula e concentrica a bolinha. Folga igual (pad) nos
+     4 lados entre borda e bolinha; o miolo tem exatamente 2 bolinhas. */
+  --tbf-lang-switch-pad: 3px;
+  --tbf-lang-switch-w: calc(2 * var(--tbf-lang-switch-h) - 2px - 2 * var(--tbf-lang-switch-pad));
   /* A altura persegue a MARCA do sanduíche (svg de 24px), não a caixa de
      clique dele (40px com padding): a pílula é preenchida e com borda, então
      pesa mais que um ícone vazado do mesmo tamanho. A largura fica onde está —
@@ -218,18 +221,18 @@
   display: flex;
   align-items: center;
   gap: 0;
-  padding: 0;
+  padding: var(--tbf-lang-switch-pad);
   background: none;
-  /* CONTORNO FINO (08/10/2026): 1px, tinta do texto a 55% de opacidade. Envolve
-     PT e EN e faz os dois lerem como UM controle. A opacidade evita o branco
-     duro contra o fundo escuro, sem perder legibilidade. */
-  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 55%, transparent);
+  /* CONTORNO CONCENTRICO (09/10/2026): 1px a 18% de opacidade. A folga ate a
+     bolinha e a mesma (pad) em cima, embaixo e nos lados, e o raio da pilula e
+     o da bolinha mais a folga, entao as duas curvas tem o mesmo centro. */
+  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 18%, transparent);
   border-radius: var(--tbf-radius-full);
   transition: border-color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
 }
 
 .lang-switch:hover {
-  border-color: var(--tbf-text-primary);
+  border-color: color-mix(in srgb, var(--tbf-text-primary) 40%, transparent);
 }
 
 @media (min-width: 1280px) {
@@ -248,10 +251,10 @@
   /* UM CIRCULO perfeito (largura = altura, raio 50%), nao pilula. O diametro e a
      altura interna menos 2px de folga em cima e embaixo; ele nasce centrado no
      rotulo da esquerda (25% da largura interna) e viaja ate o da direita. */
-  --lang-thumb-d: calc(var(--tbf-lang-switch-h) - 2px - 4px);
+  --lang-thumb-d: calc(var(--tbf-lang-switch-h) - 2px - 2 * var(--tbf-lang-switch-pad));
   position: absolute;
-  top: calc(50% - var(--lang-thumb-d) / 2);
-  left: calc(25% - var(--lang-thumb-d) / 2);
+  top: var(--tbf-lang-switch-pad);
+  left: var(--tbf-lang-switch-pad);
   z-index: 0;
   width: var(--lang-thumb-d);
   height: var(--lang-thumb-d);
@@ -265,7 +268,7 @@
 
 /* Percurso = metade da largura interna (largura total menos as 2 bordas de 1px). */
 .lang-switch[data-lang='en'] .lang-switch__thumb {
-  transform: translateX(calc((var(--tbf-lang-switch-w) - 2px) / 2));
+  transform: translateX(var(--lang-thumb-d));
 }
 
 .lang-switch__btn {
