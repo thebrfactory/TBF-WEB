@@ -63,7 +63,7 @@ const en = {
     // Na vitrine ela seria lida como mais um case e perderia o verbo.
     // Correção 09/09/2026: vira um card de "próxima leitura" (NextRead), não
     // mais um link solto. kicker/label continuam, + support e cta novos.
-    hospitalityKicker: 'Also available',
+    hospitalityKicker: 'STILLS · SHOT BY TAVARÍSTICO',
     hospitalityLabel: 'Where Brazil Stays',
     hospitalitySupport: 'A portfolio built for hospitality brands, shot by Tavarístico.',
     hospitalityCta: 'See the work',
@@ -121,7 +121,7 @@ const pt: typeof en = {
     linkedinLabel: 'LinkedIn',
     emailLabel: 'Email',
     githubLabel: 'GitHub',
-    hospitalityKicker: 'Também disponível',
+    hospitalityKicker: 'STILLS · FOTOS DE TAVARÍSTICO',
     hospitalityLabel: 'Onde o Brasil se hospeda',
     hospitalitySupport: 'Um portfólio feito para marcas de hospitalidade, fotografado pelo Tavarístico.',
     hospitalityCta: 'Ver o trabalho',
