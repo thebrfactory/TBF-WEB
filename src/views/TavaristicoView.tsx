@@ -107,7 +107,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
             <div className={styles.heroIdentity}>
               <h1 className={styles.heroName}>{IDENTITY.name}</h1>
               <p className={styles.heroAlias}>
-                {IDENTITY.role}
+                A.K.A. {IDENTITY.alias}
               </p>
             </div>
           </div>

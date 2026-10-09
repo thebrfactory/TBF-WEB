@@ -46,8 +46,9 @@ const base = '/images/creators/tavaristico'
 const stories = '/images/creators/tavaristico/stories'
 
 export const IDENTITY = {
-  name: 'TAVARÍSTICO',
-  alias: 'Tavarístico',
+  // Hero: nome civil em cima, A.K.A. embaixo (ordem do fundador, 09/10/2026).
+  name: 'Felipe Tavares',
+  alias: 'TAVARÍSTICO',
   role: 'Associate Creative Director / Art Director',
   representedBy: '.TBF. inc',
   origin: 'Salvador, Bahia',
