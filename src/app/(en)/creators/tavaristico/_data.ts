@@ -39,6 +39,10 @@ export interface Work {
   provisional?: ProvField[]
   /** capa screenshot-grade (aguarda fonte hi-res) */
   lowRes?: boolean
+  /** Destaques de conteudo no topo da pagina de obra: aneis de story, mesmo
+   * formato e componente (Campaigns) da home do portfolio. `index` deve ser
+   * unico no site (chave do "visto" em localStorage). */
+  highlights?: Campaign[]
 }
 
 const base = '/images/creators/tavaristico'
@@ -136,21 +140,63 @@ export const WORKS: Work[] = [
     title: 'Virtuosa',
     disciplines: ['Fashion', 'Art Direction'],
     role: 'Art Director',
-    client: 'Virtuosa',
-    summary: 'Direção de arte e campanha de drop de moda.',
+    client: 'LAUDA',
+    summary: 'Direção de arte e linguagem da campanha Virtuosa, da LAUDA.',
     description:
-      'Direção de arte, styling e linguagem de campanha para o drop da Virtuosa.',
+      'Direção de arte, styling e linguagem de campanha para a campanha Virtuosa, da LAUDA.',
     descriptionEn:
-      'Art direction, styling and campaign language for the Virtuosa drop.',
+      "Art direction, styling and campaign language for LAUDA's Virtuosa campaign.",
     selected: true,
     media: {
       cover: `${base}/virtuosa/pp-01.webp`,
       gallery: [
         `${base}/virtuosa/pp-02.webp`,
         `${base}/virtuosa/pp-drop2.gif`,
+        `${base}/virtuosa/lauda-inst-01.webp`,
+        `${base}/virtuosa/lauda-inst-02.webp`,
+        `${base}/virtuosa/lauda-cat-02.webp`,
+        `${base}/virtuosa/lauda-cat-03.webp`,
+        `${base}/virtuosa/lauda-cat-04.webp`,
+        `${base}/virtuosa/lauda-cat-05.webp`,
       ],
     },
-    provisional: ['role', 'client', 'summary', 'description'],
+    highlights: [
+      {
+        index: 'virtuosa-inst',
+        name: 'INSTITUCIONAL',
+        client: 'LAUDA',
+        descriptionEN: "Institutional portraits for LAUDA's Virtuosa campaign.",
+        descriptionPT: 'Retratos institucionais da campanha Virtuosa, da LAUDA.',
+        frames: [
+          { src: `${base}/virtuosa/lauda-inst-01.webp`, alt: 'Retrato institucional da LAUDA, mulher de preto.', role: 'Institucional' },
+          { src: `${base}/virtuosa/lauda-inst-02.webp`, alt: 'Segundo retrato institucional da LAUDA, mulher de preto.', role: 'Institucional' },
+        ],
+      },
+      {
+        index: 'virtuosa-cat',
+        name: 'CATEGORIA',
+        client: 'LAUDA',
+        descriptionEN: "Category pieces for LAUDA's Virtuosa campaign.",
+        descriptionPT: 'Peças de categoria da campanha Virtuosa, da LAUDA.',
+        frames: [
+          { src: `${base}/virtuosa/lauda-cat-02.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
+          { src: `${base}/virtuosa/lauda-cat-03.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
+          { src: `${base}/virtuosa/lauda-cat-04.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
+          { src: `${base}/virtuosa/lauda-cat-05.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
+          ...(['00', '01', '0001'] as const).map((n) => ({
+            src: `${base}/virtuosa/lauda-cat-${n}-poster.webp`,
+            alt: 'Peça em movimento da campanha Virtuosa.',
+            role: 'Categoria',
+            ms: 4000,
+            video: {
+              av1: `${base}/virtuosa/lauda-cat-${n}.av1.mp4`,
+              h264: `${base}/virtuosa/lauda-cat-${n}.mp4`,
+            },
+          })),
+        ],
+      },
+    ],
+    provisional: ['role', 'summary', 'description'],
   },
   {
     slug: 'blackboah',

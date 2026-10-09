@@ -27,7 +27,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--tbf-space-2);
-  width: 5.6rem;
+  min-width: 5.6rem;
 }
 
 .name {
