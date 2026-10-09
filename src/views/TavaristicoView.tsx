@@ -26,6 +26,7 @@ import {
   EXPLORING,
   CAREER,
 } from '@/app/(en)/creators/tavaristico/_data'
+import { Fragment } from 'react'
 import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -125,8 +126,18 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
               ele queria ver o cargo. */}
           <div className={styles.heroBodyMiddle}>
             <div>
-              <p className={styles.heroHeadline}>{t.index.heroHeadline}</p>
-              <p className={styles.heroStatement}>{t.index.heroStatement}</p>
+              <p className={styles.heroHeadline}>{t.index.heroHeadline.map((line, i) => (
+                  <Fragment key={line}>
+                    {i > 0 && <br />}
+                    {line}
+                  </Fragment>
+                ))}</p>
+              <p className={styles.heroStatement}>{t.index.heroStatement.map((line, i) => (
+                  <Fragment key={line}>
+                    {i > 0 && <br />}
+                    {line}
+                  </Fragment>
+                ))}</p>
             </div>
 
             <div className={styles.heroCredit}>
