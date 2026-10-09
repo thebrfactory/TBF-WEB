@@ -2020,8 +2020,8 @@ export function PitchV2Client() {
             right: 0.6rem;
           }
           .p2-nav__btn {
-            width: 2.35rem;
-            height: 2.35rem;
+            width: 44px;
+            height: 44px;
           }
         }
 
