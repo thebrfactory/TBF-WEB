@@ -1009,6 +1009,8 @@ export interface Campaign {
   client: string
   descriptionEN: string
   descriptionPT: string
+  /** Imagem do circulo. Sem ela, usa o primeiro frame. */
+  cover?: string
   frames: StoryFrame[]
 }
 
@@ -1021,80 +1023,13 @@ export const CAMPAIGNS: Campaign[] = [
       '18 years of the most awarded Brazilian hostel. A campaign showing the gen Z lifestyle of a place that is a meeting point for cultures around the globe.',
     descriptionPT:
       '18 anos do hostel brasileiro mais premiado. Uma campanha que mostra o estilo de vida da geracao Z num lugar que e ponto de encontro de culturas ao redor do mundo.',
-    // Sobreposicao de texto tambem aqui, por pedido de 10/09/2026 ("aproveite
-    // para fazer isso em todos os outros stories tambem, incluindo das
-    // campanhas").
+    // Capa nova (CHANGES #01, 09/10/2026): o circulo usa `cover`, que nao e
+    // frame do story. Os frames sao o 01.png de cada pasta 01, 02 e 03.
+    cover: `${base}/o-18-years/capa.webp`,
     frames: [
       {
-        src: `${base}/o-18-years/cover.webp`,
-        alt: 'DEZOITÔ, capa da campanha',
-        role: 'Campaign key visual',
-        overlay: {
-          kickerEN: '@ODECASAHOSTEL · 18 YEARS',
-          kickerPT: '@ODECASAHOSTEL · 18 ANOS',
-          titleEN: 'Eighteen years of the most awarded hostel in Brazil.',
-          titlePT: 'Dezoito anos do hostel mais premiado do Brasil.',
-        },
-      },
-      {
-        src: `${base}/o-18-years/g1.webp`,
-        alt: 'DEZOITÔ, frame 1',
-        role: 'Lifestyle photography',
-        overlay: {
-          kickerEN: 'GEN Z LIFESTYLE',
-          kickerPT: 'ESTILO DE VIDA GERAÇÃO Z',
-          titleEN: 'A meeting point for cultures, told by the people who slept there.',
-          titlePT: 'Um ponto de encontro de culturas, contado por quem dormiu lá.',
-        },
-      },
-      {
-        src: `${base}/o-18-years/g2.webp`,
-        alt: 'DEZOITÔ, frame 2',
-        role: 'Lifestyle photography',
-        overlay: {
-          kickerEN: 'THE CAMPAIGN',
-          kickerPT: 'A CAMPANHA',
-          titleEN: 'DEZOITÔ. A birthday that became a season.',
-          titlePT: 'DEZOITÔ. Um aniversário que virou temporada.',
-        },
-      },
-
-      // CURADORIA 10/09/2026. O story tinha só o ensaio do merch (as três
-      // acima). Estes cinco são a PEÇA GRÁFICA da campanha, tirados de
-      // `Ô | 04 | Abril 25/GRID` no TAV05, que é a grade publicada em abril de
-      // 2025: 1080x1920 de origem, formato de story, convertidos para webp
-      // sem redimensionar (já estão no teto de 1920 da spec de imagem).
-      // O que ficou de fora, de propósito: as outras cinco peças da grade
-      // (18+, FERIADOU, e três variações do mesmo letreiro) repetem lockup
-      // ou pertencem a outro momento de abril, e story que repete cansa; as
-      // 24 imagens da pasta DEZOITOU são referência de terceiro baixada de
-      // rede social, não peça nossa; e a pasta STORIES do mês é cobertura da
-      // Expotel, outra história.
-      {
-        src: `${base}/o-18-years/k1-dezoitou.webp`,
-        alt: 'DEZOITÔ, o letreiro pintado no muro do hostel',
-        role: 'Campaign key visual',
-        overlay: {
-          kickerEN: 'THE ANNOUNCEMENT',
-          kickerPT: 'O ANÚNCIO',
-          titleEN: 'DEZOITOU. The house comes of age, and everyone is invited.',
-          titlePT: 'DEZOITOU. A casa fez idade, e a maioridade chega para todos.',
-        },
-      },
-      {
-        src: `${base}/o-18-years/k2-18-de-casa.webp`,
-        alt: 'DEZOITÔ, lockup 18 de casa sobre laranja',
-        role: 'Campaign key visual',
-        overlay: {
-          kickerEN: 'THE MARK',
-          kickerPT: 'A MARCA',
-          titleEN: 'Eighteen, written the way the house writes everything.',
-          titlePT: 'Dezoito, escrito do jeito que a casa escreve tudo.',
-        },
-      },
-      {
-        src: `${base}/o-18-years/k3-hostel-18.webp`,
-        alt: 'DEZOITÔ, fachada do hostel com hóspedes',
+        src: `${base}/o-18-years/s1.webp`,
+        alt: 'DEZOITÔ, crianças diante da parede laranja do hostel com o lockup 18 de casa',
         role: 'Campaign key visual',
         overlay: {
           kickerEN: 'THE HOUSE',
@@ -1104,25 +1039,25 @@ export const CAMPAIGNS: Campaign[] = [
         },
       },
       {
-        src: `${base}/o-18-years/k4-staff.webp`,
-        alt: 'DEZOITÔ, equipe da casa na piscina',
-        role: 'Campaign key visual',
+        src: `${base}/o-18-years/s2.webp`,
+        alt: 'DEZOITÔ, close de uma pessoa sorrindo com óculos de adesivos 18 de casa e uma jarra de cobre',
+        role: 'Lifestyle photography',
         overlay: {
-          kickerEN: 'THE STAFF',
-          kickerPT: 'A EQUIPE',
-          titleEN: 'Eighteen years of people who make the place a place.',
-          titlePT: 'Dezoito anos de gente que faz o lugar ser um lugar.',
+          kickerEN: 'GEN Z LIFESTYLE',
+          kickerPT: 'ESTILO DE VIDA GERAÇÃO Z',
+          titleEN: 'A meeting point for cultures, told by the people who slept there.',
+          titlePT: 'Um ponto de encontro de culturas, contado por quem dormiu lá.',
         },
       },
       {
-        src: `${base}/o-18-years/k5-efervescente.webp`,
-        alt: 'DEZOITÔ, fitas coloridas e a palavra EFERVESCENTE',
+        src: `${base}/o-18-years/s3.webp`,
+        alt: 'DEZOITÔ, rapaz deitado na grama com chapéu de adesivos 18 de casa e a palavra DEZOITÔ',
         role: 'Campaign key visual',
         overlay: {
-          kickerEN: 'THE SEASON',
-          kickerPT: 'A TEMPORADA',
-          titleEN: 'EFERVESCENTE. A month of parties instead of one night.',
-          titlePT: 'EFERVESCENTE. Um mês de festa no lugar de uma noite.',
+          kickerEN: 'THE CAMPAIGN',
+          kickerPT: 'A CAMPANHA',
+          titleEN: 'DEZOITÔ. A birthday that became a season.',
+          titlePT: 'DEZOITÔ. Um aniversário que virou temporada.',
         },
       },
     ],
