@@ -1,5 +1,5 @@
 // Página de obra do portfólio Tavarístico. Uma view, dois idiomas: o cromo
-// (rótulos Role/Client/Discipline/Year, Prev/Next, breadcrumb) vem do
+// (rótulos Role/Client/Year, Prev/Next, breadcrumb) vem do
 // dicionário; título, papel, cliente e narrativa da obra continuam em
 // `_data.ts` sem tradução — são conteúdo de portfólio, não cromo de UI (ver
 // src/content/i18n/pages/tavaristico.ts e o relatório desta leva).
@@ -11,7 +11,8 @@
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { notFound } from 'next/navigation'
-import { WORKS, findWork, isProv } from '@/app/(en)/creators/tavaristico/_data'
+import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
+import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -47,23 +48,25 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <h1 className={styles.workTitle}>{w.title}</h1>
         </div>
 
+        {w.highlights && w.highlights.length > 0 && (
+          <div style={{ marginBottom: 'var(--tbf-space-6)' }}>
+            <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" />
+          </div>
+        )}
+
         <div className={styles.workMeta}>
           <span className={styles.metaCell}>
             <span className={styles.label}>{t.roleLabel}</span>
-            <span className={`${styles.val} ${styles.roleVal} ${isProv(w, 'role') ? styles.prov : ''}`}>
+            <span className={`${styles.val} ${styles.roleVal}`}>
               {w.role}
             </span>
           </span>
           {w.client && (
             <span className={styles.metaCell}>
               <span className={styles.label}>{t.clientLabel}</span>
-              <span className={`${styles.val} ${isProv(w, 'client') ? styles.prov : ''}`}>{w.client}</span>
+              <span className={styles.val}>{w.client}</span>
             </span>
           )}
-          <span className={styles.metaCell}>
-            <span className={styles.label}>{t.disciplineLabel}</span>
-            <span className={styles.val}>{w.disciplines.join(' · ')}</span>
-          </span>
           {w.year && (
             <span className={styles.metaCell}>
               <span className={styles.label}>{t.yearLabel}</span>
@@ -73,7 +76,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         </div>
 
         {text && (
-          <p className={`${styles.workIntro} ${isProv(w, 'description') ? styles.prov : ''}`}>{text}</p>
+          <p className={`${styles.workIntro}`}>{text}</p>
         )}
 
         <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
