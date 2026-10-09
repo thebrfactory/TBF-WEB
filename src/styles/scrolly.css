@@ -202,6 +202,16 @@
   align-items: flex-end;
   overflow: clip;
   contain: layout paint;
+  /* O conteúdo ancora embaixo; se a esteira + título passarem da viewport, ele
+     cresceria para CIMA, por baixo do cabeçalho fixo. O respiro reserva a
+     altura do nav (mesmo token do .nav) e a esteira nasce depois dele. */
+  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-4));
+}
+
+@media (min-width: 1280px) {
+  .scrolly-hero {
+    padding-top: calc(var(--tbf-nav-height-xl) + var(--tbf-space-4));
+  }
 }
 
 .scrolly-hero__media,
