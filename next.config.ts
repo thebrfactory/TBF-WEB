@@ -78,6 +78,77 @@ const nextConfig: NextConfig = {
   // ─── Redirects ────────────────────────────────────────────────────────────
   async redirects() {
     return [
+      // 7 obras do TAVARÍSTICO arquivadas em 09/10/2026 (#01 CHANGES): URL antiga cai no perfil.
+      {
+        source: '/creators/tavaristico/works/cores-e-sabores',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/cores-e-sabores',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/grocery-store',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/grocery-store',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/bw-mood',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/bw-mood',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/promomeats',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/promomeats',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/meats-content',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/meats-content',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/o-18-years',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/o-18-years',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/creators/tavaristico/works/max-vidros',
+        destination: '/creators/tavaristico',
+        permanent: true,
+      },
+      {
+        source: '/pt/creators/tavaristico/works/max-vidros',
+        destination: '/pt/creators/tavaristico',
+        permanent: true,
+      },
       // Garante canonical URLs sem trailing slash
       {
         source: '/zine/',
