@@ -27,6 +27,7 @@ import {
   MediaPair,
 } from '@/components/scrolly'
 import type { MediaPairItem } from '@/components/scrolly'
+import { GalleryScope } from '@/components/gallery'
 import { MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import type { ManifestoArticle, ManifestoBlock } from '@/content/articles/the-day-brazil-stopped-translating-itself'
 import type { Lang } from '@/lib/i18n'
@@ -39,13 +40,24 @@ interface ArticleScrollyProps {
   lang: Lang
 }
 
+const LIGHTBOX_LABELS = {
+  en: { close: 'Close', prev: 'Previous photo', next: 'Next photo', dialog: 'Photo gallery' },
+  pt: { close: 'Fechar', prev: 'Foto anterior', next: 'Próxima foto', dialog: 'Galeria de fotos' },
+}
+
 export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
+  // Toda foto da matéria abre em tela cheia (galeria, #01 CHANGES 09/10/2026).
+  // A capa fica de fora: é o fundo do título, não uma foto para ver.
+  const lightboxItems = Array.from(
+    new Map(collectPhotos(article.blocks, lang).map((p) => [p.src, { src: p.src, alt: p.alt }])).values(),
+  )
   return (
     // `data-article` existe para a Camada 3 poder afinar UMA materia sem
     // reescrever o motor de todas. Ver a alternancia de peso em scrolly.css.
     <div className="scrolly-article" id="scrolly-article-root" data-article={article.slug}>
       <ArticleLoader />
       <ScrollProgress />
+      <GalleryScope items={lightboxItems} labels={LIGHTBOX_LABELS[lang]}>
 
       {/* A capa deixou de ser `null`. O void preto existia porque o piloto
           nasceu sem foto, e forçar uma imagem ali teria sido mentira visual;
@@ -84,6 +96,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
       })()}
 
       {renderBlocks(article.blocks, lang)}
+      </GalleryScope>
 
       {/* O seletor PT|EN não mora mais aqui: virou a pílula da navegação
           (components/LanguageSwitch), visível em todo o site e permanente no

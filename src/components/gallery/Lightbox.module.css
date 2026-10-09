@@ -1,0 +1,88 @@
+/* Mobile-first. Preto chapado, sem circulos, sem bolinhas. */
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #000;
+  touch-action: pan-y pinch-zoom;
+  overscroll-behavior: contain;
+}
+
+.stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img {
+  width: auto;
+  height: auto;
+  max-width: 100vw;
+  max-height: 100dvh;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.count {
+  position: absolute;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8125rem;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.close,
+.nav {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+}
+.close:hover,
+.nav:hover,
+.close:focus-visible,
+.nav:focus-visible { opacity: 1; }
+.close:focus-visible,
+.nav:focus-visible { outline: 1px solid rgba(255, 255, 255, 0.6); outline-offset: -4px; }
+
+.close svg,
+.nav svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.close {
+  top: max(0.5rem, env(safe-area-inset-top));
+  right: 0.5rem;
+}
+
+.nav { top: 50%; transform: translateY(-50%); }
+.prev { left: 0.25rem; }
+.next { right: 0.25rem; }
+
+@media (min-width: 768px) {
+  .count { left: 1.5rem; }
+  .close { right: 1rem; }
+  .prev { left: 1rem; }
+  .next { right: 1rem; }
+  .close svg, .nav svg { width: 1.75rem; height: 1.75rem; }
+}

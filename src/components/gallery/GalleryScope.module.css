@@ -1,0 +1,3 @@
+/* Sem caixa propria: o wrapper nao altera o layout das fotos. */
+.scope { display: contents; }
+.scope img { cursor: zoom-in; }

@@ -15,19 +15,27 @@
 // SEM ANIMAÇÃO DE ROLAGEM. O motor de scrolly do site existe e é bom, e esta
 // página não o usa: proposta comercial se lê de cima a baixo com pressa, e
 // animação de entrada em catorze fotos vira espera. A página é HTML servido,
-// server component, zero JavaScript de cliente.
+// server component, zero JavaScript de cliente (exceto a galeria em tela cheia, GalleryScope).
 // =============================================================================
 
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { hospitality, SHOTS, HIGHLIGHTS, HIGHLIGHT_PROFILE } from '@/content/i18n/pages/hospitality'
+import { GalleryScope } from '@/components/gallery'
 import { StoryDeck, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import styles from './HospitalityView.module.css'
 
+const LIGHTBOX_LABELS = {
+  en: { close: 'Close', prev: 'Previous photo', next: 'Next photo', dialog: 'Photo gallery' },
+  pt: { close: 'Fechar', prev: 'Foto anterior', next: 'Próxima foto', dialog: 'Galeria de fotos' },
+}
+
 export default function HospitalityView({ lang }: { lang: Lang }) {
   const t = hospitality[lang]
   const path = (p: string) => localizedPath(p, lang)
+  // Toda foto da proposta, do carrossel e da galeria, abre em tela cheia.
+  const lightboxItems = SHOTS.map((s) => ({ src: s.src, alt: s.alt[lang], w: s.w, h: s.h }))
 
   return (
     <main className={styles.page}>
@@ -41,15 +49,17 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
         </Link>
       </div>
 
-      <MediaBelt
-        className={styles.reel}
-        items={SHOTS.map((shot) => ({
-          src: shot.src,
-          alt: shot.alt[lang],
-          role: shot.role[lang],
-        }))}
-        label={t.reelLabel}
-      />
+      <GalleryScope items={lightboxItems} labels={LIGHTBOX_LABELS[lang]}>
+        <MediaBelt
+          className={styles.reel}
+          items={SHOTS.map((shot) => ({
+            src: shot.src,
+            alt: shot.alt[lang],
+            role: shot.role[lang],
+          }))}
+          label={t.reelLabel}
+        />
+      </GalleryScope>
       <p className={styles.reelLabel}>{t.reelLabel}</p>
 
       <div className="container">
@@ -128,6 +138,7 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
               continua no `alt`, que é onde ela serve a quem não vê a imagem.
               Numa página cujo produto É a fotografia, rótulo embaixo de cada
               foto disputa atenção com a foto. */}
+          <GalleryScope items={lightboxItems} labels={LIGHTBOX_LABELS[lang]}>
           <div className={styles.gallery}>
             {SHOTS.map((shot, i) => (
               <figure key={shot.src} className={styles.shot}>
@@ -149,6 +160,7 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
               </figure>
             ))}
           </div>
+          </GalleryScope>
         </section>
 
         {/* A SEÇÃO SEPARADA "E aí vira anúncio" FOI ABSORVIDA pelo bloco do
