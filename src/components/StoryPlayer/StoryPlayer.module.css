@@ -286,13 +286,13 @@
   z-index: 5;
   display: grid;
   place-items: center;
-  width: 1.9rem;
-  height: 1.9rem;
+  width: 44px;
+  height: 44px;
   padding: 0;
-  border: 1px solid rgba(240, 237, 230, 0.32);
-  border-radius: var(--tbf-radius-full);
-  background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(4px);
+  border: 0;
+  background: transparent;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
+  -webkit-tap-highlight-color: transparent;
   color: #f0ede6;
   font-size: 0.85rem;
   line-height: 1;
@@ -308,7 +308,7 @@
 }
 
 .pass:hover {
-  background: rgba(0, 0, 0, 0.7);
+  color: #ff6500;
 }
 
 /* No toque não existe hover: lá eles ficam sempre visíveis, senão a peça fica
@@ -349,21 +349,21 @@
   display: grid;
   place-items: center;
   padding: 0;
-  border: 1px solid rgba(240, 237, 230, 0.25);
-  border-radius: var(--tbf-radius-full);
+  /* Sem círculo (pedido do fundador, CHANGES #01 09/10): só a seta, mais
+     discreta; a caixa de 44px segue como alvo de toque. */
+  border: 0;
   background: transparent;
-  color: #f0ede6;
+  color: rgba(240, 237, 230, 0.55);
   font-size: 0.85rem;
   line-height: 1;
   cursor: pointer;
-  transition: background 240ms cubic-bezier(0.23, 1, 0.32, 1),
-              border-color 240ms cubic-bezier(0.23, 1, 0.32, 1);
+  -webkit-tap-highlight-color: transparent;
+  transition: color 240ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dotArrow:hover,
 .dotArrow:focus-visible {
-  background: rgba(255, 101, 0, 0.15);
-  border-color: #ff6500;
+  color: #ff6500;
 }
 
 /* Faixa de pontos: rola de lado exatamente como .thumbs, mesmo raciocínio de
@@ -400,17 +400,17 @@
 
 .dot::before {
   content: '';
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   border-radius: 999px;
-  background: rgba(240, 237, 230, 0.35);
+  background: rgba(240, 237, 230, 0.22);
   transition: background 240ms cubic-bezier(0.23, 1, 0.32, 1),
               transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dotOn::before {
-  background: #ff6500;
-  transform: scale(1.5);
+  background: rgba(255, 101, 0, 0.7);
+  transform: scale(1.25);
 }
 
 .dot:hover::before,

@@ -1997,17 +1997,14 @@ export function PitchV2Client() {
           align-items: center;
           justify-content: center;
           background: transparent;
-          border: 1px solid rgba(240,237,230,0.25);
-          border-radius: var(--tbf-radius-full);
+          border: 0;
           color: ${PAPER};
           font-size: 1rem;
           cursor: pointer;
-          transition: background-color 300ms ${EASE}, border-color 300ms ${EASE}, opacity 300ms ${EASE}, transform 300ms ${EASE};
+          transition: color 300ms ${EASE}, opacity 300ms ${EASE}, transform 300ms ${EASE};
         }
         .p2-nav__btn:hover:not(:disabled) {
-          background: ${ACCENT};
-          border-color: ${ACCENT};
-          color: #000000;
+          color: ${ACCENT};
         }
         .p2-nav__btn:active:not(:disabled) { transform: scale(0.94); }
         .p2-nav__btn:disabled { opacity: 0.25; cursor: default; }
