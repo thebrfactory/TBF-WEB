@@ -909,12 +909,12 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  padding: var(--tbf-space-10, 2.5rem) var(--tbf-grid-margin-sm) calc(var(--tbf-space-3) + env(safe-area-inset-bottom));
+  padding: var(--tbf-space-10, 2.5rem) var(--tbf-grid-margin-sm) calc(var(--tbf-space-3) + 0.75rem + env(safe-area-inset-bottom));
   background: linear-gradient(
     to top,
-    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 96%, #000) 0%,
-    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 88%, transparent) 40%,
-    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 50%, transparent) 72%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 82%, #000) 0%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 96%, transparent) 40%,
+    color-mix(in srgb, var(--tbf-nav-bg-scrolled) 78%, transparent) 72%,
     transparent 100%
   );
   opacity: 1;
@@ -925,8 +925,8 @@
 .basedInText {
   margin: 0;
   font-family: var(--mono);
-  font-size: var(--tav-text-micro);
-  font-weight: 400;
+  font-size: 0.8rem;
+  font-weight: 100; /* Brother1816 Thin, o mais fino da familia */
   letter-spacing: 0.08em;
   text-transform: uppercase;
   text-align: center;
