@@ -398,6 +398,10 @@ export const WORKS: Work[] = [
       ],
     },
   },
+]
+
+// arquivadas em 09/10/2026 por ordem do fundador (#01 CHANGES)
+export const ARCHIVED_WORKS: Work[] = [
   {
     slug: 'bahia-em-cores-quentes',
     index: '18',
@@ -433,10 +437,6 @@ export const WORKS: Work[] = [
       ],
     },
   },
-]
-
-// arquivadas em 09/10/2026 por ordem do fundador (#01 CHANGES)
-export const ARCHIVED_WORKS: Work[] = [
   {
     slug: 'o-18-years',
     index: '03',
