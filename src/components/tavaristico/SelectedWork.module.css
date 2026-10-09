@@ -82,6 +82,9 @@ a.ventureName:focus-visible {
    iguais, anda -50%. Duracao proporcional ao numero de tags (lento). */
 .ticker {
   display: block;
+  align-self: flex-start;
+  /* mobile ate 60% do corpo; desktop 1/3 (ajuste 09/10/2026) */
+  width: 60%;
   overflow: hidden;
   font-family: var(--mono);
   font-size: var(--tav-text-micro);
@@ -89,8 +92,8 @@ a.ventureName:focus-visible {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
 }
 .tickerTrack {
   display: flex;
@@ -100,6 +103,9 @@ a.ventureName:focus-visible {
 .ticker:hover .tickerTrack { animation-play-state: paused; }
 .tickerHalf { display: flex; flex: 0 0 auto; }
 .tickerItem { flex: 0 0 auto; }
+@media (min-width: 768px) {
+  .ticker { width: 33.333%; }
+}
 @keyframes tickerMove {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -174,8 +180,6 @@ a.ventureName:focus-visible {
   position: relative;
   width: 1.4rem;
   height: 1.4rem;
-  border-radius: var(--tbf-radius-full);
-  border: 1px solid currentColor;
   flex: 0 0 auto;
 }
 .moreIcon::before,
@@ -184,7 +188,7 @@ a.ventureName:focus-visible {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 0.6rem;
+  width: 0.8rem;
   height: 1px;
   background: currentColor;
   transform: translate(-50%, -50%);

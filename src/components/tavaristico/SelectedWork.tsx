@@ -47,8 +47,8 @@ const OPEN_LABEL: Record<Lang, string> = {
 }
 
 const MORE_LABEL: Record<Lang, string> = {
-  pt: 'Sobre o projeto',
-  en: 'About the project',
+  pt: 'Sobre',
+  en: 'About',
 }
 
 // Letreiro de tags: a lista se repete ate encher a faixa e o trilho anda 50%

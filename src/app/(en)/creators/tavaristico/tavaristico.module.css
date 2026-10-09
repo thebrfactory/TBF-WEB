@@ -372,9 +372,8 @@
   object-fit: cover;
   flex-shrink: 0;
 }
-/* Brilho do selo (pedido 09/10/2026): a mesma batida de farol do pop-up de
-   e-mail (1700ms, luz subindo e caindo), em degradê de amarelo escuro para
-   claro. O degradê gira atrás do selo e o halo respira. */
+/* Brilho do selo (ajuste 09/10/2026): discreto, so um fresh. Respira em 7s,
+   opacidade 0.1 a 0.3, sem escala nem giro. */
 .representedByOrb {
   position: relative;
   display: inline-flex;
@@ -386,20 +385,20 @@
 .representedByOrb::before {
   content: '';
   position: absolute;
-  inset: -3px;
+  inset: -2px;
   border-radius: var(--tbf-radius-full);
   background: linear-gradient(135deg, #a87400 0%, #e0a800 45%, #ffe680 100%);
-  filter: blur(3px);
-  opacity: 0.9;
-  animation: tav-orb-beacon 1700ms ease-in-out infinite;
+  filter: blur(2px);
+  opacity: 0.1;
+  animation: tav-orb-beacon 7s ease-in-out infinite;
 }
 .representedByOrb > img { position: relative; }
 @keyframes tav-orb-beacon {
-  0%, 100% { opacity: 1; transform: scale(1.25) rotate(0deg); }
-  50% { opacity: 0.35; transform: scale(1) rotate(180deg); }
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.3; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .representedByOrb::before { animation: none; opacity: 0.8; transform: scale(1.15); }
+  .representedByOrb::before { animation: none; opacity: 0.2; }
 }
 /* ".TBF." no peso mais alto da família. */
 .representedByBrand {
