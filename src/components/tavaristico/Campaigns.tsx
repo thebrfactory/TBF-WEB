@@ -132,7 +132,7 @@ export function Campaigns({
         return (
           <div key={c.index} className={styles.item}>
             <StoryRing
-              cover={cover?.src ?? ''}
+              cover={c.cover ?? cover?.src ?? ''}
               alt=""
               seen={isSeen}
               ariaLabel={ariaLabel}
