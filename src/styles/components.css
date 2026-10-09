@@ -222,16 +222,13 @@
   gap: 0;
   padding: var(--tbf-lang-switch-pad);
   background: none;
-  /* CONTORNO CONCENTRICO (09/10/2026): 1px a 18% de opacidade. A folga ate a
+  /* CONTORNO CONCENTRICO (09/10/2026): 1px a 40% de opacidade (a do antigo
+     hover, agora fixa em repouso por pedido do fundador). A folga ate a
      bolinha e a mesma (pad) em cima, embaixo e nos lados, e o raio da pilula e
      o da bolinha mais a folga, entao as duas curvas tem o mesmo centro. */
-  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 40%, transparent);
   border-radius: var(--tbf-radius-full);
   transition: border-color var(--tbf-duration-raw-400) var(--tbf-easing-raw-ease-out);
-}
-
-.lang-switch:hover {
-  border-color: color-mix(in srgb, var(--tbf-text-primary) 40%, transparent);
 }
 
 @media (min-width: 1280px) {
