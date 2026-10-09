@@ -37,7 +37,8 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
   return (
     <main className={styles.page}>
       <article className={`${styles.work} container`}>
-        <Link href={path('/creators/tavaristico#work')} className={styles.crumb}>
+        {/* #01 CHANGES 09/10: voltar ao portfólio na mesma guia (ordem do fundador) */}
+        <Link href={path('/creators/tavaristico#work')} target="_self" newTabIcon={false} className={styles.crumb}>
           {t.crumb}
         </Link>
 
