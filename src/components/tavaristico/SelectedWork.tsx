@@ -156,7 +156,9 @@ function VentureRow({
         aria-controls={descId}
         onClick={() => setOpen((o) => !o)}
       >
-        <span className={styles.moreIcon} aria-hidden="true" />
+        <svg className={styles.moreIcon} viewBox="0 0 10 10" aria-hidden="true" focusable="false">
+          <path d="M2 0.5 L9 5 L2 9.5 Z" fill="currentColor" />
+        </svg>
         {MORE_LABEL[lang]}
       </button>
       <span id={descId} className={`${styles.descWrap}${open ? ` ${styles.descWrapOpen}` : ''}`}>

@@ -98,7 +98,7 @@ a.ventureName:focus-visible {
 .tickerTrack {
   display: flex;
   width: max-content;
-  animation: tickerMove calc(var(--ticker-n, 2) * 3 * 7s) linear infinite;
+  animation: tickerMove calc(var(--ticker-n, 2) * 3 * 3.5s) linear infinite;
 }
 .ticker:hover .tickerTrack { animation-play-state: paused; }
 .tickerHalf { display: flex; flex: 0 0 auto; }
@@ -155,6 +155,7 @@ a.ventureName:focus-visible {
   margin: 0;
   position: relative;
   align-self: flex-start;
+  min-height: 1.4rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -170,32 +171,21 @@ a.ventureName:focus-visible {
 .moreBtn::before {
   content: '';
   position: absolute;
-  inset: -14px -8px;
+  inset: -16px -8px;
 }
 .moreBtn:hover,
 .moreBtn:focus-visible { color: var(--tbf-accent); }
 .moreBtn:focus-visible { outline: 2px solid var(--tbf-color-parchment); outline-offset: 4px; }
 
 .moreIcon {
-  position: relative;
-  width: 1.4rem;
-  height: 1.4rem;
+  display: block;
+  width: 0.55rem;
+  height: 0.55rem;
   flex: 0 0 auto;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease-out;
 }
-.moreIcon::before,
-.moreIcon::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0.8rem;
-  height: 1px;
-  background: currentColor;
-  transform: translate(-50%, -50%);
-  transition: transform 0.3s ease;
-}
-.moreIcon::after { transform: translate(-50%, -50%) rotate(90deg); }
-.moreBtn[aria-expanded='true'] .moreIcon::after { transform: translate(-50%, -50%) rotate(0deg); }
+.moreBtn[aria-expanded='true'] .moreIcon { transform: rotate(90deg); }
 
 .descWrap {
   display: grid;
@@ -215,6 +205,5 @@ a.ventureName:focus-visible {
 .descWrapOpen .descInner { padding-top: 0.35rem; }
 @media (prefers-reduced-motion: reduce) {
   .descWrap,
-  .moreIcon::before,
-  .moreIcon::after { transition: none; }
+  .moreIcon { transition: none; }
 }
