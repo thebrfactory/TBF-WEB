@@ -152,12 +152,6 @@ export const WORKS: Work[] = [
       gallery: [
         `${base}/virtuosa/pp-02.webp`,
         `${base}/virtuosa/pp-drop2.gif`,
-        `${base}/virtuosa/lauda-inst-01.webp`,
-        `${base}/virtuosa/lauda-inst-02.webp`,
-        `${base}/virtuosa/lauda-cat-02.webp`,
-        `${base}/virtuosa/lauda-cat-03.webp`,
-        `${base}/virtuosa/lauda-cat-04.webp`,
-        `${base}/virtuosa/lauda-cat-05.webp`,
       ],
     },
     highlights: [
@@ -168,8 +162,8 @@ export const WORKS: Work[] = [
         descriptionEN: "Institutional portraits for LAUDA's Virtuosa campaign.",
         descriptionPT: 'Retratos institucionais da campanha Virtuosa, da LAUDA.',
         frames: [
-          { src: `${base}/virtuosa/lauda-inst-01.webp`, alt: 'Retrato institucional da LAUDA, mulher de preto.', role: 'Institucional' },
           { src: `${base}/virtuosa/lauda-inst-02.webp`, alt: 'Segundo retrato institucional da LAUDA, mulher de preto.', role: 'Institucional' },
+          { src: `${base}/virtuosa/lauda-inst-01.webp`, alt: 'Retrato institucional da LAUDA, mulher de preto.', role: 'Institucional' },
         ],
       },
       {
@@ -179,20 +173,20 @@ export const WORKS: Work[] = [
         descriptionEN: "Category pieces for LAUDA's Virtuosa campaign.",
         descriptionPT: 'Peças de categoria da campanha Virtuosa, da LAUDA.',
         frames: [
+          {
+            src: `${base}/virtuosa/lauda-cat-00-poster.webp`,
+            alt: 'Capa da categoria LAUDA, shop por categoria.',
+            role: 'Categoria',
+            ms: 4000,
+            video: {
+              av1: `${base}/virtuosa/lauda-cat-00.av1.mp4`,
+              h264: `${base}/virtuosa/lauda-cat-00.mp4`,
+            },
+          },
           { src: `${base}/virtuosa/lauda-cat-02.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
           { src: `${base}/virtuosa/lauda-cat-03.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
           { src: `${base}/virtuosa/lauda-cat-04.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
           { src: `${base}/virtuosa/lauda-cat-05.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
-          ...(['00', '01', '0001'] as const).map((n) => ({
-            src: `${base}/virtuosa/lauda-cat-${n}-poster.webp`,
-            alt: 'Peça em movimento da campanha Virtuosa.',
-            role: 'Categoria',
-            ms: 4000,
-            video: {
-              av1: `${base}/virtuosa/lauda-cat-${n}.av1.mp4`,
-              h264: `${base}/virtuosa/lauda-cat-${n}.mp4`,
-            },
-          })),
         ],
       },
     ],
