@@ -35,9 +35,9 @@ const en = {
 
   manifesto: {
     eyebrow: 'Manifesto',
-    quote: ['“What about', 'this Brazilian label', 'called .TBF.?', 'It’s a brand?”'] as [string, string, string, string],
-    line: "We don't copy Paris, we print over it.",
-    cta: 'READ THE MANIFESTO',
+    quote: ['Culture is', 'raw material.', 'Brazil is', 'the source code.'] as [string, string, string, string],
+    line: 'Brazil never lacked culture. It lacked machines.',
+    cta: 'MANIFESTO',
   },
 }
 
@@ -70,9 +70,9 @@ const pt: typeof en = {
 
   manifesto: {
     eyebrow: 'Manifesto',
-    quote: ['“E essa tal', 'label brasileira', 'chamada .TBF.?', 'É uma marca?”'],
-    line: 'A gente não copia Paris, imprime por cima.',
-    cta: 'LEIA O MANIFESTO',
+    quote: ['A cultura é', 'matéria-prima.', 'O Brasil é', 'o código-fonte.'],
+    line: 'Cultura nunca faltou ao Brasil. Faltou máquina.',
+    cta: 'MANIFESTO',
   },
 }
 

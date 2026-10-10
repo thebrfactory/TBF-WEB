@@ -250,12 +250,12 @@ const en = {
   },
   eyebrow: 'Creators · Tavarístico · Proposal',
   crumb: '← Portfolio',
-  title: 'Your listing looks like everyone else’s listing.',
+  title: 'Ô de casa! Somebody just arrived.',
   deck:
-    'Every property on Booking was photographed the same way: the bed head-on, the bathroom from the corner, the façade at eleven in the morning. Twenty identical listings, and the guest picks on price, because price is the only thing left that differs.',
-  thesis: 'A property that shows culture stops competing on price.',
+    'Ô de Casa is a hostel in São Paulo and the first client of .TBF. A mural at the door, plants in the hallway, a hammock, a sax over the DJ deck, a room in Brazil shirts for the match. This is the house, and this is why people stay.',
+  thesis: 'Make Brazil impossible to ignore, one house at a time.',
   thesisSub:
-    'Not because it is cheaper. Because it is the only one with that.',
+    'That is what .TBF. does. It started at Ô de Casa.',
 
   argumentTitle: 'What the engines actually reward',
   argument: [
@@ -337,11 +337,11 @@ const pt: typeof en = {
   },
   eyebrow: 'Creators · Tavarístico · Proposta',
   crumb: '← Portfólio',
-  title: 'O seu anúncio está igual ao anúncio de todo mundo.',
+  title: 'Ô de casa! Chegou alguém.',
   deck:
-    'Toda hospedagem no Booking foi fotografada do mesmo jeito: a cama de frente, o banheiro de canto, a fachada às onze da manhã. Vinte anúncios idênticos, e o hóspede escolhe por preço, porque preço é a única coisa que sobrou diferente.',
-  thesis: 'Hospedagem que mostra cultura para de competir por preço.',
-  thesisSub: 'Não por ser mais barata. Por ser a única que tem aquilo.',
+    'O Ô de Casa é um hostel em São Paulo e o primeiro cliente da .TBF. Um mural na porta, plantas no corredor, uma rede, um sax em cima da mesa de DJ, uma sala de camisa do Brasil para o jogo. Esta é a casa, e é por isso que o povo fica.',
+  thesis: 'Tornar o Brasil impossível de ignorar, uma casa de cada vez.',
+  thesisSub: 'É o que a .TBF. faz. Começou no Ô de Casa.',
 
   argumentTitle: 'O que os motores realmente premiam',
   argument: [
