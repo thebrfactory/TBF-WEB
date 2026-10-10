@@ -2,14 +2,14 @@
 
 // Lightbox: pop-up centrado na linguagem do NewsletterPopup (backdrop com blur,
 // card com borda e raio, entrada escala+fade, fechar em X fino). Foto inteira
-// (contain), contador 03 / 15, setas so com icone, teclado, swipe, zoom
-// (duplo toque, pinch, arrastar), miniaturas no desktop, crossfade, pre-carga
-// da vizinha, foco preso e scroll do body travado. Reutilizavel: recebe a
+// (contain, caixa 100% do palco), contador 03 / 15, setas so com icone, teclado,
+// swipe, zoom (clique no desktop, duplo toque no celular, pinch, arrastar),
+// miniaturas no desktop, crossfade so em opacity que espera a foto carregar,
+// pre-carga e decode das vizinhas, foco preso e scroll do body travado. Reutilizavel: recebe a
 // lista e o indice; quem abre e quem fecha e o pai (ver GalleryScope).
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import Image from 'next/image'
 import styles from './Lightbox.module.css'
 
 export interface LightboxItem {
@@ -22,7 +22,7 @@ export interface LightboxItem {
 
 const SWIPE_PX = 50
 const MAX_ZOOM = 4
-const DOUBLE_ZOOM = 2.5
+const DOUBLE_ZOOM = 2
 const DOUBLE_TAP_MS = 300
 const EXIT_MS = 220
 
@@ -46,13 +46,16 @@ export function Lightbox({
   const n = items.length
   const rootRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
-  const imgRef = useRef<HTMLDivElement>(null)
   const thumbsRef = useRef<HTMLDivElement>(null)
 
   const [mounted, setMounted] = useState(false)
   const [shown, setShown] = useState(false)
   const [prevIdx, setPrevIdx] = useState<number | null>(null)
+  const [ready, setReady] = useState(false)
+  const [panning, setPanning] = useState(false)
   const lastIdx = useRef(index)
+  const stageRef = useRef<HTMLDivElement>(null)
+  const imgEl = useRef<HTMLImageElement | null>(null)
   const [zoom, setZoom] = useState({ s: 1, x: 0, y: 0 })
   const zoomRef = useRef(zoom)
   zoomRef.current = zoom
@@ -81,16 +84,22 @@ export function Lightbox({
     [index, n, onIndexChange],
   )
 
-  // Troca de foto: guarda a anterior para o crossfade e zera o zoom.
+  // Troca de foto: guarda a anterior para o crossfade (ate a nova carregar) e zera o zoom.
   useEffect(() => {
     if (lastIdx.current !== index) {
       setPrevIdx(lastIdx.current)
       lastIdx.current = index
+      setReady(false)
       setZoom({ s: 1, x: 0, y: 0 })
-      const t = window.setTimeout(() => setPrevIdx(null), 400)
-      return () => window.clearTimeout(t)
     }
   }, [index])
+
+  // Anterior sai so depois que a nova ficou visivel.
+  useEffect(() => {
+    if (!ready || prevIdx === null) return
+    const t = window.setTimeout(() => setPrevIdx(null), 320)
+    return () => window.clearTimeout(t)
+  }, [ready, prevIdx])
 
   // Scroll do body travado, sem salto da barra; foco volta a quem abriu.
   useEffect(() => {
@@ -144,13 +153,19 @@ export function Lightbox({
     return () => document.removeEventListener('keydown', onKey)
   }, [go, requestClose])
 
-  // Pre-carrega vizinhas (mesma URL que o next/image pede).
+  // Pre-carrega e decodifica vizinhas (mesma URL que o <img> usa).
+  const preloaded = useRef(new Map<string, HTMLImageElement>())
   useEffect(() => {
     if (n < 2) return
-    ;[1, -1].forEach((d) => {
-      const it = items[(index + d + n) % n]
+    const order = [0, 1, -1, 2, -2]
+    order.forEach((d) => {
+      const it = items[(((index + d) % n) + n) % n]
+      if (!it || preloaded.current.has(it.src)) return
       const img = new window.Image()
+      img.decoding = 'async'
       img.src = optimized(it.src, 1920)
+      preloaded.current.set(it.src, img)
+      img.decode?.().catch(() => {})
     })
   }, [index, items, n])
 
@@ -167,13 +182,33 @@ export function Lightbox({
   const lastTap = useRef(0)
   const [dragY, setDragY] = useState(0)
 
+  // Limite do arrasto: usa o tamanho real da foto desenhada (contain), nao o do palco.
   const clamp = (s: number, x: number, y: number) => {
-    const box = imgRef.current
-    const w = box?.offsetWidth ?? 0
-    const h = box?.offsetHeight ?? 0
-    const mx = Math.max(0, ((s - 1) * w) / 2)
-    const my = Math.max(0, ((s - 1) * h) / 2)
+    const st = stageRef.current
+    const W = st?.clientWidth ?? 0
+    const H = st?.clientHeight ?? 0
+    const im = imgEl.current
+    const nw = im?.naturalWidth || W
+    const nh = im?.naturalHeight || H
+    const fit = nw && nh ? Math.min(W / nw, H / nh) : 1
+    const dw = nw * fit
+    const dh = nh * fit
+    const mx = Math.max(0, (dw * s - W) / 2)
+    const my = Math.max(0, (dh * s - H) / 2)
     return { s, x: Math.min(mx, Math.max(-mx, x)), y: Math.min(my, Math.max(-my, y)) }
+  }
+
+  // Zoom centrado no ponto (cx, cy) em px do palco: o ponto fica sob o dedo/cursor.
+  const zoomAt = (cx: number, cy: number) => {
+    if (zoomRef.current.s > 1) {
+      setZoom({ s: 1, x: 0, y: 0 })
+      return
+    }
+    const st = stageRef.current
+    if (!st) return
+    const px = cx - st.clientWidth / 2
+    const py = cy - st.clientHeight / 2
+    setZoom(clamp(DOUBLE_ZOOM, px * (1 - DOUBLE_ZOOM), py * (1 - DOUBLE_ZOOM)))
   }
 
   const onPointerDown = (e: React.PointerEvent) => {
@@ -205,6 +240,7 @@ export function Lightbox({
     const dy = e.clientY - st.y
     if (Math.abs(dx) > 6 || Math.abs(dy) > 6) st.moved = true
     if (zoomRef.current.s > 1) {
+      if (st.moved) setPanning(true)
       setZoom(clamp(zoomRef.current.s, st.px + dx, st.py + dy))
     } else if (e.pointerType !== 'mouse' && dy > 0 && Math.abs(dy) > Math.abs(dx)) {
       setDragY(dy)
@@ -223,18 +259,27 @@ export function Lightbox({
     const st = start.current
     start.current = null
     setDragY(0)
+    setPanning(false)
     if (!st) return
     const dx = e.clientX - st.x
     const dy = e.clientY - st.y
 
     if (!st.moved) {
-      // Toque: duas vezes seguidas alterna o zoom.
-      const now = Date.now()
-      if (now - lastTap.current < DOUBLE_TAP_MS) {
-        lastTap.current = 0
-        setZoom(zoomRef.current.s > 1 ? { s: 1, x: 0, y: 0 } : clamp(DOUBLE_ZOOM, 0, 0))
+      const rect = stageRef.current?.getBoundingClientRect()
+      const cx = e.clientX - (rect?.left ?? 0)
+      const cy = e.clientY - (rect?.top ?? 0)
+      if (e.pointerType === 'mouse') {
+        // Mouse: um clique alterna o zoom no ponto clicado.
+        zoomAt(cx, cy)
       } else {
-        lastTap.current = now
+        // Toque: duas vezes seguidas alterna o zoom.
+        const now = Date.now()
+        if (now - lastTap.current < DOUBLE_TAP_MS) {
+          lastTap.current = 0
+          zoomAt(cx, cy)
+        } else {
+          lastTap.current = now
+        }
       }
       return
     }
@@ -259,7 +304,7 @@ export function Lightbox({
     >
       <div className={styles.backdrop} onClick={requestClose} aria-hidden="true" />
 
-      <div className={styles.card} style={dragY ? { transform: `translateY(${dragY}px)` } : undefined}>
+      <div className={styles.card} style={dragY ? { transform: `translateY(${dragY}px)`, transition: 'none' } : undefined}>
         <div className={styles.bar}>
           <span className={styles.count} aria-live="polite">
             {pad(index + 1)} / {pad(n)}
@@ -272,6 +317,7 @@ export function Lightbox({
         </div>
 
         <div
+          ref={stageRef}
           className={`${styles.stage} ${zoomed ? styles.zoomed : ''}`}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
@@ -280,36 +326,32 @@ export function Lightbox({
         >
           {prev && (
             <div key={`p-${prevIdx}`} className={`${styles.layer} ${styles.out}`} aria-hidden="true">
-              <Image
-                src={prev.src}
-                alt=""
-                width={prev.w ?? 1600}
-                height={prev.h ?? 1200}
-                sizes="(min-width: 768px) 1000px, 100vw"
-                quality={75}
-                draggable={false}
-                className={styles.img}
-              />
+              <div className={styles.zoomBox}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={optimized(prev.src, 1920)} alt="" decoding="async" draggable={false} className={styles.img} />
+              </div>
             </div>
           )}
-          <div key={`c-${index}`} className={`${styles.layer} ${prev ? styles.in : ''}`}>
+          <div key={`c-${index}`} className={`${styles.layer} ${ready ? styles.in : styles.wait}`}>
             <div
-              ref={imgRef}
               className={styles.zoomBox}
               style={{
-                transform: `translate(${zoom.x}px, ${zoom.y}px) scale(${zoom.s})`,
-                transition: pointers.current.size ? 'none' : undefined,
+                transform: `translate3d(${zoom.x}px, ${zoom.y}px, 0) scale(${zoom.s})`,
+                transition: panning ? 'none' : undefined,
               }}
             >
-              <Image
-                src={it.src}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                ref={(el) => {
+                  imgEl.current = el
+                  if (el && el.complete && el.naturalWidth) setReady(true)
+                }}
+                src={optimized(it.src, 1920)}
                 alt={it.alt}
-                width={it.w ?? 1600}
-                height={it.h ?? 1200}
-                sizes="(min-width: 768px) 1000px, 100vw"
-                quality={75}
-                priority
+                decoding="async"
                 draggable={false}
+                onLoad={() => setReady(true)}
+                onError={() => setReady(true)}
                 className={styles.img}
               />
             </div>

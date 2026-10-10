@@ -116,31 +116,25 @@
 .layer {
   position: absolute;
   inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   pointer-events: none;
 }
-.in { animation: fadeIn 0.35s ease both; }
-.out { animation: fadeOut 0.35s ease both; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+/* Crossfade so em opacity. A nova espera a foto carregar (.wait) para nao piscar. */
+.wait { opacity: 0; }
+.in { opacity: 1; transition: opacity 0.28s ease; }
+.out { opacity: 1; }
 
+/* Caixa ocupa o palco todo: a foto (contain) usa o maior tamanho possivel sem corte. */
 .zoomBox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 100%;
-  max-height: 100%;
-  transition: transform 0.25s ease;
+  position: absolute;
+  inset: 0;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1);
   will-change: transform;
 }
 
 .img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   -webkit-user-drag: none;
 }
@@ -221,7 +215,7 @@
   .backdrop,
   .card,
   .zoomBox { transition: none; }
-  .in, .out { animation: none; }
+  .in { transition: none; }
   .out { display: none; }
   .close:hover { transform: none; }
 }
