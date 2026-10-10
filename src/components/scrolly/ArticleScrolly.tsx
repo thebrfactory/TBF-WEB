@@ -87,10 +87,16 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
               eyebrow={article.category}
               image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
               lang={lang}
-              belt={beltInHeader ? strip : undefined}
-              beltLabel={beltInHeader ? article.heroBelt?.[lang] : undefined}
             />
             {hasBelt && !beltInHeader && <MediaBelt className="scrolly-reel" items={strip} />}
+            {/* 10/10/2026, fundador: a esteira com legenda sai do topo do Hero e
+                ocupa o vão entre o fim do Hero e a primeira seção. Hero limpo. */}
+            {beltInHeader && (
+              <section className="scrolly-reel-gap" aria-label={article.heroBelt?.[lang]}>
+                <MediaBelt className="scrolly-reel" items={strip} label={article.heroBelt?.[lang]} />
+                <p className="scrolly-reel-gap__caption">{article.heroBelt?.[lang]}</p>
+              </section>
+            )}
           </>
         )
       })()}
