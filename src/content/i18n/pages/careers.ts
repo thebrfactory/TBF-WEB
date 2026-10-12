@@ -18,7 +18,12 @@ const en = {
     tag: 'Careers',
     title: 'We are building the Factory.',
     // <strong>.THE BRAZILIAN FACTORY.</strong> + deckSuffix
-    deckSuffix: 'is building a creative company born in Brazil and designed to operate globally. We are not building a big team. We are building a capable one.',
+    deckSuffix: 'is building a capable team, not a big one.',
+    openRoles: 'open roles',
+    where: 'São Paulo / remote',
+    cta: 'See open roles',
+    howLabel: 'How we work',
+    detailsLabel: 'Details',
     lines: ['Small inside.', 'Big outside.'],
   },
 
@@ -181,7 +186,12 @@ const pt: typeof en = {
   hero: {
     tag: 'Careers',
     title: 'Estamos construindo a Factory.',
-    deckSuffix: 'está construindo uma empresa criativa nascida no Brasil e desenhada para operar globalmente. Não estamos montando um time grande. Estamos montando um time capaz.',
+    deckSuffix: 'está montando um time capaz, não um time grande.',
+    openRoles: 'vagas abertas',
+    where: 'São Paulo / remoto',
+    cta: 'Ver vagas abertas',
+    howLabel: 'Como trabalhamos',
+    detailsLabel: 'Detalhes',
     lines: ['Pequena por dentro.', 'Grande por fora.'],
   },
 

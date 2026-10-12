@@ -1,0 +1,182 @@
+/* /careers: vagas primeiro, mobile-first. Sem dividers; respiro e peso separam. */
+
+.hero {
+  padding-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-8));
+  padding-bottom: var(--tbf-space-6);
+}
+
+.heroInner {
+  max-width: var(--tbf-grid-max-xl);
+  margin-inline: auto;
+}
+
+.title {
+  font-family: var(--tbf-type-display-xl-family);
+  font-size: clamp(2.25rem, 9vw, 4.5rem);
+  font-weight: 800;
+  line-height: 0.95;
+  letter-spacing: var(--tbf-type-display-xl-ls);
+  color: #fff;
+  margin: 0 0 var(--tbf-space-4);
+  overflow-wrap: break-word;
+}
+
+.deck {
+  font-family: var(--tbf-type-deck-family);
+  font-size: var(--tbf-type-body-size-sm);
+  line-height: var(--tbf-type-deck-lh);
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 var(--tbf-space-5);
+  max-width: 40rem;
+}
+
+.evidence {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tbf-space-3) var(--tbf-space-5);
+}
+
+.count {
+  font-family: var(--tbf-type-h2-family);
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.count span {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.roles {
+  padding-bottom: var(--tbf-space-8);
+  scroll-margin-top: calc(var(--tbf-nav-height-sm) + var(--tbf-space-4));
+}
+
+.rolesInner {
+  max-width: var(--tbf-grid-max-xl);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-8);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-3);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-3);
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--tbf-radius-card);
+  padding: var(--tbf-space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+}
+
+.roleTitle {
+  font-family: var(--tbf-type-h2-family);
+  font-size: clamp(1.375rem, 4.5vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  color: #fff;
+  margin: 0;
+}
+
+.line {
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-body-size-sm);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 0;
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: var(--tbf-space-2);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--tbf-space-4);
+}
+
+.details summary {
+  cursor: pointer;
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  padding-block: var(--tbf-space-2);
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.details summary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+.details[open] summary {
+  color: #fff;
+}
+
+.detailsBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+  padding-top: var(--tbf-space-2);
+}
+
+.future {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tbf-space-3);
+}
+
+.futureItem {
+  font-family: var(--tbf-type-body-family);
+  font-size: var(--tbf-type-body-size-sm);
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}
+
+.futureItem strong {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 800;
+}
+
+/* Blocos de "How we work" mais próximos: o Block do institutional tem
+   respiro grande, aqui é reduzido sem tocar no componente compartilhado. */
+.rest {
+  padding-top: var(--tbf-space-8);
+}
+
+.rest > section {
+  padding-block: clamp(1.5rem, 4vw, 3rem) !important;
+}
+
+@media (min-width: 768px) {
+  .list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .future {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .card {
+    padding: var(--tbf-space-6);
+  }
+}
