@@ -5,7 +5,8 @@
 // Zero sidebar · Zero distração
 // =============================================================================
 
-import type { CSSProperties } from 'react'
+import { Fragment, type CSSProperties } from 'react'
+import { EditorialPhoto, type EditorialPhotoProps } from '@/components/EditorialPhoto/EditorialPhoto'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { manifesto } from '@/content/i18n/pages/manifesto'
 import { localizedPath, type Lang } from '@/lib/i18n'
@@ -60,6 +61,15 @@ const STANZA_STYLE: Record<'mark' | 'lead' | 'hit' | 'beat' | 'body' | 'sign', C
     marginBottom: 'var(--tbf-space-12)',
   },
 }
+
+// Fotos de respiro: `after` é o índice da estrofe que a antecede. Alt em `t.photos`.
+const CS = '/images/editorial/country-side'
+const PHOTOS: { after: number; src: string; variant: EditorialPhotoProps['variant']; side?: EditorialPhotoProps['side'] }[] = [
+  { after: 3, src: `${CS}/capa.webp`, variant: 'wide' },
+  { after: 6, src: `${CS}/07-mouro-azul-cavalo.webp`, variant: 'half', side: 'right' },
+  { after: 9, src: `${CS}/08-cavalhada-panorama.webp`, variant: 'wide' },
+  { after: 12, src: `${CS}/15-entardecer.webp`, variant: 'half', side: 'left' },
+]
 
 export default function ManifestoView({ lang }: { lang: Lang }) {
   const t = manifesto[lang]
@@ -117,20 +127,28 @@ export default function ManifestoView({ lang }: { lang: Lang }) {
         style={{ paddingInline: 'var(--tbf-grid-margin-sm)' }}
       >
         <div style={{ maxWidth: 'min(var(--tbf-grid-max-xl), 42.5rem)', marginInline: 'auto' }}>
-          {t.body.map((stanza, i) => (
-            <p
-              key={i}
-              className="manifesto-fragment"
-              lang={lang === 'pt' ? 'pt-BR' : 'en'}
-              style={STANZA_STYLE[stanza.tone]}
-            >
-              {stanza.lines.map((line, j) => (
-                <span key={j} style={{ display: 'block' }}>
-                  {line}
-                </span>
-              ))}
-            </p>
-          ))}
+          {t.body.map((stanza, i) => {
+            const photoIdx = PHOTOS.findIndex((ph) => ph.after === i)
+            const photo = PHOTOS[photoIdx]
+            return (
+              <Fragment key={i}>
+                <p
+                  className="manifesto-fragment"
+                  lang={lang === 'pt' ? 'pt-BR' : 'en'}
+                  style={STANZA_STYLE[stanza.tone]}
+                >
+                  {stanza.lines.map((line, j) => (
+                    <span key={j} style={{ display: 'block' }}>
+                      {line}
+                    </span>
+                  ))}
+                </p>
+                {photo && (
+                  <EditorialPhoto src={photo.src} alt={t.photos[photoIdx]} variant={photo.variant} side={photo.side} />
+                )}
+              </Fragment>
+            )
+          })}
         </div>
       </section>
 

@@ -6,6 +6,7 @@
 // localizedPath. Ver src/content/i18n/README.md.
 // =============================================================================
 
+import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { labels } from '@/content/i18n/pages/labels'
 import { localizedPath, type Lang } from '@/lib/i18n'
@@ -97,7 +98,7 @@ export default function LabelsView({ lang }: { lang: Lang }) {
       >
         <div style={{ maxWidth: 'var(--tbf-grid-max-xl)', marginInline: 'auto' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--tbf-space-1)' }}>
-            {t.labels.map((label) => (
+            {t.labels.map((label, i) => (
               <article
                 key={label.tag}
                 style={{
@@ -112,7 +113,7 @@ export default function LabelsView({ lang }: { lang: Lang }) {
                     gap: 'var(--tbf-space-8)',
                   }}
                 >
-                  {/* Media placeholder */}
+                  {/* Preview da fase: foto + gradiente escuro de baixo para cima + sigla */}
                   <div
                     style={{
                       aspectRatio: '16/9',
@@ -122,23 +123,28 @@ export default function LabelsView({ lang }: { lang: Lang }) {
                       background: '#060d18',
                     }}
                   >
-                    <p
+                    <Image
+                      src={label.image.src}
+                      alt={label.image.alt}
+                      width={label.image.width}
+                      height={label.image.height}
+                      sizes="(min-width: 1440px) 1280px, 100vw"
+                      priority={i === 0}
+                      loading={i === 0 ? undefined : 'lazy'}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                    <div
+                      aria-hidden="true"
                       style={{
                         position: 'absolute',
-                        top: 'var(--tbf-space-3)',
-                        left: 'var(--tbf-space-4)',
-                        fontFamily: 'var(--tbf-font-family-ui)',
-                        fontSize: '0.55rem',
-                        letterSpacing: '0.14em',
-                        color: 'rgba(255,255,255,0.2)',
-                        textTransform: 'uppercase',
+                        inset: 0,
+                        background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 35%, transparent 65%)',
                       }}
-                    >
-                      {t.previewPlaceholder}
-                    </p>
+                    />
                     <p
                       style={{
                         position: 'absolute',
+                        zIndex: 1,
                         bottom: 'var(--tbf-space-4)',
                         left: 'var(--tbf-space-4)',
                         fontFamily: 'var(--tbf-font-family-display)',

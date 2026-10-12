@@ -250,7 +250,7 @@ const en = {
   },
   eyebrow: 'Creators · Tavarístico · Proposal',
   crumb: '← Portfolio',
-  title: 'Ô de casa! Somebody just arrived.',
+  title: 'Ô De Casa! Somebody just arrived.',
   deck:
     'Ô de Casa is a hostel in São Paulo and the first client of .TBF. A mural at the door, plants in the hallway, a hammock, a sax over the DJ deck, a room in Brazil shirts for the match. This is the house, and this is why people stay.',
   thesis: 'Make Brazil impossible to ignore, one house at a time.',
@@ -337,7 +337,7 @@ const pt: typeof en = {
   },
   eyebrow: 'Creators · Tavarístico · Proposta',
   crumb: '← Portfólio',
-  title: 'Ô de casa! Chegou alguém.',
+  title: 'Ô De Casa! Chegou alguém.',
   deck:
     'O Ô de Casa é um hostel em São Paulo e o primeiro cliente da .TBF. Um mural na porta, plantas no corredor, uma rede, um sax em cima da mesa de DJ, uma sala de camisa do Brasil para o jogo. Esta é a casa, e é por isso que o povo fica.',
   thesis: 'Tornar o Brasil impossível de ignorar, uma casa de cada vez.',

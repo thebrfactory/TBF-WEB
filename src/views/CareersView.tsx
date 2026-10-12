@@ -4,7 +4,7 @@
 
 import { careers } from '@/content/i18n/pages/careers'
 import type { Lang } from '@/lib/i18n'
-import { B800, BODY, Block, Cards, Checklist, Closing, Facts, Hero, Lines, MICRO, Page, Paragraphs, PILL } from './institutional'
+import { B800, BODY, Block, Cards, Checklist, Closing, Facts, Hero, Lines, MICRO, Page, Paragraphs } from './institutional'
 
 type Role = { title: string; tag: string; mission: string; standard: string }
 
@@ -38,7 +38,7 @@ export default function CareersView({ lang }: { lang: Lang }) {
           <p style={{ ...BODY, marginBottom: 'var(--tbf-space-5)' }}>{r.mission}</p>
           <span style={{ ...MICRO, marginBottom: 'var(--tbf-space-2)' }}>{t.roles.standardLabel}</span>
           <p style={{ ...BODY, marginBottom: 'var(--tbf-space-6)' }}>{r.standard}</p>
-          <a href={mail(r.title)} style={{ ...PILL, textDecoration: 'none' }}>
+          <a href={mail(r.title)} className="btn">
             {apply} →
           </a>
         </article>

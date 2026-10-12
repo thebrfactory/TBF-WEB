@@ -111,7 +111,6 @@ export function MailingList() {
               type="submit"
               disabled={status === 'loading'}
               className="btn btn--primary"
-              style={{ borderRadius: '999px' }}
             >
               {status === 'loading' ? (
                 '...'

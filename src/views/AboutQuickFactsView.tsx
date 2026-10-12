@@ -6,7 +6,7 @@
 import Link from 'next/link'
 import { aboutQuickFacts } from '@/content/i18n/pages/about-quick-facts'
 import { localizedPath, type Lang } from '@/lib/i18n'
-import { B800, Block, Cards, Closing, Facts, Hero, Lines, LinkCards, Page, Paragraphs, PILL } from './institutional'
+import { B800, Block, Cards, Closing, Facts, Hero, Lines, LinkCards, Page, Paragraphs } from './institutional'
 
 export default function AboutQuickFactsView({ lang }: { lang: Lang }) {
   const t = aboutQuickFacts[lang]
@@ -57,7 +57,7 @@ export default function AboutQuickFactsView({ lang }: { lang: Lang }) {
 
       <Closing line={t.thesis}>
         {t.cta.items.map((c) => (
-          <Link key={c.href} href={path(c.href)} style={{ ...PILL, textDecoration: 'none' }}>
+          <Link key={c.href} href={path(c.href)} className="btn">
             {c.title} →
           </Link>
         ))}

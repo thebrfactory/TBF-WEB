@@ -22,6 +22,12 @@ const en = {
   nextStepsLabel: 'Next steps',
   ctaEditorial: 'Enter the Zine',
   ctaAccess: 'Open a channel',
+  photos: [
+    'Clowns in colorful costumes riding a pink car in the Brazilian countryside.',
+    'A masked rider in blue and gold regalia standing beside a horse.',
+    'A line of riders in red and gold costumes on a grass field at a cavalhada.',
+    'Riders in red costumes at sunset under a deep blue sky.',
+  ],
   body: [
     { tone: 'mark', lines: ['.THE BRAZILIAN FACTORY.'] },
     { tone: 'lead', lines: ['Culture is raw material.', 'Brazil is the source code.'] },
@@ -56,6 +62,12 @@ const pt: typeof en = {
   nextStepsLabel: 'Próximos passos',
   ctaEditorial: 'Entrar no Zine',
   ctaAccess: 'Abrir um canal',
+  photos: [
+    'Palhaços de fantasia colorida em um carro rosa no interior do Brasil.',
+    'Cavaleiro mascarado em trajes azul e dourado ao lado de um cavalo.',
+    'Fila de cavaleiros de roupa vermelha e dourada em um gramado, durante uma cavalhada.',
+    'Cavaleiros de roupa vermelha ao entardecer, sob um céu azul profundo.',
+  ],
   body: [
     { tone: 'mark', lines: ['.THE BRAZILIAN FACTORY.'] },
     { tone: 'lead', lines: ['A cultura é matéria-prima.', 'O Brasil é o código-fonte.'] },

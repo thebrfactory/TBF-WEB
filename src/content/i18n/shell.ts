@@ -23,9 +23,6 @@ const en = {
     // Linha sob o LOGIN dentro do menu. O acesso ao brandsystem nao e um item
     // de lista como os outros: e porta de assinante, e diz isso em voz baixa.
     loginNote: 'Members only',
-    // Rotulo do grupo dentro do menu, no desenho do 032c: rotulo pequeno em
-    // cima, itens grandes embaixo.
-    menuGroupRead: 'Read',
     // Itens do menu overlay. Nomes de marca: ficam em ingles no PT tambem.
     menuAbout: 'About',
     menuShop: 'Shop',
@@ -158,7 +155,6 @@ const pt: typeof en = {
     magazine: 'Zine',
     login: 'Entrar',
     loginNote: 'Só para assinantes',
-    menuGroupRead: 'Leitura',
     menuAbout: 'About',
     menuShop: 'Shop',
     menuTalks: 'Talks',

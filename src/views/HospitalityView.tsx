@@ -19,7 +19,7 @@
 // =============================================================================
 
 import Image from 'next/image'
-import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
+import Link from 'next/link'
 import { hospitality, SHOTS, HIGHLIGHTS, HIGHLIGHT_PROFILE } from '@/content/i18n/pages/hospitality'
 import { GalleryScope } from '@/components/gallery'
 import { StoryDeck, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
@@ -44,6 +44,7 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
              Fora do `.container` de propósito, para correr de ponta a ponta.
              Ver `.reel` no CSS para o porquê da velocidade. */}
       <div className="container">
+        {/* Link simples do Next: abre na mesma guia, sem o ↗ de guia nova (12/10/2026). */}
         <Link href={path('/creators/tavaristico')} className={styles.crumb}>
           {t.crumb}
         </Link>
@@ -66,7 +67,11 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
         {/* ── Abertura ─────────────────────────────────────────────────── */}
         <header className={styles.hero}>
           <p className={styles.eyebrow}>{t.eyebrow}</p>
-          <h1 className={styles.title}>{t.title}</h1>
+          {/* Quebra forçada depois de "Ô De Casa!" em todos os viewports (12/10/2026). */}
+          <h1 className={styles.title}>
+            {t.title.split('! ')[0]}!<br />
+            {t.title.split('! ').slice(1).join('! ')}
+          </h1>
           <p className={styles.deck}>{t.deck}</p>
           <p className={styles.thesis}>{t.thesis}</p>
           <p className={styles.thesisSub}>{t.thesisSub}</p>

@@ -28,7 +28,7 @@ export function MembersGate({ area, lang }: { area: GateArea; lang: Lang }) {
 
         <button
           type="button"
-          className={styles.pill}
+          className="btn"
           aria-expanded={open}
           aria-controls={noticeId}
           onClick={() => setOpen((v) => !v)}

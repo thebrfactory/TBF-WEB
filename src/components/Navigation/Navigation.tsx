@@ -311,7 +311,7 @@ export function Navigation() {
       >
         {/* Canto superior esquerdo: a porta dos assinantes. */}
         <a href="/brandsystem/login" className="menu__access">
-          <span className="menu__access-pill">
+          <span className="btn">
             <svg
               width="11"
               height="11"
@@ -356,7 +356,6 @@ export function Navigation() {
         </button>
 
         <nav className="menu__nav" aria-label={t.mobileMenu}>
-          <p className="menu__group">{t.menuGroupRead}</p>
           {MENU_LINKS.map((item) => (
             <Link key={item.key} href={localizedPath(item.href, lang)} className="menu__link">
               {t[item.key]}

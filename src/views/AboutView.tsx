@@ -2,10 +2,23 @@
 // ABOUT: serve `/about` (inglês) e `/pt/about` (português)
 // =============================================================================
 
+import type { ReactNode } from 'react'
 import Link from 'next/link'
+import { EditorialPhoto } from '@/components/EditorialPhoto/EditorialPhoto'
 import { about } from '@/content/i18n/pages/about'
 import { localizedPath, type Lang } from '@/lib/i18n'
-import { B800, Block, Cards, Closing, Hero, Lines, LinkCards, Page, Paragraphs, PILL, Statement } from './institutional'
+import { B800, Block, Cards, Closing, Hero, Lines, LinkCards, Page, Paragraphs, Statement } from './institutional'
+
+const CS = '/images/editorial/country-side'
+
+/** Foto de respiro na coluna de leitura, entre dois blocos. */
+function Breath({ children }: { children: ReactNode }) {
+  return (
+    <div className="container">
+      <div style={{ maxWidth: '44rem', marginInline: 'auto' }}>{children}</div>
+    </div>
+  )
+}
 
 export default function AboutView({ lang }: { lang: Lang }) {
   const t = about[lang]
@@ -20,6 +33,10 @@ export default function AboutView({ lang }: { lang: Lang }) {
       <Block>
         <Lines items={t.hero.lines} />
       </Block>
+
+      <Breath>
+        <EditorialPhoto src={`${CS}/05-cavaleiro-silhueta.webp`} alt={t.photos[0]} variant="wide" />
+      </Breath>
 
       <Block label={t.whatWeAre.sectionLabel}>
         <Paragraphs
@@ -45,6 +62,10 @@ export default function AboutView({ lang }: { lang: Lang }) {
         </div>
       </Block>
 
+      <Breath>
+        <EditorialPhoto src={`${CS}/13-mascara-no-carro.webp`} alt={t.photos[1]} variant="half" side="right" />
+      </Breath>
+
       <Block label={t.how.sectionLabel} title={t.how.h2} wide>
         <Cards items={t.how.items} numbered min={200} />
       </Block>
@@ -52,6 +73,10 @@ export default function AboutView({ lang }: { lang: Lang }) {
       <Block label={t.build.sectionLabel}>
         <Lines items={t.build.items} />
       </Block>
+
+      <Breath>
+        <EditorialPhoto src="/images/editorial-feature.webp" alt={t.photos[2]} variant="wide" />
+      </Breath>
 
       <Block label={t.labels.sectionLabel} title={t.labels.h2} wide>
         <LinkCards items={withHref(t.labels.items)} />
@@ -65,6 +90,10 @@ export default function AboutView({ lang }: { lang: Lang }) {
         <Cards items={t.principles.items} numbered />
       </Block>
 
+      <Breath>
+        <EditorialPhoto src={`${CS}/03-palhaco-ao-volante.webp`} alt={t.photos[3]} variant="half" side="left" />
+      </Breath>
+
       <Block label={t.founder.sectionLabel}>
         <Statement size="md">
           {t.founder.foundedBy} <span style={B800}>{t.founder.name}</span>.
@@ -72,7 +101,7 @@ export default function AboutView({ lang }: { lang: Lang }) {
         <div style={{ margin: 'var(--tbf-space-6) 0' }}>
           <Paragraphs items={[t.founder.p1, t.founder.p2]} />
         </div>
-        <Link href={path(t.founder.ctaHref)} style={{ ...PILL, textDecoration: 'none' }}>
+        <Link href={path(t.founder.ctaHref)} className="btn">
           {t.founder.cta} →
         </Link>
       </Block>

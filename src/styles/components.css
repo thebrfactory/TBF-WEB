@@ -427,35 +427,12 @@
   }
 }
 
-.menu__access-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: var(--tbf-lang-switch-h);
-  padding-inline: 14px;
-  border: 1px solid color-mix(in srgb, var(--tbf-text-primary) 45%, transparent);
-  border-radius: var(--tbf-radius-full);
-  color: var(--tbf-text-primary);
-  font-family: var(--tbf-type-micro-family);
-  font-size: var(--tbf-type-micro-size);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition:
-    background-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
-    color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
-    border-color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+/* A pílula do LOGIN é o botão canônico (.btn), sem estilo próprio. */
+.menu__access:hover .btn {
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* No hover a pilula INVERTE: branca cheia, texto preto. E o unico elemento do
-   menu que faz isso, e e assim que ele diz "eu sou a acao daqui". */
-.menu__access:hover .menu__access-pill {
-  background-color: var(--tbf-text-primary);
-  border-color: var(--tbf-text-primary);
-  color: var(--tbf-bg-primary);
-}
-
-.menu__access:focus-visible .menu__access-pill {
+.menu__access:focus-visible .btn {
   outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
   outline-offset: var(--tbf-focus-ring-offset);
 }
@@ -520,18 +497,6 @@
   .menu__nav {
     margin-top: calc(var(--tbf-lang-switch-h) + var(--tbf-space-12) * 1.5);
   }
-}
-
-/* Rotulo do grupo: pequeno, apagado, em caixa alta. Faz o trabalho que a regua
-   do 032c fazia, sem desenhar traco nenhum. */
-.menu__group {
-  margin-bottom: var(--tbf-space-3);
-  font-family: var(--tbf-type-micro-family);
-  font-size: var(--tbf-type-micro-size);
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: color-mix(in srgb, var(--tbf-text-primary) 34%, transparent);
 }
 
 .menu__link {
@@ -1838,85 +1803,52 @@
    COMPONENTE 06 — BUTTON
    ============================================================================= */
 
+/* ESTILO ÚNICO DE BOTÃO (pedido do fundador, 12/10/2026): a pílula do
+   "PRESS ROOM →" de /about vale para o site inteiro. Fundo cinza-escuro sobre o
+   preto, caixa alta pequena, tracking largo, sem borda. .btn--primary,
+   .btn--secondary e .btn--ghost continuam existindo como nomes, mas NÃO mudam
+   o visual: não crie variante nova. Alvo de toque >= 44px. */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: var(--tbf-space-3);
-  font-family: var(--tbf-type-tag-family);
-  font-size: var(--tbf-type-tag-size);
-  font-weight: var(--tbf-type-tag-weight);
-  letter-spacing: var(--tbf-type-tag-ls);
-  text-transform: var(--tbf-type-tag-transform);
+  justify-content: center;
+  gap: var(--tbf-space-2);
+  min-height: 44px;
+  padding: 0 var(--tbf-space-5);
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   text-decoration: none;
-  padding: var(--tbf-btn-padding-y-sm) var(--tbf-btn-padding-x-sm);
-  border-radius: var(--tbf-btn-radius);
-  /* Flat design em todo o site: zera o bisel `outset` que o <button> herda do
-     user-agent (deixava os botões-submit com cara 3D/brega). Borda transparente
-     = sem mudança visual nos .btn que já eram chapados (<a>/Link). */
-  border: 1px solid transparent;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 0;
+  border-radius: var(--tbf-radius-full);
   cursor: pointer;
   transition:
     background-color var(--tbf-btn-duration) var(--tbf-motion-easing-micro),
-    color var(--tbf-btn-duration) var(--tbf-motion-easing-micro),
-    border-color var(--tbf-btn-duration) var(--tbf-motion-easing-micro),
-    transform var(--tbf-btn-duration) var(--tbf-motion-easing-micro);
-}
-
-@media (min-width: 1280px) {
-  .btn {
-    padding: var(--tbf-btn-padding-y) var(--tbf-btn-padding-x);
-  }
+    color var(--tbf-btn-duration) var(--tbf-motion-easing-micro);
 }
 
 .btn:hover {
-  transform: translateY(var(--tbf-btn-hover-ty)) scale(1.02);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .btn:active {
-  transform: translateY(0) scale(var(--tbf-btn-active-scale));
+  background-color: rgba(255, 255, 255, 0.28);
 }
 
 .btn:focus-visible {
   outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
   outline-offset: var(--tbf-focus-ring-offset);
-  border-radius: var(--tbf-focus-ring-radius);
 }
 
 .btn:disabled,
 .btn[aria-disabled="true"] {
   opacity: var(--tbf-btn-disabled-opacity);
   cursor: not-allowed;
-  transform: none;
   pointer-events: none;
-}
-
-.btn--primary {
-  background-color: var(--tbf-btn-primary-bg);
-  color: var(--tbf-btn-primary-text);
-}
-
-.btn--primary:hover {
-  background-color: var(--tbf-btn-primary-bg-hover);
-  color: var(--tbf-btn-primary-text-hover);
-}
-
-.btn--secondary {
-  background-color: var(--tbf-btn-secondary-bg);
-  color: var(--tbf-btn-secondary-text);
-}
-
-.btn--secondary:hover {
-  background-color: var(--tbf-btn-secondary-bg-hover);
-  color: var(--tbf-btn-secondary-text-hover);
-}
-
-.btn--ghost {
-  background-color: var(--tbf-btn-ghost-bg);
-  color: var(--tbf-btn-ghost-text);
-}
-
-.btn--ghost:hover {
-  color: var(--tbf-btn-ghost-text-hover);
 }
 
 .btn__arrow {
@@ -2204,15 +2136,6 @@ textarea.field__input {
   padding-inline: var(--tbf-space-2);
   justify-content: center;
   text-align: center;
-}
-
-/* Reject ganha contorno fino e flat (o .btn base já zerou o bisel `outset`). */
-.cookie-banner__btn.btn--secondary {
-  border-color: var(--tbf-border);
-}
-
-.cookie-banner__btn.btn--secondary:hover {
-  border-color: var(--tbf-accent);
 }
 
 .cookie-banner__prefs-toggle {

@@ -16,7 +16,7 @@ const en = {
 
   hero: {
     tag: 'About .TBF.',
-    title: 'Culture Factory.',
+    title: '.THE CULTURE FACTORY.',
     deck: 'Born in São Paulo. Built for global relevance. We build brands, worlds, businesses and intellectual property from Brazil for a global audience.',
     lines: ['Culture is our raw material.', 'Brazil is our source code.', 'Ideas are our starting point.', 'Building is the job.'],
   },
@@ -103,6 +103,13 @@ const en = {
     ctaHref: '/press',
   },
 
+  photos: [
+    'The silhouette of a rider on horseback against a blue sky.',
+    'A person wearing an orange mask and a purple and blue jacket at night.',
+    'A gallery wall with paintings and a sculpture in a blue-lit exhibition hall.',
+    'A clown mask driver giving a thumbs up inside a pink car.',
+  ],
+
   closing: 'Born in São Paulo. Built for everywhere.',
 }
 
@@ -115,7 +122,7 @@ const pt: typeof en = {
 
   hero: {
     tag: 'Sobre a .TBF.',
-    title: 'Culture Factory.',
+    title: '.THE CULTURE FACTORY.',
     deck: 'Nascida em São Paulo. Construída para relevância global. Construímos marcas, mundos, negócios e propriedade intelectual a partir do Brasil, para uma audiência global.',
     lines: ['Cultura é nossa matéria-prima.', 'Brasil é nosso código-fonte.', 'Ideias são o ponto de partida.', 'Construir é o trabalho.'],
   },
@@ -199,6 +206,13 @@ const pt: typeof en = {
     cta: 'Press Room',
     ctaHref: '/press',
   },
+
+  photos: [
+    'Silhueta de um cavaleiro montado contra o céu azul.',
+    'Pessoa com máscara laranja e jaqueta roxa e azul à noite.',
+    'Parede de galeria com pinturas e uma escultura em um salão de exposição com luz azul.',
+    'Motorista de máscara de palhaço fazendo joinha dentro de um carro rosa.',
+  ],
 
   closing: 'Nascida em São Paulo. Construída para qualquer lugar.',
 }

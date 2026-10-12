@@ -170,12 +170,6 @@ export function NewsletterPopup() {
                 type="submit"
                 disabled={status === 'loading'}
                 className="btn btn--primary"
-                style={{
-                  borderRadius: '999px',
-                  whiteSpace: 'nowrap',
-                  fontSize: '0.6rem',
-                  padding: '0.45rem 1.05rem',
-                }}
               >
                 {status === 'loading' ? '...' : t.submitLabel}
               </button>

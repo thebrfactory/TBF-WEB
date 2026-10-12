@@ -54,19 +54,6 @@ const CARD_TITLE: CSSProperties = {
   margin: 0,
 }
 
-export const PILL: CSSProperties = {
-  display: 'inline-block',
-  fontFamily: 'var(--tbf-type-micro-family)',
-  fontSize: 'var(--tbf-type-micro-size)',
-  fontWeight: 700,
-  letterSpacing: '0.1em',
-  textTransform: 'uppercase',
-  color: '#fff',
-  background: 'rgba(255,255,255,0.1)',
-  borderRadius: 'var(--tbf-radius-full)',
-  padding: '6px 12px',
-}
-
 export function Page({ children }: { children: ReactNode }) {
   return <div style={{ background: '#000', color: '#fff', minHeight: '100dvh' }}>{children}</div>
 }

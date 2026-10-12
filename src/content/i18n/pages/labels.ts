@@ -26,15 +26,11 @@ const en = {
 
   sectionAriaLabel: 'Labels of .TBF. inc',
 
-  // Nota interna sobre o placeholder de mídia: não é copy de marca, é aviso
-  // de produção para quando a arte real entrar. Fica em inglês nos dois
-  // idiomas, como um rótulo técnico.
-  previewPlaceholder: 'ADD-PREVIEW-MATERIAL',
-
   labels: [
     {
       index: '01',
       tag: '.TBF.',
+      image: { src: '/images/editorial/country-side/capa.webp', width: 1920, height: 1280, alt: 'Masked clowns riding a pink pickup truck in a Brazilian countryside festival' },
       name: 'The Brazilian Factory',
       territory: 'CULTURE',
       line: 'The cultural factory.',
@@ -46,6 +42,7 @@ const en = {
     {
       index: '02',
       tag: '.TFD.',
+      image: { src: '/images/tfd/tfd-closing.webp', width: 2000, height: 1125, alt: 'The Fiore Daily key art: red silhouette of legs in heels in the dark' },
       name: 'The Fiore Daily',
       territory: 'INTIMACY',
       line: 'Intimacy as culture.',
@@ -57,6 +54,7 @@ const en = {
     {
       index: '03',
       tag: '.RUC.',
+      image: { src: '/images/ruc/ruc-hero.webp', width: 2000, height: 1125, alt: 'Two DJs under a lit Fashion Club logo at a Runway Untd night' },
       name: 'Runway Untd Collective',
       territory: 'FASHION',
       line: 'Fashion as cultural memory.',
@@ -68,6 +66,7 @@ const en = {
     {
       index: '04',
       tag: '.TGF.',
+      image: { src: '/images/tgf/tgf-ambition.webp', width: 2000, height: 1334, alt: 'A person with a backpack facing a city skyline at sunset' },
       name: 'The Growth Factory',
       territory: 'GROWTH',
       line: 'Cultural capital into business value.',
@@ -111,12 +110,11 @@ const pt: typeof en = {
 
   sectionAriaLabel: 'Labels da .TBF. inc',
 
-  previewPlaceholder: 'ADD-PREVIEW-MATERIAL',
-
   labels: [
     {
       index: '01',
       tag: '.TBF.',
+      image: { src: '/images/editorial/country-side/capa.webp', width: 1920, height: 1280, alt: 'Palhaços mascarados numa caminhonete rosa em festa do interior do Brasil' },
       name: 'The Brazilian Factory',
       territory: 'CULTURE',
       line: 'A fábrica cultural.',
@@ -128,6 +126,7 @@ const pt: typeof en = {
     {
       index: '02',
       tag: '.TFD.',
+      image: { src: '/images/tfd/tfd-closing.webp', width: 2000, height: 1125, alt: 'Arte da The Fiore Daily: silhueta vermelha de pernas em salto alto no escuro' },
       name: 'The Fiore Daily',
       territory: 'INTIMACY',
       line: 'Intimidade como cultura.',
@@ -139,6 +138,7 @@ const pt: typeof en = {
     {
       index: '03',
       tag: '.RUC.',
+      image: { src: '/images/ruc/ruc-hero.webp', width: 2000, height: 1125, alt: 'Dois DJs sob o logo iluminado do Fashion Club numa noite da Runway Untd' },
       name: 'Runway Untd Collective',
       territory: 'FASHION',
       line: 'Moda como memória cultural.',
@@ -150,6 +150,7 @@ const pt: typeof en = {
     {
       index: '04',
       tag: '.TGF.',
+      image: { src: '/images/tgf/tgf-ambition.webp', width: 2000, height: 1334, alt: 'Pessoa de mochila diante do skyline de uma cidade ao pôr do sol' },
       name: 'The Growth Factory',
       territory: 'GROWTH',
       line: 'Capital cultural em valor de negócio.',

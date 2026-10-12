@@ -1,0 +1,29 @@
+/* Foto editorial entre blocos de texto. Mobile-first: toda a largura da coluna
+   (o gutter vem do container pai). A partir de 768px, a variante `half` ocupa
+   metade da coluna e alterna esquerda/direita. Raio: --tbf-radius-tile, o mesmo
+   das fotos do scrolly/hospitality. */
+.figure {
+  margin: 0;
+  margin-block: var(--tbf-space-12);
+  width: 100%;
+}
+
+.frame {
+  position: relative;
+  overflow: clip;
+  border-radius: var(--tbf-radius-tile);
+  aspect-ratio: 4 / 3;
+}
+
+.wide .frame { aspect-ratio: 16 / 10; }
+.tall .frame { aspect-ratio: 4 / 5; }
+
+.img { object-fit: cover; }
+
+@media (min-width: 768px) {
+  .figure { margin-block: var(--tbf-space-16); }
+  .wide .frame { aspect-ratio: 16 / 9; }
+  .half { width: 56%; }
+  .left { margin-inline-end: auto; }
+  .right { margin-inline-start: auto; }
+}
