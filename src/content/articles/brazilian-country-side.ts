@@ -13,9 +13,9 @@
 //
 // TRADUÇÃO. O texto fonte é só em português. O inglês de todo bloco é
 // TRADUÇÃO EDITORIAL (registro VICE/DAZED), não tradução literal palavra por
-// palavra. Nenhum fato, nome, lugar ou número foi adicionado: o texto fonte
-// não tem nenhum número, e este artigo também não tem nenhum (por isso não há
-// bloco `stat`).
+// palavra. O texto fonte não tem número. O único número do artigo (R$ 5
+// milhões, 16 municípios, capítulo PRODUÇÃO) entrou em 13/10/2026 com fonte
+// primária lida (Secult GO), listada em `sources`. Não há bloco `stat`.
 //
 // FOTOGRAFIA (10/09/2026). As 15 fotos entraram: são do próprio fundador, do
 // mesmo dia e do mesmo campo que o texto descreve, entregues em
@@ -133,6 +133,25 @@ export const brazilianCountrySide: ManifestoArticle = {
     pt: 'Posse, Goiás. Quinze quadros do mesmo campo que o texto descreve.',
   },
 
+  // Fonte do número (R$ 5 milhões, 16 municípios) e das datas de Posse
+  // (23 e 24/05/2026), ambas lidas na página da Secult GO em 13/10/2026.
+  sources: [
+    {
+      label: {
+        en: 'Goiás State Government (Secult GO), Circuito das Cavalhadas 2026 launch: R$ 5 million, 16 municipalities.',
+        pt: 'Governo de Goiás (Secult GO), lançamento do Circuito das Cavalhadas 2026: R$ 5 milhões, 16 municípios.',
+      },
+      url: 'https://goias.gov.br/cultura/governo-de-goias-lanca-circuito-das-cavalhadas-2026/',
+    },
+    {
+      label: {
+        en: 'Goiás State Government (Secult GO), Cavalhadas in Posse on May 23 and 24, 2026, Estádio Serra das Araras.',
+        pt: 'Governo de Goiás (Secult GO), Cavalhadas de Posse em 23 e 24 de maio de 2026, Estádio Serra das Araras.',
+      },
+      url: 'https://goias.gov.br/cultura/governo-de-goias-apoia-cavalhadas-em-quatro-cidades-entre-os-dias-23-e-26-de-maio/',
+    },
+  ],
+
   blocks: [
     // ─── ABERTURA. O dateline do próprio texto fonte entra no kicker do
     //     `pinned`, então o hero não precisa repeti-lo.
@@ -169,7 +188,7 @@ export const brazilianCountrySide: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'But Posse does not end at prayer.', pt: 'Mas Posse não termina na oração.' },
-        { en: 'A few days later, the city changes scale.', pt: 'Alguns dias depois, a cidade muda de escala.' },
+        { en: 'And the city changes scale.', pt: 'E a cidade muda de escala.' },
       ],
       emphasize: [1],
     },
@@ -239,7 +258,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Months of preparation. Organizers, money, infrastructure, communication, sponsors, city hall.', pt: 'Meses de preparação. Organização, dinheiro, infraestrutura, comunicação, patrocínio, poder público.' },
+        { en: 'In 2026 the Goiás state government put R$ 5 million into the Cavalhadas circuit. Sixteen towns. Posse is one of them.', pt: 'Em 2026, o Governo de Goiás destinou R$ 5 milhões ao circuito das Cavalhadas. São 16 municípios. Posse é um deles.' },
         { en: 'What could be community memory alone is also a production.', pt: 'O que podia ser só memória de comunidade também é produção.' },
       ],
     },
@@ -250,6 +269,15 @@ export const brazilianCountrySide: ManifestoArticle = {
         { en: 'Tradition needs logistics.', pt: 'A tradição precisa de logística.' },
         { en: 'Heritage needs a budget.', pt: 'O patrimônio precisa de orçamento.' },
       ],
+    },
+    {
+      kind: 'lines',
+      lines: [
+        { en: 'Cavalhada in Posse has two producers.', pt: 'A Cavalhada de Posse tem dois produtores.' },
+        { en: 'Public money funds the circuit.', pt: 'O dinheiro público financia o circuito.' },
+        { en: 'The young bring the mask, the car and the sound.', pt: 'Os jovens trazem a máscara, o carro e o som.' },
+      ],
+      emphasize: [0],
     },
     {
       kind: 'lines',
@@ -378,8 +406,8 @@ export const brazilianCountrySide: ManifestoArticle = {
       fragments: [
         { en: 'Inland car culture meets eletrofunk.', pt: 'A cultura automotiva do interior encontra o eletrofunk.' },
         { en: 'The horse meets the car.', pt: 'O cavalo encontra o carro.' },
-        { en: 'The medieval character meets the teenager.', pt: 'O personagem medieval encontra o adolescente.' },
-        { en: 'The mask meets the sound system.', pt: 'A máscara encontra o sistema de som.' },
+        { en: 'The medieval character next to the teenager.', pt: 'O personagem medieval ao lado do adolescente.' },
+        { en: 'The mask in front of the sound system.', pt: 'A máscara diante do sistema de som.' },
       ],
     },
     {
@@ -467,8 +495,8 @@ export const brazilianCountrySide: ManifestoArticle = {
         { en: 'It incorporates.', pt: 'Ela incorpora.' },
         { en: 'It changes clothes.', pt: 'Ela muda de roupa.' },
         { en: 'It finds new people.', pt: 'Ela encontra novas pessoas.' },
-        { en: 'It finds new sounds.', pt: 'Ela encontra novos sons.' },
-        { en: 'It finds new desires.', pt: 'Ela encontra novos desejos.' },
+        { en: 'It takes on new sounds.', pt: 'Ela ganha novos sons.' },
+        { en: 'It takes on new desires.', pt: 'Ela ganha novos desejos.' },
       ],
     },
     {
@@ -659,11 +687,8 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'European references landed here and ran into indigenous peoples, African populations, popular Catholicism, street parties, music, oral tradition, religion, violence, invention, improvisation.', pt: 'A referência europeia chegou aqui e encontrou povo indígena, população africana, catolicismo popular, festa de rua, música, oralidade, religiosidade, violência, invenção, improviso.' },
-        { en: 'Nothing stayed the same.', pt: 'Nada ficou igual.' },
         { en: 'What came from outside had to learn how to exist here.', pt: 'O que veio de fora aprendeu a existir aqui.' },
       ],
-      emphasize: [2],
     },
     {
       kind: 'lines',
@@ -751,10 +776,10 @@ export const brazilianCountrySide: ManifestoArticle = {
       kind: 'stickers',
       fragments: [
         { en: 'The erudite meets the popular.', pt: 'O erudito encontra o popular.' },
-        { en: 'The religious meets the sensual.', pt: 'O religioso encontra o sensual.' },
-        { en: 'The historical meets the contemporary.', pt: 'O histórico encontra o contemporâneo.' },
-        { en: 'The imported meets the local.', pt: 'O importado encontra o local.' },
-        { en: 'The institutional meets the street.', pt: 'O institucional encontra a rua.' },
+        { en: 'The religious next to the sensual.', pt: 'O religioso ao lado do sensual.' },
+        { en: 'The historical inside the contemporary.', pt: 'O histórico dentro do contemporâneo.' },
+        { en: 'The imported on local ground.', pt: 'O importado em chão local.' },
+        { en: 'The institutional in the street.', pt: 'O institucional na rua.' },
         { en: 'The sacred meets the bass.', pt: 'O sagrado encontra o grave.' },
       ],
     },
@@ -872,81 +897,6 @@ export const brazilianCountrySide: ManifestoArticle = {
       lines: [
         { en: 'It stays alive when the present decides what to do with it.', pt: 'Fica viva quando o presente decide o que fazer com ela.' },
       ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'In the end, the question stops being why the young transform tradition.', pt: 'No fim, a pergunta deixa de ser por que os jovens transformam a tradição.' },
-        { en: 'The question is why we expected them not to.', pt: 'A pergunta é por que a gente esperava que eles não transformassem.' },
-      ],
-      emphasize: [1],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'Every generation inherits symbols it did not choose.', pt: 'Toda geração recebe símbolo que não escolheu.' },
-        { en: 'Some get abandoned.', pt: 'Alguns são abandonados.' },
-        { en: 'Others get preserved.', pt: 'Outros são preservados.' },
-        { en: 'The ones that last are the ones that can be reinvented.', pt: 'Os que resistem são os que podem ser reinventados.' },
-      ],
-      emphasize: [3],
-    },
-    {
-      kind: 'stickers',
-      fragments: [
-        { en: 'A white dove crosses the city.', pt: 'Uma pomba branca atravessa a cidade.' },
-        { en: 'Then come the horses.', pt: 'Depois vêm os cavalos.' },
-        { en: 'The Moors.', pt: 'Os mouros.' },
-        { en: 'The Christians.', pt: 'Os cristãos.' },
-        { en: 'The clowns.', pt: 'Os palhaços.' },
-        { en: 'The masks.', pt: 'As máscaras.' },
-        { en: 'The costumes.', pt: 'As fantasias.' },
-        { en: 'The cars.', pt: 'Os carros.' },
-        { en: 'The eletrofunk.', pt: 'O eletrofunk.' },
-        { en: 'The bass.', pt: 'O grave.' },
-      ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'And none of it asks theory for permission.', pt: 'E nada disso pede licença para a teoria.' },
-      ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'The phenomenon is not the attempt to keep a tradition intact.', pt: 'O fenômeno não é a tentativa de manter a tradição intacta.' },
-        { en: 'It is what happens when it meets a generation that refuses to treat it like a museum piece.', pt: 'É o que acontece quando ela encontra uma geração que se recusa a tratar ela como peça de museu.' },
-      ],
-      emphasize: [1],
-    },
-    {
-      kind: 'stickers',
-      fragments: [
-        { en: 'A tradition meets a city.', pt: 'Uma tradição encontra uma cidade.' },
-        { en: 'A city meets its young.', pt: 'Uma cidade encontra seus jovens.' },
-        { en: 'The young meet a costume.', pt: 'Os jovens encontram uma fantasia.' },
-        { en: 'The costume meets a horse.', pt: 'A fantasia encontra um cavalo.' },
-        { en: 'The horse meets a car.', pt: 'O cavalo encontra um carro.' },
-        { en: 'The car meets a sound system.', pt: 'O carro encontra um sistema de som.' },
-      ],
-    },
-    {
-      kind: 'fullbleed',
-      text: {
-        en: 'And a few centuries of history walk onto the same field.',
-        pt: 'E alguns séculos de história entram no mesmo campo.',
-      },
-      theme: 'dark',
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'The sacred never ended.', pt: 'O sagrado nunca terminou.' },
-        { en: 'The profane never began.', pt: 'O profano nunca começou.' },
-        { en: 'They were happening at the same time.', pt: 'Estavam acontecendo ao mesmo tempo.' },
-      ],
-      emphasize: [2],
     },
     {
       kind: 'closing',
