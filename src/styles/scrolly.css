@@ -360,6 +360,17 @@
   animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 450ms both;
 }
 
+/* AVISO DE FICÇÃO no hero: letra pequena, recua sem sumir. */
+.scrolly-hero__note {
+  font-family: var(--tbf-type-micro-family);
+  font-size: var(--tbf-type-micro-size);
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--tbf-text-primary) 72%, transparent);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.65);
+  max-width: 60ch;
+  margin-top: var(--tbf-space-3);
+}
+
 /* ASSINATURA, pedido do fundador em #01 CHANGES 2026-08-24 (print da Forbes
    Life: "F / Redacao Forbes"). Circulo escuro com inicial + nome em uma linha
    discreta, logo abaixo do subtitulo. Nao anima com o resto do hero: entra
@@ -697,6 +708,28 @@
   text-transform: uppercase;
   color: var(--tbf-text-tertiary);
 }
+
+/* =============================================================================
+   RODAPÉ DA MATÉRIA: aviso de ficção e fontes, letra pequena (caption).
+   Mobile-first: a coluna é a tela menos o respiro lateral.
+   ============================================================================= */
+.scrolly-fineprint {
+  max-width: 65ch;
+  margin: var(--tbf-space-12) auto var(--tbf-space-6);
+  padding-inline: var(--tbf-grid-margin-sm);
+  font-family: var(--tbf-type-caption-family);
+  font-size: clamp(0.8125rem, 1.15vw, 0.9375rem);
+  line-height: 1.5;
+  color: var(--tbf-text-secondary);
+}
+.scrolly-fineprint__title {
+  margin-top: var(--tbf-space-4);
+  font-weight: var(--tbf-font-weight-raw-700);
+  color: var(--tbf-text-primary);
+}
+.scrolly-fineprint__list { list-style: none; padding: 0; margin: var(--tbf-space-2) 0 0; }
+.scrolly-fineprint__list li + li { margin-top: var(--tbf-space-1); }
+.scrolly-fineprint a { color: inherit; text-decoration: underline; overflow-wrap: anywhere; }
 
 /* =============================================================================
    MEDIA PARALLAX

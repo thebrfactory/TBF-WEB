@@ -22,6 +22,7 @@
 
 import { execSync } from 'node:child_process'
 import { existsSync } from 'node:fs'
+import { spawnSync } from 'node:child_process'
 
 const raiz = process.cwd()
 
@@ -73,3 +74,8 @@ if (pids.length > 0 && existsSync(`${raiz}/.next`)) {
   console.error('')
   process.exit(1)
 }
+
+// Contrato do zine: Manifesto sem aviso de ficção ou Field Research sem fonte
+// reprova o build (scripts/check-zine-contract.mjs).
+const contrato = spawnSync(process.execPath, [`${raiz}/scripts/check-zine-contract.mjs`], { stdio: 'inherit' })
+if (contrato.status !== 0) process.exit(1)

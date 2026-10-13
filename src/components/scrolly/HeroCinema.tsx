@@ -27,9 +27,11 @@ interface HeroCinemaProps {
   belt?: { src: string; alt: string; role: string }[]
   /** Legenda da esteira, mesmo papel do `reelLabel` do reel da proposta. */
   beltLabel?: string
+  /** Aviso de ficção (`ManifestoArticle.fiction`), letra pequena abaixo do subtítulo. */
+  note?: string
 }
 
-export function HeroCinema({ title, subtitle, eyebrow, image, lang, belt, beltLabel }: HeroCinemaProps) {
+export function HeroCinema({ title, subtitle, eyebrow, image, lang, belt, beltLabel, note }: HeroCinemaProps) {
   return (
     <section className="scrolly-hero" aria-label="Abertura da matéria">
       {image ? (
@@ -52,6 +54,7 @@ export function HeroCinema({ title, subtitle, eyebrow, image, lang, belt, beltLa
         {eyebrow && <p className="scrolly-hero__eyebrow">{eyebrow}</p>}
         <h1 className="scrolly-hero__title">{title}</h1>
         {subtitle && <p className="scrolly-hero__subtitle">{subtitle}</p>}
+        {note && <p className="scrolly-hero__note">{note}</p>}
         {lang && <AuthorSignature lang={lang} shareTitle={title} />}
       </div>
     </section>

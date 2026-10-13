@@ -84,6 +84,7 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
             <HeroCinema
               title={article.heroTitle[lang]}
               subtitle={article.heroSubtitle[lang]}
+              note={article.fiction?.[lang]}
               eyebrow={article.category}
               image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
               lang={lang}
@@ -108,6 +109,26 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
           (components/LanguageSwitch), visível em todo o site e permanente no
           topo mesmo com o header escondido. Lá ele NAVEGA para a mesma matéria
           na outra rota, em vez de esconder metade do HTML. */}
+
+      {(article.fiction || article.sources?.length) && (
+        <footer className="scrolly-fineprint">
+          {article.fiction && <p className="scrolly-fineprint__note">{article.fiction[lang]}</p>}
+          {article.sources && article.sources.length > 0 && (
+            <>
+              <p className="scrolly-fineprint__title">{lang === 'pt' ? 'Fontes' : 'Sources'}</p>
+              <ul className="scrolly-fineprint__list">
+                {article.sources.map((s) => (
+                  <li key={s.url}>
+                    <a href={s.url} target="_blank" rel="noopener noreferrer">
+                      {s.label[lang]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </footer>
+      )}
 
       <ShareRow title={article.heroTitle[lang]} />
     </div>

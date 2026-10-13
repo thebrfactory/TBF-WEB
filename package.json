@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
+    "check:zine": "node scripts/check-zine-contract.mjs",
     "check:i18n": "node scripts/check-i18n.mjs",
     "deploy:count": "node scripts/bump-deploy-count.mjs"
   },

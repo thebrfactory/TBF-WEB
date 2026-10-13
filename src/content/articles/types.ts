@@ -125,5 +125,17 @@ export interface ManifestoArticle {
    * lugar por causa disto.
    */
   heroBelt?: Bilingual
+  /**
+   * AVISO DE FICÇÃO. Obrigatório em toda matéria `Manifesto` (guard:
+   * scripts/check-zine-contract.mjs). Aparece em letra pequena abaixo do
+   * subtítulo do hero e se repete no fim da matéria. Ficção pode inventar fato,
+   * mas tem de dizer que é ficção.
+   */
+  fiction?: Bilingual
+  /**
+   * FONTES. Obrigatório (ao menos uma) em toda matéria `Field Research`. Lista
+   * curta no fim da matéria, em letra pequena, com link.
+   */
+  sources?: { label: Bilingual; url: string }[]
   blocks: ManifestoBlock[]
 }

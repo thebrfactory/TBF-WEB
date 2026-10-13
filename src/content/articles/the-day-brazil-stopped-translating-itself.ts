@@ -43,8 +43,12 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
   category: 'Manifesto',
   publishedAt: '2026-08-01',
   deck: {
-    en: "The first industry Brazil industrialised wasn't steel. It was confidence.",
-    pt: 'A primeira indústria que o Brasil industrializou não foi o aço. Foi a confiança.',
+    en: "The first product Brazil mass-produced wasn't steel. It was confidence.",
+    pt: 'O primeiro produto que o Brasil fabricou em série não foi aço. Foi confiança.',
+  },
+  fiction: {
+    en: 'This is a work of fiction. Gurgel existed and closed in the 1990s. .TBF. exists because that day has not come yet.',
+    pt: 'Esta é uma ficção. A Gurgel existiu e fechou nos anos 90. A .TBF. existe porque esse dia ainda não chegou.',
   },
   // NOTA DE FATO, e ela importa para quem editar este artigo: não existe um
   // modelo "Gurgel Renegado" na história real da montadora. A matéria é
@@ -299,7 +303,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: "They're asking the wrong question.", pt: 'É a pergunta errada.' },
         { en: 'The economy was never the beginning.', pt: 'A economia nunca foi o começo.' },
         { en: 'It was the consequence.', pt: 'Foi a consequência.' },
-        { en: "The first industry Brazil industrialised wasn't steel.", pt: 'A primeira indústria que o Brasil industrializou não foi o aço.' },
+        { en: "The first thing Brazil ever made in volume wasn't steel.", pt: 'A primeira coisa que o Brasil fez em escala não foi o aço.' },
       ],
     },
     // TIER 1 #2: o pivô, o momento mais silencioso da página
@@ -419,11 +423,16 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       ],
     },
     // TIER 2: o que a casa vende, dito sem vender
-    { kind: 'lines', lines: [{ en: 'Its real product was institutional imagination.', pt: 'Seu produto real era imaginação institucional.' }], emphasize: [0] },
     {
       kind: 'lines',
       lines: [
-        { en: 'It turned cultural signal into company, and company into myth.', pt: 'Ela transformava sinal cultural em empresa, e empresa em mito.' },
+        { en: 'Yes, the house that publishes this piece is the one in the story.', pt: 'Sim, a casa que publica esta matéria é a mesma da história.' },
+        { en: 'Read it with that discount.', pt: 'Leia com esse desconto.' },
+      ],
+    },
+    {
+      kind: 'lines',
+      lines: [
         { en: 'If Brazilian Hi-Fi was where ideas collided...', pt: 'Se o Brazilian Hi-Fi era onde as ideias colidiam...' },
         { en: 'The Brazilian Factory was where they acquired permanent form.', pt: 'A Brazilian Factory era onde elas ganhavam forma permanente.' },
       ],
@@ -528,16 +537,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     // rótulo é legenda de UI (StatBlock), não uma linha do corpo do texto, não
     // existe frase EN equivalente em debut.md para transportar. Ver ESC-03.md.
     {
-      kind: 'stat',
-      value: 500,
-      formatted: { en: '500', pt: '500' },
-      prefix: { en: 'R$ ', pt: 'R$ ' },
-      label: {
-        en: "million, the filmmaker's cultural investment fund, Xique-Xique",
-        pt: 'milhões, o fundo cultural de Xique-Xique',
-      },
-    },
-    {
       kind: 'lines',
       lines: [
         { en: 'None of this happened because Brazil wanted global recognition.', pt: 'Nada disso aconteceu porque o Brasil queria reconhecimento global.' },
@@ -640,18 +639,17 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: 'Brazil had quietly rewritten the grammar of influence.', pt: 'O Brasil tinha reescrito, em silêncio, a gramática da influência.' },
         { en: 'Hollywood no longer dictated imagination, nor did Silicon Valley monopolise innovation.', pt: 'Hollywood não ditava mais a imaginação, nem o Vale do Silício monopolizava a inovação.' },
         { en: 'Milan had lost sight of elegance, and Tokyo no longer owned the future.', pt: 'Milão tinha perdido a elegância de vista, e Tóquio já não era dona do futuro.' },
-        { en: 'Not because those places declined.', pt: 'Não porque esses lugares decaíram.' },
       ],
     },
     // TIER 2: a tese geopolítica em nove palavras
-    { kind: 'lines', lines: [{ en: 'Because another accent entered the conversation.', pt: 'Porque outro sotaque entrou na conversa.' }], emphasize: [0] },
+    { kind: 'lines', lines: [{ en: 'Another accent entered the conversation.', pt: 'Outro sotaque entrou na conversa.' }], emphasize: [0] },
 
     { kind: 'divider' },
 
     {
       kind: 'lines',
       lines: [
-        { en: 'Looking back, historians agree on one detail.', pt: 'Olhando para trás, os historiadores concordam num detalhe.' },
+        { en: 'Looking back, I see one detail.', pt: 'Olhando para trás, eu vejo um detalhe.' },
         { en: "The decisive moment wasn't technological, or economic, or geopolitical.", pt: 'O momento decisivo não foi tecnológico, nem econômico, nem geopolítico.' },
         { en: 'It was psychological.', pt: 'Foi psicológico.' },
       ],
@@ -669,7 +667,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Everything else followed: the cars, the films, the billion-dollar companies, the currency.', pt: 'Todo o resto veio atrás: os carros, os filmes, as empresas bilionárias, a moeda.' },
+        { en: 'Everything else followed.', pt: 'Todo o resto veio atrás.' },
         { en: 'And the confidence, which had in fact come first.', pt: 'E a confiança, que na verdade tinha vindo antes de tudo.' },
       ],
     },
@@ -701,12 +699,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        {
-          en: "Nobody remembers when Brazil became one of the world's cultural centres.",
-          pt: 'Ninguém lembra quando o Brasil virou um dos centros culturais do mundo.',
-        },
-        { en: 'They remember something else.', pt: 'Lembram de outra coisa.' },
-        { en: 'The day choosing a Gurgel stopped meaning anything at all.', pt: 'O dia em que escolher um Gurgel deixou de significar qualquer coisa.' },
+        { en: 'The brochure said it in 1981. The company went bankrupt in the 1990s.', pt: 'O folheto de 1981 já dizia isso. A empresa quebrou nos anos 90.' },
+        { en: "This story doesn't say we got there.", pt: 'Esta ficção não diz que chegamos.' },
+        { en: 'It measures how far we are from the day:', pt: 'Ela mede o quanto falta para o dia:' },
+        { en: 'The day choosing a Gurgel stops meaning anything at all.', pt: 'O dia em que escolher um Gurgel deixa de significar qualquer coisa.' },
         { en: 'Because, by then...', pt: 'Porque, a essa altura...' },
       ],
     },
