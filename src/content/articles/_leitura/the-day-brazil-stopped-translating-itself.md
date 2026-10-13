@@ -29,6 +29,8 @@
 
 **Ou: e se o Gurgel Renegado sempre tivesse estado estacionado ao lado do Jeep Renegade?**
 
+_Esta é uma ficção. A Gurgel existiu e fechou nos anos 90. A .TBF. existe porque esse dia ainda não chegou._
+
 > O primeiro produto que o Brasil fabricou em série não foi aço. Foi confiança.
 
 `Manifesto` · `2026-08-01` · `/pt/editorial/the-day-brazil-stopped-translating-itself`
@@ -255,7 +257,7 @@ Até olharem de perto.
 O sistema de suspensão que a Gurgel desenvolveu para estradas de terra em Goiás virou o padrão global de mobilidade rural na Austrália.
 Um sistema operacional brasileiro feito para escolas públicas virou a plataforma educacional preferida da América Latina e da África Ocidental.
 Uma montadora indiana licenciou o chassi da Gurgel e não escreveu Brasil em lugar nenhum da embalagem.
-Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha R$ 500 milhões garantidos por um fundo brasileiro de investimento cultural.
+Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha financiamento garantido por um fundo brasileiro de investimento cultural.
 
 `IMAGEM`
 
@@ -352,11 +354,15 @@ Porque, a essa altura...
 
 > ...ele sempre esteve ali.
 
+_Esta é uma ficção. A Gurgel existiu e fechou nos anos 90. A .TBF. existe porque esse dia ainda não chegou._
+
 ---
 
 # THE DAY BRAZIL STOPPED TRANSLATING ITSELF.
 
 **Or: what if the Gurgel Renegado had always been parked next to the Jeep Renegade?**
+
+_This is a work of fiction. Gurgel existed and closed in the 1990s. .TBF. exists because that day has not come yet._
 
 > The first product Brazil mass-produced wasn't steel. It was confidence.
 
@@ -584,7 +590,7 @@ Until they looked closer.
 The suspension system developed by Gurgel for dirt roads in Goiás became the global standard for rural mobility in Australia.
 A Brazilian operating system designed for public schools became the preferred educational platform across Latin America and West Africa.
 An Indian carmaker licensed the Gurgel chassis and printed the word Brazil nowhere on the box.
-A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured R$ 500 million from a Brazilian cultural investment fund.
+A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured funding from a Brazilian cultural investment fund.
 
 `IMAGEM`
 
@@ -680,3 +686,5 @@ Because, by then...
 `FECHO`
 
 > ...it had always been there.
+
+_This is a work of fiction. Gurgel existed and closed in the 1990s. .TBF. exists because that day has not come yet._

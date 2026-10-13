@@ -510,8 +510,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
           pt: 'Uma montadora indiana licenciou o chassi da Gurgel e não escreveu Brasil em lugar nenhum da embalagem.',
         },
         {
-          en: 'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured R$ 500 million from a Brazilian cultural investment fund.',
-          pt: 'Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha R$ 500 milhões garantidos por um fundo brasileiro de investimento cultural.',
+          en: 'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured funding from a Brazilian cultural investment fund.',
+          pt: 'Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha financiamento garantido por um fundo brasileiro de investimento cultural.',
         },
       ],
     },

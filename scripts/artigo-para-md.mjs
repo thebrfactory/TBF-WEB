@@ -101,10 +101,19 @@ function versao(L) {
   const cab = [
     `# ${art.heroTitle[L]}`,
     `**${art.heroSubtitle[L]}**`,
+    ...(art.fiction ? [`_${art.fiction[L]}_`] : []),
     `> ${art.deck[L]}`,
     `\`${art.category}\` · \`${art.publishedAt}\` · \`/${L}/editorial/${art.slug}\``,
   ].join('\n\n')
-  return [cab, '---', ...art.blocks.map((b) => bloco(b, L))].join('\n\n')
+  const fontes = art.sources?.length
+    ? [
+        '---',
+        `**${L === 'pt' ? 'Fontes' : 'Sources'}**\n\n` +
+          art.sources.map((f) => `- [${f.label[L]}](${f.url})`).join('\n'),
+      ]
+    : []
+  const fim = art.fiction ? [`_${art.fiction[L]}_`] : []
+  return [cab, '---', ...art.blocks.map((b) => bloco(b, L)), ...fim, ...fontes].join('\n\n')
 }
 
 const hoje = new Date().toISOString().slice(0, 10)
