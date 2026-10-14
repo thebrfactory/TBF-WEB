@@ -12,17 +12,13 @@
   position: relative;
   overflow: clip;
   border-radius: var(--tbf-radius-tile);
-  aspect-ratio: 4 / 3;
 }
 
-.wide .frame { aspect-ratio: 16 / 10; }
-.tall .frame { aspect-ratio: 4 / 5; }
-
-.img { object-fit: cover; }
+/* Foto inteira: proporcao do arquivo, sem recorte. */
+.img { display: block; width: 100%; height: auto; }
 
 @media (min-width: 768px) {
   .figure { margin-block: var(--tbf-space-16); }
-  .wide .frame { aspect-ratio: 16 / 9; }
   .half { width: 56%; }
   .left { margin-inline-end: auto; }
   .right { margin-inline-start: auto; }

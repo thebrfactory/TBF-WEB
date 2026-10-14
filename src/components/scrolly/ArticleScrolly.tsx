@@ -89,12 +89,12 @@ export function ArticleScrolly({ article, lang }: ArticleScrollyProps) {
               image={{ src: article.cover.src, alt: article.cover.alt[lang] }}
               lang={lang}
             />
-            {hasBelt && !beltInHeader && <MediaBelt className="scrolly-reel" items={strip} />}
+            {hasBelt && !beltInHeader && <MediaBelt className="scrolly-reel fade-edges" items={strip} />}
             {/* 10/10/2026, fundador: a esteira com legenda sai do topo do Hero e
                 ocupa o vão entre o fim do Hero e a primeira seção. Hero limpo. */}
             {beltInHeader && (
               <section className="scrolly-reel-gap" aria-label={article.heroBelt?.[lang]}>
-                <MediaBelt className="scrolly-reel" items={strip} label={article.heroBelt?.[lang]} />
+                <MediaBelt className="scrolly-reel fade-edges" items={strip} label={article.heroBelt?.[lang]} />
                 <p className="scrolly-reel-gap__caption">{article.heroBelt?.[lang]}</p>
               </section>
             )}

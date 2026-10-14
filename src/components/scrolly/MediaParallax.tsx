@@ -19,8 +19,28 @@
 // =============================================================================
 
 import type React from 'react'
+import path from 'node:path'
 import Image from 'next/image'
+import sharp from 'sharp'
 import { withTbf } from '@/lib/tbf-text'
+
+// PROPORCAO NATURAL (14/10/2026, pedido do fundador: "voce esta cortando MUITA
+// foto dos artigos"). Foto editorial no corpo aparece INTEIRA. O hero de abertura
+// e o unico lugar onde o corte e permitido. Como o conteudo nao carrega
+// width/height nas fotos `bleed`, a medida real sai do arquivo em /public, uma
+// vez por foto (cache em memoria), no servidor. Falhou a leitura: 3 / 2.
+const dimsCache = new Map<string, Promise<{ width: number; height: number }>>()
+function nativeSize(src: string) {
+  let hit = dimsCache.get(src)
+  if (!hit) {
+    hit = sharp(path.join(process.cwd(), 'public', src))
+      .metadata()
+      .then((m) => ({ width: m.width ?? 3, height: m.height ?? 2 }))
+      .catch(() => ({ width: 3, height: 2 }))
+    dimsCache.set(src, hit)
+  }
+  return hit
+}
 
 // LEGENDA (08/10/2026, CHANGES #01): a frase em light, o crédito em bold, e as
 // duas sempre dentro do `figcaption`, que mora no MESMO `figure` da imagem. A
@@ -45,21 +65,23 @@ interface MediaParallaxProps {
   caption?: string
   credit?: string
   variant?: 'bleed' | 'plate'
-  /** Obrigatórios em `plate`: é a proporção nativa que define a altura. */
+  /** Opcionais: sem eles, a proporção nativa é lida do arquivo em /public. */
   width?: number
   height?: number
 }
 
-export function MediaParallax({
+export async function MediaParallax({
   src,
   alt,
   caption,
   credit,
-  variant = 'bleed',
   width,
   height,
 }: MediaParallaxProps) {
-  if (variant === 'plate') {
+  // Toda foto do corpo e prancha: inteira, na proporcao nativa. `variant` segue
+  // aceito (o conteudo ainda o declara), mas `bleed` nao recorta mais.
+  {
+    if (!(width && height)) ({ width, height } = await nativeSize(src))
     return (
       <figure
         className="scrolly-media scrolly-media--plate"
@@ -80,15 +102,6 @@ export function MediaParallax({
       </figure>
     )
   }
-
-  return (
-    <figure className="scrolly-media">
-      <div className="scrolly-media__frame">
-        <Image src={src} alt={alt} fill sizes="(min-width: 768px) 680px, 100vw" style={{ objectFit: 'cover' }} className="scrolly-media__img" />
-      </div>
-      <MediaCaption caption={caption} credit={credit} />
-    </figure>
-  )
 }
 
 // =============================================================================
@@ -117,7 +130,7 @@ export interface MediaPairItem {
   credit?: string
 }
 
-export function MediaPair({
+export async function MediaPair({
   items,
   ratio,
 }: {
@@ -125,24 +138,23 @@ export function MediaPair({
   /** Proporcao do quadro de cada metade. Default 4/3, ver scrolly.css. */
   ratio?: string
 }) {
+  // `ratio` fica aceito por compatibilidade com o conteudo, mas nao recorta mais:
+  // cada peca usa a proporcao do proprio arquivo.
+  void ratio
+  const sizes = await Promise.all(items.map((it) => nativeSize(it.src)))
   return (
     <div className="scrolly-pair">
-      {items.map((item) => (
+      {items.map((item, i) => (
         <figure key={item.src} className="scrolly-media scrolly-pair__item">
-          <div
-            className="scrolly-media__frame scrolly-pair__frame"
-            style={ratio ? ({ ['--pair-ratio']: ratio } as React.CSSProperties) : undefined}
-          >
-            <Image
-              src={item.src}
-              alt={item.alt}
-              fill
-              // Meia coluna (340px) a partir de 768px; largura cheia abaixo disso.
-              sizes="(min-width: 768px) 340px, 100vw"
-              style={{ objectFit: 'cover' }}
-              className="scrolly-media__img"
-            />
-          </div>
+          <Image
+            src={item.src}
+            alt={item.alt}
+            width={sizes[i].width}
+            height={sizes[i].height}
+            // Meia coluna (340px) a partir de 768px; largura cheia abaixo disso.
+            sizes="(min-width: 768px) 340px, 100vw"
+            className="scrolly-media__plate-img"
+          />
           <MediaCaption caption={item.caption} credit={item.credit} />
         </figure>
       ))}

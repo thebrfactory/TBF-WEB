@@ -1,106 +1,21 @@
-/* Mobile-first. Mesma linguagem do .newsletter-popup (components.css):
-   card com borda, raio 18, sombra funda, entrada escala+fade, X fino. */
+/* Mobile-first. Tela cheia, preto puro, sem caixa, borda, sombra nem blur.
+   A foto (contain) usa a tela toda; contador, fechar e legenda ficam por cima
+   com um degrade fino so para legibilidade. Raio da foto: 3px. */
 .root {
+  --lb-fade: 1;
   position: fixed;
   inset: 0;
   z-index: var(--tbf-z-modal);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overscroll-behavior: contain;
-}
-
-.backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.72);
-  -webkit-backdrop-filter: blur(0);
-  backdrop-filter: blur(0);
-  opacity: 0;
-  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
-              backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
-              -webkit-backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
-}
-.open .backdrop {
-  opacity: 1;
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-}
-
-.card {
-  position: relative;
-  display: flex;
   flex-direction: column;
-  width: calc(100vw - var(--tbf-space-4));
-  height: min(86dvh, 900px);
-  background-color: var(--tbf-bg-primary);
-  border: 1px solid var(--tbf-border);
-  border-radius: 18px;
-  overflow: hidden;
-  box-shadow:
-    0 32px 80px rgba(0, 0, 0, 0.85),
-    0 12px 32px rgba(0, 0, 0, 0.7),
-    0 2px 8px rgba(0, 0, 0, 0.6);
+  background: #000;
   opacity: 0;
-  transform: translateY(12px) scale(0.96);
-  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
-              transform var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
+  transition: opacity 0.22s ease;
+  overscroll-behavior: contain;
+  /* o gesto e todo nosso: nada de scroll, zoom ou refresh do navegador */
+  touch-action: none;
 }
-.open .card {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: none;
-  padding: var(--tbf-space-1) var(--tbf-space-1) 0 var(--tbf-space-4);
-}
-
-.count {
-  font-family: var(--tbf-font-family-ui);
-  font-size: var(--tbf-type-micro-size);
-  letter-spacing: var(--tbf-type-micro-ls);
-  color: var(--tbf-text-tertiary);
-  font-variant-numeric: tabular-nums;
-}
-
-.close,
-.nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  padding: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  color: var(--tbf-text-tertiary);
-  cursor: pointer;
-  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
-              transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
-}
-.close:hover,
-.nav:hover,
-.close:focus-visible,
-.nav:focus-visible { color: var(--tbf-text-primary); }
-.close:hover { transform: scale(1.12); }
-.close:active { transform: scale(0.92); }
-.close:focus-visible,
-.nav:focus-visible { outline: 1px solid var(--tbf-border); outline-offset: -6px; }
-
-.nav svg {
-  width: 1.5rem;
-  height: 1.5rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
+.open { opacity: var(--lb-fade); }
 
 .stage {
   position: relative;
@@ -109,7 +24,11 @@
   overflow: hidden;
   touch-action: none;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
   cursor: zoom-in;
+  /* sem transition de transform aqui: o arrasto vertical escreve direto */
+  transition: transform 0.2s ease;
 }
 .stage.zoomed { cursor: grab; }
 
@@ -118,17 +37,24 @@
   inset: 0;
   pointer-events: none;
 }
-/* Crossfade so em opacity. A nova espera a foto carregar (.wait) para nao piscar. */
+/* Troca so em opacity + transform (compositor). A nova espera a foto carregar
+   (.wait) para nao piscar e entra do lado de onde o dedo veio. */
 .wait { opacity: 0; }
-.in { opacity: 1; transition: opacity 0.28s ease; }
+.in { animation: lb-in 0.24s cubic-bezier(0.2, 0, 0, 1) both; }
+.in[data-dir='prev'] { --lb-from: -20px; }
+.in[data-dir='next'] { --lb-from: 20px; }
 .out { opacity: 1; }
 
-/* Caixa ocupa o palco todo: a foto (contain) usa o maior tamanho possivel sem corte. */
+@keyframes lb-in {
+  from { opacity: 0; transform: translate3d(var(--lb-from, 0), 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+
 .zoomBox {
   position: absolute;
   inset: 0;
   /* Centraliza a foto: a caixa da <img> abraça a foto, para o raio pegar
-     o canto visível (com object-fit: contain pegaria a caixa vazia). */
+     o canto visivel (com object-fit: contain pegaria a caixa vazia). */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,34 +69,101 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  /* Mesmo raio das fotos do carrossel (StoryPlayer .beltImg). */
-  border-radius: var(--tbf-radius-card);
+  border-radius: 3px;
   -webkit-user-drag: none;
 }
 
+/* Topo: contador e fechar por cima da foto. */
+.bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: env(safe-area-inset-top) calc(var(--tbf-space-1) + env(safe-area-inset-right)) var(--tbf-space-6)
+    calc(var(--tbf-space-4) + env(safe-area-inset-left));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+.count {
+  font-family: var(--tbf-font-family-ui);
+  font-size: var(--tbf-type-micro-size);
+  letter-spacing: var(--tbf-type-micro-ls);
+  color: rgba(255, 255, 255, 0.78);
+  font-variant-numeric: tabular-nums;
+}
+
+.close,
 .nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+  pointer-events: auto;
+  transition: color var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro),
+              transform var(--tbf-motion-duration-micro) var(--tbf-motion-easing-micro);
+}
+.close:hover,
+.nav:hover,
+.close:focus-visible,
+.nav:focus-visible { color: #fff; }
+.close:hover { transform: scale(1.12); }
+.close:active { transform: scale(0.92); }
+.close:focus-visible,
+.nav:focus-visible { outline: 1px solid rgba(255, 255, 255, 0.5); outline-offset: -6px; }
+
+.nav svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Setas: so no desktop. No celular o gesto e a seta. */
+.nav {
+  display: none;
   position: absolute;
   top: 50%;
   margin-top: -1.375rem;
-  z-index: 1;
-  /* sem circulo: so o icone, com sombra para ler sobre foto clara */
+  z-index: 2;
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.6));
-  color: #fff;
-  opacity: 0.8;
 }
-.nav:hover,
-.nav:focus-visible { color: var(--tbf-text-primary); opacity: 1; }
-.prev { left: 0; }
-.next { right: 0; }
+.prev { left: var(--tbf-space-2); }
+.next { right: var(--tbf-space-2); }
+
+/* Rodape: legenda por cima da foto, degrade fino para legibilidade. */
+.foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  pointer-events: none;
+}
 
 .caption {
-  flex: none;
   margin: 0;
-  padding: var(--tbf-space-2) var(--tbf-space-4) var(--tbf-space-4);
+  padding: var(--tbf-space-8) calc(var(--tbf-space-4) + env(safe-area-inset-right))
+    calc(var(--tbf-space-3) + env(safe-area-inset-bottom)) calc(var(--tbf-space-4) + env(safe-area-inset-left));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
   font-family: var(--tbf-type-caption-family);
   font-size: var(--tbf-type-caption-size-sm);
-  line-height: 1.5;
-  color: var(--tbf-text-tertiary);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.82);
   text-wrap: pretty;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -182,23 +175,21 @@
 .thumbs { display: none; }
 
 @media (min-width: 768px) {
-  .card {
-    width: min(1100px, calc(100vw - var(--tbf-space-12)));
-    height: min(88dvh, 860px);
-  }
+  .nav { display: flex; }
+  /* a faixa de miniaturas nao cobre a foto */
+  .stage { margin-bottom: 5.5rem; }
   .bar { padding-left: var(--tbf-space-6); padding-right: var(--tbf-space-2); }
-  .caption { padding-left: var(--tbf-space-6); padding-right: var(--tbf-space-6); padding-bottom: var(--tbf-space-3); }
-  .nav { margin-top: -1.375rem; }
-  .prev { left: var(--tbf-space-2); }
-  .next { right: var(--tbf-space-2); }
+  .caption { padding-left: var(--tbf-space-6); padding-right: var(--tbf-space-6); padding-bottom: var(--tbf-space-2); }
 
   .thumbs {
-    flex: none;
     display: flex;
+    justify-content: center;
     gap: var(--tbf-space-2);
     overflow-x: auto;
-    padding: 0 var(--tbf-space-6) var(--tbf-space-4);
+    padding: var(--tbf-space-2) var(--tbf-space-6) var(--tbf-space-4);
+    background: rgba(0, 0, 0, 0.6);
     scrollbar-width: none;
+    pointer-events: auto;
   }
   .thumbs::-webkit-scrollbar { display: none; }
   .thumb {
@@ -207,7 +198,7 @@
     height: 3.5rem;
     padding: 0;
     border: 1px solid transparent;
-    border-radius: 6px;
+    border-radius: 3px;
     background: transparent;
     overflow: hidden;
     cursor: pointer;
@@ -217,14 +208,14 @@
   }
   .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .thumb:hover { opacity: 0.85; }
-  .thumb[data-active='true'] { opacity: 1; border-color: var(--tbf-text-primary); }
+  .thumb[data-active='true'] { opacity: 1; border-color: #fff; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .backdrop,
-  .card,
+  .root,
+  .stage,
   .zoomBox { transition: none; }
-  .in { transition: none; }
+  .in { animation: none; }
   .out { display: none; }
   .close:hover { transform: none; }
 }

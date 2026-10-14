@@ -75,7 +75,7 @@ export function NewsletterPopup() {
   }, [status, close])
 
   // ESC fecha. NÃO trava o scroll do body — a home continua rolável com o popup
-  // aberto (pedido). O overlay é só visual (grayscale) e não captura cliques.
+  // aberto (pedido). Sem overlay: o site por trás mantém a cor.
   useEffect(() => {
     if (!open) return
 
@@ -89,11 +89,6 @@ export function NewsletterPopup() {
 
   return (
     <>
-      <div
-        className={`newsletter-popup-overlay ${open ? 'newsletter-popup-overlay--open' : ''}`}
-        onClick={close}
-        aria-hidden="true"
-      />
       <div
         className={`newsletter-popup ${open ? 'newsletter-popup--open' : ''}`}
         role="dialog"

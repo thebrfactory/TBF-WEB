@@ -14,7 +14,7 @@ const en = {
 
   magazine: {
     sectionLabel: 'Zine',
-    cta: 'Enter the Zine',
+    cta: 'Zine',
   },
 
   // Capas de exemplo, exibidas só enquanto o CMS não tem matéria publicada.
@@ -51,7 +51,7 @@ const pt: typeof en = {
 
   magazine: {
     sectionLabel: 'Zine',
-    cta: 'Entrar no Zine',
+    cta: 'Zine',
   },
 
   mockCards: [

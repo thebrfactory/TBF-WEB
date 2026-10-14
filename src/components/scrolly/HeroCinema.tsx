@@ -31,12 +31,32 @@ interface HeroCinemaProps {
   note?: string
 }
 
+// Ponto focal por capa, para o recorte vertical do celular (9:16) não cortar
+// rosto. Sem entrada: 50% 35%, o terço de cima onde costuma morar o rosto.
+// Capa de Posse: palhaço de laranja (62%) e o motorista (60%) cabem juntos.
+const HERO_FOCUS: Record<string, string> = {
+  '/images/editorial/country-side/capa.webp': '60% 30%',
+  // X-15: a frente do carro (parabrisa e faróis) fica à esquerda do quadro.
+  '/images/editorial/gurgel/18-x15-estrada.webp': '30% 50%',
+}
+
 export function HeroCinema({ title, subtitle, eyebrow, image, lang, belt, beltLabel, note }: HeroCinemaProps) {
   return (
     <section className="scrolly-hero" aria-label="Abertura da matéria">
       {image ? (
         <div className="scrolly-hero__media">
-          <Image src={image.src} alt={image.alt} fill priority sizes="100vw" style={{ objectFit: 'cover' }} />
+          {/* Foto em resolução real: sizes 100vw + quality 90 + priority. O
+              movimento (Ken Burns) vive na classe, só com transform. */}
+          <Image
+            className="scrolly-hero__img"
+            src={image.src}
+            alt={image.alt}
+            fill
+            priority
+            quality={90}
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: HERO_FOCUS[image.src] ?? '50% 35%' }}
+          />
           <div className="scrolly-hero__overlay" aria-hidden="true" />
         </div>
       ) : (
@@ -47,7 +67,7 @@ export function HeroCinema({ title, subtitle, eyebrow, image, lang, belt, beltLa
       <div className="scrolly-hero__content">
         {belt && belt.length > 0 && (
           <>
-            <MediaBelt className="scrolly-hero__belt" items={belt} label={beltLabel} />
+            <MediaBelt className="scrolly-hero__belt fade-edges" items={belt} label={beltLabel} />
             {beltLabel && <p className="scrolly-hero__beltLabel">{beltLabel}</p>}
           </>
         )}

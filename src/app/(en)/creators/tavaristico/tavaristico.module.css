@@ -284,23 +284,33 @@
      quadrado nasce em x=0 de verdade; o respiro do lado direito passa a
      viver em `.heroBody`, que ganha o padding que a página inteira usa. */
   .hero {
-    grid-template-columns: 1fr 1fr;
+    /* Hero desktop (14/10/2026): a borda DIREITA da capa cola na linha de
+       centro da pagina (50vw) e o bloco de texto comeca no centro + o MESMO
+       recuo que a capa guarda da borda esquerda (--hero-inset). O tamanho da
+       capa e o de antes: min(metade da area util, teto de altura). */
+    --hero-cover: min(
+      calc((100vw - var(--tbf-space-4) - var(--tbf-space-10)) / 2),
+      calc(100svh - var(--tbf-nav-height-xl) - var(--tbf-space-6) - var(--tbf-space-12))
+    );
+    --hero-inset: calc(50vw - var(--hero-cover));
+    grid-template-columns: 50% 50%;
     align-items: center;
     /* Correção 10/09/2026 (rodada 6, item 1): restaura o vão largo no
        desktop, onde o gap do grid é horizontal (colunas lado a lado), não
        vertical. */
-    gap: var(--tbf-space-10);
+    gap: 0;
     max-width: none;
-    /* Correção 10/09/2026 (rodada 7, item 1): margem pequena na esquerda em
-       vez de colar o quadrado na borda da tela. */
-    padding-inline: var(--tbf-space-4) 0;
+    padding-inline: 0;
   }
   /* Correção 10/09/2026 (rodada 7, item 1): a capa é quadrada, então limitar
      a LARGURA limita a altura junto. O teto é a altura da janela menos o nav
      e os respiros do hero: assim ela cabe na página inteira, nunca sobra pra
      fora. */
   .heroCover {
-    max-width: min(100%, calc(100svh - var(--tbf-nav-height-xl) - var(--tbf-space-6) - var(--tbf-space-12)));
+    width: var(--hero-cover);
+    max-width: none;
+    justify-self: end;
+    margin-inline: 0;
   }
   .heroTop { padding: var(--tbf-space-6); gap: var(--tbf-space-4); }
   .heroAvatar { width: 84px; height: 84px; }
@@ -323,6 +333,7 @@
     justify-content: center;
     gap: var(--tbf-space-10);
     padding-top: 0;
+    padding-left: var(--hero-inset);
     padding-right: var(--tbf-grid-margin-lg);
   }
   /* Os margin-top abaixo existiam pra abrir vao empilhando de cima pra baixo

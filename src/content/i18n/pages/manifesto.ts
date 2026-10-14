@@ -20,7 +20,7 @@ const en = {
   kicker: 'Founding document',
   bodyLabel: 'Manifesto',
   nextStepsLabel: 'Next steps',
-  ctaEditorial: 'Enter the Zine',
+  ctaEditorial: 'Zine',
   ctaAccess: 'Open a channel',
   photos: [
     'Clowns in colorful costumes riding a pink car in the Brazilian countryside.',
@@ -60,7 +60,7 @@ const pt: typeof en = {
   kicker: 'Documento fundador',
   bodyLabel: 'Manifesto',
   nextStepsLabel: 'Próximos passos',
-  ctaEditorial: 'Entrar no Zine',
+  ctaEditorial: 'Zine',
   ctaAccess: 'Abrir um canal',
   photos: [
     'Palhaços de fantasia colorida em um carro rosa no interior do Brasil.',
