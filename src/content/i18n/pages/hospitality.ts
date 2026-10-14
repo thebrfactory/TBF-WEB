@@ -112,7 +112,7 @@ export const SHOTS: Shot[] = [
   },
   {
     src: `${base}/14-piscina.webp`,
-    w: 1333,
+    w: 1209,
     h: 2000,
     role: { en: 'The amenity, at night', pt: 'O diferencial, à noite' },
     alt: {
