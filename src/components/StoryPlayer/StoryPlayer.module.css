@@ -214,6 +214,8 @@
   z-index: 1;
 }
 
+.mediaBlur.mediaOn { opacity: 1; z-index: 1; }
+
 .shadeTop,
 .shadeBottom {
   position: absolute;
@@ -491,7 +493,7 @@
 }
 
 /* =============================================================================
-   FAIXA DE MÍDIA — esteira infinita, sem JavaScript
+   FAIXA DE MÍDIA: esteira infinita, sem JavaScript
    -----------------------------------------------------------------------------
    O trilho tem o DOBRO da lista e anda exatamente uma metade: no fim do ciclo a
    segunda cópia está onde a primeira começou, e o salto de volta é invisível.
