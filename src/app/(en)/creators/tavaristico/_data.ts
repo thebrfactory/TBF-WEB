@@ -810,64 +810,81 @@ export const VENTURES: Venture[] = [
     weight: 'primary',
     cover: `${base}/ventures/veraozao.webp`,
     coverAlt: 'VERÃOZÃO, Ô de Casa',
-    // As pecas sao as MESMAS do case do /pitch (`/images/pitch/veraozao/`),
-    // apontadas, nao copiadas (regra 4). Sao stories nativos 1080x1920 que a
-    // .TBF. publicou em fevereiro: ja nasceram neste formato.
+    // 14/10/2026: as pecas sao as NOVAS do Tavaristico (TAV05, PERSONAL
+    // PRESENTATION/VERAOZAO), 1080x1920 nativas, com o texto ja gravado no
+    // arquivo: por isso nenhum quadro leva `overlay`. Capas primeiro, depois a
+    // numeracao, e o filme BASE-2 (sem audio) fecha. As antigas seguem em
+    // `/images/pitch/veraozao/` porque o case do /pitch ainda as usa.
     frames: [
       {
-        src: '/images/pitch/veraozao/story-01-chave.webp',
-        alt: 'Peça de abertura da campanha VERÃOZÃO, com o estandarte e a identidade do ÔÀSIS.',
-        role: 'Key visual',
-        overlay: {
-          kickerEN: 'Ô DE CASA HOSTEL · SUMMER 2026',
-          kickerPT: 'Ô DE CASA HOSTEL · VERÃO 2026',
-          titleEN: 'When a season stops being a campaign and becomes a scene.',
-          titlePT: 'Quando uma temporada para de ser campanha e vira cena.',
-        },
+        src: `${stories}/veraozao/01-capa1.webp`,
+        alt: 'Capa 1 da campanha VERÃOZÃO: estandarte do Ô de Casa na rua, com o título Gringo Loco.',
+        role: 'Cover 1',
       },
       {
-        src: '/images/pitch/veraozao/story-03-rua.webp',
-        alt: 'Story com o estandarte do Ô de Casa levantado na rua, em dia de sol.',
-        role: 'The street',
-        overlay: {
-          kickerEN: 'THE STREET',
-          kickerPT: 'A RUA',
-          titleEN: 'The banner left the hostel and took the block with it.',
-          titlePT: 'O estandarte saiu do hostel e levou o quarteirão junto.',
-        },
+        src: `${stories}/veraozao/02-capa4.webp`,
+        alt: 'Capa 4 da campanha VERÃOZÃO: close de um rapaz com chifres de diabo e um copo na mão.',
+        role: 'Cover 4',
       },
       {
-        src: '/images/pitch/veraozao/story-06-publico.webp',
-        alt: 'Story do público de braços erguidos na ativação de rua.',
-        role: 'Audience',
-        overlay: {
-          kickerEN: 'THE CROWD',
-          kickerPT: 'A GALERA',
-          titleEN: 'Nobody was invited to watch. They were invited to be in it.',
-          titlePT: 'Ninguém foi chamado para assistir. Foi chamado para estar dentro.',
-        },
+        src: `${stories}/veraozao/03-01.webp`,
+        alt: 'Peça 01 da campanha VERÃOZÃO: estandarte colorido e mão em primeiro plano.',
+        role: 'Piece 01',
       },
       {
-        src: '/images/pitch/veraozao/story-07-experiencia.webp',
-        alt: 'Story da festa de espuma dentro do hostel.',
-        role: 'Experience',
-        overlay: {
-          kickerEN: 'THE EXPERIENCE',
-          kickerPT: 'A EXPERIÊNCIA',
-          titleEN: 'Foam, bass and a February that ran every single day.',
-          titlePT: 'Espuma, grave e um fevereiro que não parou um dia sequer.',
-        },
+        src: `${stories}/veraozao/06-01-copy-10.webp`,
+        alt: 'Peça da campanha VERÃOZÃO: piscina em São Paulo.',
+        role: 'Pool',
       },
       {
-        src: '/images/pitch/veraozao/story-12-fecho.webp',
-        alt: 'Story de fecho, com duas pessoas rindo dentro do hostel.',
-        role: 'What remains',
-        overlay: {
-          kickerEN: 'WHAT REMAINS',
-          kickerPT: 'O QUE FICOU',
-          titleEN: 'It reached open TV in January. It reached the hallway every night.',
-          titlePT: 'Chegou na TV aberta em janeiro. Chegou no corredor todas as noites.',
+        src: `${stories}/veraozao/07-01-copy-12.webp`,
+        alt: 'Peça da campanha VERÃOZÃO: o hostel acontece aqui.',
+        role: 'Here',
+      },
+      {
+        src: `${stories}/veraozao/08-01-copy-17.webp`,
+        alt: 'Peça da campanha VERÃOZÃO: a água da piscina ao sol.',
+        role: 'Water',
+      },
+      {
+        src: `${stories}/veraozao/09-01-copy-22.webp`,
+        alt: 'Peça da campanha VERÃOZÃO: samba, mãos e camisa listrada.',
+        role: 'Samba',
+      },
+      {
+        src: `${stories}/veraozao/10-02.webp`,
+        alt: 'Peça 02 da campanha VERÃOZÃO: bolsa colorida e espuma.',
+        role: 'Piece 02',
+      },
+      {
+        src: `${stories}/veraozao/11-02-2.webp`,
+        alt: 'Peça 02 (versão 2) da campanha VERÃOZÃO: o estandarte erguido na rua.',
+        role: 'Piece 02, v2',
+      },
+      {
+        src: `${stories}/veraozao/12-03.webp`,
+        alt: 'Peça 03 da campanha VERÃOZÃO: retrato gritando de alegria, de camisa estampada.',
+        role: 'Piece 03',
+      },
+      {
+        src: `${stories}/veraozao/04-01-2.webp`,
+        alt: 'Peça 01 (versão 2) da campanha VERÃOZÃO: câmera de TV e o selo do Ô.',
+        role: 'Piece 01, v2',
+      },
+      {
+        src: `${stories}/veraozao/05-01-3.webp`,
+        alt: 'Peça 01 (versão 3) da campanha VERÃOZÃO: dançarina na festa do hostel.',
+        role: 'Piece 01, v3',
+      },
+      {
+        src: `${stories}/veraozao/13-base-poster.jpg`,
+        video: {
+          av1: '/videos/veraozao/base.av1.mp4',
+          h264: '/videos/veraozao/base.mp4',
         },
+        ms: 10500,
+        alt: 'Filme da campanha VERÃOZÃO: espuma, festa e o selo do Ô.',
+        role: 'Film',
       },
     ],
   },

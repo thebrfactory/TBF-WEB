@@ -27,7 +27,7 @@
 
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
-import { StoryDeck } from '@/components/StoryPlayer/StoryPlayer'
+import { StoryPlayer } from '@/components/StoryPlayer/StoryPlayer'
 import { SHOTS } from '@/content/i18n/pages/hospitality'
 import {
   ACCENT,
@@ -220,9 +220,8 @@ export function PropostaCasteloClient() {
 
       {/* ── CENA 03 · A PROVA ──────────────────────────────────────────────
              O anúncio rodando sozinho, com as catorze do Ô de Casa. Mesma
-             mecânica da cena 05 do deck: `p3-deck-flat` desmonta a pilha do
-             StoryDeck para o quadro dividir a linha com o texto e a fila de
-             miniaturas correr embaixo. */}
+             mecânica da cena 05 do deck: o StoryPlayer inline divide a linha
+             com o texto. O invólucro `pc-proof-story` só dá a medida. */}
       <section id="cena-03" style={{ ...S }} aria-label="A Prova / The Proof">
         <Numeral n="03" />
         <Kicker n="03" pt="A Prova" en="The Proof" />
@@ -242,15 +241,20 @@ export function PropostaCasteloClient() {
         </PitchReveal>
 
         <div className="p3-case-layout pc-proof">
-          <StoryDeck
-            deckClassName="p3-deck-flat"
-            playerClassName="p3-story"
-            thumbsClassName="p3-thumbs"
-            handle="Ô"
-            avatarSrc="/images/creators/tavaristico/o-avatar.webp"
-            label={PROOF.headline.pt}
-            items={SHOTS.map((s) => ({ src: s.src, alt: s.alt.pt, role: s.role.pt }))}
-          />
+          <div className="pc-proof-story">
+            <StoryPlayer
+              variant="inline"
+              groups={[
+                {
+                  id: 'o-de-casa',
+                  handle: 'Ô',
+                  avatarSrc: '/images/creators/tavaristico/hospitality/o-avatar.webp',
+                  items: SHOTS.map((s) => ({ src: s.src, alt: s.alt.pt, role: s.role.pt })),
+                },
+              ]}
+              label={PROOF.headline.pt}
+            />
+          </div>
 
           <div className="pc-proof-copy">
             <PitchReveal delay={240}>
@@ -575,6 +579,23 @@ export function PropostaCasteloClient() {
         }
         .pc-proof {
           margin-top: var(--p3-gap-sm);
+        }
+        /* Medida do story (o player inline preenche este invólucro). 9/16
+           travado: a largura sai da altura. Mobile primeiro: empilhado. */
+        .pc-proof-story {
+          order: 1;
+          align-self: center;
+          height: min(44vh, 22rem);
+          aspect-ratio: 9 / 16;
+        }
+        @media (min-width: 768px) {
+          .pc-proof-story {
+            order: 0;
+            grid-column: 1;
+            grid-row: 1 / -1;
+            align-self: start;
+            height: min(58vh, 30rem);
+          }
         }
         .pc-proof-copy {
           display: flex;

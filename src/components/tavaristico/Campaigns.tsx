@@ -25,7 +25,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Campaign } from '@/app/(en)/creators/tavaristico/_data'
 import type { Lang } from '@/lib/i18n'
 import { StoryRing } from './StoryRing'
-import { StoryModal } from './StoryModal'
+import { StoryPlayer, type StoryGroup } from '@/components/StoryPlayer/StoryPlayer'
 import styles from './Campaigns.module.css'
 
 const SEEN_KEY = 'tav:campaigns:seen'
@@ -110,17 +110,21 @@ export function Campaigns({
 
   // Mesma escolha de idioma do overlay que o SelectedWork faz (pedido do
   // fundador 10/09/2026: "PT/EN de tudo, inclusive stories").
-  const activeFrames = active
-    ? active.frames.map((f) => ({
-        ...f,
-        overlay: f.overlay
-          ? {
-              title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
-              kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
-            }
-          : undefined,
-      }))
-    : []
+  // Todas as campanhas viram stories vizinhos no desktop (layout padrão).
+  const groups: StoryGroup[] = campaigns.map((c) => ({
+    id: c.index,
+    handle: c.client,
+    avatarSrc: c.cover ?? c.frames[0]?.src,
+    items: c.frames.map((f) => ({
+      ...f,
+      overlay: f.overlay
+        ? {
+            title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
+            kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
+          }
+        : undefined,
+    })),
+  }))
 
   return (
     <div className={styles.wrap}>
@@ -155,9 +159,10 @@ export function Campaigns({
       ) : null}
 
       {active ? (
-        <StoryModal
-          frames={activeFrames}
-          handle={active.client}
+        <StoryPlayer
+          groups={groups}
+          startGroup={campaigns.indexOf(active)}
+          lang={lang}
           label={modalLabel}
           onClose={close}
         />

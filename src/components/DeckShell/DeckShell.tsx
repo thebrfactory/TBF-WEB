@@ -1102,21 +1102,14 @@ export function DeckStyles() {
         /* A COMPOSIÇÃO DA CENA 05, em grade de duas colunas e duas linhas:
 
              [ quadro ] [ texto do case        ]
-             [ fila de miniaturas, largura inteira ]
 
            LADO A LADO JÁ NO TELEFONE (2026-08-14). Empilhado, o story e a copy
            somavam altura um em cima do outro, e era isso que impedia o quadro de
            crescer: 73px de estouro medido no iPhone 13. Em linha, os dois
            dividem a LARGURA, que é o que sobra numa tela de telefone.
 
-           A FILA NA LARGURA INTEIRA, e não embaixo do quadro: o quadro tem 9/16,
-           ou seja é estreito, e uma fila de doze miniaturas presa a 207px de
-           largura viraria um túnel de rolagem. display: contents no invólucro
-           do StoryDeck (.p3-deck-flat) dissolve a pilha padrão dele e entrega
-           quadro e fila como filhos diretos desta grade.
-
-           É a estrutura da referência que o fundador mandou: quadro à esquerda,
-           texto à direita, miniaturas atravessando por baixo. */
+           O quadro é o StoryPlayer (layout padrão de stories). Quem usa esta
+           grade põe o player num invólucro próprio que só dá a medida. */
         .p3-case-layout {
           display: grid;
           grid-template-columns: auto minmax(0, 1fr);
@@ -1136,78 +1129,12 @@ export function DeckStyles() {
           min-height: 0;
         }
 
-        .p3-deck-flat { display: contents; }
-
-        /* POSIÇÃO EXPLÍCITA nos três, e não é preciosismo. Com display:
-           contents a ordem no DOM vira quadro, fila, texto — nessa ordem. Na
-           colocação automática, a fila (que atravessa as duas colunas) empurra o
-           texto para uma TERCEIRA linha, e as colunas colapsam: medido,
-           1278px na primeira e 0px na segunda. Dizendo onde cada um mora, a
-           grade fica do jeito que a referência pede. */
-        /* O STORY ATRAVESSA AS DUAS LINHAS (pedido do fundador 2026-08-14: "o
-           story expandido também para baixo no lugar das miniaturas"). Ele
-           ocupa a coluna da esquerda inteira, do topo da composição até a base,
-           e as miniaturas se mudaram para debaixo do texto, na coluna da
-           direita. */
-        /* 🔴 9/16 TRAVADO, SEM RECORTE (pedido do fundador 2026-08-14: "preciso
-           que tenha o formato padrão story sem foto cortada").
-
-           O que estava errado: o quadro esticava até a altura da linha
-           (height: 100%) enquanto a LARGURA continuava saindo de --story-h. As
-           duas medidas deixavam de conversar, o quadro virava mais alto que
-           9/16, e o object-fit: cover da foto passava a recortar para preencher.
-           As peças são 1080x1920 nativas, ou seja JÁ SÃO 9/16: não havia nada a
-           recortar, o recorte era só do quadro deformado.
-
-           A correção é declarar a proporção e deixar a LARGURA sair dela:
-           aspect-ratio + height 100% + width auto. A altura da linha da grade é
-           definida, então o navegador resolve a largura sozinho, e o quadro fica
-           exatamente 9/16 em qualquer altura de janela. --story-h deixa de
-           mandar na largura e passa a ser só o teto. */
-        .p3-story {
-          grid-column: 1;
-          grid-row: 1 / -1;
-          align-self: stretch;
-          height: 100%;
-          width: auto;
-          aspect-ratio: 9 / 16;
-          /* 🔴 O TETO DO TELEFONE, e ele não é decoração. O quadro é 9/16: cada
-             pixel de altura vira 0,56 de largura, e num telefone a largura é o
-             recurso escasso. Sem teto, o story tomava a linha inteira da grade
-             (844px de altura viram 475 de largura numa tela de 390) e empurrava
-             a copy e a esteira para fora da cena, que tem overflow: hidden e come
-             o que sai sem avisar. Medido em 390x844 antes de existir este teto.
-             No desktop o teto sai (ver o media query de 1024px): lá sobra
-             largura e o quadro ocupa a altura inteira da cena, que é onde o deck
-             é apresentado. */
-          max-height: min(100%, 52vh, 26rem);
-          /* 🔴 É DAQUI QUE VINHA O STORY CORTADO NO MEIO (#05, #01 CHANGES
-             2026-08-14), e a causa não era o recorte da foto: era o QUADRO.
-
-             O player já ganhava a altura da linha da grade (667px medidos em
-             1440x900), mas o quadro por dentro continuava com a altura fixa que
-             o componente traz de fábrica, 'height: var(--story-h)' — 512px. A
-             peça, que é 9/16 da altura do player, entrava com 668px de altura
-             dentro de uma caixa de 512 com 'overflow: hidden': os últimos 156px
-             da imagem eram simplesmente decepados, sempre no mesmo lugar, mais
-             ou menos no meio do slide. Era isso que ele estava vendo.
-
-             A régua velha existia porque '--story-h' mandava nos dois ao mesmo
-             tempo (largura do player E altura do quadro). Aqui o player mede a
-             própria altura pela grade, então a variável passa a valer 100% e o
-             quadro cresce junto com ele. A tentativa anterior de corrigir isso
-             mirava '> div:first-of-type', que no DOM do player é a barra do
-             cronômetro, não o quadro — e por isso não consertava nada. */
-          --story-h: 100%;
-        }
+        /* O story (StoryPlayer inline) mora num invólucro da página que só dá a
+           medida; ver pc-proof-story na proposta. */
         .p3-case-copy {
           grid-column: 2;
           grid-row: 1;
           align-self: start;
-        }
-        .p3-thumbs {
-          grid-column: 2;
-          grid-row: 2;
         }
         .p3-case-video {
           width: clamp(6rem, 24vw, 9rem);
@@ -1231,9 +1158,7 @@ export function DeckStyles() {
         /* ÍCONE DE STORIES DO CASE (pitch v3, cena 05), aberto em 2026-09-16:
            pedido do fundador para o quadro sempre-ligado virar um StoryRing
            que abre o modal sob demanda, igual ao círculo de cada projeto em
-           Selected Work (/creators/tavaristico). Classe NOVA, sem tocar em
-           .p3-story: aquela carrega o tamanho medido do quadro 9/16 em
-           cada breakpoint, e um ícone pequeno não deveria herdar nada disso.
+           Selected Work (/creators/tavaristico). Classe NOVA, de um ícone pequeno.
            Ocupa o MESMO lugar na grade (coluna 1, as duas linhas) que o
            quadro ocupava, mas mede pelo próprio conteúdo, então a coluna
            encolhe para o tamanho do anel e sobra largura para a copy. */
@@ -1281,15 +1206,6 @@ export function DeckStyles() {
            discordavam. '--story-h' agora vale 100% e mora junto com a proporção
            lá em cima, num lugar só. */
 
-        /* A FILA DE MINIATURAS. Ela mora dentro do StoryDeck, colada embaixo do
-           quadro, e por isso a largura dela é limitada pela do quadro no
-           telefone: rola de lado. No desktop a cena tem largura sobrando e a
-           fila ganha a linha inteira (ver o media query de 1024px).
-           A miniatura é 9/16 como o quadro, então a largura em rem já define a
-           altura: 3.4rem de largura dá 96px de altura. */
-        .p3-thumbs {
-          --thumb-w: clamp(2.4rem, 5vh, 3.4rem);
-        }
 
         /* A IDENTIDADE DA CAMPANHA no lugar do título de texto. O h2 perde a
            tipografia porque o que ele carrega agora é uma imagem: sem isto, a
@@ -1767,18 +1683,6 @@ export function DeckStyles() {
           /* Miniatura MAIOR no desktop tambem (pedido do fundador: a faixa
              estava com proporcao muito pequena). Termo em vh: em tela baixa ela
              encolhe junto, que e a regra do deck. */
-          /* No desktop a fila sai de baixo do quadro e ocupa a largura da cena:
-             o StoryDeck é uma coluna, mas a cena 05 é uma linha, então a fila
-             recebe a largura cheia por posicionamento (ver .p3-case-layout). */
-          .p3-thumbs {
-            --thumb-w: clamp(3rem, 6.5vh, 4.5rem);
-          }
-          /* No desktop o quadro toma a altura inteira da cena: aqui sobra
-             largura, então o teto que protege o telefone sai do caminho (#05,
-             2026-08-14). Ver a nota do teto em '.p3-story'. */
-          .p3-story {
-            max-height: 100%;
-          }
           /* Imprensa em duas colunas: o bloco tinha a altura de tres paragrafos
              empilhados numa tela que nao tem essa altura para dar. */
           .p3-press {
@@ -1914,9 +1818,6 @@ export function DeckStyles() {
           .p3-case-video {
             width: clamp(4.5rem, 20vw, 6.5rem);
           }
-          .p3-thumbs {
-            --thumb-w: clamp(3.25rem, 13vw, 4.5rem);
-          }
 
           /* CENA 05 NO TELEFONE, EMPILHADA (bug relatado: logotipo da
              campanha, marca do cliente e copy caindo POR CIMA do quadro de
@@ -1929,35 +1830,12 @@ export function DeckStyles() {
              nenhuma no meio.
 
              ORDEM (por 'order', não pelo DOM): quadro, depois a identidade da
-             campanha + copy, depois a fila de miniaturas por último, perto do
-             passador do deck. O quadro de story continua 9/16 sem recorte
-             ('.p3-story' mantém aspect-ratio); só o teto de altura encolhe
-             para sobrar altura para o resto. */
+             campanha + copy. O quadro de story continua 9/16 sem recorte. */
           .p3-case-layout {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: var(--p3-gap-sm);
-          }
-          .p3-story {
-            order: 1;
-            grid-column: auto;
-            grid-row: auto;
-            align-self: center;
-            /* Era min(100%, 52vh, 26rem): esse teto presumia o quadro sozinho
-               numa coluna, dividindo a LARGURA com o texto. Empilhado, ele
-               agora divide a ALTURA com o wordmark, a marca do cliente, a
-               copy e a fila. Medido em 390x844 até fechar sem corte. */
-            /* Altura EXPLÍCITA, não só um teto: empilhado, o pai (a coluna
-               flex) não tem altura própria, então 'height: 100%' (regra
-               base) colapsaria a 0 e junto com ele a largura, que sai da
-               proporção 9/16 sobre a altura. */
-            /* 🔴 O VALOR SAIU DE MEDICAO, e a primeira medida estava apertada
-               demais: com 30vh sobravam 237px de vazio na cena (165 dentro da
-               copy, que crescia sozinha, e 72 no rodape). Vazio nao e respiro,
-               e quadro pequeno a toa: o story e a prova da cena. */
-            height: min(44vh, 22rem);
-            max-height: min(44vh, 22rem);
           }
           .p3-case-copy {
             order: 2;
@@ -1970,12 +1848,6 @@ export function DeckStyles() {
                que sobra", e a caixa esticava 165px abaixo da ultima linha de
                texto: era o buraco entre a copy e a fileira de pontos. */
             flex: 0 0 auto;
-          }
-          .p3-thumbs {
-            order: 3;
-            grid-column: auto;
-            grid-row: auto;
-            width: 100%;
           }
           /* O wordmark também encolhe: era pensado para dividir a linha com o
              quadro (largura sobrando), e empilhado ele reserva altura demais

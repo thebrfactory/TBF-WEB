@@ -129,18 +129,15 @@
    deixa de competir com ele: miniatura é índice, não é a peça. Pela metade,
    cabem o dobro delas na mesma largura, e o leitor vê de uma vez que existem
    treze quadros em vez de cinco. */
-.listingPlayer {
-  --story-h: min(72vh, 34rem);
-}
-
-.listingThumbs {
-  /* Exatamente metade dos valores anteriores (3.5 / 13vw / 6.5). */
-  --thumb-w: clamp(1.75rem, 6.5vw, 3.25rem);
+/* Invólucro do StoryPlayer inline: só dá a MEDIDA (largura = 9/16 da altura
+   pedida). O cromo do player não é tocado por CSS de página. */
+.listingStory {
+  width: min(100%, calc(min(72vh, 34rem) * 9 / 16));
 }
 
 @media (min-width: 1024px) {
-  .listingPlayer {
-    --story-h: min(76vh, 40rem);
+  .listingStory {
+    width: min(100%, calc(min(76vh, 40rem) * 9 / 16));
   }
 }
 

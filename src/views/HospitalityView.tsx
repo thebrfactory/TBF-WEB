@@ -22,7 +22,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { hospitality, SHOTS, HIGHLIGHTS, HIGHLIGHT_PROFILE } from '@/content/i18n/pages/hospitality'
 import { GalleryScope } from '@/components/gallery'
-import { StoryDeck, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
+import { StoryPlayer, MediaBelt } from '@/components/StoryPlayer/StoryPlayer'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import styles from './HospitalityView.module.css'
 
@@ -108,19 +108,26 @@ export default function HospitalityView({ lang }: { lang: Lang }) {
               ))}
             </div>
 
-            <StoryDeck
-              playerClassName={styles.listingPlayer}
-              thumbsClassName={styles.listingThumbs}
-              items={HIGHLIGHTS.map((h) => ({
-                src: h.src,
-                alt: h.alt[lang],
-                role: h.role[lang],
-              }))}
-              handle={HIGHLIGHT_PROFILE.handle}
-              avatarSrc={HIGHLIGHT_PROFILE.avatar}
-              ms={3200}
-              label={t.listingTitle}
-            />
+            <div className={styles.listingStory}>
+              <StoryPlayer
+                variant="inline"
+                thumbs
+                lang={lang}
+                label={t.listingTitle}
+                groups={[
+                  {
+                    id: 'destaques',
+                    handle: HIGHLIGHT_PROFILE.handle,
+                    avatarSrc: HIGHLIGHT_PROFILE.avatar,
+                    items: HIGHLIGHTS.map((h) => ({
+                      src: h.src,
+                      alt: h.alt[lang],
+                      role: h.role[lang],
+                    })),
+                  },
+                ]}
+              />
+            </div>
           </div>
         </section>
 

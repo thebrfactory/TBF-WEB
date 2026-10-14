@@ -40,8 +40,7 @@
 // em TbfWordmark.tsx desde a 2.1, para o corpo do deck caber na cabeça.
 // =============================================================================
 
-import { Fragment, useCallback, useEffect, useId, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
+import { Fragment, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { PressLogosCarousel } from '../v1/PressLogosCarousel'
@@ -49,18 +48,9 @@ import { HeroVideo } from '@/components/HeroVideo/HeroVideo'
 import { HomeHero } from '@/components/HomeHero/HomeHero'
 import { Ticker } from '@/components/Ticker/Ticker'
 import { TbfWordmark } from './TbfWordmark'
-import { StoryDeck, type StoryItem } from '@/components/StoryPlayer/StoryPlayer'
-// O ANEL E O CROMO DO MODAL SAO REUSO POR IMPORT, NAO COPIA (regra 4 do
-// ecossistema). StoryRing e o CSS de StoryModal nasceram na pagina do
-// Tavaristico para a secao Selected Work (circulo que abre o story de cada
-// projeto); aqui e o mesmo padrao pedido pelo fundador para o case VERAOZAO.
-// Nao editamos nada em src/components/tavaristico/: so importamos. A logica
-// do modal (foco, escape, portal, gesto de segurar) mora em
-// CaseStoryModal abaixo, copiada de StoryModal.tsx e com uma variacao que o
-// componente generico nao tem (avatarSrc do cliente): e o "crie wrapper"
-// do proprio pedido.
+import { StoryPlayer } from '@/components/StoryPlayer/StoryPlayer'
+// O anel abre o StoryPlayer, o layout padrao de stories da .TBF. (regra 4: apontar, nao copiar).
 import { StoryRing } from '@/components/tavaristico/StoryRing'
-import modalStyles from '@/components/tavaristico/StoryModal.module.css'
 import { SCENES, COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
 // ─── O casco do formato mora fora deste arquivo ──────────────────────────────
@@ -196,178 +186,6 @@ function PortfolioCard({ item, delay }: { item: (typeof BUSINESS.portfolio)[numb
   )
 }
 
-// Troca a esteira de miniaturas do case por pontos abaixo de 768px (pedido
-// do fundador: "as thumbs podem diminuir e se transformar em pontos"). Começa
-// em `false` para bater com o HTML do servidor e só liga depois do mount, no
-// mesmo padrão do GridRuler acima: ler `window` antes disso quebra a
-// hidratação.
-function useDotsNav() {
-  const [dots, setDots] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 767px)')
-    const onChange = () => setDots(mq.matches)
-    onChange()
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [])
-  return dots
-}
-
-// ─── Modal do case VERAOZAO (cena 05) ────────────────────────────────────────
-// Copia de src/components/tavaristico/StoryModal.tsx (09/09/2026), com uma
-// variacao: recebe `avatarSrc` e repassa ao StoryDeck, porque o quadro deste
-// case precisa mostrar a foto de perfil real do @odecasahostel (pedido do
-// fundador 2026-08-14), coisa que o StoryModal generico nao carrega. O cromo
-// (overlay, dialog, zonas de toque, botao de fechar) usa o MESMO CSS module
-// do StoryModal por import, entao os dois modais tem a cara identica sem
-// duplicar folha de estilo.
-function CaseStoryModal({
-  frames,
-  handle,
-  avatarSrc,
-  label,
-  nav,
-  onClose,
-}: {
-  frames: StoryItem[]
-  handle: string
-  avatarSrc?: string
-  label: string
-  nav: 'thumbs' | 'dots'
-  onClose: () => void
-}) {
-  const dialogRef = useRef<HTMLDivElement>(null)
-  const deckWrapRef = useRef<HTMLDivElement>(null)
-  const [held, setHeld] = useState(false)
-  const holdTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const cancelHold = useCallback(() => {
-    if (holdTimer.current) {
-      clearTimeout(holdTimer.current)
-      holdTimer.current = null
-    }
-    setHeld(false)
-  }, [])
-  useEffect(() => cancelHold, [cancelHold])
-  const titleId = useId()
-
-  const tap = useCallback((btnLabel: 'Peça anterior' | 'Próxima peça') => {
-    const btn = deckWrapRef.current?.querySelector<HTMLButtonElement>(
-      `button[aria-label="${btnLabel}"]`
-    )
-    btn?.click()
-  }, [])
-
-  useEffect(() => {
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      document.body.style.overflow = previous
-    }
-  }, [])
-
-  useEffect(() => {
-    const node = dialogRef.current
-    const focusable = node?.querySelectorAll<HTMLElement>(
-      'button:not([aria-hidden="true"]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    )
-    focusable?.[0]?.focus()
-
-    function onKeyDown(e: KeyboardEvent) {
-      if (e.key === 'Escape') {
-        onClose()
-        return
-      }
-      if (e.key !== 'Tab' || !focusable || focusable.length === 0) return
-      const first = focusable[0]
-      const last = focusable[focusable.length - 1]
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault()
-        last.focus()
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault()
-        first.focus()
-      }
-    }
-
-    document.addEventListener('keydown', onKeyDown)
-    return () => document.removeEventListener('keydown', onKeyDown)
-  }, [onClose])
-
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
-  if (!mounted) return null
-
-  return createPortal(
-    <div
-      className={modalStyles.overlay}
-      onMouseDown={(e) => {
-        if (e.target === e.currentTarget) onClose()
-      }}
-    >
-      <div
-        ref={dialogRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        className={modalStyles.dialog}
-      >
-        <h2 id={titleId} className="sr-only">
-          {label}
-        </h2>
-        <div
-          ref={deckWrapRef}
-          className={modalStyles.deckWrap}
-          onPointerDown={() => {
-            holdTimer.current = setTimeout(() => setHeld(true), 180)
-          }}
-          onPointerUp={cancelHold}
-          onPointerCancel={cancelHold}
-          onPointerLeave={cancelHold}
-        >
-          {/* O X DE FECHAR MORA DENTRO DO StoryDeck (pedido do fundador
-              2026-09-16), no `.head` do quadro, mesma linha do avatar e do
-              handle. Antes vivia aqui, sobre o `deckWrap` (StoryModal.module.css,
-              importado por cima): esse invólucro não tem largura própria, mede
-              pelo maior filho, e a esteira de pontos/miniaturas do case
-              VERAOZAO (12 peças, sem quebra) podia ficar mais larga que o
-              quadro, empurrando o X para fora dele no celular. Ver o
-              comentário de `onClose` em StoryPlayer.tsx. */}
-          <StoryDeck
-            items={frames}
-            handle={handle}
-            avatarSrc={avatarSrc}
-            ms={3200}
-            nav={nav}
-            label={label}
-            playerClassName={modalStyles.modalPlayer}
-            paused={held}
-            onClose={onClose}
-          />
-          <button
-            type="button"
-            aria-hidden="true"
-            tabIndex={-1}
-            className={`${modalStyles.tapZone} ${modalStyles.tapPrev}`}
-            onClick={() => {
-              if (!held) tap('Peça anterior')
-            }}
-          />
-          <button
-            type="button"
-            aria-hidden="true"
-            tabIndex={-1}
-            className={`${modalStyles.tapZone} ${modalStyles.tapNext}`}
-            onClick={() => {
-              if (!held) tap('Próxima peça')
-            }}
-          />
-        </div>
-      </div>
-    </div>,
-    document.body
-  )
-}
-
 // ─── Página ──────────────────────────────────────────────────────────────────
 
 /**
@@ -383,7 +201,6 @@ function CaseStoryModal({
  * `/pitch/v3/<empresa>` passando ele aqui. Não editar a cena aberta.
  */
 export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
-  const dotsNav = useDotsNav()
   const [caseStoryOpen, setCaseStoryOpen] = useState(false)
   const caseStoryLabel = 'Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces'
   return (
@@ -834,15 +651,20 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           </div>
 
           {caseStoryOpen ? (
-            <CaseStoryModal
-              frames={CASE.media.map((m) => ({
-                src: m.src,
-                alt: m.alt.pt,
-                role: m.role.pt,
-              }))}
-              handle="Ô De Casa"
-              avatarSrc="/images/pitch/veraozao/o-avatar.webp"
-              nav={dotsNav ? 'dots' : 'thumbs'}
+            <StoryPlayer
+              groups={[
+                {
+                  id: 'veraozao',
+                  handle: 'Ô De Casa',
+                  avatarSrc: '/images/pitch/veraozao/o-avatar.webp',
+                  timeLabel: 'fev 2026',
+                  items: CASE.media.map((m) => ({
+                    src: m.src,
+                    alt: m.alt.pt,
+                    role: m.role.pt,
+                  })),
+                },
+              ]}
               label={caseStoryLabel}
               onClose={() => setCaseStoryOpen(false)}
             />

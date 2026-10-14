@@ -1,508 +1,493 @@
 /* =============================================================================
-   STORY PLAYER + FAIXA DE MÍDIA — CSS compartilhado
-   -----------------------------------------------------------------------------
-   Ver o cabeçalho de StoryPlayer.tsx para o porquê de estes dois objetos serem
-   compartilhados em vez de copiados.
-
-   A PEÇA SE MEDE PELA ALTURA, não pela largura. Um quadro 9/16 numa cena que já
-   precisa caber em uma tela é o pior caso possível: medido em largura, ele
-   estoura a janela por baixo. Então a conta é ao contrário — a altura é o teto
-   (`--story-h`, entregue por quem usa) e a LARGURA sai dela, multiplicada por
-   9/16. É a mesma lógica da prancha do artigo, pela mesma razão.
+   LAYOUT PADRÃO DE STORIES DA .TBF. Réplica do instagram.com/stories.
+   Mobile-first: tela cheia no celular; palco escuro com setas e vizinhos no
+   desktop. Nada aqui é sobrescrito por CSS de página (guard: check:stories).
    ============================================================================= */
 
-/* O conjunto: quadro em cima, fila de miniaturas embaixo.
-
-   GRID, não flex (correção QA 16/09/2026, bug do case VERAOZAO no modal do
-   pitch v3). `display: flex` + `align-items: stretch` tinha um furo: quando
-   o conjunto mora dentro de um popup que se mede pelo próprio conteúdo (o
-   StoryModal genérico, `align-items: center` no dialog), a largura do `.deck`
-   passa a ser calculada a partir da MAIOR largura entre os filhos, e a fila
-   de pontos/miniaturas SEM QUEBRA (12 peças, caso do VERAOZAO) é mais larga
-   que o quadro. O conjunto inteiro inchava para a largura da fila e saía
-   fora do popup, deslocado para a esquerda. Coluna única de grid com
-   `minmax(0, 1fr)` corta esse contágio: o track nunca herda o max-content da
-   fila, então o quadro manda na largura de novo, do jeito que era o desenho
-   original.
-   `justify-self: start` no quadro é o equivalente, em grid, do antigo
-   `align-self: flex-start`: ele sai do stretch e assume só a própria
-   largura (calculada pela altura, ver comentário do topo do arquivo). Fila
-   de pontos e de miniaturas continuam esticando full width, que é o padrão
-   de `justify-items` em grid quando nada o sobrescreve. */
-.deck {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.6rem;
-  min-width: 0;
-  max-width: 100%;
+/* ─── MODAL ──────────────────────────────────────────────────────────────── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--tbf-z-modal);
+  background: #000000;
+  animation: storyFade 200ms ease;
 }
 
-.player {
-  --story-h: 20rem;
-  justify-self: start;
+.modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  --stage-h: min(100dvh, calc(100vw * 16 / 9));
+}
+
+.stageWrap {
   position: relative;
   display: flex;
-  flex-direction: column;
-  width: calc(var(--story-h) * 9 / 16);
-  max-width: 100%;
-  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
 }
 
-/* O quadro: só ele tem o raio e o recorte. Barras e cabeçalho ficam POR CIMA
-   dele, e por isso são absolutos com z-index. */
+/* Celular: o quadro é 9:16 exato, encaixado na largura; sobra preto, nunca corte. */
+.stage {
+  position: relative;
+  height: var(--stage-h);
+  aspect-ratio: 9 / 16;
+  max-width: 100vw;
+  transition: transform 220ms cubic-bezier(0.23, 1, 0.32, 1), opacity 220ms ease;
+}
+
+/* Setas: no celular existem só para teclado e leitor de tela. */
+.arrow {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  padding: 0;
+  border: 0;
+}
+
+.neighbor { display: none; }
+
+@keyframes storyFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (min-width: 768px) {
+  .backdrop { background: #1a1a1a; }
+  .modal { --stage-h: min(calc(100dvh - 3rem), 60rem); }
+  .stageWrap { margin-inline: 4.5rem; }
+
+  .arrow {
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    overflow: visible;
+    clip-path: none;
+    transform: translateY(-50%);
+    z-index: 6;
+    display: grid;
+    place-items: center;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #1a1a1a;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .arrow:hover { transform: translateY(-50%) scale(1.06); }
+  .arrow .icon { width: 20px; height: 20px; }
+  .arrowPrev { left: -3.5rem; }
+  .arrowNext { right: -3.5rem; }
+
+  .frame { border-radius: 8px; }
+}
+
+/* Vizinhos: só onde a tela comporta os três quadros. */
+@media (min-width: 1180px) {
+  .neighbor {
+    position: relative;
+    display: block;
+    flex: 0 0 auto;
+    height: calc(var(--stage-h) * 0.6);
+    aspect-ratio: 9 / 16;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000000;
+    cursor: pointer;
+  }
+  .neighborImg { object-fit: cover; }
+  .neighborShade {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.62);
+    transition: background 200ms ease;
+  }
+  .neighbor:hover .neighborShade { background: rgba(0, 0, 0, 0.45); }
+  .neighborWho {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0 0.75rem;
+  }
+  .neighborAvatar,
+  .neighborAvatarFallback {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    object-fit: cover;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7);
+  }
+  .neighborAvatarFallback {
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+  }
+  .neighborName {
+    max-width: 100%;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
+    font-family: var(--tbf-font-family-display);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #ffffff;
+    text-align: center;
+  }
+}
+
+/* ─── INLINE: o story ao lado do texto ───────────────────────────────────────
+   Preenche a largura do invólucro da página; a altura sai de 9:16. */
+.inline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+  min-width: 0;
+  outline: none;
+}
+
+.inline:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.85); outline-offset: 4px; border-radius: 8px; }
+
+.inline .frame {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  border-radius: 8px;
+  touch-action: pan-y;
+}
+
+/* ─── QUADRO ─────────────────────────────────────────────────────────────── */
 .frame {
   position: relative;
-  display: grid;
   width: 100%;
-  height: var(--story-h);
-  border-radius: var(--tbf-radius-card);
+  height: 100%;
   overflow: hidden;
   background: #000000;
+  color: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
-.img {
-  grid-area: 1 / 1;
+.layers { position: absolute; inset: 0; }
+
+.media {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 1;
 }
 
-.imgOn { opacity: 1; }
+.mediaOn { opacity: 1; z-index: 2; }
 
-/* CRONÔMETRO. Um traço por imagem, dividindo a largura em partes iguais. A
-   borda arredondada é a do Instagram e é o que faz a barra ser lida como barra
-   de story em vez de barra de progresso de formulário. */
-.bars {
+/* Fora de 9:16: contain sobre a própria imagem desfocada. Nunca corta. */
+.mediaContain { object-fit: contain; }
+
+.mediaBlur {
   position: absolute;
-  top: 0.4rem;
-  left: 0.4rem;
-  right: 0.4rem;
-  z-index: 4;
-  display: flex;
-  gap: 0.15rem;
-}
-
-.bar {
-  flex: 1 1 0;
-  height: 2px;
-  border-radius: 999px;
-  background: rgba(240, 237, 230, 0.32);
-  overflow: hidden;
-}
-
-.fill {
-  display: block;
-  width: 0;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  background: #f0ede6;
+  object-fit: cover;
+  filter: blur(28px) brightness(0.7);
+  transform: scale(1.25);
+  opacity: 0;
+  z-index: 1;
 }
 
-/* Segmento já visto: cheio e parado. */
-.fillDone { width: 100%; }
-
-/* Segmento da vez: enche no MESMO tempo em que a imagem fica na tela.
-   `linear` de propósito — cronômetro com easing mente sobre o tempo. A duração
-   vem por variável inline, para o mesmo componente servir ritmos diferentes. */
-.fillLive {
-  animation: storyFill var(--story-ms, 2400ms) linear forwards;
-}
-
-@keyframes storyFill {
-  from { width: 0; }
-  to   { width: 100%; }
-}
-
-/* ─── O SOMBREADO, e por que ele é um nó e não um fundo ────────────────────
-   Ele já foi o `background` do cabeçalho. Como fundo do cabeçalho, tinha a
-   LARGURA DO CABEÇALHO, que respeita um recuo lateral de 0.4rem: sobrava um
-   degrau visível nas duas beiradas e o topo do quadro ficava sombreado "só num
-   pedaço". Foi o que o fundador viu.
-
-   Agora são dois nós próprios, ancorados no quadro inteiro (`inset` lateral em
-   0), então o degradê nasce colado nas bordas e o raio do quadro o recorta
-   junto com a foto. O de baixo é novo: sem ele, foto clara no rodapé encostava
-   direto no fim do quadro sem assentar.
-
-   `pointer-events: none` nos dois, senão eles roubam o clique dos passadores. */
 .shadeTop,
 .shadeBottom {
   position: absolute;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 3;
   pointer-events: none;
 }
 
 .shadeTop {
   top: 0;
-  height: 28%;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.62) 0%,
-    rgba(0, 0, 0, 0.34) 42%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  height: 24%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.22) 55%, rgba(0, 0, 0, 0) 100%);
 }
 
 .shadeBottom {
   bottom: 0;
-  height: 24%;
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.22) 48%,
-    rgba(0, 0, 0, 0) 100%
-  );
+  height: 22%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.2) 55%, rgba(0, 0, 0, 0) 100%);
 }
 
-/* CABEÇALHO: avatar (opcional) + handle. Sem fundo próprio: quem dá contraste
-   é o `.shadeTop`, que cobre a largura inteira. */
-/* DESCEU (pedido do fundador: o avatar estava colado na borda de cima). Era
-   0.9rem. A barra de tempo (.bars) fica em top: 0.4rem com 2px de altura, ou
-   seja termina por volta de 0.55rem: 1.3rem deixa quase 0.8rem de respiro
-   entre as duas, sem colar. */
+/* Camada de gesto: cobre o quadro; o cromo fica acima dela. */
+.touch {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  cursor: pointer;
+  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.inline .touch { touch-action: pan-y; }
+
+.chrome {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+/* Segurar esconde o cromo, como no Instagram. */
+.frame[data-hold='true'] .chrome,
+.frame[data-hold='true'] .legend { opacity: 0; }
+
+/* Barras: 2px, vão 4px, fundo branco 35%, preenchimento linear. */
+.bars {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.bar {
+  flex: 1 1 0;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+/* Linha do autor, abaixo das barras. */
 .head {
   position: absolute;
-  top: 1.3rem;
-  left: 0.55rem;
-  right: 0.55rem;
-  z-index: 4;
+  top: 18px;
+  left: 12px;
+  right: 4px;
   display: flex;
   align-items: center;
-  /* `space-between` empurra o X para a quina direita do próprio `.head`, que
-     é a largura real do quadro (herdada do `.player`). É o que garante o
-     pedido do fundador 2026-09-16: X dentro do quadro, mesma linha do
-     avatar e do handle. */
   justify-content: space-between;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
-/* Avatar + handle andam juntos, com o mesmo respiro que o `.head` tinha
-   antes. `min-width: 0` deixa o `.handle` cortar com reticências em vez de
-   empurrar o X para fora quando o nome é comprido. */
-.headInfo {
+.author {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 8px;
   min-width: 0;
   flex: 1 1 auto;
 }
 
-/* O avatar é uma FOTO DE PERFIL, e é tratado como tal: recortada no círculo,
-   preenchendo o quadro, com o anel fino que o Instagram desenha em volta. Nada
-   de fundo colorido nem de respiro interno — isso é tratamento de logotipo, e
-   logotipo com margem dentro de um círculo de 20px lê como bolinha, não como
-   perfil.
-   SEM filtro de inversão em hipótese nenhuma: o filtro não respeita a fronteira
-   do desenho, inverte o elemento inteiro, e na conferência de 2026-08-14 o
-   laranja da marca saiu ciano por causa disso. */
-.avatar {
-  width: clamp(1.1rem, 2.6vh, 1.5rem);
-  height: clamp(1.1rem, 2.6vh, 1.5rem);
-  border-radius: var(--tbf-radius-full);
+.avatar,
+.avatarFallback {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
   object-fit: cover;
-  box-shadow: 0 0 0 1.5px rgba(240, 237, 230, 0.55);
-  flex: 0 0 auto;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.7);
 }
 
-/* Sem avatar, um anel da cor da marca segura o mesmo lugar: o cabeçalho não
-   pode mudar de altura entre uma página e outra. */
-.dot {
-  width: clamp(1rem, 2.4vh, 1.35rem);
-  height: clamp(1rem, 2.4vh, 1.35rem);
-  border-radius: var(--tbf-radius-full);
-  border: 2px solid #ff6500;
-  flex: 0 0 auto;
+.avatarFallback {
+  display: grid;
+  place-items: center;
+  border: 0;
+  box-shadow: 0 0 0 2px #ff6500;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
-/* NOME COMPLETO (pedido do fundador): "Ô" virou "Ô De Casa". A fonte desceu
-   um pouco (era clamp(0.6rem, 1.5vh, 0.75rem)) para o texto maior continuar
-   folgado no quadro mais estreito do telefone, e ganhou corte com reticências
-   como cinto de segurança: nunca estoura o cabeçalho, mesmo num quadro
-   pequeno. */
 .handle {
   min-width: 0;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow-wrap: anywhere;
   font-family: var(--tbf-font-family-display);
   font-weight: 800;
-  font-size: clamp(0.56rem, 1.4vh, 0.7rem);
-  letter-spacing: 0.02em;
-  color: #f0ede6;
+  font-size: 14px;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* O (X) DE FECHAR, DENTRO DO CABEÇALHO (pedido do fundador 2026-09-16). Vive
-   dentro do `.head`, mesma linha do avatar e do handle, alinhado à direita
-   pelo `justify-content: space-between` do pai: é o desenho do Instagram, e
-   herda a largura real do quadro em vez da largura de um invólucro externo.
-
-   Antes o X morava no modal que chama (StoryModal/CaseStoryModal),
-   posicionado sobre o `.deckWrap`. Esse invólucro não tem largura própria:
-   mede pelo maior filho, e a fila de miniaturas/pontos sem quebra (12 peças
-   no case VERAOZAO) podia ficar mais larga que o quadro, empurrando o X
-   para fora dele no celular. Aqui dentro não tem como acontecer: o `.head`
-   é sempre a largura do `.player`.
-
-   Sem fundo, só o glifo com sombra sutil: o mesmo tratamento discreto que
-   os passadores e o story real do Instagram usam. */
-.close {
+.time {
   flex: 0 0 auto;
+  font-size: 14px;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  pointer-events: auto;
+}
+
+.action {
   display: grid;
   place-items: center;
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 40px;
+  height: 40px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #f0ede6;
-  font-size: 0.85rem;
-  line-height: 1;
+  color: #ffffff;
   cursor: pointer;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.55));
   -webkit-tap-highlight-color: transparent;
 }
 
-.close:focus-visible {
-  outline: 2px solid rgba(240, 237, 230, 0.85);
+.action:focus-visible,
+.arrow:focus-visible,
+.cta:focus-visible,
+.neighbor:focus-visible {
+  outline: 2px solid #ffffff;
   outline-offset: 2px;
-  border-radius: var(--tbf-radius-full);
-}
-
-/* ─── PASSADORES ──────────────────────────────────────────────────────────
-   Sobre as beiradas do quadro, no meio da altura. Discretos parados, cheios no
-   hover e no foco de teclado: num story a foto é a peça, e seta permanente em
-   cima dela vira interface disputando a imagem.
-
-   Ficam FORA do `.frame` e dentro do `.player`, que não recorta: assim o anel
-   de foco deles nunca é decepado (é o mesmo defeito que cortava o anel da
-   miniatura ativa, e não vale reintroduzir do lado). */
-.pass {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 0 8px rgba(0, 0, 0, 0.3);
-  -webkit-tap-highlight-color: transparent;
-  color: #f0ede6;
-  font-size: 0.85rem;
-  line-height: 1;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 240ms cubic-bezier(0.23, 1, 0.32, 1),
-              background 240ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.player:hover .pass,
-.pass:focus-visible {
-  opacity: 1;
-}
-
-.pass:hover {
-  color: #ff6500;
-}
-
-/* No toque não existe hover: lá eles ficam sempre visíveis, senão a peça fica
-   sem forma de passar de quadro a não ser pelas miniaturas. */
-@media (hover: none) {
-  .pass { opacity: 0.85; }
-}
-
-.passPrev { left: 0.45rem; }
-.passNext { right: 0.45rem; }
-
-/* VARIANTE `dots`: as setas de cima do quadro somem. A fileira de pontos
-   já traz um par de setas próprio, e duas setas fazendo o mesmo trabalho em
-   dois lugares da mesma peça é ruído, não reforço. Decisão: quem navega pelo
-   ponto usa a fileira; quem está sobre o quadro usa clique na miniatura
-   (dot) ou o teclado do deck. */
-.playerDots .pass { display: none; }
-
-/* ─── FILEIRA DE PONTOS (variante `dots`) ───────────────────────────────────
-   Troca a esteira de miniaturas por pontos, pensada para telas estreitas: um
-   ponto de 6px lê melhor que uma miniatura de 3rem espremida. As setas ficam
-   FORA da faixa que rola, ladeando-a; os pontos rolam de lado quando a lista
-   é maior que a largura disponível (o case do deck tem 12 peças). */
-.dotsNav {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  width: 100%;
-}
-
-/* Botão de seta com alvo de toque de 44px: a seta em si é pequena, o
-   `display: grid; place-items: center` centraliza o glifo dentro da caixa
-   cheia, que é o alvo real. */
-.dotArrow {
-  flex: 0 0 auto;
-  width: 44px;
-  height: 44px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  /* Sem círculo (pedido do fundador, CHANGES #01 09/10): só a seta, mais
-     discreta; a caixa de 44px segue como alvo de toque. */
-  border: 0;
-  background: transparent;
-  color: rgba(240, 237, 230, 0.55);
-  font-size: 0.85rem;
-  line-height: 1;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  transition: color 240ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.dotArrow:hover,
-.dotArrow:focus-visible {
-  color: #ff6500;
-}
-
-/* Faixa de pontos: rola de lado exatamente como .thumbs, mesmo raciocínio de
-   respiro (senão o anel de foco do ponto ativo corta na borda da faixa). */
-.dots {
-  flex: 1 1 auto;
-  display: flex;
-  align-items: center;
-  gap: 0.1rem;
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
-  min-width: 0;
-}
-
-.dots::-webkit-scrollbar { display: none; }
-
-/* Botão de verdade com alvo de toque de 44px (largura mínima do WCAG),
-   desenhado como ponto de 6px CENTRADO na caixa, não a caixa inteira
-   pintada: 12 caixas de 44px cheias virariam uma barra sólida, não uma
-   fileira de pontos. */
-.dot {
-  flex: 0 0 auto;
-  width: 28px;
-  height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  scroll-snap-align: center;
-}
-
-.dot::before {
-  content: '';
-  width: 4px;
-  height: 4px;
   border-radius: 999px;
-  background: rgba(240, 237, 230, 0.22);
-  transition: background 240ms cubic-bezier(0.23, 1, 0.32, 1),
-              transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.dotOn::before {
-  background: rgba(255, 101, 0, 0.7);
-  transform: scale(1.25);
-}
+.icon { width: 22px; height: 22px; }
 
-.dot:hover::before,
-.dot:focus-visible::before {
-  background: rgba(255, 101, 0, 0.7);
-}
-
-/* AQUI FICAVA A TARJA DE LEGENDA, e ela saiu inteira em 2026-08-14: "todo
-   stories fica liso liso, sem nenhuma descrição". O que o story mostra é a
-   foto. O texto de cada peça migrou para o `aria-label`/`title` da miniatura
-   correspondente, então a informação continua acessível sem sujar a imagem.
-
-   ─────────────────────────────────────────────────────────────────────────
-   A FILA DE MINIATURAS — o seletor
-   ─────────────────────────────────────────────────────────────────────────
-   Rola de lado quando não cabe, sem barra visível: é o gesto natural num
-   telefone e o trackpad resolve no desktop. `scroll-snap` para a miniatura
-   parar alinhada em vez de meio cortada. */
-/* 🔴 O RESPIRO INTERNO É O QUE SALVA O ANEL DA MINIATURA ATIVA, e não é
-   decoração: é correção de bug.
-
-   Esta fila rola de lado, ou seja, tem `overflow-x: auto`. E overflow RECORTA
-   tudo que passa da caixa de conteúdo, inclusive `box-shadow` e `outline`. Sem
-   respiro, o anel da miniatura selecionada era cortado nos quatro lados: rente
-   em cima e embaixo, e sumindo de vez nas miniaturas das pontas. Foi o "fica
-   sem a sombra e deixa muito feio cortado" que o fundador viu.
-
-   A correção é o par padding + margem negativa: o padding abre a folga que a
-   sombra precisa DENTRO da área de rolagem, e a margem negativa de mesmo valor
-   devolve o alinhamento, para a primeira miniatura continuar na mesma coluna do
-   quadro acima. Sem a margem, a fila inteira entraria 6px para dentro e a peça
-   pareceria desalinhada.
-
-   `--ring`: o valor mora numa variável porque três coisas dependem dele ao
-   mesmo tempo (a espessura do anel, este respiro e esta margem). Mexer numa e
-   esquecer das outras é como o corte volta. */
-.thumbs {
-  --thumb-w: 4.5rem;
-  --ring: 2px;
-  --ring-room: calc(var(--ring) + 4px);
+/* Rodapé: legenda do quadro, quando o quadro pede. */
+.legend {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 3rem 1rem 1.25rem;
+  pointer-events: none;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.62) 38%, rgba(0, 0, 0, 0) 100%);
+  transition: opacity 160ms ease;
+}
+
+.legendKicker {
+  font-family: var(--tbf-font-family-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.legendTitle {
+  font-family: var(--tbf-font-family-display);
+  font-size: clamp(1rem, 4.4vw, 1.25rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+/* Link sticker. */
+.cta {
+  position: absolute;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  max-width: calc(100% - 2rem);
+  min-height: 44px;
+  padding: 0 1.1rem;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-weight: 800;
+  font-size: 0.85rem;
+  text-decoration: none;
+  pointer-events: auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+.ctaLabel { overflow-wrap: anywhere; }
+
+/* ─── MINIATURAS (inline, opcional) ──────────────────────────────────────── */
+.thumbs {
+  display: flex;
+  gap: 0.4rem;
   overflow-x: auto;
-  scroll-snap-type: x proximity;
   scrollbar-width: none;
-  padding: var(--ring-room);
-  margin: calc(var(--ring-room) * -1);
-  /* A caixa cresce o dobro do respiro para a fila continuar ocupando a largura
-     da coluna em que foi posta, e não a largura menos o respiro. */
-  width: calc(100% + var(--ring-room) * 2);
-  max-width: calc(100% + var(--ring-room) * 2);
+  padding: 4px;
+  margin: -4px;
 }
 
 .thumbs::-webkit-scrollbar { display: none; }
 
-/* Botão de verdade, com a aparência zerada. Alvo de toque: a miniatura tem
-   altura de sobra (9/16 de 4.5rem já passa de 120px), então o mínimo de 44px
-   está garantido pela própria proporção. */
 .thumb {
   flex: 0 0 auto;
-  width: var(--thumb-w);
+  width: 2.75rem;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
-  scroll-snap-align: center;
-  border-radius: var(--tbf-radius-card);
-  /* A não-selecionada recua: menos brilho e um véu. A seleção fica óbvia sem
-     precisar de moldura em todas. */
-  opacity: 0.45;
-  transition: opacity 300ms cubic-bezier(0.23, 1, 0.32, 1),
-              box-shadow 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 6px;
+  opacity: 0.5;
+  transition: opacity 200ms ease, box-shadow 200ms ease;
 }
 
 .thumb:hover,
-.thumb:focus-visible {
-  opacity: 0.85;
-}
+.thumb:focus-visible { opacity: 0.85; }
 
 .thumbOn,
 .thumbOn:hover {
   opacity: 1;
-  box-shadow: 0 0 0 var(--ring, 2px) #ff6500;
+  box-shadow: 0 0 0 2px #ff6500;
 }
 
 .thumbImg {
+  display: block;
   width: 100%;
   height: auto;
   aspect-ratio: 9 / 16;
   object-fit: cover;
-  display: block;
-  border-radius: var(--tbf-radius-card);
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .stage,
+  .chrome,
+  .legend,
+  .thumb,
+  .arrow { animation: none; transition: none; }
 }
 
 /* =============================================================================
@@ -555,61 +540,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .beltTrack { animation: none; }
-  .img { transition: none; }
-  .fillLive { animation: none; width: 100%; }
-  .thumb { transition: none; }
-  .dot::before { transition: none; }
 }
 
-/* ─── SOBREPOSIÇÃO DE TEXTO NO QUADRO (10/09/2026) ────────────────────────
-   Pedido do fundador com a referência na mão: o mesmo tratamento do nome no
-   hero do Tavarístico, texto branco sobre um degradê preto que sobe da base.
-   Não é a tarja automática de legenda que ele proibiu em 14/08 (aquela
-   imprimia o `role` em TODA foto); esta é opcional por quadro e é composição.
-   Ver o comentário de `StoryItem.overlay` em StoryPlayer.tsx.
-
-   O degradê é o mesmo desenho do `.heroCoverFade` da página do Tavarístico,
-   só que mais alto: aqui ele precisa segurar duas linhas de texto sobre foto
-   clara, e o `.shadeBottom` sozinho (24%, opacidade 0,5) não segura. Quando
-   há overlay, este degradê é quem manda; o `.shadeBottom` continua embaixo e
-   os dois somam sem brigar, porque os dois vão para preto. */
-.overlay {
-  grid-area: 1 / 1;
-  align-self: end;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding: 1.1rem 1rem 1.15rem;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.68) 30%,
-    rgba(0, 0, 0, 0) 100%
-  );
-}
-.overlayOn { opacity: 1; }
-
-.overlayKicker {
-  font-family: var(--tbf-font-family-display);
-  font-size: 0.6rem;
-  font-weight: 400;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-/* Peso 800 e entrelinha curta: é o desenho do nome no hero, e é ele que faz o
-   texto ler como parte da peça em vez de legenda colada por cima. */
-.overlayTitle {
-  font-family: var(--tbf-font-family-display);
-  font-size: clamp(0.95rem, 1.5vw, 1.25rem);
-  font-weight: 800;
-  line-height: 1.06;
-  letter-spacing: -0.01em;
-  color: #ffffff;
-  text-wrap: balance;
-}

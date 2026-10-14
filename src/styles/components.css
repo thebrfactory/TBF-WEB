@@ -533,29 +533,8 @@
    COMPONENTE 01C — NEWSLETTER POPUP (sitewide)
    ============================================================================= */
 
-/* Overlay do popup — NÃO bloqueia a página (pointer-events: none): dá pra rolar
-   a home com o popup aberto (pedido). Deixa o site levemente em grayscale via
-   backdrop-filter, que dessatura só o que está ATRÁS do overlay — o popup, acima
-   no z-index, mantém a cor. */
-.newsletter-popup-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: transparent;
-  opacity: 0;
-  pointer-events: none;
-  z-index: calc(var(--tbf-z-modal) - 1);
-  -webkit-backdrop-filter: grayscale(0);
-  backdrop-filter: grayscale(0);
-  transition: opacity var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
-              backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open),
-              -webkit-backdrop-filter var(--tbf-drawer-duration-open) var(--tbf-drawer-easing-open);
-}
-
-.newsletter-popup-overlay--open {
-  opacity: 1;
-  -webkit-backdrop-filter: grayscale(0.6);
-  backdrop-filter: grayscale(0.6);
-}
+/* Sem overlay: o site por trás do popup mantém a cor (pedido do fundador
+   14/10/2026). A página continua rolável com o popup aberto. */
 
 /* Card flutuante no canto INFERIOR DIREITO (pedido 2026-07-31) — mesma família
    visual do .cookie-banner: mesma largura, mesmo raio, mesma sombra. Só que o
@@ -624,7 +603,7 @@
 }
 
 /* FAROL DA MARCA (pedido do fundador 2026-08-08) — enquanto o popup está aberto
-   o site inteiro fica em grayscale, e só isso não explicava POR QUE. O .svg
+   o popup é um card flutuante, e só isso não explicava POR QUE. O .svg
    TBF SÃO PAULO passa a respirar: é ele que aponta para a origem do efeito.
 
    Por que a curva mora nos KEYFRAMES e o timing é `linear`: qualquer easing
@@ -693,8 +672,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .newsletter-popup,
-  .newsletter-popup-overlay {
+  .newsletter-popup {
     transition: none;
   }
 
@@ -739,11 +717,13 @@
   text-align: left;
 }
 
-/* Fechamento dentro do rodape: mobile empilhado e a esquerda, sob o selo. */
+/* Fechamento dentro do rodape: mobile empilhado sob o selo, alinhado a DIREITA
+   (lado oposto ao selo, que fica a esquerda) para equilibrar o layout. */
 .footer__closing {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
+  text-align: right;
   gap: var(--tbf-space-4);
 }
 
@@ -776,8 +756,6 @@
   }
 
   .footer__closing {
-    align-items: flex-end;
-    text-align: right;
     max-width: 24rem;
   }
 
@@ -1497,6 +1475,30 @@
    Mobile: swipeable snap scroll (Netflix-style)
    Desktop: infinite auto-scroll
    ============================================================================= */
+
+/* ── BORDAS SOMBREADAS, PADRÃO DE TODO CARROSSEL/ESTEIRA HORIZONTAL DE FOTOS ──
+   Pedido do fundador (14/10/2026). Mesmo fade do reel do hostel
+   (HospitalityView.module.css `.reel`): 8% no mobile, 12% desktop. Todas as
+   esteiras são loops infinitos, então nenhuma foto fica presa sob o fade no
+   início. Carrossel novo: adicionar `fade-edges` na className. */
+.fade-edges,
+.carousel {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+
+@media (min-width: 768px) {
+  .fade-edges,
+  .carousel {
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-edges,
+  .carousel { -webkit-mask-image: none; mask-image: none; }
+}
 
 /* ── Carrossel ÚNICO (mobile = desktop): auto-scroll contínuo + clicável ── */
 .carousel {

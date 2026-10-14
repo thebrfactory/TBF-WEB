@@ -30,7 +30,7 @@ import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Venture } from '@/app/(en)/creators/tavaristico/_data'
 import { localizedPath, type Lang } from '@/lib/i18n'
 import { StoryRing } from '@/components/tavaristico/StoryRing'
-import { StoryModal } from '@/components/tavaristico/StoryModal'
+import { StoryPlayer, type StoryGroup } from '@/components/StoryPlayer/StoryPlayer'
 import styles from './SelectedWork.module.css'
 
 // Mesma chave de padrao do Campaigns (`tav:campaigns:seen`), namespace
@@ -218,17 +218,20 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
   // Escolhe o idioma do overlay aqui (pedido do fundador 10/09/2026: "PT/EN
   // de tudo, inclusive stories"). `StoryFrame.overlay` chega bilingue do
   // dado; o StoryPlayer so recebe string pronta, sem nocao de idioma.
-  const activeFrames = active
-    ? active.frames.map((f) => ({
-        ...f,
-        overlay: f.overlay
-          ? {
-              title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
-              kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
-            }
-          : undefined,
-      }))
-    : []
+  const groups: StoryGroup[] = ventures.map((v) => ({
+    id: v.index,
+    handle: v.name,
+    avatarSrc: v.cover,
+    items: v.frames.map((f) => ({
+      ...f,
+      overlay: f.overlay
+        ? {
+            title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,
+            kicker: lang === 'pt' ? f.overlay.kickerPT : f.overlay.kickerEN,
+          }
+        : undefined,
+    })),
+  }))
 
   return (
     <div className={styles.ventureList}>
@@ -246,13 +249,12 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
       ))}
 
       {active ? (
-        <StoryModal
-          // Correcao 10/09/2026: era UM quadro so (a marca em fundo preto).
-          // Agora e a sequencia que o proprio dado carrega, com a sobreposicao
-          // de texto de cada quadro no idioma da pagina. Ver `Venture.frames`
-          // em _data.ts e `activeFrames` acima.
-          frames={activeFrames}
-          handle={active.name}
+        <StoryPlayer
+          // Sequencia que o proprio dado carrega, com a sobreposicao de texto
+          // de cada quadro no idioma da pagina (`Venture.frames` em _data.ts).
+          groups={groups}
+          startGroup={ventures.indexOf(active)}
+          lang={lang}
           label={`${OPEN_LABEL[lang]}: ${active.name}. ${active.description}`}
           onClose={close}
         />

@@ -51,15 +51,12 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
     { key: 'github', href: IDENTITY.socials.github, label: t.index.githubLabel },
   ]
 
-  // Correção 09/09/2026, item 9: interpunct "·" entre cada competência do
-  // letreiro. Sem ele as palavras corriam coladas e o fundador achou
-  // "confuso": o ticker não separa segmento por conta própria (ver
-  // Ticker.tsx, comentário "SEM SEPARADOR ENTRE OS SEGMENTOS", regra do
-  // letreiro da casa), então o ponto entra aqui como um segmento a mais.
-  const explorerSegments = EXPLORING.flatMap((label, i) => {
-    const item = { text: label, weight: 'medium' as const }
-    return i === 0 ? [item] : [{ text: '·', weight: 'book' as const }, item]
-  })
+  // Mesma alternância do letreiro de cidades do rodapé (Footer.tsx): termos
+  // alternam medium e book, sem separador (o respiro separa). Pedido 14/10/2026.
+  const explorerSegments = EXPLORING.map((label, i) => ({
+    text: label,
+    weight: (i % 2 === 0 ? 'medium' : 'book') as 'medium' | 'book',
+  }))
 
   return (
     <main className={styles.page}>
