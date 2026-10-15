@@ -7,6 +7,8 @@
 //   Vercel Analytics + Speed Insights e Google Analytics 4 (ambos só com opt-in,
 //   ver CookieBanner e lib/consent) · Cloudflare Stream (vídeo, só ao dar play) ·
 //   localStorage/sessionStorage · hospedagem Vercel.
+// Seção de pesquisas (id research) em 15/10/2026: questionário /compras da CRIVO,
+//   que grava respostas parciais (Supabase). O link do consentimento aponta para #research.
 // Se o código ganhar coleta nova, esta página muda junto.
 //
 // LGPD = Lei 13.709/2018, ANPD e os artigos citados são termos oficiais
@@ -17,6 +19,7 @@ import type { Lang } from '@/lib/i18n'
 
 export type PrivacyItem = { label: string; text: string }
 export type PrivacySection = {
+  id?: string
   title: string
   intro?: string[]
   items?: PrivacyItem[]
@@ -33,7 +36,7 @@ const en = {
   tag: 'Legal',
   title: 'Privacy Policy',
   updatedLabel: 'Last updated',
-  updatedDate: '08/10/2026',
+  updatedDate: '15/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -53,7 +56,7 @@ const en = {
     },
     {
       title: 'What data we collect, and when',
-      intro: ['We collect data in three situations.'],
+      intro: ['We collect data in four situations.'],
       items: [
         {
           label: 'When you write to us',
@@ -62,6 +65,10 @@ const en = {
         {
           label: 'When you join the mailing list',
           text: 'The newsletter form (page and pop-up) collects your e-mail address. We then send you a welcome message.',
+        },
+        {
+          label: 'When you answer a survey',
+          text: 'Our research questionnaires collect the answers you give, including partial ones. The rules are in the section on research below.',
         },
         {
           label: 'When you browse the site',
@@ -94,7 +101,7 @@ const en = {
       items: [
         {
           label: 'Consent',
-          text: 'For analytics cookies and for the mailing list. You can withdraw it at any time.',
+          text: 'For analytics cookies, the mailing list and research questionnaires. You can withdraw it at any time.',
         },
         {
           label: 'Pre-contractual procedures and contract',
@@ -122,6 +129,43 @@ const en = {
       outro: ['We do not sell, rent or trade your personal data.'],
     },
     {
+      id: 'research',
+      title: 'Research questionnaires',
+      intro: [
+        '.TBF. INC conducts market research through online questionnaires, directly or through projects under its incubation, such as CRIVO. This section governs the processing of personal data in such research and, where specific, prevails over the other provisions of this policy.',
+      ],
+      items: [
+        {
+          label: 'Data processed',
+          text: 'The answers given to the questionnaire, including partial answers, and technical session metadata: a random session identifier, date and time, device type, time spent on each screen and the point at which the participant stopped. Questionnaires do not ask for name, company, contracts, prices or sensitive personal data.',
+        },
+        {
+          label: 'Partial answers',
+          text: 'By agreeing on the first screen, the participant expressly authorizes the recording of the answers already given, even if the questionnaire is not completed. Such answers are saved periodically while the questionnaire is being filled in and when the page is closed, and are processed for the exclusive purposes of the research, in particular to understand where participants stop and to improve the questionnaire.',
+        },
+        {
+          label: 'Exclusive purpose',
+          text: 'Data collected in a survey is used exclusively for that research. It is not used for advertising, individual profiling or automated decisions, nor shared with third parties for their own purposes. Results are analyzed and disclosed only in aggregate form, without identifying participants.',
+        },
+        {
+          label: 'Interview contact',
+          text: 'If the participant agrees to be contacted for a later conversation, the contact provided is stored separately from the answers for up to 12 months and then deleted.',
+        },
+        {
+          label: 'Audio recording',
+          text: 'A conversation is recorded only with specific consent, given at the start of the recording. The audio is deleted once the summary is prepared, within 12 months at most. The participant may refuse recording and still take part.',
+        },
+        {
+          label: 'Legal basis and withdrawal',
+          text: 'Consent of the data subject (LGPD, art. 7, I), given freely, informed and unambiguously on the first screen. The participant may withdraw consent and request deletion of their data, including partial answers, at any time, through the contact in the last section or the address shown in the questionnaire.',
+        },
+        {
+          label: 'Retention',
+          text: 'Answers, complete or partial, are kept for as long as needed to complete the research and analyze its results, and are then deleted or anonymized.',
+        },
+      ],
+    },
+    {
       title: 'Tools and partners',
       intro: [
         'These are the services that process data on our behalf or receive it when you use the site. Each one has its own privacy policy.',
@@ -132,6 +176,7 @@ const en = {
         { label: 'Resend', text: 'Sends the e-mail notifications of forms and mailing-list sign-ups to our team. Receives the content of your message, name and e-mail address.' },
         { label: 'Brevo', text: 'Stores the mailing list and sends the welcome message and newsletters. Receives your e-mail address.' },
         { label: 'Sanity', text: 'Content management for articles and pages, and the delivery of their images. It does not receive form data. Image requests reach its servers like any file you load.' },
+        { label: 'Supabase', text: 'Database for research questionnaires. Receives the answers, including partial ones, and session metadata. It may process data outside Brazil.' },
         { label: 'Cloudflare Stream', text: 'Plays videos embedded in some pages. The player loads only when you press play, and it then receives your IP address and device data.' },
         { label: 'Links to other services', text: 'The site links to Instagram, LinkedIn and Calendly, among others. When you click, you leave our site and their policies apply. Calendly receives whatever you type to book a call.' },
       ],
@@ -163,7 +208,7 @@ const en = {
       intro: [
         'We use HTTPS on the whole site, restrict access to the tools above to the people who need them, and keep our API keys out of the public code. No system is fully secure, and if an incident puts your data at risk we will tell you and the ANPD as the law requires.',
         'We keep data only as long as needed for the purpose. Mailing-list e-mails stay until you unsubscribe. Messages from the forms stay while the conversation or the working relationship lasts, and are deleted when you ask, unless the law requires us to keep them. Analytics data follows the retention period set in each provider account.',
-        'Several partners above, such as Vercel, Google, Resend and Brevo, operate servers outside Brazil. We only use providers that offer adequate safeguards for international transfers, as LGPD art. 33 requires.',
+        'Several partners above, such as Vercel, Google, Resend, Brevo and Supabase, operate servers outside Brazil. We only use providers that offer adequate safeguards for international transfers, as LGPD art. 33 requires.',
       ],
     },
     {
@@ -198,7 +243,7 @@ const pt: typeof en = {
   tag: 'Jurídico',
   title: 'Política de Privacidade',
   updatedLabel: 'Última alteração',
-  updatedDate: '08/10/2026',
+  updatedDate: '15/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -218,7 +263,7 @@ const pt: typeof en = {
     },
     {
       title: 'Quais dados coletamos, e quando',
-      intro: ['Coletamos dados em três situações.'],
+      intro: ['Coletamos dados em quatro situações.'],
       items: [
         {
           label: 'Quando você escreve para nós',
@@ -227,6 +272,10 @@ const pt: typeof en = {
         {
           label: 'Quando você entra na mailing list',
           text: 'O formulário da newsletter (página e pop-up) coleta o seu e-mail. Em seguida enviamos uma mensagem de boas-vindas.',
+        },
+        {
+          label: 'Quando você responde a uma pesquisa',
+          text: 'Nossos questionários de pesquisa coletam as respostas que você dá, inclusive as parciais. As regras estão na seção de pesquisas, abaixo.',
         },
         {
           label: 'Quando você navega no site',
@@ -259,7 +308,7 @@ const pt: typeof en = {
       items: [
         {
           label: 'Consentimento',
-          text: 'Para cookies de analytics e para a mailing list. Você pode retirá-lo a qualquer momento.',
+          text: 'Para cookies de analytics, para a mailing list e para os questionários de pesquisa. Você pode retirá-lo a qualquer momento.',
         },
         {
           label: 'Procedimentos preliminares e execução de contrato',
@@ -287,6 +336,43 @@ const pt: typeof en = {
       outro: ['Não vendemos, alugamos nem trocamos seus dados pessoais.'],
     },
     {
+      id: 'research',
+      title: 'Questionários de pesquisa',
+      intro: [
+        'A .TBF. INC conduz pesquisas de mercado por meio de questionários online, diretamente ou por projetos sob sua incubação, como a CRIVO. Esta seção rege o tratamento de dados pessoais nessas pesquisas e, no que for específica, prevalece sobre as demais disposições desta política.',
+      ],
+      items: [
+        {
+          label: 'Dados tratados',
+          text: 'As respostas fornecidas ao questionário, inclusive as parciais, e metadados técnicos da sessão: identificador aleatório da sessão, data e hora, tipo de aparelho, tempo em cada tela e ponto de interrupção. Os questionários não solicitam nome, empresa, contratos, valores nem dados pessoais sensíveis.',
+        },
+        {
+          label: 'Respostas parciais',
+          text: 'Ao manifestar concordância na tela inicial, o participante autoriza expressamente o registro das respostas já fornecidas, ainda que não conclua o questionário. Tais respostas são gravadas periodicamente durante o preenchimento e no fechamento da página, e são tratadas para fins exclusivos da pesquisa, em especial a compreensão dos pontos de desistência e o aprimoramento do questionário.',
+        },
+        {
+          label: 'Finalidade exclusiva',
+          text: 'Os dados coletados em uma pesquisa destinam-se exclusivamente a ela. Não são utilizados para publicidade, perfilamento individual ou decisão automatizada, nem compartilhados com terceiros para fins próprios destes. Os resultados são analisados e divulgados apenas de forma agregada, sem identificar participantes.',
+        },
+        {
+          label: 'Contato para entrevista',
+          text: 'Se o participante aceitar ser contatado para conversa posterior, o contato fornecido é armazenado separadamente das respostas, por até 12 meses, e eliminado em seguida.',
+        },
+        {
+          label: 'Gravação de áudio',
+          text: 'A conversa só é gravada mediante consentimento específico, colhido no início da gravação. O áudio é eliminado após a elaboração da síntese, no prazo máximo de 12 meses. O participante pode recusar a gravação sem prejuízo da participação.',
+        },
+        {
+          label: 'Base legal e revogação',
+          text: 'Consentimento do titular (LGPD, art. 7º, I), manifestado de forma livre, informada e inequívoca na tela inicial. O participante pode, a qualquer tempo, revogar o consentimento e solicitar a eliminação dos seus dados, inclusive das respostas parciais, pelo contato da última seção ou pelo endereço indicado no questionário.',
+        },
+        {
+          label: 'Retenção',
+          text: 'As respostas, completas ou parciais, são mantidas pelo tempo necessário à conclusão da pesquisa e à análise dos resultados, e depois eliminadas ou anonimizadas.',
+        },
+      ],
+    },
+    {
       title: 'Ferramentas e parceiros',
       intro: [
         'Estes são os serviços que tratam dados em nosso nome ou recebem dados quando você usa o site. Cada um tem a própria política de privacidade.',
@@ -297,6 +383,7 @@ const pt: typeof en = {
         { label: 'Resend', text: 'Envia à nossa equipe os e-mails de aviso dos formulários e das inscrições na mailing list. Recebe o conteúdo da sua mensagem, nome e e-mail.' },
         { label: 'Brevo', text: 'Guarda a mailing list e envia a mensagem de boas-vindas e as newsletters. Recebe o seu e-mail.' },
         { label: 'Sanity', text: 'Gestão de conteúdo de artigos e páginas, e entrega das imagens deles. Não recebe dados de formulário. Os pedidos de imagem chegam aos servidores dela como qualquer arquivo que você carrega.' },
+        { label: 'Supabase', text: 'Banco de dados dos questionários de pesquisa. Recebe as respostas, inclusive as parciais, e os metadados da sessão. Pode tratar dados fora do Brasil.' },
         { label: 'Cloudflare Stream', text: 'Reproduz vídeos incorporados em algumas páginas. O player só carrega quando você aperta play, e então recebe o seu IP e dados do aparelho.' },
         { label: 'Links para outros serviços', text: 'O site tem links para Instagram, LinkedIn e Calendly, entre outros. Ao clicar, você sai do nosso site e valem as políticas deles. O Calendly recebe o que você digitar para agendar uma conversa.' },
       ],
@@ -328,7 +415,7 @@ const pt: typeof en = {
       intro: [
         'Usamos HTTPS em todo o site, limitamos o acesso às ferramentas acima a quem precisa e mantemos as chaves de API fora do código público. Nenhum sistema é totalmente seguro, e se um incidente colocar seus dados em risco, avisaremos você e a ANPD como a lei exige.',
         'Guardamos os dados só pelo tempo necessário à finalidade. E-mails da mailing list ficam até você cancelar. Mensagens dos formulários ficam enquanto durar a conversa ou a relação de trabalho, e são apagadas quando você pede, salvo se a lei nos obrigar a guardar. Dados de analytics seguem o prazo de retenção definido em cada conta de provedor.',
-        'Vários parceiros acima, como Vercel, Google, Resend e Brevo, têm servidores fora do Brasil. Só usamos provedores com garantias adequadas para transferência internacional, como exige o art. 33 da LGPD.',
+        'Vários parceiros acima, como Vercel, Google, Resend, Brevo e Supabase, têm servidores fora do Brasil. Só usamos provedores com garantias adequadas para transferência internacional, como exige o art. 33 da LGPD.',
       ],
     },
     {

@@ -48,6 +48,7 @@
 
 .section {
   margin-top: var(--tbf-space-12);
+  scroll-margin-top: 96px;
 }
 
 .h2 {

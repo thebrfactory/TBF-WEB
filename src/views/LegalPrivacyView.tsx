@@ -26,7 +26,7 @@ export default function LegalPrivacyView({ lang }: { lang: Lang }) {
         </p>
 
         {t.sections.map((sec, i) => (
-          <section key={sec.title} className={s.section}>
+          <section key={sec.title} id={sec.id} className={s.section}>
             <h2 className={s.h2}>
               <span className={s.num}>{i + 1}.</span>
               {sec.title}
