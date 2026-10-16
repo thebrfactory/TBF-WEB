@@ -17,7 +17,7 @@
 // milhões, 16 municípios, capítulo PRODUÇÃO) entrou em 13/10/2026 com fonte
 // primária lida (Secult GO), listada em `sources`. Não há bloco `stat`.
 //
-// FOTOGRAFIA (10/09/2026). As 15 fotos entraram: são do próprio fundador, do
+// FOTOGRAFIA (10/09/2026). As 15 fotos entraram (a 08 saiu em 16/10/2026): são do próprio fundador, do
 // mesmo dia e do mesmo campo que o texto descreve, entregues em
 // `TBF GOIÁS COOLHUNTING PACK/SAÍDA`. Ritmo: uma foto por capítulo logo depois
 // da palavra-título, e `pair` só onde as duas peças são a MESMA coisa vista de
@@ -422,22 +422,6 @@ export const brazilianCountrySide: ManifestoArticle = {
 
     // ─── CAPÍTULO 4: TRADIÇÃO VIVA.
     { kind: 'word', label: { en: 'LIVING TRADITION', pt: 'TRADIÇÃO VIVA' }, theme: 'dark' },
-    {
-      kind: 'image',
-      src: '/images/editorial/country-side/08-cavalhada-panorama.webp',
-      alt: {
-        en: 'The full line of riders drawn up on the field before the charge.',
-        pt: 'A fila inteira de cavaleiros formada no campo antes da investida.',
-      },
-      caption: {
-        en: 'The field is not a stage set. It is a street with a fence around it.',
-        pt: 'O campo não é cenário. É rua com cerca em volta.',
-      },
-      credit: 'TAVARÍSTICO / .TBF. inc',
-      variant: 'plate',
-      width: 2400,
-      height: 980,
-    },
     {
       kind: 'image',
       src: '/images/editorial/country-side/05-cavaleiro-silhueta.webp',

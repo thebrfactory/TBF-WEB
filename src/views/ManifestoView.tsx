@@ -67,7 +67,7 @@ const CS = '/images/editorial/country-side'
 const PHOTOS: { after: number; src: string; variant: EditorialPhotoProps['variant']; side?: EditorialPhotoProps['side'] }[] = [
   { after: 3, src: `${CS}/capa.webp`, variant: 'wide' },
   { after: 6, src: `${CS}/07-mouro-azul-cavalo.webp`, variant: 'half', side: 'right' },
-  { after: 9, src: `${CS}/08-cavalhada-panorama.webp`, variant: 'wide' },
+  { after: 9, src: `${CS}/05-cavaleiro-silhueta.webp`, variant: 'wide' },
   { after: 12, src: `${CS}/15-entardecer.webp`, variant: 'half', side: 'left' },
 ]
 

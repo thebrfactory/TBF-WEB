@@ -25,7 +25,7 @@ const en = {
   photos: [
     'Clowns in colorful costumes riding a pink car in the Brazilian countryside.',
     'A masked rider in blue and gold regalia standing beside a horse.',
-    'A line of riders in red and gold costumes on a grass field at a cavalhada.',
+    'A rider in plumed helmet silhouetted against a blue sky, lance raised.',
     'Riders in red costumes at sunset under a deep blue sky.',
   ],
   body: [
@@ -65,7 +65,7 @@ const pt: typeof en = {
   photos: [
     'Palhaços de fantasia colorida em um carro rosa no interior do Brasil.',
     'Cavaleiro mascarado em trajes azul e dourado ao lado de um cavalo.',
-    'Fila de cavaleiros de roupa vermelha e dourada em um gramado, durante uma cavalhada.',
+    'Cavaleiro de capacete com plumas em silhueta contra o céu azul, lança erguida.',
     'Cavaleiros de roupa vermelha ao entardecer, sob um céu azul profundo.',
   ],
   body: [
