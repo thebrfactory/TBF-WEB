@@ -8,7 +8,8 @@
 //   ver CookieBanner e lib/consent) · Cloudflare Stream (vídeo, só ao dar play) ·
 //   localStorage/sessionStorage · hospedagem Vercel.
 // Seção de pesquisas (id research) em 15/10/2026: questionário /compras da CRIVO,
-//   que grava respostas parciais (Supabase). O link do consentimento aponta para #research.
+//   que grava respostas parciais e, com consentimento separado, identificação (Supabase).
+//   Atualizada em 17/10/2026: telemetria, identificação opcional, 24 meses. O link do consentimento aponta para #research.
 // Se o código ganhar coleta nova, esta página muda junto.
 //
 // LGPD = Lei 13.709/2018, ANPD e os artigos citados são termos oficiais
@@ -36,7 +37,7 @@ const en = {
   tag: 'Legal',
   title: 'Privacy Policy',
   updatedLabel: 'Last updated',
-  updatedDate: '15/10/2026',
+  updatedDate: '17/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -136,32 +137,40 @@ const en = {
       ],
       items: [
         {
-          label: 'Data processed',
-          text: 'The answers given to the questionnaire, including partial answers, and technical session metadata: a random session identifier, date and time, device type, time spent on each screen and the point at which the participant stopped. Questionnaires do not ask for name, company, contracts, prices or sensitive personal data.',
+          label: 'Survey answers and browsing data',
+          text: 'The answers you give, including partial ones, and how you move through the survey: screens viewed, time on each screen, where you stopped, and the channel you came from (including UTM tags). The browsing data never includes text you type. We also record the date and time you started and submitted.',
         },
         {
           label: 'Partial answers',
-          text: 'By agreeing on the first screen, the participant expressly authorizes the recording of the answers already given, even if the questionnaire is not completed. Such answers are saved periodically while the questionnaire is being filled in and when the page is closed, and are processed for the exclusive purposes of the research, in particular to understand where participants stop and to improve the questionnaire.',
+          text: 'By agreeing on the first screen, you allow us to save the answers already given, even if you do not finish. They are saved while you fill in the survey and when you close the page, and are used only for the research, mainly to see where people stop and to improve the survey.',
+        },
+        {
+          label: 'Identification (optional)',
+          text: 'Giving your identity is optional and has its own separate consent. If you agree, we collect: name, e-mail, company, job title, city, state, WhatsApp (optional) and LinkedIn (optional). Only people who ask for the beta test are also asked the size of their purchasing team. We also store whether you are interested in the beta test, the text of the consent you accepted, and the date and time you accepted.',
+        },
+        {
+          label: 'Why we use it',
+          text: 'To analyze the survey. To contact you about the results. For a 15-minute research conversation, only if you accept. To invite you to the beta test of the CRIVO software, only if you ask for it. We do not use it for anything else.',
         },
         {
           label: 'Exclusive purpose',
-          text: 'Data collected in a survey is used exclusively for that research. It is not used for advertising, individual profiling or automated decisions, nor shared with third parties for their own purposes. Results are analyzed and disclosed only in aggregate form, without identifying participants.',
-        },
-        {
-          label: 'Interview contact',
-          text: 'If the participant agrees to be contacted for a later conversation, the contact provided is stored separately from the answers for up to 12 months and then deleted.',
+          text: 'Data collected in a survey is used only for that research. It is not used for advertising, individual profiling or automated decisions. We do not sell it or give it to third parties. Results are shared only in aggregate form, without naming participants.',
         },
         {
           label: 'Audio recording',
-          text: 'A conversation is recorded only with specific consent, given at the start of the recording. The audio is deleted once the summary is prepared, within 12 months at most. The participant may refuse recording and still take part.',
+          text: 'A conversation is recorded only with specific consent, given at the start of the recording. The audio is deleted once the summary is prepared, within 12 months at most. You may refuse recording and still take part.',
         },
         {
-          label: 'Legal basis and withdrawal',
-          text: 'Consent of the data subject (LGPD, art. 7, I), given freely, informed and unambiguously on the first screen. The participant may withdraw consent and request deletion of their data, including partial answers, at any time, through the contact in the last section or the address shown in the questionnaire.',
+          label: 'Legal basis and storage',
+          text: 'Your consent (LGPD, art. 7, I), given freely and clearly. Your identification is kept in a separate table from your answers, in Supabase, so the answers alone do not point to you.',
         },
         {
           label: 'Retention',
-          text: 'Answers, complete or partial, are kept for as long as needed to complete the research and analyze its results, and are then deleted or anonymized.',
+          text: 'We keep your data for 24 months, then delete or anonymize it.',
+        },
+        {
+          label: 'Your rights',
+          text: 'You can ask for access, correction or deletion of your data, and withdraw your consent, at any time. Write to legal@thebrfactory.com. Withdrawing does not affect what was done before.',
         },
       ],
     },
@@ -243,7 +252,7 @@ const pt: typeof en = {
   tag: 'Jurídico',
   title: 'Política de Privacidade',
   updatedLabel: 'Última alteração',
-  updatedDate: '15/10/2026',
+  updatedDate: '17/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -343,32 +352,40 @@ const pt: typeof en = {
       ],
       items: [
         {
-          label: 'Dados tratados',
-          text: 'As respostas fornecidas ao questionário, inclusive as parciais, e metadados técnicos da sessão: identificador aleatório da sessão, data e hora, tipo de aparelho, tempo em cada tela e ponto de interrupção. Os questionários não solicitam nome, empresa, contratos, valores nem dados pessoais sensíveis.',
+          label: 'Respostas e dados de navegação',
+          text: 'As respostas que você dá, inclusive as parciais, e como você percorre a pesquisa: telas vistas, tempo em cada tela, onde parou e o canal de onde veio (inclusive marcações UTM). Os dados de navegação nunca incluem texto digitado. Registramos também a data e a hora em que você começou e enviou.',
         },
         {
           label: 'Respostas parciais',
-          text: 'Ao manifestar concordância na tela inicial, o participante autoriza expressamente o registro das respostas já fornecidas, ainda que não conclua o questionário. Tais respostas são gravadas periodicamente durante o preenchimento e no fechamento da página, e são tratadas para fins exclusivos da pesquisa, em especial a compreensão dos pontos de desistência e o aprimoramento do questionário.',
+          text: 'Ao concordar na tela inicial, você permite que gravemos as respostas já dadas, mesmo que não termine. Elas são gravadas enquanto você preenche e quando fecha a página, e servem só à pesquisa, principalmente para ver onde as pessoas param e melhorar o questionário.',
+        },
+        {
+          label: 'Identificação (opcional)',
+          text: 'Informar quem você é é opcional e tem um consentimento separado. Se você concordar, coletamos: nome, e-mail, empresa, cargo, cidade, UF, WhatsApp (opcional) e LinkedIn (opcional). Só quem pede o teste beta informa também o tamanho da equipe de compras. Guardamos ainda se você tem interesse no teste beta, o texto do consentimento que você aceitou e a data e a hora do aceite.',
+        },
+        {
+          label: 'Para que usamos',
+          text: 'Para analisar a pesquisa. Para falar com você sobre os resultados. Para uma conversa de pesquisa de 15 minutos, só se você aceitar. Para convidar você ao teste beta do software da CRIVO, só se você pedir. Não usamos para mais nada.',
         },
         {
           label: 'Finalidade exclusiva',
-          text: 'Os dados coletados em uma pesquisa destinam-se exclusivamente a ela. Não são utilizados para publicidade, perfilamento individual ou decisão automatizada, nem compartilhados com terceiros para fins próprios destes. Os resultados são analisados e divulgados apenas de forma agregada, sem identificar participantes.',
-        },
-        {
-          label: 'Contato para entrevista',
-          text: 'Se o participante aceitar ser contatado para conversa posterior, o contato fornecido é armazenado separadamente das respostas, por até 12 meses, e eliminado em seguida.',
+          text: 'Os dados coletados em uma pesquisa servem só a ela. Não são usados para publicidade, perfil individual nem decisão automatizada. Não vendemos nem cedemos a terceiros. Os resultados são divulgados só de forma agregada, sem identificar participantes.',
         },
         {
           label: 'Gravação de áudio',
-          text: 'A conversa só é gravada mediante consentimento específico, colhido no início da gravação. O áudio é eliminado após a elaboração da síntese, no prazo máximo de 12 meses. O participante pode recusar a gravação sem prejuízo da participação.',
+          text: 'A conversa só é gravada com consentimento específico, dado no início da gravação. O áudio é apagado depois que o resumo fica pronto, em no máximo 12 meses. Você pode recusar a gravação e continuar participando.',
         },
         {
-          label: 'Base legal e revogação',
-          text: 'Consentimento do titular (LGPD, art. 7º, I), manifestado de forma livre, informada e inequívoca na tela inicial. O participante pode, a qualquer tempo, revogar o consentimento e solicitar a eliminação dos seus dados, inclusive das respostas parciais, pelo contato da última seção ou pelo endereço indicado no questionário.',
+          label: 'Base legal e armazenamento',
+          text: 'O seu consentimento (LGPD, art. 7º, I), dado de forma livre e clara. A identificação fica guardada em uma tabela separada das respostas, no Supabase, para que as respostas sozinhas não apontem para você.',
         },
         {
           label: 'Retenção',
-          text: 'As respostas, completas ou parciais, são mantidas pelo tempo necessário à conclusão da pesquisa e à análise dos resultados, e depois eliminadas ou anonimizadas.',
+          text: 'Guardamos seus dados por 24 meses e depois apagamos ou anonimizamos.',
+        },
+        {
+          label: 'Seus direitos',
+          text: 'Você pode pedir acesso, correção ou exclusão dos seus dados, e revogar o consentimento, a qualquer momento. Escreva para legal@thebrfactory.com. Revogar não afeta o que foi feito antes.',
         },
       ],
     },
