@@ -18,7 +18,7 @@
 import Image from 'next/image'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import type { ManifestoArticle } from '@/content/articles'
-import { localizedPath } from '@/lib/i18n'
+import { zineHref } from '@/lib/zine-url'
 import type { Lang } from '@/lib/i18n'
 
 /** Proporção da capa. As capas são paisagem; o card respeita isso em vez de cortar. */
@@ -50,7 +50,7 @@ export function LocalArticleCard({ article, lang, variant = 'standard' }: LocalA
 
   return (
     <ArticleMorphLink
-      href={localizedPath(`/zine/${article.slug}`, lang)}
+      href={zineHref(article.slug, lang)}
       className={`card ${isFeatured ? 'card--featured' : 'card--standard'}`}
       aria-label={titulo}
     >

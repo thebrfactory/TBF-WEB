@@ -21,6 +21,7 @@ import { InstagramFloat } from '@/components/InstagramFloat/InstagramFloat'
 import { LOCAIS } from '@/content/articles'
 import { home } from '@/content/i18n/pages/home'
 import { localizedPath, type Lang } from '@/lib/i18n'
+import { zineHref } from '@/lib/zine-url'
 import type { CarouselArticle } from '@/components/PhotoCarousel/PhotoCarousel'
 
 // NOME E LINK DE CADA FOTO DOS DOIS CARROSSÉIS (pedido do fundador).
@@ -206,7 +207,7 @@ export default async function HomeView({ lang }: { lang: Lang }) {
         </div>
 
         <div className="container" style={{ marginTop: 'var(--tbf-space-8)' }}>
-          <Link href={path('/zine')} className="btn btn--secondary">
+          <Link href={zineHref(undefined, lang)} className="btn btn--secondary">
             {t.magazine.cta}
             <span className="btn__arrow" aria-hidden="true">→</span>
           </Link>

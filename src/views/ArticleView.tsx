@@ -15,6 +15,7 @@ import { ArticleScrolly } from '@/components/scrolly/ArticleScrolly'
 import { materiaLocal } from '@/content/articles'
 import { article as dict } from '@/content/i18n/pages/article'
 import { localizedPath, type Lang } from '@/lib/i18n'
+import { zineHref } from '@/lib/zine-url'
 
 // ─── Helper: formatar data ─────────────────────────────────────────────────────
 
@@ -211,7 +212,7 @@ export default async function ArticleView({
           </div>
         </div>
         <div style={{ paddingInline: 'var(--tbf-grid-margin-sm)', paddingBlock: 'var(--tbf-space-12)', display: 'flex', gap: 'var(--tbf-space-4)' }}>
-          <a href={path('/zine')} className="btn btn--secondary">{t.backToMagazine}</a>
+          <a href={zineHref(undefined, lang)} className="btn btn--secondary">{t.backToMagazine}</a>
         </div>
       </article>
     )

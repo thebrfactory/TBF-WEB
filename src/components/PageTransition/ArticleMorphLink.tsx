@@ -49,6 +49,8 @@ export function ArticleMorphLink({ href, children, ...rest }: Props) {
     // Clique que o usuário quer em outra aba/janela não é nosso.
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return
     if (!canMorph()) return
+    // Zine em subdomínio: link para outro host é navegação normal, sem morph.
+    if (/^https?:\/\//.test(href) && new URL(href).origin !== window.location.origin) return
 
     const cover = ref.current?.querySelector<HTMLElement>('[data-morph]')
       ?? ref.current?.querySelector<HTMLElement>('img')

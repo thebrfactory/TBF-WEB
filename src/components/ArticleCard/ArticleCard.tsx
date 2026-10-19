@@ -8,6 +8,7 @@ import Image from 'next/image'
 import type { ArticleCardProps } from '@/types'
 import { ArticleMorphLink } from '@/components/PageTransition/ArticleMorphLink'
 import { urlFor } from '@/lib/sanity'
+import { zineHref } from '@/lib/zine-url'
 import { ThumbSpec, thumbDimensions, THUMB_RATIO_FALLBACK } from '@/components/ThumbSpec/ThumbSpec'
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -39,7 +40,7 @@ export function ArticleCard({ post, variant = 'standard' }: ArticleCardProps) {
     // ArticleMorphLink e não Link: abrir a matéria entra PELA capa (a imagem
     // cresce até o lugar dela na página da matéria). Ver PageTransition/.
     <ArticleMorphLink
-      href={`/zine/${post.slug.current}`}
+      href={zineHref(post.slug.current)}
       className={cardClass}
       aria-label={post.title}
     >

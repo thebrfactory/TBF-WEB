@@ -4,7 +4,7 @@
 import type { Metadata } from 'next'
 import EditorialView from '@/views/EditorialView'
 import { editorial } from '@/content/i18n/pages/editorial'
-import { languageAlternates } from '@/lib/i18n'
+import { zineAlternates, zineUrl } from '@/lib/zine-url'
 import { openGraphMeta } from '@/lib/og'
 
 const t = editorial.en
@@ -12,8 +12,11 @@ const t = editorial.en
 export const metadata: Metadata = {
   title: t.meta.title,
   description: t.meta.description,
-  alternates: languageAlternates('/zine'),
-  openGraph: openGraphMeta({ title: t.meta.ogTitle, description: t.meta.ogDescription }),
+  alternates: zineAlternates(undefined, 'en'),
+  openGraph: {
+    ...openGraphMeta({ title: t.meta.ogTitle, description: t.meta.ogDescription }),
+    url: zineUrl(undefined, 'en'),
+  },
 }
 
 export const revalidate = 3600

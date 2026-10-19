@@ -9,7 +9,6 @@
 // =============================================================================
 
 import type { MetadataRoute } from 'next'
-import { sanityFetch, ARTICLE_SLUGS_QUERY } from '@/lib/sanity'
 import { WORKS } from '@/app/(en)/creators/tavaristico/_data'
 
 const BASE_URL = 'https://thebrfactory.com'
@@ -32,7 +31,6 @@ type Rota = {
 // próprio, também `robots: { index: false }`: quem deve indexar é o destino).
 const STATIC_ROUTES: Rota[] = [
   { path: '/', changeFrequency: 'daily', priority: 1.0 },
-  { path: '/zine', changeFrequency: 'daily', priority: 0.9 },
   { path: '/consulting', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/brand-tech', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/manifesto', changeFrequency: 'monthly', priority: 0.9 },
@@ -75,6 +73,8 @@ function bilingue(rota: Rota): MetadataRoute.Sitemap {
   ]
 }
 
+// O zine saiu daqui em 19/10/2026: vive em zine.thebrfactory.com, com sitemap
+// próprio (src/app/zine-sitemap.xml/route.ts, servido em /sitemap.xml do subdomínio).
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const rotas: Rota[] = [...STATIC_ROUTES]
 
@@ -85,18 +85,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.5,
     })
-  }
-
-  try {
-    const slugs = await sanityFetch<{ slug: string }[]>(ARTICLE_SLUGS_QUERY)
-    for (const { slug } of slugs) {
-      rotas.push({ path: `/zine/${slug}`, changeFrequency: 'weekly', priority: 0.8 })
-    }
-  } catch (erro) {
-    // Sanity fora do ar: sobem só as rotas estáticas, e o sitemap perde TODAS as
-    // matérias sem avisar ninguém. Foi exatamente o que aconteceu em produção, então
-    // o erro passa a ser gritado no log em vez de engolido em silêncio.
-    console.error('[sitemap] slugs das materias nao vieram do Sanity:', erro)
   }
 
   return rotas.flatMap(bilingue)

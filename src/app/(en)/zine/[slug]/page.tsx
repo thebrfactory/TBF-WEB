@@ -6,7 +6,7 @@ import ArticleView from '@/views/ArticleView'
 import { sanityFetch, ARTICLE_QUERY, ARTICLE_SLUGS_QUERY, urlFor } from '@/lib/sanity'
 import type { EditorialPost } from '@/types'
 import { materiaLocal, SLUGS_LOCAIS } from '@/content/articles'
-import { languageAlternates } from '@/lib/i18n'
+import { zineAlternates, zineUrl } from '@/lib/zine-url'
 import { OG_IMAGE_PATH } from '@/lib/og'
 
 const LANG = 'en' as const
@@ -32,7 +32,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const alternates = languageAlternates(`/zine/${slug}`)
+  const alternates = zineAlternates(slug, LANG)
 
   // As matérias do motor scrolly vivem fora do Sanity, então têm o próprio ramo
   // de metadados: o texto sai do arquivo da matéria, já bilíngue.
@@ -45,6 +45,7 @@ export async function generateMetadata({
       description: a.deck[LANG],
       alternates,
       openGraph: {
+        url: zineUrl(slug, LANG),
         title: a.heroTitle[LANG],
         description: a.deck[LANG],
         images: [{ url: og, width: 1200, height: 630 }],
@@ -75,6 +76,7 @@ export async function generateMetadata({
       description: post.metaDescription ?? post.deck,
       alternates,
       openGraph: {
+        url: zineUrl(slug, LANG),
         title: post.title,
         description: post.metaDescription ?? post.deck,
         images: [
