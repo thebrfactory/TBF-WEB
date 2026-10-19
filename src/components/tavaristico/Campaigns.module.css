@@ -12,22 +12,26 @@
 .wrap { margin-top: var(--tbf-space-6); }
 
 .row {
-  display: flex;
-  gap: var(--tbf-space-6);
-  overflow-x: auto;
+  /* Grade de colunas fixas, alinhada a esquerda: ordem de leitura limpa e
+     as mesmas margens com 2 ou com 8 circulos. Quebra de linha em vez de
+     rolagem lateral. */
+  --cell: 7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, var(--cell));
+  justify-content: start;
+  align-items: start;
+  gap: var(--tbf-space-6) var(--tbf-space-4);
   padding-block: var(--tbf-space-2);
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 }
-.row::-webkit-scrollbar { display: none; }
+/* Sem nome embaixo: so o circulo, celula do tamanho dele. */
+.rowCompact { --cell: 4.6rem; gap: var(--tbf-space-4); }
 
 .item {
-  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--tbf-space-2);
-  min-width: 5.6rem;
+  width: var(--cell);
 }
 
 .name {
@@ -41,6 +45,19 @@
   line-height: 1.25;
   overflow-wrap: anywhere;
 }
+
+/* Credito de producao executiva: miudo, sob o nome. A marca e nome proprio,
+   extrabold. Sem nowrap: quebra a linha se a celula for estreita. */
+.credit {
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tav-text-micro, 0.68rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  text-align: center;
+  color: var(--tbf-text-tertiary);
+}
+.credit strong { font-weight: 800; color: var(--tbf-text-secondary); }
 
 /* Convite discreto, UMA vez para a secao inteira. Repetido embaixo de cada
    circulo virava ruido, e o gesto do Instagram nao explica cada story.
@@ -57,5 +74,6 @@
 }
 
 @media (min-width: 768px) {
-  .item { width: 6.4rem; }
+  .row { --cell: 8rem; gap: var(--tbf-space-8) var(--tbf-space-6); }
+  .rowCompact { --cell: 5rem; gap: var(--tbf-space-6); }
 }

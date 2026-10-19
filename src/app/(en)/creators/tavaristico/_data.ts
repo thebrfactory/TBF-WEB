@@ -43,6 +43,25 @@ export interface Work {
    * formato e componente (Campaigns) da home do portfolio. `index` deve ser
    * unico no site (chave do "visto" em localStorage). */
   highlights?: Campaign[]
+  /** alt descritivo (PT) da capa e da galeria; sem eles, vale o titulo */
+  coverAlt?: string
+  galleryAlts?: string[]
+  /** Credito de producao executiva (marca, nome proprio: extrabold na tela).
+   * CHANGES #01 19/10/2026: "Producao executiva: LAUDA" na Virtuosa. */
+  executiveProduction?: string
+  /** Pecas 9:16 de lookbook/catalogo, em carrossel na pagina de obra. */
+  lookbook?: WorkPiece[]
+  /** Grid do feed (3 colunas, quadrado como no PDF de planejamento). */
+  feedGrid?: WorkPiece[]
+}
+
+/** Peca de pagina de obra: arquivo pronto (nunca montado por codigo) e alt em PT. */
+export interface WorkPiece {
+  src: string
+  alt: string
+  /** legenda curta fora da imagem (nunca sobre ela) */
+  captionEN?: string
+  captionPT?: string
 }
 
 const base = '/images/creators/tavaristico'
@@ -80,6 +99,84 @@ export const DISCIPLINES: Discipline[] = [
   'Fashion',
   'Graphic & Motion',
 ]
+
+// Lookbook e catalogo da Virtuosa (CHANGES #01, 19/10/2026): pecas 9:16 prontas.
+const vz = `${base}/virtuosa`
+const LOOKBOOK: WorkPiece[] = [
+  { src: `${vz}/lb-capa-v2.webp`, alt: 'Capa do catálogo Virtuosa, da LAUDA: mulher de blusa transparente preta e calça preta, com o título VIRTUOSA ao fundo.', captionEN: 'Cover', captionPT: 'Capa' },
+  { src: `${vz}/lb-indice.webp`, alt: 'Índice do catálogo Virtuosa Inverno 24, com miniaturas de todos os looks em fileiras sobre fundo claro.', captionEN: 'Index', captionPT: 'Índice' },
+  { src: `${vz}/lb-inverno24.webp`, alt: 'Quinze looks da coleção Inverno 24, da LAUDA, em três fileiras sobre fundo cinza claro.', captionEN: 'Winter 24', captionPT: 'Inverno 24' },
+  { src: `${vz}/lb-drop12.webp`, alt: 'Lookbook Virtuosa Inverno 24, Drop I e II, com doze looks em quatro fileiras sobre fundo claro.', captionEN: 'Lookbook Drop I & II', captionPT: 'Lookbook Drop I & II' },
+  { src: `${vz}/lb-capa.webp`, alt: 'Capa alternativa do catálogo: mulher de body preto com manga esvoaçante, com o título VIRTUOSA ao fundo, Inverno 24, Drop I e II.', captionEN: 'Cover, alternate', captionPT: 'Capa, alternativa' },
+  { src: `${vz}/lb-final.webp`, alt: 'Página final do catálogo: mulher de body preto de corpo inteiro, com o título VIRTUOSA ao fundo.', captionEN: 'Closing page', captionPT: 'Página final' },
+]
+
+// Grid do feed de setembro (FEED_SETEMBRO.pdf): 15 quadros, 3 colunas, os dois
+// tiles LAUDA FASHION FILM nos cantos da terceira fileira. Quadros 07, 09, 11 e
+// 15 vieram do proprio PDF (sem arquivo solto na pasta de origem).
+const FEED_ALTS = [
+  'Mulher de costas olhando para trás, com moletom branco de capuz.',
+  'Mulher de camisa branca e calça preta justa sobre fundo claro.',
+  'Mulher de costas olhando para trás, com moletom bege de capuz.',
+  'Mulher de suéter preto brilhante sobre fundo cinza.',
+  'Mulher de moletom e calça bege diante de painéis de madeira e uma coluna bordô.',
+  'Mulher de vestido longo preto transparente sobre fundo claro.',
+  'Tile LAUDA Fashion Film, texto sobre fundo bege.',
+  'Mulher de vestido preto longo com os braços erguidos sobre fundo cinza.',
+  'Tile LAUDA Fashion Film, texto sobre fundo bege.',
+  'Mulher de blazer preto e calça justa sobre fundo claro.',
+  'Mulher de blazer xadrez marrom e blusa amarela diante de painéis de madeira.',
+  'Perfil de mulher com coque e vestido preto de costas abertas.',
+  'Mulher de moletom e calça bege apoiada em uma coluna bordô.',
+  'Mulher de costas em terno xadrez marrom sobre fundo claro.',
+  'Mulher de blusa branca e calça caramelo diante de um painel curvo de madeira.',
+]
+const FEED_GRID: WorkPiece[] = FEED_ALTS.map((alt, i) => ({
+  src: `${vz}/feed-${String(i + 1).padStart(2, '0')}.webp`,
+  alt,
+}))
+
+// TIGER CAPSULE (CHANGES #01, 19/10/2026). Texto so do que a midia afirma:
+// "A Savannah Odyssey", "Spring Summer 24", "Creative District", "Designed and
+// created in Brazil". Papel e cliente nao constam da midia: papel provisorio.
+const tg = `${base}/tiger-capsule`
+const TIGER_CAPSULE: Work = {
+  slug: 'tiger-capsule',
+  index: '19',
+  title: 'Tiger Capsule',
+  disciplines: ['Fashion', 'Graphic & Motion'],
+  role: 'Art Director',
+  summary: 'A Savannah Odyssey: cápsula de camisas e camiseta com estampa de tigres.',
+  description:
+    'A Savannah Odyssey, Spring Summer 24, Creative District. Cápsula com identidade própria: lockup, emblema de tigres com louros, ícone do tigre, estampa contínua em ocre sobre branco, camisa e camiseta preta. Desenhada e criada no Brasil.',
+  descriptionEn:
+    'A Savannah Odyssey, Spring Summer 24, Creative District. A capsule with its own identity: lockup, tiger emblem with laurels, tiger icon, continuous ochre-on-white pattern, shirt and black tee. Designed and created in Brazil.',
+  coverAlt: 'Lockup A Savannah Odyssey, Spring Summer 24, em ocre sobre fundo marrom escuro.',
+  galleryAlts: [
+    'Dois tigres de pé, em silhueta ocre sobre fundo marrom escuro.',
+    'Emblema de tigre cercado por coroa de louros, em ocre sobre fundo escuro.',
+    'Cabeça de tigre rugindo, em silhueta ocre sobre fundo escuro.',
+    'Três símbolos em ocre: cabeça de tigre, emblema com louros e tigre de pé.',
+    'Camiseta preta com pequeno emblema ocre no peito, sobre fundo escuro.',
+    'Detalhe da estampa contínua de tigres ocre sobre branco, com botões laranja.',
+    'Camisa de manga curta com a estampa de tigres ocre sobre branco, sobre fundo escuro.',
+    'Camisa de manga curta com a estampa de tigres, em animação, sobre fundo escuro.',
+  ],
+  media: {
+    cover: `${tg}/01.webp`,
+    gallery: [
+      `${tg}/02.webp`,
+      `${tg}/03.webp`,
+      `${tg}/04.webp`,
+      `${tg}/05.webp`,
+      `${tg}/06.webp`,
+      `${tg}/07.webp`,
+      `${tg}/08.webp`,
+      `${tg}/09.webp`,
+    ],
+  },
+  provisional: ['role', 'summary'],
+}
 
 export const WORKS: Work[] = [
   {
@@ -137,15 +234,15 @@ export const WORKS: Work[] = [
   {
     slug: 'virtuosa',
     index: '04',
-    title: 'Virtuosa',
+    title: 'LAUDA Virtuosa',
     disciplines: ['Fashion', 'Art Direction'],
     role: 'Art Director',
     client: 'LAUDA',
     summary: 'Direção de arte e linguagem da campanha Virtuosa, da LAUDA.',
     description:
-      'Direção de arte, styling e linguagem de campanha para a campanha Virtuosa, da LAUDA.',
+      'Virtuosa foi inspirada em mulheres habilidosas e naturalmente elegantes, que nos levaram a criar uma harmoniosa reunião de materiais nobres, silhuetas e cores que celebram as múltiplas essências femininas, através da tecitura das nossas coleções.\nA rotina das mulheres contemporâneas demanda, a cada dia mais, criatividade e versatilidade no vestir. Para acompanhá-las em todos os momentos do dia, idealizamos cada roupa para atender diversos estilos de vida, possibilitando diferentes combinações, sempre com muita personalidade.',
     descriptionEn:
-      "Art direction, styling and campaign language for LAUDA's Virtuosa campaign.",
+      'Virtuosa was inspired by skilled, naturally elegant women, who led us to create a harmonious gathering of noble materials, silhouettes and colors that celebrate the many feminine essences, through the weaving of our collections.\nThe routine of contemporary women demands, more every day, creativity and versatility in dressing. To accompany them through every moment of the day, we designed each garment to suit different lifestyles, allowing different combinations, always with plenty of personality.',
     selected: true,
     media: {
       cover: `${base}/virtuosa/pp-01.webp`,
@@ -189,9 +286,116 @@ export const WORKS: Work[] = [
           { src: `${base}/virtuosa/lauda-cat-05.webp`, alt: 'Peça de categoria da campanha Virtuosa.', role: 'Categoria' },
         ],
       },
+      {
+        index: 'virtuosa-body-sonata',
+        name: 'BODY SONATA',
+        client: 'LAUDA',
+        descriptionEN: 'Institutional Body Sonata stories for LAUDA, dark looks.',
+        descriptionPT: 'Stories institucionais Body Sonata, da LAUDA, looks escuros.',
+        frames: [
+          { src: `${base}/virtuosa/st03-01.webp`, alt: 'Seis figuras de preto lado a lado sobre fundo cinza, com o logotipo LAUDA ao fundo.', role: 'Institucional Body Sonata' },
+          { src: `${base}/virtuosa/st03-02.webp`, alt: 'Mulher de macacão preto, mãos na cintura, sobre fundo cinza.', role: 'Institucional Body Sonata' },
+          { src: `${base}/virtuosa/st03-03.webp`, alt: 'Colagem de looks pretos com a modelo repetida em recortes.', role: 'Institucional Body Sonata' },
+          { src: `${base}/virtuosa/st03-04.webp`, alt: 'Fundo escuro com silhuetas pretas e o logotipo LAUDA ao centro.', role: 'Institucional Body Sonata' },
+        ],
+      },
+      {
+        index: 'virtuosa-composizione',
+        name: 'COMPOSIZIONE',
+        client: 'LAUDA',
+        descriptionEN: 'Composizione stories for LAUDA, light looks.',
+        descriptionPT: 'Stories Composizione, da LAUDA, looks claros.',
+        frames: [
+          { src: `${base}/virtuosa/st04-01.webp`, alt: 'Abertura sobre tecido xadrez marrom com o menu da coleção.', role: 'Composizione' },
+          { src: `${base}/virtuosa/st04-02.webp`, alt: 'Mulher de costas em casaco longo de alfaiataria sobre fundo cinza, com texto sobre os tecidos.', role: 'Composizione' },
+          { src: `${base}/virtuosa/st04-03.webp`, alt: 'Mulher de blazer xadrez marrom, blusa amarela e calça larga.', role: 'Composizione' },
+          { src: `${base}/virtuosa/st04-04.webp`, alt: 'Detalhe de calça larga de tecido xadrez marrom.', role: 'Composizione' },
+          { src: `${base}/virtuosa/st04-05.webp`, alt: 'Close de casaco xadrez marrom com lenço amarelo e o logotipo LAUDA.', role: 'Composizione' },
+        ],
+      },
+      {
+        index: 'virtuosa-polo',
+        name: 'POLO',
+        client: 'LAUDA',
+        descriptionEN: 'Polo shirt stories for LAUDA, April content.',
+        descriptionPT: 'Stories da camisa polo, da LAUDA, conteúdo de abril.',
+        frames: [
+          {
+            src: `${base}/virtuosa/st05-video-poster.webp`,
+            alt: 'Mulher sentada em cadeira de madeira com uma camisa polo branca em destaque e o texto Ícone dentro e fora das quadras.',
+            role: 'Polo',
+            video: {
+              av1: `${base}/virtuosa/st05-video.av1.mp4`,
+              h264: `${base}/virtuosa/st05-video.mp4`,
+              hasAudio: true,
+            },
+          },
+          { src: `${base}/virtuosa/st05-01.webp`, alt: 'Mulher sentada ao lado de um cachorro marrom, com o texto Ícone dentro e fora das quadras.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-02.webp`, alt: 'Foto em preto e branco de um tenista, com texto sobre o ano de 1936.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-03.webp`, alt: 'Fotos em preto e branco de tenistas em quadra, com texto sobre a história da camisa polo.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-04.webp`, alt: 'Retrato antigo em preto e branco, com o texto Em 1933 e uma descrição.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-05.webp`, alt: 'Mulher sentada ao lado de um cachorro marrom, com o texto Conheça as nossas versões da camisa polo.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-06.webp`, alt: 'Camisa polo branca Regina sobre fundo claro, com descrição do produto.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-07.webp`, alt: 'Camisa polo branca Pétalas sobre fundo claro, com descrição do produto.', role: 'Polo' },
+          { src: `${base}/virtuosa/st05-08.webp`, alt: 'Mulher de conjunto polo e short claros diante de painel de madeira.', role: 'Polo' },
+        ],
+      },
+      {
+        index: 'virtuosa-domingo',
+        name: 'DOMINGO',
+        client: 'LAUDA',
+        descriptionEN: 'Sunday stories for LAUDA, July content.',
+        descriptionPT: 'Stories de domingo, da LAUDA, conteúdo de julho.',
+        frames: [
+          { src: `${base}/virtuosa/st06-01.webp`, alt: 'Mulher de moletom com capuz e calça bege sobre fundo cinza, com o texto Shop now.', role: 'Domingo' },
+          { src: `${base}/virtuosa/st06-02.webp`, alt: 'Detalhe de moletom e calça bege, com o texto Get the look.', role: 'Domingo' },
+          { src: `${base}/virtuosa/st06-03.webp`, alt: 'Look completo de moletom e calça bege, com o texto Get the look.', role: 'Domingo' },
+          { src: `${base}/virtuosa/st06-04.webp`, alt: 'Detalhe de calça bege e sapato de salto, sobre fundo cinza.', role: 'Domingo' },
+        ],
+      },
+      {
+        index: 'virtuosa-marrom',
+        name: 'MARROM',
+        client: 'LAUDA',
+        descriptionEN: 'Brown on the radar: LAUDA stories in rust tones.',
+        descriptionPT: 'Marrom no radar: stories da LAUDA em tons de ferrugem.',
+        frames: [
+          { src: `${base}/virtuosa/st07-01.webp`, alt: 'Colagem de quatro vistas de um look cor de ferrugem, mulher loira de blazer e calça.', role: 'Marrom no radar' },
+          { src: `${base}/virtuosa/st07-02.webp`, alt: 'Peça Marrom no radar, com blazer e calça cor de ferrugem sobre fundo claro.', role: 'Marrom no radar' },
+          { src: `${base}/virtuosa/st07-03.webp`, alt: 'Peça Marrom no radar, com vestido cor de ferrugem sobre fundo claro.', role: 'Marrom no radar' },
+          { src: `${base}/virtuosa/st07-04.webp`, alt: 'Peça Marrom no radar, com blazer e calça cor de ferrugem sobre fundo claro.', role: 'Marrom no radar' },
+          { src: `${base}/virtuosa/st07-05.webp`, alt: 'Colagem de vistas do look cor de ferrugem, com o texto Confira já.', role: 'Marrom no radar' },
+          { src: `${base}/virtuosa/st07-06.webp`, alt: 'Mulher de blazer e calça cor de ferrugem, com o texto Marrom no radar.', role: 'Marrom no radar' },
+        ],
+      },
+      {
+        index: 'virtuosa-namorados',
+        name: 'NAMORADOS',
+        client: 'LAUDA',
+        descriptionEN: 'Virtuosa Drop III, Valentine\'s Day pieces.',
+        descriptionPT: 'Peças da Virtuosa Drop III, Dia dos Namorados.',
+        frames: [
+          { src: `${base}/virtuosa/st08-01.webp`, alt: 'Três modelos de vestido vermelho e preto sobre fundo bordô, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-02.webp`, alt: 'Mulher loira de vestido vermelho sobre fundo bordô, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-03.webp`, alt: 'Mulher loira de vestido preto com renda sobre fundo bordô, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-04.webp`, alt: 'Mulher loira de vestido preto sobre fundo bordô, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-05.webp`, alt: 'Fundo bordô com o título VIRTUOSA e o convite para conferir no site.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-06.webp`, alt: 'Duas modelos de vestido preto e vermelho sobre fundo bordô, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+          { src: `${base}/virtuosa/st08-07.webp`, alt: 'Close de braços e tecido preto sobre fundo escuro, com o título VIRTUOSA.', role: 'Virtuosa Drop III' },
+        ],
+      },
     ],
-    provisional: ['role', 'summary', 'description'],
+    coverAlt: 'Campanha Virtuosa, da LAUDA, imagem de capa.',
+    galleryAlts: [
+      'Campanha Virtuosa, da LAUDA, imagem da coleção.',
+      'Virtuosa Drop II, da LAUDA, imagem em movimento.',
+    ],
+    executiveProduction: 'LAUDA',
+    lookbook: LOOKBOOK,
+    feedGrid: FEED_GRID,
+    provisional: ['role', 'summary'],
   },
+  TIGER_CAPSULE,
   {
     slug: 'blackboah',
     index: '05',
@@ -696,7 +900,7 @@ export interface StoryFrame {
    * miniatura; isto aqui e o filme que entra por cima. Par AV1 + H.264, a
    * mesma escada do HeroVideo. Quadro sem `video` segue foto parada.
    */
-  video?: { av1: string; h264: string }
+  video?: { av1: string; h264: string; hasAudio?: boolean }
   /** Tempo do quadro em ms. Sem ele, vale o do deck (2800). Video pede o seu. */
   ms?: number
 }
@@ -1068,6 +1272,8 @@ export interface Campaign {
   descriptionPT: string
   /** Imagem do circulo. Sem ela, usa o primeiro frame. */
   cover?: string
+  /** Marca da producao executiva, mostrada sob o nome do circulo. */
+  executiveProduction?: string
   frames: StoryFrame[]
 }
 
@@ -1115,6 +1321,39 @@ export const CAMPAIGNS: Campaign[] = [
           kickerPT: 'A CAMPANHA',
           titleEN: 'DEZOITÔ. A birthday that became a season.',
           titlePT: 'DEZOITÔ. Um aniversário que virou temporada.',
+        },
+      },
+    ],
+  },
+  {
+    index: '02',
+    name: 'VIRTUOSA',
+    client: 'LAUDA',
+    descriptionEN:
+      "LAUDA's Virtuosa campaign: two films for the collection.",
+    descriptionPT:
+      'Campanha Virtuosa, da LAUDA: dois filmes da coleção.',
+    cover: `${base}/virtuosa/avatar.webp`,
+    executiveProduction: 'LAUDA',
+    frames: [
+      {
+        src: `${base}/virtuosa/back-to-black-poster.webp`,
+        alt: 'Filme Back To Black, da LAUDA: três modelos de preto lado a lado sobre fundo claro.',
+        role: 'Back To Black',
+        video: {
+          av1: `${base}/virtuosa/back-to-black.av1.mp4`,
+          h264: `${base}/virtuosa/back-to-black.mp4`,
+          hasAudio: true,
+        },
+      },
+      {
+        src: `${base}/virtuosa/lauda-movie-poster.webp`,
+        alt: 'Filme LAUDA Movie: mosaico de cenas da coleção em torno do logotipo LAUDA.',
+        role: 'LAUDA Movie',
+        video: {
+          av1: `${base}/virtuosa/lauda-movie.av1.mp4`,
+          h264: `${base}/virtuosa/lauda-movie.mp4`,
+          hasAudio: true,
         },
       },
     ],

@@ -857,6 +857,16 @@
 .metaCell .label { margin-bottom: 4px; }
 .metaCell .val { font-family: var(--mono); font-size: 0.85rem; color: var(--tbf-text-primary); }
 .roleVal { color: var(--tbf-accent) !important; }
+/* Credito de producao executiva: visivel logo abaixo do titulo. A marca e
+   nome proprio, extrabold. */
+.execCredit {
+  margin: 0 0 var(--tbf-space-6);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--tbf-text-secondary);
+}
+.execCredit strong { font-weight: 800; color: var(--tbf-text-primary); }
 .workIntro {
   font-family: var(--serif);
   font-size: clamp(1.15rem, 2.6vw, 1.5rem);
@@ -864,6 +874,7 @@
   max-width: 60ch;
   margin-bottom: var(--tbf-space-12);
 }
+.workIntroGap { margin-bottom: var(--tbf-space-4); }
 .cover { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--tav-radius-sm); background: var(--tbf-bg-secondary); margin-bottom: var(--tbf-space-6); }
 .cover img { object-fit: cover; }
 .lowResTag {

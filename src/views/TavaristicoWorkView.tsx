@@ -13,6 +13,7 @@ import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { notFound } from 'next/navigation'
 import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
+import { Lookbook, FeedGrid } from '@/components/tavaristico/WorkEditorial'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -30,6 +31,8 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
   const next = WORKS[(i + 1) % WORKS.length]
   const gallery = w.media.gallery ?? []
   const text = lang === 'en' ? (w.descriptionEn ?? w.description) : w.description
+  // A narrativa pode ter varios paragrafos, separados por quebra de linha.
+  const paragraphs = (text ?? '').split('\n').filter(Boolean)
   // Capa com a proporção da própria peça quando é paisagem; o resto (retrato,
   // quadrado) segue em 16:9 como nos cards.
   const [cw, ch] = DIMS[w.media.cover] ?? [16, 9]
@@ -48,9 +51,15 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <h1 className={styles.workTitle}>{w.title}</h1>
         </div>
 
+        {w.executiveProduction && (
+          <p className={styles.execCredit}>
+            {t.executiveProduction}: <strong>{w.executiveProduction}</strong>
+          </p>
+        )}
+
         {w.highlights && w.highlights.length > 0 && (
           <div style={{ marginBottom: 'var(--tbf-space-6)' }}>
-            <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" />
+            <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" hideNames />
           </div>
         )}
 
@@ -75,12 +84,17 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           )}
         </div>
 
-        {text && (
-          <p className={`${styles.workIntro}`}>{text}</p>
-        )}
+        {paragraphs.map((para, k) => (
+          <p
+            key={k}
+            className={`${styles.workIntro} ${k < paragraphs.length - 1 ? styles.workIntroGap : ''}`}
+          >
+            {para}
+          </p>
+        ))}
 
         <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
-          <Image src={w.media.cover} alt={w.title} fill sizes="100vw" quality={90} priority />
+          <Image src={w.media.cover} alt={w.coverAlt ?? w.title} fill sizes="100vw" quality={90} priority />
         </div>
         {w.lowRes && (
           <span className={styles.lowResTag}>{t.lowResTag}</span>
@@ -97,7 +111,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
                 >
                   <Image
                     src={src}
-                    alt={`${w.title} ${idx + 2}`}
+                    alt={w.galleryAlts?.[idx] ?? `${w.title} ${idx + 2}`}
                     width={iw}
                     height={ih}
                     sizes="(min-width: 768px) 50vw, 100vw"
@@ -110,6 +124,12 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
             })}
           </div>
         )}
+
+        {w.lookbook && w.lookbook.length > 0 && (
+          <Lookbook pieces={w.lookbook} lang={lang} label={t.lookbookLabel} />
+        )}
+
+        {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} />}
 
         <nav className={styles.workNav}>
           <Link href={path(`/creators/tavaristico/works/${prev.slug}`)} className={styles.navLink}>

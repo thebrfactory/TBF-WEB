@@ -1,0 +1,87 @@
+/* =============================================================================
+   WORK EDITORIAL: lookbook e grid de feed da pagina de obra. Mobile first.
+   Sem dividers, sem texto sobre imagem.
+   ============================================================================= */
+
+.section { margin-top: var(--tbf-space-12); }
+
+.label {
+  display: block;
+  margin-bottom: var(--tbf-space-6);
+  font-family: var(--mono);
+  font-size: var(--tav-text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+/* LOOKBOOK: celular, esteira que rola de lado com snap; cada peca 9:16. */
+.lookbook {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 var(--tbf-space-2);
+  display: flex;
+  gap: var(--tbf-space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.lookbook::-webkit-scrollbar { display: none; }
+
+.lookItem {
+  flex: 0 0 62%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+}
+
+.lookMedia {
+  position: relative;
+  display: block;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: var(--tav-radius-sm);
+  background: var(--tbf-bg-secondary);
+}
+.lookMedia img { object-fit: cover; }
+
+.caption {
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tav-text-micro, 0.68rem);
+  letter-spacing: 0.04em;
+  color: var(--tbf-text-secondary);
+}
+
+/* FEED: 3 colunas quadradas como no PDF de planejamento. Teto de largura:
+   a grade e um perfil de celular, nao uma parede. */
+.feed {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+  max-width: 34rem;
+}
+.feedItem {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--tbf-bg-secondary);
+}
+.feedItem img { object-fit: cover; object-position: 50% 25%; }
+
+@media (min-width: 768px) {
+  .lookbook {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--tbf-space-6) var(--tbf-space-4);
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+  .lookItem { flex: initial; }
+  .feed { gap: 4px; }
+}

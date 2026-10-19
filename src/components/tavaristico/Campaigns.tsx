@@ -58,6 +58,8 @@ export function Campaigns({
   label,
   caseLabel: _caseLabel,
   inviteLabel = 'Tap to open the project',
+  hideNames = false,
+  executiveProductionLabel = '',
 }: {
   campaigns: Campaign[]
   lang: Lang
@@ -68,6 +70,11 @@ export function Campaigns({
   /** Convite perto do circulo. String vazia = sem convite nenhum, sem
    * espaco reservado para ele (o titulo com o convite passou para o view). */
   inviteLabel?: string
+  /** Sem o nome embaixo do circulo (pagina de obra, CHANGES #01 19/10/2026).
+   * O nome segue no aria-label do botao. */
+  hideNames?: boolean
+  /** Rotulo do credito "Producao executiva: MARCA" sob o nome. Vazio = sem credito. */
+  executiveProductionLabel?: string
 }) {
   const [seen, setSeen] = useState<Record<string, true>>({})
   const [openIndex, setOpenIndex] = useState<string | null>(null)
@@ -128,7 +135,7 @@ export function Campaigns({
 
   return (
     <div className={styles.wrap}>
-      <div className={styles.row}>
+      <div className={`${styles.row} ${hideNames ? styles.rowCompact : ''}`}>
       {campaigns.map((c) => {
         const isSeen = !!seen[c.index]
         const cover = c.frames[0]
@@ -145,7 +152,12 @@ export function Campaigns({
                 triggerRefs.current[c.index] = el
               }}
             />
-            <span className={styles.name}>{c.name}</span>
+            {hideNames ? null : <span className={styles.name}>{c.name}</span>}
+            {!hideNames && c.executiveProduction && executiveProductionLabel ? (
+              <span className={styles.credit}>
+                {executiveProductionLabel}: <strong>{c.executiveProduction}</strong>
+              </span>
+            ) : null}
           </div>
         )
       })}

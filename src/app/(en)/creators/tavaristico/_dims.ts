@@ -231,4 +231,13 @@ export const DIMS: Record<string, readonly [number, number]> = {
   '/images/creators/tavaristico/virtuosa/pp-01.webp': [2800, 1659],
   '/images/creators/tavaristico/virtuosa/pp-02.webp': [1920, 1920],
   '/images/creators/tavaristico/virtuosa/pp-drop2.gif': [770, 1368],
+  '/images/creators/tavaristico/tiger-capsule/01.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/02.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/03.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/04.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/05.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/06.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/07.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/08.webp': [1200, 686],
+  '/images/creators/tavaristico/tiger-capsule/09.webp': [1000, 571],
 }
