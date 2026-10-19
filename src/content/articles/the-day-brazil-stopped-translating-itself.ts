@@ -101,8 +101,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       lines: [
         { en: 'Brazil crossed that threshold quietly.', pt: 'O Brasil cruzou essa linha em silêncio.' },
         { en: 'Not with a revolution.', pt: 'Não com uma revolução.' },
-        { en: 'Not with a speech.', pt: 'Não com um discurso.' },
-        { en: 'Not with a flag.', pt: 'Não com uma bandeira.' },
       ],
     },
     // TIER 2: fecho da abertura
@@ -123,8 +121,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         pt: 'Anúncio de jornal de 1993 do Gurgel Supermini, com o endereço da concessionária impresso no rodapé.',
       },
       caption: {
-        en: 'Where the story begins: the showroom floor, the most ordinary room in the country. It had an address.',
-        pt: 'Onde a história começa: o salão da concessionária, a sala mais comum do país. Ela tinha endereço.',
+        en: 'The most ordinary room in the country. It had an address.',
+        pt: 'A sala mais comum do país. Tinha endereço.',
       },
       credit: 'Fonte: Pinterest (divulgação/reprodução)',
     },
@@ -136,17 +134,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Two compact SUVs.', pt: 'Dois SUVs compactos.' },
-        { en: 'One American.', pt: 'Um americano.' },
-        { en: 'One Brazilian.', pt: 'Um brasileiro.' },
         { en: 'On the left, the Jeep Renegade.', pt: 'À esquerda, o Jeep Renegade.' },
         { en: 'On the right, the Gurgel Renegado.', pt: 'À direita, o Gurgel Renegado.' },
-        { en: 'Nobody takes pictures.', pt: 'Ninguém tira foto.' },
-        { en: 'Nobody says "look, a Brazilian car."', pt: 'Ninguém diz "olha, um carro brasileiro".' },
-        { en: 'Nobody writes patriotic posts on social media.', pt: 'Ninguém escreve post patriótico nas redes.' },
         { en: 'Because there is nothing unusual about it.', pt: 'Porque não há nada de estranho nisso.' },
         { en: 'Your father owned a Gurgel.', pt: 'Seu pai teve um Gurgel.' },
-        { en: 'Your grandfather worked at one of its suppliers.', pt: 'Seu avô trabalhou num dos fornecedores.' },
-        { en: "Your cousin designs suspensions for the company's African division.", pt: 'Seu primo desenha suspensão para a divisão africana da empresa.' },
         { en: 'Your neighbor develops embedded software in Campinas.', pt: 'Seu vizinho desenvolve software embarcado em Campinas.' },
         { en: 'Choosing a Gurgel feels no more political than choosing Adidas over Nike.', pt: 'Escolher um Gurgel não é mais político do que escolher Adidas em vez de Nike.' },
         { en: "A culture doesn't go invisible because it was imposed.", pt: 'Cultura não fica invisível porque foi imposta.' },
@@ -181,8 +172,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
             pt: 'Render de um SUV compacto Gurgel moderno, em três quartos frontal, amarelo.',
           },
           caption: {
-            en: 'On the right of the aisle, the Brazilian. It was never built: this is the modern Gurgel the designer Kleber Silva drew in 2020, a rereading of the BR-800.',
-            pt: 'À direita do corredor, o brasileiro. Ele nunca foi feito: este é o Gurgel moderno que o designer Kleber Silva desenhou em 2020, uma releitura do BR-800.',
+            en: 'On the right, the Brazilian. It was never built: the modern Gurgel Kleber Silva drew in 2020, a rereading of the BR-800.',
+            pt: 'À direita, o brasileiro. Nunca foi feito: o Gurgel moderno que Kleber Silva desenhou em 2020, uma releitura do BR-800.',
           },
           credit: 'Render: Kleber Silva · fonte: Pinterest (divulgação/reprodução)',
         },
@@ -206,7 +197,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'History rarely changes because someone invents something.', pt: 'A história raramente muda porque alguém inventou alguma coisa.' },
         { en: 'History changes because millions stop noticing it.', pt: 'A história muda porque milhões param de reparar.' },
         { en: 'The Gurgel Renegado changed nothing by existing.', pt: 'O Gurgel Renegado não mudou nada por existir.' },
         { en: 'It changed things because nobody needed to explain why it existed.', pt: 'Mudou porque ninguém precisou explicar por que ele existia.' },
@@ -217,10 +207,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
 
     // ─── TIER 3: o que o mundo queria x o que o Brasil passou a exportar ─
     { kind: 'lines', lines: [{ en: 'For decades, Brazil was told what it should export.', pt: 'Por décadas, disseram ao Brasil o que ele deveria exportar.' }] },
-    {
-      kind: 'lines',
-      lines: [{ en: 'The order was always the same: stay a supplier of raw material.', pt: 'O pedido era sempre o mesmo: continuar fornecedor de matéria-prima.' }],
-    },
     // TIER 3: "Raw" fixo, o resto trocando (máquina de escrever, sem cursor).
     // Ver nota de transporte no topo do arquivo: em PT o adjetivo muda de forma
     // e de posição, então não há prefixo fixo, `fixed.pt` fica vazio e a frase
@@ -300,7 +286,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'People often ask what transformed the Brazilian economy.', pt: 'Costumam perguntar o que transformou a economia brasileira.' },
-        { en: "They're asking the wrong question.", pt: 'É a pergunta errada.' },
         { en: 'The economy was never the beginning.', pt: 'A economia nunca foi o começo.' },
         { en: 'It was the consequence.', pt: 'Foi a consequência.' },
         { en: "The first thing Brazil ever made in volume wasn't steel.", pt: 'A primeira coisa que o Brasil fez em escala não foi o aço.' },
@@ -340,7 +325,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
           en: 'By the early 2000s, Brazilian companies were no longer trying to become "the Brazilian version" of foreign brands.',
           pt: 'No início dos anos 2000, as empresas brasileiras já não tentavam ser "a versão brasileira" de marcas estrangeiras.',
         },
-        { en: 'That expression disappeared.', pt: 'Essa expressão desapareceu.' },
       ],
     },
     // TIER 3: pares de negação
@@ -352,10 +336,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
           { en: 'Only Arara Technologies.', pt: 'Só Arara Technologies.' },
         ],
         [
-          { en: 'No Brazilian Disney.', pt: 'Não existia Disney brasileira.' },
-          { en: 'Only Amazônia Studios.', pt: 'Só Amazônia Studios.' },
-        ],
-        [
           { en: 'No Brazilian Studio 54.', pt: 'Não existia Studio 54 brasileiro.' },
           { en: 'Only Brazilian Hi-Fi.', pt: 'Só Brazilian Hi-Fi.' },
         ],
@@ -364,7 +344,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Nobody introduced these institutions by comparing them to somewhere else.', pt: 'Ninguém apresentava essas instituições comparando com outro lugar.' },
         { en: 'Comparison had become obsolete.', pt: 'A comparação tinha ficado obsoleta.' },
       ],
     },
@@ -377,13 +356,9 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         { en: "Brazilian Hi-Fi wasn't a nightclub.", pt: 'Brazilian Hi-Fi não era uma casa noturna.' },
         { en: 'It was where the country rehearsed its next version of itself.', pt: 'Era onde o país ensaiava sua próxima versão.' },
         { en: 'Designers met engineers, filmmakers met physicists.', pt: 'Designer encontrava engenheiro, cineasta encontrava físico.' },
-        { en: 'Fashion editors argued with anthropologists until sunrise.', pt: 'Editoras de moda discutiam com antropólogos até o sol nascer.' },
-        { en: 'Musicians tested unfinished albums in front of semiconductor founders.', pt: 'Músicos testavam álbuns inacabados na frente de fundadores de semicondutores.' },
         { en: "Ideas weren't pitched.", pt: 'Ideias não eram pitchadas.' },
         { en: 'They circulated.', pt: 'Circulavam.' },
-        { en: 'Every country has places where culture accelerates.', pt: 'Todo país tem lugares onde a cultura acelera.' },
         { en: 'New York had Studio 54.', pt: 'Nova York teve o Studio 54.' },
-        { en: 'Manchester had the Haçienda.', pt: 'Manchester teve o Haçienda.' },
         { en: 'São Paulo had Brazilian Hi-Fi.', pt: 'São Paulo teve o Brazilian Hi-Fi.' },
         { en: 'Studio 54 launched trends.', pt: 'O Studio 54 lançava tendências.' },
       ],
@@ -397,15 +372,10 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Around the same time, another institution quietly emerged.', pt: 'Na mesma época, outra instituição surgiu discretamente.' },
-        { en: 'Nobody could explain exactly what it was.', pt: 'Ninguém sabia explicar exatamente o que era.' },
         { en: 'Agency?', pt: 'Agência?' },
         { en: 'Not really.', pt: 'Não exatamente.' },
         { en: 'Production company?', pt: 'Produtora?' },
         { en: 'Sometimes.', pt: 'Às vezes.' },
-        { en: 'Holding?', pt: 'Holding?' },
-        { en: 'Too small.', pt: 'Pequena demais.' },
-        { en: 'Creative studio?', pt: 'Estúdio criativo?' },
-        { en: 'Not even close.', pt: 'Nem perto.' },
         { en: 'People simply called it:', pt: 'As pessoas simplesmente chamavam de:' },
       ],
     },
@@ -414,10 +384,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Trying to define it always felt slightly embarrassing.', pt: 'Tentar definir sempre soava meio constrangedor.' },
-        { en: 'Like trying to define the internet as a website.', pt: 'Como tentar definir a internet como um site.' },
-        { en: 'Technically possible.', pt: 'Tecnicamente possível.' },
-        { en: 'Conceptually useless.', pt: 'Conceitualmente inútil.' },
         { en: "The Brazilian Factory didn't produce campaigns, films or brands.", pt: 'A Brazilian Factory não produzia campanhas, filmes nem marcas.' },
         { en: 'Those were side effects.', pt: 'Isso eram efeitos colaterais.' },
       ],
@@ -445,10 +411,7 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'This is also where MELFIORE enters the story.', pt: 'É aqui também que a MELFIORE entra na história.' },
-        { en: 'Nobody remembers the first night she appeared.', pt: 'Ninguém lembra da primeira noite em que ela apareceu.' },
-        { en: 'Only that one day everyone already knew her.', pt: 'Só que um dia todo mundo já a conhecia.' },
-        { en: 'Not because she went viral.', pt: 'Não porque viralizou.' },
-        { en: 'Virality was always considered a weak form of reputation.', pt: 'Viralizar sempre foi considerado uma forma fraca de reputação.' },
+        { en: 'Nobody remembers her first night. One day everyone already knew her.', pt: 'Ninguém lembra da primeira noite. Um dia, todo mundo já a conhecia.' },
         { en: 'People knew MELFIORE because someone always had a story.', pt: 'As pessoas conheciam a MELFIORE porque alguém sempre tinha uma história.' },
       ],
     },
@@ -457,7 +420,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'stickers',
       fragments: [
         { en: 'I met her after a screening.', pt: 'Conheci ela depois de uma exibição.' },
-        { en: 'She disappeared with a filmmaker from Recife.', pt: 'Ela sumiu com um cineasta de Recife.' },
         { en: 'She convinced a software founder to finance an opera.', pt: 'Ela convenceu um fundador de software a financiar uma ópera.' },
         { en: 'She was wearing yellow over her eyes.', pt: 'Ela estava de amarelo sobre os olhos.' },
       ],
@@ -476,21 +438,13 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Foreign journalists kept asking the same question.', pt: 'Jornalistas estrangeiros repetiam a mesma pergunta.' },
+        { en: 'Foreign journalists kept asking:', pt: 'Jornalistas estrangeiros perguntavam:' },
         { en: '"When did Brazil become a cultural superpower?"', pt: '"Quando o Brasil virou uma potência cultural?"' },
-        { en: 'Brazilian historians usually smiled before answering.', pt: 'Historiadores brasileiros costumavam sorrir antes de responder.' },
         { en: '"We didn\'t."', pt: '"Não viramos."' },
       ],
     },
     // TIER 1 #4: o título voltando, na voz de outro personagem
     { kind: 'fullbleed', text: { en: 'We simply stopped translating ourselves.', pt: 'Nós simplesmente paramos de nos traduzir.' }, theme: 'dark', scale: 'display' },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'That sentence confused almost everyone.', pt: 'Essa frase confundia quase todo mundo.' },
-        { en: 'Until they looked closer.', pt: 'Até olharem de perto.' },
-      ],
-    },
 
     { kind: 'divider' },
 
@@ -498,8 +452,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         {
-          en: 'The suspension system developed by Gurgel for dirt roads in Goiás became the global standard for rural mobility in Australia.',
-          pt: 'O sistema de suspensão que a Gurgel desenvolveu para estradas de terra em Goiás virou o padrão global de mobilidade rural na Austrália.',
+          en: 'The suspension Gurgel developed for dirt roads in Goiás became the global standard for rural mobility in Australia.',
+          pt: 'A suspensão que a Gurgel desenvolveu para estradas de terra em Goiás virou o padrão global de mobilidade rural na Austrália.',
         },
         {
           en: 'A Brazilian operating system designed for public schools became the preferred educational platform across Latin America and West Africa.',
@@ -510,8 +464,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
           pt: 'Uma montadora indiana licenciou o chassi da Gurgel e não escreveu Brasil em lugar nenhum da embalagem.',
         },
         {
-          en: 'A filmmaker from Xique-Xique refused a Hollywood contract because his next feature had already secured funding from a Brazilian cultural investment fund.',
-          pt: 'Um cineasta de Xique-Xique recusou um contrato de Hollywood porque seu próximo longa já tinha financiamento garantido por um fundo brasileiro de investimento cultural.',
+          en: 'A filmmaker from Xique-Xique turned down Hollywood: his next feature was already funded by a Brazilian cultural fund.',
+          pt: 'Um cineasta de Xique-Xique recusou Hollywood: o próximo longa já tinha financiamento de um fundo cultural brasileiro.',
         },
       ],
     },
@@ -549,21 +503,17 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Brazilian originality always looked like it happened despite the contradiction.', pt: 'A originalidade brasileira sempre pareceu acontecer apesar da contradição.' },
-        { en: 'The contradiction was the engine.', pt: 'A contradição era o motor.' },
+        { en: 'Brazilian originality ran on contradiction.', pt: 'A originalidade brasileira sempre funcionou à base de contradição.' },
         {
           en: 'Long before artificial intelligence began remixing culture, Brazil had already mastered the practice.',
           pt: 'Muito antes de a inteligência artificial começar a remixar cultura, o Brasil já dominava a prática.',
         },
         { en: 'Not in laboratories.', pt: 'Não em laboratórios.' },
         { en: 'In street festivals.', pt: 'Em festas de rua.' },
-        { en: 'In public squares.', pt: 'Em praças públicas.' },
         { en: 'On carnival trucks.', pt: 'Em cima de trio elétrico.' },
-        { en: 'Inside dance halls.', pt: 'Dentro de salões de baile.' },
-        { en: 'In improvised garages.', pt: 'Em garagens improvisadas.' },
         {
-          en: 'The infamous Carreta Furacão became one of the earliest case studies taught in design schools worldwide.',
-          pt: 'A infame Carreta Furacão virou um dos primeiros estudos de caso ensinados em escolas de design do mundo inteiro.',
+          en: 'The Carreta Furacão became one of the earliest case studies taught in design schools worldwide.',
+          pt: 'A Carreta Furacão virou um dos primeiros estudos de caso ensinados em escolas de design do mundo inteiro.',
         },
         { en: 'Not because it was absurd.', pt: 'Não por ser absurda.' },
         { en: 'Because it revealed a uniquely Brazilian technology.', pt: 'Por revelar uma tecnologia unicamente brasileira.' },
@@ -635,10 +585,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'Foreign analysts spent years measuring the country\'s GDP and found nothing there.', pt: 'Analistas estrangeiros passaram anos medindo o PIB do país e não acharam nada ali.' },
-        { en: 'The real transformation had happened elsewhere.', pt: 'A transformação real tinha acontecido em outro lugar.' },
         { en: 'Brazil had quietly rewritten the grammar of influence.', pt: 'O Brasil tinha reescrito, em silêncio, a gramática da influência.' },
         { en: 'Hollywood no longer dictated imagination, nor did Silicon Valley monopolise innovation.', pt: 'Hollywood não ditava mais a imaginação, nem o Vale do Silício monopolizava a inovação.' },
-        { en: 'Milan had lost sight of elegance, and Tokyo no longer owned the future.', pt: 'Milão tinha perdido a elegância de vista, e Tóquio já não era dona do futuro.' },
       ],
     },
     // TIER 2: a tese geopolítica em nove palavras
@@ -649,7 +597,6 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Looking back, I see one detail.', pt: 'Olhando para trás, eu vejo um detalhe.' },
         { en: "The decisive moment wasn't technological, or economic, or geopolitical.", pt: 'O momento decisivo não foi tecnológico, nem econômico, nem geopolítico.' },
         { en: 'It was psychological.', pt: 'Foi psicológico.' },
       ],
@@ -691,8 +638,8 @@ export const theDayBrazilStoppedTranslatingItself: ManifestoArticle = {
         pt: 'Folheto Gurgel de 1981 do G-15 L, com a picape numa estrada de fazenda ao lado de um homem a cavalo, sob a frase "Nossa terra - Nossa gente - Nosso carro".',
       },
       caption: {
-        en: 'Our land. Our people. Our car. Gurgel printed the thesis of this article in 1981, and meant it literally.',
-        pt: 'Nossa terra. Nossa gente. Nosso carro. A Gurgel imprimiu a tese desta matéria em 1981, e falava literalmente.',
+        en: 'Our land. Our people. Our car. Gurgel printed the thesis of this article in 1981.',
+        pt: 'Nossa terra. Nossa gente. Nosso carro. A Gurgel imprimiu a tese desta matéria em 1981.',
       },
       credit: 'Folheto Gurgel, 1981 · fonte: Pinterest (divulgação/reprodução)',
     },
