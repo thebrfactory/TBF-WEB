@@ -2,7 +2,7 @@
 // Dicionário do deck 1.0 (agora em /pitch/v1, investidores/parceiros) e da
 // página índice em /pitch. Convenções: ../README.md
 //
-// NÃO é o dicionário do /pitch/v2 ou /pitch/v3: aqueles decks são
+// NÃO é o dicionário do /pitch/v2, /pitch/v3 ou /pitch/v4: aqueles decks são
 // deliberadamente bilíngues (PT + EN na mesma tela) e não passam por este
 // sistema de i18n.
 // =============================================================================

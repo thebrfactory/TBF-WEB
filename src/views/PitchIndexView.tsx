@@ -22,6 +22,7 @@ const GENERAL_PITCHES: PitchEntry[] = [
   { label: 'Pitch 1.0', href: '/pitch/v1' },
   { label: 'Pitch 2.0', href: '/pitch/v2' },
   { label: 'Pitch 3.0', href: '/pitch/v3' },
+  { label: 'Pitch 4.0', href: '/pitch/v4' },
 ]
 
 const COMPANY_PITCHES: PitchEntry[] = [
