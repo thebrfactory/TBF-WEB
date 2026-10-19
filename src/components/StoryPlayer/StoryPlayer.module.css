@@ -400,6 +400,9 @@
   transition: opacity 160ms ease;
 }
 
+/* Quadro com legenda E link: a legenda sobe acima do sticker (44px + respiro). */
+.legendCta { padding-bottom: 4.5rem; }
+
 .legendKicker {
   font-family: var(--tbf-font-family-display);
   font-size: 0.65rem;

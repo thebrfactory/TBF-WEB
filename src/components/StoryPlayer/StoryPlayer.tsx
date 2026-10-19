@@ -250,7 +250,8 @@ export function StoryPlayer({
   const group = groups[gi]
   const items = group.items
   const item = items[i]
-  const upcoming = i < items.length - 1 ? items[i + 1] : items[0]
+  // Story de um quadro só não tem vizinho: o "próximo" seria o mesmo quadro e duplicaria a key.
+  const upcoming = items.length < 2 ? undefined : i < items.length - 1 ? items[i + 1] : items[0]
   const paused = held || userPaused || reduced || (!modal && !inView)
 
   const rootRef = useRef<HTMLDivElement>(null)
@@ -517,7 +518,11 @@ export function StoryPlayer({
       <span className={styles.shadeBottom} aria-hidden="true" />
 
       {item.overlay ? (
-        <span key={`ov-${item.src}`} className={styles.legend} aria-hidden="true">
+        <span
+          key={`ov-${item.src}`}
+          className={`${styles.legend}${item.cta ? ` ${styles.legendCta}` : ''}`}
+          aria-hidden="true"
+        >
           {item.overlay.kicker ? <span className={styles.legendKicker}>{item.overlay.kicker}</span> : null}
           <span className={styles.legendTitle}>{item.overlay.title}</span>
         </span>

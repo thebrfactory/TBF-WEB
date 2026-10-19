@@ -175,7 +175,7 @@ export function EditorialGrid({ posts }: EditorialGridProps) {
 
       {/* ─── MINI CARROSSEL DE CATEGORIAS — no final, depois do último artigo ─── */}
       <div style={{ paddingTop: 'var(--tbf-space-16)' }}>
-        <CategoryGrid onSelect={handleCategoryChange} />
+        <CategoryGrid posts={posts} />
       </div>
     </section>
   )

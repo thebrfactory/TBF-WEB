@@ -1,0 +1,28 @@
+/* Categorias do /zine no desenho do SELECTED WORK do Tavaristico.
+   O bloco SelectedWork le variaveis que la moram em `.page`
+   (tavaristico.module.css). Aqui elas sao declaradas com os mesmos valores,
+   escopo so deste bloco. Mobile primeiro: nada muda por breakpoint. */
+.wrap {
+  --mono: var(--tbf-font-family-display);
+  --tav-text-title: clamp(1.25rem, 3.6vw, 1.75rem);
+  --tav-text-body: clamp(0.92rem, 1.6vw, 1.05rem);
+  --tav-text-micro: 0.68rem;
+  --tav-text-label: 0.7rem;
+  padding-inline: var(--tbf-grid-margin-sm);
+  padding-bottom: var(--tbf-space-10);
+}
+
+.inner {
+  max-width: var(--tbf-grid-max-xl);
+  margin-inline: auto;
+}
+
+.label {
+  display: block;
+  font-family: var(--mono);
+  font-size: var(--tav-text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}

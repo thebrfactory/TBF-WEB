@@ -35,6 +35,23 @@ const en = {
   filterAriaLabel: 'Filter by category',
   categoryCardAriaLabel: (label: string) => `View ${label} category`,
 
+  // Bloco de categorias no fim do /zine (stories). Mesmo desenho do Selected
+  // Work do Tavarístico; cada categoria abre um story com os posts dela.
+  categoryStories: {
+    label: 'Browse by category',
+    openLabel: 'Open category',
+    readCta: 'Read the piece',
+    enterCta: 'Enter the Zine',
+    emptyKicker: 'Coming soon',
+    items: {
+      'fashion-film': { tags: ['Runway', 'Backstage', 'Film'], description: 'Brazilian runways and backstage, shot in motion.' },
+      editorial: { tags: ['Field Research', 'Photography', 'Culture'], description: 'Long reads and photo essays on Brazilian culture.' },
+      manifesto: { tags: ['Fiction', 'Voice', 'Position'], description: 'What the house believes, written as story.' },
+      coolhunting: { tags: ['Parties', 'Street', 'Signals'], description: 'Early signals from Brazilian nights and streets.' },
+      collaboration: { tags: ['Music', 'Fashion', 'Crossovers'], description: 'When Brazilian creators work in the same room.' },
+    } as Record<'fashion-film' | 'editorial' | 'manifesto' | 'coolhunting' | 'collaboration', { tags: string[]; description: string }>,
+  },
+
   grid: {
     sectionAriaLabel: 'Editorial archive',
     feedAriaLabel: 'Editorial articles',
@@ -78,6 +95,21 @@ const pt: typeof en = {
 
   filterAriaLabel: 'Filtrar por categoria',
   categoryCardAriaLabel: (label: string) => `Ver categoria ${label}`,
+
+  categoryStories: {
+    label: 'Navegue por categoria',
+    openLabel: 'Abrir categoria',
+    readCta: 'Ler a matéria',
+    enterCta: 'Entrar no Zine',
+    emptyKicker: 'Em breve',
+    items: {
+      'fashion-film': { tags: ['Passarela', 'Backstage', 'Filme'], description: 'Passarelas e bastidores brasileiros, filmados em movimento.' },
+      editorial: { tags: ['Pesquisa de campo', 'Fotografia', 'Cultura'], description: 'Reportagens longas e ensaios sobre a cultura brasileira.' },
+      manifesto: { tags: ['Ficção', 'Voz', 'Posição'], description: 'No que a casa acredita, escrito como história.' },
+      coolhunting: { tags: ['Festas', 'Rua', 'Sinais'], description: 'Sinais antecipados das noites e ruas do Brasil.' },
+      collaboration: { tags: ['Música', 'Moda', 'Encontros'], description: 'Quando criadores brasileiros trabalham na mesma sala.' },
+    },
+  },
 
   grid: {
     sectionAriaLabel: 'Arquivo editorial',

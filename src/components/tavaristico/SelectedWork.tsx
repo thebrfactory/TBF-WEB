@@ -113,14 +113,16 @@ function VentureRow({
   seen,
   onOpen,
   registerRef,
+  openLabel,
 }: {
   v: Venture
   lang: Lang
+  openLabel: string
   seen: boolean
   onOpen: (index: string) => void
   registerRef: (index: string, el: HTMLButtonElement | null) => void
 }) {
-  const ariaLabel = `${OPEN_LABEL[lang]}: ${v.name}`
+  const ariaLabel = `${openLabel}: ${v.name}`
   const [open, setOpen] = useState(false)
   const descId = useId()
 
@@ -181,7 +183,18 @@ function VentureRow({
   )
 }
 
-export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: Lang }) {
+// `openLabel`: rótulo acessível de abertura. Opcional, o padrão é o do Tavarístico;
+// o /zine reaproveita este bloco para as categorias e passa o seu (19/10/2026).
+export function SelectedWork({
+  ventures,
+  lang,
+  openLabel,
+}: {
+  ventures: Venture[]
+  lang: Lang
+  openLabel?: string
+}) {
+  const open_ = openLabel ?? OPEN_LABEL[lang]
   const [seen, setSeen] = useState<Record<string, true>>({})
   const [openIndex, setOpenIndex] = useState<string | null>(null)
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({})
@@ -240,6 +253,7 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
           key={v.index}
           v={v}
           lang={lang}
+          openLabel={open_}
           seen={!!seen[v.index]}
           onOpen={open}
           registerRef={(index, el) => {
@@ -255,7 +269,7 @@ export function SelectedWork({ ventures, lang }: { ventures: Venture[]; lang: La
           groups={groups}
           startGroup={ventures.indexOf(active)}
           lang={lang}
-          label={`${OPEN_LABEL[lang]}: ${active.name}. ${active.description}`}
+          label={`${open_}: ${active.name}. ${active.description}`}
           onClose={close}
         />
       ) : null}
