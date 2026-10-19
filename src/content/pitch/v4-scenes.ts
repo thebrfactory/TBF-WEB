@@ -71,10 +71,9 @@ export const FOUNDER = {
 // ─── CENA 04 (verticais): stories e avatar de cada uma ──────────────────────
 // Chave = `name` do item em BUSINESS.portfolio (v3-scenes.ts).
 //
-// AVATAR: o repo só tem a foto de perfil da .TBF. (`/brand/TBF-AVATAR.webp`).
-// RUC, TFD e TGF NÃO têm o avatar do Instagram no repo. Até o fundador mandar
-// os três arquivos, o anel usa uma imagem de capa da própria vertical.
-// TODO: trocar `avatar` das três por `/images/pitch/verticais/<sigla>-avatar.webp`.
+// AVATAR: foto de perfil do Instagram de .TBF., RUC (@runwayunited) e TFD
+// (@thefioredaily), as duas últimas em 150px, o teto servido pela web.
+// TGF ainda sem perfil informado: o anel usa uma imagem de capa da vertical.
 export interface VerticalStory {
   handle: string
   avatar: string
@@ -98,9 +97,9 @@ export const VERTICAL_STORIES: Record<string, VerticalStory> = {
     ],
   },
   '.RUNWAY UNTD COLLECTIVE.': {
-    handle: 'Runway Untd Collective',
-    avatar: '/images/ruc/ruc-hero.webp',
-    avatarIsReal: false,
+    handle: 'runwayunited',
+    avatar: '/images/pitch/verticais/ruc-avatar.webp',
+    avatarIsReal: true,
     items: [
       { src: `${STORIES}/runway-untd/01-passarela.webp`, alt: 'Runway Untd, a passarela', role: 'Runway Untd' },
       { src: `${STORIES}/runway-untd/02-bastidor.webp`, alt: 'Runway Untd, o bastidor', role: 'Runway Untd' },
@@ -110,8 +109,8 @@ export const VERTICAL_STORIES: Record<string, VerticalStory> = {
   },
   '.THE FIORE DAILY.': {
     handle: 'thefioredaily',
-    avatar: '/images/tfd/tfd-hero.webp',
-    avatarIsReal: false,
+    avatar: '/images/pitch/verticais/tfd-avatar.webp',
+    avatarIsReal: true,
     items: [
       { src: '/images/tfd/tfd-hero.webp', alt: 'The Fiore Daily', role: 'The Fiore Daily' },
       { src: '/images/tfd/tfd-closing.webp', alt: 'The Fiore Daily, fecho', role: 'The Fiore Daily' },
