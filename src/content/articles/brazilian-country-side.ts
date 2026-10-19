@@ -100,14 +100,14 @@ export const brazilianCountrySide: ManifestoArticle = {
     pt: 'O SAGRADO, O POSSANTE E O PALHAÇO.',
   },
   heroSubtitle: {
-    en: 'Field notes from Posse, Goiás: a religious procession, a horseback battle between Moors and Christians, and a lowered car with the bass turned all the way up.',
-    pt: 'Notas de campo de Posse, Goiás: uma procissão religiosa, uma batalha a cavalo entre mouros e cristãos, e um carro rebaixado com o som no talo.',
+    en: 'Field notes from Posse, Goiás: a procession, a horseback battle between Moors and Christians, and a lowered car with the bass up.',
+    pt: 'Notas de campo de Posse, Goiás: uma procissão, uma batalha a cavalo entre mouros e cristãos, e um carro rebaixado com o grave alto.',
   },
   category: 'Field Research',
   publishedAt: '2026-09-10',
   deck: {
-    en: 'In inland Goiás, a Catholic feast with European roots shares a field with sound systems built for eletrofunk. Nobody agreed to keep the sacred and the profane apart.',
-    pt: 'No interior de Goiás, uma festa católica de raiz europeia divide o campo com som feito para eletrofunk. Ninguém combinou de manter o sagrado e o profano separados.',
+    en: 'In inland Goiás, a Catholic feast with European roots shares a field with sound systems built for eletrofunk. Nobody agreed to keep them apart.',
+    pt: 'No interior de Goiás, uma festa católica de raiz europeia divide o campo com som feito para eletrofunk. Ninguém combinou de separá-los.',
   },
   cover: {
     src: '/images/editorial/country-side/capa.webp',
@@ -167,13 +167,7 @@ export const brazilianCountrySide: ManifestoArticle = {
       kind: 'lines',
       lines: [
         { en: 'I got there on May 24th, for the feast of the Holy Spirit.', pt: 'Cheguei em 24 de maio, para a festa do Divino Espírito Santo.' },
-        { en: 'Family invite. My cousin was a folião, one of the people who put the Folia do Divino together.', pt: 'Vim a convite de família. Meu primo era folião, um dos que põem a Folia do Divino de pé.' },
-      ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'The first impression is religious.', pt: 'A primeira impressão é religiosa.' },
+        { en: 'Family invite. My cousin was a folião, one of those who put the Folia do Divino together.', pt: 'Vim a convite de família. Meu primo era folião, um dos que põem a Folia do Divino de pé.' },
       ],
     },
     {
@@ -181,22 +175,19 @@ export const brazilianCountrySide: ManifestoArticle = {
       lines: [
         { en: 'Groups walk the city carrying a flag with the Holy Spirit on it, a white dove.', pt: 'Grupos percorrem a cidade carregando a bandeira do Divino, a pomba branca.' },
         { en: 'People open the house. They sing, they pray, they visit.', pt: 'As pessoas abrem a casa. Cantam, rezam, visitam.' },
-        { en: 'Faith, community, repetition. It crosses generations because the generations keep doing it.', pt: 'Fé, comunidade e repetição. Atravessa gerações porque as gerações continuam fazendo.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'But Posse does not end at prayer.', pt: 'Mas Posse não termina na oração.' },
-        { en: 'And the city changes scale.', pt: 'E a cidade muda de escala.' },
       ],
-      emphasize: [1],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The house visit turns into spectacle. The field fills with horses, characters, costumes, choreography.', pt: 'A visita vira espetáculo. O campo recebe cavalos, personagens, figurinos, coreografia.' },
-        { en: 'History comes in through the Cavalhadas, the staged battle between Moors and Christians, European in origin and long since absorbed into Brazil.', pt: 'A história entra pelas Cavalhadas, a encenação da batalha entre mouros e cristãos, de origem europeia e há muito incorporada ao Brasil.' },
+        { en: 'The visit turns into spectacle. The field fills with horses, costumes, choreography.', pt: 'A visita vira espetáculo. O campo recebe cavalos, figurinos, coreografia.' },
+        { en: 'History comes in through the Cavalhadas, the staged battle between Moors and Christians, European in origin, long since Brazilian.', pt: 'A história entra pelas Cavalhadas, a encenação da batalha entre mouros e cristãos, de origem europeia, há muito brasileira.' },
       ],
     },
     {
@@ -220,8 +211,8 @@ export const brazilianCountrySide: ManifestoArticle = {
         pt: 'Homem de camisa vermelha carrega a bandeira de fitas da Folia do Divino.',
       },
       caption: {
-        en: 'The banner opens the way. Everything else in Posse comes after it.',
-        pt: 'A bandeira abre o caminho. Tudo o mais em Posse vem depois dela.',
+        en: 'The banner opens the way.',
+        pt: 'A bandeira abre o caminho.',
       },
       credit: 'TAVARÍSTICO / .TBF. inc',
       variant: 'plate',
@@ -249,23 +240,20 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Something curious is going on in Posse.', pt: 'Tem uma coisa curiosa acontecendo em Posse.' },
         { en: 'Tradition here is not being preserved.', pt: 'A tradição ali não está sendo preservada.' },
         { en: 'It is being produced.', pt: 'Está sendo produzida.' },
       ],
-      emphasize: [2],
+      emphasize: [1],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'In 2026 the Goiás state government put R$ 5 million into the Cavalhadas circuit. Sixteen towns. Posse is one of them.', pt: 'Em 2026, o Governo de Goiás destinou R$ 5 milhões ao circuito das Cavalhadas. São 16 municípios. Posse é um deles.' },
-        { en: 'What could be community memory alone is also a production.', pt: 'O que podia ser só memória de comunidade também é produção.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'The past needs production.', pt: 'O passado precisa de produção.' },
         { en: 'Tradition needs logistics.', pt: 'A tradição precisa de logística.' },
         { en: 'Heritage needs a budget.', pt: 'O patrimônio precisa de orçamento.' },
       ],
@@ -282,7 +270,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'And on the day of the feast, all of it disappears behind the spectacle.', pt: 'E no dia da festa tudo isso desaparece atrás do espetáculo.' },
+        { en: 'On the day, all of it disappears behind the spectacle.', pt: 'No dia, tudo isso desaparece atrás do espetáculo.' },
       ],
     },
 
@@ -307,15 +295,14 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'That is where the characters come in.', pt: 'É aí que entram os personagens.' },
-        { en: 'Among them, the clowns.', pt: 'Entre eles, os palhaços.' },
+        { en: 'Then the characters. Among them, the clowns.', pt: 'Depois os personagens. Entre eles, os palhaços.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'Clown is not a big enough word for it.', pt: 'Palhaço é palavra pequena para o que eles fazem.' },
-        { en: 'Masked and colorful, they hold their own place inside the Cavalhadas. They are part of the tradition and they belong somewhere else at the same time.', pt: 'Mascarados e coloridos, ocupam um lugar próprio dentro das Cavalhadas. São parte da tradição e pertencem a outra coisa ao mesmo tempo.' },
+        { en: 'Masked and colorful, they hold a place of their own in the Cavalhadas, part of the tradition and belonging to something else at once.', pt: 'Mascarados e coloridos, ocupam um lugar próprio nas Cavalhadas, parte da tradição e pertencentes a outra coisa ao mesmo tempo.' },
       ],
     },
     {
@@ -330,18 +317,9 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'The younger ones get it without anyone explaining.', pt: 'Os mais jovens entendem sem ninguém explicar.' },
-        { en: 'They put on the character, put on the mask, play with their own image. The costume becomes a way of talking to everyone else.', pt: 'Vestem o personagem, põem a máscara, brincam com a própria imagem. A fantasia vira jeito de falar com os outros.' },
+        { en: 'The younger ones get it without explanation.', pt: 'Os mais jovens entendem sem ninguém explicar.' },
+        { en: 'They put on the mask, play with their own image. The costume becomes a way of talking to everyone else.', pt: 'Põem a máscara, brincam com a própria imagem. A fantasia vira jeito de falar com os outros.' },
       ],
-    },
-    {
-      kind: 'lines',
-      lines: [
-        { en: 'Nobody there is worried about freezing tradition in place.', pt: 'Ninguém ali está preocupado em congelar a tradição.' },
-        { en: 'They are using it.', pt: 'Eles estão usando.' },
-        { en: 'And that is how it stays alive.', pt: 'E é assim que ela continua viva.' },
-      ],
-      emphasize: [2],
     },
 
     // ─── CAPÍTULO 3: POSSANTE (PT) / HORSEPOWER (EN).
@@ -363,21 +341,12 @@ export const brazilianCountrySide: ManifestoArticle = {
       height: 2048,
     },
     {
-      kind: 'lines',
-      lines: [
-        { en: 'Out in the field, a decorated horse shares the ground with a character from another century.', pt: 'No campo, cavalo ornamentado divide o chão com personagem de outro século.' },
-      ],
-    },
-    {
       kind: 'stickers',
       fragments: [
         { en: 'Children.', pt: 'Crianças.' },
         { en: 'Teenagers.', pt: 'Jovens.' },
         { en: 'Families.', pt: 'Famílias.' },
         { en: 'Clowns.', pt: 'Palhaços.' },
-        { en: 'Costumes.', pt: 'Fantasias.' },
-        { en: 'Masks.', pt: 'Máscaras.' },
-        { en: 'Color.', pt: 'Cores.' },
       ],
     },
     {
@@ -398,26 +367,22 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Machines lowered and modified to produce presence. Huge sound systems. Bass that crosses the field.', pt: 'Máquina rebaixada e modificada para produzir presença. Som enorme. Grave que atravessa o campo.' },
+        { en: 'Lowered, modified machines. Huge sound systems. Bass that crosses the field.', pt: 'Máquina rebaixada e modificada. Som enorme. Grave que atravessa o campo.' },
       ],
     },
     {
       kind: 'stickers',
       fragments: [
         { en: 'Inland car culture meets eletrofunk.', pt: 'A cultura automotiva do interior encontra o eletrofunk.' },
-        { en: 'The horse meets the car.', pt: 'O cavalo encontra o carro.' },
-        { en: 'The medieval character next to the teenager.', pt: 'O personagem medieval ao lado do adolescente.' },
-        { en: 'The mask in front of the sound system.', pt: 'A máscara diante do sistema de som.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
         { en: 'The church is right there.', pt: 'A igreja está ali.' },
-        { en: 'So is the history.', pt: 'A história também.' },
         { en: 'And nobody agreed to keep those things apart.', pt: 'E ninguém combinou de manter essas coisas separadas.' },
       ],
-      emphasize: [2],
+      emphasize: [1],
     },
 
     // ─── CAPÍTULO 4: TRADIÇÃO VIVA.
@@ -438,7 +403,6 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'This is the hard part to explain from the outside.', pt: 'Essa é a parte difícil de explicar de fora.' },
         { en: 'The word tradition comes with an expectation glued to it.', pt: 'A palavra tradição vem com uma expectativa colada nela.' },
       ],
     },
@@ -452,19 +416,16 @@ export const brazilianCountrySide: ManifestoArticle = {
       kind: 'stickers',
       fragments: [
         { en: 'Keep the customs.', pt: 'Manter os costumes.' },
-        { en: 'Keep the costumes.', pt: 'Manter os figurinos.' },
         { en: 'Keep the rituals.', pt: 'Manter os rituais.' },
-        { en: 'Keep the meanings.', pt: 'Manter os significados.' },
         { en: 'Keep everything in place.', pt: 'Manter tudo no lugar.' },
       ],
     },
     {
       kind: 'lines',
       lines: [
-        { en: 'Culture does not work that way.', pt: 'Cultura não funciona assim.' },
         { en: 'A tradition that has to stay identical has already become a museum piece.', pt: 'Tradição que precisa ficar idêntica já virou peça de museu.' },
       ],
-      emphasize: [1],
+      emphasize: [0],
     },
     {
       kind: 'lines',
@@ -476,9 +437,6 @@ export const brazilianCountrySide: ManifestoArticle = {
       kind: 'stickers',
       fragments: [
         { en: 'It absorbs.', pt: 'Ela absorve.' },
-        { en: 'It incorporates.', pt: 'Ela incorpora.' },
-        { en: 'It changes clothes.', pt: 'Ela muda de roupa.' },
-        { en: 'It finds new people.', pt: 'Ela encontra novas pessoas.' },
         { en: 'It takes on new sounds.', pt: 'Ela ganha novos sons.' },
         { en: 'It takes on new desires.', pt: 'Ela ganha novos desejos.' },
       ],
@@ -551,23 +509,6 @@ export const brazilianCountrySide: ManifestoArticle = {
       lines: [
         { en: 'This is where the clown gets interesting.', pt: 'É aqui que o palhaço fica interessante.' },
         { en: 'He exists inside the tradition and escapes it.', pt: 'Ele existe dentro da tradição e escapa dela.' },
-      ],
-    },
-    {
-      kind: 'mirror',
-      beforeLabel: { en: 'RITUAL', pt: 'RITUAL' },
-      afterLabel: { en: 'PERSON', pt: 'PESSOA' },
-      before: [
-        { en: 'Character.', pt: 'Personagem.' },
-        { en: 'Mask.', pt: 'Máscara.' },
-        { en: 'Ritual.', pt: 'Ritual.' },
-        { en: 'Heritage.', pt: 'Patrimônio.' },
-      ],
-      after: [
-        { en: 'Person.', pt: 'Pessoa.' },
-        { en: 'Identity.', pt: 'Identidade.' },
-        { en: 'Play.', pt: 'Brincadeira.' },
-        { en: 'Performance.', pt: 'Performance.' },
       ],
     },
     {
@@ -671,7 +612,6 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'What came from outside had to learn how to exist here.', pt: 'O que veio de fora aprendeu a existir aqui.' },
       ],
     },
     {
@@ -685,7 +625,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'With the horses from there. With the families from there. With the young people from there.', pt: 'Com o cavalo dali. Com a família dali. Com o jovem dali.' },
+        { en: 'With horses, families and young people from there.', pt: 'Com cavalo, família e jovem dali.' },
         { en: 'With the money, the infrastructure and the look of now.', pt: 'Com o dinheiro, a infraestrutura e a estética de agora.' },
       ],
     },
@@ -753,7 +693,6 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'Brazil absorbs references and sets them against each other until something new comes out.', pt: 'O Brasil absorve referência e põe uma contra a outra até sair coisa nova.' },
       ],
     },
     {
@@ -761,9 +700,7 @@ export const brazilianCountrySide: ManifestoArticle = {
       fragments: [
         { en: 'The erudite meets the popular.', pt: 'O erudito encontra o popular.' },
         { en: 'The religious next to the sensual.', pt: 'O religioso ao lado do sensual.' },
-        { en: 'The historical inside the contemporary.', pt: 'O histórico dentro do contemporâneo.' },
         { en: 'The imported on local ground.', pt: 'O importado em chão local.' },
-        { en: 'The institutional in the street.', pt: 'O institucional na rua.' },
         { en: 'The sacred meets the bass.', pt: 'O sagrado encontra o grave.' },
       ],
     },
@@ -793,22 +730,12 @@ export const brazilianCountrySide: ManifestoArticle = {
       height: 2048,
     },
     {
-      kind: 'lines',
-      lines: [
-        { en: 'That is what the photographs showed.', pt: 'Foi isso que as fotos mostraram.' },
-      ],
-    },
-    {
       kind: 'stickers',
       fragments: [
-        { en: 'A man in the organization uniform.', pt: 'Um homem com a roupa da organização.' },
         { en: 'Masked clowns in a field.', pt: 'Palhaços mascarados num campo.' },
-        { en: 'Children dressed as characters.', pt: 'Crianças vestidas de personagem.' },
         { en: 'Decorated horses.', pt: 'Cavalos ornamentados.' },
-        { en: 'Characters from the Cavalhadas.', pt: 'Personagens das Cavalhadas.' },
         { en: 'Clowns on top of cars.', pt: 'Palhaços em cima de carro.' },
         { en: 'Lowered cars.', pt: 'Carros rebaixados.' },
-        { en: 'Colorful costumes.', pt: 'Fantasias coloridas.' },
       ],
     },
     {
@@ -852,7 +779,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'That is what makes Posse more interesting than the idea of a traditional feast.', pt: 'É isso que torna Posse mais interessante que a ideia de festa tradicional.' },
+        { en: 'That is what makes Posse more interesting than a traditional feast.', pt: 'É isso que torna Posse mais interessante que uma festa tradicional.' },
         { en: 'What gets celebrated there is not a story that survived.', pt: 'O que se celebra ali não é uma história que sobreviveu.' },
         { en: 'It is a story that keeps finding a use.', pt: 'É uma história que continua servindo para alguma coisa.' },
       ],
@@ -863,8 +790,6 @@ export const brazilianCountrySide: ManifestoArticle = {
       fragments: [
         { en: 'To be wanted.', pt: 'De ser desejada.' },
         { en: 'To be performed.', pt: 'De ser performada.' },
-        { en: 'To be modified.', pt: 'De ser modificada.' },
-        { en: 'To be photographed.', pt: 'De ser fotografada.' },
         { en: 'To be heard at full volume.', pt: 'De ser ouvida em alto volume.' },
       ],
     },
