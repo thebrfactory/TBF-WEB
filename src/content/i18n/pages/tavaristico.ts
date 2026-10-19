@@ -44,7 +44,6 @@ const en = {
     campaignsParenthetical: '(tap to open)',
     campaignsCaseLabel: 'Selected Case',
     campaignsInvite: 'Tap to open the project',
-    executiveProduction: 'Executive production',
     workLabel: 'Advertising, fashion & culture',
     whatIBuildLabel: 'What I Build',
     aboutLabel: 'About',
@@ -83,9 +82,9 @@ const en = {
     nextLabel: 'Next',
     metaTitleSuffix: 'Tavarístico',
     fallbackTitle: 'Work · Tavarístico',
-    executiveProduction: 'Executive production',
     lookbookLabel: 'Lookbook & catalog',
     feedLabel: 'Feed, September',
+    creditsLabel: 'Credits',
   },
 }
 
@@ -110,7 +109,6 @@ const pt: typeof en = {
     campaignsParenthetical: '(toque para abrir)',
     campaignsCaseLabel: 'Caso Selecionado',
     campaignsInvite: 'Toque para abrir o projeto',
-    executiveProduction: 'Produção executiva',
     workLabel: 'Publicidade, moda e cultura',
     whatIBuildLabel: 'O Que Eu Construo',
     aboutLabel: 'Sobre',
@@ -144,9 +142,9 @@ const pt: typeof en = {
     nextLabel: 'Próximo',
     metaTitleSuffix: 'Tavarístico',
     fallbackTitle: 'Obra · Tavarístico',
-    executiveProduction: 'Produção executiva',
     lookbookLabel: 'Lookbook e catálogo',
     feedLabel: 'Feed, setembro',
+    creditsLabel: 'Créditos',
   },
 }
 

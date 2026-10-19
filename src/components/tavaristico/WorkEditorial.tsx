@@ -47,7 +47,7 @@ export function FeedGrid({ pieces, label }: { pieces: WorkPiece[]; label: string
       <ul className={styles.feed}>
         {pieces.map((p) => (
           <li key={p.src} className={styles.feedItem}>
-            <Image src={p.src} alt={p.alt} fill sizes="(min-width: 768px) 190px, 33vw" quality={80} />
+            <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 400px, 33vw" quality={85} />
           </li>
         ))}
       </ul>

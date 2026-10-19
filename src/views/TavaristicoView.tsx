@@ -168,7 +168,6 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
           label={t.index.campaignsLabel}
           caseLabel={t.index.campaignsCaseLabel}
           inviteLabel=""
-          executiveProductionLabel={t.index.executiveProduction}
         />
       </RevealWrapper>
 

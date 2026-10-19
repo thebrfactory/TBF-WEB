@@ -240,4 +240,5 @@ export const DIMS: Record<string, readonly [number, number]> = {
   '/images/creators/tavaristico/tiger-capsule/07.webp': [1200, 686],
   '/images/creators/tavaristico/tiger-capsule/08.webp': [1200, 686],
   '/images/creators/tavaristico/tiger-capsule/09.webp': [1000, 571],
+  '/images/creators/tavaristico/tiger-capsule/cover.webp': [1400, 800],
 }

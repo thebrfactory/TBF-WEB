@@ -55,8 +55,8 @@
   color: var(--tbf-text-secondary);
 }
 
-/* FEED: 3 colunas quadradas como no PDF de planejamento. Teto de largura:
-   a grade e um perfil de celular, nao uma parede. */
+/* FEED: 3 colunas quadradas como no PDF de planejamento. Quadros em alta
+   (19/10/2026): sem teto de largura, a grade ocupa a coluna da pagina. */
 .feed {
   list-style: none;
   margin: 0;
@@ -64,7 +64,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3px;
-  max-width: 34rem;
 }
 .feedItem {
   position: relative;

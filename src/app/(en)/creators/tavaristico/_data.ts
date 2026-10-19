@@ -46,9 +46,9 @@ export interface Work {
   /** alt descritivo (PT) da capa e da galeria; sem eles, vale o titulo */
   coverAlt?: string
   galleryAlts?: string[]
-  /** Credito de producao executiva (marca, nome proprio: extrabold na tela).
-   * CHANGES #01 19/10/2026: "Producao executiva: LAUDA" na Virtuosa. */
-  executiveProduction?: string
+  /** Ficha de creditos da obra (nomes proprios: extrabold na tela).
+   * Rodada 19/10/2026: substituiu o "Producao executiva: LAUDA" do topo. */
+  credits?: WorkCredit[]
   /** Pecas 9:16 de lookbook/catalogo, em carrossel na pagina de obra. */
   lookbook?: WorkPiece[]
   /** Grid do feed (3 colunas, quadrado como no PDF de planejamento). */
@@ -85,9 +85,7 @@ export const IDENTITY = {
     instagram: 'https://instagram.com/thebrfactory',
     linkedin: 'https://www.linkedin.com/in/tavaristico/', // confirmado pelo fundador em 09/09/2026
     linkedinProvisional: false,
-    // Fundador ainda não passou a URL do GitHub. Fica vazio até chegar; o
-    // ícone só renderiza com URL real (ver SocialIcons).
-    github: 'https://github.com/thebrfactory', // confirmado pelo fundador em 09/09/2026
+    github: 'https://github.com/tavaristico', // conta nova, pedido do fundador em 19/10/2026
     githubPending: false,
   },
 }
@@ -113,7 +111,8 @@ const LOOKBOOK: WorkPiece[] = [
 
 // Grid do feed de setembro (FEED_SETEMBRO.pdf): 15 quadros, 3 colunas, os dois
 // tiles LAUDA FASHION FILM nos cantos da terceira fileira. Quadros 07, 09, 11 e
-// 15 vieram do proprio PDF (sem arquivo solto na pasta de origem).
+// 15 refeitos em alta (19/10/2026) a partir de MKT LAUDA/05. Feed/AGO:
+// 0.FASHIONFILM.png (07 e 09), 12.png (11) e 10.png (15).
 const FEED_ALTS = [
   'Mulher de costas olhando para trás, com moletom branco de capuz.',
   'Mulher de camisa branca e calça preta justa sobre fundo claro.',
@@ -151,7 +150,7 @@ const TIGER_CAPSULE: Work = {
     'A Savannah Odyssey, Spring Summer 24, Creative District. Cápsula com identidade própria: lockup, emblema de tigres com louros, ícone do tigre, estampa contínua em ocre sobre branco, camisa e camiseta preta. Desenhada e criada no Brasil.',
   descriptionEn:
     'A Savannah Odyssey, Spring Summer 24, Creative District. A capsule with its own identity: lockup, tiger emblem with laurels, tiger icon, continuous ochre-on-white pattern, shirt and black tee. Designed and created in Brazil.',
-  coverAlt: 'Lockup A Savannah Odyssey, Spring Summer 24, em ocre sobre fundo marrom escuro.',
+  coverAlt: 'Camisa de manga curta com a estampa de tigres ocre sobre branco, sobre fundo marrom escuro.',
   galleryAlts: [
     'Dois tigres de pé, em silhueta ocre sobre fundo marrom escuro.',
     'Emblema de tigre cercado por coroa de louros, em ocre sobre fundo escuro.',
@@ -163,7 +162,7 @@ const TIGER_CAPSULE: Work = {
     'Camisa de manga curta com a estampa de tigres, em animação, sobre fundo escuro.',
   ],
   media: {
-    cover: `${tg}/01.webp`,
+    cover: `${tg}/cover.webp`,
     gallery: [
       `${tg}/02.webp`,
       `${tg}/03.webp`,
@@ -390,7 +389,12 @@ export const WORKS: Work[] = [
       'Campanha Virtuosa, da LAUDA, imagem da coleção.',
       'Virtuosa Drop II, da LAUDA, imagem em movimento.',
     ],
-    executiveProduction: 'LAUDA',
+    credits: [
+      { roleEN: 'Stills', rolePT: 'Stills', name: 'Bruno Barreto' },
+      { roleEN: 'Make up & hair', rolePT: 'Maquiagem e cabelo', name: 'Hicaro Thales' },
+      { roleEN: 'Executive production', rolePT: 'Produção executiva', name: 'Aileen Beattie' },
+      { roleEN: 'Art director', rolePT: 'Direção de arte', name: 'Felipe Tavares' },
+    ],
     lookbook: LOOKBOOK,
     feedGrid: FEED_GRID,
     provisional: ['role', 'summary'],
@@ -1264,6 +1268,12 @@ export const VENTURES: Venture[] = [
 // nao "Ô: 18 Years".
 // -----------------------------------------------------------------------------
 
+export interface WorkCredit {
+  roleEN: string
+  rolePT: string
+  name: string
+}
+
 export interface Campaign {
   index: string
   name: string
@@ -1272,8 +1282,6 @@ export interface Campaign {
   descriptionPT: string
   /** Imagem do circulo. Sem ela, usa o primeiro frame. */
   cover?: string
-  /** Marca da producao executiva, mostrada sob o nome do circulo. */
-  executiveProduction?: string
   frames: StoryFrame[]
 }
 
@@ -1333,8 +1341,7 @@ export const CAMPAIGNS: Campaign[] = [
       "LAUDA's Virtuosa campaign: two films for the collection.",
     descriptionPT:
       'Campanha Virtuosa, da LAUDA: dois filmes da coleção.',
-    cover: `${base}/virtuosa/avatar.webp`,
-    executiveProduction: 'LAUDA',
+    cover: `${base}/virtuosa/avatar-sonata.webp`,
     frames: [
       {
         src: `${base}/virtuosa/back-to-black-poster.webp`,

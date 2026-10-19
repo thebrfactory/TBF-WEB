@@ -59,7 +59,6 @@ export function Campaigns({
   caseLabel: _caseLabel,
   inviteLabel = 'Tap to open the project',
   hideNames = false,
-  executiveProductionLabel = '',
 }: {
   campaigns: Campaign[]
   lang: Lang
@@ -73,8 +72,6 @@ export function Campaigns({
   /** Sem o nome embaixo do circulo (pagina de obra, CHANGES #01 19/10/2026).
    * O nome segue no aria-label do botao. */
   hideNames?: boolean
-  /** Rotulo do credito "Producao executiva: MARCA" sob o nome. Vazio = sem credito. */
-  executiveProductionLabel?: string
 }) {
   const [seen, setSeen] = useState<Record<string, true>>({})
   const [openIndex, setOpenIndex] = useState<string | null>(null)
@@ -153,11 +150,6 @@ export function Campaigns({
               }}
             />
             {hideNames ? null : <span className={styles.name}>{c.name}</span>}
-            {!hideNames && c.executiveProduction && executiveProductionLabel ? (
-              <span className={styles.credit}>
-                {executiveProductionLabel}: <strong>{c.executiveProduction}</strong>
-              </span>
-            ) : null}
           </div>
         )
       })}

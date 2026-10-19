@@ -1,15 +1,15 @@
 'use client'
 
 // =============================================================================
-// TIMER DO PITCH 4.0: contagem regressiva de 5 minutos, mm:ss.
+// TIMER DO PITCH 4.0: cronômetro progressivo, 00:00 a 10:00, mm:ss.
 // Discreto: canto inferior esquerdo (o direito é do passador), opacidade 50%,
 // `pointer-events: none` (não captura clique) e dentro do respiro de rodapé que
 // toda cena já reserva (`--p3-foot`), então não cobre conteúdo.
 //
 // QUANDO COMEÇA: no primeiro avanço do deck (rolagem, seta, PageDown, toque que
-// rola). Antes disso mostra 05:00 parado. O tempo é medido por `Date.now()`, não
+// rola). Antes disso mostra 00:00 parado. O tempo é medido por `Date.now()`, não
 // por contagem de ticks: aba em segundo plano não atrasa o relógio.
-// Chegou a 00:00 para e fica em 00:00. Não interrompe a apresentação.
+// Chegou a 10:00 para e fica em 10:00. Não interrompe a apresentação.
 // Fixed por CSS, então fica fora do fluxo e da geometria das cenas.
 // =============================================================================
 
@@ -24,7 +24,7 @@ function format(total: number) {
 }
 
 export function DeckTimer() {
-  const [remaining, setRemaining] = useState(TIMER_SECONDS)
+  const [elapsedS, setElapsedS] = useState(0)
   const startedAt = useRef<number | null>(null)
 
   useEffect(() => {
@@ -36,9 +36,9 @@ export function DeckTimer() {
       cleanupListeners()
       interval = setInterval(() => {
         const elapsed = Math.floor((Date.now() - (startedAt.current ?? Date.now())) / 1000)
-        const left = Math.max(0, TIMER_SECONDS - elapsed)
-        setRemaining(left)
-        if (left === 0 && interval) clearInterval(interval)
+        const shown = Math.min(TIMER_SECONDS, elapsed)
+        setElapsedS(shown)
+        if (shown >= TIMER_SECONDS && interval) clearInterval(interval)
       }, 250)
     }
 
@@ -63,7 +63,7 @@ export function DeckTimer() {
 
   return (
     <div className="p4-timer" aria-hidden="true">
-      {format(remaining)}
+      {format(elapsedS)}
     </div>
   )
 }

@@ -51,12 +51,6 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <h1 className={styles.workTitle}>{w.title}</h1>
         </div>
 
-        {w.executiveProduction && (
-          <p className={styles.execCredit}>
-            {t.executiveProduction}: <strong>{w.executiveProduction}</strong>
-          </p>
-        )}
-
         {w.highlights && w.highlights.length > 0 && (
           <div style={{ marginBottom: 'var(--tbf-space-6)' }}>
             <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" hideNames />
@@ -92,6 +86,20 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
             {para}
           </p>
         ))}
+
+        {w.credits && w.credits.length > 0 && (
+          <section className={styles.credits} aria-label={t.creditsLabel}>
+            <span className={styles.label}>{t.creditsLabel}</span>
+            <dl className={styles.creditList}>
+              {w.credits.map((c) => (
+                <div key={c.roleEN} className={styles.creditRow}>
+                  <dt>{lang === 'pt' ? c.rolePT : c.roleEN}</dt>
+                  <dd>{c.name}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )}
 
         <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
           <Image src={w.media.cover} alt={w.coverAlt ?? w.title} fill sizes="100vw" quality={90} priority />

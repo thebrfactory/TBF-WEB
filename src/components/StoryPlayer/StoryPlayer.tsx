@@ -147,6 +147,7 @@ function StoryMedia({
   priority,
   onFit,
   onVideoRef,
+  onEnded,
 }: {
   item: StoryItem
   active: boolean
@@ -157,6 +158,7 @@ function StoryMedia({
   priority: boolean
   onFit: (src: string, w: number, h: number) => void
   onVideoRef: (el: HTMLVideoElement | null) => void
+  onEnded: () => void
 }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const hasVideo = !!item.video
@@ -201,6 +203,7 @@ function StoryMedia({
           aria-label={item.alt}
           className={layer}
           onLoadedMetadata={(e) => onFit(item.src, e.currentTarget.videoWidth, e.currentTarget.videoHeight)}
+          onEnded={active ? onEnded : undefined}
         >
           <source src={item.video.av1} type="video/mp4; codecs=av01.0.05M.08" />
           <source src={item.video.h264} type="video/mp4" />
@@ -263,6 +266,8 @@ export function StoryPlayer({
   const elapsed = useRef(0)
   const waited = useRef(0)
   const ready = useRef(false)
+  // Um quadro avança uma vez só: o evento `ended` e o relógio disputam o mesmo fim.
+  const advanced = useRef(false)
   const setVideo = useCallback((el: HTMLVideoElement | null) => {
     videoRef.current = el
   }, [])
@@ -276,6 +281,7 @@ export function StoryPlayer({
 
   // ─── Navegação ─────────────────────────────────────────────────────────────
   const next = useCallback(() => {
+    advanced.current = true
     if (i < items.length - 1) setI(i + 1)
     else {
       // Loop: volta ao primeiro quadro do mesmo story.
@@ -294,8 +300,14 @@ export function StoryPlayer({
     setI(0)
   }, [])
 
+  // Fim do vídeo: o evento avança mesmo com o relógio parado (aba em segundo plano).
+  const onVideoEnded = useCallback(() => {
+    if (!advanced.current) next()
+  }, [next])
+
   // ─── Barras: estado de cada segmento ao trocar de quadro ───────────────────
   useLayoutEffect(() => {
+    advanced.current = false
     elapsed.current = 0
     waited.current = 0
     ready.current = false
@@ -341,7 +353,7 @@ export function StoryPlayer({
       }
       if (fill) fill.style.transform = `scaleX(${Math.min(p, 1)})`
       if (p >= 1) {
-        next()
+        if (!advanced.current) next()
         return
       }
       raf = requestAnimationFrame(tick)
@@ -509,6 +521,7 @@ export function StoryPlayer({
               priority={k === 0 && modal && i === 0}
               onFit={onFit}
               onVideoRef={setVideo}
+              onEnded={onVideoEnded}
             />
           ) : null,
         )}

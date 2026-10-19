@@ -14,7 +14,7 @@
 
 import type { Bi } from './v3-scenes'
 
-// ─── Cenas: 00 capa, 01 fundador (novo), 02 a 08 = as 7 da 3.0, 09 empresa (novo)
+// ─── Cenas: 00 capa, 01 fundador (novo), 02 a 08 = as 7 da 3.0, 09 empresa (mesclada na 07)
 export const SCENES_V4 = [
   { id: 'cena-00', pt: 'Capa', en: 'Cover', n: '00' },
   { id: 'cena-01', pt: 'O Fundador', en: 'The Founder', n: '01' },
@@ -23,15 +23,14 @@ export const SCENES_V4 = [
   { id: 'cena-04', pt: 'A Pergunta e a Tese', en: 'The Question and the Thesis', n: '04' },
   { id: 'cena-05', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '05' },
   { id: 'cena-06', pt: 'Case Selecionado', en: 'Selected Case', n: '06' },
-  { id: 'cena-07', pt: 'A Parceria', en: 'The Partnership', n: '07' },
+  { id: 'cena-07', pt: 'A Parceria e a Empresa', en: 'The Partnership and the Company', n: '07' },
   { id: 'cena-08', pt: 'Fecho', en: 'Close', n: '08' },
-  { id: 'cena-09', pt: 'A Empresa', en: 'The Company', n: '09' },
 ] as const
 
-export const TOTAL_V4 = '09'
+export const TOTAL_V4 = '08'
 
 // ─── Timer ───────────────────────────────────────────────────────────────────
-export const TIMER_SECONDS = 5 * 60
+export const TIMER_SECONDS = 10 * 60
 
 // ─── CENA 01: O FUNDADOR ─────────────────────────────────────────────────────
 export const FOUNDER = {

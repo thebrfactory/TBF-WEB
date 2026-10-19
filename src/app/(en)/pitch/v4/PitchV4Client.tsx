@@ -1,7 +1,7 @@
 'use client'
 
 // =============================================================================
-// PITCH 4.0 CLIENT · working deck, 9 cenas + capa
+// PITCH 4.0 CLIENT · working deck, 8 cenas + capa
 // -----------------------------------------------------------------------------
 // NASCEU CÓPIA DA 3.0 (pedido do fundador, CHANGES #01, 19/10/2026), pela mesma
 // razão com que a 3.0 nasceu da 2.0: divergir sem tocar no deck que já foi
@@ -9,11 +9,11 @@
 // reaproveitados; só o que é novo mora em `v4-scenes.ts`.
 //
 // O QUE A 4.0 ACRESCENTA
-//   1. Timer de 5 minutos no canto (`DeckTimer.tsx`).
+//   1. Cronômetro de 10 minutos no canto (`DeckTimer.tsx`).
 //   2. cena-01: o fundador (jornada e o que faz), logo depois da capa.
 //   3. cena-05: cada vertical ganha o anel de avatar e abre o StoryPlayer
 //      (layout padrão de stories, `npm run check:stories`).
-//   4. cena-09: a empresa, CNPJ e regime INOVA SIMPLES, por último.
+//   4. cena-07: a parceria e a empresa (CNPJ, regime INOVA SIMPLES) mescladas.
 // As cenas 02 a 08 são as 01 a 07 da 3.0, renumeradas. Decisões de layout das
 // cenas herdadas estão documentadas no `PitchV3Client.tsx`.
 // Mobile-first. Prefixo de CSS novo: `.p4-*`.
@@ -899,6 +899,32 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             <En>{partner.hypotheses.en}</En>
           </p>
         </PitchReveal>
+
+        {/* A EMPRESA (era a cena 09, mesclada aqui a pedido do fundador, 19/10/2026).
+            Bloco compacto no pé da cena: regime INOVA SIMPLES e os três dados. */}
+        <PitchReveal delay={720}>
+          <div className="p4-company">
+            <p className="p3-kicker-mini">
+              {COMPANY.headline.pt[0]} {COMPANY.headline.pt[1]}
+              <En>{COMPANY.headline.en.join(' ')}</En>
+            </p>
+            <p className="p3-body p4-company__regime">
+              {COMPANY.regimeText.pt}
+              <En>{COMPANY.regimeText.en}</En>
+            </p>
+            <dl className="p4-company__rows">
+              {COMPANY.rows.map((row) => (
+                <div key={row.label.en} className="p4-company__row">
+                  <dt className="p3-label">
+                    {row.label.pt}
+                    <En>{row.label.en}</En>
+                  </dt>
+                  <dd className="p4-company__value">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </PitchReveal>
       </section>
 
       {/* ── CENA 07 · FECHO ──────────────────────────────────────────────────── */}
@@ -980,44 +1006,6 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </div>
       </section>
 
-      {/* ── CENA 09 · A EMPRESA (novo na 4.0) ───────────────────────────────────
-             Último slide: razão social, CNPJ e o regime INOVA SIMPLES. Dados de
-             `_SHARED/LEGAL-ACCOUNTING`, via `v4-scenes.ts`. */}
-      <section id="cena-09" style={{ ...S, background: '#111110' }} aria-label="A Empresa / The Company">
-        <Numeral n="09" />
-        <Kicker n="09" pt="A Empresa" en="The Company" />
-
-        <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2 p3-h2--md">
-            {COMPANY.headline.pt[0]}
-            <br />
-            <span style={{ color: ACCENT }}>{COMPANY.headline.pt[1]}</span>
-            <En size="lead">{COMPANY.headline.en.join(' ')}</En>
-          </h2>
-        </PitchReveal>
-
-        <PitchReveal delay={200}>
-          <p className="p3-assert p4-company__regime">
-            {COMPANY.regimeText.pt}
-            <En>{COMPANY.regimeText.en}</En>
-          </p>
-        </PitchReveal>
-
-        <PitchReveal delay={320}>
-          <dl className="p4-company">
-            {COMPANY.rows.map((row) => (
-              <div key={row.label.en} className="p4-company__row">
-                <dt className="p3-label">
-                  {row.label.pt}
-                  <En>{row.label.en}</En>
-                </dt>
-                <dd className="p4-company__value">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </PitchReveal>
-      </section>
-
       <style>{`
         /* ─── 4.0: timer, fundador, anel das verticais, empresa (mobile-first) ─ */
         .p4-timer {
@@ -1033,6 +1021,15 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           letter-spacing: 0.08em;
           font-variant-numeric: tabular-nums;
           color: ${PAPER};
+        }
+
+        /* Passador sem traços (item 3, rodada 19/10/2026): botões sem contorno. */
+        .p3-deck .p3-nav__btn {
+          border: 0;
+          background: rgba(240, 237, 230, 0.08);
+        }
+        .p3-deck .p3-nav__btn:hover:not(:disabled) {
+          background: ${ACCENT};
         }
 
         .p4-founder {
@@ -1094,36 +1091,52 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           position: absolute;
           top: clamp(0.6rem, 1.2vh, 0.9rem);
           right: clamp(0.5rem, 1.2vw, 0.9rem);
-          z-index: 5;
+          /* Acima do painel expandido (.p3-portfolio-more, z-index 6): com o
+             hover o painel cobria o anel e o clique nunca chegava nele. */
+          z-index: 10;
         }
-        .p4-vertical .p3-portfolio-name:not(.p3-portfolio-name--more) {
+        .p4-vertical .p3-portfolio-name {
           padding-right: 3.6rem;
         }
 
-        .p4-company__regime {
-          margin: var(--p3-gap-sm) 0 0;
-          max-width: var(--p3-measure-wide);
-        }
         .p4-company {
           position: relative;
           z-index: 1;
-          margin: var(--p3-gap-sm) 0 0;
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: clamp(0.5rem, 1.4vh, 1rem);
+          margin-top: var(--p3-gap-sm);
           max-width: var(--p3-measure-wide);
+        }
+        .p4-company__regime {
+          margin: 0.2rem 0 0.35rem;
+          font-size: 0.72rem;
+          line-height: 1.35;
+        }
+        /* Só no celular: a cena junta parceria e empresa e precisa caber em uma tela. */
+        @media (max-width: 767px) {
+          .p4-company .p3-label .p3-en,
+          .p4-company__regime .p3-en {
+            display: none;
+          }
+        }
+        .p4-company__rows {
+          margin: 0;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.3rem;
+        }
+        .p4-company__row:last-child {
+          grid-column: 1 / -1;
         }
         .p4-company__row {
           background: #000000;
           border-left: 3px solid ${ACCENT};
           border-radius: var(--tbf-radius-card);
-          padding: clamp(0.5rem, 1.2vh, 0.9rem) 0.9rem;
+          padding: 0.3rem 0.7rem;
         }
         .p4-company__value {
-          margin: 0.2rem 0 0;
+          margin: 0.1rem 0 0;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.95rem, min(3vw, 2.6vh), 1.3rem);
+          font-size: clamp(0.78rem, min(2.6vw, 2.2vh), 1rem);
           line-height: 1.2;
           color: ${PAPER};
         }
@@ -1133,8 +1146,11 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             grid-template-columns: minmax(14rem, 1fr) 2fr;
             align-items: start;
           }
-          .p4-company {
-            grid-template-columns: repeat(2, 1fr);
+          .p4-company__rows {
+            grid-template-columns: 1fr 1fr 2fr;
+          }
+          .p4-company__row:last-child {
+            grid-column: auto;
           }
         }
       `}</style>

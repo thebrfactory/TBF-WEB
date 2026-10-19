@@ -372,15 +372,29 @@
   animation: scrolly-fade-up var(--tbf-motion-duration-reveal-deck) var(--tbf-motion-easing-reveal) 450ms both;
 }
 
-/* AVISO DE FICÇÃO no hero: letra pequena, recua sem sumir. */
+/* AVISO DE FICÇÃO no hero. Pedido do fundador (rodada 19/10/2026, prints 5 e 6):
+   mais evidência e mais respiro. Barra vertical de acento (sem divider
+   horizontal), corpo em body-sm, parchment pleno e margem acima e abaixo. */
 .scrolly-hero__note {
-  font-family: var(--tbf-type-micro-family);
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: color-mix(in srgb, var(--tbf-text-primary) 88%, transparent);
+  font-family: var(--tbf-type-body-sm-family);
+  font-size: var(--tbf-type-body-sm-size-sm);
+  line-height: var(--tbf-type-body-sm-lh-sm);
+  color: var(--tbf-text-primary);
   text-shadow: 0 1px 10px rgba(0, 0, 0, 0.65);
-  max-width: 60ch;
-  margin-top: var(--tbf-space-3);
+  max-width: 52ch;
+  margin-top: var(--tbf-space-8);
+  margin-bottom: var(--tbf-space-6);
+  padding-left: var(--tbf-space-4);
+  border-left: 2px solid var(--tbf-accent);
+}
+
+@media (min-width: 768px) {
+  .scrolly-hero__note {
+    font-size: var(--tbf-type-body-sm-size);
+    line-height: var(--tbf-type-body-sm-lh);
+    margin-top: var(--tbf-space-10);
+    margin-bottom: var(--tbf-space-8);
+  }
 }
 
 /* ASSINATURA, pedido do fundador em #01 CHANGES 2026-08-24 (print da Forbes
@@ -733,6 +747,13 @@
   font-size: clamp(0.8125rem, 1.15vw, 0.9375rem);
   line-height: 1.5;
   color: var(--tbf-text-secondary);
+}
+.scrolly-fineprint__note {
+  padding-left: var(--tbf-space-4);
+  border-left: 2px solid var(--tbf-accent);
+  color: var(--tbf-text-primary);
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
+  margin-bottom: var(--tbf-space-8);
 }
 .scrolly-fineprint__title {
   margin-top: var(--tbf-space-4);
