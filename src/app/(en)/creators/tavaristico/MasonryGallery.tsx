@@ -99,7 +99,7 @@ export function MasonryGallery({
           >
             <span className={styles.cardMedia} style={{ aspectRatio: RATIOS[i % RATIOS.length] }}>
               <Image
-                src={w.media.cover}
+                src={w.cardCover ?? w.media.cover}
                 alt={w.title}
                 fill
                 sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"

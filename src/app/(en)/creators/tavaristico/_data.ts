@@ -45,6 +45,8 @@ export interface Work {
   highlights?: Campaign[]
   /** alt descritivo (PT) da capa e da galeria; sem eles, vale o titulo */
   coverAlt?: string
+  /** Capa so do card do portfolio (a pagina de obra segue em media.cover). */
+  cardCover?: string
   galleryAlts?: string[]
   /** Ficha de creditos da obra (nomes proprios: extrabold na tela).
    * Rodada 19/10/2026: substituiu o "Producao executiva: LAUDA" do topo. */
@@ -243,6 +245,7 @@ export const WORKS: Work[] = [
     descriptionEn:
       'Virtuosa was inspired by skilled, naturally elegant women, who led us to create a harmonious gathering of noble materials, silhouettes and colors that celebrate the many feminine essences, through the weaving of our collections.\nThe routine of contemporary women demands, more every day, creativity and versatility in dressing. To accompany them through every moment of the day, we designed each garment to suit different lifestyles, allowing different combinations, always with plenty of personality.',
     selected: true,
+    cardCover: `${base}/virtuosa/card-sonata.webp`, // 6 modelos em fila, pedido do fundador 20/10/2026
     media: {
       cover: `${base}/virtuosa/pp-01.webp`,
       gallery: [
@@ -1341,7 +1344,7 @@ export const CAMPAIGNS: Campaign[] = [
       "LAUDA's Virtuosa campaign: two films for the collection.",
     descriptionPT:
       'Campanha Virtuosa, da LAUDA: dois filmes da coleção.',
-    cover: `${base}/virtuosa/avatar-sonata.webp`,
+    cover: `${base}/virtuosa/avatar.webp`,
     frames: [
       {
         src: `${base}/virtuosa/back-to-black-poster.webp`,

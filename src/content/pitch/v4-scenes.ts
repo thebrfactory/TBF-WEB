@@ -46,7 +46,38 @@ export const FOUNDER = {
     pt: ['Quem constrói a casa', 'vive a cultura.'],
     en: ['The one who builds the house', 'lives the culture.'],
   },
+  // O PORTFÓLIO EM MOVIMENTO (pedido do fundador 20/10/2026: mínimo de texto,
+  // máximo de imagem). Quatro colunas de quatro; todas são imagens que já
+  // existem em /public e já aparecem em /creators/tavaristico. No celular só as
+  // três primeiras colunas entram.
+  reel: [
+    [
+      '/images/creators/tavaristico/arquiloucura/cover.webp',
+      '/images/creators/tavaristico/hospitality/04-torcida.webp',
+      '/images/creators/tavaristico/virtuosa/cover.webp',
+      '/images/creators/tavaristico/o-18-years/cover.webp',
+    ],
+    [
+      '/images/creators/tavaristico/spfw-the-paradise/cover.webp',
+      '/images/creators/tavaristico/crush-coins/cover.webp',
+      '/images/creators/tavaristico/hospitality/12-sax.webp',
+      '/images/creators/tavaristico/charlotte/cover.webp',
+    ],
+    [
+      '/images/creators/tavaristico/blackboah/cover.webp',
+      '/images/creators/tavaristico/hospitality/02-mural-oste.webp',
+      '/images/creators/tavaristico/tiger-capsule/cover.webp',
+      '/images/creators/tavaristico/virtuosa/feed-05.webp',
+    ],
+    [
+      '/images/creators/tavaristico/capsula-brasilidade/cover.webp',
+      '/images/creators/tavaristico/hospitality/14-piscina.webp',
+      '/images/creators/tavaristico/virtuosa/feed-01.webp',
+      '/images/creators/tavaristico/tiger-capsule/03.webp',
+    ],
+  ] as readonly (readonly string[])[],
   // A jornada, em quatro passos. Cada linha existe em fonte publicada.
+  // (Fora da tela desde 20/10/2026; o dado fica para voltar se pedirem.)
   journey: [
     {
       pt: 'Nascido em Salvador, Bahia, a capital do axé: solo sagrado e profano.',
@@ -72,16 +103,34 @@ export const FOUNDER = {
 //
 // AVATAR: foto de perfil do Instagram de .TBF., RUC (@runwayunited) e TFD
 // (@thefioredaily), as duas últimas em 150px, o teto servido pela web.
-// TGF ainda sem perfil informado: o anel usa uma imagem de capa da vertical.
+// TGF: foto de perfil oficial (TAV05, 00. TGF /PROFILE).
+// Stories: vídeos tocam inteiros; o StoryPlayer espera o fim para avançar.
+export interface VerticalStoryItem {
+  src: string
+  alt: string
+  role: string
+  /** Quadro em vídeo: `src` é o poster. Toca inteiro (o player espera o fim). */
+  video?: { av1: string; h264: string; hasAudio?: boolean }
+  /** Tempo do quadro em ms (só foto). */
+  ms?: number
+}
+
 export interface VerticalStory {
   handle: string
   avatar: string
   avatarIsReal: boolean
   timeLabel?: string
-  items: { src: string; alt: string; role: string }[]
+  items: VerticalStoryItem[]
 }
 
-const STORIES = '/images/creators/tavaristico/stories'
+const SV = '/images/pitch/verticais/stories'
+const VV = '/videos/pitch/verticais'
+const clip = (name: string, alt: string, role: string, hasAudio = true): VerticalStoryItem => ({
+  src: `${SV}/${name}.webp`,
+  alt,
+  role,
+  video: { av1: `${VV}/${name}.av1.mp4`, h264: `${VV}/${name}.mp4`, hasAudio },
+})
 
 export const VERTICAL_STORIES: Record<string, VerticalStory> = {
   '.THE BRAZILIAN FACTORY.': {
@@ -89,10 +138,9 @@ export const VERTICAL_STORIES: Record<string, VerticalStory> = {
     avatar: '/brand/TBF-AVATAR.webp',
     avatarIsReal: true,
     items: [
-      { src: `${STORIES}/brandsystem/01-marca.webp`, alt: 'BRANDSYSTEM, a marca', role: 'BRANDSYSTEM' },
-      { src: `${STORIES}/brandsystem/02-conhecimento.webp`, alt: 'BRANDSYSTEM, o conhecimento da marca', role: 'BRANDSYSTEM' },
-      { src: `${STORIES}/brandsystem/03-agente.webp`, alt: 'BRANDSYSTEM, o agente', role: 'BRANDSYSTEM' },
-      { src: `${STORIES}/brandsystem/04-fluxo.webp`, alt: 'BRANDSYSTEM, o fluxo', role: 'BRANDSYSTEM' },
+      clip('tbf-01', 'The Brazilian Factory, abertura', 'The Brazilian Factory'),
+      clip('tbf-02', 'The Brazilian Factory, digital', 'The Brazilian Factory'),
+      clip('tbf-03', 'The Brazilian Factory, filme', 'The Brazilian Factory'),
     ],
   },
   '.RUNWAY UNTD COLLECTIVE.': {
@@ -100,10 +148,10 @@ export const VERTICAL_STORIES: Record<string, VerticalStory> = {
     avatar: '/images/pitch/verticais/ruc-avatar.webp',
     avatarIsReal: true,
     items: [
-      { src: `${STORIES}/runway-untd/01-passarela.webp`, alt: 'Runway Untd, a passarela', role: 'Runway Untd' },
-      { src: `${STORIES}/runway-untd/02-bastidor.webp`, alt: 'Runway Untd, o bastidor', role: 'Runway Untd' },
-      { src: `${STORIES}/runway-untd/03-retrato.webp`, alt: 'Runway Untd, retrato', role: 'Runway Untd' },
-      { src: `${STORIES}/runway-untd/04-noite.webp`, alt: 'Runway Untd, a noite', role: 'Runway Untd' },
+      clip('ruc-01', 'Runway Untd, peça 1', 'Runway Untd'),
+      clip('ruc-02', 'Runway Untd, peça 2', 'Runway Untd'),
+      clip('ruc-03', 'Runway Untd, peça 3', 'Runway Untd'),
+      clip('ruc-04', 'Runway Untd, peça 4', 'Runway Untd'),
     ],
   },
   '.THE FIORE DAILY.': {
@@ -111,19 +159,17 @@ export const VERTICAL_STORIES: Record<string, VerticalStory> = {
     avatar: '/images/pitch/verticais/tfd-avatar.webp',
     avatarIsReal: true,
     items: [
-      { src: '/images/tfd/tfd-hero.webp', alt: 'The Fiore Daily', role: 'The Fiore Daily' },
-      { src: '/images/tfd/tfd-closing.webp', alt: 'The Fiore Daily, fecho', role: 'The Fiore Daily' },
+      { src: `${SV}/tfd-01.webp`, alt: 'The Fiore Daily, branding', role: 'The Fiore Daily' },
+      clip('tfd-02', 'The Fiore Daily, filme', 'The Fiore Daily'),
+      clip('tfd-03', 'The Fiore Daily, produto', 'The Fiore Daily', false),
+      { src: `${SV}/tfd-04.webp`, alt: 'The Fiore Daily, WhatsApp', role: 'The Fiore Daily' },
     ],
   },
   '.THE GROWTH FACTORY.': {
     handle: 'The Growth Factory',
-    avatar: '/images/tgf/tgf-ambition.webp',
-    avatarIsReal: false,
-    items: [
-      { src: '/images/tgf/tgf-ambition.webp', alt: 'The Growth Factory, ambição', role: 'The Growth Factory' },
-      { src: '/images/tgf/tgf-momentum.webp', alt: 'The Growth Factory, momento', role: 'The Growth Factory' },
-      { src: '/images/tgf/tgf-global.webp', alt: 'The Growth Factory, alcance global', role: 'The Growth Factory' },
-    ],
+    avatar: '/images/pitch/verticais/tgf-avatar.webp',
+    avatarIsReal: true,
+    items: [{ src: `${SV}/tgf-01.webp`, alt: 'The Growth Factory', role: 'The Growth Factory' }],
   },
 }
 
