@@ -147,26 +147,30 @@ function PortfolioCard({
           aria-label={`${open ? 'Fechar' : 'Expandir'}: ${item.name}`}
           onClick={onToggle}
         />
-        {story ? (
-          <div className="p4-vc__ring">
-            <StoryRing
-              cover={story.avatar}
-              alt={item.name}
-              size={48}
-              ariaLabel={`Abrir stories: ${item.name}`}
-              onClick={onOpenStory}
-            />
-          </div>
-        ) : null}
         <span className="p4-vc__hint" aria-hidden="true">
           EXPAND
         </span>
 
         <div className="p4-vc__body">
+          <div className="p4-vc__head">
+          {story ? (
+            <div className="p4-vc__ring">
+              <StoryRing
+                cover={story.avatar}
+                alt={item.name}
+                size={48}
+                ariaLabel={`Abrir stories: ${item.name}`}
+                onClick={onOpenStory}
+              />
+            </div>
+          ) : null}
+          <div className="p4-vc__id">
           <p className="p3-portfolio-name p4-vc__name" style={{ color: PAPER }}>
             {item.name}
           </p>
           <p className="p4-vc__desc">{item.role.pt}</p>
+          </div>
+          </div>
 
           <div className="p4-vc__more">
             <div className="p4-vc__more-inner">
@@ -305,7 +309,8 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
                           src={src}
                           alt=""
                           fill
-                          sizes="(max-width: 767px) 30vw, 14vw"
+                          sizes="(max-width: 767px) 66vw, 30vw"
+                          quality={92}
                           className="p4-reel__img"
                           loading={i < col.length ? 'eager' : 'lazy'}
                         />
@@ -1023,9 +1028,10 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 0.5rem;
           overflow: hidden;
-          /* Esmaece topo e base: máscara, não camada por cima da imagem. */
-          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
+          /* Esmaece topo e base, bem sutil (22/10/2026): máscara de 4%, que parte
+             de 65% de opacidade. Não é camada por cima da imagem. */
+          -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, #000 4%, #000 96%, rgba(0, 0, 0, 0.65) 100%);
+          mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, #000 4%, #000 96%, rgba(0, 0, 0, 0.65) 100%);
         }
         .p4-reel__col {
           min-width: 0;
@@ -1104,16 +1110,19 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           outline: 2px solid ${ACCENT};
           outline-offset: -2px;
         }
+        /* 22/10/2026: destaque (anel), nome e descrição são UM bloco, igual nos
+           quatro. Mobile: anel à esquerda, texto à direita. Desktop: anel em cima,
+           nome e descrição embaixo, ancorados na base do cartão. */
         .p4-vc__ring {
-          position: absolute;
+          position: relative;
           z-index: 3;
-          top: 0.7rem;
-          left: 0.75rem;
+          flex: none;
+          pointer-events: auto;
         }
         .p4-vc__hint {
           position: absolute;
           z-index: 2;
-          top: 0.8rem;
+          bottom: 0.7rem;
           right: 0.9rem;
           font-family: var(--tbf-font-family-printed);
           font-weight: 500;
@@ -1133,17 +1142,29 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p4-vc--open .p4-vc__hint { opacity: 0 !important; }
         .p4-vc__body {
           position: relative;
-          padding-left: 3.7rem;
-          min-height: 3.4rem;
           pointer-events: none;
         }
-        .p4-vc__name {
+        .p4-vc__head {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.85rem;
+        }
+        .p4-vc__id {
+          min-width: 0;
+          flex: 1 1 auto;
+        }
+        .p4-vc .p4-vc__name {
           margin: 0;
-          font-size: clamp(0.85rem, 3.4vw, 1.05rem);
+          font-size: clamp(0.72rem, 3.1vw, 0.95rem);
+          letter-spacing: -0.03em;
+          line-height: 1.15;
           white-space: normal;
         }
         .p4-vc__desc {
-          margin: 0.25rem 0 0;
+          margin: 0.3rem 0 0;
+          padding-right: 3rem;
+          min-height: calc(3 * 1.35em);
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
           font-size: 0.74rem;
@@ -1292,6 +1313,11 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-reel {
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 0.75rem;
+            /* Escala real (22/10/2026): peça de ~8rem, bem abaixo da resolução
+               nativa dos arquivos (720px a 1600px de largura). */
+            max-width: 36rem;
+            justify-self: center;
+            width: 100%;
           }
           .p4-reel__col--3 { display: block; }
           .p4-reel__tile { margin-bottom: 0.75rem; }
@@ -1306,16 +1332,20 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-vc {
             padding: 1rem;
           }
-          .p4-vc__ring { top: 1rem; left: 1rem; }
-          .p4-vc__hint { top: 1.2rem; right: 1rem; font-size: 0.66rem; }
+          .p4-vc__hint { top: 1.2rem; bottom: auto; right: 1rem; font-size: 0.66rem; }
           .p4-vc__body {
             margin-top: auto;
-            padding-left: 0;
             padding-bottom: clamp(1rem, 7vh, 3.5rem);
             min-height: 0;
           }
-          .p4-vc__name { font-size: clamp(1rem, 1.5vw, 1.35rem); }
-          .p4-vc__desc,
+          .p4-vc__head {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.9rem;
+          }
+          .p4-vc__id { width: 100%; }
+          .p4-vc .p4-vc__name { font-size: clamp(0.6rem, 0.78vw, 0.9rem); }
+          .p4-vc__desc { padding-right: 0; font-size: 0.72rem; }
           .p4-vc__field { font-size: 0.82rem; }
           .p4-vc__link { font-size: 0.8rem; }
 
