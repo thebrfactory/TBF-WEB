@@ -11,10 +11,13 @@
 // O QUE A 4.0 ACRESCENTA
 //   1. Cronômetro de 10 minutos no canto (`DeckTimer.tsx`).
 //   2. cena-01: o fundador (jornada e o que faz), logo depois da capa.
-//   3. cena-05: cada vertical ganha o anel de avatar e abre o StoryPlayer
+//   3. cena-06: cada vertical ganha o anel de avatar e abre o StoryPlayer
 //      (layout padrão de stories, `npm run check:stories`).
-//   4. cena-07: a parceria e a empresa (CNPJ, regime INOVA SIMPLES) mescladas.
-// As cenas 02 a 08 são as 01 a 07 da 3.0, renumeradas. Decisões de layout das
+//   4. (22/10/2026 b) deck para PARCEIRO ESTRATEGICO: cena-05 mercado e mapa,
+//      cena-07 como cada vertical ganha + roadmap, cena-09 o que construimos
+//      juntos (no lugar da cena de CNPJ e regime), metricas no case VERAOZAO e
+//      area de metricas da TFD (`TfdSheet.tsx`). Cenas novas em `NewScenes.tsx`.
+// As cenas 02 a 04 são as 01 a 03 da 3.0, renumeradas. Decisões de layout das
 // cenas herdadas estão documentadas no `PitchV3Client.tsx`.
 // Mobile-first. Prefixo de CSS novo: `.p4-*`.
 // =============================================================================
@@ -33,7 +36,9 @@ import { StoryPlayer } from '@/components/StoryPlayer/StoryPlayer'
 import { StoryRing } from '@/components/tavaristico/StoryRing'
 import { COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
-import { SCENES_V4, TOTAL_V4, FOUNDER, COMPANY, VERTICAL_STORIES } from '@/content/pitch/v4-scenes'
+import { SCENES_V4, TOTAL_V4, FOUNDER, VERTICAL_STORIES, VERAOZAO_METRICS, VERAOZAO_SOURCE } from '@/content/pitch/v4-scenes'
+import { MarketScene, ModelScene, TogetherScene, NewScenesStyles } from './NewScenes'
+import { TfdSheet } from './TfdSheet'
 // ─── O casco do formato mora fora deste arquivo ──────────────────────────────
 // EXTRAÍDO em 2026-08-18 para `src/components/DeckShell/DeckShell.tsx`: as
 // constantes, a camada de tradução, a animação de entrada, a régua `?grid=1`, o
@@ -63,7 +68,7 @@ const EDITORIAL_VIDEO = {
   mobile: { av1: '/videos/editorial-mobile.av1.mp4', h264: '/videos/editorial-mobile.mp4' },
 }
 
-// ─── Cartão de portfólio expansível (cena-05) ────────────────────────────────
+// ─── Cartão de portfólio expansível (cena-06) ────────────────────────────────
 // Cada propriedade mostra nome + papel na primeira leitura. Por que e formas
 // só aparecem na expansão: hover no desktop, toque no mobile.
 //
@@ -89,7 +94,7 @@ const EDITORIAL_VIDEO = {
 // ritmo ou de contraste só chegaria numa das duas (regra 4: apontar, não copiar).
 // O porquê de cada detalhe do player mora no cabeçalho daquele arquivo.
 
-// Filme do case (cena-06): vertical, em laço e mudo. Com prefers-reduced-motion
+// Filme do case (cena-08): vertical, em laço e mudo. Com prefers-reduced-motion
 // fica parado no poster.
 function CaseFilm() {
   const ref = useRef<HTMLVideoElement>(null)
@@ -128,12 +133,15 @@ function PortfolioCard({
   open,
   onToggle,
   onOpenStory,
+  metrics = false,
 }: {
   item: (typeof BUSINESS.portfolio)[number]
   delay: number
   open: boolean
   onToggle: () => void
   onOpenStory: () => void
+  /** 22/10/2026: o clique abre a area de metricas (TfdSheet) em vez de expandir o cartao. */
+  metrics?: boolean
 }) {
   const story = VERTICAL_STORIES[item.name]
 
@@ -143,12 +151,13 @@ function PortfolioCard({
         <button
           type="button"
           className="p4-vc__hit"
-          aria-expanded={open}
-          aria-label={`${open ? 'Fechar' : 'Expandir'}: ${item.name}`}
+          aria-expanded={metrics ? undefined : open}
+          aria-haspopup={metrics ? 'dialog' : undefined}
+          aria-label={metrics ? `Abrir métricas: ${item.name}` : `${open ? 'Fechar' : 'Expandir'}: ${item.name}`}
           onClick={onToggle}
         />
         <span className="p4-vc__hint" aria-hidden="true">
-          EXPAND
+          {metrics ? 'MÉTRICAS' : 'EXPAND'}
         </span>
 
         <div className="p4-vc__body">
@@ -209,10 +218,12 @@ function PortfolioCard({
  */
 export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
   const [caseStoryOpen, setCaseStoryOpen] = useState(false)
-  // Índice da vertical aberta no StoryPlayer (cena-05); null = fechado.
+  // Índice da vertical aberta no StoryPlayer (cena-06); null = fechado.
   const [verticalStory, setVerticalStory] = useState<number | null>(null)
-  // Índice do cartão de vertical expandido (cena-05); null = todos fechados.
+  // Índice do cartão de vertical expandido (cena-06); null = todos fechados.
   const [openVertical, setOpenVertical] = useState<number | null>(null)
+  // Area de metricas da TFD (aberta pelo clique no cartao dela).
+  const [tfdOpen, setTfdOpen] = useState(false)
   const verticalGroups = BUSINESS.portfolio.map((v) => {
     const st = VERTICAL_STORIES[v.name]
     return {
@@ -274,51 +285,85 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         <div className="p4-founder">
           <PitchReveal delay={200}>
-            <div className="p4-founder__id">
-              <Image
-                src={FOUNDER.portrait}
-                alt={FOUNDER.alt}
-                width={400}
-                height={400}
-                sizes="(max-width: 767px) 22vw, 10vw"
-                className="p4-founder__img"
-              />
-              <div>
-                <p className="p4-founder__name" style={{ color: PAPER }}>
-                  {FOUNDER.name}
-                </p>
-                <p className="p4-founder__alias" style={{ color: ACCENT }}>
-                  {FOUNDER.alias}
-                </p>
-                <p className="p3-item-desc">{FOUNDER.role.pt}</p>
+            <div className="p4-founder__info">
+              <div className="p4-founder__id">
+                <Image
+                  src={FOUNDER.portrait}
+                  alt={FOUNDER.alt}
+                  width={400}
+                  height={400}
+                  sizes="(max-width: 767px) 22vw, 10vw"
+                  className="p4-founder__img"
+                />
+                <div>
+                  <p className="p4-founder__name" style={{ color: PAPER }}>
+                    {FOUNDER.name}
+                  </p>
+                  <p className="p4-founder__alias" style={{ color: ACCENT }}>
+                    {FOUNDER.alias}
+                  </p>
+                  <p className="p3-item-desc">{FOUNDER.role.pt}</p>
+                </div>
               </div>
+              {/* HONESTIDADE DE EQUIPE (22/10/2026 b, item 6): um fundador só, em
+                  estágio inicial, e por isso procura parceiros. Sem rosto inventado. */}
+              <p className="p4-founder__team">
+                {FOUNDER.team.pt}
+                <En>{FOUNDER.team.en}</En>
+              </p>
+              <ul className="p4-founder__disc">
+                {FOUNDER.disciplines.map((d) => (
+                  <li key={d.pt} className="p4-founder__chip">
+                    {d.pt}
+                    <span className="p4-founder__chip-en"> / {d.en}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </PitchReveal>
 
-          {/* O PORTFÓLIO EM MOVIMENTO (20/10/2026): colunas em esteira vertical
-              lenta, sentidos alternados, cada uma com a lista duplicada para o
-              laço fechar sem salto. Decorativo (aria-hidden). */}
+          {/* O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026): cinco
+              colunas de sete quadros em esteira vertical, sentidos alternados,
+              cada uma com a lista duplicada para o laço fechar sem salto. As bordas
+              somem por máscara (sem corte duro). Decorativo (aria-hidden). */}
           <PitchReveal delay={320} style={{ minHeight: 0, height: '100%' }}>
             <div className="p4-reel" aria-hidden="true">
-              {FOUNDER.reel.map((col, ci) => (
-                <div key={ci} className={`p4-reel__col p4-reel__col--${ci}`}>
-                  <div className="p4-reel__track">
-                    {[...col, ...col].map((src, i) => (
-                      <div key={`${src}-${i}`} className="p4-reel__tile">
-                        <Image
-                          src={src}
-                          alt=""
-                          fill
-                          sizes="(max-width: 767px) 66vw, 30vw"
-                          quality={92}
-                          className="p4-reel__img"
-                          loading={i < col.length ? 'eager' : 'lazy'}
-                        />
-                      </div>
-                    ))}
+              <div className="p4-reel__grid">
+                {FOUNDER.reel.map((col, ci) => (
+                  <div key={ci} className={`p4-reel__col p4-reel__col--${ci}`}>
+                    <div className="p4-reel__track">
+                      {[...col, ...col].map((t, i) =>
+                        t.kind === 'img' ? (
+                          <div key={`${t.src}-${i}`} className="p4-reel__tile" style={{ aspectRatio: t.ar }}>
+                            <Image
+                              src={t.src}
+                              alt=""
+                              fill
+                              sizes="(max-width: 767px) 38vw, 20vw"
+                              quality={90}
+                              className="p4-reel__img"
+                              loading={ci < 3 && i < 4 ? 'eager' : 'lazy'}
+                            />
+                          </div>
+                        ) : (
+                          <div
+                            key={`${t.big}-${i}`}
+                            className={`p4-reel__tile p4-reel__info p4-reel__info--${t.tone}`}
+                            style={{ aspectRatio: t.ar }}
+                          >
+                            <span className="p4-reel__big">{t.big}</span>
+                            <span className="p4-reel__sub">{t.sub}</span>
+                            <span className="p4-reel__line">
+                              {t.line.pt}
+                              <span className="p4-reel__line-en">{t.line.en}</span>
+                            </span>
+                          </div>
+                        )
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </PitchReveal>
         </div>
@@ -613,14 +658,19 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </div>
       </section>
 
-      {/* ── CENA 04 · DA CULTURA AO NEGÓCIO ──────────────────────────────────────
+      {/* ── CENA 05 · MERCADO E POSIÇÃO (22/10/2026 b) ─────────────────────────
+             Dois dados de fonte verificável, a tese "o Brasil exporta cultura,
+             não propriedade" e o mapa de dois eixos. Em `NewScenes.tsx`. */}
+      <MarketScene />
+
+      {/* ── CENA 06 · DA CULTURA AO NEGÓCIO ──────────────────────────────────────
              Dois níveis: a linha de raciocínio (quatro verbos) e o portfólio
              (quatro propriedades, expansíveis). A mais cheia do deck: a
              expansão do portfólio acontece por hover/toque, dentro do próprio
              cartão, para nunca empurrar a cena para fora da tela. ─────────── */}
-      <section id="cena-05" style={{ ...S }} aria-label="Da Cultura ao Negócio / From Culture to Business">
-        <Numeral n="05" />
-        <Kicker n="05" pt="Da Cultura ao Negócio" en="From Culture to Business" />
+      <section id="cena-06" style={{ ...S }} aria-label="Da Cultura ao Negócio / From Culture to Business">
+        <Numeral n="06" />
+        <Kicker n="06" pt="Da Cultura ao Negócio" en="From Culture to Business" />
 
         <PitchReveal delay={100} slot="head">
           <h2 className="p3-h2 p3-h2--md">
@@ -663,11 +713,18 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
               item={item}
               delay={560 + i * 70}
               open={openVertical === i}
-              onToggle={() => setOpenVertical(openVertical === i ? null : i)}
+              metrics={item.name === '.THE FIORE DAILY.'}
+              onToggle={() =>
+                item.name === '.THE FIORE DAILY.'
+                  ? setTfdOpen(true)
+                  : setOpenVertical(openVertical === i ? null : i)
+              }
               onOpenStory={() => setVerticalStory(i)}
             />
           ))}
         </div>
+
+        {tfdOpen ? <TfdSheet onClose={() => setTfdOpen(false)} /> : null}
 
         {verticalStory !== null ? (
           <StoryPlayer
@@ -682,14 +739,17 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             saíram (20/10/2026): não cabiam limpas. Texto em BUSINESS.vision. */}
       </section>
 
-      {/* ── CENA 05 · CASE SELECIONADO ───────────────────────────────────────────
+      {/* ── CENA 07 · COMO CADA VERTICAL GANHA + ROADMAP (22/10/2026 b) ───────── */}
+      <ModelScene />
+
+      {/* ── CENA 08 · CASE SELECIONADO ───────────────────────────────────────────
              Mídia protagonista, texto mínimo. O filme vertical dá a atmosfera;
              as nove imagens correm em faixa horizontal, respeitando o arco
              narrativo do array (atmosfera → no ar), sem empurrar a cena para
              fora da tela: o scroll é da faixa, não da cena. ────────────────── */}
-      <section id="cena-06" style={{ ...S, background: '#111110' }} aria-label="Case Selecionado / Selected Case">
-        <Numeral n="06" />
-        <Kicker n="06" pt="Case Selecionado" en="Selected Case" />
+      <section id="cena-08" style={{ ...S, background: '#111110' }} aria-label="Case Selecionado / Selected Case">
+        <Numeral n="08" />
+        <Kicker n="08" pt="Case Selecionado" en="Selected Case" />
 
         {/* O TÍTULO SAIU DE CIMA DA CENA e foi para o lado do story (pedido do
             fundador 2026-08-14: "verãozão + nome do cliente do lado direito do
@@ -756,6 +816,25 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             </PitchReveal>
           </div>
 
+          {/* 22/10/2026 b: números confirmados pelo fundador em 25/09/2026 (conta
+              @odecasahostel). Três de seis; cada um com o seu período. Fonte em
+              `VERAOZAO_METRICS` (v4-scenes.ts). */}
+          <PitchReveal delay={420}>
+            <div className="p4-case__metrics">
+              {VERAOZAO_METRICS.map((m) => (
+                <div key={m.value} className="p4-case__metric">
+                  <span className="p4-case__mval">{m.value}</span>
+                  <span className="p4-case__mlab">
+                    {m.label.pt}
+                    <En>{m.label.en}</En>
+                  </span>
+                  <span className="p4-case__mper">{m.period.pt}</span>
+                </div>
+              ))}
+              <p className="p4-case__msrc">{VERAOZAO_SOURCE.pt}</p>
+            </div>
+          </PitchReveal>
+
           {caseStoryOpen ? (
             <StoryPlayer
               groups={[
@@ -776,104 +855,18 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             />
           ) : null}
         </div>
-
-        {/* Números do case: VAZIO enquanto não houver medição verificada do
-            período da campanha (ver a nota no módulo de conteúdo). Renderiza
-            só se `metrics` tiver algo; nunca um placeholder no lugar. */}
-        {CASE.metrics.length > 0 && (
-          <PitchReveal delay={580}>
-            <div className="p3-proof__stats p3-case-metrics">
-              {CASE.metrics.map((m) => (
-                <div key={m.label.pt} className="p3-proof__stat">
-                  <span className="p3-proof__value">{m.value}</span>
-                  <span className="p3-proof__label">
-                    {m.label.pt}
-                    <En>{m.label.en}</En>
-                  </span>
-                </div>
-              ))}
-            </div>
-          </PitchReveal>
-        )}
       </section>
 
-      {/* ── CENA 06 · POR QUE A OVERLENS ─────────────────────────────────────── */}
-      <section id="cena-07" style={{ ...S }} aria-label={`${partner.kicker.pt} / ${partner.kicker.en}`}>
-        <Numeral n="07" />
-        <Kicker n="07" pt={partner.kicker.pt} en={partner.kicker.en} />
+      {/* ── CENA 09 · O QUE CONSTRUÍMOS JUNTOS (22/10/2026 b) ──────────────────
+             Entrou no lugar da cena de CNPJ e regime: três marcos com retorno
+             para o parceiro, datados em trimestres de 2027, e o pedido em uma
+             frase. A cena de dois lados (`partner.sides`) e a linha de CNPJ saíram
+             da tela; os dados seguem em `v3-scenes.ts` e `COMPANY`. */}
+      <TogetherScene />
 
-        <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2 p3-h2--md">
-            {partner.question.pt[0]}
-            <br />
-            {partner.question.pt[1]}
-            <En size="lead">{partner.question.en.join(' ')}</En>
-          </h2>
-        </PitchReveal>
-
-        {/* Os dois lados, tratamento visual equivalente: nenhum dos dois é
-            "cliente" do outro. */}
-        <div className="p3-partner-grid">
-          {partner.sides.map((side, i) => {
-            const color = side.color === 'accent' ? ACCENT : PAPER
-            return (
-              <PitchReveal key={side.who} delay={200 + i * 120}>
-                <div
-                  style={{
-                    background: '#000000',
-                    padding: 'clamp(1.1rem, 3vw, 1.4rem)',
-                    borderTop: `2px solid ${color}`,
-                    borderRadius: 'var(--tbf-radius-card)',
-                    height: '100%',
-                  }}
-                >
-                  <p className="p3-partner-name" style={{ color }}>
-                    {side.who}
-                  </p>
-                  {side.lines.map((line) => (
-                    <p key={line.pt} className="p3-partner-line">
-                      {line.pt}
-                    </p>
-                  ))}
-                </div>
-              </PitchReveal>
-            )
-          })}
-        </div>
-
-        {/* THE GOAL: onde os dois lados convergem, maior peso visual da cena. */}
-        <PitchReveal delay={480}>
-          <div className="p3-goal">
-            <p className="p3-kicker-mini">{partner.goal.kicker}</p>
-            <p className="p3-goal__line">
-              {partner.goal.lines[0].pt}
-              <br />
-              <span style={{ color: ACCENT }}>{partner.goal.lines[1].pt}</span>
-              <En size="lead">{partner.goal.lines.map((l) => l.en).join(' ')}</En>
-            </p>
-          </div>
-        </PitchReveal>
-
-        {/* RODAPÉ DISCRETO (pedido do fundador 20/10/2026). Hipóteses e o bloco
-            INOVA SIMPLES saíram da tela; regime, razão social, CNPJ e sede
-            viram uma linha só, em corpo miúdo. Os textos seguem em
-            `partner.hypotheses` e `COMPANY.regimeText`. */}
-        <PitchReveal delay={600}>
-          <p className="p4-fineprint">
-            <span className="p4-fineprint__part">
-              {COMPANY.legalName}, startup no regime {COMPANY.regime}
-            </span>
-            <span className="p4-fineprint__sep" aria-hidden="true"> · </span>
-            <span className="p4-fineprint__part">CNPJ {COMPANY.cnpj}</span>
-            <span className="p4-fineprint__sep" aria-hidden="true"> · </span>
-            <span className="p4-fineprint__part">{COMPANY.address}</span>
-          </p>
-        </PitchReveal>
-      </section>
-
-      {/* ── CENA 07 · FECHO ──────────────────────────────────────────────────── */}
+      {/* ── CENA 10 · FECHO ──────────────────────────────────────────────────── */}
       <section
-        id="cena-08"
+        id="cena-10"
         style={{ ...S, alignItems: 'center', textAlign: 'center', background: '#000000' }}
         aria-label="Fecho / Close"
       >
@@ -982,7 +975,11 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           color: ${ACCENT};
         }
 
-        /* ─── Cena 01: o fundador + portfólio em movimento (20/10/2026) ─────── */
+        /* ─── Cena 01: o fundador + portfólio em movimento (22/10/2026 b) ────── */
+        /* Mosaico maior que antes: sangra até as bordas laterais da tela e desce
+           por cima do respiro de rodapé (o passador flutua por cima). As bordas
+           não têm corte duro: duas máscaras de transparência (lateral e vertical)
+           fazem o quadro sumir no preto, como sombra que se dissolve. */
         .p4-founder {
           position: relative;
           z-index: 1;
@@ -991,16 +988,21 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           display: grid;
           grid-template-columns: 1fr;
           grid-template-rows: auto minmax(0, 1fr);
-          gap: clamp(0.6rem, 1.8vh, 1.25rem);
+          gap: clamp(0.4rem, 1.2vh, 1rem);
           margin-top: var(--p3-gap-sm);
+          margin-inline: calc(var(--p3-pad-x) * -1);
+          margin-bottom: calc(var(--p3-foot) * -0.9);
+        }
+        .p4-founder__info {
+          padding-inline: var(--p3-pad-x);
         }
         .p4-founder__id {
           display: flex;
           align-items: center;
-          gap: 0.85rem;
+          gap: 0.75rem;
         }
         .p4-founder__img {
-          width: clamp(3.5rem, min(20vw, 11vh), 6.5rem);
+          width: clamp(3rem, min(15vw, 9vh), 6.5rem);
           height: auto;
           aspect-ratio: 1 / 1;
           object-fit: cover;
@@ -1012,55 +1014,114 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           margin: 0;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.95rem, min(3vw, 2.6vh), 1.3rem);
+          font-size: clamp(0.9rem, min(3vw, 2.6vh), 1.3rem);
           line-height: 1.1;
         }
         .p4-founder__alias {
-          margin: 0.1rem 0 0.3rem;
+          margin: 0.05rem 0 0.15rem;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.7rem, min(2.2vw, 2vh), 0.9rem);
+          font-size: clamp(0.68rem, min(2.2vw, 2vh), 0.9rem);
           letter-spacing: 0.06em;
         }
+        .p4-founder__team {
+          margin: 0.4rem 0 0;
+          font-family: var(--tbf-font-family-display);
+          font-weight: 600;
+          font-size: 0.78rem;
+          line-height: 1.22;
+          color: ${PAPER};
+        }
+        .p4-founder__team .p3-en { font-size: 0.64rem; line-height: 1.15; font-weight: 300; }
+        .p4-founder__disc { display: none; }
+
         .p4-reel {
+          height: 100%;
+          overflow: hidden;
+          -webkit-mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+        }
+        .p4-reel__grid {
           height: 100%;
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 0.5rem;
-          overflow: hidden;
-          /* Esmaece topo e base, bem sutil (22/10/2026): máscara de 4%, que parte
-             de 65% de opacidade. Não é camada por cima da imagem. */
-          -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, #000 4%, #000 96%, rgba(0, 0, 0, 0.65) 100%);
-          mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65) 0, #000 4%, #000 96%, rgba(0, 0, 0, 0.65) 100%);
+          gap: 0.45rem;
+          padding-inline: 0.45rem;
+          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
         }
         .p4-reel__col {
           min-width: 0;
           overflow: hidden;
         }
-        .p4-reel__col--3 {
+        .p4-reel__col--3,
+        .p4-reel__col--4 {
           display: none;
         }
         .p4-reel__track {
           display: flex;
           flex-direction: column;
-          animation: p4-reel 80s linear infinite;
+          animation: p4-reel 34s linear infinite;
           will-change: transform;
         }
-        .p4-reel__col--0 .p4-reel__track { animation-duration: 70s; }
-        .p4-reel__col--1 .p4-reel__track { animation-duration: 90s; animation-direction: reverse; animation-delay: -25s; }
-        .p4-reel__col--2 .p4-reel__track { animation-duration: 80s; animation-delay: -40s; }
-        .p4-reel__col--3 .p4-reel__track { animation-duration: 100s; animation-direction: reverse; animation-delay: -10s; }
+        .p4-reel__col--0 .p4-reel__track { animation-duration: 32s; }
+        .p4-reel__col--1 .p4-reel__track { animation-duration: 38s; animation-direction: reverse; animation-delay: -12s; }
+        .p4-reel__col--2 .p4-reel__track { animation-duration: 35s; animation-delay: -20s; }
+        .p4-reel__col--3 .p4-reel__track { animation-duration: 42s; animation-direction: reverse; animation-delay: -6s; }
+        .p4-reel__col--4 .p4-reel__track { animation-duration: 37s; animation-delay: -15s; }
         .p4-reel__tile {
           position: relative;
           flex: none;
-          aspect-ratio: 4 / 5;
-          margin-bottom: 0.5rem;
+          width: 100%;
+          margin-bottom: 0.45rem;
           border-radius: var(--tbf-radius-card);
           overflow: hidden;
           background: #0a0a09;
         }
         .p4-reel__img {
           object-fit: cover;
+        }
+        /* Peças tipográficas: fato já publicado (papel, cliente, ano). Texto
+           sobre fundo chapado, nunca sobre imagem. */
+        .p4-reel__info {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 0.5rem;
+        }
+        .p4-reel__info--accent { background: ${ACCENT}; color: #000000; }
+        .p4-reel__info--paper { background: ${PAPER}; color: #000000; }
+        .p4-reel__info--dark { background: #1b1b19; color: ${PAPER}; }
+        .p4-reel__big {
+          font-family: var(--tbf-font-family-display);
+          font-weight: 800;
+          font-size: clamp(0.85rem, 4.2vw, 1.5rem);
+          line-height: 1;
+          letter-spacing: -0.04em;
+        }
+        .p4-reel__info--dark .p4-reel__big { color: ${ACCENT}; }
+        .p4-reel__sub {
+          margin-top: 0.1rem;
+          font-family: var(--tbf-font-family-display);
+          font-weight: 800;
+          font-size: clamp(0.7rem, 3.4vw, 1.1rem);
+          line-height: 1.05;
+          letter-spacing: -0.03em;
+        }
+        .p4-reel__line {
+          margin-top: 0.3rem;
+          display: flex;
+          flex-direction: column;
+          font-family: var(--tbf-font-family-body);
+          font-weight: 450;
+          font-size: 0.56rem;
+          line-height: 1.15;
+        }
+        .p4-reel__line-en {
+          font-family: var(--tbf-font-family-printed);
+          font-style: italic;
+          font-weight: 300;
+          opacity: 0.7;
         }
         @keyframes p4-reel {
           from { transform: translateY(0); }
@@ -1216,16 +1277,31 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           color: ${ACCENT};
         }
 
-        /* ─── Cena 06: o filme é o protagonista (20/10/2026) ────────────────── */
+        /* ─── Cena 08: o filme é o protagonista (20/10/2026; métricas 22/10/2026 b) ──
+           Mobile: filme à esquerda, marca e frase à direita; faixa de três
+           números embaixo, de ponta a ponta. Desktop: filme em coluna, texto e
+           números à direita. */
         .p4-case {
           position: relative;
           z-index: 1;
           flex: 1 1 auto;
           min-height: 0;
-          display: flex;
-          flex-direction: column;
-          gap: 0.6rem;
+          display: grid;
+          grid-template-columns: auto minmax(0, 1fr);
+          grid-template-rows: minmax(0, 1fr) auto;
+          align-content: center;
+          column-gap: 0.8rem;
+          row-gap: 0.6rem;
           margin-top: var(--p3-gap-sm);
+        }
+        .p4-case > .pitch-reveal:first-child {
+          grid-row: 1;
+          grid-column: 1;
+          flex: none !important;
+        }
+        .p4-case > .pitch-reveal:nth-child(3) {
+          grid-row: 2;
+          grid-column: 1 / -1;
         }
         .p4-case__media {
           height: 100%;
@@ -1233,6 +1309,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }
         .p4-case__video {
           height: 100%;
+          max-height: calc((100vw - 2 * var(--p3-pad-x)) * 0.5 * 16 / 9);
           width: auto;
           max-width: 100%;
           aspect-ratio: 9 / 16;
@@ -1241,47 +1318,95 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           background: #000000;
         }
         .p4-case__copy {
-          flex: none;
-          display: grid;
-          grid-template-columns: 1fr auto;
-          column-gap: 0.9rem;
-          align-items: center;
-        }
-        .p4-case__copy > :nth-child(3) {
+          grid-row: 1;
           grid-column: 2;
-          grid-row: 1 / span 2;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 0.55rem;
         }
         .p4-case__brand {
           display: flex;
-          align-items: center;
-          gap: 0.9rem;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
         }
         .p4-case__brand .p3-case-title {
           margin: 0;
         }
         .p4-case__wordmark {
-          width: 5.6rem;
+          width: 5.2rem;
           height: auto;
           display: block;
         }
         .p4-case__client {
-          width: 4.8rem;
+          width: 4.4rem;
           height: auto;
           display: block;
         }
         .p4-case__line {
-          margin: 0.3rem 0 0;
+          margin: 0;
           font-family: var(--tbf-font-family-display);
           font-weight: 600;
-          font-size: 0.82rem;
-          line-height: 1.3;
+          font-size: 0.74rem;
+          line-height: 1.25;
           color: ${PAPER};
         }
+        .p4-case__line .p3-en { font-size: 0.62rem; line-height: 1.15; font-weight: 300; }
         .p4-case__stories {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
           align-items: center;
-          gap: 0.3rem;
+          gap: 0.6rem;
+        }
+        .p4-case__metrics {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 0.4rem;
+        }
+        .p4-case__metric {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          padding: 0.5rem 0.55rem;
+          background: #0a0a09;
+          border-radius: var(--tbf-radius-card);
+          min-width: 0;
+        }
+        .p4-case__mval {
+          font-family: var(--tbf-font-family-display);
+          font-weight: 800;
+          font-size: clamp(0.95rem, 4.6vw, 1.4rem);
+          line-height: 1;
+          letter-spacing: -0.04em;
+          color: ${ACCENT};
+        }
+        .p4-case__mlab {
+          font-family: var(--tbf-font-family-body);
+          font-weight: 350;
+          font-size: 0.58rem;
+          line-height: 1.2;
+          color: rgba(240, 237, 230, 0.8);
+        }
+        .p4-case__mlab .p3-en { font-size: 0.52rem; line-height: 1.12; }
+        .p4-case__mper {
+          font-family: var(--tbf-font-family-printed);
+          font-weight: 500;
+          font-size: 0.5rem;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          color: rgba(240, 237, 230, 0.45);
+        }
+        .p4-case__msrc {
+          grid-column: 1 / -1;
+          margin: 0;
+          font-family: var(--tbf-font-family-printed);
+          font-weight: 400;
+          font-size: 0.54rem;
+          letter-spacing: 0.04em;
+          color: rgba(240, 237, 230, 0.4);
         }
 
         /* ─── Cena 07: rodapé discreto (20/10/2026) ─────────────────────────── */
@@ -1306,21 +1431,48 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-fineprint__sep { display: inline; }
           .p4-founder {
             margin-top: var(--p3-gap);
-            grid-template-columns: minmax(14rem, 1fr) 2.2fr;
+            margin-inline: 0 calc(var(--p3-pad-x) * -1);
+            grid-template-columns: minmax(15rem, 0.8fr) 2.4fr;
             grid-template-rows: minmax(0, 1fr);
             align-items: start;
+            gap: clamp(1.25rem, 3vw, 3rem);
           }
-          .p4-reel {
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 0.75rem;
-            /* Escala real (22/10/2026): peça de ~8rem, bem abaixo da resolução
-               nativa dos arquivos (720px a 1600px de largura). */
-            max-width: 36rem;
-            justify-self: center;
-            width: 100%;
+          .p4-founder__info { padding-inline: 0; }
+          .p4-founder__team { font-size: clamp(0.95rem, 1.5vw, 1.25rem); margin-top: 1.1rem; }
+          .p4-founder__team .p3-en { font-size: clamp(0.78rem, 1.1vw, 0.95rem); }
+          .p4-founder__disc {
+            list-style: none;
+            margin: 1.4rem 0 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
           }
-          .p4-reel__col--3 { display: block; }
-          .p4-reel__tile { margin-bottom: 0.75rem; }
+          .p4-founder__chip {
+            padding: 0.3rem 0.7rem;
+            border-radius: var(--tbf-radius-full);
+            background: #0a0a09;
+            font-family: var(--tbf-font-family-printed);
+            font-weight: 500;
+            font-size: 0.68rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: rgba(240, 237, 230, 0.82);
+          }
+          .p4-founder__chip-en { color: rgba(240, 237, 230, 0.45); font-weight: 400; }
+          .p4-reel { height: 100%; }
+          .p4-reel__grid {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 0.7rem;
+            padding-inline: 0.7rem;
+          }
+          .p4-reel__col--3,
+          .p4-reel__col--4 { display: block; }
+          .p4-reel__tile { margin-bottom: 0.7rem; }
+          .p4-reel__info { padding: 0.8rem; }
+          .p4-reel__big { font-size: clamp(1rem, 1.7vw, 1.7rem); }
+          .p4-reel__sub { font-size: clamp(0.8rem, 1.2vw, 1.2rem); }
+          .p4-reel__line { font-size: clamp(0.62rem, 0.8vw, 0.8rem); margin-top: 0.5rem; }
 
           .p4-verticals {
             flex: 1 1 auto;
@@ -1350,37 +1502,42 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-vc__link { font-size: 0.8rem; }
 
           .p4-case {
-            flex-direction: row;
-            gap: clamp(2rem, 6vw, 5rem);
+            grid-template-columns: auto minmax(0, 1fr);
+            grid-template-rows: 1fr auto;
+            column-gap: clamp(2rem, 6vw, 5rem);
+            row-gap: 1.4rem;
+            align-content: stretch;
             align-items: stretch;
           }
-          .p4-case > .pitch-reveal:first-child {
-            flex: 0 0 auto !important;
-          }
+          .p4-case > .pitch-reveal:first-child { grid-row: 1 / span 2; }
+          .p4-case > .pitch-reveal:nth-child(3) { grid-row: 2; grid-column: 2; }
+          .p4-case__video { max-height: none; }
           .p4-case__copy {
-            flex: 1 1 auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: flex-start;
             gap: 1.1rem;
+            align-self: end;
           }
-          .p4-case__brand { gap: 1.4rem; }
+          .p4-case__brand { flex-direction: row; align-items: center; gap: 1.4rem; }
           .p4-case__wordmark { width: clamp(10rem, 20vw, 17rem); }
           .p4-case__client { width: clamp(7rem, 11vw, 10rem); }
           .p4-case__line {
             max-width: 26rem;
             font-size: clamp(1.1rem, 1.9vw, 1.6rem);
           }
-          .p4-case__stories {
-            flex-direction: row;
-            gap: 0.75rem;
-          }
+          .p4-case__line .p3-en { font-size: clamp(0.85rem, 1.2vw, 1.05rem); }
+          .p4-case__stories { gap: 0.75rem; }
+          .p4-case__metrics { gap: 0.75rem; align-self: start; max-width: 40rem; }
+          .p4-case__metric { padding: 0.9rem 1rem; gap: 0.3rem; }
+          .p4-case__mval { font-size: clamp(1.4rem, 2.6vw, 2.2rem); }
+          .p4-case__mlab { font-size: 0.8rem; }
+          .p4-case__mlab .p3-en { font-size: 0.7rem; }
+          .p4-case__mper { font-size: 0.62rem; }
+          .p4-case__msrc { font-size: 0.66rem; }
           .p4-fineprint { font-size: 0.72rem; }
         }
       `}</style>
 
       {/* ── Design system do deck + layout responsivo (mobile-first) ─────────── */}
+      <NewScenesStyles />
       <DeckStyles />
     </div>
   )
