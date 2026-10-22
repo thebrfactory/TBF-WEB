@@ -2,6 +2,11 @@
 // o espaço certo e montar o mosaico. Gerado a partir dos arquivos em public/;
 // ao trocar uma imagem, regere. Chave: caminho público.
 export const DIMS: Record<string, readonly [number, number]> = {
+  '/images/creators/tavaristico/fashion-backstage/cover.webp': [2000, 1125],
+  '/images/creators/tavaristico/fashion-backstage/02.webp': [1080, 1440],
+  '/images/creators/tavaristico/fashion-backstage/03.webp': [1080, 1440],
+  '/images/creators/tavaristico/fashion-backstage/04.webp': [2000, 1125],
+  '/images/creators/tavaristico/fashion-backstage/05.webp': [2000, 1125],
   '/images/creators/tavaristico/behance/arquiloucura/01.webp': [1400, 1000],
   '/images/creators/tavaristico/behance/arquiloucura/02.webp': [1400, 1000],
   '/images/creators/tavaristico/behance/arquiloucura/03.webp': [1400, 1000],

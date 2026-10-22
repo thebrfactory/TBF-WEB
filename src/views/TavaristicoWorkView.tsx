@@ -14,6 +14,7 @@ import { notFound } from 'next/navigation'
 import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { Lookbook, FeedGrid } from '@/components/tavaristico/WorkEditorial'
+import { InstagramEmbeds } from '@/components/tavaristico/InstagramEmbeds'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -138,6 +139,10 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         )}
 
         {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} />}
+
+        {w.instagramEmbeds && w.instagramEmbeds.length > 0 && (
+          <InstagramEmbeds urls={w.instagramEmbeds} label={t.reelsLabel} />
+        )}
 
         <nav className={styles.workNav}>
           <Link href={path(`/creators/tavaristico/works/${prev.slug}`)} className={styles.navLink}>

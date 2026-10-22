@@ -97,11 +97,15 @@ export function MasonryGallery({
             href={path(`/creators/tavaristico/works/${w.slug}`)}
             className={`${styles.card} ${visible(w) ? '' : styles.cardHidden}`}
           >
-            <span className={styles.cardMedia} style={{ aspectRatio: RATIOS[i % RATIOS.length] }}>
+            <span
+              className={styles.cardMedia}
+              style={{ aspectRatio: RATIOS[i % RATIOS.length], ...(w.cardFit ? { background: w.cardFit.bg } : null) }}
+            >
               <Image
                 src={w.cardCover ?? w.media.cover}
                 alt={w.title}
                 fill
+                style={w.cardFit ? { objectFit: 'contain', padding: w.cardFit.inset } : undefined}
                 sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
               />
               <span className={styles.cardOverlay} aria-hidden="true" />

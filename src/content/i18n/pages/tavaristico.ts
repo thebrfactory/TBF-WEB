@@ -84,6 +84,7 @@ const en = {
     fallbackTitle: 'Work · Tavarístico',
     lookbookLabel: 'Lookbook & catalog',
     feedLabel: 'Feed, September',
+    reelsLabel: 'On Instagram, @runwayunited',
     creditsLabel: 'Credits',
   },
 }
@@ -144,6 +145,7 @@ const pt: typeof en = {
     fallbackTitle: 'Obra · Tavarístico',
     lookbookLabel: 'Lookbook e catálogo',
     feedLabel: 'Feed, setembro',
+    reelsLabel: 'No Instagram, @runwayunited',
     creditsLabel: 'Créditos',
   },
 }

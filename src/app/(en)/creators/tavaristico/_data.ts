@@ -47,6 +47,8 @@ export interface Work {
   coverAlt?: string
   /** Capa so do card do portfolio (a pagina de obra segue em media.cover). */
   cardCover?: string
+  /** Card do portfolio com a capa contida (sem corte) sobre fundo chapado: `inset` e o respiro (padding) em volta. */
+  cardFit?: { bg: string; inset: string }
   galleryAlts?: string[]
   /** Ficha de creditos da obra (nomes proprios: extrabold na tela).
    * Rodada 19/10/2026: substituiu o "Producao executiva: LAUDA" do topo. */
@@ -55,6 +57,8 @@ export interface Work {
   lookbook?: WorkPiece[]
   /** Grid do feed (3 colunas, quadrado como no PDF de planejamento). */
   feedGrid?: WorkPiece[]
+  /** Posts/reels do Instagram embedados (embed oficial, carregado so ao rolar ate eles). */
+  instagramEmbeds?: string[]
 }
 
 /** Peca de pagina de obra: arquivo pronto (nunca montado por codigo) e alt em PT. */
@@ -180,58 +184,6 @@ const TIGER_CAPSULE: Work = {
 }
 
 export const WORKS: Work[] = [
-  {
-    slug: 'spfw-the-paradise',
-    index: '01',
-    title: 'SPFW · The Paradise',
-    disciplines: ['Art Direction', 'Fashion'],
-    role: 'Creative Director',
-    client: 'São Paulo Fashion Week',
-    summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
-    description:
-      'Runway United Collective: um coletivo de profissionais unidos para viabilizar filmes de moda de forma autoral e independente. Ato I, São Paulo Fashion Week N58, 16 de outubro de 2024, credenciado e representado por The Paradise. Ato II, Casa de Criadores 55, de 5 a 10 de dezembro de 2024. Ato III, Brasil Eco Fashion Week, de 13 a 15 de dezembro de 2024.',
-    descriptionEn:
-      'Runway United Collective: a collective of professionals united to make fashion films possible in an authorial and independent way. Act I, São Paulo Fashion Week N58, October 16, 2024, accredited and represented by The Paradise. Act II, Casa de Criadores 55, December 5 to 10, 2024. Act III, Brasil Eco Fashion Week, December 13 to 15, 2024.',
-    selected: true,
-    media: {
-      cover: `${base}/spfw-the-paradise/cover.webp`,
-      gallery: [`${base}/spfw-the-paradise/g1.webp`, `${base}/spfw-the-paradise/g2.webp`, `${base}/spfw-the-paradise/g3.webp`],
-    },
-    provisional: ['summary'],
-  },
-  {
-    slug: 'capsula-brasilidade',
-    index: '02',
-    title: 'Cápsula Brasilidade',
-    disciplines: ['Branding'],
-    role: 'Art Director / Designer',
-    // Cliente corrigido pelo fundador em 16/09/2026: "e um projeto de minha
-    // autoria para o cliente BOAH (da epoca que trabalhei la)". Nao era
-    // projeto autoral solto, era autoral DENTRO da BOAH.
-    client: 'BOAH',
-    summary: 'Uma cápsula que traduz brasilidade em conceito, produto e identidade.',
-    description:
-      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade para a BOAH: do folder ao produto, uma leitura contemporânea de repertório brasileiro. Projeto autoral, do período na marca.',
-    descriptionEn:
-      'Concept, packaging and identity system for a Brazilianness capsule for BOAH: from the folder to the product, a contemporary reading of Brazilian repertoire. An authorial project from the period at the brand.',
-    media: {
-      cover: `${base}/behance/capsula-brasilidade-boah/01.webp`,
-      gallery: [
-        `${base}/behance/capsula-brasilidade-boah/02.gif`,
-        `${base}/behance/capsula-brasilidade-boah/03.webp`,
-        `${base}/behance/capsula-brasilidade-boah/04.webp`,
-        `${base}/behance/capsula-brasilidade-boah/05.webp`,
-        `${base}/behance/capsula-brasilidade-boah/06.webp`,
-        `${base}/behance/capsula-brasilidade-boah/07.webp`,
-        `${base}/behance/capsula-brasilidade-boah/08.webp`,
-        `${base}/behance/capsula-brasilidade-boah/09.webp`,
-        `${base}/capsula-brasilidade/pp-bottle-1.webp`,
-        `${base}/capsula-brasilidade/pp-bottle-2.webp`,
-        `${base}/behance/capsula-brasilidade-boah/10.webp`,
-      ],
-    },
-    provisional: ['role', 'summary', 'description'],
-  },
   {
     slug: 'virtuosa',
     index: '04',
@@ -402,6 +354,39 @@ export const WORKS: Work[] = [
     feedGrid: FEED_GRID,
     provisional: ['role', 'summary'],
   },
+  {
+    slug: 'capsula-brasilidade',
+    index: '02',
+    title: 'Cápsula Brasilidade',
+    disciplines: ['Branding'],
+    role: 'Art Director / Designer',
+    // Cliente corrigido pelo fundador em 16/09/2026: "e um projeto de minha
+    // autoria para o cliente BOAH (da epoca que trabalhei la)". Nao era
+    // projeto autoral solto, era autoral DENTRO da BOAH.
+    client: 'BOAH',
+    summary: 'Uma cápsula que traduz brasilidade em conceito, produto e identidade.',
+    description:
+      'Conceito, embalagem e sistema de identidade de uma cápsula de brasilidade para a BOAH: do folder ao produto, uma leitura contemporânea de repertório brasileiro. Projeto autoral, do período na marca.',
+    descriptionEn:
+      'Concept, packaging and identity system for a Brazilianness capsule for BOAH: from the folder to the product, a contemporary reading of Brazilian repertoire. An authorial project from the period at the brand.',
+    media: {
+      cover: `${base}/behance/capsula-brasilidade-boah/01.webp`,
+      gallery: [
+        `${base}/behance/capsula-brasilidade-boah/02.gif`,
+        `${base}/behance/capsula-brasilidade-boah/03.webp`,
+        `${base}/behance/capsula-brasilidade-boah/04.webp`,
+        `${base}/behance/capsula-brasilidade-boah/05.webp`,
+        `${base}/behance/capsula-brasilidade-boah/06.webp`,
+        `${base}/behance/capsula-brasilidade-boah/07.webp`,
+        `${base}/behance/capsula-brasilidade-boah/08.webp`,
+        `${base}/behance/capsula-brasilidade-boah/09.webp`,
+        `${base}/capsula-brasilidade/pp-bottle-1.webp`,
+        `${base}/capsula-brasilidade/pp-bottle-2.webp`,
+        `${base}/behance/capsula-brasilidade-boah/10.webp`,
+      ],
+    },
+    provisional: ['role', 'summary', 'description'],
+  },
   TIGER_CAPSULE,
   {
     slug: 'blackboah',
@@ -544,6 +529,8 @@ export const WORKS: Work[] = [
       'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
     descriptionEn:
       'Art direction of branded content for BOAH: seasonal campaigns, product still and lifestyle content for social media.',
+    // Rodada 22/10/2026: logo menor, com respiro, sobre o creme #f6f4ed preenchendo o card.
+    cardFit: { bg: '#f6f4ed', inset: '12%' },
     media: {
       cover: `${base}/behance/branded-content-boah/01.webp`,
       gallery: [
@@ -648,6 +635,40 @@ export const WORKS: Work[] = [
         `${base}/behance/festival-de-arte-e-gastronomia/23.webp`,
       ],
     },
+  },
+  {
+    slug: 'spfw-the-paradise',
+    index: '01',
+    title: 'The Fashion Backstage',
+    disciplines: ['Art Direction', 'Fashion'],
+    role: 'Creative Director',
+    client: 'São Paulo Fashion Week',
+    summary: 'Direção de arte e linguagem visual para a São Paulo Fashion Week.',
+    description:
+      'Antes da passarela, o bastidor. Pelo Runway United Collective (RUC), a câmera acompanhou a moda brasileira de dentro: São Paulo Fashion Week N58, Casa de Criadores 55 e Brasil Eco Fashion Week, em 2024. A luz azul, o corpo a caminho do desfile, o olhar de quem espera a vez.',
+    descriptionEn:
+      'Before the runway, the backstage. Through Runway United Collective (RUC), the camera followed Brazilian fashion from the inside: São Paulo Fashion Week N58, Casa de Criadores 55 and Brasil Eco Fashion Week, in 2024. The blue light, the body on its way to the show, the gaze of someone waiting for their turn.',
+    selected: true,
+    media: {
+      cover: `${base}/fashion-backstage/cover.webp`,
+      gallery: [
+        `${base}/fashion-backstage/04.webp`,
+        `${base}/fashion-backstage/02.webp`,
+        `${base}/fashion-backstage/03.webp`,
+        `${base}/fashion-backstage/05.webp`,
+        `${base}/spfw-the-paradise/cover.webp`,
+        `${base}/spfw-the-paradise/g1.webp`,
+        `${base}/spfw-the-paradise/g2.webp`,
+        `${base}/spfw-the-paradise/g3.webp`,
+      ],
+    },
+    // Reels do perfil @runwayunited (conferidos pela legenda publica em 22/10/2026).
+    instagramEmbeds: [
+      'https://www.instagram.com/p/DPUk0hvgn-6/',
+      'https://www.instagram.com/p/Da5fZDlOfoj/',
+      'https://www.instagram.com/p/DPKfbR6jmx_/',
+    ],
+    provisional: ['summary'],
   },
 ]
 
