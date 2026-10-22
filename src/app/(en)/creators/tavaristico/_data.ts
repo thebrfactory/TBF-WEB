@@ -49,6 +49,13 @@ export interface Work {
   cardCover?: string
   /** Card do portfolio com a capa contida (sem corte) sobre fundo chapado: `inset` e o respiro (padding) em volta. */
   cardFit?: { bg: string; inset: string }
+  /** Proporcao fixa do card (ex.: '4 / 5'). Sem ela, o card segue o ritmo da grade. */
+  cardRatio?: string
+  /** Ponto focal da capa no card, em fracao da imagem [x, y]. A grade calcula o
+   * object-position para esse ponto cair no centro do card, em qualquer proporcao. */
+  cardFocus?: [number, number]
+  /** Galeria densa: 2 colunas no celular, 3 no tablet, 4 no desktop, proporcao nativa. */
+  galleryDense?: boolean
   galleryAlts?: string[]
   /** Ficha de creditos da obra (nomes proprios: extrabold na tela).
    * Rodada 19/10/2026: substituiu o "Producao executiva: LAUDA" do topo. */
@@ -141,6 +148,60 @@ const FEED_GRID: WorkPiece[] = FEED_ALTS.map((alt, i) => ({
   alt,
 }))
 
+// BOAH BRANDED CONTENT (rodada 22/10/2026): a maioria das pecas e 9:16 e entra como
+// stories (mesmo componente da Virtuosa), agrupadas por tema. Os quadros ficam como
+// vieram do arquivo (texto ja gravado), sem montagem nem sobreposicao por codigo.
+// Os quadrados e os 4:5 seguem na galeria densa, lado a lado.
+const bo = `${base}/behance/branded-content-boah`
+const boFrames = (nums: number[], alt: string, role: string): StoryFrame[] =>
+  nums.map((n, i) => ({
+    src: `${bo}/${String(n).padStart(2, '0')}.webp`,
+    alt: `${alt}, quadro ${i + 1} de ${nums.length}.`,
+    role,
+  }))
+const BOAH_HIGHLIGHTS: Campaign[] = [
+  {
+    index: 'boah-dias-de-folga',
+    name: 'DIAS DE FOLGA',
+    client: 'BOAH',
+    descriptionEN: 'Days off stories for BOAH: the season looks and accessories.',
+    descriptionPT: 'Stories Dias de folga, da BOAH: os looks da estação e os acessórios.',
+    frames: boFrames([2, 3, 4, 5, 6], 'Story Dias de folga da BOAH', 'Stories'),
+  },
+  {
+    index: 'boah-registros',
+    name: 'REGISTROS',
+    client: 'BOAH',
+    descriptionEN: 'Records stories for BOAH: looks photographed on location.',
+    descriptionPT: 'Stories Registros, da BOAH: looks fotografados em locação.',
+    frames: boFrames([13, 14, 15, 16], 'Story Registros da BOAH', 'Stories'),
+  },
+  {
+    index: 'boah-celebre-o-amor',
+    name: 'CELEBRE O AMOR',
+    client: 'BOAH',
+    descriptionEN: 'Celebrate love stories for BOAH: the red looks of the season.',
+    descriptionPT: 'Stories Celebre o amor, da BOAH: os looks vermelhos da estação.',
+    frames: boFrames([22, 23, 24, 25, 26], 'Story Celebre o amor da BOAH', 'Stories'),
+  },
+  {
+    index: 'boah-lojas-abertas',
+    name: 'LOJAS ABERTAS',
+    client: 'BOAH',
+    descriptionEN: 'Open stores stories for BOAH: the stores, the looks and the opening hours.',
+    descriptionPT: 'Stories Lojas abertas, da BOAH: as lojas, os looks e os horários.',
+    frames: boFrames([27, 28, 29, 30, 31], 'Story Lojas abertas da BOAH', 'Stories'),
+  },
+  {
+    index: 'boah-manha-tarde-noite',
+    name: 'MANHÃ, TARDE E NOITE',
+    client: 'BOAH',
+    descriptionEN: 'Morning, afternoon and night stories for BOAH: one look for each moment of the day.',
+    descriptionPT: 'Stories Manhã, tarde e noite, da BOAH: um look para cada momento do dia.',
+    frames: boFrames([32, 33, 34, 35, 36], 'Story Manhã, tarde e noite da BOAH', 'Stories'),
+  },
+]
+
 // TIGER CAPSULE (CHANGES #01, 19/10/2026). Texto so do que a midia afirma:
 // "A Savannah Odyssey", "Spring Summer 24", "Creative District", "Designed and
 // created in Brazil". Papel e cliente nao constam da midia: papel provisorio.
@@ -181,6 +242,8 @@ const TIGER_CAPSULE: Work = {
     ],
   },
   provisional: ['role', 'summary'],
+  // Camisa no centro do card (rodada 22/10/2026): a camisa fica a 54% da largura e 50% da altura da capa.
+  cardFocus: [0.546, 0.5],
 }
 
 export const WORKS: Work[] = [
@@ -440,31 +503,6 @@ export const WORKS: Work[] = [
     provisional: ['role', 'client', 'summary'],
   },
   {
-    slug: 'crush-coins',
-    index: '07',
-    title: 'Crush Coins',
-    disciplines: ['Graphic & Motion', 'Art Direction'],
-    role: 'Art Director',
-    client: 'Crush Coins',
-    summary: 'Direção de arte e identidade: cultura pop e meme em linguagem visual.',
-    description:
-      'O cliente precisava de uma estratégia de bonificação em consumação para aniversariantes e ocasiões específicas. O resultado é a CrushCoin, moeda própria do Crush Hall: notas com personalidades do empoderamento feminino, cores vivas e traços das notas do real.',
-    descriptionEn:
-      'The client needed a strategy for consumption bonuses for birthdays and other specific occasions. The result is the CrushCoin, the own currency of Crush Hall: notes featuring figures of female empowerment, vivid colors and traits of the Brazilian real banknotes.',
-    media: {
-      cover: `${base}/behance/crush-coins/01.webp`,
-      gallery: [
-        `${base}/behance/crush-coins/02.gif`,
-        `${base}/behance/crush-coins/03.webp`,
-        `${base}/behance/crush-coins/04.webp`,
-        `${base}/behance/crush-coins/05.webp`,
-        `${base}/behance/crush-coins/06.webp`,
-        `${base}/behance/crush-coins/07.webp`,
-      ],
-    },
-    provisional: ['role', 'client', 'summary'],
-  },
-  {
     slug: 'charlotte',
     index: '08',
     title: 'Charlotte',
@@ -529,46 +567,26 @@ export const WORKS: Work[] = [
       'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
     descriptionEn:
       'Art direction of branded content for BOAH: seasonal campaigns, product still and lifestyle content for social media.',
-    // Rodada 22/10/2026: logo menor, com respiro, sobre o creme #f6f4ed preenchendo o card.
-    cardFit: { bg: '#f6f4ed', inset: '12%' },
+    // Rodada 22/10/2026: card com o logo recortado (card.webp) sobre o creme exato do arquivo,
+    // maior e centralizado de verdade (a capa original tinha margem preta e logo fora do centro).
+    cardCover: `${base}/behance/branded-content-boah/card.webp`,
+    cardFit: { bg: '#f7f3ed', inset: '20%' },
+    galleryDense: true,
+    highlights: BOAH_HIGHLIGHTS,
     media: {
       cover: `${base}/behance/branded-content-boah/01.webp`,
       gallery: [
-        `${base}/behance/branded-content-boah/02.webp`,
-        `${base}/behance/branded-content-boah/03.webp`,
-        `${base}/behance/branded-content-boah/04.webp`,
-        `${base}/behance/branded-content-boah/05.webp`,
-        `${base}/behance/branded-content-boah/06.webp`,
-        `${base}/behance/branded-content-boah/07.gif`,
         `${base}/behance/branded-content-boah/08.webp`,
         `${base}/behance/branded-content-boah/09.webp`,
         `${base}/behance/branded-content-boah/10.webp`,
         `${base}/behance/branded-content-boah/11.webp`,
         `${base}/behance/branded-content-boah/12.webp`,
-        `${base}/behance/branded-content-boah/13.webp`,
-        `${base}/behance/branded-content-boah/14.webp`,
-        `${base}/behance/branded-content-boah/15.webp`,
-        `${base}/behance/branded-content-boah/16.webp`,
         `${base}/behance/branded-content-boah/17.webp`,
         `${base}/behance/branded-content-boah/18.webp`,
         `${base}/behance/branded-content-boah/19.webp`,
         `${base}/behance/branded-content-boah/20.webp`,
         `${base}/behance/branded-content-boah/21.webp`,
-        `${base}/behance/branded-content-boah/22.webp`,
-        `${base}/behance/branded-content-boah/23.webp`,
-        `${base}/behance/branded-content-boah/24.webp`,
-        `${base}/behance/branded-content-boah/25.webp`,
-        `${base}/behance/branded-content-boah/26.webp`,
-        `${base}/behance/branded-content-boah/27.webp`,
-        `${base}/behance/branded-content-boah/28.webp`,
-        `${base}/behance/branded-content-boah/29.webp`,
-        `${base}/behance/branded-content-boah/30.webp`,
-        `${base}/behance/branded-content-boah/31.webp`,
-        `${base}/behance/branded-content-boah/32.webp`,
-        `${base}/behance/branded-content-boah/33.webp`,
-        `${base}/behance/branded-content-boah/34.webp`,
-        `${base}/behance/branded-content-boah/35.webp`,
-        `${base}/behance/branded-content-boah/36.webp`,
+        `${base}/behance/branded-content-boah/07.gif`,
         `${base}/behance/branded-content-boah/37.webp`,
       ],
     },
@@ -583,6 +601,8 @@ export const WORKS: Work[] = [
     summary: 'Identidade e cobertura do baile de máscaras da Meats Espeteria.',
     description:
       'Identidade e peças do ArquiMeats, baile de máscaras da Meats Espeteria no circuito Sérgio Bezerra, em Salvador. O desafio foi criar algo que lembrasse um bloquinho de rua tradicional, estilo marchinha: tipografia de tom retrô e o vermelho como cor de energia e ação.',
+    // Rodada 22/10/2026: o lockup fica a 51,5% da largura da capa; o foco o leva ao centro do card.
+    cardFocus: [0.515, 0.48],
     descriptionEn:
       'Identity and pieces for ArquiMeats, the masquerade ball of Meats Espeteria on the Sérgio Bezerra circuit, in Salvador. The challenge was to create something that recalled a traditional street bloco, marchinha style: retro-toned typography and red as the color of energy and action.',
     media: {
@@ -594,45 +614,6 @@ export const WORKS: Work[] = [
         `${base}/behance/arquimeats-o-baile-de-mascaras/05.gif`,
         `${base}/behance/arquimeats-o-baile-de-mascaras/06.webp`,
         `${base}/behance/arquimeats-o-baile-de-mascaras/07.webp`,
-      ],
-    },
-  },
-  {
-    slug: 'festival-de-arte-e-gastronomia',
-    index: '14',
-    title: 'Festival de Arte e Gastronomia',
-    disciplines: ['Graphic & Motion', 'Campaign & Content'],
-    role: 'Art Director',
-    summary: 'Identidade e peças de divulgação do Festival de Arte e Gastronomia.',
-    description:
-      'Key visual e peças de divulgação para a 5ª edição do Festival de Arte e Gastronomia, com o tema do cacau ao chocolate.',
-    descriptionEn:
-      'Key visual and promotional pieces for the 5th edition of the Festival de Arte e Gastronomia, themed from cocoa to chocolate.',
-    media: {
-      cover: `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
-      gallery: [
-        `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/02.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/03.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/04.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/06.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/07.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/08.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/09.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/10.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/11.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/12.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/13.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/14.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/15.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/16.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/17.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/18.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/19.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/20.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/21.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/22.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/23.webp`,
       ],
     },
   },
@@ -669,6 +650,76 @@ export const WORKS: Work[] = [
       'https://www.instagram.com/p/DPKfbR6jmx_/',
     ],
     provisional: ['summary'],
+  },
+  {
+    slug: 'crush-coins',
+    index: '07',
+    title: 'Crush Coins',
+    disciplines: ['Graphic & Motion', 'Art Direction'],
+    role: 'Art Director',
+    client: 'Crush Coins',
+    summary: 'Direção de arte e identidade: cultura pop e meme em linguagem visual.',
+    description:
+      'O cliente precisava de uma estratégia de bonificação em consumação para aniversariantes e ocasiões específicas. O resultado é a CrushCoin, moeda própria do Crush Hall: notas com personalidades do empoderamento feminino, cores vivas e traços das notas do real.',
+    descriptionEn:
+      'The client needed a strategy for consumption bonuses for birthdays and other specific occasions. The result is the CrushCoin, the own currency of Crush Hall: notes featuring figures of female empowerment, vivid colors and traits of the Brazilian real banknotes.',
+    cardFocus: [0.495, 0.5],
+    media: {
+      cover: `${base}/behance/crush-coins/01.webp`,
+      gallery: [
+        `${base}/behance/crush-coins/02.gif`,
+        `${base}/behance/crush-coins/03.webp`,
+        `${base}/behance/crush-coins/04.webp`,
+        `${base}/behance/crush-coins/05.webp`,
+        `${base}/behance/crush-coins/06.webp`,
+        `${base}/behance/crush-coins/07.webp`,
+      ],
+    },
+    provisional: ['role', 'client', 'summary'],
+  },
+  {
+    slug: 'festival-de-arte-e-gastronomia',
+    index: '14',
+    title: 'Festival de Arte e Gastronomia',
+    disciplines: ['Graphic & Motion', 'Campaign & Content'],
+    role: 'Art Director',
+    summary: 'Identidade e peças de divulgação do Festival de Arte e Gastronomia.',
+    description:
+      'Key visual e peças de divulgação para a 5ª edição do Festival de Arte e Gastronomia, com o tema do cacau ao chocolate.',
+    descriptionEn:
+      'Key visual and promotional pieces for the 5th edition of the Festival de Arte e Gastronomia, themed from cocoa to chocolate.',
+    // Rodada 22/10/2026: a capa da pagina passa a ser o key visual 16:9 em 2560x1440 (antes o 05, 4:5,
+    // era cortado em 16:9). O 05 segue no card, na proporcao nativa, e entra na galeria.
+    cardCover: `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
+    cardRatio: '4 / 5',
+    galleryDense: true,
+    media: {
+      cover: `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
+      gallery: [
+        `${base}/behance/festival-de-arte-e-gastronomia/02.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/03.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/04.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/06.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/07.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/08.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/09.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/10.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/11.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/12.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/13.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/14.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/15.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/16.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/17.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/18.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/19.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/20.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/21.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/22.webp`,
+        `${base}/behance/festival-de-arte-e-gastronomia/23.webp`,
+      ],
+    },
   },
 ]
 
@@ -1529,3 +1580,36 @@ export const CAREER: CareerEntry[] = [
     city: 'Salvador, Bahia',
   },
 ]
+
+// =============================================================================
+// FORMACAO E IDIOMAS (rodada 22/10/2026). Fonte: curriculo do fundador, passado
+// por ele no pedido. Mesma forma visual da carreira (periodo, titulo, instituicao).
+// Nome de instituicao e cidade nao se traduzem; o titulo do curso e o idioma sim.
+// =============================================================================
+
+export interface EducationEntry {
+  titleEN: string
+  titlePT: string
+  org: string
+  city: string
+  periodEN: string
+  periodPT: string
+}
+
+export const EDUCATION: EducationEntry[] = [
+  {
+    titleEN: 'Bachelor in Social Communication: Advertising',
+    titlePT: 'Comunicação Social: Publicidade e Propaganda',
+    org: 'UNIFACS',
+    city: 'Salvador, Bahia',
+    periodEN: '2018 - 2022',
+    periodPT: '2018 - 2022',
+  },
+]
+
+export interface LanguageEntry {
+  labelEN: string
+  labelPT: string
+}
+
+export const LANGUAGES: LanguageEntry[] = [{ labelEN: 'English, fluent', labelPT: 'Inglês fluente' }]

@@ -25,6 +25,8 @@ import {
   BUILD_PILLARS,
   EXPLORING,
   CAREER,
+  EDUCATION,
+  LANGUAGES,
 } from '@/app/(en)/creators/tavaristico/_data'
 import { Fragment } from 'react'
 import { MasonryGallery } from '@/app/(en)/creators/tavaristico/MasonryGallery'
@@ -242,6 +244,37 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
               </li>
             ))}
           </ul>
+
+          {/* FORMACAO e IDIOMAS (rodada 22/10/2026, fonte: curriculo do
+              fundador): mesma linha do tempo da carreira, abaixo dela. */}
+          <div className={styles.careerBlock}>
+            <span className={styles.label}>{t.index.educationLabel}</span>
+            <ul className={styles.careerList}>
+              {EDUCATION.map((ed) => (
+                <li key={ed.titleEN} className={styles.careerItem}>
+                  <span className={styles.careerDot} aria-hidden="true" />
+                  <span className={styles.careerPeriod}>{lang === 'pt' ? ed.periodPT : ed.periodEN}</span>
+                  <span className={styles.careerRole}>{lang === 'pt' ? ed.titlePT : ed.titleEN}</span>
+                  <span className={styles.careerOrg}>
+                    {ed.org}
+                    <span className={styles.careerCity}>{ed.city}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className={styles.careerBlock}>
+            <span className={styles.label}>{t.index.languagesLabel}</span>
+            <ul className={styles.careerList}>
+              {LANGUAGES.map((l) => (
+                <li key={l.labelEN} className={styles.careerItem}>
+                  <span className={styles.careerDot} aria-hidden="true" />
+                  <span className={styles.careerRole}>{lang === 'pt' ? l.labelPT : l.labelEN}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 

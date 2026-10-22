@@ -42,6 +42,24 @@
   transition: transform 180ms ease;
 }
 .ring:hover { transform: scale(1.04); }
+
+/* Entrada escalonada (rodada 22/10/2026), opt-in por `staggerIndex`. Antes de
+   entrar na tela o anel fica invisivel (.ringPre); ao entrar, o fade sobe com
+   um atraso por posicao (--ring-delay). `backwards`, nunca `both`: o estado
+   final nao e travado pela animacao, entao o hover (scale) continua valendo.
+   Sob reduced-motion o anel aparece pronto, sem fade. */
+.ringPre { opacity: 0; }
+.ringIn {
+  animation: ring-fade-in 560ms cubic-bezier(0.2, 0.8, 0.2, 1) var(--ring-delay, 0ms) backwards;
+}
+@keyframes ring-fade-in {
+  from { opacity: 0; transform: scale(0.86); }
+  to { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ringPre { opacity: 1; }
+  .ringIn { animation: none; }
+}
 .ring:focus-visible {
   outline: 2px solid var(--tbf-color-parchment);
   outline-offset: 3px;

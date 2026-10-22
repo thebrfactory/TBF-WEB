@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Work, Discipline } from './_data'
+import { DIMS } from './_dims'
 import styles from './tavaristico.module.css'
 import { useLang } from '@/lib/LangProvider'
 import { localizedPath } from '@/lib/i18n'
@@ -14,6 +15,24 @@ const ALL = 'all'
 
 // Ritmo Pinterest: alturas variadas, deterministas por posição (evita layout shift).
 const RATIOS = ['3 / 4', '1 / 1', '4 / 5', '3 / 4', '4 / 3', '1 / 1', '4 / 5', '3 / 4']
+
+const ratioNum = (r: string) => {
+  const [a, b] = r.split('/').map((n) => parseFloat(n))
+  return a / b
+}
+
+// object-position que leva o ponto focal [fx, fy] (fracao da imagem) ao centro
+// do card, para o recorte `cover` de qualquer proporcao (rodada 22/10/2026:
+// camisa da Tiger e lockup do ArquiMeats desalinhados no card).
+function focusPosition(src: string, ratio: string, [fx, fy]: [number, number]): string {
+  const [iw, ih] = DIMS[src] ?? [1, 1]
+  const ri = iw / ih
+  const rb = ratioNum(ratio)
+  const clamp = (n: number) => Math.min(100, Math.max(0, n * 100))
+  if (ri > rb) return `${clamp((fx * ri - rb / 2) / (ri - rb))}% 50%`
+  if (ri < rb) return `50% ${clamp((fy / ri - 1 / (2 * rb)) / (1 / ri - 1 / rb))}%`
+  return '50% 50%'
+}
 
 export function MasonryGallery({
   works,
@@ -91,7 +110,10 @@ export function MasonryGallery({
       )}
 
       <div className={styles.masonry}>
-        {works.map((w, i) => (
+        {works.map((w, i) => {
+          const ratio = w.cardRatio ?? RATIOS[i % RATIOS.length]
+          const cardSrc = w.cardCover ?? w.media.cover
+          return (
           <Link
             key={w.slug}
             href={path(`/creators/tavaristico/works/${w.slug}`)}
@@ -99,13 +121,19 @@ export function MasonryGallery({
           >
             <span
               className={styles.cardMedia}
-              style={{ aspectRatio: RATIOS[i % RATIOS.length], ...(w.cardFit ? { background: w.cardFit.bg } : null) }}
+              style={{ aspectRatio: ratio, ...(w.cardFit ? { background: w.cardFit.bg } : null) }}
             >
               <Image
-                src={w.cardCover ?? w.media.cover}
+                src={cardSrc}
                 alt={w.title}
                 fill
-                style={w.cardFit ? { objectFit: 'contain', padding: w.cardFit.inset } : undefined}
+                style={
+                  w.cardFit
+                    ? { objectFit: 'contain', padding: w.cardFit.inset }
+                    : w.cardFocus
+                      ? { objectPosition: focusPosition(cardSrc, ratio, w.cardFocus) }
+                      : undefined
+                }
                 sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
               />
               <span className={styles.cardOverlay} aria-hidden="true" />
@@ -115,7 +143,8 @@ export function MasonryGallery({
               <span className={styles.cardMeta}>{w.disciplines.join(' · ')}</span>
             </span>
           </Link>
-        ))}
+          )
+        })}
         {extraCard && (
           <Link
             href={extraCard.href}

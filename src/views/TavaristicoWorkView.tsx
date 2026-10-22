@@ -110,7 +110,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         )}
 
         {gallery.length > 0 && (
-          <div className={styles.gallery}>
+          <div className={`${styles.gallery} ${w.galleryDense ? styles.galleryDense : ''}`}>
             {gallery.map((src, idx) => {
               const [iw, ih] = DIMS[src] ?? [1600, 1000]
               return (
@@ -123,7 +123,11 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
                     alt={w.galleryAlts?.[idx] ?? `${w.title} ${idx + 2}`}
                     width={iw}
                     height={ih}
-                    sizes="(min-width: 768px) 50vw, 100vw"
+                    sizes={
+                      w.galleryDense
+                        ? '(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 50vw'
+                        : '(min-width: 768px) 50vw, 100vw'
+                    }
                     quality={90}
                     unoptimized={src.endsWith('.gif')}
                     style={{ width: '100%', height: 'auto', display: 'block' }}

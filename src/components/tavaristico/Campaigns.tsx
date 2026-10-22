@@ -133,7 +133,7 @@ export function Campaigns({
   return (
     <div className={styles.wrap}>
       <div className={`${styles.row} ${hideNames ? styles.rowCompact : ''}`}>
-      {campaigns.map((c) => {
+      {campaigns.map((c, ci) => {
         const isSeen = !!seen[c.index]
         const cover = c.frames[0]
         const ariaLabel = inviteLabel ? `${inviteLabel}: ${c.name}` : c.name
@@ -145,6 +145,7 @@ export function Campaigns({
               seen={isSeen}
               ariaLabel={ariaLabel}
               onClick={() => open(c.index)}
+              staggerIndex={ci}
               buttonRef={(el) => {
                 triggerRefs.current[c.index] = el
               }}
