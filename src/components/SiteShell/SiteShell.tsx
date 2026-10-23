@@ -20,6 +20,7 @@ import { CookieBanner } from '@/components/CookieBanner/CookieBanner'
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor'
 import { ConsentedAnalytics } from '@/components/Analytics/ConsentedAnalytics'
 import { AnalyticsGate } from '@/components/Analytics/AnalyticsGate'
+import { MetaPixel } from '@/components/Analytics/MetaPixel'
 import { ViewTransitionBridge } from '@/components/PageTransition/ViewTransitionBridge'
 import { LangProvider } from '@/lib/LangProvider'
 import { HTML_LANG, type Lang } from '@/lib/i18n'
@@ -75,6 +76,9 @@ export function SiteShell({ lang, children }: { lang: Lang; children: React.Reac
 
           {/* GA4 sob Consent Mode v2 — default denied até o opt-in real. */}
           <AnalyticsGate />
+
+          {/* Meta Pixel: inerte sem NEXT_PUBLIC_META_PIXEL_ID, e só após consentimento. */}
+          <MetaPixel />
         </LangProvider>
       </body>
     </html>

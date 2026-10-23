@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useLang } from '@/lib/LangProvider'
 import { shell } from '@/content/i18n/shell'
+import { trackMetaLead } from '@/lib/meta-pixel'
 
 export type NewsletterStatus = 'idle' | 'loading' | 'success' | 'error'
 
@@ -32,6 +33,7 @@ export function useNewsletterSubmit() {
       const data = await res.json()
       if (data.success) {
         setStatus('success')
+        trackMetaLead()
         setEmail('')
       } else {
         setStatus('error')
