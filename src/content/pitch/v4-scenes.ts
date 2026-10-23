@@ -265,8 +265,8 @@ export const COMPANY = {
   // a empresa e enquadrada no Inova Simples. Nenhuma vantagem concreta esta
   // escrita la, entao nenhuma e afirmada aqui (a linha de prioridade no INPI saiu).
   regimeText: {
-    pt: 'Empresa enquadrada no Inova Simples (LC 182/2021, Marco Legal das Startups).',
-    en: 'Company registered under Inova Simples (LC 182/2021, Startups Legal Framework).',
+    pt: 'Empresa enquadrada no Inova Simples (LC 167/2019)',
+    en: 'Company registered under Inova Simples (Supplementary Law 167/2019)',
   } as Bi,
   rows: [
     { label: { pt: 'Razão social', en: 'Legal name' } as Bi, value: '.TBF. inc' },
