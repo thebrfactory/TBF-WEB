@@ -72,6 +72,14 @@ export function writeConsent(analytics: boolean, marketing = false): void {
   } catch {
     /* modo privado / storage bloqueado — segue sem persistir */
   }
+  if (!marketing) {
+    try {
+      // Correspondência avançada manual do Meta Pixel (ver lib/meta-pixel).
+      localStorage.removeItem('tbf-meta-am')
+    } catch {
+      /* storage bloqueado */
+    }
+  }
   try {
     window.dispatchEvent(new Event('tbf-cookie-choice'))
   } catch {

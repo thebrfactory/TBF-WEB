@@ -6,6 +6,7 @@
 // =============================================================================
 
 import { useState, useId } from 'react'
+import { trackMetaLead } from '@/lib/meta-pixel'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { ContactIntent, ContactFormData, ContactFormState } from '@/types'
 import { useLang } from '@/lib/LangProvider'
@@ -89,6 +90,7 @@ export function AccessForm({ entryPoints, defaultIntent }: AccessFormProps) {
 
       if (res.ok) {
         setState({ status: 'success' })
+        trackMetaLead({ email: form.email, name: form.name })
       } else {
         const data = await res.json()
         setState({ status: 'error', error: data.error ?? t.errors.generic })

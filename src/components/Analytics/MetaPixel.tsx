@@ -16,7 +16,7 @@ import Script from 'next/script'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { readConsent } from '@/lib/consent'
-import { META_PIXEL_ID } from '@/lib/meta-pixel'
+import { META_PIXEL_ID, readSavedUserData, safeJsonForScript } from '@/lib/meta-pixel'
 
 export function MetaPixel() {
   const [allowed, setAllowed] = useState(false)
@@ -43,6 +43,9 @@ export function MetaPixel() {
 
   if (!META_PIXEL_ID || !allowed) return null
 
+  // Correspondência avançada manual: precisa estar no init do código base.
+  const userData = safeJsonForScript(readSavedUserData())
+
   return (
     <Script id="tbf-meta-pixel" strategy="afterInteractive">
       {`
@@ -51,7 +54,7 @@ export function MetaPixel() {
         n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
         t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
         document,'script','https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', '${META_PIXEL_ID}');
+        fbq('init', ${safeJsonForScript(META_PIXEL_ID)}, ${userData});
         fbq('track', 'PageView');
       `}
     </Script>

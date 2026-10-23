@@ -33,7 +33,7 @@ export function useNewsletterSubmit() {
       const data = await res.json()
       if (data.success) {
         setStatus('success')
-        trackMetaLead(email)
+        trackMetaLead({ email })
         setEmail('')
       } else {
         setStatus('error')

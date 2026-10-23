@@ -8,6 +8,7 @@
 
 import { useId, useState } from 'react'
 import { useLang } from '@/lib/LangProvider'
+import { trackMetaLead } from '@/lib/meta-pixel'
 import { contactUs } from '@/content/i18n/pages/contact-us'
 
 interface FormData {
@@ -64,6 +65,7 @@ export function ContactForm() {
 
       if (res.ok) {
         setStatus('success')
+        trackMetaLead({ email: form.email, name: form.name })
       } else {
         const data = await res.json()
         setStatus('error')
