@@ -40,6 +40,7 @@
 // em TbfWordmark.tsx desde a 2.1, para o corpo do deck caber na cabeça.
 // =============================================================================
 
+import { MetaPitchEvent } from '@/components/Analytics/MetaEvent'
 import { Fragment, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
@@ -205,6 +206,7 @@ export function PitchV3Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
   const caseStoryLabel = 'Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces'
   return (
     <div className="p3-deck">
+      <MetaPitchEvent />
       <DeckNav scenes={SCENES} total="07" />
       <GridRuler />
 

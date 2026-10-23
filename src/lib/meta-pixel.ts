@@ -71,9 +71,93 @@ export function safeJsonForScript(value: unknown): string {
     .split(String.fromCharCode(0x2029)).join('\\u2029')
 }
 
+export type MetaEventName = 'PageView' | 'ViewContent' | 'Contact' | 'Lead' | 'PitchComplete'
+
+const STANDARD = new Set<string>(['PageView', 'ViewContent', 'Contact', 'Lead'])
+const CAPI_PATH = '/api/meta-capi'
+
+function newEventId(): string {
+  try {
+    return crypto.randomUUID()
+  } catch {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`
+  }
+}
+
+/** Espelho server-side (API de Conversoes) com o MESMO event_id do pixel. */
+function sendCapi(
+  name: MetaEventName,
+  eventId: string,
+  custom: Record<string, unknown>,
+  userData: MetaUserData,
+): void {
+  try {
+    const payload: Record<string, unknown> = {
+      event_name: name,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      custom_data: custom,
+    }
+    if (Object.keys(userData).length) payload.user_data_raw = userData
+    const body = JSON.stringify(payload)
+    if (typeof navigator.sendBeacon === 'function') {
+      const blob = new Blob([body], { type: 'application/json' })
+      if (navigator.sendBeacon(CAPI_PATH, blob)) return
+    }
+    void fetch(CAPI_PATH, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body,
+      keepalive: true,
+    }).catch(() => {})
+  } catch {
+    /* telemetria nunca derruba a pagina */
+  }
+}
+
 /**
- * Evento Lead no envio com sucesso de um formulário. No-op sem marketing aceito.
- * Salva a correspondência avançada, refaz o init com ela e dispara o Lead.
+ * Evento do pixel + espelho na API de Conversoes, mesmo eventID (deduplicacao).
+ * No-op sem marketing aceito. Se o fbq ainda nao carregou (o snippet entra
+ * depois da hidratacao), espera ate 6s antes de desistir.
+ * Retorna false quando nao disparou por falta de consentimento.
+ */
+export function trackMetaEvent(
+  name: MetaEventName,
+  custom: Record<string, unknown> = {},
+  userData: MetaUserData = {},
+): boolean {
+  if (typeof window === 'undefined') return false
+  try {
+    if (readConsent()?.marketing !== true) return false
+    const eventId = newEventId()
+    const fire = () => {
+      window.fbq?.(STANDARD.has(name) ? 'track' : 'trackCustom', name, custom, { eventID: eventId })
+    }
+    if (typeof window.fbq === 'function') {
+      fire()
+    } else {
+      let tries = 0
+      const t = window.setInterval(() => {
+        tries += 1
+        if (typeof window.fbq === 'function') {
+          window.clearInterval(t)
+          if (readConsent()?.marketing === true) fire()
+        } else if (tries > 60) {
+          window.clearInterval(t)
+        }
+      }, 100)
+    }
+    sendCapi(name, eventId, custom, userData)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Evento Lead no envio com sucesso de um formulario. No-op sem marketing aceito.
+ * Salva a correspondencia avancada, refaz o init com ela e dispara o Lead
+ * (pixel + API de Conversoes, mesmo eventID).
  */
 export function trackMetaLead(input: { email?: string; phone?: string; name?: string } = {}): void {
   if (typeof window === 'undefined') return
@@ -83,10 +167,9 @@ export function trackMetaLead(input: { email?: string; phone?: string; name?: st
     if (Object.keys(merged).length) {
       localStorage.setItem(META_AM_STORAGE_KEY, JSON.stringify(merged))
     }
-    if (typeof window.fbq !== 'function') return
-    if (META_PIXEL_ID) window.fbq('init', META_PIXEL_ID, merged)
-    window.fbq('track', 'Lead')
+    if (typeof window.fbq === 'function' && META_PIXEL_ID) window.fbq('init', META_PIXEL_ID, merged)
+    trackMetaEvent('Lead', {}, merged)
   } catch {
-    /* telemetria nunca derruba a página */
+    /* telemetria nunca derruba a pagina */
   }
 }

@@ -22,6 +22,7 @@
 // Mobile-first. Prefixo de CSS novo: `.p4-*`.
 // =============================================================================
 
+import { MetaPitchEvent } from '@/components/Analytics/MetaEvent'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
@@ -139,6 +140,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
   const caseStoryLabel = 'Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces'
   return (
     <div className="p3-deck">
+      <MetaPitchEvent />
       <DeckNav scenes={SCENES_V4} total={TOTAL_V4} />
       <DeckTimer />
       <GridRuler />

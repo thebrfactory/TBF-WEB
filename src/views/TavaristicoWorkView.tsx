@@ -19,6 +19,7 @@ import { WorkBlocks } from '@/components/tavaristico/WorkBlocks'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
+import { MetaContentView } from '@/components/Analytics/MetaEvent'
 import { localizedPath, type Lang } from '@/lib/i18n'
 
 export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: string }) {
@@ -42,6 +43,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
 
   return (
     <main className={styles.page}>
+      <MetaContentView name={w.title} category="case" id={w.slug} />
       <article className={`${styles.work} container`}>
         {/* #01 CHANGES 09/10: voltar ao portfólio na mesma guia (ordem do fundador) */}
         <Link href={path('/creators/tavaristico#work')} target="_self" newTabIcon={false} className={styles.crumb}>
