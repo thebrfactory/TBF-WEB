@@ -4,11 +4,9 @@
 // META PIXEL: inerte até existir NEXT_PUBLIC_META_PIXEL_ID
 //
 // Sem a variável: não renderiza nada, zero script, zero requisição.
-// Com a variável: só carrega depois do consentimento (readConsent().analytics),
-// o mesmo gancho do GA4. GANCHO LGPD: o banner hoje tem uma categoria só
-// (analytics). Pixel de anúncio é marketing; antes de ligar em produção, criar
-// a categoria `marketing` em @/lib/consent (bump de CONSENT_VERSION) e trocar o
-// teste em `read` abaixo para `.marketing`.
+// Com a variável: só carrega com readConsent().marketing === true (categoria
+// própria, opt-in, default false; CONSENT_VERSION 3). GA4 e Vercel seguem em
+// `analytics`, esta categoria não os afeta.
 //
 // PageView no load e a cada troca de rota do App Router (usePathname).
 // Revogar o consentimento: fbq('consent', 'revoke') e para de disparar.
@@ -26,7 +24,7 @@ export function MetaPixel() {
 
   useEffect(() => {
     if (!META_PIXEL_ID) return
-    const read = () => setAllowed(readConsent()?.analytics === true)
+    const read = () => setAllowed(readConsent()?.marketing === true)
     read()
     window.addEventListener('tbf-cookie-choice', read)
     return () => window.removeEventListener('tbf-cookie-choice', read)

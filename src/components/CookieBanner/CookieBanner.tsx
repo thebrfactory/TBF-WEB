@@ -2,9 +2,10 @@
 
 // =============================================================================
 // COOKIE BANNER — consentimento LGPD sitewide
-// Aparece na primeira visita (sem escolha salva). Duas categorias REAIS: cookies
-// necessários (sempre) + analytics (Vercel — gateado de verdade pelo
-// ConsentedAnalytics). Sem categoria de marketing: o site não seta esse cookie.
+// Aparece na primeira visita (sem escolha salva). Três categorias: necessários
+// (sempre), analytics (Vercel e GA4, gateados pelo ConsentedAnalytics e pelo
+// AnalyticsGate) e marketing (Meta Pixel, gateado pelo MetaPixel; opt-in,
+// default false).
 // A escolha persiste em localStorage e pode ser reaberta a qualquer momento pelo
 // link "Cookie Preferences" do rodapé (evento tbf-open-cookie-prefs). Zero rede.
 //
@@ -43,6 +44,7 @@ export function CookieBanner() {
   const [visible, setVisible] = useState(false)
   const [showPrefs, setShowPrefs] = useState(false)
   const [analytics, setAnalytics] = useState(true)
+  const [marketing, setMarketing] = useState(false)
   const lang = useLang()
   const t = shell[lang].cookies
   const privacyLabel = shell[lang].footer.links.privacy
@@ -57,6 +59,7 @@ export function CookieBanner() {
 
     if (current) {
       setAnalytics(current.analytics)
+      setMarketing(current.marketing)
     } else if (ARTICLE_ROUTE_PATTERN.test(pathname ?? '')) {
       timer = setTimeout(() => setVisible(true), ARTICLE_BANNER_DELAY_MS)
     } else {
@@ -66,7 +69,10 @@ export function CookieBanner() {
     // Reabridor: qualquer lugar do site pode reabrir o painel de preferências.
     const onReopen = () => {
       const saved = readConsent()
-      if (saved) setAnalytics(saved.analytics)
+      if (saved) {
+        setAnalytics(saved.analytics)
+        setMarketing(saved.marketing)
+      }
       setShowPrefs(true)
       setVisible(true)
     }
@@ -111,15 +117,15 @@ export function CookieBanner() {
 
   // Grava e avisa (1) o NewsletterPopup, que só aparece depois da escolha de
   // cookies, e (2) o ConsentedAnalytics, que liga/desliga o Vercel na hora.
-  function persist(allowAnalytics: boolean) {
-    writeConsent(allowAnalytics)
+  function persist(allowAnalytics: boolean, allowMarketing: boolean) {
+    writeConsent(allowAnalytics, allowMarketing)
     setVisible(false)
     setShowPrefs(false)
   }
 
-  const acceptAll = () => persist(true)
-  const rejectOptional = () => persist(false)
-  const savePrefs = () => persist(analytics)
+  const acceptAll = () => persist(true, true)
+  const rejectOptional = () => persist(false, false)
+  const savePrefs = () => persist(analytics, marketing)
 
   if (!visible) return null
 
@@ -148,6 +154,16 @@ export function CookieBanner() {
               />
               <span>
                 <strong>{t.analyticsLabel}</strong>{t.analyticsText}
+              </span>
+            </label>
+            <label className="cookie-pref">
+              <input
+                type="checkbox"
+                checked={marketing}
+                onChange={(e) => setMarketing(e.target.checked)}
+              />
+              <span>
+                <strong>{t.marketingLabel}</strong>{t.marketingText}
               </span>
             </label>
           </div>

@@ -7,6 +7,21 @@ import { legalPrivacy } from '@/content/i18n/pages/legal-privacy'
 import type { Lang } from '@/lib/i18n'
 import s from './LegalPrivacyView.module.css'
 
+const URL_RE = /(https:\/\/[^\s]+)/
+
+/** Transforma URLs https no texto em link externo. */
+function linkify(text: string, linkClass: string) {
+  return text.split(URL_RE).map((part, i) =>
+    i % 2 === 1 ? (
+      <a key={i} href={part} className={linkClass} target="_blank" rel="noopener noreferrer">
+        {part}
+      </a>
+    ) : (
+      part
+    ),
+  )
+}
+
 export default function LegalPrivacyView({ lang }: { lang: Lang }) {
   const t = legalPrivacy[lang]
   const last = t.sections.length - 1
@@ -43,7 +58,7 @@ export default function LegalPrivacyView({ lang }: { lang: Lang }) {
                 {sec.items.map((it) => (
                   <li key={it.label} className={s.item}>
                     <span className={s.itemLabel}>{it.label}</span>
-                    {it.text}
+                    {linkify(it.text, s.link)}
                   </li>
                 ))}
               </ul>

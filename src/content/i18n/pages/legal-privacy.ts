@@ -10,6 +10,7 @@
 // Seção de pesquisas (id research) em 15/10/2026: questionário /compras da CRIVO,
 //   que grava respostas parciais e, com consentimento separado, identificação (Supabase).
 //   Atualizada em 17/10/2026: telemetria, identificação opcional, 24 meses. O link do consentimento aponta para #research.
+// Meta Pixel (categoria marketing, opt-in) incluído em 23/10/2026.
 // Se o código ganhar coleta nova, esta página muda junto.
 //
 // LGPD = Lei 13.709/2018, ANPD e os artigos citados são termos oficiais
@@ -37,7 +38,7 @@ const en = {
   tag: 'Legal',
   title: 'Privacy Policy',
   updatedLabel: 'Last updated',
-  updatedDate: '17/10/2026',
+  updatedDate: '23/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -92,7 +93,11 @@ const en = {
         },
         {
           label: 'Analytics',
-          text: 'Only after you accept. They load Vercel Analytics and Speed Insights, and Google Analytics 4. If you reject, or have not chosen yet, none of these scripts load. We do not use advertising or marketing cookies, and we do not build advertising profiles.',
+          text: 'Only after you accept. They load Vercel Analytics and Speed Insights, and Google Analytics 4. If you reject, or have not chosen yet, none of these scripts load.',
+        },
+        {
+          label: 'Marketing',
+          text: 'Off by default. Only after you turn it on. Loads the Meta Pixel (Meta Platforms), which measures our ads and lets us show them again to people who visited the site. If you reject, or have not chosen yet, the pixel does not load and sends nothing. If you withdraw, it stops sending events right away. Nothing else on the site is used for advertising.',
         },
       ],
     },
@@ -102,7 +107,7 @@ const en = {
       items: [
         {
           label: 'Consent',
-          text: 'For analytics cookies, the mailing list and research questionnaires. You can withdraw it at any time.',
+          text: 'For analytics and marketing cookies, the mailing list and research questionnaires. You can withdraw it at any time.',
         },
         {
           label: 'Pre-contractual procedures and contract',
@@ -124,6 +129,7 @@ const en = {
         { label: 'Answer you', text: 'Read and reply to messages sent through the forms.' },
         { label: 'Send the newsletter', text: 'Send the welcome message and later editions to people who joined the list. Every message carries an unsubscribe link.' },
         { label: 'Understand the site', text: 'Measure which pages are read and how fast they load, to improve content and performance. Only with consent.' },
+        { label: 'Measure ads and remarket', text: 'Measure the result of our ads and show them again to people who visited the site, through the Meta Pixel. Only with consent in the Marketing category.' },
         { label: 'Protect the site', text: 'Detect abuse, errors and attacks.' },
         { label: 'Meet the law', text: 'Comply with legal obligations and defend ourselves in legal proceedings.' },
       ],
@@ -182,6 +188,7 @@ const en = {
       items: [
         { label: 'Vercel', text: 'Hosting and delivery of the site. Receives technical data from every visit (server logs). Vercel Analytics and Speed Insights measure visits and performance, only with consent.' },
         { label: 'Google Analytics 4', text: 'Audience measurement: pages, sessions, approximate location, device. Only with consent, under Google Consent Mode, with denied as the default. Google may process data outside Brazil.' },
+        { label: 'Meta Pixel (Meta Platforms)', text: 'Ad measurement and remarketing. Only with consent in the Marketing category; legal basis: consent. Receives browser identifiers (cookies such as _fbp) and two events: PageView and Lead (form submission), without the content of the form. Meta may process data outside Brazil. To withdraw, open Cookie Preferences in the footer and turn Marketing off. Meta privacy policy: https://www.facebook.com/privacy/policy/' },
         { label: 'Resend', text: 'Sends the e-mail notifications of forms and mailing-list sign-ups to our team. Receives the content of your message, name and e-mail address.' },
         { label: 'Brevo', text: 'Stores the mailing list and sends the welcome message and newsletters. Receives your e-mail address.' },
         { label: 'Sanity', text: 'Content management for articles and pages, and the delivery of their images. It does not receive form data. Image requests reach its servers like any file you load.' },
@@ -205,7 +212,7 @@ const en = {
         { label: 'Deletion', text: 'Of data processed with your consent, except where the law requires us to keep it.' },
         { label: 'Information on sharing', text: 'Who we shared your data with.' },
         { label: 'Information on refusing consent', text: 'What happens if you say no.' },
-        { label: 'Withdrawal of consent', text: 'At any time. For analytics, use Cookie Preferences. For the newsletter, use the unsubscribe link.' },
+        { label: 'Withdrawal of consent', text: 'At any time. For analytics and marketing, use Cookie Preferences. For the newsletter, use the unsubscribe link.' },
         { label: 'Objection', text: 'To processing based on legitimate interest, if you think it breaks the law.' },
       ],
       outro: [
@@ -217,7 +224,7 @@ const en = {
       intro: [
         'We use HTTPS on the whole site, restrict access to the tools above to the people who need them, and keep our API keys out of the public code. No system is fully secure, and if an incident puts your data at risk we will tell you and the ANPD as the law requires.',
         'We keep data only as long as needed for the purpose. Mailing-list e-mails stay until you unsubscribe. Messages from the forms stay while the conversation or the working relationship lasts, and are deleted when you ask, unless the law requires us to keep them. Analytics data follows the retention period set in each provider account.',
-        'Several partners above, such as Vercel, Google, Resend, Brevo and Supabase, operate servers outside Brazil. We only use providers that offer adequate safeguards for international transfers, as LGPD art. 33 requires.',
+        'Several partners above, such as Vercel, Google, Meta, Resend, Brevo and Supabase, operate servers outside Brazil. We only use providers that offer adequate safeguards for international transfers, as LGPD art. 33 requires.',
       ],
     },
     {
@@ -252,7 +259,7 @@ const pt: typeof en = {
   tag: 'Jurídico',
   title: 'Política de Privacidade',
   updatedLabel: 'Última alteração',
-  updatedDate: '17/10/2026',
+  updatedDate: '23/10/2026',
 
   introOrg: '.TBF. INC',
   introText: [
@@ -307,7 +314,11 @@ const pt: typeof en = {
         },
         {
           label: 'Analytics',
-          text: 'Só depois que você aceita. Carregam o Vercel Analytics, o Speed Insights e o Google Analytics 4. Se você rejeita, ou ainda não escolheu, nenhum desses scripts carrega. Não usamos cookies de publicidade nem de marketing, e não montamos perfis publicitários.',
+          text: 'Só depois que você aceita. Carregam o Vercel Analytics, o Speed Insights e o Google Analytics 4. Se você rejeita, ou ainda não escolheu, nenhum desses scripts carrega.',
+        },
+        {
+          label: 'Marketing',
+          text: 'Desligados por padrão. Só depois que você ligar. Carregam o Meta Pixel (Meta Platforms), que mede nossos anúncios e permite mostrá-los de novo a quem visitou o site. Se você rejeita, ou ainda não escolheu, o pixel não carrega e não envia nada. Se você revoga, ele para de enviar eventos na hora. Nada mais no site é usado para publicidade.',
         },
       ],
     },
@@ -317,7 +328,7 @@ const pt: typeof en = {
       items: [
         {
           label: 'Consentimento',
-          text: 'Para cookies de analytics, para a mailing list e para os questionários de pesquisa. Você pode retirá-lo a qualquer momento.',
+          text: 'Para cookies de analytics e de marketing, para a mailing list e para os questionários de pesquisa. Você pode retirá-lo a qualquer momento.',
         },
         {
           label: 'Procedimentos preliminares e execução de contrato',
@@ -339,6 +350,7 @@ const pt: typeof en = {
         { label: 'Responder você', text: 'Ler e responder as mensagens enviadas pelos formulários.' },
         { label: 'Enviar a newsletter', text: 'Enviar a mensagem de boas-vindas e as edições seguintes a quem entrou na lista. Toda mensagem traz um link para cancelar a inscrição.' },
         { label: 'Entender o site', text: 'Medir quais páginas são lidas e a velocidade de carregamento, para melhorar conteúdo e desempenho. Só com consentimento.' },
+        { label: 'Medir anúncios e remarketing', text: 'Medir o resultado dos nossos anúncios e mostrá-los de novo a quem visitou o site, pelo Meta Pixel. Só com consentimento na categoria Marketing.' },
         { label: 'Proteger o site', text: 'Detectar abuso, erros e ataques.' },
         { label: 'Cumprir a lei', text: 'Atender obrigações legais e nos defender em processos.' },
       ],
@@ -397,6 +409,7 @@ const pt: typeof en = {
       items: [
         { label: 'Vercel', text: 'Hospedagem e entrega do site. Recebe dados técnicos de toda visita (registros de servidor). Vercel Analytics e Speed Insights medem visitas e desempenho, só com consentimento.' },
         { label: 'Google Analytics 4', text: 'Medição de audiência: páginas, sessões, localização aproximada, aparelho. Só com consentimento, sob o Consent Mode do Google, com negado como padrão. O Google pode tratar dados fora do Brasil.' },
+        { label: 'Meta Pixel (Meta Platforms)', text: 'Medição de anúncios e remarketing. Só com consentimento na categoria Marketing; base legal: consentimento. Recebe identificadores do navegador (cookies como _fbp) e dois eventos: PageView e Lead (envio de formulário), sem o conteúdo do formulário. A Meta pode tratar dados fora do Brasil. Para revogar, abra Preferências de Cookies no rodapé e desligue Marketing. Política de privacidade da Meta: https://www.facebook.com/privacy/policy/' },
         { label: 'Resend', text: 'Envia à nossa equipe os e-mails de aviso dos formulários e das inscrições na mailing list. Recebe o conteúdo da sua mensagem, nome e e-mail.' },
         { label: 'Brevo', text: 'Guarda a mailing list e envia a mensagem de boas-vindas e as newsletters. Recebe o seu e-mail.' },
         { label: 'Sanity', text: 'Gestão de conteúdo de artigos e páginas, e entrega das imagens deles. Não recebe dados de formulário. Os pedidos de imagem chegam aos servidores dela como qualquer arquivo que você carrega.' },
@@ -420,7 +433,7 @@ const pt: typeof en = {
         { label: 'Eliminação', text: 'Dos dados tratados com seu consentimento, salvo quando a lei nos obriga a guardar.' },
         { label: 'Informação sobre compartilhamento', text: 'Com quem compartilhamos seus dados.' },
         { label: 'Informação sobre negar o consentimento', text: 'O que acontece se você disser não.' },
-        { label: 'Revogação do consentimento', text: 'A qualquer momento. Para analytics, use as Preferências de Cookies. Para a newsletter, o link de cancelamento.' },
+        { label: 'Revogação do consentimento', text: 'A qualquer momento. Para analytics e marketing, use as Preferências de Cookies. Para a newsletter, o link de cancelamento.' },
         { label: 'Oposição', text: 'A tratamento feito com base em legítimo interesse, se você entender que ele descumpre a lei.' },
       ],
       outro: [
@@ -432,7 +445,7 @@ const pt: typeof en = {
       intro: [
         'Usamos HTTPS em todo o site, limitamos o acesso às ferramentas acima a quem precisa e mantemos as chaves de API fora do código público. Nenhum sistema é totalmente seguro, e se um incidente colocar seus dados em risco, avisaremos você e a ANPD como a lei exige.',
         'Guardamos os dados só pelo tempo necessário à finalidade. E-mails da mailing list ficam até você cancelar. Mensagens dos formulários ficam enquanto durar a conversa ou a relação de trabalho, e são apagadas quando você pede, salvo se a lei nos obrigar a guardar. Dados de analytics seguem o prazo de retenção definido em cada conta de provedor.',
-        'Vários parceiros acima, como Vercel, Google, Resend, Brevo e Supabase, têm servidores fora do Brasil. Só usamos provedores com garantias adequadas para transferência internacional, como exige o art. 33 da LGPD.',
+        'Vários parceiros acima, como Vercel, Google, Meta, Resend, Brevo e Supabase, têm servidores fora do Brasil. Só usamos provedores com garantias adequadas para transferência internacional, como exige o art. 33 da LGPD.',
       ],
     },
     {

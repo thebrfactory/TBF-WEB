@@ -22,7 +22,8 @@ export const CONSENT_STORAGE_KEY = 'tbf-cookie-consent'
 // Bump ao adicionar/remover/renomear categoria de cookie.
 // v1 = registro legado (ainda trazia `marketing`, categoria que o site não usa)
 // v2 = necessários + analytics
-export const CONSENT_VERSION = 2
+// v3 = necessários + analytics + marketing (Meta Pixel; opt-in, default false)
+export const CONSENT_VERSION = 3
 
 export const CONSENT_MAX_AGE_MS = 365 * 24 * 60 * 60 * 1000
 
@@ -30,6 +31,7 @@ export type Consent = {
   v: number
   necessary: true
   analytics: boolean
+  marketing: boolean
   ts: number
 }
 
@@ -47,20 +49,22 @@ export function readConsent(): Consent | null {
     const saved = JSON.parse(raw) as Partial<Consent>
     if (saved.v !== CONSENT_VERSION) return null
     if (typeof saved.analytics !== 'boolean') return null
+    if (typeof saved.marketing !== 'boolean') return null
     if (typeof saved.ts !== 'number') return null
     if (Date.now() - saved.ts > CONSENT_MAX_AGE_MS) return null
-    return { v: CONSENT_VERSION, necessary: true, analytics: saved.analytics, ts: saved.ts }
+    return { v: CONSENT_VERSION, necessary: true, analytics: saved.analytics, marketing: saved.marketing, ts: saved.ts }
   } catch {
     return null
   }
 }
 
 /** Grava a escolha e avisa o site inteiro (analytics + popup reagem na hora). */
-export function writeConsent(analytics: boolean): void {
+export function writeConsent(analytics: boolean, marketing = false): void {
   const consent: Consent = {
     v: CONSENT_VERSION,
     necessary: true,
     analytics,
+    marketing,
     ts: Date.now(),
   }
   try {
