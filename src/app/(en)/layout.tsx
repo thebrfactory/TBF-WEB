@@ -42,6 +42,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'TAVARÍSTICO', url: 'https://thebrfactory.com' }],
   creator: '.THE BRAZILIAN FACTORY.',
   publisher: '.TBF. inc',
+  other: { 'facebook-domain-verification': 'd42cj11vl5ydoemb9vvm2bmbpjlg95' },
   robots: {
     index: true,
     follow: true,
