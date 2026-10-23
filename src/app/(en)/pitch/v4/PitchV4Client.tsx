@@ -1,7 +1,7 @@
 'use client'
 
 // =============================================================================
-// PITCH 4.0 CLIENT · working deck, 8 cenas + capa
+// PITCH 4.0 CLIENT · working deck, 7 cenas + capa (rodada 23/10/2026)
 // -----------------------------------------------------------------------------
 // NASCEU CÓPIA DA 3.0 (pedido do fundador, CHANGES #01, 19/10/2026), pela mesma
 // razão com que a 3.0 nasceu da 2.0: divergir sem tocar no deck que já foi
@@ -34,11 +34,12 @@ import { DeckTimer } from './DeckTimer'
 import { StoryPlayer } from '@/components/StoryPlayer/StoryPlayer'
 // O anel abre o StoryPlayer, o layout padrao de stories da .TBF. (regra 4: apontar, nao copiar).
 import { StoryRing } from '@/components/tavaristico/StoryRing'
-import { COVER, REFERENCE, ARGUMENT, BUSINESS, CASE, PARTNERSHIP_OPEN, CLOSE } from '@/content/pitch/v3-scenes'
+import { COVER, REFERENCE, CASE, PARTNERSHIP_OPEN } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
-import { SCENES_V4, TOTAL_V4, FOUNDER, VERTICAL_STORIES, VERAOZAO_METRICS, VERAOZAO_SOURCE } from '@/content/pitch/v4-scenes'
-import { MarketScene, ModelScene, TogetherScene, NewScenesStyles } from './NewScenes'
-import { TfdSheet } from './TfdSheet'
+import { SCENES_V4, TOTAL_V4, FOUNDER, VERAOZAO_METRICS, VERAOZAO_SOURCE, VERAOZAO_REEL } from '@/content/pitch/v4-scenes'
+import { ThesisScene } from './ThesisScene'
+import { FrontsScene } from './FrontsScene'
+import { CloseScene } from './CloseScene'
 // ─── O casco do formato mora fora deste arquivo ──────────────────────────────
 // EXTRAÍDO em 2026-08-18 para `src/components/DeckShell/DeckShell.tsx`: as
 // constantes, a camada de tradução, a animação de entrada, a régua `?grid=1`, o
@@ -58,7 +59,6 @@ import {
   En,
   GridRuler,
   Kicker,
-  Numeral,
   PitchReveal,
   S,
 } from '@/components/DeckShell/DeckShell'
@@ -94,7 +94,7 @@ const EDITORIAL_VIDEO = {
 // ritmo ou de contraste só chegaria numa das duas (regra 4: apontar, não copiar).
 // O porquê de cada detalhe do player mora no cabeçalho daquele arquivo.
 
-// Filme do case (cena-08): vertical, em laço e mudo. Com prefers-reduced-motion
+// Filme do case (cena-06): vertical, em laço e mudo. Com prefers-reduced-motion
 // fica parado no poster.
 function CaseFilm() {
   const ref = useRef<HTMLVideoElement>(null)
@@ -111,94 +111,12 @@ function CaseFilm() {
         loop
         playsInline
         preload="metadata"
-        poster={CASE.video.poster}
-        aria-label={CASE.video.alt.pt}
+        poster={VERAOZAO_REEL.poster}
+        aria-label={VERAOZAO_REEL.alt.pt}
       >
-        <source src={CASE.video.srcAv1} type='video/mp4; codecs="av01.0.05M.08"' />
-        <source src={CASE.video.src} type="video/mp4" />
+        <source src={VERAOZAO_REEL.src} type="video/mp4" />
       </video>
     </div>
-  )
-}
-
-// 20/10/2026 (pedido do fundador): cartão limpo e padronizado. A área de clique
-// é um botão que cobre o cartão (aria-expanded); o anel e o link ficam por cima
-// dele, fora do botão, porque controle dentro de controle é inválido.
-// Campos iguais nos quatro, na mesma ordem: nome, o que é, por que existe, formas.
-// `proof` (só a THE FIORE DAILY. tem) não entra: campo que só um cartão tem
-// quebra o padrão. O dado segue em v3-scenes.ts.
-function PortfolioCard({
-  item,
-  delay,
-  open,
-  onToggle,
-  onOpenStory,
-  metrics = false,
-}: {
-  item: (typeof BUSINESS.portfolio)[number]
-  delay: number
-  open: boolean
-  onToggle: () => void
-  onOpenStory: () => void
-  /** 22/10/2026: o clique abre a area de metricas (TfdSheet) em vez de expandir o cartao. */
-  metrics?: boolean
-}) {
-  const story = VERTICAL_STORIES[item.name]
-
-  return (
-    <PitchReveal delay={delay} style={{ display: 'flex', flex: open ? '3.2 1 0' : '1 1 0', minWidth: 0, transition: `opacity 900ms ${EASE} ${delay}ms, transform 900ms ${EASE} ${delay}ms, filter 900ms ${EASE} ${delay}ms, flex-grow 600ms ${EASE}` }}>
-      <div className={`p4-vc${open ? ' p4-vc--open' : ''}`}>
-        <button
-          type="button"
-          className="p4-vc__hit"
-          aria-expanded={metrics ? undefined : open}
-          aria-haspopup={metrics ? 'dialog' : undefined}
-          aria-label={metrics ? `Abrir métricas: ${item.name}` : `${open ? 'Fechar' : 'Expandir'}: ${item.name}`}
-          onClick={onToggle}
-        />
-        <span className="p4-vc__hint" aria-hidden="true">
-          {metrics ? 'MÉTRICAS' : 'EXPAND'}
-        </span>
-
-        <div className="p4-vc__body">
-          <div className="p4-vc__head">
-          {story ? (
-            <div className="p4-vc__ring">
-              <StoryRing
-                cover={story.avatar}
-                alt={item.name}
-                size={48}
-                ariaLabel={`Abrir stories: ${item.name}`}
-                onClick={onOpenStory}
-              />
-            </div>
-          ) : null}
-          <div className="p4-vc__id">
-          <p className="p3-portfolio-name p4-vc__name" style={{ color: PAPER }}>
-            {item.name}
-          </p>
-          <p className="p4-vc__desc">{item.role.pt}</p>
-          </div>
-          </div>
-
-          <div className="p4-vc__more">
-            <div className="p4-vc__more-inner">
-              <p className="p4-vc__field">
-                <span className="p3-label">Por que existe</span>
-                {item.why.pt}
-              </p>
-              <p className="p4-vc__field">
-                <span className="p3-label">Como ganha forma</span>
-                {item.forms.pt}
-              </p>
-              <Link href={item.href} className="p4-vc__link">
-                Ver página &#8594;
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    </PitchReveal>
   )
 }
 
@@ -218,21 +136,6 @@ function PortfolioCard({
  */
 export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerScene } = {}) {
   const [caseStoryOpen, setCaseStoryOpen] = useState(false)
-  // Índice da vertical aberta no StoryPlayer (cena-06); null = fechado.
-  const [verticalStory, setVerticalStory] = useState<number | null>(null)
-  // Índice do cartão de vertical expandido (cena-06); null = todos fechados.
-  const [openVertical, setOpenVertical] = useState<number | null>(null)
-  // Area de metricas da TFD (aberta pelo clique no cartao dela).
-  const [tfdOpen, setTfdOpen] = useState(false)
-  const verticalGroups = BUSINESS.portfolio.map((v) => {
-    const st = VERTICAL_STORIES[v.name]
-    return {
-      id: st.handle,
-      handle: st.handle,
-      avatarSrc: st.avatar,
-      items: st.items,
-    }
-  })
   const caseStoryLabel = 'Peças da campanha VERÃOZÃO / VERÃOZÃO campaign pieces'
   return (
     <div className="p3-deck">
@@ -270,8 +173,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
              Primeira cena depois da capa: quem está por trás. Só fato já
              publicado (ver `v4-scenes.ts`). O retrato é o mesmo de
              /creators/tavaristico, em círculo como os retratos do deck. */}
-      <section id="cena-01" style={{ ...S, background: '#111110' }} aria-label="O Fundador / The Founder">
-        <Numeral n="01" />
+      <section id="cena-01" style={{ ...S, background: '#000000' }} aria-label="O Fundador / The Founder">
         <Kicker n="01" pt="O Fundador" en="The Founder" />
 
         <PitchReveal delay={100} slot="head">
@@ -474,7 +376,6 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }}
         aria-label="Campo de Referência / Reference Field"
       >
-        <Numeral n="03" />
         {/* O kicker traz o próprio recuo lateral (`.p3-kicker-slot`), então
             esta cena não precisa mais do invólucro que devolvia a margem
             que a seção sangrada tirou. */}
@@ -563,193 +464,23 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </div>
       </section>
 
-      {/* ── CENA 03 · A PERGUNTA, O CONTEXTO E A TESE ───────────────────────────
-             UMA composição em TRÊS TEMPOS, não três telas coladas: a pergunta
-             abre a tensão, o contexto mostra onde o valor vaza, a tese resolve.
-             Os três tempos são revelados em sequência, com delay crescente, e a
-             tese carrega o maior peso visual da cena. ─────────────────────── */}
-      <section id="cena-04" style={{ ...S, background: '#111110' }} aria-label="A Pergunta e a Tese / The Question and the Thesis">
-        <Numeral n="04" />
-        <Kicker n="04" pt="A Pergunta e a Tese" en="The Question and the Thesis" />
+      {/* ── CENA 04 · PERGUNTA, TESE E MERCADO (rodada 23/10/2026) ─────────────
+             Abre so com a pergunta; cada clique revela um passo. O dado de
+             mercado da antiga cena 05 mora no ultimo passo. `ThesisScene.tsx`. */}
+      <ThesisScene />
 
-        {/* Tempo 1, a pergunta */}
-        <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2 p3-h2--md">
-            {ARGUMENT.question.headline.pt[0]}
-            <br />
-            <span style={{ color: ACCENT }}>{ARGUMENT.question.headline.pt[1]}</span>
-            <En size="lead">{ARGUMENT.question.headline.en.join(' ')}</En>
-          </h2>
-        </PitchReveal>
+      {/* ── CENA 05 · DA CULTURA AO NEGOCIO (rodada 23/10/2026) ──────────────────
+             As quatro frentes empilhadas; cada uma abre em tela cheia.
+             Fundiu as antigas cenas 06 e 07. `FrontsScene.tsx`. */}
+      <FrontsScene />
 
-        {/* CADA PERGUNTA NUM QUADRADINHO (pedido do fundador #05, #01 CHANGES
-            2026-08-14). Soltas, as duas perguntas eram dois parágrafos colados,
-            e a segunda parecia continuação da primeira em vez de uma segunda
-            pergunta. No quadro cada uma vira um objeto, e as duas passam a ler
-            como um par, que é o que são. Mesma caixa do resto do deck (fundo
-            #0a0a09, borda de topo no acento, raio de cartão do design system),
-            para a cena 03 não inventar um cartão só dela. */}
-        <div className="p3-question-grid">
-          {ARGUMENT.question.items.map((q, i) => (
-            <PitchReveal key={q.pt} delay={180 + i * 80}>
-              <div className="p3-question-box">
-                <p className="p3-question">
-                  {q.pt}
-                  <En>{q.en}</En>
-                </p>
-              </div>
-            </PitchReveal>
-          ))}
-        </div>
-
-        {/* 🔴 O TEMPO 2 (O CONTEXTO) SAIU DA TELA (#03, #01 CHANGES 2026-08-14).
-            Eram as duas linhas do contexto ("O Brasil já produz repertório..." e
-            "Mas o valor que nasce da nossa cultura...") mais a assertiva
-            ("Atenção é a consequência, não o objetivo."): ele colou as três e
-            escreveu "remove".
-
-            A cena deixa de ter três tempos e passa a ter dois, pergunta e tese,
-            que continuam sendo a tensão e a resolução, o contexto era a ponte
-            entre elas, e sem ele a tese responde a pergunta diretamente.
-
-            O conteúdo NÃO foi apagado: `ARGUMENT.context` segue inteiro em
-            `v3-scenes.ts`. Para devolver qualquer uma das três, é reescrever
-            este bloco a partir do histórico deste arquivo. */}
-
-        {/* Tempo 2, a tese: resolução da cena, maior peso visual */}
-        <div className="p3-argument-block p3-argument-block--thesis">
-          <PitchReveal delay={620}>
-            <p className="p3-kicker-mini">
-              {ARGUMENT.thesis.kicker.pt}
-              <En>{ARGUMENT.thesis.kicker.en}</En>
-            </p>
-          </PitchReveal>
-          <PitchReveal delay={680}>
-            <p className="p3-thesis-line">
-              {ARGUMENT.thesis.lines[0].pt}
-              <br />
-              <span style={{ color: ACCENT }}>{ARGUMENT.thesis.lines[1].pt}</span>
-              <En size="lead">{ARGUMENT.thesis.lines.map((l) => l.en).join(' ')}</En>
-            </p>
-          </PitchReveal>
-          <PitchReveal delay={760}>
-            <div className="p3-chain">
-              {ARGUMENT.thesis.chain.map((step, i) => (
-                <Fragment key={step.pt}>
-                  <div className="p3-chain__node">
-                    <span className="p3-chain__n">0{i + 1}</span>
-                    <p
-                      className="p3-chain__title"
-                      style={{ color: i === ARGUMENT.thesis.chain.length - 1 ? ACCENT : PAPER }}
-                    >
-                      {step.pt}
-                    </p>
-                    <En>{step.en}</En>
-                  </div>
-                  {i < ARGUMENT.thesis.chain.length - 1 && (
-                    <span className="p3-chain__arrow" aria-hidden="true">
-                      &#8594;
-                    </span>
-                  )}
-                </Fragment>
-              ))}
-            </div>
-          </PitchReveal>
-        </div>
-      </section>
-
-      {/* ── CENA 05 · MERCADO E POSIÇÃO (22/10/2026 b) ─────────────────────────
-             Dois dados de fonte verificável, a tese "o Brasil exporta cultura,
-             não propriedade" e o mapa de dois eixos. Em `NewScenes.tsx`. */}
-      <MarketScene />
-
-      {/* ── CENA 06 · DA CULTURA AO NEGÓCIO ──────────────────────────────────────
-             Dois níveis: a linha de raciocínio (quatro verbos) e o portfólio
-             (quatro propriedades, expansíveis). A mais cheia do deck: a
-             expansão do portfólio acontece por hover/toque, dentro do próprio
-             cartão, para nunca empurrar a cena para fora da tela. ─────────── */}
-      <section id="cena-06" style={{ ...S }} aria-label="Da Cultura ao Negócio / From Culture to Business">
-        <Numeral n="06" />
-        <Kicker n="06" pt="Da Cultura ao Negócio" en="From Culture to Business" />
-
-        <PitchReveal delay={100} slot="head">
-          <h2 className="p3-h2 p3-h2--md">
-            {BUSINESS.headline.pt[0]}
-            <br />
-            {BUSINESS.headline.pt[1]}
-            <En size="lead">{BUSINESS.headline.en.join(' ')}</En>
-          </h2>
-        </PitchReveal>
-
-
-        {/* O MÉTODO SAIU DA CENA (pedido do fundador #06, #01 CHANGES
-            2026-08-14: "remove esse 4 quadradinhos"). Eram OBSERVAR, DAR FORMA,
-            COLOCAR EM MOVIMENTO e FAZER PERMANECER, em quatro cartões acima do
-            portfólio.
-
-            A cena tinha DOIS níveis de leitura de quatro caixas cada, um em cima
-            do outro, e as duas fileiras competiam pela mesma tela: quem olhava
-            não sabia se as oito caixas eram uma lista só de oito ou duas de
-            quatro. Sem o método, o portfólio fica sozinho e a cena passa a ter
-            uma pergunta só, quais são as propriedades.
-
-            `BUSINESS.method` continua em `v3-scenes.ts`, intacto: o conteúdo não
-            foi apagado, só não é mais desenhado aqui. */}
-
-        {/* O portfólio: quatro propriedades, expansíveis. */}
-        <PitchReveal delay={500}>
-          <p className="p3-portfolio-subtitle" style={{ margin: 'var(--p3-gap-sm) 0' }}>
-            {BUSINESS.portfolioSubtitle}
-          </p>
-        </PitchReveal>
-
-        {/* 20/10/2026: cartões limpos, um aberto por vez. Fechado: anel + nome +
-            descrição curta da metade para a base. Hover mostra EXPAND; clique
-            (ou toque) expande no mesmo cartão, com os mesmos campos em todos. */}
-        <div className="p4-verticals">
-          {BUSINESS.portfolio.map((item, i) => (
-            <PortfolioCard
-              key={item.name}
-              item={item}
-              delay={560 + i * 70}
-              open={openVertical === i}
-              metrics={item.name === '.THE FIORE DAILY.'}
-              onToggle={() =>
-                item.name === '.THE FIORE DAILY.'
-                  ? setTfdOpen(true)
-                  : setOpenVertical(openVertical === i ? null : i)
-              }
-              onOpenStory={() => setVerticalStory(i)}
-            />
-          ))}
-        </div>
-
-        {tfdOpen ? <TfdSheet onClose={() => setTfdOpen(false)} /> : null}
-
-        {verticalStory !== null ? (
-          <StoryPlayer
-            groups={verticalGroups}
-            startGroup={verticalStory}
-            label="Stories das quatro verticais / Stories of the four verticals"
-            onClose={() => setVerticalStory(null)}
-          />
-        ) : null}
-
-        {/* A frase de visão ("E o caminho tem direção declarada...") e a tradução
-            saíram (20/10/2026): não cabiam limpas. Texto em BUSINESS.vision. */}
-      </section>
-
-      {/* ── CENA 07 · COMO CADA VERTICAL GANHA + ROADMAP (22/10/2026 b) ───────── */}
-      <ModelScene />
-
-      {/* ── CENA 08 · CASE SELECIONADO ───────────────────────────────────────────
+      {/* ── CENA 06 · CASE SELECIONADO ───────────────────────────────────────────
              Mídia protagonista, texto mínimo. O filme vertical dá a atmosfera;
              as nove imagens correm em faixa horizontal, respeitando o arco
              narrativo do array (atmosfera → no ar), sem empurrar a cena para
              fora da tela: o scroll é da faixa, não da cena. ────────────────── */}
-      <section id="cena-08" style={{ ...S, background: '#111110' }} aria-label="Case Selecionado / Selected Case">
-        <Numeral n="08" />
-        <Kicker n="08" pt="Case Selecionado" en="Selected Case" />
+      <section id="cena-06" style={{ ...S, background: '#000000' }} aria-label="Case Selecionado / Selected Case">
+        <Kicker n="06" pt="Case Selecionado" en="Selected Case" />
 
         {/* O TÍTULO SAIU DE CIMA DA CENA e foi para o lado do story (pedido do
             fundador 2026-08-14: "verãozão + nome do cliente do lado direito do
@@ -857,91 +588,10 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </div>
       </section>
 
-      {/* ── CENA 09 · O QUE CONSTRUÍMOS JUNTOS (22/10/2026 b) ──────────────────
-             Entrou no lugar da cena de CNPJ e regime: três marcos com retorno
-             para o parceiro, datados em trimestres de 2027, e o pedido em uma
-             frase. A cena de dois lados (`partner.sides`) e a linha de CNPJ saíram
-             da tela; os dados seguem em `v3-scenes.ts` e `COMPANY`. */}
-      <TogetherScene />
-
-      {/* ── CENA 10 · FECHO ──────────────────────────────────────────────────── */}
-      <section
-        id="cena-10"
-        style={{ ...S, alignItems: 'center', textAlign: 'center', background: '#000000' }}
-        aria-label="Fecho / Close"
-      >
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <Image
-            src="/brand/BRAND-ASSET-01.svg"
-            alt=""
-            width={600}
-            height={600}
-            style={{ width: '80vmin', height: '80vmin', opacity: 0.04, filter: 'invert(1)' }}
-          />
-        </div>
-
-        <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <PitchReveal delay={100}>
-            <blockquote className="p3-h2 p3-quote">
-              {CLOSE.quote.pt[0]}
-              <br />
-              <span style={{ color: ACCENT }}>{CLOSE.quote.pt[1]}</span>
-              <En size="lead">{CLOSE.quote.en.join(' ')}</En>
-            </blockquote>
-          </PitchReveal>
-
-          <PitchReveal delay={280}>
-            <TbfWordmark
-              style={{
-                width: '100%',
-                // Teto menor (era 700px): no fecho o logotipo divide a tela com
-                // citação, Culture™, contatos, três botões e o rodapé legal.
-                maxWidth: 'min(460px, 62vw)',
-                height: 'auto',
-                display: 'block',
-                marginBottom: 'var(--p3-gap-sm)',
-              }}
-            />
-          </PitchReveal>
-
-          <PitchReveal delay={360}>
-            <p className="p3-culture">{CLOSE.culture}</p>
-          </PitchReveal>
-
-          <PitchReveal delay={450}>
-            <p className="p3-eyebrow p3-eyebrow--accent">
-              {partner.closeEyebrow.pt}
-              <En>{partner.closeEyebrow.en}</En>
-            </p>
-          </PitchReveal>
-
-          <PitchReveal delay={550}>
-            <p className="p3-contact-site">{CLOSE.site}</p>
-            <p className="p3-contact-mail">{CLOSE.email}</p>
-          </PitchReveal>
-
-          <PitchReveal delay={650}>
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              {CLOSE.links.map((link, i) => {
-                const cls = link.external ? 'btn btn--ghost' : i === 0 ? 'btn btn--primary' : 'btn btn--secondary'
-                return link.external ? (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={cls}>
-                    {link.label} &#8594;
-                  </a>
-                ) : (
-                  <Link key={link.href} href={link.href} className={cls}>
-                    {link.label} &#8594;
-                  </Link>
-                )
-              })}
-            </div>
-          </PitchReveal>
-
-          <PitchReveal delay={800}>
-            <p className="p3-legal">{CLOSE.legal}</p>
-          </PitchReveal>
-        </div>
-      </section>
+      {/* ── CENA 07 · PARCEIROS, MARCOS E FECHO (rodada 23/10/2026) ─────────────
+             Fundiu a antiga 09 (o que construimos juntos) no fecho, no layout
+             da cena 06 do pitch v3. `CloseScene.tsx`. */}
+      <CloseScene partner={partner} />
 
       <style>{`
         /* ─── 4.0: timer, fundador, anel das verticais, empresa (mobile-first) ─ */
@@ -1035,48 +685,52 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p4-founder__team .p3-en { font-size: 0.64rem; line-height: 1.15; font-weight: 300; }
         .p4-founder__disc { display: none; }
 
+        /* Rodada 23/10: bordas SEM corte seco. UMA máscara com quatro rampas
+           longas e suaves (esquerda, direita, topo, base) intersectadas, então o
+           mosaico se dissolve no preto em todos os lados, como sombra. */
         .p4-reel {
           height: 100%;
           overflow: hidden;
-          -webkit-mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0, #000 9%, #000 91%, transparent 100%);
+          --p4-fade-x: linear-gradient(to right, transparent 0, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.7) 13%, #000 24%, #000 76%, rgba(0,0,0,0.7) 87%, rgba(0,0,0,0.25) 94%, transparent 100%);
+          --p4-fade-y: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 7%, rgba(0,0,0,0.7) 15%, #000 28%, #000 70%, rgba(0,0,0,0.6) 84%, rgba(0,0,0,0.2) 93%, transparent 100%);
+          -webkit-mask-image: var(--p4-fade-x), var(--p4-fade-y);
+          mask-image: var(--p4-fade-x), var(--p4-fade-y);
+          -webkit-mask-composite: source-in;
+          mask-composite: intersect;
         }
         .p4-reel__grid {
           height: 100%;
           display: grid;
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 0.45rem;
-          padding-inline: 0.45rem;
-          -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
-          mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.5rem;
+          padding-inline: 0.5rem;
         }
         .p4-reel__col {
           min-width: 0;
           overflow: hidden;
         }
-        .p4-reel__col--3,
-        .p4-reel__col--4 {
+        .p4-reel__col--2,
+        .p4-reel__col--3 {
           display: none;
         }
         .p4-reel__track {
           display: flex;
           flex-direction: column;
-          animation: p4-reel 34s linear infinite;
+          animation: p4-reel 26s linear infinite;
           will-change: transform;
         }
-        .p4-reel__col--0 .p4-reel__track { animation-duration: 32s; }
-        .p4-reel__col--1 .p4-reel__track { animation-duration: 38s; animation-direction: reverse; animation-delay: -12s; }
-        .p4-reel__col--2 .p4-reel__track { animation-duration: 35s; animation-delay: -20s; }
-        .p4-reel__col--3 .p4-reel__track { animation-duration: 42s; animation-direction: reverse; animation-delay: -6s; }
-        .p4-reel__col--4 .p4-reel__track { animation-duration: 37s; animation-delay: -15s; }
+        .p4-reel__col--0 .p4-reel__track { animation-duration: 24s; }
+        .p4-reel__col--1 .p4-reel__track { animation-duration: 28s; animation-direction: reverse; animation-delay: -9s; }
+        .p4-reel__col--2 .p4-reel__track { animation-duration: 26s; animation-delay: -14s; }
+        .p4-reel__col--3 .p4-reel__track { animation-duration: 30s; animation-direction: reverse; animation-delay: -5s; }
         .p4-reel__tile {
           position: relative;
           flex: none;
           width: 100%;
-          margin-bottom: 0.45rem;
+          margin-bottom: 0.5rem;
           border-radius: var(--tbf-radius-card);
           overflow: hidden;
-          background: #0a0a09;
+          background: #050505;
         }
         .p4-reel__img {
           object-fit: cover;
@@ -1091,11 +745,12 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         }
         .p4-reel__info--accent { background: ${ACCENT}; color: #000000; }
         .p4-reel__info--paper { background: ${PAPER}; color: #000000; }
-        .p4-reel__info--dark { background: #1b1b19; color: ${PAPER}; }
+        .p4-reel__info--dark { background: #171716; color: ${PAPER}; }
         .p4-reel__big {
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.85rem, 4.2vw, 1.5rem);
+          font-size: clamp(0.9rem, 4.8vw, 1.6rem);
+          overflow-wrap: anywhere;
           line-height: 1;
           letter-spacing: -0.04em;
         }
@@ -1104,7 +759,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           margin-top: 0.1rem;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.7rem, 3.4vw, 1.1rem);
+          font-size: clamp(0.8rem, 4vw, 1.15rem);
           line-height: 1.05;
           letter-spacing: -0.03em;
         }
@@ -1114,7 +769,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           flex-direction: column;
           font-family: var(--tbf-font-family-body);
           font-weight: 450;
-          font-size: 0.56rem;
+          font-size: 0.64rem;
           line-height: 1.15;
         }
         .p4-reel__line-en {
@@ -1131,153 +786,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-reel__track { animation: none; }
         }
 
-        /* ─── Cena 05: cartões das verticais (20/10/2026) ───────────────────── */
-        .p4-verticals {
-          position: relative;
-          z-index: 1;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-          margin-top: var(--p3-gap-sm);
-          max-width: var(--p3-inner);
-        }
-        .p4-vc {
-          position: relative;
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          padding: 0.75rem 0.9rem 0.75rem 0.75rem;
-          background: #0a0a09;
-          border-left: 3px solid ${PAPER};
-          border-radius: var(--tbf-radius-card);
-          overflow: hidden;
-          transition: border-color 400ms ${EASE};
-        }
-        .p4-vc--open {
-          border-color: ${ACCENT};
-        }
-        .p4-vc__hit {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          width: 100%;
-          background: none;
-          border: 0;
-          padding: 0;
-          cursor: pointer;
-          border-radius: inherit;
-        }
-        .p4-vc__hit:focus-visible {
-          outline: 2px solid ${ACCENT};
-          outline-offset: -2px;
-        }
-        /* 22/10/2026: destaque (anel), nome e descrição são UM bloco, igual nos
-           quatro. Mobile: anel à esquerda, texto à direita. Desktop: anel em cima,
-           nome e descrição embaixo, ancorados na base do cartão. */
-        .p4-vc__ring {
-          position: relative;
-          z-index: 3;
-          flex: none;
-          pointer-events: auto;
-        }
-        .p4-vc__hint {
-          position: absolute;
-          z-index: 2;
-          bottom: 0.7rem;
-          right: 0.9rem;
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 500;
-          font-size: 0.62rem;
-          letter-spacing: 0.14em;
-          color: ${ACCENT};
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 300ms ${EASE};
-        }
-        @media (hover: hover) {
-          .p4-vc:hover .p4-vc__hint { opacity: 1; }
-        }
-        @media (hover: none) {
-          .p4-vc__hint { opacity: 0.6; }
-        }
-        .p4-vc--open .p4-vc__hint { opacity: 0 !important; }
-        .p4-vc__body {
-          position: relative;
-          pointer-events: none;
-        }
-        .p4-vc__head {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: 0.85rem;
-        }
-        .p4-vc__id {
-          min-width: 0;
-          flex: 1 1 auto;
-        }
-        .p4-vc .p4-vc__name {
-          margin: 0;
-          font-size: clamp(0.72rem, 3.1vw, 0.95rem);
-          letter-spacing: -0.03em;
-          line-height: 1.15;
-          white-space: normal;
-        }
-        .p4-vc__desc {
-          margin: 0.3rem 0 0;
-          padding-right: 3rem;
-          min-height: calc(3 * 1.35em);
-          font-family: var(--tbf-font-family-body);
-          font-weight: 350;
-          font-size: 0.74rem;
-          line-height: 1.35;
-          color: rgba(240, 237, 230, 0.62);
-        }
-        .p4-vc__more {
-          display: grid;
-          grid-template-rows: 0fr;
-          opacity: 0;
-          visibility: hidden;
-          transition: grid-template-rows 600ms ${EASE}, opacity 400ms ${EASE}, visibility 0s linear 600ms;
-        }
-        .p4-vc--open .p4-vc__more {
-          grid-template-rows: 1fr;
-          opacity: 1;
-          visibility: visible;
-          transition-delay: 0s, 120ms, 0s;
-        }
-        .p4-vc__more-inner {
-          min-height: 0;
-          overflow: hidden;
-        }
-        .p4-vc__field {
-          margin: 0.6rem 0 0;
-          font-family: var(--tbf-font-family-body);
-          font-weight: 350;
-          font-size: 0.74rem;
-          line-height: 1.4;
-          color: rgba(240, 237, 230, 0.72);
-        }
-        .p4-vc__field .p3-label {
-          display: block;
-          margin-bottom: 0.1rem;
-          color: ${ACCENT};
-        }
-        .p4-vc__link {
-          position: relative;
-          z-index: 3;
-          pointer-events: auto;
-          display: inline-block;
-          margin-top: 0.7rem;
-          padding: 0.3rem 0;
-          font-family: var(--tbf-font-family-display);
-          font-weight: 800;
-          font-size: 0.75rem;
-          letter-spacing: 0.06em;
-          text-decoration: none;
-          color: ${ACCENT};
-        }
-
-        /* ─── Cena 08: o filme é o protagonista (20/10/2026; métricas 22/10/2026 b) ──
+        /* ─── Cena 06: o filme é o protagonista (20/10/2026; métricas 22/10/2026 b) ──
            Mobile: filme à esquerda, marca e frase à direita; faixa de três
            números embaixo, de ponta a ponta. Desktop: filme em coluna, texto e
            números à direita. */
@@ -1371,7 +880,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           flex-direction: column;
           gap: 0.15rem;
           padding: 0.5rem 0.55rem;
-          background: #0a0a09;
+          background: #050505;
           border-radius: var(--tbf-radius-card);
           min-width: 0;
         }
@@ -1409,26 +918,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           color: rgba(240, 237, 230, 0.4);
         }
 
-        /* ─── Cena 07: rodapé discreto (20/10/2026) ─────────────────────────── */
-        .p4-fineprint {
-          position: relative;
-          z-index: 1;
-          margin: var(--p3-gap-sm) 0 0;
-          max-width: var(--p3-measure-wide);
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 400;
-          font-size: 0.64rem;
-          line-height: 1.45;
-          letter-spacing: 0.02em;
-          color: rgba(240, 237, 230, 0.42);
-        }
-
-        .p4-fineprint__part { display: block; }
-        .p4-fineprint__sep { display: none; }
-
         @media (min-width: 768px) {
-          .p4-fineprint__part { display: inline; }
-          .p4-fineprint__sep { display: inline; }
           .p4-founder {
             margin-top: var(--p3-gap);
             margin-inline: 0 calc(var(--p3-pad-x) * -1);
@@ -1451,7 +941,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-founder__chip {
             padding: 0.3rem 0.7rem;
             border-radius: var(--tbf-radius-full);
-            background: #0a0a09;
+            background: #050505;
             font-family: var(--tbf-font-family-printed);
             font-weight: 500;
             font-size: 0.68rem;
@@ -1462,44 +952,17 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-founder__chip-en { color: rgba(240, 237, 230, 0.45); font-weight: 400; }
           .p4-reel { height: 100%; }
           .p4-reel__grid {
-            grid-template-columns: repeat(5, minmax(0, 1fr));
-            gap: 0.7rem;
-            padding-inline: 0.7rem;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.8rem;
+            padding-inline: 0.8rem;
           }
-          .p4-reel__col--3,
-          .p4-reel__col--4 { display: block; }
-          .p4-reel__tile { margin-bottom: 0.7rem; }
+          .p4-reel__col--2,
+          .p4-reel__col--3 { display: block; }
+          .p4-reel__tile { margin-bottom: 0.8rem; }
           .p4-reel__info { padding: 0.8rem; }
           .p4-reel__big { font-size: clamp(1rem, 1.7vw, 1.7rem); }
           .p4-reel__sub { font-size: clamp(0.8rem, 1.2vw, 1.2rem); }
           .p4-reel__line { font-size: clamp(0.62rem, 0.8vw, 0.8rem); margin-top: 0.5rem; }
-
-          .p4-verticals {
-            flex: 1 1 auto;
-            min-height: 0;
-            max-height: 30rem;
-            flex-direction: row;
-            gap: 0.75rem;
-          }
-          .p4-vc {
-            padding: 1rem;
-          }
-          .p4-vc__hint { top: 1.2rem; bottom: auto; right: 1rem; font-size: 0.66rem; }
-          .p4-vc__body {
-            margin-top: auto;
-            padding-bottom: clamp(1rem, 7vh, 3.5rem);
-            min-height: 0;
-          }
-          .p4-vc__head {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 0.9rem;
-          }
-          .p4-vc__id { width: 100%; }
-          .p4-vc .p4-vc__name { font-size: clamp(0.6rem, 0.78vw, 0.9rem); }
-          .p4-vc__desc { padding-right: 0; font-size: 0.72rem; }
-          .p4-vc__field { font-size: 0.82rem; }
-          .p4-vc__link { font-size: 0.8rem; }
 
           .p4-case {
             grid-template-columns: auto minmax(0, 1fr);
@@ -1532,12 +995,10 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-case__mlab .p3-en { font-size: 0.7rem; }
           .p4-case__mper { font-size: 0.62rem; }
           .p4-case__msrc { font-size: 0.66rem; }
-          .p4-fineprint { font-size: 0.72rem; }
         }
       `}</style>
 
       {/* ── Design system do deck + layout responsivo (mobile-first) ─────────── */}
-      <NewScenesStyles />
       <DeckStyles />
     </div>
   )

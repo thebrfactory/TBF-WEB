@@ -14,25 +14,25 @@
 
 import type { Bi } from './v3-scenes'
 
-// ─── Cenas (rodada 22/10 b: deck para PARCEIRO ESTRATEGICO, nao investidor) ─────
-// 00 capa, 01 fundador, 02 abertura, 03 referencia, 04 tese, 05 mercado e mapa,
-// 06 verticais, 07 como ganhamos + roadmap, 08 case, 09 o que construimos juntos,
-// 10 fecho. Sem captacao, sem valor, sem equity, sem numero de receita ou cliente.
+// ─── Cenas (rodada 23/10: deck enxuto, 8 telas) ─────────────────────────────
+// 00 capa, 01 fundador, 02 abertura, 03 referencia, 04 pergunta, tese e mercado
+// (revelacao por clique), 05 as quatro frentes (cada uma abre em tela cheia),
+// 06 case, 07 parceiros, marcos e fecho. Saiu a cena de mercado (o essencial foi
+// para a 04), a cena "como cada vertical ganha" (virou papel de cada frente na 05)
+// e a cena "o que construimos juntos" (os marcos foram para a 07).
+// Sem captacao, sem valor, sem equity, sem numero de receita ou cliente.
 export const SCENES_V4 = [
   { id: 'cena-00', pt: 'Capa', en: 'Cover', n: '00' },
   { id: 'cena-01', pt: 'O Fundador', en: 'The Founder', n: '01' },
   { id: 'cena-02', pt: 'Abertura', en: 'Opening', n: '02' },
   { id: 'cena-03', pt: 'Campo de Referência', en: 'Reference Field', n: '03' },
   { id: 'cena-04', pt: 'A Pergunta e a Tese', en: 'The Question and the Thesis', n: '04' },
-  { id: 'cena-05', pt: 'Mercado e Posição', en: 'Market and Position', n: '05' },
-  { id: 'cena-06', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '06' },
-  { id: 'cena-07', pt: 'Como Cada Vertical Ganha', en: 'How Each Vertical Earns', n: '07' },
-  { id: 'cena-08', pt: 'Case Selecionado', en: 'Selected Case', n: '08' },
-  { id: 'cena-09', pt: 'O Que Construímos Juntos', en: 'What We Build Together', n: '09' },
-  { id: 'cena-10', pt: 'Fecho', en: 'Close', n: '10' },
+  { id: 'cena-05', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '05' },
+  { id: 'cena-06', pt: 'Case Selecionado', en: 'Selected Case', n: '06' },
+  { id: 'cena-07', pt: 'Parceiros e Fecho', en: 'Partners and Close', n: '07' },
 ] as const
 
-export const TOTAL_V4 = '10'
+export const TOTAL_V4 = '07'
 
 // ─── Timer ───────────────────────────────────────────────────────────────────
 export const TIMER_SECONDS = 10 * 60
@@ -71,8 +71,8 @@ export const FOUNDER = {
     pt: ['Quem constrói a casa', 'vive a cultura.'],
     en: ['The one who builds the house', 'lives the culture.'],
   },
-  // O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026): cinco
-  // colunas de sete quadros, esteira vertical. As imagens são as peças ATUAIS do
+  // O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026): quatro
+  // colunas de doze quadros (rodada 23/10), esteira vertical. As imagens são as peças ATUAIS do
   // portfólio (capas e galerias de `creators/tavaristico/_data.ts`, incluindo as
   // capas novas de The Fashion Backstage, Tiger Capsule e Virtuosa) mais as
   // peças de campanha e de marca. `ar` é a proporção REAL do arquivo (nada é
@@ -84,27 +84,42 @@ export const FOUNDER = {
       info('SPFW N58', 2024, { pt: 'Direção criativa', en: 'Creative direction' }, 'accent'),
       img('behance/arquiloucura/01', 1400, 1000),
       img('virtuosa/card-sonata', 1080, 1440),
-      img('ventures/veraozao', 1080, 1080),
+      img('martha-medeiros/cover', 1600, 900),
       img('tiger-capsule/cover', 1400, 800),
+      info('MANACÁ', 'Martha Medeiros', { pt: 'Direção de arte', en: 'Art direction' }, 'dark'),
       img('hospitality/04-torcida', 1500, 2000),
+      img('behance/bahia-em-cores-quentes/01', 2800, 1867),
+      img('o-18-years/cover', 1080, 1350),
+      img('ventures/veraozao', 1080, 1080),
+      img('behance/promomeats/01', 1350, 818),
     ],
     [
-      img('virtuosa/pp-02', 1920, 1920),
+      img('virtuosa/pp-01', 2800, 1659),
       img('stories/veraozao/03-01', 1080, 1920),
       info('LAUDA', 'Virtuosa', { pt: 'Direção de arte', en: 'Art direction' }, 'paper'),
       img('behance/charlotte/01', 1754, 1240),
-      img('o-18-years/cover', 1080, 1350),
+      img('martha-medeiros/garden-01', 1067, 1599),
       img('fashion-backstage/04', 2000, 1125),
+      info('BOAH', 'Branded content', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'accent'),
+      img('behance/branded-content-boah/10', 1080, 1080),
       img('ventures/runway-untd', 1000, 1000),
+      img('behance/max-vidros/09', 2800, 1855),
+      img('virtuosa/feed-09', 1080, 1350),
+      img('behance/grocery-store/04', 1867, 2800),
     ],
     [
       img('behance/black-boah/01', 1400, 800),
       img('virtuosa/feed-01', 720, 900),
       img('hospitality/12-sax', 1500, 2000),
       info('TIGER', 'SS24', { pt: 'Direção de arte', en: 'Art direction' }, 'dark'),
-      img('behance/festival-de-arte-e-gastronomia/05', 1080, 1350),
+      img('behance/festival-de-arte-e-gastronomia/01', 2560, 1440),
       img('stories/veraozao/07-01-copy-12', 1080, 1920),
       img('ventures/crivo', 1000, 1000),
+      info('ARQUILOUCURA', 2023, { pt: 'Gráfico e motion', en: 'Graphic and motion' }, 'paper'),
+      img('behance/cores-e-sabores/01', 2800, 1867),
+      img('spfw-the-paradise/cover', 1080, 1080),
+      img('behance/branded-content-boah/20', 1080, 1350),
+      img('tiger-capsule/05', 1200, 686),
     ],
     [
       img('behance/capsula-brasilidade-boah/01', 1400, 800),
@@ -113,13 +128,9 @@ export const FOUNDER = {
       img('hospitality/02-mural-oste', 1500, 2000),
       img('behance/crush-coins/01', 1350, 1080),
       img('fashion-backstage/03', 1080, 1440),
+      info('MEATS', 'Espeteria', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'dark'),
       img('virtuosa/lauda-cat-02', 900, 1600),
-    ],
-    [
-      img('ventures/story-brandsystem', 1080, 1920),
-      img('virtuosa/feed-05', 720, 900),
-      img('behance/branded-content-boah/01', 1400, 800),
-      img('hospitality/14-piscina', 1209, 2000),
+      img('behance/bw-mood/05', 1867, 2800),
       img('behance/arquimeats-o-baile-de-mascaras/01', 1350, 818),
       img('o-18-years/k1-dezoitou', 1080, 1920),
       img('virtuosa/g1', 1440, 1440),
@@ -250,9 +261,12 @@ export const COMPANY = {
     pt: ['Uma startup,', 'registrada como startup.'],
     en: ['A startup,', 'registered as a startup.'],
   },
+  // Rodada 23/10: so o fato escrito nas fontes (LEGAL-ACCOUNTING e tbf-context):
+  // a empresa e enquadrada no Inova Simples. Nenhuma vantagem concreta esta
+  // escrita la, entao nenhuma e afirmada aqui (a linha de prioridade no INPI saiu).
   regimeText: {
-    pt: 'INOVA SIMPLES é o regime específico para startups. Entre as vantagens, prioridade no registro de propriedade intelectual no INPI.',
-    en: 'INOVA SIMPLES is the specific regime for startups. Among its advantages, priority in intellectual property registration at INPI.',
+    pt: 'Empresa enquadrada no Inova Simples (LC 182/2021, Marco Legal das Startups).',
+    en: 'Company registered under Inova Simples (LC 182/2021, Startups Legal Framework).',
   } as Bi,
   rows: [
     { label: { pt: 'Razão social', en: 'Legal name' } as Bi, value: '.TBF. inc' },
@@ -512,5 +526,37 @@ export const TOGETHER = {
   ask: {
     pt: 'Buscamos um parceiro estratégico com estrutura e escala, para construir propriedades culturais junto com a .TBF.',
     en: 'We seek a strategic partner with structure and scale, to build cultural properties together with .TBF.',
+  } as Bi,
+}
+
+
+// =============================================================================
+// RODADA 23/10/2026: CENA 04 (revelacao por clique), CENA 06 (video do case)
+// =============================================================================
+
+// Video vertical dinamico do VERAOZAO: os quatro stories de 18/02 (01, 03, 04,
+// 05, 1080x1920, texto ja gravado) em sequencia com zoom lento e transicoes.
+// Gerado com ffmpeg a partir de `TAV05/.../stories-oasis-fevereiro/18.02`.
+export const VERAOZAO_REEL = {
+  src: '/images/pitch/veraozao-reel/veraozao-reel.mp4',
+  poster: '/images/pitch/veraozao-reel/veraozao-reel-poster.webp',
+  alt: { pt: 'Quatro stories da campanha VERÃOZÃO em sequência', en: 'Four VERÃOZÃO campaign stories in sequence' } as Bi,
+}
+
+// Dado de mercado que migrou da antiga cena 05 para o ultimo passo da cena 04.
+// Fonte e conferencia em `MARKET` acima (Firjan, dados de 2023).
+export const THESIS_MARKET = {
+  stat: MARKET.stats[0],
+  tbf: {
+    label: { pt: 'Dona de IP, alcance global', en: 'IP owner, global reach' } as Bi,
+    line: { pt: 'Propriedade brasileira, alcance global.', en: 'Brazilian property, global reach.' } as Bi,
+    others: {
+      pt: 'Agências e produtoras locais, redes globais de agências, coletivos regionais: nenhuma ocupa esse canto.',
+      en: 'Local agencies and production houses, global agency networks, regional collectives: none occupies this corner.',
+    } as Bi,
+  },
+  source: {
+    pt: 'Fonte: Firjan, Mapeamento da Indústria Criativa 2025 (dados de 2023).',
+    en: 'Source: Firjan, Creative Industry Mapping 2025 (2023 data).',
   } as Bi,
 }
