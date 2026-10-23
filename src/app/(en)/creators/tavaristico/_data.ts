@@ -7,6 +7,8 @@
 // para o redator substituir. Ô:18 Years é copy real (não provisória).
 // ─────────────────────────────────────────────────────────────────────────────
 
+import type { CarouselItem } from '@/components/tavaristico/WorkCarousel'
+
 export type Discipline =
   | 'Art Direction'
   | 'Branding'
@@ -23,6 +25,8 @@ export interface Work {
   disciplines: Discipline[]
   /** papel do Tavarístico, OBRIGATÓRIO (credibilidade) */
   role: string
+  /** papel em PT; sem ele, a pagina PT mostra `role` */
+  rolePT?: string
   client?: string
   /** ano é opcional por decisão do ECD (entra só onde faz sentido) */
   year?: string
@@ -64,9 +68,21 @@ export interface Work {
   lookbook?: WorkPiece[]
   /** Grid do feed (3 colunas, quadrado como no PDF de planejamento). */
   feedGrid?: WorkPiece[]
+  /** Proporcao dos quadros do feedGrid (ex.: '4 / 5'); sem ela, quadrado. */
+  feedRatio?: string
   /** Posts/reels do Instagram embedados (embed oficial, carregado so ao rolar ate eles). */
   instagramEmbeds?: string[]
+  /** Sequencia editorial apos a galeria: carrossel, feed, embed e imagem, na ordem do array. */
+  blocks?: WorkBlock[]
 }
+
+/** Bloco da pagina de obra (rodada 23/10/2026). Rotulos curtos, PT e EN, fora da imagem. */
+export type WorkBlock = { labelEN?: string; labelPT?: string } & (
+  | { kind: 'carousel'; variant: 'tall' | 'wide'; items: CarouselItem[] }
+  | { kind: 'feed'; pieces: WorkPiece[]; ratio?: string }
+  | { kind: 'embed'; url: string }
+  | { kind: 'image'; src: string; alt: string; w: number; h: number }
+)
 
 /** Peca de pagina de obra: arquivo pronto (nunca montado por codigo) e alt em PT. */
 export interface WorkPiece {
@@ -245,6 +261,115 @@ const TIGER_CAPSULE: Work = {
   // Camisa no centro do card (rodada 22/10/2026): a camisa fica a 54% da largura e 50% da altura da capa.
   cardFocus: [0.546, 0.5],
 }
+
+// Rodada 23/10/2026: blocos editoriais dos cases BOAH, Festival e The Fashion Backstage.
+// Dimensoes reais dos arquivos (w, h) reservam o espaco: carrossel sem CLS.
+const BO = `${base}/behance/branded-content-boah`
+const BX = `${base}/branded-content-boah-extra`
+const FEST = `${base}/behance/festival-de-arte-e-gastronomia`
+const FB = `${base}/fashion-backstage`
+const SP = `${base}/spfw-the-paradise`
+const VID = '/videos/tavaristico'
+const px = (src: string, w: number, h: number, alt: string) => ({ src, w, h, alt })
+
+const BOAH_FEED: WorkPiece[] = [
+  { src: `${BO}/17.webp`, alt: 'Look de linho com colete de botões, no corredor claro.' },
+  { src: `${BO}/08.webp`, alt: 'Colar de pérola barroca e fios azuis sobre blusa branca.' },
+  { src: `${BO}/09.webp`, alt: 'Estampa verde e creme em tecido dobrado.' },
+  { src: `${BO}/10.webp`, alt: 'Colar de miçangas verdes com moedas douradas.' },
+  { src: `${BO}/19.webp`, alt: 'Look de linho diante da arara de peças, com a frase da campanha na própria peça.' },
+  { src: `${BO}/11.webp`, alt: 'Bolsa xadrez verde, óculos escuros e taça sobre a mesa.' },
+  { src: `${BO}/18.webp`, alt: 'Detalhe do colete de linho com botões de madeira e pingente.' },
+  { src: `${BO}/12.webp`, alt: 'Bolsa de tecido listrado e brincos em still de produto.' },
+  { src: `${BO}/20.webp`, alt: 'Look de linho refletido no espelho de um provador claro.' },
+  { src: `${BO}/21.webp`, alt: 'Colete e calça de linho, com o braço apoiado na cortina.' },
+  { src: `${BO}/07.gif`, alt: 'Look de vestido longo listrado, em animação.' },
+  { src: `${BX}/detail-06.webp`, alt: 'Três modelos em looks brancos e verdes diante do fundo claro.' },
+]
+
+const BOAH_LOOKS: CarouselItem[] = [
+  px(`${BX}/look-01.webp`, 1068, 1600, 'Conjunto azul em estúdio, modelo de frente.'),
+  px(`${BX}/look-04.webp`, 1068, 1600, 'Macacão azul com recorte nas costas.'),
+  px(`${BX}/look-05.webp`, 1200, 1600, 'Conjunto azul listrado e chapéu, na varanda branca.'),
+  px(`${BX}/look-08.webp`, 1067, 1600, 'Look azul claro no deque de madeira.'),
+  px(`${BX}/look-02.webp`, 1068, 1600, 'Conjunto azul de duas peças, de pé no estúdio.'),
+  px(`${BX}/look-07.webp`, 1200, 1600, 'Modelo de chapéu e conjunto listrado, apoiada na balaustrada.'),
+  px(`${BX}/look-11.webp`, 1067, 1600, 'Vestido estampado na praia, entre coqueiros.'),
+  px(`${BX}/look-13.webp`, 1067, 1600, 'Colete de linho branco com botões de madeira.'),
+  px(`${BX}/look-15.webp`, 1200, 1600, 'Vestido branco diante do azulejo azul de um casarão.'),
+  px(`${BX}/look-03.webp`, 1068, 1600, 'Conjunto azul de duas peças, de costas, no estúdio.'),
+  px(`${BX}/look-09.webp`, 1067, 1600, 'Vestido azul no deque, com o mar ao fundo.'),
+  px(`${BX}/look-12.webp`, 1280, 1600, 'Camiseta creme com estampa vermelha, na areia.'),
+  px(`${BX}/look-06.webp`, 1200, 1600, 'Modelo de chapéu e conjunto azul listrado, de braços cruzados.'),
+  px(`${BX}/look-10.webp`, 1067, 1600, 'Look estampado na escada de madeira.'),
+  px(`${BX}/look-14.webp`, 1067, 1600, 'Detalhe do colete de linho com botões.'),
+  px(`${BX}/look-16.webp`, 1080, 1350, 'Vestido branco à beira da piscina.'),
+  px(`${BX}/look-17.webp`, 1200, 1600, 'Look jeans e verde na grama.'),
+  px(`${BX}/look-18.webp`, 1067, 1600, 'Grupo de modelos em looks claros no deque.'),
+  px(`${BX}/look-19.webp`, 1200, 1600, 'Modelo de linho sentada nas pedras, com o mar ao fundo.'),
+]
+
+const BOAH_DETAILS: CarouselItem[] = [
+  px(`${BX}/set-01.webp`, 900, 1600, 'Bastidor: a equipe fotografando um look em locação.'),
+  px(`${BX}/set-02.webp`, 900, 1600, 'Bastidor: o fotógrafo em ação, de camisa azul.'),
+  px(`${BX}/detail-01.webp`, 900, 1600, 'Camiseta creme com estampa vermelha, em still.'),
+  px(`${BX}/detail-02.webp`, 1067, 1600, 'Colar de contas marrons sobre fundo branco.'),
+  px(`${BX}/detail-03.webp`, 1067, 1600, 'Colar de contas vermelhas sobre tecido claro.'),
+  px(`${BX}/detail-04.webp`, 1067, 1600, 'Colares de contas verdes e vermelhas.'),
+  px(`${BX}/detail-05.webp`, 900, 1600, 'Bolsa xadrez verde sobre bandeja de metal, à beira da piscina.'),
+]
+
+const FEST_FEED: WorkPiece[] = Array.from({ length: 21 }, (_, i) => {
+  const n = String(i + 2).padStart(2, '0')
+  return { src: `${FEST}/${n}.webp`, alt: `Peça ${i + 1} de 21 do feed do Festival de Arte e Gastronomia.` }
+})
+
+const SPFW_BLOCKS: WorkBlock[] = [
+  {
+    kind: 'carousel',
+    variant: 'wide',
+    labelEN: 'Runway and light',
+    labelPT: 'Passarela e luz',
+    items: [
+      px(`${FB}/04.webp`, 2000, 1125, 'Modelo de vestido azul de crochê na passarela, com a plateia ao fundo.'),
+      px(`${SP}/ruc-hero.webp`, 1800, 1013, 'Emblema vermelho do Fashion Club em luz vermelha, com duas pessoas ao fundo.'),
+      px(`${FB}/05.webp`, 2000, 1125, 'Retrato de modelo em luz azul e roxa, camisa branca e paletó.'),
+      px(`${SP}/ruc-closing.webp`, 1800, 1306, 'Plateia em silhueta diante do painel luminoso, com refletores azuis.'),
+      px(`${SP}/cover.webp`, 1080, 1080, 'Modelos nos bastidores, com bonés e peças coloridas.'),
+      px(`${SP}/g2.webp`, 1080, 1080, 'Perfil de modelo em luz azul e magenta.'),
+    ],
+  },
+  { kind: 'embed', url: 'https://www.instagram.com/p/DPUk0hvgn-6/', labelEN: 'On Instagram, @runwayunited', labelPT: 'No Instagram, @runwayunited' },
+  {
+    kind: 'carousel',
+    variant: 'tall',
+    labelEN: 'Backstage',
+    labelPT: 'Bastidor',
+    items: [
+      px(`${SP}/g3.webp`, 1080, 1920, 'Fila de modelos na passarela branca, em perspectiva.'),
+      px(`${FB}/02.webp`, 1080, 1440, 'Silhueta de modelo de costas em névoa azul.'),
+      px(`${SP}/ruc-22.webp`, 1080, 1920, 'Modelo de vestido azul na passarela, com o selo .RUC. São Paulo.'),
+      px(`${FB}/03.webp`, 1080, 1440, 'Silhueta de modelo de costas em luz vermelha e azul.'),
+      px(`${SP}/ruc-backstage.webp`, 900, 1600, 'Modelos enfileirados em tons de vermelho e franjas verdes, com o reflexo no piso.'),
+      px(`${SP}/g1.webp`, 1080, 1920, 'Mulher de costas caminhando em luz azul.'),
+      px(`${SP}/ruc-23.webp`, 1080, 1920, 'Silhueta de modelo em luz azul, com o selo .RUC. São Paulo.'),
+    ],
+  },
+  { kind: 'embed', url: 'https://www.instagram.com/p/Da5fZDlOfoj/' },
+  {
+    kind: 'carousel',
+    variant: 'tall',
+    labelEN: 'Films',
+    labelPT: 'Filmes',
+    items: [
+      { src: `${VID}/ruc-24.mp4`, poster: `${SP}/ruc-24-poster.webp`, w: 720, h: 1280, alt: 'Filme: close de modelo de vestido azul de crochê na passarela.' },
+      { src: `${VID}/ruc-18.mp4`, poster: `${SP}/ruc-18-poster.webp`, w: 720, h: 1280, alt: 'Filme: Brasil Eco Fashion Week, desfile visto de frente.' },
+      { src: `${VID}/ruc-19.mp4`, poster: `${SP}/ruc-19-poster.webp`, w: 720, h: 1280, alt: 'Filme: cinematic fashion edit, em luz azul e magenta.' },
+      { src: `${VID}/ruc-22.mp4`, poster: `${SP}/ruc-22-poster.webp`, w: 720, h: 1280, alt: 'Filme: modelo de costas na passarela, em movimento.' },
+    ],
+  },
+  { kind: 'embed', url: 'https://www.instagram.com/p/DPKfbR6jmx_/' },
+]
 
 export const WORKS: Work[] = [
   {
@@ -443,6 +568,8 @@ export const WORKS: Work[] = [
         `${base}/behance/capsula-brasilidade-boah/07.webp`,
         `${base}/behance/capsula-brasilidade-boah/08.webp`,
         `${base}/behance/capsula-brasilidade-boah/09.webp`,
+        `${base}/capsula-brasilidade/box-01.webp`,
+        `${base}/capsula-brasilidade/box-02.webp`,
         `${base}/capsula-brasilidade/pp-bottle-1.webp`,
         `${base}/capsula-brasilidade/pp-bottle-2.webp`,
         `${base}/behance/capsula-brasilidade-boah/10.webp`,
@@ -560,7 +687,8 @@ export const WORKS: Work[] = [
     index: '09',
     title: 'Branded Content | BOAH',
     disciplines: ['Campaign & Content', 'Fashion'],
-    role: 'Art Director',
+    role: 'Content production, community management, graphic design, video editing and social media management',
+    rolePT: 'Produção de conteúdo, community management, design gráfico, edição de vídeo e social media management',
     client: 'BOAH',
     summary: 'Branded content e campanhas sazonais para a BOAH.',
     description:
@@ -571,24 +699,17 @@ export const WORKS: Work[] = [
     // maior e centralizado de verdade (a capa original tinha margem preta e logo fora do centro).
     cardCover: `${base}/behance/branded-content-boah/card.webp`,
     cardFit: { bg: '#f7f3ed', inset: '20%' },
-    galleryDense: true,
     highlights: BOAH_HIGHLIGHTS,
+    // Rodada 23/10/2026: feed em grade de 3 colunas (estilo perfil do Instagram) e carrosseis
+    // de pecas verticais, para ver o conteudo de forma mais fluida.
+    blocks: [
+      { kind: 'feed', ratio: '4 / 5', labelEN: 'Feed', labelPT: 'Feed', pieces: BOAH_FEED },
+      { kind: 'carousel', variant: 'tall', labelEN: 'Looks', labelPT: 'Looks', items: BOAH_LOOKS },
+      { kind: 'carousel', variant: 'tall', labelEN: 'Behind the scenes and details', labelPT: 'Bastidores e detalhes', items: BOAH_DETAILS },
+      { kind: 'image', src: `${BO}/37.webp`, w: 1401, h: 401, alt: 'Fechamento do case, faixa com a marca BOAH.' },
+    ],
     media: {
-      cover: `${base}/behance/branded-content-boah/01.webp`,
-      gallery: [
-        `${base}/behance/branded-content-boah/08.webp`,
-        `${base}/behance/branded-content-boah/09.webp`,
-        `${base}/behance/branded-content-boah/10.webp`,
-        `${base}/behance/branded-content-boah/11.webp`,
-        `${base}/behance/branded-content-boah/12.webp`,
-        `${base}/behance/branded-content-boah/17.webp`,
-        `${base}/behance/branded-content-boah/18.webp`,
-        `${base}/behance/branded-content-boah/19.webp`,
-        `${base}/behance/branded-content-boah/20.webp`,
-        `${base}/behance/branded-content-boah/21.webp`,
-        `${base}/behance/branded-content-boah/07.gif`,
-        `${base}/behance/branded-content-boah/37.webp`,
-      ],
+      cover: `${BO}/01.webp`,
     },
   },
   {
@@ -630,25 +751,12 @@ export const WORKS: Work[] = [
     descriptionEn:
       'Before the runway, the backstage. Through Runway United Collective (RUC), the camera followed Brazilian fashion from the inside: São Paulo Fashion Week N58, Casa de Criadores 55 and Brasil Eco Fashion Week, in 2024. The blue light, the body on its way to the show, the gaze of someone waiting for their turn.',
     selected: true,
+    // Rodada 23/10/2026: pagina em ritmo. Carrossel de stills, embed, carrossel de bastidor, embed,
+    // carrossel de filmes, embed. Os 3 reels do perfil @runwayunited ficam entre os blocos.
+    blocks: SPFW_BLOCKS,
     media: {
       cover: `${base}/fashion-backstage/cover.webp`,
-      gallery: [
-        `${base}/fashion-backstage/04.webp`,
-        `${base}/fashion-backstage/02.webp`,
-        `${base}/fashion-backstage/03.webp`,
-        `${base}/fashion-backstage/05.webp`,
-        `${base}/spfw-the-paradise/cover.webp`,
-        `${base}/spfw-the-paradise/g1.webp`,
-        `${base}/spfw-the-paradise/g2.webp`,
-        `${base}/spfw-the-paradise/g3.webp`,
-      ],
     },
-    // Reels do perfil @runwayunited (conferidos pela legenda publica em 22/10/2026).
-    instagramEmbeds: [
-      'https://www.instagram.com/p/DPUk0hvgn-6/',
-      'https://www.instagram.com/p/Da5fZDlOfoj/',
-      'https://www.instagram.com/p/DPKfbR6jmx_/',
-    ],
     provisional: ['summary'],
   },
   {
@@ -774,33 +882,14 @@ export const WORKS: Work[] = [
     // era cortado em 16:9). O 05 segue no card, na proporcao nativa, e entra na galeria.
     cardCover: `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
     cardRatio: '4 / 5',
-    galleryDense: true,
+    // Rodada 23/10/2026: as 21 pecas viram um feed de Instagram, 3 por fileira (4 / 5, a proporcao do arquivo);
+    // a faixa 23 fecha a pagina como veio.
+    blocks: [
+      { kind: 'feed', ratio: '4 / 5', labelEN: 'Feed', labelPT: 'Feed', pieces: FEST_FEED },
+      { kind: 'image', src: `${base}/behance/festival-de-arte-e-gastronomia/23.webp`, w: 851, h: 315, alt: 'Faixa de fechamento com o cacau e a frase Mais que um festival, um movimento.' },
+    ],
     media: {
       cover: `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
-      gallery: [
-        `${base}/behance/festival-de-arte-e-gastronomia/02.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/03.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/04.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/05.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/06.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/07.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/08.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/09.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/10.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/11.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/12.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/13.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/14.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/15.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/16.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/17.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/18.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/19.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/20.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/21.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/22.webp`,
-        `${base}/behance/festival-de-arte-e-gastronomia/23.webp`,
-      ],
     },
   },
 ]

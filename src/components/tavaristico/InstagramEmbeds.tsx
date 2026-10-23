@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export function InstagramEmbeds({ urls, label }: { urls: string[]; label: string }) {
+export function InstagramEmbeds({ urls, label, single }: { urls: string[]; label?: string; single?: boolean }) {
   const ref = useRef<HTMLElement>(null)
   const [near, setNear] = useState(false)
 
@@ -40,8 +40,8 @@ export function InstagramEmbeds({ urls, label }: { urls: string[]; label: string
 
   return (
     <section ref={ref} className={styles.section} aria-label={label}>
-      <span className={styles.label}>{label}</span>
-      <div className={styles.grid}>
+      {label ? <span className={styles.label}>{label}</span> : null}
+      <div className={`${styles.grid} ${single ? styles.single : ''}`}>
         {urls.map((u) => (
           <div key={u} className={styles.item}>
             {near ? (

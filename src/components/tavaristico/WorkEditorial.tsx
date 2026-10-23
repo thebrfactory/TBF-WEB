@@ -40,14 +40,14 @@ export function Lookbook({ pieces, lang, label }: { pieces: WorkPiece[]; lang: L
   )
 }
 
-export function FeedGrid({ pieces, label }: { pieces: WorkPiece[]; label: string }) {
+export function FeedGrid({ pieces, label, ratio }: { pieces: WorkPiece[]; label?: string; ratio?: string }) {
   return (
     <section className={styles.section} aria-label={label}>
-      <span className={styles.label}>{label}</span>
+      {label ? <span className={styles.label}>{label}</span> : null}
       <ul className={styles.feed}>
         {pieces.map((p) => (
-          <li key={p.src} className={styles.feedItem}>
-            <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 400px, 33vw" quality={85} />
+          <li key={p.src} className={styles.feedItem} style={ratio ? { aspectRatio: ratio } : undefined}>
+            <Image src={p.src} alt={p.alt} fill sizes="(min-width: 1024px) 400px, 33vw" quality={85} unoptimized={p.src.endsWith('.gif')} />
           </li>
         ))}
       </ul>

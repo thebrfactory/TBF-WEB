@@ -10,7 +10,7 @@ import { openGraphMeta } from '@/lib/og'
 const t = tavaristico.pt
 
 export const metadata: Metadata = {
-  title: t.meta.title,
+  title: { absolute: t.meta.title },
   description: t.meta.description,
   alternates: languageAlternates('/creators/tavaristico'),
   openGraph: openGraphMeta({ title: t.meta.title, description: t.meta.description }),

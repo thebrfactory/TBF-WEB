@@ -271,4 +271,6 @@ export const DIMS: Record<string, readonly [number, number]> = {
   '/images/creators/tavaristico/martha-medeiros/cat-07.webp': [1080, 1920],
   '/images/creators/tavaristico/martha-medeiros/cat-09.webp': [1080, 1920],
   '/images/creators/tavaristico/martha-medeiros/cat-11.webp': [1080, 1920],
+  '/images/creators/tavaristico/capsula-brasilidade/box-01.webp': [900, 1600],
+  '/images/creators/tavaristico/capsula-brasilidade/box-02.webp': [900, 1600],
 }

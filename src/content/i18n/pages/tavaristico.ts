@@ -14,7 +14,7 @@ import type { Lang } from '@/lib/i18n'
 
 const en = {
   meta: {
-    title: 'TAVARÍSTICO · Portfolio',
+    title: 'TAVARÍSTICO',
     description:
       'TAVARÍSTICO. Associate Creative Director / Art Director. Selected work. Represented by .TBF. inc.',
   },
@@ -88,12 +88,14 @@ const en = {
     feedLabel: 'Feed, September',
     reelsLabel: 'On Instagram, @runwayunited',
     creditsLabel: 'Credits',
+    carouselPrev: 'Previous',
+    carouselNext: 'Next',
   },
 }
 
 const pt: typeof en = {
   meta: {
-    title: 'TAVARÍSTICO · Portfólio',
+    title: 'TAVARÍSTICO',
     description:
       'TAVARÍSTICO. Associate Creative Director / Art Director. Trabalhos selecionados. Representado pela .TBF. inc.',
   },
@@ -151,6 +153,8 @@ const pt: typeof en = {
     feedLabel: 'Feed, setembro',
     reelsLabel: 'No Instagram, @runwayunited',
     creditsLabel: 'Créditos',
+    carouselPrev: 'Anterior',
+    carouselNext: 'Próxima',
   },
 }
 

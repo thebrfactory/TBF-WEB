@@ -15,6 +15,7 @@ import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
 import { Lookbook, FeedGrid } from '@/components/tavaristico/WorkEditorial'
 import { InstagramEmbeds } from '@/components/tavaristico/InstagramEmbeds'
+import { WorkBlocks } from '@/components/tavaristico/WorkBlocks'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -62,7 +63,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <span className={styles.metaCell}>
             <span className={styles.label}>{t.roleLabel}</span>
             <span className={`${styles.val} ${styles.roleVal}`}>
-              {w.role}
+              {lang === 'pt' ? (w.rolePT ?? w.role) : w.role}
             </span>
           </span>
           {w.client && (
@@ -142,7 +143,11 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <Lookbook pieces={w.lookbook} lang={lang} label={t.lookbookLabel} />
         )}
 
-        {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} />}
+        {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} ratio={w.feedRatio} />}
+
+        {w.blocks && w.blocks.length > 0 && (
+          <WorkBlocks blocks={w.blocks} lang={lang} prevLabel={t.carouselPrev} nextLabel={t.carouselNext} />
+        )}
 
         {w.instagramEmbeds && w.instagramEmbeds.length > 0 && (
           <InstagramEmbeds urls={w.instagramEmbeds} label={t.reelsLabel} />

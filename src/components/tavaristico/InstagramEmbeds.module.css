@@ -28,4 +28,7 @@
 @media (min-width: 768px) {
   .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .item { margin-inline: 0; }
+  /* Embed solto entre blocos: uma coluna, centralizado. */
+  .grid.single { grid-template-columns: minmax(0, 540px); justify-content: center; }
+  .single .item { margin-inline: auto; }
 }

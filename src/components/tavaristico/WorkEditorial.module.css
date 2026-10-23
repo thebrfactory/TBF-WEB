@@ -72,6 +72,8 @@
   background: var(--tbf-bg-secondary);
 }
 .feedItem img { object-fit: cover; object-position: 50% 25%; }
+/* Feed com proporcao propria (ex.: 4 / 5): a peca inteira, sem corte de texto. */
+.feedItem[style] img { object-position: 50% 50%; }
 
 @media (min-width: 768px) {
   .lookbook {

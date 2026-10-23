@@ -1,0 +1,101 @@
+/* =============================================================================
+   WORK CAROUSEL. Mobile first (390px): altura em vw; peca seguinte espia na
+   borda para convidar o swipe. Sem dividers, sem texto sobre imagem.
+   ============================================================================= */
+
+.section { margin-top: var(--tbf-space-12); min-width: 0; }
+
+.label {
+  display: block;
+  margin-bottom: var(--tbf-space-6);
+  font-family: var(--mono);
+  font-size: var(--tav-text-label);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tbf-text-tertiary);
+}
+
+.track {
+  --h: 104vw;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--tbf-space-3);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.track::-webkit-scrollbar { display: none; }
+.track:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+}
+
+.tall { --h: 104vw; }
+.wide { --h: 62vw; }
+
+.slide {
+  flex: none;
+  height: var(--h);
+  max-width: 100%;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--tav-radius-sm);
+  background: var(--tbf-bg-secondary);
+}
+
+.media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.controls {
+  margin-top: var(--tbf-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--tbf-space-4);
+}
+.count {
+  font-family: var(--mono);
+  font-size: var(--tav-text-label);
+  letter-spacing: 0.16em;
+  color: var(--tbf-text-tertiary);
+}
+.arrows { display: inline-flex; gap: var(--tbf-space-2); }
+.arrow {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.arrow:hover { background: rgba(255, 255, 255, 0.2); }
+.arrow:active { background: rgba(255, 255, 255, 0.28); }
+.arrow:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+}
+
+@media (min-width: 768px) {
+  .tall { --h: 560px; }
+  .wide { --h: 380px; }
+  .track { gap: var(--tbf-space-4); }
+}
+@media (min-width: 1200px) {
+  .tall { --h: 620px; }
+  .wide { --h: 440px; }
+}
