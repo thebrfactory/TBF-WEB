@@ -879,6 +879,8 @@
 .metaCell .label { margin-bottom: 4px; }
 .metaCell .val { font-family: var(--mono); font-size: 0.85rem; color: var(--tbf-text-primary); }
 .roleVal { color: var(--tbf-accent) !important; }
+/* Funcoes em lista, uma embaixo da outra (rodada 26/10/2026). */
+.roleList { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 /* Ficha de creditos da obra: mobile empilha papel e nome; nomes proprios em
    extrabold. Sem divisor. */
 .credits { margin: 0 0 var(--tbf-space-10); }

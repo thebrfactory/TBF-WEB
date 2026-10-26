@@ -6,7 +6,7 @@
 // reserva a propria proporcao (aspect-ratio + width/height): zero CLS.
 // Mobile-first: altura em vw no celular, em px de 768px para cima.
 // Pecas entram como vieram do arquivo: sem texto montado por codigo.
-// Rodada 23/10/2026.
+// Rodada 23/10/2026; faixa que sangra e legenda em 26/10/2026.
 // =============================================================================
 
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -21,6 +21,8 @@ export interface CarouselItem {
   h: number
   /** se houver, o item e video (src = mp4) e `poster` e a imagem de capa */
   poster?: string
+  /** legenda curta fora da imagem (nunca sobre ela) */
+  caption?: string
 }
 
 function Slide({ item, index }: { item: CarouselItem; index: number }) {
@@ -92,6 +94,7 @@ export function WorkCarousel({
   nextLabel: string
 }) {
   const track = useRef<HTMLUListElement>(null)
+  const section = useRef<HTMLElement>(null)
   const [pos, setPos] = useState(0)
   const raf = useRef(0)
 
@@ -113,6 +116,21 @@ export function WorkCarousel({
 
   useEffect(() => () => cancelAnimationFrame(raf.current), [])
 
+  // A faixa sangra ate a borda da tela (CSS); o snap precisa saber o recuo da coluna.
+  useEffect(() => {
+    const sec = section.current
+    const el = track.current
+    if (!sec || !el) return
+    const set = () => {
+      const px = Math.max(0, (document.documentElement.clientWidth - sec.clientWidth) / 2)
+      el.style.setProperty('--bleed', `${px}px`)
+    }
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(sec)
+    return () => ro.disconnect()
+  }, [])
+
   const go = (dir: 1 | -1) => {
     const el = track.current
     if (!el) return
@@ -123,7 +141,7 @@ export function WorkCarousel({
   const n = String(items.length).padStart(2, '0')
 
   return (
-    <section className={styles.section} aria-label={label}>
+    <section ref={section} className={styles.section} aria-label={label}>
       {label ? <span className={styles.label}>{label}</span> : null}
       <ul
         ref={track}
@@ -132,8 +150,11 @@ export function WorkCarousel({
         tabIndex={0}
       >
         {items.map((it, i) => (
-          <li key={it.src} className={styles.slide} style={{ aspectRatio: `${it.w} / ${it.h}` }}>
-            <Slide item={it} index={i} />
+          <li key={it.src} className={styles.slide}>
+            <span className={styles.frame} style={{ aspectRatio: `${it.w} / ${it.h}` }}>
+              <Slide item={it} index={i} />
+            </span>
+            {it.caption ? <span className={styles.caption}>{it.caption}</span> : null}
           </li>
         ))}
       </ul>

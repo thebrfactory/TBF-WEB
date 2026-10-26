@@ -1,6 +1,9 @@
 /* =============================================================================
    WORK CAROUSEL. Mobile first (390px): altura em vw; peca seguinte espia na
    borda para convidar o swipe. Sem dividers, sem texto sobre imagem.
+   Faixa que sangra (rodada 26/10/2026): mesmo padrao do reel da hospitality,
+   cartoes de canto arredondado lado a lado, de ponta a ponta da tela, bordas
+   esfumadas. A primeira peca nasce alinhada a coluna do texto.
    ============================================================================= */
 
 .section { margin-top: var(--tbf-space-12); min-width: 0; }
@@ -28,6 +31,14 @@
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  /* Sangra: margem negativa e padding iguais (% = largura da coluna), a faixa
+     ocupa a viewport inteira e o conteudo segue alinhado a coluna. */
+  margin-inline: calc(50% - 50vw);
+  padding-inline: calc(50vw - 50%);
+  /* % de scroll-padding mede a viewport da faixa, nao a coluna: o JS grava --bleed em px. */
+  scroll-padding-inline: var(--bleed, 0px);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
 }
 .track::-webkit-scrollbar { display: none; }
 .track:focus-visible {
@@ -40,13 +51,30 @@
 
 .slide {
   flex: none;
-  height: var(--h);
   max-width: 100%;
   scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tbf-space-2);
+}
+
+.frame {
+  height: var(--h);
+  max-width: 100%;
   position: relative;
   overflow: hidden;
   border-radius: var(--tav-radius-sm);
   background: var(--tbf-bg-secondary);
+}
+
+/* Legenda fora da imagem; nao alarga o cartao (width 0 + min-width 100%). */
+.caption {
+  width: 0;
+  min-width: 100%;
+  font-family: var(--tbf-font-family-display);
+  font-size: var(--tav-text-micro, 0.68rem);
+  letter-spacing: 0.04em;
+  color: var(--tbf-text-secondary);
 }
 
 .media {
@@ -93,7 +121,14 @@
 @media (min-width: 768px) {
   .tall { --h: 560px; }
   .wide { --h: 380px; }
-  .track { gap: var(--tbf-space-4); }
+  .track {
+    gap: var(--tbf-space-4);
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 56px, #000 calc(100% - 56px), transparent 100%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .track { -webkit-mask-image: none; mask-image: none; }
 }
 @media (min-width: 1200px) {
   .tall { --h: 620px; }

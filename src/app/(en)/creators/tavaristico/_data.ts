@@ -27,6 +27,9 @@ export interface Work {
   role: string
   /** papel em PT; sem ele, a pagina PT mostra `role` */
   rolePT?: string
+  /** Funcoes em lista, uma embaixo da outra, cada uma com inicial maiuscula (rodada 26/10/2026). Sem ela, vale `role`. */
+  roleList?: string[]
+  roleListPT?: string[]
   client?: string
   /** ano é opcional por decisão do ECD (entra só onde faz sentido) */
   year?: string
@@ -310,8 +313,7 @@ const BOAH_LOOKS: CarouselItem[] = [
 ]
 
 const BOAH_DETAILS: CarouselItem[] = [
-  px(`${BX}/set-01.webp`, 900, 1600, 'Bastidor: a equipe fotografando um look em locação.'),
-  px(`${BX}/set-02.webp`, 900, 1600, 'Bastidor: o fotógrafo em ação, de camisa azul.'),
+  // set-01 e set-02 (bastidor de outra marca) tiram-se da pagina em 26/10/2026, pedido do fundador.
   px(`${BX}/detail-01.webp`, 900, 1600, 'Camiseta creme com estampa vermelha, em still.'),
   px(`${BX}/detail-02.webp`, 1067, 1600, 'Colar de contas marrons sobre fundo branco.'),
   px(`${BX}/detail-03.webp`, 1067, 1600, 'Colar de contas vermelhas sobre tecido claro.'),
@@ -556,21 +558,41 @@ export const WORKS: Work[] = [
       'This campaign and composition was a ghost campaign, a presentation piece for the brand, which is why it was never circulated.\nStarting from the Manacá summer collection, we built a visual identity of its own, shaping and refining forms and typefaces until the symbol became memorable. It gave way to e-commerce banners, a vertical WhatsApp catalog and a This or That story set.\nGenerative AI tools were used in developing the material.',
     media: {
       cover: `${base}/martha-medeiros/cover.webp`,
-      gallery: [
-        `${base}/martha-medeiros/banner-h.webp`,
-        `${base}/martha-medeiros/banner-v.webp`,
-        `${base}/martha-medeiros/garden-01.webp`,
-        `${base}/martha-medeiros/garden-02.webp`,
-        `${base}/martha-medeiros/garden-03.webp`,
-        `${base}/martha-medeiros/garden-04.webp`,
-        `${base}/martha-medeiros/garden-05.webp`,
-        `${base}/martha-medeiros/garden-06.webp`,
-        `${base}/martha-medeiros/garden-07.webp`,
-        `${base}/martha-medeiros/garden-08.webp`,
-        `${base}/martha-medeiros/garden-09.webp`,
-        `${base}/martha-medeiros/garden-10.webp`,
-      ],
+      // Rodada 26/10/2026: so pecas desenvolvidas pelo Tavaristico. As 10 fotos garden-*
+      // (reproducao do fotografo, sem composicao) sairam da pagina; os arquivos seguem em public/.
+      gallery: [`${base}/martha-medeiros/banner-h.webp`],
     },
+    blocks: [
+      {
+        kind: 'carousel',
+        variant: 'tall',
+        labelEN: 'Banner and catalog',
+        labelPT: 'Banner e catálogo',
+        items: [
+          px(`${base}/martha-medeiros/banner-v.webp`, 750, 1100, 'Banner vertical da coleção Manacá, com modelo de vestido pink e o logotipo.'),
+          px(`${base}/martha-medeiros/cat-00.webp`, 1080, 1920, 'Capa do catálogo Manacá, modelo de vestido pink diante de folhagem.'),
+          px(`${base}/martha-medeiros/cat-00001.webp`, 1080, 1920, 'Página de apresentação da coleção Manacá, com três looks sobre fundo claro.'),
+          px(`${base}/martha-medeiros/cat-01.webp`, 1080, 1920, 'Look de blusa e calça pink sobre fundo claro.'),
+          px(`${base}/martha-medeiros/cat-02.webp`, 1080, 1920, 'Look pink visto de costas e de frente.'),
+          px(`${base}/martha-medeiros/cat-04.webp`, 1080, 1920, 'Vestido curto branco de renda sobre fundo claro.'),
+          px(`${base}/martha-medeiros/cat-07.webp`, 1080, 1920, 'Vestido longo azul de babados sobre fundo claro.'),
+          px(`${base}/martha-medeiros/cat-09.webp`, 1080, 1920, 'Vestido longo azul de babados, em plano mais próximo.'),
+          px(`${base}/martha-medeiros/cat-11.webp`, 1080, 1920, 'Contracapa do catálogo Manacá, modelo de vestido pink e o endereço do site da marca.'),
+        ],
+      },
+      {
+        kind: 'carousel',
+        variant: 'tall',
+        labelEN: 'This or That',
+        labelPT: 'This or That',
+        items: [
+          px(`${base}/martha-medeiros/tot-01.webp`, 1080, 1920, 'Duas modelos de vestidos azul e verde em rendas, com o texto This or That e o logotipo Manacá.'),
+          px(`${base}/martha-medeiros/tot-02.webp`, 1080, 1920, 'Quatro looks sobre fundo claro, dois claros e dois pink, para votar no favorito.'),
+          px(`${base}/martha-medeiros/tot-03.webp`, 1080, 1920, 'Quatro looks sobre fundo claro, dois verdes e dois brancos, para votar no favorito.'),
+          px(`${base}/martha-medeiros/tot-08.webp`, 1080, 1920, 'Quatro looks sobre fundo claro, dois azuis e dois pretos, para votar no favorito.'),
+        ],
+      },
+    ],
     highlights: [
       {
         index: 'martha-medeiros-this-or-that',
@@ -604,20 +626,7 @@ export const WORKS: Work[] = [
       },
     ],
     coverAlt: 'Manacá, da Martha Medeiros: quatro modelos de vestidos de festa em meio à folhagem, com o logotipo ao centro.',
-    galleryAlts: [
-      'Banner horizontal da coleção Manacá, com modelo de vestido pink e o logotipo.',
-      'Banner vertical da coleção Manacá, com modelo de vestido pink e o logotipo.',
-      'Duas modelos de vestidos estampados em pink e branco, de costas e de frente, na mata.',
-      'Modelo de vestido longo rosa de renda com fenda, na mata.',
-      'Duas modelos, de vestido azul de babados e vestido verde de renda.',
-      'Duas modelos de vestidos amarelos de mangas bufantes.',
-      'Duas modelos de vestidos verdes de renda e babados.',
-      'Modelo de vestido longo azul de renda, saia ampla.',
-      'Duas modelos, de vestido azul e de top com saia verdes.',
-      'Duas modelos de vestidos brancos de renda.',
-      'Modelo de vestido pink de ombros de fora, saia em movimento.',
-      'Modelo de vestido rosa de camadas.',
-    ],
+    galleryAlts: ['Banner horizontal da coleção Manacá, com modelo de vestido pink e o logotipo.'],
     credits: [
       { roleEN: 'Stills', rolePT: 'Stills', name: 'André Salcedo' },
       { roleEN: 'Art director', rolePT: 'Direção de arte', name: 'Felipe Tavares' },
@@ -771,6 +780,8 @@ export const WORKS: Work[] = [
     disciplines: ['Campaign & Content', 'Fashion'],
     role: 'Content production, community management, graphic design, video editing and social media management',
     rolePT: 'Produção de conteúdo, community management, design gráfico, edição de vídeo e social media management',
+    roleList: ['Content Production', 'Community Management', 'Graphic Design', 'Video Editing', 'Social Media Management'],
+    roleListPT: ['Produção de Conteúdo', 'Community Management', 'Design Gráfico', 'Edição de Vídeo', 'Social Media Management'],
     client: 'BOAH',
     summary: 'Branded content e campanhas sazonais para a BOAH.',
     description:
@@ -787,7 +798,7 @@ export const WORKS: Work[] = [
     blocks: [
       { kind: 'feed', ratio: '4 / 5', labelEN: 'Feed', labelPT: 'Feed', pieces: BOAH_FEED },
       { kind: 'carousel', variant: 'tall', labelEN: 'Looks', labelPT: 'Looks', items: BOAH_LOOKS },
-      { kind: 'carousel', variant: 'tall', labelEN: 'Behind the scenes and details', labelPT: 'Bastidores e detalhes', items: BOAH_DETAILS },
+      { kind: 'carousel', variant: 'tall', labelEN: 'Details', labelPT: 'Detalhes', items: BOAH_DETAILS },
       { kind: 'image', src: `${BO}/37.webp`, w: 1401, h: 401, alt: 'Fechamento do case, faixa com a marca BOAH.' },
     ],
     media: {

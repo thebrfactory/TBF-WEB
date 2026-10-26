@@ -13,7 +13,8 @@ import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import { notFound } from 'next/navigation'
 import { WORKS, findWork } from '@/app/(en)/creators/tavaristico/_data'
 import { Campaigns } from '@/components/tavaristico/Campaigns'
-import { Lookbook, FeedGrid } from '@/components/tavaristico/WorkEditorial'
+import { FeedGrid } from '@/components/tavaristico/WorkEditorial'
+import { WorkCarousel, type CarouselItem } from '@/components/tavaristico/WorkCarousel'
 import { InstagramEmbeds } from '@/components/tavaristico/InstagramEmbeds'
 import { WorkBlocks } from '@/components/tavaristico/WorkBlocks'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
@@ -39,7 +40,52 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
   // Capa com a proporção da própria peça quando é paisagem; o resto (retrato,
   // quadrado) segue em 16:9 como nos cards.
   const [cw, ch] = DIMS[w.media.cover] ?? [16, 9]
+  const roleList = (lang === 'pt' ? (w.roleListPT ?? w.roleList) : w.roleList)?.length
+    ? (lang === 'pt' ? (w.roleListPT ?? w.roleList) : w.roleList)
+    : undefined
   const coverRatio = cw / ch >= 1.2 && cw / ch <= 2.4 ? `${cw} / ${ch}` : '16 / 9'
+
+  // Rodada 26/10/2026: pecas verticais lado a lado viram a faixa que sangra (padrao do
+  // reel da hospitality). Na galeria, 2 ou mais verticais seguidas formam uma faixa;
+  // o resto segue na grade de sempre.
+  type Cell = { src: string; idx: number; iw: number; ih: number }
+  type Chunk = { kind: 'grid'; items: Cell[] } | { kind: 'strip'; items: CarouselItem[] }
+  const cells: Cell[] = gallery.map((src, idx) => {
+    const [iw, ih] = DIMS[src] ?? [1600, 1000]
+    return { src, idx, iw, ih }
+  })
+  const isTall = (c: Cell) => c.ih / c.iw > 1.15
+  const galleryChunks: Chunk[] = []
+  for (let k = 0; k < cells.length; ) {
+    let e = k
+    if (!w.galleryDense && isTall(cells[k])) {
+      while (e < cells.length && isTall(cells[e])) e++
+    }
+    if (e - k >= 2) {
+      galleryChunks.push({
+        kind: 'strip',
+        items: cells.slice(k, e).map((c) => ({
+          src: c.src,
+          alt: w.galleryAlts?.[c.idx] ?? `${w.title} ${c.idx + 2}`,
+          w: c.iw,
+          h: c.ih,
+        })),
+      })
+      k = e
+    } else {
+      const last = galleryChunks[galleryChunks.length - 1]
+      if (last && last.kind === 'grid') last.items.push(cells[k])
+      else galleryChunks.push({ kind: 'grid', items: [cells[k]] })
+      k++
+    }
+  }
+  const lookbookItems: CarouselItem[] = (w.lookbook ?? []).map((p) => ({
+    src: p.src,
+    alt: p.alt,
+    w: 1080,
+    h: 1920,
+    caption: lang === 'pt' ? p.captionPT : p.captionEN,
+  }))
 
   return (
     <main className={styles.page}>
@@ -64,9 +110,17 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         <div className={styles.workMeta}>
           <span className={styles.metaCell}>
             <span className={styles.label}>{t.roleLabel}</span>
-            <span className={`${styles.val} ${styles.roleVal}`}>
-              {lang === 'pt' ? (w.rolePT ?? w.role) : w.role}
-            </span>
+            {roleList ? (
+              <ul className={`${styles.val} ${styles.roleVal} ${styles.roleList}`}>
+                {roleList.map((r) => (
+                  <li key={r}>{r}</li>
+                ))}
+              </ul>
+            ) : (
+              <span className={`${styles.val} ${styles.roleVal}`}>
+                {lang === 'pt' ? (w.rolePT ?? w.role) : w.role}
+              </span>
+            )}
           </span>
           {w.client && (
             <span className={styles.metaCell}>
@@ -112,11 +166,22 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <span className={styles.lowResTag}>{t.lowResTag}</span>
         )}
 
-        {gallery.length > 0 && (
-          <div className={`${styles.gallery} ${w.galleryDense ? styles.galleryDense : ''}`}>
-            {gallery.map((src, idx) => {
-              const [iw, ih] = DIMS[src] ?? [1600, 1000]
-              return (
+        {galleryChunks.map((chunk, ci) =>
+          chunk.kind === 'strip' ? (
+            <WorkCarousel
+              key={`s${ci}`}
+              items={chunk.items}
+              variant="tall"
+              prevLabel={t.carouselPrev}
+              nextLabel={t.carouselNext}
+            />
+          ) : (
+            <div
+              key={`g${ci}`}
+              className={`${styles.gallery} ${w.galleryDense ? styles.galleryDense : ''}`}
+              style={chunk.items.length === 1 ? { columnCount: 1 } : undefined}
+            >
+              {chunk.items.map(({ src, idx, iw, ih }) => (
                 <div
                   key={src}
                   className={`${styles.galleryItem} ${iw / ih >= 2.2 ? styles.galleryWide : ''}`}
@@ -136,13 +201,19 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
                     style={{ width: '100%', height: 'auto', display: 'block' }}
                   />
                 </div>
-              )
-            })}
-          </div>
+              ))}
+            </div>
+          ),
         )}
 
-        {w.lookbook && w.lookbook.length > 0 && (
-          <Lookbook pieces={w.lookbook} lang={lang} label={t.lookbookLabel} />
+        {lookbookItems.length > 0 && (
+          <WorkCarousel
+            items={lookbookItems}
+            label={t.lookbookLabel}
+            variant="tall"
+            prevLabel={t.carouselPrev}
+            nextLabel={t.carouselNext}
+          />
         )}
 
         {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} ratio={w.feedRatio} />}

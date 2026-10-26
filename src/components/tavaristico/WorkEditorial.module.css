@@ -84,5 +84,7 @@
     scroll-snap-type: none;
   }
   .lookItem { flex: initial; }
-  .feed { gap: 4px; }
+  /* Rodada 26/10/2026: a grade era grande demais ("zoom in"). Teto de largura,
+     alinhada a esquerda da coluna do texto. */
+  .feed { gap: 4px; max-width: 600px; }
 }
