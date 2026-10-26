@@ -1,7 +1,13 @@
 'use client'
 
 // =============================================================================
-// PITCH 4.0 · CENA 04: A PERGUNTA, A TESE E O MERCADO (rodada 23/10/2026)
+// PITCH 4.0 · CENA 02: ABERTURA + A PERGUNTA, A TESE E O MERCADO
+// (rodada 23/10/2026; fundida na abertura na rodada 26/10 tarde)
+// RODADA 26/10 TARDE: a antiga cena 04 virou uma camada DENTRO da cena 02, sobre o
+// mesmo video. A cena abre com o letreiro de abertura (passo -1). O primeiro
+// toque tira o letreiro e traz a pergunta; os toques seguintes seguem os passos
+// abaixo; depois do ultimo, o toque volta ao letreiro. O video escurece quando a
+// tese esta aberta (texto sobre imagem leva overlay).
 // Pedido do fundador: "muito texto logo de cara. entrar uma informacao por vez.
 // clicar na primeira parte de texto expande o resto, transicoes suaves e
 // elegantes". A cena abre so com a pergunta. Cada clique (ou toque, ou Enter e
@@ -11,38 +17,48 @@
 // Com tudo aberto, clicar no titulo recolhe. Mobile-first, prefixo `.p4-th`.
 // =============================================================================
 
-import { Fragment, useState } from 'react'
+import { Fragment, useState, type ReactNode } from 'react'
 import { ACCENT, EASE, En, Kicker, PAPER, PitchReveal, S } from '@/components/DeckShell/DeckShell'
 import { ARGUMENT } from '@/content/pitch/v3-scenes'
 import { THESIS_MARKET } from '@/content/pitch/v4-scenes'
 
 const STEPS = 5
+// Passo -1 = letreiro de abertura; 0 a 5 = a tese.
 
 // `fold`: no celular, a partir deste passo o bloco recolhe para dar lugar ao
 // resto (a tese responde as perguntas). No desktop ele fica na tela.
-function Step({ at, step, fold, children }: { at: number; step: number; fold?: number; children: React.ReactNode }) {
+function Step({ at, step, fold, wide, children }: { at: number; step: number; fold?: number; wide?: boolean; children: React.ReactNode }) {
   const on = step >= at
   const folded = fold !== undefined && step >= fold
   return (
-    <div className={`p4-th__step${on ? ' p4-th__step--on' : ''}${folded ? ' p4-th__step--fold' : ''}`} aria-hidden={!on}>
+    <div className={`p4-th__step${on ? ' p4-th__step--on' : ''}${folded ? ' p4-th__step--fold' : ''}${wide ? ' p4-th__step--wide' : ''}`} aria-hidden={!on}>
       <div className="p4-th__step-inner">{children}</div>
     </div>
   )
 }
 
-export function ThesisScene() {
-  const [step, setStep] = useState(0)
+export function OpeningScene({ background, cover }: { background: ReactNode; cover: ReactNode }) {
+  const [step, setStep] = useState(-1)
+  const open = step >= 0
   const done = step >= STEPS
-  const advance = () => setStep((s) => (s >= STEPS ? 0 : s + 1))
+  const advance = () => setStep((s) => (s >= STEPS ? -1 : s + 1))
   const market = THESIS_MARKET
 
   return (
     <section
-      id="cena-04"
-      style={{ ...S, background: '#000000' }}
-      aria-label="A Pergunta e a Tese / The Question and the Thesis"
+      id="cena-02"
+      style={{ ...S, justifyContent: 'flex-end', padding: 0, background: '#000000' }}
+      aria-label="Abertura e Tese / Opening and Thesis"
     >
-      <Kicker n="04" pt="A Pergunta e a Tese" en="The Question and the Thesis" />
+      {background}
+      <div className={`p4-th__dim${open ? ' p4-th__dim--on' : ''}`} aria-hidden="true" />
+
+      <div className={`p4-th__cover${open ? ' p4-th__cover--off' : ''}`} aria-hidden={open} inert={open}>
+        {cover}
+      </div>
+
+      <div className={`p4-th__layer${open ? ' p4-th__layer--on' : ''}`} aria-hidden={!open} inert={!open}>
+      <Kicker n="02" pt="A Pergunta e a Tese" en="The Question and the Thesis" />
 
       <PitchReveal delay={100} slot="head">
         <h2 className="p3-h2 p3-h2--md p4-th__h2">
@@ -75,7 +91,7 @@ export function ThesisScene() {
           </p>
         </Step>
 
-        <Step at={3} step={step}>
+        <Step at={3} step={step} wide>
           <div className="p4-th__thesis">
             <p className="p3-kicker-mini">
               {ARGUMENT.thesis.kicker.pt}
@@ -90,7 +106,7 @@ export function ThesisScene() {
           </div>
         </Step>
 
-        <Step at={4} step={step}>
+        <Step at={4} step={step} wide>
           <div className="p3-chain p4-th__chain">
             {ARGUMENT.thesis.chain.map((c, i) => (
               <Fragment key={c.pt}>
@@ -114,7 +130,7 @@ export function ThesisScene() {
           </div>
         </Step>
 
-        <Step at={5} step={step}>
+        <Step at={5} step={step} wide>
           <div className="p4-th__mk">
             <div className="p4-th__stat">
               <span className="p4-th__val">{market.stat.value}</span>
@@ -134,17 +150,57 @@ export function ThesisScene() {
           </div>
         </Step>
       </div>
+      </div>
 
-      <button type="button" className="p4-th__hint" onClick={advance} aria-label={done ? 'Recolher / Collapse' : 'Continuar / Continue'}>
+      <button type="button" className="p4-th__hint" onClick={advance} aria-label={done ? 'Voltar à abertura / Back to opening' : 'Continuar / Continue'}>
         <span className="p4-th__dots" aria-hidden="true">
-          {Array.from({ length: STEPS + 1 }, (_, i) => (
-            <span key={i} className={`p4-th__dot${i <= step ? ' p4-th__dot--on' : ''}`} />
+          {Array.from({ length: STEPS + 2 }, (_, i) => (
+            <span key={i} className={`p4-th__dot${i <= step + 1 ? ' p4-th__dot--on' : ''}`} />
           ))}
         </span>
-        <span>{done ? 'Toque para recolher / Tap to collapse' : 'Toque para continuar / Tap to continue'}</span>
+        <span>{done ? 'Toque para voltar / Tap to go back' : 'Toque para continuar / Tap to continue'}</span>
       </button>
 
       <style>{`
+        .p4-th__dim {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background: rgba(0, 0, 0, 0.82);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 700ms ${EASE};
+        }
+        .p4-th__dim--on { opacity: 1; }
+        .p4-th__cover {
+          position: relative;
+          z-index: 1;
+          transition: opacity 600ms ${EASE}, transform 700ms ${EASE}, visibility 0s linear 0s;
+        }
+        .p4-th__cover--off {
+          opacity: 0;
+          transform: translateY(-14px);
+          visibility: hidden;
+          transition: opacity 500ms ${EASE}, transform 600ms ${EASE}, visibility 0s linear 600ms;
+        }
+        .p4-th__layer {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          display: flex;
+          flex-direction: column;
+          padding-inline: var(--p3-pad-x);
+          padding-top: var(--p3-kicker-reserve);
+          padding-bottom: var(--p3-foot);
+          opacity: 0;
+          visibility: hidden;
+          transition: opacity 500ms ${EASE}, visibility 0s linear 500ms;
+        }
+        .p4-th__layer--on {
+          opacity: 1;
+          visibility: visible;
+          transition: opacity 700ms ${EASE} 250ms, visibility 0s linear 0s;
+        }
         .p4-th__head {
           display: block;
           width: 100%;
@@ -187,6 +243,11 @@ export function ThesisScene() {
         }
         .p4-th__step-inner { min-height: 0; overflow: hidden; }
         @media (max-width: 767px) {
+          /* No celular a tese inteira so cabe sem a linha em ingles da cadeia e
+             do dado de mercado; sem isto ela encosta no indicador do rodape. */
+          .p4-th__chain .p3-en,
+          .p4-th__lab .p3-en,
+          .p4-th__line .p3-en { display: none; }
           .p4-th__step--fold { grid-template-rows: 0fr; opacity: 0; transform: translateY(-10px); }
         }
         .p4-th__q {
@@ -203,6 +264,7 @@ export function ThesisScene() {
         }
         .p4-th__q .p3-en { font-size: 0.68rem; line-height: 1.15; font-weight: 300; }
         .p4-th__thesis { padding-top: 0.2rem; }
+        .p4-th__thesis .p3-kicker-mini .p3-en { display: none; }
         .p4-th__line { margin: 0; font-size: clamp(1.1rem, 5.4vw, 1.9rem); }
         .p4-th__chain { margin-top: 0.7rem; }
         .p4-th__mk {
@@ -301,7 +363,13 @@ export function ThesisScene() {
         }
         .p4-th__dot--on { background: ${ACCENT}; }
         @media (min-width: 768px) {
-          .p4-th { margin-top: var(--p3-gap); }
+          /* As duas perguntas lado a lado: poupa a altura que a tese inteira
+             precisa para nao encostar no indicador do rodape. */
+          .p4-th { margin-top: var(--p3-gap); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 0.75rem; align-content: start; }
+          .p4-th__step--wide { grid-column: 1 / -1; }
+          .p4-th__chain { margin-top: 0.4rem; }
+          .p4-th__mk { margin-top: 0.45rem; }
+          .p4-th__q { margin-bottom: 0.4rem; padding: 0.6rem 1rem; }
           .p4-th__q { font-size: 1.25rem; padding: 0.8rem 1rem; }
           .p4-th__q .p3-en { font-size: 0.9rem; }
           .p4-th__mk { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 0.75rem; max-width: 44rem; }
@@ -313,8 +381,12 @@ export function ThesisScene() {
           .p4-th__src { font-size: 0.66rem; }
           .p4-th__hint { font-size: 0.68rem; }
         }
+        @media (min-width: 768px) and (max-height: 960px) {
+          .p4-th__chain .p3-en,
+          .p4-th__lab .p3-en { display: none; }
+        }
         @media (prefers-reduced-motion: reduce) {
-          .p4-th__step, .p4-th__dot { transition: none; }
+          .p4-th__step, .p4-th__dot, .p4-th__cover, .p4-th__layer, .p4-th__dim { transition: none; }
         }
       `}</style>
     </section>

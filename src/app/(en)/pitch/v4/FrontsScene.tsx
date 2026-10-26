@@ -360,11 +360,11 @@ export function FrontsScene() {
 
   return (
     <section
-      id="cena-05"
+      id="cena-04"
       style={{ ...S, background: '#000000' }}
       aria-label="Da Cultura ao Negócio / From Culture to Business"
     >
-      <Kicker n="05" pt="Da Cultura ao Negócio" en="From Culture to Business" />
+      <Kicker n="04" pt="Da Cultura ao Negócio" en="From Culture to Business" />
 
       <PitchReveal delay={100} slot="head">
         <h2 className="p3-h2 p3-h2--md">

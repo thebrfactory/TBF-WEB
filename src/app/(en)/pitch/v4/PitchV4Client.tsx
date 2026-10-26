@@ -38,7 +38,7 @@ import { StoryRing } from '@/components/tavaristico/StoryRing'
 import { COVER, REFERENCE, CASE, PARTNERSHIP_OPEN } from '@/content/pitch/v3-scenes'
 import type { PartnerScene } from '@/content/pitch/v3-scenes'
 import { SCENES_V4, TOTAL_V4, FOUNDER, VERAOZAO_METRICS, VERAOZAO_SOURCE, VERAOZAO_REEL } from '@/content/pitch/v4-scenes'
-import { ThesisScene } from './ThesisScene'
+import { OpeningScene } from './ThesisScene'
 import { FrontsScene } from './FrontsScene'
 import { CloseScene } from './CloseScene'
 // ─── O casco do formato mora fora deste arquivo ──────────────────────────────
@@ -69,7 +69,7 @@ const EDITORIAL_VIDEO = {
   mobile: { av1: '/videos/editorial-mobile.av1.mp4', h264: '/videos/editorial-mobile.mp4' },
 }
 
-// ─── Cartão de portfólio expansível (cena-06) ────────────────────────────────
+// ─── Cartão de portfólio expansível (cena-05) ────────────────────────────────
 // Cada propriedade mostra nome + papel na primeira leitura. Por que e formas
 // só aparecem na expansão: hover no desktop, toque no mobile.
 //
@@ -95,7 +95,7 @@ const EDITORIAL_VIDEO = {
 // ritmo ou de contraste só chegaria numa das duas (regra 4: apontar, não copiar).
 // O porquê de cada detalhe do player mora no cabeçalho daquele arquivo.
 
-// Sequência do case (cena-06, rodada 26/10/2026): as peças da campanha trocam
+// Sequência do case (cena-05, rodada 26/10/2026): as peças da campanha trocam
 // em CORTE SECO, como no visualizador de stories do portfólio (pedido do
 // fundador: "cortes secos igual esse"). Troca instantânea de quadro: sem
 // crossfade, sem zoom, sem transição CSS. Todas as imagens ficam montadas e
@@ -255,7 +255,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
                               sizes="(max-width: 767px) 38vw, 20vw"
                               quality={90}
                               className="p4-reel__img"
-                              loading={ci < 3 && i < 4 ? 'eager' : 'lazy'}
+                              loading={ci < 5 && i < 4 ? 'eager' : 'lazy'}
                             />
                           </div>
                         ) : (
@@ -287,95 +287,101 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
              o vídeo editorial dá a presença, o letreiro do fundador dá a
              frase, e Culture™ mora aqui, onde o direcionamento pede que
              esteja. A cena não usa mais o HomeHero, e o Ticker sai do deck. */}
-      <section
-        id="cena-02"
-        style={{ ...S, justifyContent: 'flex-end', padding: 0, background: '#000000' }}
-        aria-label="Capa / Cover"
-      >
-        <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-          <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} />
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(to bottom, transparent 0%, transparent 58%, rgba(0,0,0,0.72) 100%)',
-            }}
-          />
-        </div>
-
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            padding: 'clamp(2rem, 6vw, 5rem)',
-            paddingBottom: 'clamp(3rem, 8vw, 7rem)',
-          }}
-        >
-          {/* A LINHA DE EYEBROW SAIU E VIROU CARIMBO (#01, #01 CHANGES
-              2026-08-14). Ela dizia "FELIPE T. · CONFIDENTIAL DOC · .TBF. inc"
-              em corpo miúdo, e o aviso que importava ali era o do meio.
-
-              O selo entra ATRÁS do título, no lugar em que o carimbo cairia num
-              papel: em cima do texto, meio torto, com a tinta fraca. Ele é
-              `aria-hidden` e tem alt vazio de propósito, para o leitor de tela
-              o que existe na cena é a headline, e um carimbo decorativo lido em
-              voz alta atrapalharia exatamente quem mais precisa da headline.
-
-              A headline veio do fundador já em inglês, e por isso não usa <En>:
-              a camada de tradução existe para dobrar o português, e aqui não há
-              português para dobrar. */}
-          <PitchReveal delay={200}>
-            <div className="p3-cover-title">
-              <Image
-                src={COVER.stamp}
-                alt=""
-                aria-hidden="true"
-                width={1400}
-                height={705}
-                className="p3-cover-stamp"
+      {/* Rodada 26/10 tarde: a pergunta e a tese (antiga cena 04) moram aqui,
+             como camada sobre o mesmo video, por toque. `ThesisScene.tsx`. */}
+      <OpeningScene
+        background={
+          <>
+            <div aria-hidden="true" style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+              <HeroVideo sources={EDITORIAL_VIDEO} poster="/images/editorial-feature.webp" opacity={0.35} />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background:
+                    'linear-gradient(to bottom, transparent 0%, transparent 58%, rgba(0,0,0,0.72) 100%)',
+                }}
               />
-              <h1 className="p3-cover-headline">
-                {COVER.headlineEn[0]}
-                <br />
-                {COVER.headlineEn[1]}
-                <br />
-                <span style={{ color: ACCENT }}>{COVER.headlineEn[2]}</span>
-              </h1>
             </div>
-          </PitchReveal>
 
-          <PitchReveal delay={330}>
-            <TbfWordmark className="p3-cover-wordmark" />
-          </PitchReveal>
+          </>
+        }
+        cover={
+          <>
+            <div
+              style={{
+                position: 'relative',
+                zIndex: 1,
+                padding: 'clamp(2rem, 6vw, 5rem)',
+                paddingBottom: 'clamp(5.75rem, 8vw, 7rem)',
+              }}
+            >
+              {/* A LINHA DE EYEBROW SAIU E VIROU CARIMBO (#01, #01 CHANGES
+                  2026-08-14). Ela dizia "FELIPE T. · CONFIDENTIAL DOC · .TBF. inc"
+                  em corpo miúdo, e o aviso que importava ali era o do meio.
 
-          {/* UMA ASSINATURA SÓ, SEM QUEBRA DE TEXTO (resposta do fundador
-              2026-08-14). Ela nasceu em duas linhas, `Culture™` e a linha de
-              origem logo abaixo, e o efeito na tela era o de duas assinaturas
-              laranjas empilhadas disputando o mesmo posto. Agora é uma frase
-              contínua: `Culture™` mantém o corpo cheio e a origem entra inline
-              10% menor, que é a hierarquia que ele pediu no #01.
+                  O selo entra ATRÁS do título, no lugar em que o carimbo cairia num
+                  papel: em cima do texto, meio torto, com a tinta fraca. Ele é
+                  `aria-hidden` e tem alt vazio de propósito, para o leitor de tela
+                  o que existe na cena é a headline, e um carimbo decorativo lido em
+                  voz alta atrapalharia exatamente quem mais precisa da headline.
 
-              A quebra que sobra é a natural do parágrafo, quando a linha não
-              cabe na largura, não se força `nowrap` em texto neste repo
-              (`frontend/CLAUDE.md`), porque no telefone isso ou vaza a caixa ou
-              obriga a encolher a fonte até o ilegível. */}
-          <PitchReveal delay={400}>
-            <p className="p3-culture p3-culture--cover">
-              {COVER.culture} <span className="p3-craft-line">{COVER.craft}</span>
-            </p>
-          </PitchReveal>
+                  A headline veio do fundador já em inglês, e por isso não usa <En>:
+                  a camada de tradução existe para dobrar o português, e aqui não há
+                  português para dobrar. */}
+              <PitchReveal delay={200}>
+                <div className="p3-cover-title">
+                  <Image
+                    src={COVER.stamp}
+                    alt=""
+                    aria-hidden="true"
+                    width={1400}
+                    height={705}
+                    className="p3-cover-stamp"
+                  />
+                  <h1 className="p3-cover-headline">
+                    {COVER.headlineEn[0]}
+                    <br />
+                    {COVER.headlineEn[1]}
+                    <br />
+                    <span style={{ color: ACCENT }}>{COVER.headlineEn[2]}</span>
+                  </h1>
+                </div>
+              </PitchReveal>
 
-          {/* UMA LINHA SÓ, sem a dobra de tradução: ver a nota em COVER.body. */}
-          <PitchReveal delay={550}>
-            <p className="p3-body" style={{ maxWidth: 'var(--p3-measure)' }}>
-              {COVER.body}
-            </p>
-          </PitchReveal>
-        </div>
-      </section>
+              <PitchReveal delay={330}>
+                <TbfWordmark className="p3-cover-wordmark" />
+              </PitchReveal>
 
-      {/* ── CENA 02 · CAMPO DE REFERÊNCIA ───────────────────────────────────── */}
+              {/* UMA ASSINATURA SÓ, SEM QUEBRA DE TEXTO (resposta do fundador
+                  2026-08-14). Ela nasceu em duas linhas, `Culture™` e a linha de
+                  origem logo abaixo, e o efeito na tela era o de duas assinaturas
+                  laranjas empilhadas disputando o mesmo posto. Agora é uma frase
+                  contínua: `Culture™` mantém o corpo cheio e a origem entra inline
+                  10% menor, que é a hierarquia que ele pediu no #01.
+
+                  A quebra que sobra é a natural do parágrafo, quando a linha não
+                  cabe na largura, não se força `nowrap` em texto neste repo
+                  (`frontend/CLAUDE.md`), porque no telefone isso ou vaza a caixa ou
+                  obriga a encolher a fonte até o ilegível. */}
+              <PitchReveal delay={400}>
+                <p className="p3-culture p3-culture--cover">
+                  {COVER.culture} <span className="p3-craft-line">{COVER.craft}</span>
+                </p>
+              </PitchReveal>
+
+              {/* UMA LINHA SÓ, sem a dobra de tradução: ver a nota em COVER.body. */}
+              <PitchReveal delay={550}>
+                <p className="p3-body" style={{ maxWidth: 'var(--p3-measure)' }}>
+                  {COVER.body}
+                </p>
+              </PitchReveal>
+            </div>
+          </>
+        }
+      />
+
+      {/* ── CENA 03 · CAMPO DE REFERÊNCIA ───────────────────────────────────── */}
       <section
         id="cena-03"
         style={{
@@ -475,23 +481,18 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         </div>
       </section>
 
-      {/* ── CENA 04 · PERGUNTA, TESE E MERCADO (rodada 23/10/2026) ─────────────
-             Abre so com a pergunta; cada clique revela um passo. O dado de
-             mercado da antiga cena 05 mora no ultimo passo. `ThesisScene.tsx`. */}
-      <ThesisScene />
-
-      {/* ── CENA 05 · DA CULTURA AO NEGOCIO (rodada 23/10/2026) ──────────────────
+      {/* ── CENA 04 · DA CULTURA AO NEGOCIO (rodada 23/10/2026) ──────────────────
              As quatro frentes empilhadas; cada uma abre em tela cheia.
              Fundiu as antigas cenas 06 e 07. `FrontsScene.tsx`. */}
       <FrontsScene />
 
-      {/* ── CENA 06 · CASE SELECIONADO ───────────────────────────────────────────
+      {/* ── CENA 05 · CASE SELECIONADO ───────────────────────────────────────────
              Mídia protagonista, texto mínimo. O filme vertical dá a atmosfera;
              as nove imagens correm em faixa horizontal, respeitando o arco
              narrativo do array (atmosfera → no ar), sem empurrar a cena para
              fora da tela: o scroll é da faixa, não da cena. ────────────────── */}
-      <section id="cena-06" style={{ ...S, background: '#000000' }} aria-label="Case Selecionado / Selected Case">
-        <Kicker n="06" pt="Case Selecionado" en="Selected Case" />
+      <section id="cena-05" style={{ ...S, background: '#000000' }} aria-label="Case Selecionado / Selected Case">
+        <Kicker n="05" pt="Case Selecionado" en="Selected Case" />
 
         {/* O TÍTULO SAIU DE CIMA DA CENA e foi para o lado do story (pedido do
             fundador 2026-08-14: "verãozão + nome do cliente do lado direito do
@@ -703,7 +704,8 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            longas e suaves (esquerda, direita, topo, base) intersectadas, então o
            mosaico se dissolve no preto em todos os lados, como sombra. */
         .p4-reel {
-          height: 100%;
+          height: calc(100% + 0.6rem);
+          margin-top: -0.6rem;
           overflow: hidden;
           --p4-fade-x: linear-gradient(to right, transparent 0, rgba(0,0,0,0.25) 6%, rgba(0,0,0,0.7) 13%, #000 24%, #000 76%, rgba(0,0,0,0.7) 87%, rgba(0,0,0,0.25) 94%, transparent 100%);
           --p4-fade-y: linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.25) 7%, rgba(0,0,0,0.7) 15%, #000 28%, #000 70%, rgba(0,0,0,0.6) 84%, rgba(0,0,0,0.2) 93%, transparent 100%);
@@ -724,7 +726,8 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           overflow: hidden;
         }
         .p4-reel__col--2,
-        .p4-reel__col--3 {
+        .p4-reel__col--3,
+        .p4-reel__col--4 {
           display: none;
         }
         .p4-reel__track {
@@ -737,6 +740,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p4-reel__col--1 .p4-reel__track { animation-duration: 28s; animation-direction: reverse; animation-delay: -9s; }
         .p4-reel__col--2 .p4-reel__track { animation-duration: 26s; animation-delay: -14s; }
         .p4-reel__col--3 .p4-reel__track { animation-duration: 30s; animation-direction: reverse; animation-delay: -5s; }
+        .p4-reel__col--4 .p4-reel__track { animation-duration: 27s; animation-delay: -11s; }
         .p4-reel__tile {
           position: relative;
           flex: none;
@@ -966,15 +970,17 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             color: rgba(240, 237, 230, 0.82);
           }
           .p4-founder__chip-en { color: rgba(240, 237, 230, 0.45); font-weight: 400; }
-          .p4-reel { height: 100%; }
+          /* Rodada 26/10 tarde: cinco colunas e o mosaico sobe 3.25rem (~52px). */
+          .p4-reel { height: calc(100% + 3.25rem); margin-top: -3.25rem; }
           .p4-reel__grid {
             align-content: center;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             gap: 0.8rem;
             padding-inline: 0.8rem;
           }
           .p4-reel__col--2,
-          .p4-reel__col--3 { display: block; }
+          .p4-reel__col--3,
+          .p4-reel__col--4 { display: block; }
           .p4-reel__tile { margin-bottom: 0.8rem; }
           .p4-reel__info { padding: 0.8rem; }
           .p4-reel__big { font-size: clamp(1rem, 1.7vw, 1.7rem); }

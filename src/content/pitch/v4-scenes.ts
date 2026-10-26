@@ -15,24 +15,25 @@
 import type { Bi } from './v3-scenes'
 
 // ─── Cenas (rodada 23/10: deck enxuto, 8 telas) ─────────────────────────────
-// 00 capa, 01 fundador, 02 abertura, 03 referencia, 04 pergunta, tese e mercado
-// (revelacao por clique), 05 as quatro frentes (cada uma abre em tela cheia),
-// 06 case, 07 parceiros, marcos e fecho. Saiu a cena de mercado (o essencial foi
+// Rodada 26/10 tarde: 07 telas viraram 06. A pergunta e a tese (antiga 04) foram
+// para DENTRO da abertura (02), por toque. Ordem atual: 00 capa, 01 fundador,
+// 02 abertura e tese (revelacao por clique), 03 referencia, 04 as quatro frentes
+// (cada uma abre em tela cheia), 05 case, 06 parceiros e fecho.
+// (Texto abaixo e da rodada 23/10, com a numeracao antiga.) Saiu a cena de mercado (o essencial foi
 // para a 04), a cena "como cada vertical ganha" (virou papel de cada frente na 05)
 // e a cena "o que construimos juntos" (os marcos foram para a 07).
 // Sem captacao, sem valor, sem equity, sem numero de receita ou cliente.
 export const SCENES_V4 = [
   { id: 'cena-00', pt: 'Capa', en: 'Cover', n: '00' },
   { id: 'cena-01', pt: 'O Fundador', en: 'The Founder', n: '01' },
-  { id: 'cena-02', pt: 'Abertura', en: 'Opening', n: '02' },
+  { id: 'cena-02', pt: 'Abertura e Tese', en: 'Opening and Thesis', n: '02' },
   { id: 'cena-03', pt: 'Campo de Referência', en: 'Reference Field', n: '03' },
-  { id: 'cena-04', pt: 'A Pergunta e a Tese', en: 'The Question and the Thesis', n: '04' },
-  { id: 'cena-05', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '05' },
-  { id: 'cena-06', pt: 'Case Selecionado', en: 'Selected Case', n: '06' },
-  { id: 'cena-07', pt: 'Parceiros e Fecho', en: 'Partners and Close', n: '07' },
+  { id: 'cena-04', pt: 'Da Cultura ao Negócio', en: 'From Culture to Business', n: '04' },
+  { id: 'cena-05', pt: 'Case Selecionado', en: 'Selected Case', n: '05' },
+  { id: 'cena-06', pt: 'Parceiros e Fecho', en: 'Partners and Close', n: '06' },
 ] as const
 
-export const TOTAL_V4 = '07'
+export const TOTAL_V4 = '06'
 
 // ─── Timer ───────────────────────────────────────────────────────────────────
 export const TIMER_SECONDS = 10 * 60
@@ -77,7 +78,7 @@ export const FOUNDER = {
   // capas novas de The Fashion Backstage, Tiger Capsule e Virtuosa) mais as
   // peças de campanha e de marca. `ar` é a proporção REAL do arquivo (nada é
   // cortado). Os quadros `info` são peças tipográficas com fato já publicado
-  // (papel, cliente, ano). No celular entram as três primeiras colunas.
+  // (papel, cliente, ano). No celular entram as duas primeiras colunas; no desktop, as cinco.
   reel: [
     [
       img('fashion-backstage/02', 1080, 1440),
@@ -134,6 +135,20 @@ export const FOUNDER = {
       img('behance/arquimeats-o-baile-de-mascaras/01', 1350, 818),
       img('o-18-years/k1-dezoitou', 1080, 1920),
       img('virtuosa/g1', 1440, 1440),
+    ],
+    [
+      img('hospitality/03-parede-azul', 1500, 1125),
+      img('hospitality/06-corredor', 1500, 1125),
+      img('tiger-capsule/01', 1200, 686),
+      img('behance/bahia-em-cores-quentes/05', 1867, 2800),
+      img('fashion-backstage/05', 2000, 1125),
+      img('virtuosa/feed-05', 720, 900),
+      img('behance/meats-content/02', 2000, 1300),
+      img('hospitality/14-piscina', 1209, 2000),
+      img('behance/cores-e-sabores/04', 1867, 2800),
+      img('behance/max-vidros/03', 1920, 1081),
+      img('behance/festival-de-arte-e-gastronomia/05', 1080, 1350),
+      img('hospitality/13-recepcao', 1500, 1000),
     ],
   ] as readonly (readonly ReelTile[])[],
   // Facto de equipe, dito com honestidade (pedido 22/10/2026, item 6).
