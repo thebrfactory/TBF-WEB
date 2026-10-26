@@ -61,3 +61,12 @@ nativos (1365 px de largura), só o `_MG_0645` e o panorama foram reduzidos.
 O `_MG_0645` (carro rosa com os palhaços em cima) NÃO entrou no corpo: é a foto
 que o fundador está usando na capa, no Photoshop. Repetir capa dentro da
 matéria é a coisa que mais denuncia acervo curto.
+
+## Troca pela pós finalizada (26/10/2026)
+
+O fundador finalizou as fotos em `/Volumes/TAV05/0. TBF inc/RAW/TBF GOIÁS COOLHUNTING
+PACK/SAÍDA - OUT:10` (62 JPEG). Os 14 arquivos do corpo (01 a 07, 09 a 15) foram
+refeitos dessa pasta, mesma fonte `_MG` da tabela acima, mesma conversão (WebP `q82`,
+`method=6`, sem metadados, largura até 1920 px). Dimensões iguais, então o `.ts` não
+mudou. As versões anteriores estão em `public/_ARQUIVO/country-side-pre-out10/`.
+A `08-cavalhada-panorama` segue fora do site e não foi trocada.
