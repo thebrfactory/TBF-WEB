@@ -17,6 +17,7 @@ import { FeedGrid } from '@/components/tavaristico/WorkEditorial'
 import { WorkCarousel, type CarouselItem } from '@/components/tavaristico/WorkCarousel'
 import { InstagramEmbeds } from '@/components/tavaristico/InstagramEmbeds'
 import { WorkBlocks } from '@/components/tavaristico/WorkBlocks'
+import { WorkProcess } from '@/components/tavaristico/WorkProcess'
 import { DIMS } from '@/app/(en)/creators/tavaristico/_dims'
 import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 import { tavaristico } from '@/content/i18n/pages/tavaristico'
@@ -166,6 +167,10 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <span className={styles.lowResTag}>{t.lowResTag}</span>
         )}
 
+        {w.topBlocks && w.topBlocks.length > 0 && (
+          <WorkBlocks blocks={w.topBlocks} lang={lang} prevLabel={t.carouselPrev} nextLabel={t.carouselNext} />
+        )}
+
         {galleryChunks.map((chunk, ci) =>
           chunk.kind === 'strip' ? (
             <WorkCarousel
@@ -217,6 +222,16 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         )}
 
         {w.feedGrid && w.feedGrid.length > 0 && <FeedGrid pieces={w.feedGrid} label={t.feedLabel} ratio={w.feedRatio} />}
+
+        {w.process && w.process.length > 0 && (
+          <WorkProcess
+            steps={w.process}
+            lang={lang}
+            label={t.processLabel}
+            prevLabel={t.carouselPrev}
+            nextLabel={t.carouselNext}
+          />
+        )}
 
         {w.blocks && w.blocks.length > 0 && (
           <WorkBlocks blocks={w.blocks} lang={lang} prevLabel={t.carouselPrev} nextLabel={t.carouselNext} />

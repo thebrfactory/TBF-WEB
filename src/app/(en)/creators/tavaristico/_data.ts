@@ -77,6 +77,20 @@ export interface Work {
   instagramEmbeds?: string[]
   /** Sequencia editorial apos a galeria: carrossel, feed, embed e imagem, na ordem do array. */
   blocks?: WorkBlock[]
+  /** Destaque logo abaixo da capa (ex.: filme final com som), antes da galeria. Rodada 26/10/2026. */
+  topBlocks?: WorkBlock[]
+  /** Processo do case em etapas (titulo, narrativa curta PT e EN, pecas da etapa). Vem antes de `blocks`. */
+  process?: ProcessStep[]
+}
+
+/** Etapa do processo de um case. Texto bilingue no mesmo padrao do resto do case. */
+export interface ProcessStep {
+  titleEN: string
+  titlePT: string
+  textEN: string
+  textPT: string
+  variant: 'tall' | 'wide'
+  items: CarouselItem[]
 }
 
 /** Bloco da pagina de obra (rodada 23/10/2026). Rotulos curtos, PT e EN, fora da imagem. */
@@ -275,6 +289,130 @@ const SP = `${base}/spfw-the-paradise`
 const VID = '/videos/tavaristico'
 const ob = `${base}/oblack`
 const px = (src: string, w: number, h: number, alt: string) => ({ src, w, h, alt })
+// Rodada 26/10/2026: material do SSD (ssd-2610) em SPFW, BLACKBOAH e BOAH. Videos 608x1080 (9:16), mudos, com poster.
+const SPS = `${SP}/ssd-2610`
+const BBS = `${base}/blackboah/ssd-2610`
+const BXS = `${BX}/ssd-2610`
+const vid = (src: string, poster: string, w: number, h: number, alt: string, sound?: boolean) =>
+  ({ src, poster, w, h, alt, ...(sound ? { sound } : null) })
+
+// Filme final do The Paradise (SPFW N58) com som, e as verticais do evento em faixa.
+const SPFW_TOP: WorkBlock[] = [
+  {
+    kind: 'carousel',
+    variant: 'tall',
+    labelEN: 'The Paradise, SPFW N58',
+    labelPT: 'The Paradise, SPFW N58',
+    items: [
+      vid(`${SPS}/filme-the-paradise.mp4`, `${SPS}/filme-the-paradise-poster.webp`, 608, 1080, 'Filme final do The Paradise na São Paulo Fashion Week N58: bastidores de maquiagem, provas de roupa e o cartão The Paradise, com som.', true),
+      px(`${SPS}/edit-04.webp`, 900, 1600, 'Modelo de vestido azul de crochê na passarela, com a fila de modelos ao fundo.'),
+      px(`${SPS}/edit-02.webp`, 900, 1600, 'Silhueta de modelo de costas, em luz azul, nos bastidores.'),
+      px(`${SPS}/pista-lilas.webp`, 1281, 1600, 'Modelo de camisa clara e saia estampada na passarela, em luz lilás.'),
+      px(`${SPS}/led-cria-costura.webp`, 900, 1600, 'Tela de LED vermelha com a frase CRIA COSTURA, e a plateia em silhueta.'),
+      px(`${SPS}/led-id.webp`, 900, 1600, 'Arte de LED do evento, com a palavra LED repetida em branco sobre fundo escuro.'),
+    ],
+  },
+]
+
+// BLACKBOAH: stories (imagem e animados) em faixa, GIFs em loop, feed, logo e postal.
+const BLACKBOAH_BLOCKS: WorkBlock[] = [
+  {
+    kind: 'carousel',
+    variant: 'tall',
+    labelEN: 'Stories',
+    labelPT: 'Stories',
+    items: [
+      px(`${BBS}/story-03.webp`, 900, 1600, 'Story "começou": BLACK BOAH dentro do arco, 40% off, sobre modelo de conjunto rosa.'),
+      vid(`${BBS}/story-anim-comecou.mp4`, `${BBS}/story-anim-comecou-poster.webp`, 608, 1080, 'Story animado "começou": BLACK BOAH, 40% off, com o arco recortado.'),
+      px(`${BBS}/story-04.webp`, 900, 1600, 'Story das categorias: BLACK BOAH, 40% off, sobre tecido amarelo em movimento.'),
+      vid(`${BBS}/story-anim-23.mp4`, `${BBS}/story-anim-23-poster.webp`, 608, 1080, 'Story animado de 23.11: mosaico de looks em arco.'),
+      vid(`${BBS}/story-anim-24.mp4`, `${BBS}/story-anim-24-poster.webp`, 608, 1080, 'Story animado de 24.11: mosaico de looks.'),
+      vid(`${BBS}/story-anim-25.mp4`, `${BBS}/story-anim-25-poster.webp`, 608, 1080, 'Story animado de 25.11: BLACK FRIDAY, 60% off.'),
+      px(`${BBS}/story-01.webp`, 1080, 1350, 'Story BLACK BOAH, com modelo de regata estampada em rosa e laranja dentro do arco.'),
+      px(`${BBS}/story-02.webp`, 1080, 1350, 'Story BLACK BOAH, com modelo de colete rosa de botões dentro do arco.'),
+    ],
+  },
+  { kind: 'image', src: `${BBS}/feed-mosaico.webp`, w: 1400, h: 800, alt: 'Capa do mosaico do feed: grade de looks coloridos da BOAH.' },
+  {
+    kind: 'carousel',
+    variant: 'wide',
+    labelEN: 'GIFs in loop',
+    labelPT: 'GIFs em loop',
+    items: [
+      vid(`${BBS}/gif-board.mp4`, `${BBS}/gif-board-poster.webp`, 1080, 772, 'GIFs em loop: peças com o arco recortado e modelos da BOAH.'),
+      vid(`${BBS}/gif-feed.mp4`, `${BBS}/gif-feed-poster.webp`, 1080, 772, 'GIF do feed dentro do mockup de um post.'),
+    ],
+  },
+  { kind: 'image', src: `${BBS}/feed-grade.webp`, w: 1400, h: 800, alt: 'Grade do feed: mosaico de looks com a marca BLACK BOAH no arco ao centro.' },
+  {
+    kind: 'carousel',
+    variant: 'wide',
+    labelEN: 'Logo and postcard',
+    labelPT: 'Logo e postal',
+    items: [
+      px(`${BBS}/capa-logo.webp`, 1081, 501, 'Logo BLACK BOAH em dourado.'),
+      px(`${BBS}/postal.webp`, 789, 1183, 'Postal raspadinha BLACK BOAH, com quatro círculos: 20, 30, 40 e 60 por cento.'),
+    ],
+  },
+]
+
+// BOAH: processo em 4 etapas. Narrativa só com fatos das fontes do projeto (manual da marca, guideline, notas).
+const BOAH_PROCESS: ProcessStep[] = [
+  {
+    titleEN: 'Strategy',
+    titlePT: 'Estratégia',
+    textEN:
+      'BOAH was born in 2011, in Salvador, with a boho style and touches of bossa from a coastal life. The diagnosis: the cropped top and the short brought the young audience closer, and the brand lost its connection with the mature woman. The direction was to leave the same old behind, with other eyes and sources, without giving up the branding. The guiding question: where and how can this woman wear BOAH, at work and with friends.',
+    textPT:
+      'A BOAH nasceu em 2011, em Salvador, com estilo boho e toques de bossa de uma vida litorânea. O diagnóstico: o cropped e o short aproximaram o público jovem, e a marca perdeu conexão com a mulher madura. A direção foi sair do mais do mesmo, com outros olhares e fontes, sem abrir mão do branding. A pergunta guia: onde e como essa mulher pode usar BOAH, no trabalho e entre amigas.',
+    variant: 'wide',
+    items: [
+      px(`${BXS}/etapa1-manual-marca.webp`, 1600, 1132, 'Página do manual da BOAH: a marca em letras douradas, com a fachada de uma loja dentro de um arco.'),
+      px(`${BXS}/etapa1-guias-analise.webp`, 1600, 900, 'Página "guias para analisar", com uma porta de madeira dentro de um arco, sobre fundo creme.'),
+    ],
+  },
+  {
+    titleEN: 'Identity',
+    titlePT: 'Identidade',
+    textEN:
+      'The manual defines purpose, mission, positioning and the slogan "to dress the soul". The brand gains a standard logo, supporting elements in arcs and rays, and a supporting color palette. The voice is light, sophisticated, friendly and inspiring. Matte weighs more than shine: sophistication, quality and minimalism guide the look.',
+    textPT:
+      'O manual define propósito, missão, posicionamento e o slogan "para vestir a alma". A marca ganha logo padrão, elementos de apoio em arco e raios e uma paleta de cores de suporte. O tom de voz é leve, sofisticado, amigável e inspirador. Opaco pesa mais que brilho: sofisticação, qualidade e minimalismo guiam o visual.',
+    variant: 'wide',
+    items: [
+      px(`${BXS}/etapa2-marca-padrao.webp`, 1600, 1132, 'Página do manual: marca padrão BOAH em dourado, com o elemento de raios abaixo.'),
+      px(`${BXS}/etapa2-paleta.webp`, 1600, 1132, 'Página do manual: paleta de cores de suporte, em tons de bege, areia e marrom.'),
+      px(`${BXS}/etapa2-aplicacao-fotografia.webp`, 1600, 1132, 'Página do manual: aplicação sobre fotografia, com cinco imagens de referência.'),
+    ],
+  },
+  {
+    titleEN: 'Production',
+    titlePT: 'Produção',
+    textEN:
+      'Photography with sunlight, volumes and textures, and editing in warm tones, beige and ochre, with low saturation. Backstage and store rounds enter as photos, not only as reels. Local, exclusive production becomes content: atelier, fittings and team meetings. Lojas abertas brings colors that vibrate with the joy of hot days and textures that welcome.',
+    textPT:
+      'Fotografia com luz de sol, volumes e texturas, e edição em tons quentes, bege e ocre, de pouca saturação. O bastidor e o giro de loja entram como foto, não só como reels. A produção local e exclusiva vira conteúdo: ateliê, provas de roupa e reuniões do time. Lojas abertas traz cores que vibram a alegria dos dias quentes e texturas que acolhem.',
+    variant: 'wide',
+    items: [
+      px(`${BXS}/etapa3-edicao-iluminacao.webp`, 1600, 900, 'Grade de edição e iluminação: dez fotos em tons quentes, bege e ocre.'),
+      vid(`${BXS}/etapa3-lojas-abertas.mp4`, `${BXS}/etapa3-lojas-abertas-poster.webp`, 608, 1080, 'Vídeo "lojas abertas": detalhe de colar sobre fundo creme.'),
+    ],
+  },
+  {
+    titleEN: 'Social',
+    titlePT: 'Social',
+    textEN:
+      'Communication becomes a routine of dated videos, from 28.12 to the end of January. Each video has a theme: weekend looks, altar print, the launch teaser. The soundtrack favors Brazilian music, between MPB, lo-fi and electronic, with charm, swing and lightness. In commercial copy, enchantment serves the writing.',
+    textPT:
+      'A comunicação vira rotina de vídeos datados, de 28.12 ao fim de janeiro. Cada vídeo tem um tema: looks para o fim de semana, estampa altar, o teaser de lançamento. O trilho sonoro prefere música brasileira, entre MPB, lo-fi e eletrônica, com encanto, gingado e leveza. No texto comercial, o encantamento serve à redação.',
+    variant: 'tall',
+    items: [
+      vid(`${BXS}/etapa4-looks-fim-de-semana.mp4`, `${BXS}/etapa4-looks-fim-de-semana-poster.webp`, 608, 1080, 'Reel "looks para o final de semana": três modelos de vestido amarelo, vermelho e branco.'),
+      vid(`${BXS}/etapa4-estampa-altar.mp4`, `${BXS}/etapa4-estampa-altar-poster.webp`, 608, 1080, 'Reel "estampa altar": quimono floral rosa e creme, com o mar ao fundo.'),
+      vid(`${BXS}/etapa4-teaser-voa.mp4`, `${BXS}/etapa4-teaser-voa-poster.webp`, 606, 1080, 'Teaser de lançamento: modelo de vestido estampado, com a marca AMANHÃ.'),
+    ],
+  },
+]
 
 const BOAH_FEED: WorkPiece[] = [
   { src: `${BO}/17.webp`, alt: 'Look de linho com colete de botões, no corredor claro.' },
@@ -340,6 +478,8 @@ const SPFW_BLOCKS: WorkBlock[] = [
       px(`${SP}/ruc-closing.webp`, 1800, 1306, 'Plateia em silhueta diante do painel luminoso, com refletores azuis.'),
       px(`${SP}/cover.webp`, 1080, 1080, 'Modelos nos bastidores, com bonés e peças coloridas.'),
       px(`${SP}/g2.webp`, 1080, 1080, 'Perfil de modelo em luz azul e magenta.'),
+      px(`${SPS}/edit-01.webp`, 1080, 1080, 'Dois modelos nos bastidores, de boné azul e jaqueta estampada em cores vivas.'),
+      px(`${SPS}/edit-03.webp`, 1080, 1080, 'Perfil de modelo de camisa clara, em luz azul e magenta.'),
     ],
   },
   { kind: 'embed', url: 'https://www.instagram.com/p/DPUk0hvgn-6/', labelEN: 'On Instagram, @runwayunited', labelPT: 'No Instagram, @runwayunited' },
@@ -624,6 +764,7 @@ export const WORKS: Work[] = [
         `${base}/behance/black-boah/06.webp`,
       ],
     },
+    blocks: BLACKBOAH_BLOCKS,
     provisional: ['role', 'client', 'summary', 'description'],
   },
   {
@@ -646,6 +787,8 @@ export const WORKS: Work[] = [
     cardCover: `${base}/behance/branded-content-boah/card.webp`,
     cardFit: { bg: '#f7f3ed', inset: '20%' },
     highlights: BOAH_HIGHLIGHTS,
+    // Rodada 26/10/2026: processo em 4 etapas (estrategia, identidade, producao, social).
+    process: BOAH_PROCESS,
     // Rodada 23/10/2026: feed em grade de 3 colunas (estilo perfil do Instagram) e carrosseis
     // de pecas verticais, para ver o conteudo de forma mais fluida.
     blocks: [
@@ -761,7 +904,6 @@ export const WORKS: Work[] = [
         ],
       },
     ],
-    provisional: ['summary', 'description'],
   },
   TIGER_CAPSULE,
   {
@@ -860,6 +1002,7 @@ export const WORKS: Work[] = [
     // Rodada 23/10/2026: pagina em ritmo. Carrossel de stills, embed, carrossel de bastidor, embed,
     // carrossel de filmes, embed. Os 3 reels do perfil @runwayunited ficam entre os blocos.
     blocks: SPFW_BLOCKS,
+    topBlocks: SPFW_TOP,
     media: {
       cover: `${base}/fashion-backstage/cover.webp`,
     },

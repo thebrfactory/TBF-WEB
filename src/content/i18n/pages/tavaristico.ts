@@ -92,6 +92,7 @@ const en = {
     carouselNext: 'Next',
     soundOn: 'Turn sound on',
     soundOff: 'Turn sound off',
+    processLabel: 'Process',
   },
 }
 
@@ -159,6 +160,7 @@ const pt: typeof en = {
     carouselNext: 'Próxima',
     soundOn: 'Ligar o som',
     soundOff: 'Desligar o som',
+    processLabel: 'Processo',
   },
 }
 

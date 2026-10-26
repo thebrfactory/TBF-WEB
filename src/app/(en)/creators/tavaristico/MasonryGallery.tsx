@@ -1,6 +1,6 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Work, Discipline } from './_data'
@@ -88,8 +88,9 @@ export function MasonryGallery({
 
   const extraNode = extraCard ? (
       <Link
+        key="extra-card"
         href={extraCard.href}
-        className={`${styles.card} ${active === ALL ? '' : styles.cardHidden}`}
+        className={styles.card}
       >
         <span className={styles.cardMedia} style={{ aspectRatio: extraCard.ratio ?? RATIOS[works.length % RATIOS.length] }}>
           <Image
@@ -107,6 +108,58 @@ export function MasonryGallery({
         </span>
       </Link>
     ) : null
+
+  // Cards na ordem da lista: os visiveis no filtro, com o card extra no lugar de `extraAfter`.
+  const nodes: ReactNode[] = []
+  works.forEach((w, i) => {
+    if (visible(w)) {
+      const ratio = w.cardRatio ?? RATIOS[i % RATIOS.length]
+      const cardSrc = w.cardCover ?? w.media.cover
+      nodes.push(
+        <Link key={w.slug} href={path(`/creators/tavaristico/works/${w.slug}`)} className={styles.card}>
+          <span
+            className={styles.cardMedia}
+            style={{ aspectRatio: ratio, ...(w.cardFit ? { background: w.cardFit.bg } : null) }}
+          >
+            <Image
+              src={cardSrc}
+              alt={w.title}
+              fill
+              style={
+                w.cardFit
+                  ? { objectFit: 'contain', padding: w.cardFit.inset }
+                  : w.cardFocus
+                    ? { objectPosition: focusPosition(cardSrc, ratio, w.cardFocus) }
+                    : undefined
+              }
+              sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
+            />
+            <span className={styles.cardOverlay} aria-hidden="true" />
+          </span>
+          <span className={styles.cardCaption}>
+            <span className={styles.cardTitle}>{w.title}</span>
+            <span className={styles.cardMeta}>{w.disciplines.join(' · ')}</span>
+          </span>
+        </Link>,
+      )
+    }
+    if (extraNode && active === ALL && extraAfter !== undefined && i === extraAfter - 1) nodes.push(extraNode)
+  })
+  if (extraNode && active === ALL && extraAfter === undefined) nodes.push(extraNode)
+
+  // Ordem de leitura por LINHA (rodada 26/10/2026): o item k vai para a coluna k % n,
+  // entao os primeiros da lista ocupam a primeira faixa. Os tres layouts (2, 3 e 4
+  // colunas) saem no HTML e o CSS mostra um por breakpoint: sem JS na troca, sem salto
+  // na hidratacao. Imagens lazy dentro de display:none nao baixam.
+  const layout = (n: 2 | 3 | 4, cls: string) => (
+    <div className={`${styles.masonry} ${cls}`}>
+      {Array.from({ length: n }, (_, c) => (
+        <div key={c} className={styles.masonryCol}>
+          {nodes.filter((_, k) => k % n === c)}
+        </div>
+      ))}
+    </div>
+  )
 
   return (
     <>
@@ -134,52 +187,9 @@ export function MasonryGallery({
         </div>
       )}
 
-      <div className={styles.masonry}>
-        {works.map((w, i) => {
-          const ratio = w.cardRatio ?? RATIOS[i % RATIOS.length]
-          const cardSrc = w.cardCover ?? w.media.cover
-          const card = (
-          <Link
-            key={w.slug}
-            href={path(`/creators/tavaristico/works/${w.slug}`)}
-            className={`${styles.card} ${visible(w) ? '' : styles.cardHidden}`}
-          >
-            <span
-              className={styles.cardMedia}
-              style={{ aspectRatio: ratio, ...(w.cardFit ? { background: w.cardFit.bg } : null) }}
-            >
-              <Image
-                src={cardSrc}
-                alt={w.title}
-                fill
-                style={
-                  w.cardFit
-                    ? { objectFit: 'contain', padding: w.cardFit.inset }
-                    : w.cardFocus
-                      ? { objectPosition: focusPosition(cardSrc, ratio, w.cardFocus) }
-                      : undefined
-                }
-                sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
-              />
-              <span className={styles.cardOverlay} aria-hidden="true" />
-            </span>
-            <span className={styles.cardCaption}>
-              <span className={styles.cardTitle}>{w.title}</span>
-              <span className={styles.cardMeta}>{w.disciplines.join(' · ')}</span>
-            </span>
-          </Link>
-          )
-          return extraAfter !== undefined && i === extraAfter - 1 ? (
-            <Fragment key={w.slug}>
-              {card}
-              {extraNode}
-            </Fragment>
-          ) : (
-            card
-          )
-        })}
-        {extraCard && extraAfter === undefined && extraNode}
-      </div>
+      {layout(2, styles.cols2)}
+      {layout(3, styles.cols3)}
+      {layout(4, styles.cols4)}
     </>
   )
 }

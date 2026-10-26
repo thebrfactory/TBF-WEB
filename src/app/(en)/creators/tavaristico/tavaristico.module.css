@@ -516,12 +516,17 @@
 }
 
 /* Masonry via colunas CSS: cards fluem preservando ritmo de alturas. */
+/* Ordem por linha: colunas em flex, itens distribuidos em round-robin no TSX.
+   Um layout por breakpoint (2 no celular, 3 no tablet, 4 no desktop). */
 .masonry {
-  column-count: 2;
-  column-gap: var(--tbf-space-4);
+  align-items: flex-start;
+  gap: var(--tbf-space-4);
 }
-@media (min-width: 768px)  { .masonry { column-count: 3; } }
-@media (min-width: 1200px) { .masonry { column-count: 4; } }
+.masonryCol { flex: 1 1 0; min-width: 0; }
+.cols2 { display: flex; }
+.cols3, .cols4 { display: none; }
+@media (min-width: 768px)  { .cols2 { display: none; } .cols3 { display: flex; } }
+@media (min-width: 1200px) { .cols3 { display: none; } .cols4 { display: flex; } }
 
 .card {
   display: block;
@@ -530,7 +535,6 @@
   text-decoration: none;
   color: inherit;
 }
-.cardHidden { display: none; }
 .cardMedia {
   position: relative;
   display: block;
