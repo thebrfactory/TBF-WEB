@@ -186,6 +186,7 @@ export default function TavaristicoView({ lang }: { lang: Lang }) {
         <MasonryGallery
           works={WORKS}
           disciplines={DISCIPLINES}
+          extraAfter={4}
           extraCard={{
             href: localizedPath('/creators/tavaristico/hospitality', lang),
             image: '/images/creators/tavaristico/hospitality/01-engradados.webp',

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
 import type { Work, Discipline } from './_data'
@@ -38,6 +38,7 @@ export function MasonryGallery({
   works,
   disciplines,
   extraCard,
+  extraAfter,
 }: {
   works: Work[]
   disciplines: Discipline[]
@@ -52,6 +53,8 @@ export function MasonryGallery({
     /** object-position da thumb, para rosto e corpo não cortarem */
     position?: string
   }
+  /** Quantos works vêm antes do card extra. Sem isso, ele fecha a grade. */
+  extraAfter?: number
 }) {
   const lang = useLang()
   const t = tavaristico[lang].gallery
@@ -83,6 +86,28 @@ export function MasonryGallery({
   const visible = (w: Work) => active === ALL || w.disciplines.some((d) => d === active)
   const onlyOne = disciplines.length <= 1
 
+  const extraNode = extraCard ? (
+      <Link
+        href={extraCard.href}
+        className={`${styles.card} ${active === ALL ? '' : styles.cardHidden}`}
+      >
+        <span className={styles.cardMedia} style={{ aspectRatio: extraCard.ratio ?? RATIOS[works.length % RATIOS.length] }}>
+          <Image
+            src={extraCard.image}
+            alt={extraCard.title}
+            fill
+            style={extraCard.position ? { objectPosition: extraCard.position } : undefined}
+            sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
+          />
+          <span className={styles.cardOverlay} aria-hidden="true" />
+        </span>
+        <span className={styles.cardCaption}>
+          <span className={styles.cardTitle}>{extraCard.title}</span>
+          <span className={styles.cardMeta}>{extraCard.meta}</span>
+        </span>
+      </Link>
+    ) : null
+
   return (
     <>
       {!onlyOne && (
@@ -113,7 +138,7 @@ export function MasonryGallery({
         {works.map((w, i) => {
           const ratio = w.cardRatio ?? RATIOS[i % RATIOS.length]
           const cardSrc = w.cardCover ?? w.media.cover
-          return (
+          const card = (
           <Link
             key={w.slug}
             href={path(`/creators/tavaristico/works/${w.slug}`)}
@@ -144,28 +169,16 @@ export function MasonryGallery({
             </span>
           </Link>
           )
+          return extraAfter !== undefined && i === extraAfter - 1 ? (
+            <Fragment key={w.slug}>
+              {card}
+              {extraNode}
+            </Fragment>
+          ) : (
+            card
+          )
         })}
-        {extraCard && (
-          <Link
-            href={extraCard.href}
-            className={`${styles.card} ${active === ALL ? '' : styles.cardHidden}`}
-          >
-            <span className={styles.cardMedia} style={{ aspectRatio: extraCard.ratio ?? RATIOS[works.length % RATIOS.length] }}>
-              <Image
-                src={extraCard.image}
-                alt={extraCard.title}
-                fill
-                style={extraCard.position ? { objectPosition: extraCard.position } : undefined}
-                sizes="(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 48vw"
-              />
-              <span className={styles.cardOverlay} aria-hidden="true" />
-            </span>
-            <span className={styles.cardCaption}>
-              <span className={styles.cardTitle}>{extraCard.title}</span>
-              <span className={styles.cardMeta}>{extraCard.meta}</span>
-            </span>
-          </Link>
-        )}
+        {extraCard && extraAfter === undefined && extraNode}
       </div>
     </>
   )

@@ -543,6 +543,112 @@ export const WORKS: Work[] = [
     provisional: ['role', 'summary'],
   },
   {
+    slug: 'martha-medeiros',
+    index: '19',
+    title: 'Martha Medeiros',
+    disciplines: ['Fashion', 'Art Direction', 'Campaign & Content'],
+    role: 'Art Director / Creative Director',
+    client: 'Martha Medeiros',
+    summary: 'Campanha conceitual Manacá para a Martha Medeiros: identidade, banners, catálogo de WhatsApp e stories.',
+    description:
+      'Essa construção de campanha e composição foi uma campanha fantasma de apresentação para a marca, por isso não foi circulada.\nPartindo da coleção Manacá, de verão, criamos uma identidade visual própria, com construção, mudança e refinamento de formas e fontes até o símbolo ganhar pregnância. Dela saíram banners de e-commerce, um catálogo de WhatsApp em formato vertical e um set de stories no jogo This or That.\nFerramentas de inteligência artificial generativa foram usadas no desenvolvimento do material.',
+    descriptionEn:
+      'This campaign and composition was a ghost campaign, a presentation piece for the brand, which is why it was never circulated.\nStarting from the Manacá summer collection, we built a visual identity of its own, shaping and refining forms and typefaces until the symbol became memorable. It gave way to e-commerce banners, a vertical WhatsApp catalog and a This or That story set.\nGenerative AI tools were used in developing the material.',
+    media: {
+      cover: `${base}/martha-medeiros/cover.webp`,
+      gallery: [
+        `${base}/martha-medeiros/banner-h.webp`,
+        `${base}/martha-medeiros/banner-v.webp`,
+        `${base}/martha-medeiros/garden-01.webp`,
+        `${base}/martha-medeiros/garden-02.webp`,
+        `${base}/martha-medeiros/garden-03.webp`,
+        `${base}/martha-medeiros/garden-04.webp`,
+        `${base}/martha-medeiros/garden-05.webp`,
+        `${base}/martha-medeiros/garden-06.webp`,
+        `${base}/martha-medeiros/garden-07.webp`,
+        `${base}/martha-medeiros/garden-08.webp`,
+        `${base}/martha-medeiros/garden-09.webp`,
+        `${base}/martha-medeiros/garden-10.webp`,
+      ],
+    },
+    highlights: [
+      {
+        index: 'martha-medeiros-this-or-that',
+        name: 'THIS OR THAT',
+        client: 'Martha Medeiros',
+        descriptionEN: 'This or That story set for the Manacá collection, a ghost campaign.',
+        descriptionPT: 'Set de stories This or That da coleção Manacá, campanha fantasma.',
+        frames: [
+          { src: `${base}/martha-medeiros/tot-01.webp`, alt: 'Duas modelos de vestidos azul e verde em rendas, com o texto This or That e o logotipo Manacá.', role: 'This or That' },
+          { src: `${base}/martha-medeiros/tot-02.webp`, alt: 'Quatro looks sobre fundo claro, dois claros e dois pink, para votar no favorito.', role: 'This or That' },
+          { src: `${base}/martha-medeiros/tot-03.webp`, alt: 'Quatro looks sobre fundo claro, dois verdes e dois brancos, para votar no favorito.', role: 'This or That' },
+          { src: `${base}/martha-medeiros/tot-08.webp`, alt: 'Quatro looks sobre fundo claro, dois azuis e dois pretos, para votar no favorito.', role: 'This or That' },
+        ],
+      },
+      {
+        index: 'martha-medeiros-catalogo',
+        name: 'CATÁLOGO',
+        client: 'Martha Medeiros',
+        descriptionEN: 'Vertical WhatsApp catalog for the Manacá collection.',
+        descriptionPT: 'Catálogo vertical de WhatsApp da coleção Manacá.',
+        frames: [
+          { src: `${base}/martha-medeiros/cat-00.webp`, alt: 'Capa do catálogo Manacá, modelo de vestido pink diante de folhagem.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-00001.webp`, alt: 'Página de apresentação da coleção Manacá, com três looks sobre fundo claro.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-01.webp`, alt: 'Look de blusa e calça pink sobre fundo claro.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-02.webp`, alt: 'Look pink visto de costas e de frente.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-04.webp`, alt: 'Vestido curto branco de renda sobre fundo claro.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-07.webp`, alt: 'Vestido longo azul de babados sobre fundo claro.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-09.webp`, alt: 'Vestido longo azul de babados, em plano mais próximo.', role: 'Catálogo' },
+          { src: `${base}/martha-medeiros/cat-11.webp`, alt: 'Contracapa do catálogo Manacá, modelo de vestido pink e o endereço do site da marca.', role: 'Catálogo' },
+        ],
+      },
+    ],
+    coverAlt: 'Manacá, da Martha Medeiros: quatro modelos de vestidos de festa em meio à folhagem, com o logotipo ao centro.',
+    galleryAlts: [
+      'Banner horizontal da coleção Manacá, com modelo de vestido pink e o logotipo.',
+      'Banner vertical da coleção Manacá, com modelo de vestido pink e o logotipo.',
+      'Duas modelos de vestidos estampados em pink e branco, de costas e de frente, na mata.',
+      'Modelo de vestido longo rosa de renda com fenda, na mata.',
+      'Duas modelos, de vestido azul de babados e vestido verde de renda.',
+      'Duas modelos de vestidos amarelos de mangas bufantes.',
+      'Duas modelos de vestidos verdes de renda e babados.',
+      'Modelo de vestido longo azul de renda, saia ampla.',
+      'Duas modelos, de vestido azul e de top com saia verdes.',
+      'Duas modelos de vestidos brancos de renda.',
+      'Modelo de vestido pink de ombros de fora, saia em movimento.',
+      'Modelo de vestido rosa de camadas.',
+    ],
+    credits: [
+      { roleEN: 'Stills', rolePT: 'Stills', name: 'André Salcedo' },
+      { roleEN: 'Art director', rolePT: 'Direção de arte', name: 'Felipe Tavares' },
+    ],
+    provisional: ['summary'],
+  },
+  {
+    slug: 'blackboah',
+    index: '05',
+    title: 'BLACKBOAH',
+    disciplines: ['Art Direction'],
+    role: 'Art Director',
+    client: 'BOAH',
+    summary: 'Direção de arte e identidade visual.',
+    description:
+      'Construção de linguagem visual e direção de arte para Blackboah.',
+    descriptionEn:
+      'Visual language and art direction for Blackboah.',
+    media: {
+      cover: `${base}/behance/black-boah/01.webp`,
+      gallery: [
+        `${base}/behance/black-boah/02.gif`,
+        `${base}/behance/black-boah/03.webp`,
+        `${base}/behance/black-boah/04.webp`,
+        `${base}/behance/black-boah/05.gif`,
+        `${base}/behance/black-boah/06.webp`,
+      ],
+    },
+    provisional: ['role', 'client', 'summary', 'description'],
+  },
+  {
     slug: 'capsula-brasilidade',
     index: '02',
     title: 'Cápsula Brasilidade',
@@ -578,30 +684,6 @@ export const WORKS: Work[] = [
     provisional: ['role', 'summary', 'description'],
   },
   TIGER_CAPSULE,
-  {
-    slug: 'blackboah',
-    index: '05',
-    title: 'BLACKBOAH',
-    disciplines: ['Art Direction'],
-    role: 'Art Director',
-    client: 'BOAH',
-    summary: 'Direção de arte e identidade visual.',
-    description:
-      'Construção de linguagem visual e direção de arte para Blackboah.',
-    descriptionEn:
-      'Visual language and art direction for Blackboah.',
-    media: {
-      cover: `${base}/behance/black-boah/01.webp`,
-      gallery: [
-        `${base}/behance/black-boah/02.gif`,
-        `${base}/behance/black-boah/03.webp`,
-        `${base}/behance/black-boah/04.webp`,
-        `${base}/behance/black-boah/05.gif`,
-        `${base}/behance/black-boah/06.webp`,
-      ],
-    },
-    provisional: ['role', 'client', 'summary', 'description'],
-  },
   {
     slug: 'arquiloucura',
     index: '06',
@@ -713,32 +795,6 @@ export const WORKS: Work[] = [
     },
   },
   {
-    slug: 'arquimeats-o-baile-de-mascaras',
-    index: '10',
-    title: 'ArquiMeats: O baile de máscaras',
-    disciplines: ['Graphic & Motion', 'Campaign & Content'],
-    role: 'Art Director',
-    client: 'Meats Espeteria',
-    summary: 'Identidade e cobertura do baile de máscaras da Meats Espeteria.',
-    description:
-      'Identidade e peças do ArquiMeats, baile de máscaras da Meats Espeteria no circuito Sérgio Bezerra, em Salvador. O desafio foi criar algo que lembrasse um bloquinho de rua tradicional, estilo marchinha: tipografia de tom retrô e o vermelho como cor de energia e ação.',
-    // Rodada 22/10/2026: o lockup fica a 51,5% da largura da capa; o foco o leva ao centro do card.
-    cardFocus: [0.515, 0.48],
-    descriptionEn:
-      'Identity and pieces for ArquiMeats, the masquerade ball of Meats Espeteria on the Sérgio Bezerra circuit, in Salvador. The challenge was to create something that recalled a traditional street bloco, marchinha style: retro-toned typography and red as the color of energy and action.',
-    media: {
-      cover: `${base}/behance/arquimeats-o-baile-de-mascaras/01.webp`,
-      gallery: [
-        `${base}/behance/arquimeats-o-baile-de-mascaras/02.webp`,
-        `${base}/behance/arquimeats-o-baile-de-mascaras/03.webp`,
-        `${base}/behance/arquimeats-o-baile-de-mascaras/04.webp`,
-        `${base}/behance/arquimeats-o-baile-de-mascaras/05.gif`,
-        `${base}/behance/arquimeats-o-baile-de-mascaras/06.webp`,
-        `${base}/behance/arquimeats-o-baile-de-mascaras/07.webp`,
-      ],
-    },
-  },
-  {
     slug: 'spfw-the-paradise',
     index: '01',
     title: 'The Fashion Backstage',
@@ -786,88 +842,6 @@ export const WORKS: Work[] = [
     provisional: ['role', 'client', 'summary'],
   },
   {
-    slug: 'martha-medeiros',
-    index: '19',
-    title: 'Martha Medeiros',
-    disciplines: ['Fashion', 'Art Direction', 'Campaign & Content'],
-    role: 'Art Director / Creative Director',
-    client: 'Martha Medeiros',
-    summary: 'Campanha conceitual Manacá para a Martha Medeiros: identidade, banners, catálogo de WhatsApp e stories.',
-    description:
-      'Essa construção de campanha e composição foi uma campanha fantasma de apresentação para a marca, por isso não foi circulada.\nPartindo da coleção Manacá, de verão, criamos uma identidade visual própria, com construção, mudança e refinamento de formas e fontes até o símbolo ganhar pregnância. Dela saíram banners de e-commerce, um catálogo de WhatsApp em formato vertical e um set de stories no jogo This or That.\nFerramentas de inteligência artificial generativa foram usadas no desenvolvimento do material.',
-    descriptionEn:
-      'This campaign and composition was a ghost campaign, a presentation piece for the brand, which is why it was never circulated.\nStarting from the Manacá summer collection, we built a visual identity of its own, shaping and refining forms and typefaces until the symbol became memorable. It gave way to e-commerce banners, a vertical WhatsApp catalog and a This or That story set.\nGenerative AI tools were used in developing the material.',
-    media: {
-      cover: `${base}/martha-medeiros/cover.webp`,
-      gallery: [
-        `${base}/martha-medeiros/banner-h.webp`,
-        `${base}/martha-medeiros/banner-v.webp`,
-        `${base}/martha-medeiros/garden-01.webp`,
-        `${base}/martha-medeiros/garden-02.webp`,
-        `${base}/martha-medeiros/garden-03.webp`,
-        `${base}/martha-medeiros/garden-04.webp`,
-        `${base}/martha-medeiros/garden-05.webp`,
-        `${base}/martha-medeiros/garden-06.webp`,
-        `${base}/martha-medeiros/garden-07.webp`,
-        `${base}/martha-medeiros/garden-08.webp`,
-        `${base}/martha-medeiros/garden-09.webp`,
-        `${base}/martha-medeiros/garden-10.webp`,
-      ],
-    },
-    highlights: [
-      {
-        index: 'martha-medeiros-this-or-that',
-        name: 'THIS OR THAT',
-        client: 'Martha Medeiros',
-        descriptionEN: 'This or That story set for the Manacá collection, a ghost campaign.',
-        descriptionPT: 'Set de stories This or That da coleção Manacá, campanha fantasma.',
-        frames: [
-          { src: `${base}/martha-medeiros/tot-01.webp`, alt: 'Duas modelos de vestidos azul e verde em rendas, com o texto This or That e o logotipo Manacá.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-02.webp`, alt: 'Quatro looks sobre fundo claro, dois claros e dois pink, para votar no favorito.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-03.webp`, alt: 'Quatro looks sobre fundo claro, dois verdes e dois brancos, para votar no favorito.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-08.webp`, alt: 'Quatro looks sobre fundo claro, dois azuis e dois pretos, para votar no favorito.', role: 'This or That' },
-        ],
-      },
-      {
-        index: 'martha-medeiros-catalogo',
-        name: 'CATÁLOGO',
-        client: 'Martha Medeiros',
-        descriptionEN: 'Vertical WhatsApp catalog for the Manacá collection.',
-        descriptionPT: 'Catálogo vertical de WhatsApp da coleção Manacá.',
-        frames: [
-          { src: `${base}/martha-medeiros/cat-00.webp`, alt: 'Capa do catálogo Manacá, modelo de vestido pink diante de folhagem.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-00001.webp`, alt: 'Página de apresentação da coleção Manacá, com três looks sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-01.webp`, alt: 'Look de blusa e calça pink sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-02.webp`, alt: 'Look pink visto de costas e de frente.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-04.webp`, alt: 'Vestido curto branco de renda sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-07.webp`, alt: 'Vestido longo azul de babados sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-09.webp`, alt: 'Vestido longo azul de babados, em plano mais próximo.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-11.webp`, alt: 'Contracapa do catálogo Manacá, modelo de vestido pink e o endereço do site da marca.', role: 'Catálogo' },
-        ],
-      },
-    ],
-    coverAlt: 'Manacá, da Martha Medeiros: quatro modelos de vestidos de festa em meio à folhagem, com o logotipo ao centro.',
-    galleryAlts: [
-      'Banner horizontal da coleção Manacá, com modelo de vestido pink e o logotipo.',
-      'Banner vertical da coleção Manacá, com modelo de vestido pink e o logotipo.',
-      'Duas modelos de vestidos estampados em pink e branco, de costas e de frente, na mata.',
-      'Modelo de vestido longo rosa de renda com fenda, na mata.',
-      'Duas modelos, de vestido azul de babados e vestido verde de renda.',
-      'Duas modelos de vestidos amarelos de mangas bufantes.',
-      'Duas modelos de vestidos verdes de renda e babados.',
-      'Modelo de vestido longo azul de renda, saia ampla.',
-      'Duas modelos, de vestido azul e de top com saia verdes.',
-      'Duas modelos de vestidos brancos de renda.',
-      'Modelo de vestido pink de ombros de fora, saia em movimento.',
-      'Modelo de vestido rosa de camadas.',
-    ],
-    credits: [
-      { roleEN: 'Stills', rolePT: 'Stills', name: 'André Salcedo' },
-      { roleEN: 'Art director', rolePT: 'Direção de arte', name: 'Felipe Tavares' },
-    ],
-    provisional: ['summary'],
-  },
-  {
     slug: 'festival-de-arte-e-gastronomia',
     index: '14',
     title: 'Festival de Arte e Gastronomia',
@@ -890,6 +864,32 @@ export const WORKS: Work[] = [
     ],
     media: {
       cover: `${base}/behance/festival-de-arte-e-gastronomia/01.webp`,
+    },
+  },
+  {
+    slug: 'arquimeats-o-baile-de-mascaras',
+    index: '10',
+    title: 'ArquiMeats: O baile de máscaras',
+    disciplines: ['Graphic & Motion', 'Campaign & Content'],
+    role: 'Art Director',
+    client: 'Meats Espeteria',
+    summary: 'Identidade e cobertura do baile de máscaras da Meats Espeteria.',
+    description:
+      'Identidade e peças do ArquiMeats, baile de máscaras da Meats Espeteria no circuito Sérgio Bezerra, em Salvador. O desafio foi criar algo que lembrasse um bloquinho de rua tradicional, estilo marchinha: tipografia de tom retrô e o vermelho como cor de energia e ação.',
+    // Rodada 22/10/2026: o lockup fica a 51,5% da largura da capa; o foco o leva ao centro do card.
+    cardFocus: [0.515, 0.48],
+    descriptionEn:
+      'Identity and pieces for ArquiMeats, the masquerade ball of Meats Espeteria on the Sérgio Bezerra circuit, in Salvador. The challenge was to create something that recalled a traditional street bloco, marchinha style: retro-toned typography and red as the color of energy and action.',
+    media: {
+      cover: `${base}/behance/arquimeats-o-baile-de-mascaras/01.webp`,
+      gallery: [
+        `${base}/behance/arquimeats-o-baile-de-mascaras/02.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/03.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/04.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/05.gif`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/06.webp`,
+        `${base}/behance/arquimeats-o-baile-de-mascaras/07.webp`,
+      ],
     },
   },
 ]
@@ -1368,8 +1368,8 @@ export const VENTURES: Venture[] = [
     // casa. Autorizacao dele: "coloque um blur nas informacoes sensiveis".
     frames: [
       {
-        src: `${stories}/brandsystem/01-marca.webp`,
-        alt: 'Tela do .TBF.AURA no celular: o índice dos capítulos do sistema de marca.',
+        src: `${stories}/brandsystem/01-marca-v2.webp`,
+        alt: 'BRANDSYSTEM, capa: .TBF.AURA, o organismo vivo da label, com a tela do índice de capítulos.',
         role: 'The brand',
         overlay: {
           kickerEN: 'AI · BRAND · PRODUCT',
@@ -1379,8 +1379,8 @@ export const VENTURES: Venture[] = [
         },
       },
       {
-        src: `${stories}/brandsystem/02-conhecimento.webp`,
-        alt: 'Capítulo de introdução do .TBF.AURA, com o livro de branding da casa aberto.',
+        src: `${stories}/brandsystem/02-conhecimento-v2.webp`,
+        alt: 'Os 12 capítulos do livro de marca: Introdução, Overview, Posicionamento, Núcleo da Marca, Universo Verbal e Pacote Cultural.',
         role: 'The knowledge',
         overlay: {
           kickerEN: 'THE KNOWLEDGE',
@@ -1390,8 +1390,8 @@ export const VENTURES: Venture[] = [
         },
       },
       {
-        src: `${stories}/brandsystem/03-agente.webp`,
-        alt: 'Biblioteca de prompts do sistema, com o conteúdo dos prompts borrado.',
+        src: `${stories}/brandsystem/03-agente-v2.webp`,
+        alt: 'Três passos do agente: pergunta, consulta, responde, com a biblioteca de prompts de conteúdo borrado.',
         role: 'The agent',
         overlay: {
           kickerEN: 'THE AGENT',
@@ -1401,8 +1401,8 @@ export const VENTURES: Venture[] = [
         },
       },
       {
-        src: `${stories}/brandsystem/04-fluxo.webp`,
-        alt: 'Capítulo do pacote cultural: as referências que formam o DNA da marca.',
+        src: `${stories}/brandsystem/04-fluxo-v2.webp`,
+        alt: 'Do pacote cultural à peça: Manifesto Antropófago, Semana de 22, Tropicália, e o fluxo marca, agente, peça.',
         role: 'The output',
         overlay: {
           kickerEN: 'THE OUTPUT',
