@@ -1336,6 +1336,8 @@ export type VentureWeight = 'primary' | 'secondary'
 export interface StoryFrame {
   src: string
   alt: string
+  /** alt em inglês (26/10/2026): `alt` fica em PT, `altEN` vale na rota EN. */
+  altEN?: string
   role: string
   /**
    * Bilíngue desde 10/09/2026: o pedido do fundador foi "PT/EN de tudo,
@@ -1402,6 +1404,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/crivo/01-capa.webp`,
         alt: 'CRIVO, capa do deck: Autopilot de Eventos.',
+        altEN: 'CRIVO, deck cover: an autopilot for events.',
         role: 'Deck cover',
         overlay: {
           kickerEN: 'AI AGENTS · PRODUCT',
@@ -1413,6 +1416,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/crivo/02-dor.webp`,
         alt: 'Slide do problema: R$ 400 mil desaparecidos com uma produtora.',
+        altEN: 'Problem slide: R$400k gone with one producer.',
         role: 'The problem',
         overlay: {
           kickerEN: 'THE PROBLEM',
@@ -1424,6 +1428,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/crivo/03-agentes.webp`,
         alt: 'Slide da arquitetura: quatro agentes, uma chave de API.',
+        altEN: 'Architecture slide: four agents, one API key.',
         role: 'How it works',
         overlay: {
           kickerEN: 'HOW IT WORKS',
@@ -1435,6 +1440,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/crivo/04-veredito.webp`,
         alt: 'Slide dos vereditos: verificado, atencao, evitar.',
+        altEN: 'Verdict slide: verified, attention, avoid.',
         role: 'The verdict',
         overlay: {
           kickerEN: 'THE VERDICT',
@@ -1446,6 +1452,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/crivo/05-valor.webp`,
         alt: 'Slide de valor: de 20 a 40 horas para cerca de 15 minutos.',
+        altEN: 'Value slide: from 20 to 40 hours down to about 15 minutes.',
         role: 'The value',
         overlay: {
           kickerEN: 'WINNER · ATON PRAXIS HACKATHON, 2026',
@@ -1453,92 +1460,6 @@ export const VENTURES: Venture[] = [
           titleEN: 'From forty hours of WhatsApp to fifteen minutes of decision, with clickable evidence on every line.',
           titlePT: 'De quarenta horas de WhatsApp a quinze minutos de decisão, com prova clicável em cada linha.',
         },
-      },
-    ],
-  },
-  {
-    index: '02',
-    name: 'VERÃOZÃO',
-    category: ['CAMPAIGN', 'ART DIRECTION'],
-    description: 'A summer campaign for Ô de Casa, the most awarded Brazilian hostel.',
-    weight: 'primary',
-    cover: `${base}/ventures/veraozao.webp`,
-    coverAlt: 'VERÃOZÃO, Ô de Casa',
-    // 14/10/2026: as pecas sao as NOVAS do Tavaristico (TAV05, PERSONAL
-    // PRESENTATION/VERAOZAO), 1080x1920 nativas, com o texto ja gravado no
-    // arquivo: por isso nenhum quadro leva `overlay`. Capas primeiro, depois a
-    // numeracao, e o filme BASE-2 (sem audio) fecha. As antigas seguem em
-    // `/images/pitch/veraozao/` porque o case do /pitch ainda as usa.
-    frames: [
-      {
-        src: `${stories}/veraozao/01-capa1.webp`,
-        alt: 'Capa 1 da campanha VERÃOZÃO: estandarte do Ô de Casa na rua, com o título Gringo Loco.',
-        role: 'Cover 1',
-      },
-      {
-        src: `${stories}/veraozao/02-capa4.webp`,
-        alt: 'Capa 4 da campanha VERÃOZÃO: close de um rapaz com chifres de diabo e um copo na mão.',
-        role: 'Cover 4',
-      },
-      {
-        src: `${stories}/veraozao/03-01.webp`,
-        alt: 'Peça 01 da campanha VERÃOZÃO: estandarte colorido e mão em primeiro plano.',
-        role: 'Piece 01',
-      },
-      {
-        src: `${stories}/veraozao/06-01-copy-10.webp`,
-        alt: 'Peça da campanha VERÃOZÃO: piscina em São Paulo.',
-        role: 'Pool',
-      },
-      {
-        src: `${stories}/veraozao/07-01-copy-12.webp`,
-        alt: 'Peça da campanha VERÃOZÃO: o hostel acontece aqui.',
-        role: 'Here',
-      },
-      {
-        src: `${stories}/veraozao/08-01-copy-17.webp`,
-        alt: 'Peça da campanha VERÃOZÃO: a água da piscina ao sol.',
-        role: 'Water',
-      },
-      {
-        src: `${stories}/veraozao/09-01-copy-22.webp`,
-        alt: 'Peça da campanha VERÃOZÃO: samba, mãos e camisa listrada.',
-        role: 'Samba',
-      },
-      {
-        src: `${stories}/veraozao/10-02.webp`,
-        alt: 'Peça 02 da campanha VERÃOZÃO: bolsa colorida e espuma.',
-        role: 'Piece 02',
-      },
-      {
-        src: `${stories}/veraozao/11-02-2.webp`,
-        alt: 'Peça 02 (versão 2) da campanha VERÃOZÃO: o estandarte erguido na rua.',
-        role: 'Piece 02, v2',
-      },
-      {
-        src: `${stories}/veraozao/12-03.webp`,
-        alt: 'Peça 03 da campanha VERÃOZÃO: retrato gritando de alegria, de camisa estampada.',
-        role: 'Piece 03',
-      },
-      {
-        src: `${stories}/veraozao/04-01-2.webp`,
-        alt: 'Peça 01 (versão 2) da campanha VERÃOZÃO: câmera de TV e o selo do Ô.',
-        role: 'Piece 01, v2',
-      },
-      {
-        src: `${stories}/veraozao/05-01-3.webp`,
-        alt: 'Peça 01 (versão 3) da campanha VERÃOZÃO: dançarina na festa do hostel.',
-        role: 'Piece 01, v3',
-      },
-      {
-        src: `${stories}/veraozao/13-base-poster.jpg`,
-        video: {
-          av1: '/videos/veraozao/base.av1.mp4',
-          h264: '/videos/veraozao/base.mp4',
-        },
-        ms: 10500,
-        alt: 'Filme da campanha VERÃOZÃO: espuma, festa e o selo do Ô.',
-        role: 'Film',
       },
     ],
   },
@@ -1570,6 +1491,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/brandsystem/01-marca-v2.webp`,
         alt: 'BRANDSYSTEM, capa: .TBF.AURA, o organismo vivo da label, com a tela do índice de capítulos.',
+        altEN: 'BRANDSYSTEM, cover: .TBF.AURA, the label\'s living organism, with the chapter index screen.',
         role: 'The brand',
         overlay: {
           kickerEN: 'AI · BRAND · PRODUCT',
@@ -1581,6 +1503,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/brandsystem/02-conhecimento-v2.webp`,
         alt: 'Os 12 capítulos do livro de marca: Introdução, Overview, Posicionamento, Núcleo da Marca, Universo Verbal e Pacote Cultural.',
+        altEN: 'The 12 chapters of the brand book: Introduction, Overview, Positioning, Brand Core, Verbal Universe and Cultural Pack.',
         role: 'The knowledge',
         overlay: {
           kickerEN: 'THE KNOWLEDGE',
@@ -1592,6 +1515,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/brandsystem/03-agente-v2.webp`,
         alt: 'Três passos do agente: pergunta, consulta, responde, com a biblioteca de prompts de conteúdo borrado.',
+        altEN: 'The agent\'s three steps: ask, consult, answer, with the prompt library content blurred.',
         role: 'The agent',
         overlay: {
           kickerEN: 'THE AGENT',
@@ -1603,6 +1527,7 @@ export const VENTURES: Venture[] = [
       {
         src: `${stories}/brandsystem/04-fluxo-v2.webp`,
         alt: 'Do pacote cultural à peça: Manifesto Antropófago, Semana de 22, Tropicália, e o fluxo marca, agente, peça.',
+        altEN: 'From cultural pack to piece: Anthropophagic Manifesto, Week of 22, Tropicália, and the flow brand, agent, piece.',
         role: 'The output',
         overlay: {
           kickerEN: 'THE OUTPUT',
@@ -1647,6 +1572,7 @@ export const VENTURES: Venture[] = [
         },
         ms: 6000,
         alt: 'Desfile em andamento: a fila de modelos desce a passarela.',
+        altEN: 'Runway show under way: a line of models walks down the catwalk.',
         role: 'Runway',
         overlay: {
           kickerEN: 'FASHION · CULTURE · CREATIVE DIRECTION',
@@ -1663,6 +1589,7 @@ export const VENTURES: Venture[] = [
         },
         ms: 6000,
         alt: 'Brazilian Fashion Edit: o grupo em looks de estampa, entre o bastidor e a rua.',
+        altEN: 'Brazilian Fashion Edit: the group in printed looks, between backstage and the street.',
         role: 'Backstage',
         overlay: {
           kickerEN: 'THE COLLECTIVE',
@@ -1679,6 +1606,7 @@ export const VENTURES: Venture[] = [
         },
         ms: 6000,
         alt: 'Modelo em primeiro plano na passarela, look azul e branco.',
+        altEN: 'Model in the foreground on the runway, blue and white look.',
         role: 'The people',
         overlay: {
           kickerEN: 'WHAT WE DOCUMENT',
@@ -1695,6 +1623,7 @@ export const VENTURES: Venture[] = [
         },
         ms: 6000,
         alt: 'Cartela do coletivo, THE VHS LOST TAPE, sobre fundo escuro.',
+        altEN: 'The collective\'s title card, THE VHS LOST TAPE, on a dark background.',
         role: 'The night',
         overlay: {
           kickerEN: 'SÃO PAULO, MADE FOR THE WORLD',

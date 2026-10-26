@@ -25,7 +25,7 @@
 // idioma o tempo todo.
 // =============================================================================
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { localizedPath, splitLang, type Lang } from '@/lib/i18n'
@@ -59,6 +59,43 @@ export function LanguageSwitch() {
   // Chegando a página nova, o componente remonta e o estado zera sozinho.
   const [indo, setIndo] = useState<Lang | null>(null)
   const mostrado = indo ?? lang
+
+  // TROCA SEM ESPERA (26/10/2026). Como a troca atravessa dois root layouts, o
+  // navegador baixa e monta um documento novo: o atraso que o fundador sentiu.
+  // Em vez de esperar o clique, a página gêmea é BUSCADA ANTES:
+  //  - Chrome/Edge: Speculation Rules. `prefetch` imediato traz o HTML gêmeo
+  //    para o cache de prefetch; `prerender` moderado (passar o mouse / apoiar
+  //    o dedo no botão) monta a página inteira em segundo plano, e o clique só
+  //    ativa uma página já pronta. Prerender só dispara com interesse real no
+  //    botão, para não contar visita fantasma nos analytics.
+  //  - Firefox: `<link rel="prefetch">` do documento. Safari não suporta
+  //    nenhum dos dois e segue como antes (carregamento completo).
+  // O destino é calculado do mesmo jeito que o `href` do link abaixo.
+  const gemeo = SEM_GEMEO.some((p) => path === p || path.startsWith(p + '/'))
+    ? null
+    : localizedPath(pathname, lang === 'en' ? 'pt' : 'en')
+  useEffect(() => {
+    if (!gemeo) return
+    const el = document.createElement(
+      typeof HTMLScriptElement !== 'undefined' && HTMLScriptElement.supports?.('speculationrules')
+        ? 'script'
+        : 'link',
+    )
+    if (el instanceof HTMLScriptElement) {
+      el.type = 'speculationrules'
+      el.text = JSON.stringify({
+        prefetch: [{ source: 'list', urls: [gemeo], eagerness: 'immediate' }],
+        prerender: [{ source: 'list', urls: [gemeo], eagerness: 'moderate' }],
+      })
+    } else {
+      const link = el as HTMLLinkElement
+      link.rel = 'prefetch'
+      link.as = 'document'
+      link.href = gemeo
+    }
+    document.head.appendChild(el)
+    return () => el.remove()
+  }, [gemeo])
 
   if (SEM_GEMEO.some((p) => path === p || path.startsWith(p + '/'))) return null
 

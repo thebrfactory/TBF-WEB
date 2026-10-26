@@ -237,6 +237,8 @@ export function SelectedWork({
     avatarSrc: v.cover,
     items: v.frames.map((f) => ({
       ...f,
+      // alt na língua da rota (26/10/2026): `altEN` quando existe e a rota é EN.
+      alt: lang === 'en' && f.altEN ? f.altEN : f.alt,
       overlay: f.overlay
         ? {
             title: lang === 'pt' ? f.overlay.titlePT : f.overlay.titleEN,

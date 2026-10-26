@@ -12,18 +12,14 @@ import styles from '@/app/(en)/creators/tavaristico/tavaristico.module.css'
 
 // Escrito já na caixa final: o CSS não pode uppercasear, senão o naming vira
 // ".TBF. INC" e a regra de naming da casa quebra.
-const LABEL: Record<Lang, string> = {
-  en: 'REPRESENTED BY .TBF. inc',
-  pt: 'REPRESENTADO POR .TBF. inc',
-}
+// SEMPRE em inglês, nas duas línguas (pedido do fundador, 26/10/2026): o selo é
+// marca, não texto de página. Por isso não há dicionário por idioma aqui.
+const LABEL = 'REPRESENTED BY .TBF. inc'
+const LABEL_WITH_ROLE = 'CREATIVE DIRECTOR REPRESENTED BY .TBF. inc'
 
-const LABEL_WITH_ROLE: Record<Lang, string> = {
-  en: 'CREATIVE DIRECTOR REPRESENTED BY .TBF. inc',
-  pt: 'CREATIVE DIRECTOR REPRESENTADO POR .TBF. inc',
-}
-
-export function RepresentedBy({ lang, withRole = false }: { lang: Lang; withRole?: boolean }) {
-  const [before, after] = (withRole ? LABEL_WITH_ROLE : LABEL)[lang].split('.TBF.')
+// `lang` segue na assinatura para não mexer nos chamadores; o texto não depende dele.
+export function RepresentedBy({ withRole = false }: { lang?: Lang; withRole?: boolean }) {
+  const [before, after] = (withRole ? LABEL_WITH_ROLE : LABEL).split('.TBF.')
   return (
     <div className={styles.representedBy}>
       {/* Brilho amarelo (escuro para claro) que pulsa atrás do selo: mesma
