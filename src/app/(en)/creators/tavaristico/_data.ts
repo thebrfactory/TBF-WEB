@@ -227,7 +227,7 @@ const BOAH_HIGHLIGHTS: Campaign[] = [
 const tg = `${base}/tiger-capsule`
 const TIGER_CAPSULE: Work = {
   slug: 'tiger-capsule',
-  index: '19',
+  index: '20',
   title: 'Tiger Capsule',
   disciplines: ['Fashion', 'Graphic & Motion'],
   role: 'Art Director',
@@ -273,6 +273,7 @@ const FEST = `${base}/behance/festival-de-arte-e-gastronomia`
 const FB = `${base}/fashion-backstage`
 const SP = `${base}/spfw-the-paradise`
 const VID = '/videos/tavaristico'
+const ob = `${base}/oblack`
 const px = (src: string, w: number, h: number, alt: string) => ({ src, w, h, alt })
 
 const BOAH_FEED: WorkPiece[] = [
@@ -593,38 +594,6 @@ export const WORKS: Work[] = [
         ],
       },
     ],
-    highlights: [
-      {
-        index: 'martha-medeiros-this-or-that',
-        name: 'THIS OR THAT',
-        client: 'Martha Medeiros',
-        descriptionEN: 'This or That story set for the Manacá collection, a ghost campaign.',
-        descriptionPT: 'Set de stories This or That da coleção Manacá, campanha fantasma.',
-        frames: [
-          { src: `${base}/martha-medeiros/tot-01.webp`, alt: 'Duas modelos de vestidos azul e verde em rendas, com o texto This or That e o logotipo Manacá.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-02.webp`, alt: 'Quatro looks sobre fundo claro, dois claros e dois pink, para votar no favorito.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-03.webp`, alt: 'Quatro looks sobre fundo claro, dois verdes e dois brancos, para votar no favorito.', role: 'This or That' },
-          { src: `${base}/martha-medeiros/tot-08.webp`, alt: 'Quatro looks sobre fundo claro, dois azuis e dois pretos, para votar no favorito.', role: 'This or That' },
-        ],
-      },
-      {
-        index: 'martha-medeiros-catalogo',
-        name: 'CATÁLOGO',
-        client: 'Martha Medeiros',
-        descriptionEN: 'Vertical WhatsApp catalog for the Manacá collection.',
-        descriptionPT: 'Catálogo vertical de WhatsApp da coleção Manacá.',
-        frames: [
-          { src: `${base}/martha-medeiros/cat-00.webp`, alt: 'Capa do catálogo Manacá, modelo de vestido pink diante de folhagem.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-00001.webp`, alt: 'Página de apresentação da coleção Manacá, com três looks sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-01.webp`, alt: 'Look de blusa e calça pink sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-02.webp`, alt: 'Look pink visto de costas e de frente.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-04.webp`, alt: 'Vestido curto branco de renda sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-07.webp`, alt: 'Vestido longo azul de babados sobre fundo claro.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-09.webp`, alt: 'Vestido longo azul de babados, em plano mais próximo.', role: 'Catálogo' },
-          { src: `${base}/martha-medeiros/cat-11.webp`, alt: 'Contracapa do catálogo Manacá, modelo de vestido pink e o endereço do site da marca.', role: 'Catálogo' },
-        ],
-      },
-    ],
     coverAlt: 'Manacá, da Martha Medeiros: quatro modelos de vestidos de festa em meio à folhagem, com o logotipo ao centro.',
     galleryAlts: ['Banner horizontal da coleção Manacá, com modelo de vestido pink e o logotipo.'],
     credits: [
@@ -656,6 +625,38 @@ export const WORKS: Work[] = [
       ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
+  },
+  {
+    slug: 'branded-content-boah',
+    index: '09',
+    title: 'Branded Content | BOAH',
+    disciplines: ['Campaign & Content', 'Fashion'],
+    role: 'Content production, community management, graphic design, video editing and social media management',
+    rolePT: 'Produção de conteúdo, community management, design gráfico, edição de vídeo e social media management',
+    roleList: ['Content Production', 'Community Management', 'Graphic Design', 'Video Editing', 'Social Media Management'],
+    roleListPT: ['Produção de Conteúdo', 'Community Management', 'Design Gráfico', 'Edição de Vídeo', 'Social Media Management'],
+    client: 'BOAH',
+    summary: 'Branded content e campanhas sazonais para a BOAH.',
+    description:
+      'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
+    descriptionEn:
+      'Art direction of branded content for BOAH: seasonal campaigns, product still and lifestyle content for social media.',
+    // Rodada 22/10/2026: card com o logo recortado (card.webp) sobre o creme exato do arquivo,
+    // maior e centralizado de verdade (a capa original tinha margem preta e logo fora do centro).
+    cardCover: `${base}/behance/branded-content-boah/card.webp`,
+    cardFit: { bg: '#f7f3ed', inset: '20%' },
+    highlights: BOAH_HIGHLIGHTS,
+    // Rodada 23/10/2026: feed em grade de 3 colunas (estilo perfil do Instagram) e carrosseis
+    // de pecas verticais, para ver o conteudo de forma mais fluida.
+    blocks: [
+      { kind: 'feed', ratio: '4 / 5', labelEN: 'Feed', labelPT: 'Feed', pieces: BOAH_FEED },
+      { kind: 'carousel', variant: 'tall', labelEN: 'Looks', labelPT: 'Looks', items: BOAH_LOOKS },
+      { kind: 'carousel', variant: 'tall', labelEN: 'Details', labelPT: 'Detalhes', items: BOAH_DETAILS },
+      { kind: 'image', src: `${BO}/37.webp`, w: 1401, h: 401, alt: 'Fechamento do case, faixa com a marca BOAH.' },
+    ],
+    media: {
+      cover: `${BO}/01.webp`,
+    },
   },
   {
     slug: 'capsula-brasilidade',
@@ -691,6 +692,76 @@ export const WORKS: Work[] = [
       ],
     },
     provisional: ['role', 'summary', 'description'],
+  },
+  {
+    slug: 'oblack',
+    index: '21',
+    title: 'ÔBLACK',
+    disciplines: ['Art Direction', 'Campaign & Content', 'Graphic & Motion'],
+    role: 'Art Director',
+    rolePT: 'Direção de arte',
+    roleList: ['Art direction', 'Graphic design', 'Motion and video editing'],
+    roleListPT: ['Direção de arte', 'Design gráfico', 'Motion e edição de vídeo'],
+    client: 'Ô De Casa',
+    year: '2025',
+    summary: 'A primeira Black Friday da casinha: descontos progressivos de fim de semana.',
+    description:
+      'Campanha de Black Friday do Ô De Casa, o ÔBLACK, de sexta a domingo. A casinha nunca fez Black Friday, até agora: descontos de até 40% na hospedagem, que crescem com o número de diárias (15% para uma, 20% para duas a três, 30% para quatro a seis, 40% para sete ou mais), com reserva no site. Direção de arte, key visual, stories, anúncios e filmes em preto e branco, com o logo em setas como assinatura.',
+    descriptionEn:
+      'Black Friday campaign for Ô De Casa, the ÔBLACK, running Friday to Sunday. The little house had never done a Black Friday, until now: up to 40% off lodging, growing with the number of nights (15% for one, 20% for two to three, 30% for four to six, 40% for seven or more), booked on the website. Art direction, key visual, stories, ads and films in black and white, with the arrow logo as the signature.',
+    media: {
+      cover: `${ob}/kv-01.webp`,
+      gallery: [`${ob}/kv-02.webp`, `${ob}/kv-03.webp`],
+    },
+    coverAlt:
+      'Key visual do ÔBLACK: homem com a mão no rosto, em preto e branco, com a frase "A casinha nunca fez Black Friday. Até agora." e o logo ÔBLACK com setas.',
+    galleryAlts: [
+      'Story "Fica de olho no insta. Tudo vai acontecer aqui", com a fachada HOST de casa e o logo ÔBLACK, sex, sáb, dom.',
+      'Story "Nossos melhores preços do ano estão chegando", na recepção do hostel, com o logo ÔBLACK.',
+    ],
+    credits: [
+      { roleEN: 'Art director', rolePT: 'Direção de arte', name: 'Felipe Tavares' },
+    ],
+    blocks: [
+      {
+        kind: 'carousel',
+        variant: 'tall',
+        labelEN: 'Films',
+        labelPT: 'Filmes',
+        items: [
+          { src: `${ob}/film-final.mp4`, poster: `${ob}/film-final-poster.webp`, w: 608, h: 1080, sound: true, alt: 'Filme final do ÔBLACK em preto e branco, com cenas do hostel e o logo em setas.' },
+          { src: `${ob}/st-launch.mp4`, poster: `${ob}/st-launch-poster.webp`, w: 608, h: 1080, alt: 'Story de lançamento: "A casinha nunca fez Black Friday. Até agora.", sobre a fachada do hostel.' },
+          { src: `${ob}/feed-sexta.mp4`, poster: `${ob}/feed-sexta-poster.webp`, w: 810, h: 1080, alt: 'Feed de sexta: descontos até 40% na hospedagem, em preto e branco.' },
+        ],
+      },
+      {
+        kind: 'carousel',
+        variant: 'tall',
+        labelEN: 'Stories',
+        labelPT: 'Stories',
+        items: [
+          px(`${ob}/st-5pct-01.webp`, 900, 1600, 'Story "5% pra você chegar antes do sol bater", com o logo ÔBLACK.'),
+          px(`${ob}/st-5pct-02.webp`, 900, 1600, 'Story "5% pra você aproveitar antes que o verão acorde".'),
+          px(`${ob}/prog-15.webp`, 900, 1600, 'Story "15% para uma diária", sob o guarda-sol.'),
+          px(`${ob}/prog-20.webp`, 900, 1600, 'Story "20% para 2 a 3 diárias", na piscina.'),
+          px(`${ob}/prog-30.webp`, 900, 1600, 'Story "30% para 4 a 6 diárias", diante da fachada do hostel.'),
+          px(`${ob}/prog-40.webp`, 900, 1600, 'Story "40% para 7 diárias ou mais".'),
+        ],
+      },
+      {
+        kind: 'carousel',
+        variant: 'wide',
+        labelEN: 'Sponsored',
+        labelPT: 'Anúncios',
+        items: [
+          px(`${ob}/sp-01.webp`, 1080, 1080, 'Anúncio "descontos até 40% OFF na hospedagem", sobre o quarto de tijolinhos.'),
+          px(`${ob}/sp-02.webp`, 1080, 1080, 'Anúncio "descontos até 40% OFF na hospedagem", sobre o terraço com mural.'),
+          { src: `${ob}/sp-feed.mp4`, poster: `${ob}/sp-feed-poster.webp`, w: 1080, h: 1080, alt: 'Anúncio em vídeo: selo de desconto alternando 20% e 40%.' },
+          { src: `${ob}/sp-final2.mp4`, poster: `${ob}/sp-final2-poster.webp`, w: 1080, h: 1080, alt: 'Anúncio em vídeo: selo de desconto progressivo sobre o terraço do hostel.' },
+        ],
+      },
+    ],
+    provisional: ['summary', 'description'],
   },
   TIGER_CAPSULE,
   {
@@ -772,38 +843,6 @@ export const WORKS: Work[] = [
       ],
     },
     provisional: ['role', 'client', 'summary', 'description'],
-  },
-  {
-    slug: 'branded-content-boah',
-    index: '09',
-    title: 'Branded Content | BOAH',
-    disciplines: ['Campaign & Content', 'Fashion'],
-    role: 'Content production, community management, graphic design, video editing and social media management',
-    rolePT: 'Produção de conteúdo, community management, design gráfico, edição de vídeo e social media management',
-    roleList: ['Content Production', 'Community Management', 'Graphic Design', 'Video Editing', 'Social Media Management'],
-    roleListPT: ['Produção de Conteúdo', 'Community Management', 'Design Gráfico', 'Edição de Vídeo', 'Social Media Management'],
-    client: 'BOAH',
-    summary: 'Branded content e campanhas sazonais para a BOAH.',
-    description:
-      'Direção de arte de conteúdo de marca para a BOAH: campanhas sazonais, still de produto e conteúdo lifestyle para redes sociais.',
-    descriptionEn:
-      'Art direction of branded content for BOAH: seasonal campaigns, product still and lifestyle content for social media.',
-    // Rodada 22/10/2026: card com o logo recortado (card.webp) sobre o creme exato do arquivo,
-    // maior e centralizado de verdade (a capa original tinha margem preta e logo fora do centro).
-    cardCover: `${base}/behance/branded-content-boah/card.webp`,
-    cardFit: { bg: '#f7f3ed', inset: '20%' },
-    highlights: BOAH_HIGHLIGHTS,
-    // Rodada 23/10/2026: feed em grade de 3 colunas (estilo perfil do Instagram) e carrosseis
-    // de pecas verticais, para ver o conteudo de forma mais fluida.
-    blocks: [
-      { kind: 'feed', ratio: '4 / 5', labelEN: 'Feed', labelPT: 'Feed', pieces: BOAH_FEED },
-      { kind: 'carousel', variant: 'tall', labelEN: 'Looks', labelPT: 'Looks', items: BOAH_LOOKS },
-      { kind: 'carousel', variant: 'tall', labelEN: 'Details', labelPT: 'Detalhes', items: BOAH_DETAILS },
-      { kind: 'image', src: `${BO}/37.webp`, w: 1401, h: 401, alt: 'Fechamento do case, faixa com a marca BOAH.' },
-    ],
-    media: {
-      cover: `${BO}/01.webp`,
-    },
   },
   {
     slug: 'spfw-the-paradise',

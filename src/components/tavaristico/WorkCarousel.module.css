@@ -84,6 +84,27 @@
   object-fit: cover;
 }
 
+.sound {
+  position: absolute;
+  right: var(--tbf-space-3);
+  bottom: var(--tbf-space-3);
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+  cursor: pointer;
+}
+.sound:hover { background: rgba(0, 0, 0, 0.75); }
+.sound:focus-visible {
+  outline: var(--tbf-focus-ring-width) solid var(--tbf-focus-ring-color);
+  outline-offset: var(--tbf-focus-ring-offset);
+}
+
 .controls {
   margin-top: var(--tbf-space-4);
   display: flex;

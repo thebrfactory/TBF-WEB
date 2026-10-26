@@ -11,6 +11,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { useLang } from '@/lib/LangProvider'
+import { tavaristico } from '@/content/i18n/pages/tavaristico'
 import styles from './WorkCarousel.module.css'
 
 export interface CarouselItem {
@@ -23,10 +25,23 @@ export interface CarouselItem {
   poster?: string
   /** legenda curta fora da imagem (nunca sobre ela) */
   caption?: string
+  /** video com som: toca mudo por padrao, botao de som na mao de quem ve (sem autoplay com som) */
+  sound?: boolean
 }
 
 function Slide({ item, index }: { item: CarouselItem; index: number }) {
   const ref = useRef<HTMLVideoElement>(null)
+  const [muted, setMuted] = useState(true)
+  const lang = useLang()
+  const t = tavaristico[lang].work
+
+  const toggleSound = () => {
+    const v = ref.current
+    if (!v) return
+    v.muted = !v.muted
+    setMuted(v.muted)
+    if (!v.muted) v.play().catch(() => {})
+  }
 
   useEffect(() => {
     const v = ref.current
@@ -49,6 +64,7 @@ function Slide({ item, index }: { item: CarouselItem; index: number }) {
 
   if (item.poster) {
     return (
+      <>
       <video
         ref={ref}
         className={styles.media}
@@ -62,6 +78,25 @@ function Slide({ item, index }: { item: CarouselItem; index: number }) {
         preload="none"
         aria-label={item.alt}
       />
+      {item.sound ? (
+        <button
+          type="button"
+          className={styles.sound}
+          onClick={toggleSound}
+          aria-pressed={!muted}
+          aria-label={muted ? t.soundOn : t.soundOff}
+        >
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z" fill="currentColor" />
+            {muted ? (
+              <path d="M16 9.5l5 5M21 9.5l-5 5" />
+            ) : (
+              <path d="M16 9a4.5 4.5 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11" />
+            )}
+          </svg>
+        </button>
+      ) : null}
+      </>
     )
   }
   return (

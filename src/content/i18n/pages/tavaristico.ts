@@ -90,6 +90,8 @@ const en = {
     creditsLabel: 'Credits',
     carouselPrev: 'Previous',
     carouselNext: 'Next',
+    soundOn: 'Turn sound on',
+    soundOff: 'Turn sound off',
   },
 }
 
@@ -155,6 +157,8 @@ const pt: typeof en = {
     creditsLabel: 'Créditos',
     carouselPrev: 'Anterior',
     carouselNext: 'Próxima',
+    soundOn: 'Ligar o som',
+    soundOff: 'Desligar o som',
   },
 }
 
