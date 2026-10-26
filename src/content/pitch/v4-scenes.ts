@@ -72,7 +72,8 @@ export const FOUNDER = {
     pt: ['Quem constrói a casa', 'vive a cultura.'],
     en: ['The one who builds the house', 'lives the culture.'],
   },
-  // O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026): quatro
+  // O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026; 11 peças saíram na
+  // aprovação de 26/10 noite): cinco
   // colunas de doze quadros (rodada 23/10), esteira vertical. As imagens são as peças ATUAIS do
   // portfólio (capas e galerias de `creators/tavaristico/_data.ts`, incluindo as
   // capas novas de The Fashion Backstage, Tiger Capsule e Virtuosa) mais as
@@ -81,7 +82,6 @@ export const FOUNDER = {
   // (papel, cliente, ano). No celular entram as duas primeiras colunas; no desktop, as cinco.
   reel: [
     [
-      img('fashion-backstage/02', 1080, 1440),
       info('SPFW N58', 2024, { pt: 'Direção criativa', en: 'Creative direction' }, 'accent'),
       img('behance/arquiloucura/01', 1400, 1000),
       img('virtuosa/card-sonata', 1080, 1440),
@@ -102,10 +102,8 @@ export const FOUNDER = {
       img('martha-medeiros/garden-01', 1067, 1599),
       img('fashion-backstage/04', 2000, 1125),
       info('BOAH', 'Branded content', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'accent'),
-      img('behance/branded-content-boah/10', 1080, 1080),
       img('ventures/runway-untd', 1000, 1000),
       img('behance/max-vidros/09', 2800, 1855),
-      img('virtuosa/feed-09', 1080, 1350),
       img('behance/grocery-store/04', 1867, 2800),
     ],
     [
@@ -113,11 +111,8 @@ export const FOUNDER = {
       img('virtuosa/feed-01', 720, 900),
       img('hospitality/12-sax', 1500, 2000),
       info('TIGER', 'SS24', { pt: 'Direção de arte', en: 'Art direction' }, 'dark'),
-      img('behance/festival-de-arte-e-gastronomia/01', 2560, 1440),
       img('stories/veraozao/07-01-copy-12', 1080, 1920),
-      img('ventures/crivo', 1000, 1000),
       info('ARQUILOUCURA', 2023, { pt: 'Gráfico e motion', en: 'Graphic and motion' }, 'paper'),
-      img('behance/cores-e-sabores/01', 2800, 1867),
       img('spfw-the-paradise/cover', 1080, 1080),
       img('behance/branded-content-boah/20', 1080, 1350),
       img('tiger-capsule/05', 1200, 686),
@@ -128,10 +123,8 @@ export const FOUNDER = {
       info('VERÃOZÃO', 2026, { pt: 'Campanha, Ô de Casa', en: 'Campaign, Ô de Casa' }, 'accent'),
       img('hospitality/02-mural-oste', 1500, 2000),
       img('behance/crush-coins/01', 1350, 1080),
-      img('fashion-backstage/03', 1080, 1440),
       info('MEATS', 'Espeteria', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'dark'),
       img('virtuosa/lauda-cat-02', 900, 1600),
-      img('behance/bw-mood/05', 1867, 2800),
       img('behance/arquimeats-o-baile-de-mascaras/01', 1350, 818),
       img('o-18-years/k1-dezoitou', 1080, 1920),
       img('virtuosa/g1', 1440, 1440),
@@ -143,10 +136,7 @@ export const FOUNDER = {
       img('behance/bahia-em-cores-quentes/05', 1867, 2800),
       img('fashion-backstage/05', 2000, 1125),
       img('virtuosa/feed-05', 720, 900),
-      img('behance/meats-content/02', 2000, 1300),
       img('hospitality/14-piscina', 1209, 2000),
-      img('behance/cores-e-sabores/04', 1867, 2800),
-      img('behance/max-vidros/03', 1920, 1081),
       img('behance/festival-de-arte-e-gastronomia/05', 1080, 1350),
       img('hospitality/13-recepcao', 1500, 1000),
     ],

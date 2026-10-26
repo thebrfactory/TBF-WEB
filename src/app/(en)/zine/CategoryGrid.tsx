@@ -16,11 +16,12 @@ import { LOCAIS } from '@/content/articles'
 import { editorial } from '@/content/i18n/pages/editorial'
 import { urlFor } from '@/lib/sanity'
 import { useLang } from '@/lib/LangProvider'
+import { localizedPath } from '@/lib/i18n'
 import { zineHref } from '@/lib/zine-url'
 import styles from './CategoryGrid.module.css'
 
 // Fotos de apoio já existentes em /public/images (placeholder até haver capa
-// dedicada por categoria). Servem de avatar e de quadro da categoria vazia.
+// dedicada por categoria). Só aparecem em categoria sem matéria e sem material da casa.
 const CATEGORY_VALUES: { value: ArticleCategory; image: string }[] = [
   { value: 'fashion-film', image: '/images/img-01.webp' },
   { value: 'editorial', image: '/images/img-02.webp' },
@@ -28,6 +29,46 @@ const CATEGORY_VALUES: { value: ArticleCategory; image: string }[] = [
   { value: 'coolhunting', image: '/images/img-04.webp' },
   { value: 'collaboration', image: '/images/img-05.webp' },
 ]
+
+// MATERIAL DA CASA (#01 CHANGES 26/10/2026: "quero que tenha conteúdo nos
+// stories"). O Sanity não tem post publicado, então Fashion Film e Collaboration
+// abriam "Coming soon" com foto genérica. Enquanto a categoria não tiver matéria,
+// o story mostra peça real já publicada no site e leva até ela. Matéria nova da
+// categoria entra antes destes quadros, sem mexer aqui.
+interface HousePiece {
+  src: string
+  title: string
+  kicker: { en: string; pt: string }
+  cta: { en: string; pt: string }
+  path: string
+}
+
+const BACKSTAGE = '/images/creators/tavaristico/fashion-backstage'
+const RUC = '/images/ruc'
+
+const HOUSE: Partial<Record<ArticleCategory, HousePiece[]>> = {
+  'fashion-film': ['cover', '02', '03', '04', '05'].map((f) => ({
+    src: `${BACKSTAGE}/${f}.webp`,
+    title: 'The Fashion Backstage',
+    kicker: { en: 'SPFW N58 · 2024', pt: 'SPFW N58 · 2024' },
+    cta: { en: 'See the case', pt: 'Ver o case' },
+    path: '/creators/tavaristico/works/spfw-the-paradise',
+  })),
+  collaboration: ['ruc-hero', 'ruc-backstage', 'ruc-closing'].map((f) => ({
+    src: `${RUC}/${f}.webp`,
+    title: '.RUNWAY UNTD COLLECTIVE.',
+    kicker: { en: 'Music. Fashion. Film.', pt: 'Música. Moda. Filme.' },
+    cta: { en: 'Visit the label', pt: 'Conhecer a label' },
+    path: '/labels/runwayunited',
+  })),
+}
+
+// No subdomínio do zine todo caminho relativo é reescrito para /zine/..., então
+// link para o site principal precisa sair absoluto em produção.
+function siteHref(path: string, lang: 'en' | 'pt'): string {
+  const local = localizedPath(path, lang)
+  return process.env.NODE_ENV === 'production' ? `https://thebrfactory.com${local}` : local
+}
 
 // Matéria local tem categoria em texto livre; aqui vira o slug do filtro.
 // Field Research é pesquisa de campo editorial, por isso cai em `editorial`.
@@ -86,14 +127,24 @@ export function CategoryGrid({ posts }: CategoryGridProps) {
       const info = cs.items[cat.value]
       const mine = pieces.filter((p) => p.category === cat.value)
 
-      const frames: CategoryFrame[] = mine.length
-        ? mine.map((p) => ({
-            src: p.src,
-            alt: p.alt,
-            role: p.title,
-            overlay: { titleEN: p.title, titlePT: p.title, kickerEN: label, kickerPT: label },
-            cta: { label: cs.readCta, href: zineHref(p.slug, lang) },
-          }))
+      const house = (HOUSE[cat.value] ?? []).map<CategoryFrame>((h) => ({
+        src: h.src,
+        alt: h.title,
+        role: h.title,
+        overlay: { titleEN: h.title, titlePT: h.title, kickerEN: h.kicker.en, kickerPT: h.kicker.pt },
+        cta: { label: h.cta[lang], href: siteHref(h.path, lang) },
+      }))
+
+      const posted: CategoryFrame[] = mine.map((p) => ({
+        src: p.src,
+        alt: p.alt,
+        role: p.title,
+        overlay: { titleEN: p.title, titlePT: p.title, kickerEN: label, kickerPT: label },
+        cta: { label: cs.readCta, href: zineHref(p.slug, lang) },
+      }))
+
+      const frames: CategoryFrame[] = posted.length || house.length
+        ? [...posted, ...house]
         : [
             {
               src: cat.image,
@@ -109,13 +160,17 @@ export function CategoryGrid({ posts }: CategoryGridProps) {
             },
           ]
 
+      // Avatar do anel: o primeiro quadro real da categoria; a foto genérica
+      // só sobra para categoria sem nada.
+      const cover = frames[0].src
+
       return {
         index: `zine-${cat.value}`,
         name: label,
         category: info.tags,
         description: info.description,
         weight: 'primary',
-        cover: cat.image,
+        cover,
         coverAlt: label,
         frames,
       } satisfies Venture
