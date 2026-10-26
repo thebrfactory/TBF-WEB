@@ -95,28 +95,37 @@ const EDITORIAL_VIDEO = {
 // ritmo ou de contraste só chegaria numa das duas (regra 4: apontar, não copiar).
 // O porquê de cada detalhe do player mora no cabeçalho daquele arquivo.
 
-// Filme do case (cena-06): vertical, em laço e mudo. Com prefers-reduced-motion
-// fica parado no poster.
+// Sequência do case (cena-06, rodada 26/10/2026): as peças da campanha trocam
+// em CORTE SECO, como no visualizador de stories do portfólio (pedido do
+// fundador: "cortes secos igual esse"). Troca instantânea de quadro: sem
+// crossfade, sem zoom, sem transição CSS. Todas as imagens ficam montadas e
+// carregadas; só a visibilidade muda. Com prefers-reduced-motion, fica na primeira.
+const CASE_CUT_MS = 2400
 function CaseFilm() {
-  const ref = useRef<HTMLVideoElement>(null)
+  const frames = CASE.media
+  const [i, setI] = useState(0)
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) ref.current?.pause()
-  }, [])
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => setI((n) => (n + 1) % frames.length), CASE_CUT_MS)
+    return () => window.clearInterval(t)
+  }, [frames.length])
   return (
     <div className="p4-case__media">
-      <video
-        ref={ref}
-        className="p4-case__video"
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-        poster={VERAOZAO_REEL.poster}
-        aria-label={VERAOZAO_REEL.alt.pt}
-      >
-        <source src={VERAOZAO_REEL.src} type="video/mp4" />
-      </video>
+      <div className="p4-case__video" role="img" aria-label={VERAOZAO_REEL.alt.pt}>
+        {frames.map((m, idx) => (
+          <Image
+            key={m.src}
+            src={m.src}
+            alt=""
+            fill
+            sizes="(max-width: 767px) 50vw, 30vw"
+            quality={85}
+            priority={idx < 2}
+            className="p4-case__frame"
+            style={{ visibility: idx === i ? 'visible' : 'hidden' }}
+          />
+        ))}
+      </div>
     </div>
   )
 }
@@ -643,7 +652,10 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           gap: clamp(0.4rem, 1.2vh, 1rem);
           margin-top: var(--p3-gap-sm);
           margin-inline: calc(var(--p3-pad-x) * -1);
-          margin-bottom: calc(var(--p3-foot) * -0.9);
+          /* Rodada 26/10: o mosaico NAO desce mais por baixo do rodape. A caixa
+             termina onde o conteudo termina, então as máscaras ficam simétricas
+             e o conjunto fica centrado na área dele (antes parecia torto). */
+          margin-bottom: 0;
         }
         .p4-founder__info {
           padding-inline: var(--p3-pad-x);
@@ -824,10 +836,12 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           width: auto;
           max-width: 100%;
           aspect-ratio: 9 / 16;
-          object-fit: cover;
+          position: relative;
+          overflow: hidden;
           border-radius: var(--tbf-radius-card);
           background: #000000;
         }
+        .p4-case__frame { object-fit: cover; }
         .p4-case__copy {
           grid-row: 1;
           grid-column: 2;
@@ -923,7 +937,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         @media (min-width: 768px) {
           .p4-founder {
             margin-top: var(--p3-gap);
-            margin-inline: 0 calc(var(--p3-pad-x) * -1);
+            margin-inline: 0;
             grid-template-columns: minmax(15rem, 0.8fr) 2.4fr;
             grid-template-rows: minmax(0, 1fr);
             align-items: start;
@@ -954,6 +968,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-founder__chip-en { color: rgba(240, 237, 230, 0.45); font-weight: 400; }
           .p4-reel { height: 100%; }
           .p4-reel__grid {
+            align-content: center;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 0.8rem;
             padding-inline: 0.8rem;

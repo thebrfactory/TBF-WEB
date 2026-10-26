@@ -267,10 +267,15 @@ export function ThesisScene() {
           letter-spacing: 0.04em;
           color: rgba(240, 237, 230, 0.4);
         }
+        /* Rodada 26/10: indicador FIXO no rodapé da cena, mesma coordenada em
+           todo passo (nao anda com o conteudo). Fica logo acima da faixa dos
+           controles (timer a esquerda, contador e setas a direita). */
         .p4-th__hint {
-          position: relative;
+          position: absolute;
           z-index: 2;
-          margin-top: var(--p3-gap-sm);
+          left: var(--p3-pad-x);
+          bottom: calc(var(--p3-foot) - 1.15rem);
+          margin: 0;
           display: flex;
           align-items: center;
           gap: 0.6rem;

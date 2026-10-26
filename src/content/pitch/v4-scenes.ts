@@ -353,24 +353,6 @@ export const MODEL = {
   } as Bi,
   rows: [
     {
-      name: '.THE BRAZILIAN FACTORY.',
-      earns: {
-        pt: 'Plano mensal de conteúdo e projetos criativos.',
-        en: 'Monthly content plan and creative projects.',
-      } as Bi,
-      tag: { pt: 'Caixa hoje', en: 'Cash today' } as Bi,
-      tone: 'cash' as const,
-    },
-    {
-      name: '.THE GROWTH FACTORY.',
-      earns: {
-        pt: 'Fee de crescimento: estratégia, conteúdo e ads.',
-        en: 'Growth fee: strategy, content and ads.',
-      } as Bi,
-      tag: { pt: 'Próximo motor', en: 'Next engine' } as Bi,
-      tone: 'next' as const,
-    },
-    {
       name: '.RUNWAY UNTD COLLECTIVE.',
       earns: {
         pt: 'Colaborações e ativações com marcas de moda.',
@@ -380,6 +362,15 @@ export const MODEL = {
       tone: 'next' as const,
     },
     {
+      name: '.THE BRAZILIAN FACTORY.',
+      earns: {
+        pt: 'Plano mensal de conteúdo e projetos criativos.',
+        en: 'Monthly content plan and creative projects.',
+      } as Bi,
+      tag: { pt: 'Caixa hoje', en: 'Cash today' } as Bi,
+      tone: 'cash' as const,
+    },
+    {
       name: '.THE FIORE DAILY.',
       earns: {
         pt: 'Mídia própria que vira produto próprio.',
@@ -387,6 +378,15 @@ export const MODEL = {
       } as Bi,
       tag: { pt: 'A aposta', en: 'The bet' } as Bi,
       tone: 'bet' as const,
+    },
+    {
+      name: '.THE GROWTH FACTORY.',
+      earns: {
+        pt: 'Fee de crescimento: estratégia, conteúdo e ads.',
+        en: 'Growth fee: strategy, content and ads.',
+      } as Bi,
+      tag: { pt: 'Próximo motor', en: 'Next engine' } as Bi,
+      tone: 'next' as const,
     },
   ],
   building: {
