@@ -107,7 +107,7 @@ function Slide({ item, index }: { item: CarouselItem; index: number }) {
       width={item.w}
       height={item.h}
       sizes="(min-width: 1024px) 40vw, 90vw"
-      quality={85}
+      quality={92}
       loading={index < 2 ? 'eager' : 'lazy'}
       unoptimized={item.src.endsWith('.gif')}
     />

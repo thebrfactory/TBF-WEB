@@ -34,7 +34,15 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
   const i = WORKS.findIndex((x) => x.slug === w.slug)
   const prev = WORKS[(i - 1 + WORKS.length) % WORKS.length]
   const next = WORKS[(i + 1) % WORKS.length]
-  const gallery = w.media.gallery ?? []
+  // Rodada 26/10 tarde: capa vertical (ex.: ÔBLACK) nao se corta em 16:9. Com `coverAsStrip`,
+  // a capa entra como a 1a lamina da faixa da galeria, inteira, e o bloco de capa some.
+  const gallery = w.coverAsStrip ? [w.media.cover, ...(w.media.gallery ?? [])] : (w.media.gallery ?? [])
+  const altFor = (idx: number) =>
+    w.coverAsStrip
+      ? idx === 0
+        ? (w.coverAlt ?? w.title)
+        : (w.galleryAlts?.[idx - 1] ?? `${w.title} ${idx + 1}`)
+      : (w.galleryAlts?.[idx] ?? `${w.title} ${idx + 2}`)
   const text = lang === 'en' ? (w.descriptionEn ?? w.description) : w.description
   // A narrativa pode ter varios paragrafos, separados por quebra de linha.
   const paragraphs = (text ?? '').split('\n').filter(Boolean)
@@ -67,7 +75,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
         kind: 'strip',
         items: cells.slice(k, e).map((c) => ({
           src: c.src,
-          alt: w.galleryAlts?.[c.idx] ?? `${w.title} ${c.idx + 2}`,
+          alt: altFor(c.idx),
           w: c.iw,
           h: c.ih,
         })),
@@ -102,12 +110,6 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           <h1 className={styles.workTitle}>{w.title}</h1>
         </div>
 
-        {w.highlights && w.highlights.length > 0 && (
-          <div style={{ marginBottom: 'var(--tbf-space-6)' }}>
-            <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" hideNames />
-          </div>
-        )}
-
         <div className={styles.workMeta}>
           <span className={styles.metaCell}>
             <span className={styles.label}>{t.roleLabel}</span>
@@ -127,12 +129,6 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
             <span className={styles.metaCell}>
               <span className={styles.label}>{t.clientLabel}</span>
               <span className={styles.val}>{w.client}</span>
-            </span>
-          )}
-          {w.year && (
-            <span className={styles.metaCell}>
-              <span className={styles.label}>{t.yearLabel}</span>
-              <span className={styles.val}>{w.year}</span>
             </span>
           )}
         </div>
@@ -160,9 +156,17 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
           </section>
         )}
 
-        <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
-          <Image src={w.media.cover} alt={w.coverAlt ?? w.title} fill sizes="100vw" quality={90} priority />
-        </div>
+        {w.highlights && w.highlights.length > 0 && (
+          <div className={styles.workStories}>
+            <Campaigns campaigns={w.highlights} lang={lang} label={w.title} caseLabel="" inviteLabel="" hideNames />
+          </div>
+        )}
+
+        {w.coverAsStrip ? null : (
+          <div className={styles.cover} style={{ aspectRatio: coverRatio }}>
+            <Image src={w.media.cover} alt={w.coverAlt ?? w.title} fill sizes="100vw" quality={95} priority />
+          </div>
+        )}
         {w.lowRes && (
           <span className={styles.lowResTag}>{t.lowResTag}</span>
         )}
@@ -193,7 +197,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
                 >
                   <Image
                     src={src}
-                    alt={w.galleryAlts?.[idx] ?? `${w.title} ${idx + 2}`}
+                    alt={altFor(idx)}
                     width={iw}
                     height={ih}
                     sizes={
@@ -201,7 +205,7 @@ export default function TavaristicoWorkView({ lang, slug }: { lang: Lang; slug: 
                         ? '(min-width: 1200px) 24vw, (min-width: 768px) 32vw, 50vw'
                         : '(min-width: 768px) 50vw, 100vw'
                     }
-                    quality={90}
+                    quality={92}
                     unoptimized={src.endsWith('.gif')}
                     style={{ width: '100%', height: 'auto', display: 'block' }}
                   />

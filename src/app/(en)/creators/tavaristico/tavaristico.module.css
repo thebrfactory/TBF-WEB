@@ -897,11 +897,16 @@
 }
 .workIntro {
   font-family: var(--serif);
-  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
-  line-height: 1.55;
+  /* Rodada 26/10/2026 tarde: menor e mais leve (parecia negrito). */
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--tbf-text-secondary);
   max-width: 60ch;
   margin-bottom: var(--tbf-space-12);
 }
+/* Stories do case: ultimo bloco de texto, logo antes da capa. */
+.workStories { margin-bottom: var(--tbf-space-6); }
 .workIntroGap { margin-bottom: var(--tbf-space-4); }
 .cover { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--tav-radius-sm); background: var(--tbf-bg-secondary); margin-bottom: var(--tbf-space-6); }
 .cover img { object-fit: cover; }

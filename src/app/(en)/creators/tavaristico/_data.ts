@@ -44,6 +44,8 @@ export interface Work {
   media: { cover: string; gallery?: string[] }
   /** campos provisórios (sublinhar), aguardam redator/ECD */
   provisional?: ProvField[]
+  /** Capa vertical entra inteira como 1a lamina da faixa da galeria (sem corte 16:9). */
+  coverAsStrip?: boolean
   /** capa screenshot-grade (aguarda fonte hi-res) */
   lowRes?: boolean
   /** Destaques de conteudo no topo da pagina de obra: aneis de story, mesmo
@@ -690,7 +692,10 @@ export const WORKS: Work[] = [
     index: '19',
     title: 'Martha Medeiros',
     disciplines: ['Fashion', 'Art Direction', 'Campaign & Content'],
-    role: 'Art Director / Creative Director',
+    // Rodada 26/10 tarde: capa vertical MANACA (banner-v) no card da listagem.
+    cardCover: `${base}/martha-medeiros/banner-v.webp`,
+    cardRatio: '15 / 22',
+    role: 'Art Director',
     client: 'Martha Medeiros',
     summary: 'Campanha conceitual Manacá para a Martha Medeiros: identidade, banners, catálogo de WhatsApp e stories.',
     description:
@@ -841,12 +846,14 @@ export const WORKS: Work[] = [
     index: '21',
     title: 'ÔBLACK',
     disciplines: ['Art Direction', 'Campaign & Content', 'Graphic & Motion'],
+    // Rodada 26/10 tarde: card com a lamina kv-02 (logo ÔBLACK grande e inteiro, 3:4 nativo, sem corte).
+    cardCover: `${ob}/kv-02.webp`,
+    cardRatio: '3 / 4',
     role: 'Art Director',
     rolePT: 'Direção de arte',
     roleList: ['Art direction', 'Graphic design', 'Motion and video editing'],
     roleListPT: ['Direção de arte', 'Design gráfico', 'Motion e edição de vídeo'],
     client: 'Ô De Casa',
-    year: '2025',
     summary: 'A primeira Black Friday da casinha: descontos progressivos de fim de semana.',
     description:
       'Campanha de Black Friday do Ô De Casa, o ÔBLACK, de sexta a domingo. A casinha nunca fez Black Friday, até agora: descontos de até 40% na hospedagem, que crescem com o número de diárias (15% para uma, 20% para duas a três, 30% para quatro a seis, 40% para sete ou mais), com reserva no site. Direção de arte, key visual, stories, anúncios e filmes em preto e branco, com o logo em setas como assinatura.',
@@ -856,6 +863,7 @@ export const WORKS: Work[] = [
       cover: `${ob}/kv-01.webp`,
       gallery: [`${ob}/kv-02.webp`, `${ob}/kv-03.webp`],
     },
+    coverAsStrip: true,
     coverAlt:
       'Key visual do ÔBLACK: homem com a mão no rosto, em preto e branco, com a frase "A casinha nunca fez Black Friday. Até agora." e o logo ÔBLACK com setas.',
     galleryAlts: [
@@ -913,7 +921,6 @@ export const WORKS: Work[] = [
     disciplines: ['Art Direction', 'Graphic & Motion'],
     role: 'Art Director',
     client: 'Arquiloucura',
-    year: '2023',
     summary: 'A magia do Farol da Barra traduzida em sistema visual.',
     description:
       'Direção de arte e sistema gráfico do Bloco Arquiloucura para o Carnaval de Salvador de 2023, com o tema "A Magia do Farol da Barra". Camisa, caneca e peças para redes sociais. O bloco foi fundado em 2011 por estudantes de arquitetura da UFBA e desfila no circuito Sérgio Bezerra, na Barra.',
