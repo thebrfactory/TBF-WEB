@@ -36,7 +36,7 @@
 //
 //   1. HEDGE EMPILHADO. "parece" 9x, "talvez" 6x, mais "provavelmente", "não
 //      necessariamente", "é possível imaginar que estamos diante de". Quem
-//      esteve no campo em 24 de maio não precisa de amortecedor para dizer o
+//      esteve no campo em 23 e 24 de maio não precisa de amortecedor para dizer o
 //      que viu. Sobrou UM "talvez", o do fecho, que é a última palavra do
 //      texto fonte e é dele. Um hedge depois de dez cortados aterrissa; onze
 //      hedges viram tique.
@@ -166,7 +166,7 @@ export const brazilianCountrySide: ManifestoArticle = {
     {
       kind: 'lines',
       lines: [
-        { en: 'I got there on May 24th, for the feast of the Holy Spirit.', pt: 'Cheguei em 24 de maio, para a festa do Divino Espírito Santo.' },
+        { en: 'I got there in May, for the feast of the Holy Spirit.', pt: 'Cheguei em maio, para a festa do Divino Espírito Santo.' },
         { en: 'Family invite. My cousin was a folião, one of those who put the Folia do Divino together.', pt: 'Vim a convite de família. Meu primo era folião, um dos que põem a Folia do Divino de pé.' },
       ],
     },
