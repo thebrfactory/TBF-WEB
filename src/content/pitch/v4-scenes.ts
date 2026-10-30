@@ -39,23 +39,16 @@ export const TOTAL_V4 = '06'
 export const TIMER_SECONDS = 10 * 60
 
 // ─── Mosaico do fundador: tipos e atalhos ────────────────────────────────────
-export type ReelTile =
-  | { kind: 'img'; src: string; ar: string }
-  | { kind: 'info'; big: string; sub: string; line: Bi; tone: 'accent' | 'paper' | 'dark'; ar: string }
+// Rodada 29/10 (CHANGES #01, itens 133 a 137): os quadros tipográficos `info` (SPFW N58,
+// MANACÁ, LAUDA, BOAH, TIGER, ARQUILOUCURA, VERÃOZÃO, MEATS) saíram a pedido do fundador
+// ("remove todos esses nomes"). O mosaico é só foto: o tipo perdeu a variante `info` e o
+// atalho `info()` e o render dele foram embora com ela.
+export type ReelTile = { src: string; ar: string }
 
 const TV = '/images/creators/tavaristico'
 const img = (path: string, w: number, h: number): ReelTile => ({
-  kind: 'img',
   src: `${TV}/${path}.webp`,
   ar: `${w} / ${h}`,
-})
-const info = (big: string, sub: string | number, line: Bi, tone: 'accent' | 'paper' | 'dark'): ReelTile => ({
-  kind: 'info',
-  big,
-  sub: String(sub),
-  line,
-  tone,
-  ar: '1 / 1',
 })
 
 // ─── CENA 01: O FUNDADOR ─────────────────────────────────────────────────────
@@ -73,72 +66,72 @@ export const FOUNDER = {
     en: ['The one who builds the house', 'lives the culture.'],
   },
   // O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026; 11 peças saíram na
-  // aprovação de 26/10 noite): cinco
-  // colunas de doze quadros (rodada 23/10), esteira vertical. As imagens são as peças ATUAIS do
-  // portfólio (capas e galerias de `creators/tavaristico/_data.ts`, incluindo as
-  // capas novas de The Fashion Backstage, Tiger Capsule e Virtuosa) mais as
-  // peças de campanha e de marca. `ar` é a proporção REAL do arquivo (nada é
-  // cortado). Os quadros `info` são peças tipográficas com fato já publicado
-  // (papel, cliente, ano). No celular entram as duas primeiras colunas; no desktop, as cinco.
+  // aprovação de 26/10 noite): cinco colunas em esteira vertical. As imagens são as peças
+  // ATUAIS do portfólio (capas e galerias de `creators/tavaristico/_data.ts`, incluindo as
+  // capas novas de The Fashion Backstage, Tiger Capsule e Virtuosa) mais as peças de
+  // campanha e de marca. `ar` é a proporção REAL do arquivo (nada é cortado).
+  //
+  // Rodada 29/10 (CHANGES #01, itens 133 a 137):
+  //   133: os quadros de nome (`info`) saíram. O mosaico é só foto: 37.
+  //   134 a 137: quatro fotos saíram do mosaico e continuam no portfólio. Cada uma foi
+  //   confirmada contra o print dele (correlação de 0,91 a 0,98; o segundo colocado entre
+  //   os 487 arquivos de `creators/tavaristico/` não passou de 0,36):
+  //     134 behance/branded-content-boah/20 (mulher de conjunto branco no espelho)
+  //     135 behance/grocery-store/04        (batom vinho no corredor de doces)
+  //     136 martha-medeiros/garden-01       (duas modelos de rosa e branco no jardim)
+  //     137 behance/max-vidros/09           (cartão de visita MAX VIDROS)
+  //   As colunas foram REBALANCEADAS sem foto nova (cada foto precisa da aprovação dele):
+  //   8, 7, 7, 8 e 7 fotos, com laços de altura parecida (menos de 1% de diferença a 1440
+  //   e a 390), projeto repetido nunca colado e emenda do laço sem vizinho igual. No celular
+  //   entram as duas primeiras colunas; no desktop, as cinco. A velocidade é a mesma em todas
+  //   (px/s): a duração de cada coluna sai da altura do laço dela (`FounderReel`, no cliente).
   reel: [
     [
-      info('SPFW N58', 2024, { pt: 'Direção criativa', en: 'Creative direction' }, 'accent'),
-      img('behance/arquiloucura/01', 1400, 1000),
-      img('virtuosa/card-sonata', 1080, 1440),
-      img('martha-medeiros/cover', 1600, 900),
-      img('tiger-capsule/cover', 1400, 800),
-      info('MANACÁ', 'Martha Medeiros', { pt: 'Direção de arte', en: 'Art direction' }, 'dark'),
-      img('hospitality/04-torcida', 1500, 2000),
-      img('behance/bahia-em-cores-quentes/01', 2800, 1867),
       img('o-18-years/cover', 1080, 1350),
-      img('ventures/veraozao', 1080, 1080),
+      img('martha-medeiros/cover', 1600, 900),
+      img('virtuosa/feed-01', 720, 900),
+      img('behance/arquiloucura/01', 1400, 1000),
+      img('hospitality/04-torcida', 1500, 2000),
+      img('tiger-capsule/cover', 1400, 800),
+      img('virtuosa/g1', 1440, 1440),
       img('behance/promomeats/01', 1350, 818),
     ],
     [
-      img('virtuosa/pp-01', 2800, 1659),
-      img('stories/veraozao/03-01', 1080, 1920),
-      info('LAUDA', 'Virtuosa', { pt: 'Direção de arte', en: 'Art direction' }, 'paper'),
-      img('behance/charlotte/01', 1754, 1240),
-      img('martha-medeiros/garden-01', 1067, 1599),
-      img('fashion-backstage/04', 2000, 1125),
-      info('BOAH', 'Branded content', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'accent'),
-      img('ventures/runway-untd', 1000, 1000),
-      img('behance/max-vidros/09', 2800, 1855),
-      img('behance/grocery-store/04', 1867, 2800),
-    ],
-    [
-      img('behance/black-boah/01', 1400, 800),
-      img('virtuosa/feed-01', 720, 900),
-      img('hospitality/12-sax', 1500, 2000),
-      info('TIGER', 'SS24', { pt: 'Direção de arte', en: 'Art direction' }, 'dark'),
-      img('stories/veraozao/07-01-copy-12', 1080, 1920),
-      info('ARQUILOUCURA', 2023, { pt: 'Gráfico e motion', en: 'Graphic and motion' }, 'paper'),
-      img('spfw-the-paradise/cover', 1080, 1080),
-      img('behance/branded-content-boah/20', 1080, 1350),
-      img('tiger-capsule/05', 1200, 686),
-    ],
-    [
-      img('behance/capsula-brasilidade-boah/01', 1400, 800),
-      img('tiger-capsule/03', 1200, 686),
-      info('VERÃOZÃO', 2026, { pt: 'Campanha, Ô de Casa', en: 'Campaign, Ô de Casa' }, 'accent'),
       img('hospitality/02-mural-oste', 1500, 2000),
-      img('behance/crush-coins/01', 1350, 1080),
-      info('MEATS', 'Espeteria', { pt: 'Campanha e conteúdo', en: 'Campaign and content' }, 'dark'),
-      img('virtuosa/lauda-cat-02', 900, 1600),
+      img('ventures/runway-untd', 1000, 1000),
+      img('behance/bahia-em-cores-quentes/01', 2800, 1867),
+      img('hospitality/14-piscina', 1209, 2000),
       img('behance/arquimeats-o-baile-de-mascaras/01', 1350, 818),
-      img('o-18-years/k1-dezoitou', 1080, 1920),
-      img('virtuosa/g1', 1440, 1440),
+      img('behance/bahia-em-cores-quentes/05', 1867, 2800),
+      img('fashion-backstage/04', 2000, 1125),
     ],
     [
-      img('hospitality/03-parede-azul', 1500, 1125),
+      img('tiger-capsule/05', 1200, 686),
+      img('stories/veraozao/07-01-copy-12', 1080, 1920),
+      img('behance/black-boah/01', 1400, 800),
       img('hospitality/06-corredor', 1500, 1125),
-      img('tiger-capsule/01', 1200, 686),
-      img('behance/bahia-em-cores-quentes/05', 1867, 2800),
-      img('fashion-backstage/05', 2000, 1125),
-      img('virtuosa/feed-05', 720, 900),
-      img('hospitality/14-piscina', 1209, 2000),
       img('behance/festival-de-arte-e-gastronomia/05', 1080, 1350),
       img('hospitality/13-recepcao', 1500, 1000),
+      img('o-18-years/k1-dezoitou', 1080, 1920),
+    ],
+    [
+      img('virtuosa/pp-01', 2800, 1659),
+      img('spfw-the-paradise/cover', 1080, 1080),
+      img('virtuosa/feed-05', 720, 900),
+      img('behance/charlotte/01', 1754, 1240),
+      img('behance/crush-coins/01', 1350, 1080),
+      img('ventures/veraozao', 1080, 1080),
+      img('behance/capsula-brasilidade-boah/01', 1400, 800),
+      img('hospitality/12-sax', 1500, 2000),
+    ],
+    [
+      img('virtuosa/card-sonata', 1080, 1440),
+      img('hospitality/03-parede-azul', 1500, 1125),
+      img('tiger-capsule/03', 1200, 686),
+      img('virtuosa/lauda-cat-02', 900, 1600),
+      img('fashion-backstage/05', 2000, 1125),
+      img('stories/veraozao/03-01', 1080, 1920),
+      img('tiger-capsule/01', 1200, 686),
     ],
   ] as readonly (readonly ReelTile[])[],
   // Facto de equipe, dito com honestidade (pedido 22/10/2026, item 6).
@@ -347,6 +340,12 @@ export const MARKET = {
 // ─── CENA 07: COMO CADA VERTICAL GANHA + ROADMAP ─────────────────────────────
 // Sem valores em R$. A ordem das linhas e a ordem do roadmap. O papel de cada
 // uma vem de `tbf-context.md` (BUs) e de `oferta-producao-conteudo.md`.
+//
+// Rodada 29/10 (CHANGES #01, item 138): `headline`, `lead` e `building` SAIRAM da
+// cena 04 (o bloco abaixo das quatro frentes foi removido a pedido do fundador) e
+// `rows[].earns` deixou de aparecer na linha: agora so e o lead do popup. Os tres
+// campos ficam aqui porque a `ModelScene` de `NewScenes.tsx` (cena antiga, que
+// nenhum deck monta) ainda os le; apague os tres junto com ela.
 export const MODEL = {
   headline: {
     pt: ['Quatro frentes.', 'Uma por vez.'],
@@ -429,49 +428,26 @@ export const VERAOZAO_SOURCE: Bi = {
   en: 'Instagram @odecasahostel, professional dashboard, 2026.',
 }
 
-// ─── CASE TFD: AREA DE METRICAS (abre ao clicar no cartao da TFD) ────────────
-// Cada numero com periodo. So entra o que tem periodo confiavel em fonte:
-//   julho de 2026: painel do Instagram de @thefioredaily, resumo mensal,
-//     capturado pelo fundador (v3-scenes.ts, BUSINESS.portfolio, `proof`).
-//   junho de 2026: `_SHARED/BUSINESS/tbf-context.md` (atualizado em 10/06/2026):
-//     14k+ seguidores e 220+ posts.
+// ─── CASE TFD: AREA DE METRICAS (abre ao clicar na linha da TFD) ─────────────
+// Rodada 29/10 (CHANGES #01, item 138): os numeros do Instagram saíram daqui e
+// viraram o GRAFICO de `TfdSheet.tsx`, lido de PRINTS do Media Package, com os
+// pontos e a fonte de cada um em `v4-fronts.ts` (`TFD_FOLLOWERS`, `TFD_VIEWS`,
+// `TFD_PROFILE`). O resumo de julho (192 mil, 77%, 15 mil) esta nessa serie, agora
+// com o arquivo de origem; "14 mil+ seguidores e 220+ posts" (tbf-context.md, junho)
+// foi trocado pelo print do perfil de 02/06/2026 (14,7 mil seguidores, 268 posts),
+// que e fonte melhor. Fica aqui o que nao e metrica do Instagram:
 //   31/05/2026: melfiore.com em producao com lista de espera
 //     (`2. MELFIORE/_DOCS/SITE-OFICIAL/BRIEFING.md`).
-// Ficaram de fora por falta de periodo confirmado: ver o relatorio da rodada.
 export const TFD_METRICS = {
   title: { pt: 'Métricas', en: 'Metrics' } as Bi,
-  groups: [
-    {
-      period: { pt: 'Julho de 2026', en: 'July 2026' } as Bi,
-      source: {
-        pt: 'Instagram @thefioredaily, resumo mensal',
-        en: 'Instagram @thefioredaily, monthly summary',
-      } as Bi,
-      stats: [
-        { value: '192 mil', label: { pt: 'visualizações no mês', en: 'views in the month' } as Bi },
-        { value: '77%', label: { pt: 'de quem viu não seguia a marca', en: 'of viewers were not followers' } as Bi },
-        { value: '15 mil', label: { pt: 'seguidores', en: 'followers' } as Bi },
-      ],
-    },
-    {
-      period: { pt: 'Junho de 2026', en: 'June 2026' } as Bi,
-      source: { pt: 'Perfil @thefioredaily', en: 'Profile @thefioredaily' } as Bi,
-      stats: [
-        { value: '14 mil+', label: { pt: 'seguidores', en: 'followers' } as Bi },
-        { value: '220+', label: { pt: 'posts publicados', en: 'posts published' } as Bi },
-      ],
-    },
-    {
-      period: { pt: 'Desde 31 de maio de 2026', en: 'Since May 31, 2026' } as Bi,
-      source: { pt: 'melfiore.com', en: 'melfiore.com' } as Bi,
-      stats: [
-        {
-          value: 'No ar',
-          label: { pt: 'página com lista de espera ativa', en: 'live page with an active waitlist' } as Bi,
-        },
-      ],
-    },
-  ],
+  live: {
+    period: { pt: 'Desde 31 de maio de 2026', en: 'Since May 31, 2026' } as Bi,
+    label: {
+      pt: 'melfiore.com no ar, com lista de espera ativa',
+      en: 'melfiore.com live, with an active waitlist',
+    } as Bi,
+    source: { pt: 'melfiore.com', en: 'melfiore.com' } as Bi,
+  },
 }
 
 // ─── CENA 09: O QUE CONSTRUIMOS JUNTOS ───────────────────────────────────────

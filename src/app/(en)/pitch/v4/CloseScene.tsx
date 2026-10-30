@@ -9,6 +9,8 @@
 // o enquadramento Inova Simples (fato de `_SHARED/LEGAL-ACCOUNTING`, sem
 // vantagem inventada). Conteudo: `PARTNERSHIP_OPEN`, `CLOSE`, `COMPANY`.
 // No celular a cena pode passar de uma tela (altura automatica); e a ultima.
+// Rodada 29/10 (CHANGES #01, item 140): mais espacamento entre todos os itens,
+// em tres degraus (xs, sm, lg) tirados dos tokens do deck. Ver o bloco de CSS.
 // =============================================================================
 
 import { TbfLink as Link } from '@/components/TbfLink/TbfLink'
@@ -102,26 +104,40 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
       </div>
 
       <style>{`
+        /* RODADA 29/10 (CHANGES #01, item 140): "os itens podem ter mais
+           espaçamento". O ritmo vertical sai de TRES degraus, todos em tokens do
+           deck (--p3-gap e --p3-gap-lg levam um termo em vh: a janela encolhe, o
+           respiro encolhe junto) e do site (--tbf-space-*), nunca em numero solto:
+             xs  entre as linhas dentro de um cartao e de um par
+             sm  entre itens do mesmo grupo (frase e botoes, CNPJ e endereco)
+             lg  entre blocos (titulo, cartoes, frase, botoes, empresa)
+           Antes os blocos se tocavam (de 7 a 17px entre eles) e sobravam 170px
+           vazios no fim da cena em 1440x900. */
+        #cena-06 {
+          --p4cl-xs: 0.6rem;
+          --p4cl-sm: calc(var(--p3-gap) * 1.5);
+          --p4cl-lg: var(--p3-gap-lg);
+        }
         .p4-cl__cols {
           position: relative;
           z-index: 1;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 0.5rem;
+          gap: var(--tbf-space-3);
           margin-inline: auto;
-          margin-top: var(--p3-gap-sm);
+          margin-top: var(--p4cl-lg);
         }
         .p4-cl__cols > .pitch-reveal { display: flex; }
         .p4-cl__col {
           width: 100%;
-          padding: 0.6rem 0.6rem 0.7rem;
+          padding: var(--tbf-space-3) var(--tbf-space-3) var(--tbf-space-4);
           background: #050505;
           border-top: 2px solid ${PAPER};
           border-radius: var(--tbf-radius-card);
         }
         .p4-cl__col--accent { border-top-color: ${ACCENT}; }
         .p4-cl__who {
-          margin: 0 0 0.4rem;
+          margin: 0 0 var(--p4cl-xs);
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
           font-size: 0.82rem;
@@ -130,7 +146,7 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           color: ${PAPER};
         }
         .p4-cl__col--accent .p4-cl__who { color: ${ACCENT}; }
-        .p4-cl__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.35rem; }
+        .p4-cl__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--p4cl-xs); }
         .p4-cl__li {
           font-family: var(--tbf-font-family-body);
           font-weight: 400;
@@ -141,7 +157,7 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
         .p4-cl__close {
           position: relative;
           z-index: 1;
-          margin-top: var(--p3-gap);
+          margin-top: var(--p4cl-lg);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -156,15 +172,15 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           letter-spacing: -0.03em;
           color: ${PAPER};
         }
-        .p4-cl__btns { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 0.8rem; }
+        .p4-cl__btns { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--tbf-space-3); margin-top: var(--p4cl-sm); }
         .p4-cl__co {
-          margin-top: 1.1rem;
+          margin-top: var(--p4cl-lg);
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.45rem;
+          gap: var(--p3-gap);
         }
-        .p4-cl__cnpj { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+        .p4-cl__cnpj { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
         .p4-cl__cnpj-l {
           font-family: var(--tbf-font-family-printed);
           font-weight: 600;
@@ -186,7 +202,7 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.3rem;
+          gap: 0.45rem;
           max-width: 26rem;
           font-family: var(--tbf-font-family-body);
           font-weight: 400;
@@ -207,23 +223,19 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
         }
         .p4-cl__addr { margin: 0; font-family: var(--tbf-font-family-body); font-size: 0.66rem; line-height: 1.3; color: rgba(240, 237, 230, 0.6); }
         @media (min-width: 768px) {
-          .p4-cl__cols { gap: 1.25rem; max-width: 76rem; margin-inline: auto; margin-top: var(--p3-gap); }
-          .p4-cl__col { padding: 0.8rem 1.2rem 0.9rem; }
-          .p4-cl__who { font-size: 1.25rem; margin-bottom: 0.45rem; }
-          .p4-cl__list { gap: 0.4rem; }
+          .p4-cl__cols { gap: 1.25rem; max-width: 76rem; margin-inline: auto; }
+          .p4-cl__col { padding: var(--tbf-space-4) var(--tbf-space-6); }
+          .p4-cl__who { font-size: 1.25rem; margin-bottom: var(--tbf-space-4); }
+          .p4-cl__list { gap: var(--tbf-space-3); }
           .p4-cl__li { font-size: 0.86rem; }
-          .p4-cl__close { margin-top: var(--p3-gap-sm); }
-          .p4-cl__co { margin-top: 0.7rem; }
-              .p4-cl__co { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0.6rem 2.2rem; }
+          .p4-cl__btns { gap: var(--tbf-space-4); }
+          .p4-cl__co { gap: var(--p4cl-sm) 3rem; flex-direction: row; flex-wrap: wrap; justify-content: center; }
           .p4-cl__cnpj-l { font-size: 0.72rem; }
           .p4-cl__cnpj-n { font-size: 1.45rem; }
           .p4-cl__inova { flex-direction: row; text-align: left; align-items: center; gap: 0.8rem; font-size: 0.9rem; max-width: 34rem; }
           .p4-cl__inova .p3-en { font-size: 0.76rem; }
           .p4-cl__badge { font-size: 0.7rem; flex: none; }
           .p4-cl__addr { flex-basis: 100%; text-align: center; font-size: 0.78rem; }
-        }
-        @media (min-width: 768px) and (max-height: 960px) {
-          .p4-cl__quote { display: none; }
         }
       `}</style>
     </section>

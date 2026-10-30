@@ -69,6 +69,74 @@ const EDITORIAL_VIDEO = {
   mobile: { av1: '/videos/editorial-mobile.av1.mp4', h264: '/videos/editorial-mobile.mp4' },
 }
 
+// ─── Mosaico do fundador (cena-01): esteira vertical, MESMA velocidade em todas ─
+// Rodada 29/10 (CHANGES #01, itens 133 a 137). Pedido: "deixe todas essas peças na
+// mesma velocidade". Velocidade em px/s é altura do laço ÷ duração; com a duração igual
+// e laços de alturas diferentes, cada coluna andava num ritmo (61 a 78 px/s no desktop).
+// Agora a duração de CADA coluna sai da altura do laço dela: `--p4-dur` = laço ÷
+// REEL_PX_PER_S, medida no navegador porque o laço depende da largura da coluna, que muda
+// com a tela. Sentido de cada coluna e defasagem entre elas ficam no CSS (`--p4-phase`).
+//
+// O laço é UMA cópia da lista. O trilho leva REEL_COPIES cópias e anda de 0 a uma cópia
+// (-100% / REEL_COPIES), então a volta fecha sem emenda. O vão aparece quando a janela da
+// coluna passa de (REEL_COPIES - 1) laços; com 3 cópias a janela pode ter até 2 laços
+// (hoje ocupa de 18% a 40% de um laço, de 390 a 1440 de largura).
+// Sem a medição (antes de montar) vale o 24s do CSS, igual para todas.
+const REEL_PX_PER_S = 68
+const REEL_COPIES = 3
+
+function FounderReel() {
+  const gridRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const grid = gridRef.current
+    if (!grid) return
+    const tune = () => {
+      grid.querySelectorAll<HTMLElement>('.p4-reel__track').forEach((track) => {
+        const height = parseFloat(getComputedStyle(track).height)
+        // Coluna escondida no celular (display: none) não tem altura: fica no 24s do CSS
+        // e é medida quando a grade mudar de largura e ela aparecer.
+        if (!height) return
+        track.style.setProperty('--p4-dur', `${(height / REEL_COPIES / REEL_PX_PER_S).toFixed(3)}s`)
+      })
+    }
+    tune()
+    const ro = new ResizeObserver(tune)
+    ro.observe(grid)
+    return () => ro.disconnect()
+  }, [])
+
+  return (
+    <div className="p4-reel" aria-hidden="true">
+      <div className="p4-reel__grid" ref={gridRef}>
+        {FOUNDER.reel.map((col, ci) => (
+          <div key={ci} className={`p4-reel__col p4-reel__col--${ci}`}>
+            <div className="p4-reel__track" style={{ '--p4-copies': REEL_COPIES } as React.CSSProperties}>
+              {Array.from({ length: REEL_COPIES }, (_, copy) => (
+                <Fragment key={copy}>
+                  {col.map((t, i) => (
+                    <div key={t.src} className="p4-reel__tile" style={{ aspectRatio: t.ar }}>
+                      <Image
+                        src={t.src}
+                        alt=""
+                        fill
+                        sizes="(max-width: 767px) 38vw, 20vw"
+                        quality={90}
+                        className="p4-reel__img"
+                        loading={copy === 0 && i < 4 ? 'eager' : 'lazy'}
+                      />
+                    </div>
+                  ))}
+                </Fragment>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ─── Cartão de portfólio expansível (cena-05) ────────────────────────────────
 // Cada propriedade mostra nome + papel na primeira leitura. Por que e formas
 // só aparecem na expansão: hover no desktop, toque no mobile.
@@ -109,23 +177,24 @@ function CaseFilm() {
     const t = window.setInterval(() => setI((n) => (n + 1) % frames.length), CASE_CUT_MS)
     return () => window.clearInterval(t)
   }, [frames.length])
+  // Rodada 29/10 (CHANGES #01, itens 139 e 140): o quadro 9:16 devolve só o
+  // próprio quadro. A coluna do filme (`.p4-case__media`) passou para a cena,
+  // porque quem manda na largura dele é a grade, não o conteúdo.
   return (
-    <div className="p4-case__media">
-      <div className="p4-case__video" role="img" aria-label={VERAOZAO_REEL.alt.pt}>
-        {frames.map((m, idx) => (
-          <Image
-            key={m.src}
-            src={m.src}
-            alt=""
-            fill
-            sizes="(max-width: 767px) 50vw, 30vw"
-            quality={85}
-            priority={idx < 2}
-            className="p4-case__frame"
-            style={{ visibility: idx === i ? 'visible' : 'hidden' }}
-          />
-        ))}
-      </div>
+    <div className="p4-case__video" role="img" aria-label={VERAOZAO_REEL.alt.pt}>
+      {frames.map((m, idx) => (
+        <Image
+          key={m.src}
+          src={m.src}
+          alt=""
+          fill
+          sizes="(max-width: 767px) 54vw, 30vw"
+          quality={85}
+          priority={idx < 2}
+          className="p4-case__frame"
+          style={{ visibility: idx === i ? 'visible' : 'hidden' }}
+        />
+      ))}
     </div>
   )
 }
@@ -235,49 +304,13 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             </div>
           </PitchReveal>
 
-          {/* O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026): cinco
-              colunas de sete quadros em esteira vertical, sentidos alternados,
-              cada uma com a lista duplicada para o laço fechar sem salto. As bordas
-              somem por máscara (sem corte duro). Decorativo (aria-hidden). */}
+          {/* O PORTFÓLIO EM MOVIMENTO (20/10/2026, ampliado em 22/10/2026; rodada 29/10,
+              CHANGES #01, itens 133 a 137): cinco colunas de 7 a 8 fotos (sem quadros de
+              nome) em esteira vertical, sentidos alternados, a lista repetida para o laço
+              fechar sem salto e uma velocidade só para todas (`FounderReel`, acima). As
+              bordas somem por máscara (sem corte duro). Decorativo (aria-hidden). */}
           <PitchReveal delay={320} style={{ minHeight: 0, height: '100%' }}>
-            <div className="p4-reel" aria-hidden="true">
-              <div className="p4-reel__grid">
-                {FOUNDER.reel.map((col, ci) => (
-                  <div key={ci} className={`p4-reel__col p4-reel__col--${ci}`}>
-                    <div className="p4-reel__track">
-                      {[...col, ...col].map((t, i) =>
-                        t.kind === 'img' ? (
-                          <div key={`${t.src}-${i}`} className="p4-reel__tile" style={{ aspectRatio: t.ar }}>
-                            <Image
-                              src={t.src}
-                              alt=""
-                              fill
-                              sizes="(max-width: 767px) 38vw, 20vw"
-                              quality={90}
-                              className="p4-reel__img"
-                              loading={ci < 5 && i < 4 ? 'eager' : 'lazy'}
-                            />
-                          </div>
-                        ) : (
-                          <div
-                            key={`${t.big}-${i}`}
-                            className={`p4-reel__tile p4-reel__info p4-reel__info--${t.tone}`}
-                            style={{ aspectRatio: t.ar }}
-                          >
-                            <span className="p4-reel__big">{t.big}</span>
-                            <span className="p4-reel__sub">{t.sub}</span>
-                            <span className="p4-reel__line">
-                              {t.line.pt}
-                              <span className="p4-reel__line-en">{t.line.en}</span>
-                            </span>
-                          </div>
-                        )
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FounderReel />
           </PitchReveal>
         </div>
       </section>
@@ -510,10 +543,24 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
             grande; o resto cai para título curto, uma frase e o anel de stories.
             O parágrafo longo (CASE.body) e a tradução do corpo saíram da tela; o
             texto segue em v3-scenes.ts. O filme é vertical e entra como veio. */}
+        {/* RODADA 29/10 (CHANGES #01, itens 139 e 140): "acho que pode melhorar
+            esse layout". A grade agora é travada pela ALTURA DO FILME. O filme
+            ocupa a caixa útil da cena inteira (do kicker ao respiro do passador)
+            e a coluna de texto nasce e termina nas mesmas duas linhas dele:
+            identidade, título e anel de stories em cima; os três números em
+            cartões iguais embaixo, esticados até a borda direita; a fonte fecha
+            a base. Antes o texto boiava no meio e um terço da tela ficava vazio.
+
+            Ordem de leitura = ordem do DOM = hierarquia pedida: filme, logos,
+            título, anel, números, fonte. No celular a ordem é a mesma (filme à
+            esquerda, texto ao lado, números embaixo). Não empilha: o story é
+            9:16 e em 350px de largura um filme empilhado teria ~125px. */}
         <div className="p4-case">
-          <PitchReveal delay={100} style={{ flex: '1 1 0', minHeight: 0, display: 'flex', justifyContent: 'center' }}>
-            <CaseFilm />
-          </PitchReveal>
+          <div className="p4-case__media">
+            <PitchReveal delay={100}>
+              <CaseFilm />
+            </PitchReveal>
+          </div>
 
           <div className="p4-case__copy">
             <PitchReveal delay={180}>
@@ -561,22 +608,31 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
           {/* 22/10/2026 b: números confirmados pelo fundador em 25/09/2026 (conta
               @odecasahostel). Três de seis; cada um com o seu período. Fonte em
-              `VERAOZAO_METRICS` (v4-scenes.ts). */}
-          <PitchReveal delay={420}>
-            <div className="p4-case__metrics">
-              {VERAOZAO_METRICS.map((m) => (
-                <div key={m.value} className="p4-case__metric">
-                  <span className="p4-case__mval">{m.value}</span>
-                  <span className="p4-case__mlab">
-                    {m.label.pt}
-                    <En>{m.label.en}</En>
-                  </span>
-                  <span className="p4-case__mper">{m.period.pt}</span>
-                </div>
-              ))}
+              `VERAOZAO_METRICS` (v4-scenes.ts). Rodada 29/10 (CHANGES #01, itens
+              139 e 140): os três cartões têm largura e altura iguais (três
+              colunas iguais, uma linha que estica) e a fonte saiu da grade dos
+              cartões para fechar a base da coluna, alinhada à base do filme. */}
+          <div className="p4-case__stats">
+            <PitchReveal delay={420}>
+              <div className="p4-case__metrics">
+                {VERAOZAO_METRICS.map((m) => (
+                  <div key={m.value} className="p4-case__metric">
+                    <span className="p4-case__mval">{m.value}</span>
+                    <span className="p4-case__mtxt">
+                      <span className="p4-case__mlab">
+                        {m.label.pt}
+                        <En>{m.label.en}</En>
+                      </span>
+                      <span className="p4-case__mper">{m.period.pt}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </PitchReveal>
+            <PitchReveal delay={500}>
               <p className="p4-case__msrc">{VERAOZAO_SOURCE.pt}</p>
-            </div>
-          </PitchReveal>
+            </PitchReveal>
+          </div>
 
           {caseStoryOpen ? (
             <StoryPlayer
@@ -733,14 +789,21 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p4-reel__track {
           display: flex;
           flex-direction: column;
-          animation: p4-reel 26s linear infinite;
+          /* Rodada 29/10 (CHANGES #01, itens 133 a 137): a duração NÃO é fixa por coluna.
+             A variável --p4-dur (altura do laço ÷ velocidade) vem do FounderReel, coluna a
+             coluna, então todas andam em px/s iguais mesmo com laços de alturas diferentes.
+             O 24s é só o ponto de partida antes da medição. O atraso é uma FRAÇÃO da
+             duração (--p4-phase): a defasagem entre colunas sobrevive à troca de duração. */
+          animation: p4-reel var(--p4-dur, 24s) linear infinite;
+          animation-delay: calc(var(--p4-dur, 24s) * var(--p4-phase, 0) * -1);
           will-change: transform;
         }
-        .p4-reel__col--0 .p4-reel__track { animation-duration: 24s; }
-        .p4-reel__col--1 .p4-reel__track { animation-duration: 28s; animation-direction: reverse; animation-delay: -9s; }
-        .p4-reel__col--2 .p4-reel__track { animation-duration: 26s; animation-delay: -14s; }
-        .p4-reel__col--3 .p4-reel__track { animation-duration: 30s; animation-direction: reverse; animation-delay: -5s; }
-        .p4-reel__col--4 .p4-reel__track { animation-duration: 27s; animation-delay: -11s; }
+        /* Sentidos como estavam: pares sobem, ímpares descem. Fases = os atrasos antigos
+           sobre as durações antigas (9/28, 14/26, 5/30, 11/27). */
+        .p4-reel__col--1 .p4-reel__track { --p4-phase: 0.32; animation-direction: reverse; }
+        .p4-reel__col--2 .p4-reel__track { --p4-phase: 0.54; }
+        .p4-reel__col--3 .p4-reel__track { --p4-phase: 0.17; animation-direction: reverse; }
+        .p4-reel__col--4 .p4-reel__track { --p4-phase: 0.41; }
         .p4-reel__tile {
           position: relative;
           flex: none;
@@ -753,189 +816,258 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         .p4-reel__img {
           object-fit: cover;
         }
-        /* Peças tipográficas: fato já publicado (papel, cliente, ano). Texto
-           sobre fundo chapado, nunca sobre imagem. */
-        .p4-reel__info {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-end;
-          padding: 0.5rem;
-        }
-        .p4-reel__info--accent { background: ${ACCENT}; color: #000000; }
-        .p4-reel__info--paper { background: ${PAPER}; color: #000000; }
-        .p4-reel__info--dark { background: #171716; color: ${PAPER}; }
-        .p4-reel__big {
-          font-family: var(--tbf-font-family-display);
-          font-weight: 800;
-          font-size: clamp(0.9rem, 4.8vw, 1.6rem);
-          overflow-wrap: anywhere;
-          line-height: 1;
-          letter-spacing: -0.04em;
-        }
-        .p4-reel__info--dark .p4-reel__big { color: ${ACCENT}; }
-        .p4-reel__sub {
-          margin-top: 0.1rem;
-          font-family: var(--tbf-font-family-display);
-          font-weight: 800;
-          font-size: clamp(0.8rem, 4vw, 1.15rem);
-          line-height: 1.05;
-          letter-spacing: -0.03em;
-        }
-        .p4-reel__line {
-          margin-top: 0.3rem;
-          display: flex;
-          flex-direction: column;
-          font-family: var(--tbf-font-family-body);
-          font-weight: 450;
-          font-size: 0.64rem;
-          line-height: 1.15;
-        }
-        .p4-reel__line-en {
-          font-family: var(--tbf-font-family-printed);
-          font-style: italic;
-          font-weight: 300;
-          opacity: 0.7;
-        }
+        /* O trilho leva --p4-copies cópias da lista (posta pelo FounderReel) e anda de 0
+           a UMA cópia: -100% é a altura de todas, então divide pelo número delas. */
         @keyframes p4-reel {
           from { transform: translateY(0); }
-          to { transform: translateY(-50%); }
+          to { transform: translateY(calc(-100% / var(--p4-copies, 3))); }
         }
         @media (prefers-reduced-motion: reduce) {
           .p4-reel__track { animation: none; }
         }
 
-        /* ─── Cena 06: o filme é o protagonista (20/10/2026; métricas 22/10/2026 b) ──
-           Mobile: filme à esquerda, marca e frase à direita; faixa de três
-           números embaixo, de ponta a ponta. Desktop: filme em coluna, texto e
-           números à direita. */
+        /* ─── Cena 05: o filme manda na grade (20/10/2026; números 22/10/2026 b;
+           recomposta na rodada 29/10, CHANGES #01, itens 139 e 140) ──────────
+           A GRADE SAI DA ALTURA DO FILME, não do conteúdo. A variável --p4c-h é a
+           caixa útil da cena: o mesmo cálculo do objeto S do casco (janela, menos
+           a faixa pinada do topo, o reservado do kicker e o respiro do passador).
+           A largura do filme é escrita em número (9:16 dessa altura no desktop,
+           uma fração da largura no celular) e não mais "auto" + aspect-ratio:
+           a coluna "auto" dependia da altura da linha, que dependia da coluna,
+           e o Safari do iPhone fechava esse ciclo em ZERO (o filme sumia no
+           celular; medido no WebKit 390x844). Com a largura declarada não há
+           ciclo para resolver.
+
+           Celular: filme à esquerda, identidade, título e anel ao lado (topo e
+           base alinhados ao filme), três cartões iguais embaixo e a fonte.
+           Desktop (1024+): filme na altura útil inteira; a coluna da direita
+           nasce e termina nas mesmas duas linhas dele, e os cartões esticam até
+           a borda direita. */
         .p4-case {
+          --p4c-h: calc(100dvh - var(--p3-band) - var(--p3-kicker-reserve) - var(--p3-foot));
+          /* O que a fileira dos números pede abaixo do filme: cartões, fonte e respiro. */
+          --p4c-rows: calc(10.4rem + var(--p3-gap-lg));
+          --p4c-vw: min(
+            calc((var(--p4c-h) - var(--p4c-rows)) * 9 / 16),
+            calc((100vw - 2 * var(--p3-pad-x)) * 0.54)
+          );
           position: relative;
           z-index: 1;
           flex: 1 1 auto;
           min-height: 0;
           display: grid;
-          grid-template-columns: auto minmax(0, 1fr);
-          grid-template-rows: minmax(0, 1fr) auto;
-          align-content: center;
-          column-gap: 0.8rem;
-          row-gap: 0.6rem;
-          margin-top: var(--p3-gap-sm);
-        }
-        .p4-case > .pitch-reveal:first-child {
-          grid-row: 1;
-          grid-column: 1;
-          flex: none !important;
-        }
-        .p4-case > .pitch-reveal:nth-child(3) {
-          grid-row: 2;
-          grid-column: 1 / -1;
+          grid-template-columns: var(--p4c-vw) minmax(0, 1fr);
+          grid-template-rows: auto auto;
+          align-content: start;
+          column-gap: var(--p3-gap);
+          row-gap: var(--p3-gap-lg);
         }
         .p4-case__media {
-          height: 100%;
-          display: flex;
+          grid-column: 1;
+          grid-row: 1;
+          min-width: 0;
         }
         .p4-case__video {
-          height: 100%;
-          max-height: calc((100vw - 2 * var(--p3-pad-x)) * 0.5 * 16 / 9);
-          width: auto;
-          max-width: 100%;
-          aspect-ratio: 9 / 16;
           position: relative;
+          width: 100%;
+          aspect-ratio: 9 / 16;
           overflow: hidden;
           border-radius: var(--tbf-radius-card);
           background: #000000;
         }
         .p4-case__frame { object-fit: cover; }
         .p4-case__copy {
-          grid-row: 1;
           grid-column: 2;
+          grid-row: 1;
           min-width: 0;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: space-between;
           align-items: flex-start;
-          gap: 0.55rem;
+          gap: var(--p3-gap);
         }
         .p4-case__brand {
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          gap: 0.5rem;
+          gap: var(--p3-gap);
         }
         .p4-case__brand .p3-case-title {
           margin: 0;
         }
+        /* O PNG do letreiro traz um halo largo em volta da palavra: a caixa mede
+           900x591 e a letra sólida fica no meio, com 54% da largura e 30% da
+           altura. Dimensionar pela caixa deixa a letra boiando longe do topo do
+           filme e da borda do texto. A variável --p4c-core é a largura da LETRA: a imagem
+           nasce 1,844x maior e as margens negativas devolvem o halo ao vazio, de
+           modo que a caixa de layout é a própria letra. O brilho continua
+           desenhado por fora da caixa, e é isso que alinha o logo ao filme. */
         .p4-case__wordmark {
-          width: 5.2rem;
-          height: auto;
+          --p4c-core: 6.4rem;
           display: block;
+          width: calc(var(--p4c-core) * 1.844);
+          max-width: none;
+          height: auto;
+          margin: calc(var(--p4c-core) * -0.42);
         }
         .p4-case__client {
-          width: 4.4rem;
-          height: auto;
           display: block;
+          width: 5.2rem;
+          height: auto;
         }
         .p4-case__line {
           margin: 0;
           font-family: var(--tbf-font-family-display);
-          font-weight: 600;
-          font-size: 0.74rem;
-          line-height: 1.25;
+          font-weight: 700;
+          font-size: 0.84rem;
+          line-height: 1.2;
+          letter-spacing: -0.01em;
           color: ${PAPER};
+          text-wrap: balance;
         }
-        .p4-case__line .p3-en { font-size: 0.62rem; line-height: 1.15; font-weight: 300; }
+        .p4-case__line .p3-en {
+          margin-top: 0.3rem;
+          font-size: 0.68rem;
+          line-height: 1.2;
+          font-weight: 300;
+        }
         .p4-case__stories {
           display: flex;
           flex-direction: row;
           align-items: center;
-          gap: 0.6rem;
+          gap: var(--tbf-space-3);
+        }
+        .p4-case__stories .p3-label {
+          color: rgba(240, 237, 230, 0.72);
+        }
+        /* Os três números: UMA fileira de cartões de largura e altura iguais
+           (três colunas 1fr, linha 1fr), com o número no alto e o texto na
+           base de cada cartão. A fonte fecha a base da coluna. */
+        .p4-case__stats {
+          grid-column: 1 / -1;
+          grid-row: 2;
+          min-width: 0;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          gap: var(--p3-gap-sm);
+        }
+        .p4-case__stats > .pitch-reveal:first-child {
+          flex: 1 1 auto;
+          display: flex;
         }
         .p4-case__metrics {
+          flex: 1 1 auto;
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 0.4rem;
+          grid-auto-rows: 1fr;
+          gap: var(--tbf-space-2);
         }
         .p4-case__metric {
           display: flex;
           flex-direction: column;
-          gap: 0.15rem;
-          padding: 0.5rem 0.55rem;
+          justify-content: space-between;
+          gap: var(--tbf-space-3);
+          min-width: 0;
+          padding: var(--tbf-space-3) 0.6rem;
           background: #050505;
           border-radius: var(--tbf-radius-card);
-          min-width: 0;
         }
         .p4-case__mval {
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
-          font-size: clamp(0.95rem, 4.6vw, 1.4rem);
+          font-size: clamp(1.1rem, 5.4vw, 1.6rem);
           line-height: 1;
           letter-spacing: -0.04em;
           color: ${ACCENT};
         }
+        .p4-case__mtxt {
+          display: flex;
+          flex-direction: column;
+          gap: 0.3rem;
+        }
         .p4-case__mlab {
           font-family: var(--tbf-font-family-body);
           font-weight: 350;
-          font-size: 0.58rem;
+          font-size: 0.66rem;
           line-height: 1.2;
-          color: rgba(240, 237, 230, 0.8);
+          color: rgba(240, 237, 230, 0.85);
         }
-        .p4-case__mlab .p3-en { font-size: 0.52rem; line-height: 1.12; }
+        .p4-case__mlab .p3-en { font-size: 0.58rem; line-height: 1.15; }
         .p4-case__mper {
           font-family: var(--tbf-font-family-printed);
           font-weight: 500;
-          font-size: 0.5rem;
+          font-size: 0.52rem;
           letter-spacing: 0.06em;
           text-transform: uppercase;
-          color: rgba(240, 237, 230, 0.45);
+          color: rgba(240, 237, 230, 0.5);
         }
         .p4-case__msrc {
-          grid-column: 1 / -1;
           margin: 0;
           font-family: var(--tbf-font-family-printed);
           font-weight: 400;
-          font-size: 0.54rem;
+          font-size: 0.6rem;
+          line-height: 1.3;
           letter-spacing: 0.04em;
-          color: rgba(240, 237, 230, 0.4);
+          color: rgba(240, 237, 230, 0.5);
+        }
+
+        /* Tablet: a mesma grade do celular, com a tipografia e os cartões maiores. */
+        @media (min-width: 768px) {
+          .p4-case__wordmark { --p4c-core: clamp(9rem, 20vw, 13rem); }
+          .p4-case__client { width: clamp(6.5rem, 14vw, 9rem); }
+          .p4-case__line { font-size: clamp(1.1rem, 2.6vw, 1.5rem); }
+          .p4-case__line .p3-en { font-size: clamp(0.82rem, 1.7vw, 1rem); }
+          .p4-case__stories .p3-label { font-size: 0.74rem; }
+          .p4-case__metrics { gap: var(--tbf-space-3); }
+          .p4-case__metric { padding: var(--tbf-space-4); }
+          .p4-case__mval { font-size: clamp(1.7rem, 4.4vw, 2.6rem); }
+          .p4-case__mlab { font-size: 0.82rem; }
+          .p4-case__mlab .p3-en { font-size: 0.7rem; }
+          .p4-case__mper { font-size: 0.62rem; }
+          .p4-case__msrc { font-size: 0.68rem; }
+        }
+
+        /* Desktop: filme na altura útil inteira (9:16 dela, com teto de 32% da
+           largura) e a coluna de texto nas mesmas duas linhas dele. A altura da
+           grade é a do filme, então a base da fonte cai na base do filme mesmo
+           numa janela alta e estreita. Todo corpo de letra leva um termo em vh,
+           como o resto do deck: janela baixa, o conjunto encolhe junto. */
+        @media (min-width: 1024px) {
+          .p4-case {
+            --p4c-vw: min(calc(var(--p4c-h) * 9 / 16), 32vw);
+            flex: none;
+            height: calc(var(--p4c-vw) * 16 / 9);
+            grid-template-rows: auto minmax(0, 1fr);
+            column-gap: clamp(2rem, 4.5vw, 5rem);
+          }
+          .p4-case__media { grid-row: 1 / span 2; }
+          .p4-case__copy { justify-content: flex-start; gap: var(--p3-gap-lg); }
+          .p4-case__brand { flex-direction: row; align-items: center; gap: clamp(1.5rem, 3.2vw, 3.5rem); }
+          .p4-case__wordmark { --p4c-core: clamp(9.5rem, min(16vw, 27vh), 20rem); }
+          .p4-case__client { width: clamp(6.5rem, min(12vw, 20vh), 14rem); }
+          .p4-case__line {
+            max-width: 30em;
+            font-size: clamp(1.7rem, min(3.4vw, 5.6vh), 3.9rem);
+            line-height: 1.06;
+            letter-spacing: -0.03em;
+          }
+          .p4-case__line .p3-en {
+            margin-top: 0.55em;
+            font-size: clamp(1rem, min(1.45vw, 2.4vh), 1.4rem);
+            line-height: 1.25;
+          }
+          .p4-case__stories { gap: var(--tbf-space-4); }
+          .p4-case__stories .p3-label { font-size: clamp(0.72rem, 0.9vw, 0.9rem); }
+          .p4-case__stats { grid-column: 2; }
+          .p4-case__metrics { gap: var(--p3-gap); }
+          .p4-case__metric { padding: clamp(0.9rem, 1.5vw, 1.5rem); }
+          .p4-case__mval { font-size: clamp(2.2rem, min(4vw, 7.2vh), 4.6rem); }
+          .p4-case__mtxt { gap: 0.5rem; }
+          .p4-case__mlab { font-size: clamp(0.8rem, min(1.1vw, 1.9vh), 1.15rem); }
+          .p4-case__mlab .p3-en { font-size: clamp(0.7rem, min(0.95vw, 1.6vh), 0.98rem); }
+          .p4-case__mper { font-size: clamp(0.6rem, 0.72vw, 0.78rem); }
+          .p4-case__msrc { font-size: clamp(0.64rem, 0.78vw, 0.8rem); }
         }
 
         @media (min-width: 768px) {
@@ -982,42 +1114,8 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-reel__col--3,
           .p4-reel__col--4 { display: block; }
           .p4-reel__tile { margin-bottom: 0.8rem; }
-          .p4-reel__info { padding: 0.8rem; }
-          .p4-reel__big { font-size: clamp(1rem, 1.7vw, 1.7rem); }
-          .p4-reel__sub { font-size: clamp(0.8rem, 1.2vw, 1.2rem); }
-          .p4-reel__line { font-size: clamp(0.62rem, 0.8vw, 0.8rem); margin-top: 0.5rem; }
-
-          .p4-case {
-            grid-template-columns: auto minmax(0, 1fr);
-            grid-template-rows: 1fr auto;
-            column-gap: clamp(2rem, 6vw, 5rem);
-            row-gap: 1.4rem;
-            align-content: stretch;
-            align-items: stretch;
-          }
-          .p4-case > .pitch-reveal:first-child { grid-row: 1 / span 2; }
-          .p4-case > .pitch-reveal:nth-child(3) { grid-row: 2; grid-column: 2; }
-          .p4-case__video { max-height: none; }
-          .p4-case__copy {
-            gap: 1.1rem;
-            align-self: end;
-          }
-          .p4-case__brand { flex-direction: row; align-items: center; gap: 1.4rem; }
-          .p4-case__wordmark { width: clamp(10rem, 20vw, 17rem); }
-          .p4-case__client { width: clamp(7rem, 11vw, 10rem); }
-          .p4-case__line {
-            max-width: 26rem;
-            font-size: clamp(1.1rem, 1.9vw, 1.6rem);
-          }
-          .p4-case__line .p3-en { font-size: clamp(0.85rem, 1.2vw, 1.05rem); }
-          .p4-case__stories { gap: 0.75rem; }
-          .p4-case__metrics { gap: 0.75rem; align-self: start; max-width: 40rem; }
-          .p4-case__metric { padding: 0.9rem 1rem; gap: 0.3rem; }
-          .p4-case__mval { font-size: clamp(1.4rem, 2.6vw, 2.2rem); }
-          .p4-case__mlab { font-size: 0.8rem; }
-          .p4-case__mlab .p3-en { font-size: 0.7rem; }
-          .p4-case__mper { font-size: 0.62rem; }
-          .p4-case__msrc { font-size: 0.66rem; }
+          /* Rodada 29/10 (CHANGES #01, itens 139 e 140): as regras do case
+             saíram daqui e moram juntas, em Cena 05, mais acima. */
         }
       `}</style>
 
