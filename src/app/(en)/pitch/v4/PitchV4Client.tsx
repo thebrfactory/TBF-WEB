@@ -79,8 +79,9 @@ const EDITORIAL_VIDEO = {
 //
 // O laço é UMA cópia da lista. O trilho leva REEL_COPIES cópias e anda de 0 a uma cópia
 // (-100% / REEL_COPIES), então a volta fecha sem emenda. O vão aparece quando a janela da
-// coluna passa de (REEL_COPIES - 1) laços; com 3 cópias a janela pode ter até 2 laços
-// (hoje ocupa de 18% a 40% de um laço, de 390 a 1440 de largura).
+// coluna passa de (REEL_COPIES - 1) laços; com 3 cópias a janela pode ter até 2 laços.
+// Medido: ela ocupa 18% de um laço no celular (390x664), 40% no desktop (1440x900) e 113%
+// num tablet em pé (768x1024), onde duas cópias já abririam vão no fim do laço.
 // Sem a medição (antes de montar) vale o 24s do CSS, igual para todas.
 const REEL_PX_PER_S = 68
 const REEL_COPIES = 3
@@ -845,11 +846,13 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            a borda direita. */
         .p4-case {
           --p4c-h: calc(100dvh - var(--p3-band) - var(--p3-kicker-reserve) - var(--p3-foot));
+          /* Respiro entre a faixa do filme e a fileira dos números. */
+          --p4c-rg: calc(var(--p3-gap-lg) * 1.35);
           /* O que a fileira dos números pede abaixo do filme: cartões, fonte e respiro. */
-          --p4c-rows: calc(10.4rem + var(--p3-gap-lg));
+          --p4c-rows: calc(10.4rem + var(--p4c-rg));
           --p4c-vw: min(
             calc((var(--p4c-h) - var(--p4c-rows)) * 9 / 16),
-            calc((100vw - 2 * var(--p3-pad-x)) * 0.54)
+            calc((100vw - 2 * var(--p3-pad-x)) * 0.55)
           );
           position: relative;
           z-index: 1;
@@ -860,7 +863,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           grid-template-rows: auto auto;
           align-content: start;
           column-gap: var(--p3-gap);
-          row-gap: var(--p3-gap-lg);
+          row-gap: var(--p4c-rg);
         }
         .p4-case__media {
           grid-column: 1;
@@ -898,10 +901,13 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         /* O PNG do letreiro traz um halo largo em volta da palavra: a caixa mede
            900x591 e a letra sólida fica no meio, com 54% da largura e 30% da
            altura. Dimensionar pela caixa deixa a letra boiando longe do topo do
-           filme e da borda do texto. A variável --p4c-core é a largura da LETRA: a imagem
-           nasce 1,844x maior e as margens negativas devolvem o halo ao vazio, de
-           modo que a caixa de layout é a própria letra. O brilho continua
-           desenhado por fora da caixa, e é isso que alinha o logo ao filme. */
+           filme e da borda do texto. A variável --p4c-core é a largura da LETRA:
+           a imagem nasce 1,844x maior e as margens negativas devolvem o halo ao
+           vazio, de modo que a caixa de layout é a própria letra. O brilho
+           continua desenhado por fora da caixa, e é isso que alinha o logo ao
+           filme (medido em 1440x900: topo da letra a 1px do topo do filme).
+           pointer-events: none porque a caixa transparente passa por cima do
+           título e não pode roubar seleção de texto. */
         .p4-case__wordmark {
           --p4c-core: 6.4rem;
           display: block;
@@ -909,6 +915,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           max-width: none;
           height: auto;
           margin: calc(var(--p4c-core) * -0.42);
+          pointer-events: none;
         }
         .p4-case__client {
           display: block;
@@ -935,10 +942,13 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           display: flex;
           flex-direction: row;
           align-items: center;
-          gap: var(--tbf-space-3);
+          gap: var(--tbf-space-2);
         }
+        /* Na coluna estreita do celular o rótulo precisa caber em UMA linha ao
+           lado do anel de 56px: gap curto e tracking de 0.06em. */
         .p4-case__stories .p3-label {
           color: rgba(240, 237, 230, 0.72);
+          letter-spacing: 0.06em;
         }
         /* Os três números: UMA fileira de cartões de largura e altura iguais
            (três colunas 1fr, linha 1fr), com o número no alto e o texto na
@@ -1014,11 +1024,12 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
         /* Tablet: a mesma grade do celular, com a tipografia e os cartões maiores. */
         @media (min-width: 768px) {
+          .p4-case { --p4c-rows: calc(11.8rem + var(--p4c-rg)); }
           .p4-case__wordmark { --p4c-core: clamp(9rem, 20vw, 13rem); }
           .p4-case__client { width: clamp(6.5rem, 14vw, 9rem); }
-          .p4-case__line { font-size: clamp(1.1rem, 2.6vw, 1.5rem); }
-          .p4-case__line .p3-en { font-size: clamp(0.82rem, 1.7vw, 1rem); }
-          .p4-case__stories .p3-label { font-size: 0.74rem; }
+          .p4-case__line { font-size: clamp(1.25rem, 3.8vw, 2.1rem); }
+          .p4-case__line .p3-en { font-size: clamp(0.86rem, 1.9vw, 1.1rem); }
+          .p4-case__stories .p3-label { font-size: 0.74rem; letter-spacing: 0.1em; }
           .p4-case__metrics { gap: var(--tbf-space-3); }
           .p4-case__metric { padding: var(--tbf-space-4); }
           .p4-case__mval { font-size: clamp(1.7rem, 4.4vw, 2.6rem); }
@@ -1031,43 +1042,49 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
         /* Desktop: filme na altura útil inteira (9:16 dela, com teto de 32% da
            largura) e a coluna de texto nas mesmas duas linhas dele. A altura da
            grade é a do filme, então a base da fonte cai na base do filme mesmo
-           numa janela alta e estreita. Todo corpo de letra leva um termo em vh,
-           como o resto do deck: janela baixa, o conjunto encolhe junto. */
+           numa janela alta e estreita. Rodada 29/10 (CHANGES #01, itens 139 e
+           140): tudo que tem ALTURA aqui é fração da altura do filme (--p4c-u é
+           1% dela) e não da janela, então a coluna de texto cabe nas mesmas duas
+           linhas dele em 1920x1080, 1440x900 e 1366x768: o conjunto encolhe na
+           mesma proporção do filme. Os termos em vw só seguram a LARGURA (número
+           grande dentro do cartão, título em duas linhas). */
         @media (min-width: 1024px) {
           .p4-case {
             --p4c-vw: min(calc(var(--p4c-h) * 9 / 16), 32vw);
+            --p4c-u: calc(var(--p4c-vw) * 0.017778);
             flex: none;
             height: calc(var(--p4c-vw) * 16 / 9);
             grid-template-rows: auto minmax(0, 1fr);
             column-gap: clamp(2rem, 4.5vw, 5rem);
+            row-gap: calc(var(--p4c-u) * 5.5);
           }
           .p4-case__media { grid-row: 1 / span 2; }
-          .p4-case__copy { justify-content: flex-start; gap: var(--p3-gap-lg); }
+          .p4-case__copy { justify-content: flex-start; gap: calc(var(--p4c-u) * 5.5); }
           .p4-case__brand { flex-direction: row; align-items: center; gap: clamp(1.5rem, 3.2vw, 3.5rem); }
-          .p4-case__wordmark { --p4c-core: clamp(9.5rem, min(16vw, 27vh), 20rem); }
-          .p4-case__client { width: clamp(6.5rem, min(12vw, 20vh), 14rem); }
+          .p4-case__wordmark { --p4c-core: min(calc(var(--p4c-u) * 37), 16vw); }
+          .p4-case__client { width: min(calc(var(--p4c-u) * 28), 12vw); }
           .p4-case__line {
             max-width: 30em;
-            font-size: clamp(1.7rem, min(3.4vw, 5.6vh), 3.9rem);
+            font-size: min(calc(var(--p4c-u) * 9), 3.4vw);
             line-height: 1.06;
             letter-spacing: -0.03em;
           }
           .p4-case__line .p3-en {
             margin-top: 0.55em;
-            font-size: clamp(1rem, min(1.45vw, 2.4vh), 1.4rem);
+            font-size: max(0.9rem, min(calc(var(--p4c-u) * 3.4), 1.45vw));
             line-height: 1.25;
           }
           .p4-case__stories { gap: var(--tbf-space-4); }
           .p4-case__stories .p3-label { font-size: clamp(0.72rem, 0.9vw, 0.9rem); }
           .p4-case__stats { grid-column: 2; }
-          .p4-case__metrics { gap: var(--p3-gap); }
-          .p4-case__metric { padding: clamp(0.9rem, 1.5vw, 1.5rem); }
-          .p4-case__mval { font-size: clamp(2.2rem, min(4vw, 7.2vh), 4.6rem); }
-          .p4-case__mtxt { gap: 0.5rem; }
-          .p4-case__mlab { font-size: clamp(0.8rem, min(1.1vw, 1.9vh), 1.15rem); }
-          .p4-case__mlab .p3-en { font-size: clamp(0.7rem, min(0.95vw, 1.6vh), 0.98rem); }
-          .p4-case__mper { font-size: clamp(0.6rem, 0.72vw, 0.78rem); }
-          .p4-case__msrc { font-size: clamp(0.64rem, 0.78vw, 0.8rem); }
+          .p4-case__metrics { gap: calc(var(--p4c-u) * 2.4); }
+          .p4-case__metric { padding: calc(var(--p4c-u) * 3); }
+          .p4-case__mval { font-size: min(calc(var(--p4c-u) * 9.4), 3.9vw); }
+          .p4-case__mtxt { gap: calc(var(--p4c-u) * 0.9); }
+          .p4-case__mlab { font-size: max(0.75rem, calc(var(--p4c-u) * 2.6)); }
+          .p4-case__mlab .p3-en { font-size: max(0.66rem, calc(var(--p4c-u) * 2.25)); }
+          .p4-case__mper { font-size: max(0.58rem, calc(var(--p4c-u) * 1.7)); }
+          .p4-case__msrc { font-size: max(0.62rem, calc(var(--p4c-u) * 1.85)); }
         }
 
         @media (min-width: 768px) {

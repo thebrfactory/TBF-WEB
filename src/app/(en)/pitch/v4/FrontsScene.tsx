@@ -135,6 +135,7 @@ function FrontPanel({
   const viewerOpen = useRef(false)
   const unlock = useRef<(() => void) | null>(null)
   const canvasRef = useRef(canvas)
+  const opened = useRef(canvas)
   const { item, row, story } = front
   const isTfd = item.name === '.THE FIORE DAILY.'
   const isTgf = item.name === '.THE GROWTH FACTORY.'
@@ -175,7 +176,11 @@ function FrontPanel({
         setClip(OPEN_CLIP)
       })
     )
-    const root = document.documentElement
+    // A rolagem da pagina trava no BODY, nao no html. Com `overflow: hidden` no html o
+    // letreiro (sticky) solta do topo e some, no WebKit e no Chrome (medido em 31/10:
+    // o letreiro ia para -2220px); no body ele segue colado. E o mesmo gesto do menu
+    // da nav (`Navigation.tsx`).
+    const root = document.body
     const prev = root.style.overflow
     root.style.overflow = 'hidden'
     let locked = true
@@ -221,15 +226,23 @@ function FrontPanel({
         setCanvas((c) => (sameCanvas(c, next) ? c : next))
       })
     }
+    // O deck andando por baixo (PageDown, rolagem programatica do passador, a tecla de
+    // espaco) leva a cena embora: o painel nao fica pendurado numa cena que saiu, fecha.
+    const onScroll = () => {
+      const now = measureCanvas(scene.current)
+      const o = opened.current
+      if (Math.abs(now.top - o.top) > 12 || Math.abs(now.height - o.height) > 12) latest.current.closeQuick()
+      else read()
+    }
     window.addEventListener('resize', read)
-    window.addEventListener('scroll', read, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
     window.visualViewport?.addEventListener('resize', read)
     const ro = new ResizeObserver(read)
     if (scene.current) ro.observe(scene.current)
     return () => {
       cancelAnimationFrame(raf)
       window.removeEventListener('resize', read)
-      window.removeEventListener('scroll', read)
+      window.removeEventListener('scroll', onScroll)
       window.visualViewport?.removeEventListener('resize', read)
       ro.disconnect()
     }
@@ -242,7 +255,7 @@ function FrontPanel({
   return createPortal(
     <div
       ref={setHost}
-      className={`p4-fp${phase === 'open' ? ' p4-fp--on' : ''}${phase === 'quick' ? ' p4-fp--quick' : ''}`}
+      className={`p4-fp${hasMedia ? ' p4-fp--media' : ''}${phase === 'open' ? ' p4-fp--on' : ''}${phase === 'quick' ? ' p4-fp--quick' : ''}`}
       style={
         {
           top: canvas.top,
@@ -358,6 +371,9 @@ function FrontPanel({
         .p4-fp--on .p4-fp__layout > :nth-child(5) { transition-delay: 540ms; }
         .p4-fp__top {
           flex: none;
+          width: 100%;
+          max-width: 62rem;
+          margin-inline: auto;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -405,6 +421,9 @@ function FrontPanel({
           justify-items: start;
         }
         .p4-fp__head { grid-area: head; display: flex; align-items: center; gap: 0.9rem; width: 100%; }
+        /* O anel (ou o avatar) nunca encolhe: com um papel comprido, como o da TGF, o flex
+           o espremia num oval. */
+        .p4-fp__head > :first-child { flex: none; }
         .p4-fp__avatar { width: 4rem; height: 4rem; border-radius: 50%; object-fit: cover; }
         .p4-fp__id { min-width: 0; }
         .p4-fp .p4-fp__name {
@@ -472,6 +491,8 @@ function FrontPanel({
           .p4-fp__avatar { width: 5rem; height: 5rem; }
         }
         @media (min-width: 1024px) {
+          /* Com midia (grafico, feed) a tela larga ganha duas colunas e uma coluna maior. */
+          .p4-fp--media .p4-fp__top, .p4-fp--media .p4-fp__body { max-width: 76rem; }
           .p4-fp__layout--media {
             grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             grid-template-areas: 'head media' 'lead media' 'fields media' 'link media';

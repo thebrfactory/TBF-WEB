@@ -267,9 +267,7 @@ export function TgfFeed({
   return (
     <div className="p4-tg">
       <div className="p4-tg__head">
-        <p className="p4-tg__title">
-          Feed <span className="p4-tg__en">/ Feed</span>
-        </p>
+        <p className="p4-tg__title">Feed</p>
         <p className="p4-tg__stats">
           <span className="p4-tg__n">{TGF_POSTS.length}</span> posts
           <span className="p4-tg__sep" aria-hidden="true"> · </span>
@@ -329,7 +327,6 @@ export function TgfFeed({
           letter-spacing: -0.04em;
           color: ${ACCENT};
         }
-        .p4-tg__en { font-family: var(--tbf-font-family-printed); font-style: italic; font-weight: 300; letter-spacing: 0; color: rgba(240, 237, 230, 0.55); }
         .p4-tg__stats { margin: 0; font-family: var(--tbf-font-family-body); font-weight: 350; font-size: 0.78rem; line-height: 1.25; color: rgba(240, 237, 230, 0.8); }
         .p4-tg__n { font-family: var(--tbf-font-family-display); font-weight: 800; color: ${PAPER}; }
         .p4-tg__stats .p3-en { font-size: 0.66rem; line-height: 1.2; }

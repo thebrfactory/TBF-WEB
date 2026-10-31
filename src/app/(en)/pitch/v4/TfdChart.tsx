@@ -76,7 +76,16 @@ function FollowersLine({
   const Y = (v: number) => pad.t + (1 - v / yMax) * innerH
   const base = pad.t + innerH
 
-  const pts = TFD_FOLLOWERS.map((p) => ({ p, x: X(p.captured), y: Y(p.value) }))
+  // Rotulo de valor: em cima do ponto; se encostar no rotulo vizinho de cima (pontos
+  // proximos no tempo, como 05/05 e 02/06 no celular), desce para baixo do ponto.
+  const lane = { up: -Infinity, down: -Infinity }
+  const pts = TFD_FOLLOWERS.map((p) => {
+    const x = X(p.captured)
+    const half = (p.shown.pt.length * 7.4 + 6) / 2
+    const side: 'up' | 'down' = x - half > lane.up ? 'up' : x - half > lane.down ? 'down' : 'up'
+    lane[side] = x + half
+    return { p, x, y: Y(p.value), side }
+  })
   const line = pts.map((q, i) => `${i === 0 ? 'M' : 'L'}${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join(' ')
   const area = `${line} L${pts[pts.length - 1].x.toFixed(1)} ${base.toFixed(1)} L${pts[0].x.toFixed(1)} ${base.toFixed(1)} Z`
 
@@ -109,7 +118,7 @@ function FollowersLine({
       <path d={area} fill="url(#p4-tc-area)" />
       <path d={line} fill="none" stroke={ACCENT} strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
 
-      {pts.map(({ p, x, y }) => {
+      {pts.map(({ p, x, y, side }) => {
         const on = p.id === selected
         return (
           <g key={p.id} onClick={() => onSelect(p.id)} style={{ cursor: 'pointer' }}>
@@ -119,7 +128,7 @@ function FollowersLine({
             <circle cx={x} cy={y} r={on ? 6.5 : 5} fill={on ? ACCENT : '#000000'} stroke={ACCENT} strokeWidth="2.25" />
             <text
               x={x}
-              y={y - 16}
+              y={side === 'up' ? y - 16 : y + 25}
               textAnchor="middle"
               fill={on ? ACCENT : PAPER}
               fontSize="13"

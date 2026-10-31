@@ -115,8 +115,10 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
            vazios no fim da cena em 1440x900. */
         #cena-06 {
           --p4cl-xs: 0.6rem;
-          --p4cl-sm: calc(var(--p3-gap) * 1.5);
-          --p4cl-lg: var(--p3-gap-lg);
+          /* Celular (390x844): a cena cabe na tela e o endereco para 24px acima do
+             passador, entao os degraus saem um terco menores que no desktop. */
+          --p4cl-sm: calc(var(--p3-gap) * 1.25);
+          --p4cl-lg: calc(var(--p3-gap-lg) * 0.75);
         }
         .p4-cl__cols {
           position: relative;
@@ -178,7 +180,7 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: var(--p3-gap);
+          gap: calc(var(--p3-gap) * 0.8);
         }
         .p4-cl__cnpj { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
         .p4-cl__cnpj-l {
@@ -223,6 +225,10 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
         }
         .p4-cl__addr { margin: 0; font-family: var(--tbf-font-family-body); font-size: 0.66rem; line-height: 1.3; color: rgba(240, 237, 230, 0.6); }
         @media (min-width: 768px) {
+          #cena-06 {
+            --p4cl-sm: calc(var(--p3-gap) * 1.5);
+            --p4cl-lg: var(--p3-gap-lg);
+          }
           .p4-cl__cols { gap: 1.25rem; max-width: 76rem; margin-inline: auto; }
           .p4-cl__col { padding: var(--tbf-space-4) var(--tbf-space-6); }
           .p4-cl__who { font-size: 1.25rem; margin-bottom: var(--tbf-space-4); }
@@ -236,6 +242,21 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           .p4-cl__inova .p3-en { font-size: 0.76rem; }
           .p4-cl__badge { font-size: 0.7rem; flex: none; }
           .p4-cl__addr { flex-basis: 100%; text-align: center; font-size: 0.78rem; }
+        }
+        /* Janela baixa (laptop, 1366x768): os degraus encolhem em proporcao e a
+           cena continua inteira na tela. Abaixo de 740px de altura nem assim ela
+           cabe, e a frase final sai (era a regra de antes, que valia ate 960px). */
+        @media (min-width: 768px) and (max-height: 860px) {
+          #cena-06 {
+            --p4cl-sm: calc(var(--p3-gap) * 1.2);
+            --p4cl-lg: calc(var(--p3-gap-lg) * 0.6);
+          }
+          .p4-cl__col { padding: var(--tbf-space-3) var(--tbf-space-5); }
+          .p4-cl__who { margin-bottom: 0.6rem; }
+          .p4-cl__list { gap: 0.5rem; }
+        }
+        @media (min-width: 768px) and (max-height: 740px) {
+          .p4-cl__quote { display: none; }
         }
       `}</style>
     </section>
