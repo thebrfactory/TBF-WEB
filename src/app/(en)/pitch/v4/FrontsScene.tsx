@@ -470,9 +470,11 @@ function FrontPanel({
         .p4-fp__field .p3-en { font-size: 0.7rem; line-height: 1.25; }
         .p4-fp__link {
           grid-area: link;
-          display: inline-block;
-          margin-top: 1.2rem;
-          padding: 0.7rem 0;
+          display: inline-flex;
+          align-items: center;
+          min-height: 2.75rem;
+          margin-top: 0.8rem;
+          padding: 0;
           font-family: var(--tbf-font-family-display);
           font-weight: 800;
           font-size: 0.85rem;

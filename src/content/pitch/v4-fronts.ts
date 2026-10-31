@@ -7,8 +7,9 @@
 //        mostra e a fonte. A data de captura vem do nome do arquivo e posiciona o
 //        ponto no tempo; ela não é o período. Número ambíguo ficou de fora (a
 //        tabela de auditoria, uma linha por número, foi entregue à parte).
-//   TGF: o feed da The Growth Factory, 17 posts em webp 1080 (q82), na ordem
-//        das pastas de `00. TGF /FEED` (01 a 14), com os 3 avulsos da raiz no fim.
+//   TGF: o feed da The Growth Factory, 15 posts (14 carrosséis e 1 avulso) e 63
+//        slides em webp 1080 (q82), na ordem das pastas de `00. TGF /FEED` (01 a
+//        14), com o avulso da raiz no fim. A revisão de 31/10 tirou 2 avulsos.
 // Nada inventado. Sem travessão nem en-dash.
 // =============================================================================
 
@@ -248,9 +249,9 @@ export const TFD_PROFILE = {
 // ─── TGF: o feed ─────────────────────────────────────────────────────────────
 // Fonte: TAV05 `0. TBF inc/00. TGF /FEED`. Pasta numerada = carrossel (os slides
 // na ordem dos arquivos); png solto na raiz = post único (`avulso`). Ordem: a
-// numeração das pastas, 01 a 14, e os avulsos no fim (são rascunhos de dez/2025 e
-// jan/2026, sem número de pasta). Imagem em `public/images/pitch/verticais/tgf-feed/
-// <post>/NN.webp`, todas 1080x1440 (3:4).
+// numeração das pastas, 01 a 14, e o avulso no fim (rascunho de jan/2026, sem número
+// de pasta). Imagem em `public/images/pitch/verticais/tgf-feed/<post>/NN.webp`,
+// todas 1080x1440 (3:4).
 //
 // FICARAM DE FORA, e por quê:
 //   01-02.png (raiz)  duplicata byte a byte de 01/01-02.png.
@@ -258,6 +259,13 @@ export const TFD_PROFILE = {
 //                     08 é o frame 0 de 08/08-01.mp4; o vídeo em si não entrou.
 //   10/01.png         captura real do Google com nome de pessoa e anúncio de terceiros
 //                     (Anderson Plumbing, John Padilla Plumbing). Guardado no scratchpad.
+//   Artboard 1.png    (era `avulso-01`) variante de rascunho da capa do post 01: o mesmo
+//                     "O objetivo principal é gerar bons resultados" duas vezes na grade.
+//   Artboard 1 copy 11.png (era `avulso-03`) inacabado: a metade de baixo é um bloco
+//                     preto, a janela de imagem ou vídeo.
+//   Os dois últimos (revisão de 31/10) estão em `public/_ARQUIVO/pitch-tgf-feed-pre-31-10/
+//   avulso-01` e `avulso-03`. Para voltar: mover a pasta de volta para `tgf-feed/` e
+//   recolocar a linha em `TGF_POSTS`.
 export interface TgfPost {
   id: string
   kind: 'carrossel' | 'avulso'
@@ -283,9 +291,7 @@ export const TGF_POSTS: TgfPost[] = [
   { id: '12', kind: 'carrossel', slides: 4, hook: 'Mudar de país também significa mudar a forma de crescer.' },
   { id: '13', kind: 'carrossel', slides: 5, hook: 'Se você presta serviços nos Estados Unidos, fique nesse carrossel.' },
   { id: '14', kind: 'carrossel', slides: 5, hook: 'Seu concorrente não está ganhando mais clientes porque trabalha melhor.' },
-  { id: 'avulso-01', kind: 'avulso', slides: 1, hook: 'O objetivo principal é gerar bons resultados.' },
   { id: 'avulso-02', kind: 'avulso', slides: 1, hook: 'Local Service Ads: the secret tool for small businesses.' },
-  { id: 'avulso-03', kind: 'avulso', slides: 1, hook: 'Como o Google Local Services pode te ajudar?' },
 ]
 
 /** Caminho do slide `i` (começa em 0) de um post. */

@@ -841,7 +841,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
 
            Celular: filme à esquerda, identidade, título e anel ao lado (topo e
            base alinhados ao filme), três cartões iguais embaixo e a fonte.
-           Desktop (1024+): filme na altura útil inteira; a coluna da direita
+           Desktop (900+ em paisagem): filme na altura útil inteira; a coluna da direita
            nasce e termina nas mesmas duas linhas dele, e os cartões esticam até
            a borda direita. */
         .p4-case {
@@ -1039,7 +1039,8 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
           .p4-case__msrc { font-size: 0.68rem; }
         }
 
-        /* Desktop: filme na altura útil inteira (9:16 dela, com teto de 32% da
+        /* Desktop (900+ em paisagem; retrato fica na grade do tablet): filme na
+           altura útil inteira (9:16 dela, com teto de 32% da
            largura) e a coluna de texto nas mesmas duas linhas dele. A altura da
            grade é a do filme, então a base da fonte cai na base do filme mesmo
            numa janela alta e estreita. Rodada 29/10 (CHANGES #01, itens 139 e
@@ -1048,7 +1049,7 @@ export function PitchV4Client({ partner = PARTNERSHIP_OPEN }: { partner?: Partne
            linhas dele em 1920x1080, 1440x900 e 1366x768: o conjunto encolhe na
            mesma proporção do filme. Os termos em vw só seguram a LARGURA (número
            grande dentro do cartão, título em duas linhas). */
-        @media (min-width: 1024px) {
+        @media (min-width: 900px) and (orientation: landscape) {
           .p4-case {
             --p4c-vw: min(calc(var(--p4c-h) * 9 / 16), 32vw);
             --p4c-u: calc(var(--p4c-vw) * 0.017778);

@@ -224,11 +224,8 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           color: #000000;
         }
         .p4-cl__addr { margin: 0; font-family: var(--tbf-font-family-body); font-size: 0.66rem; line-height: 1.3; color: rgba(240, 237, 230, 0.6); }
+        /* Tablet (768 a 1023): os mesmos degraus do celular, com mais letra e cartao. */
         @media (min-width: 768px) {
-          #cena-06 {
-            --p4cl-sm: calc(var(--p3-gap) * 1.5);
-            --p4cl-lg: var(--p3-gap-lg);
-          }
           .p4-cl__cols { gap: 1.25rem; max-width: 76rem; margin-inline: auto; }
           .p4-cl__col { padding: var(--tbf-space-4) var(--tbf-space-6); }
           .p4-cl__who { font-size: 1.25rem; margin-bottom: var(--tbf-space-4); }
@@ -242,6 +239,13 @@ export function CloseScene({ partner = PARTNERSHIP_OPEN }: { partner?: PartnerSc
           .p4-cl__inova .p3-en { font-size: 0.76rem; }
           .p4-cl__badge { font-size: 0.7rem; flex: none; }
           .p4-cl__addr { flex-basis: 100%; text-align: center; font-size: 0.78rem; }
+        }
+        /* Desktop (1024+): os degraus inteiros, um terco maiores que no celular. */
+        @media (min-width: 1024px) {
+          #cena-06 {
+            --p4cl-sm: calc(var(--p3-gap) * 1.5);
+            --p4cl-lg: var(--p3-gap-lg);
+          }
         }
         /* Janela baixa (laptop, 1366x768): os degraus encolhem em proporcao e a
            cena continua inteira na tela. Abaixo de 740px de altura nem assim ela

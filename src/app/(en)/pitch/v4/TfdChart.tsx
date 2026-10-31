@@ -107,7 +107,7 @@ function FollowersLine({
               {m.pt}
             </text>
             {m.en !== m.pt ? (
-              <text x={x} y={base + 33} fill={PAPER} fillOpacity="0.45" fontSize="9" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
+              <text x={x} y={base + 33} fill={PAPER} fillOpacity="0.62" fontSize="9.5" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
                 {m.en}
               </text>
             ) : null}
@@ -179,7 +179,7 @@ function ViewsBars({
               {lab.pt}
             </text>
             {lab.en !== lab.pt ? (
-              <text x={cx} y={base + 33} textAnchor="middle" fill={PAPER} fillOpacity="0.45" fontSize="9" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
+              <text x={cx} y={base + 33} textAnchor="middle" fill={PAPER} fillOpacity="0.62" fontSize="9.5" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
                 {lab.en}
               </text>
             ) : null}
@@ -190,10 +190,10 @@ function ViewsBars({
         if (m.missing || m.value === undefined || m.nonFollowers === undefined) {
           return (
             <g key={m.id}>
-              <text x={cx} y={base - 14} textAnchor="middle" fill={PAPER} fillOpacity="0.55" fontSize="10" fontWeight="600" style={{ fontFamily: FONT_TXT }}>
+              <text x={cx} y={base - 14} textAnchor="middle" fill={PAPER} fillOpacity="0.78" fontSize="10.5" fontWeight="600" style={{ fontFamily: FONT_TXT }}>
                 sem print
               </text>
-              <text x={cx} y={base - 2} textAnchor="middle" fill={PAPER} fillOpacity="0.4" fontSize="9" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
+              <text x={cx} y={base - 2} textAnchor="middle" fill={PAPER} fillOpacity="0.62" fontSize="9.5" fontStyle="italic" fontWeight="300" style={{ fontFamily: FONT_TXT }}>
                 no print
               </text>
               {ticks}
