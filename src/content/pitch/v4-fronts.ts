@@ -7,9 +7,9 @@
 //        mostra e a fonte. A data de captura vem do nome do arquivo e posiciona o
 //        ponto no tempo; ela não é o período. Número ambíguo ficou de fora (a
 //        tabela de auditoria, uma linha por número, foi entregue à parte).
-//   TGF: o feed da The Growth Factory, 15 posts (14 carrosséis e 1 avulso) e 63
-//        slides em webp 1080 (q82), na ordem das pastas de `00. TGF /FEED` (01 a
-//        14), com o avulso da raiz no fim. A revisão de 31/10 tirou 2 avulsos.
+//   TGF: o feed da The Growth Factory, 12 carrosséis e 53 slides em webp 1080
+//        (q82), na ordem das pastas de `00. TGF /FEED`. A revisão de 31/10 tirou
+//        2 avulsos; a de 02/11 deixou 12 posts (ver o fim de `TGF_POSTS`).
 // Nada inventado. Sem travessão nem en-dash.
 // =============================================================================
 
@@ -282,17 +282,22 @@ export const TGF_POSTS: TgfPost[] = [
   { id: '03', kind: 'carrossel', slides: 4, hook: 'O erro mais comum dos brasileiros que anunciam nos EUA.' },
   { id: '04', kind: 'carrossel', slides: 5, hook: 'A maior diferença entre vender seus serviços no Brasil e nos EUA.' },
   { id: '05', kind: 'carrossel', slides: 6, hook: 'O erro mais comum dos brasileiros que trabalham nos EUA.' },
-  { id: '06', kind: 'carrossel', slides: 6, hook: 'O selo do Google coloca seu negócio acima dos concorrentes.' },
   { id: '07', kind: 'carrossel', slides: 5, hook: 'Google Local Service Ads: quem pode usar?' },
   { id: '08', kind: 'carrossel', slides: 5, hook: 'Brazilian in the US? Seu negócio precisa de visibilidade.' },
   { id: '09', kind: 'carrossel', slides: 4, hook: 'Ready to get clients? Atendimento em português.' },
-  { id: '10', kind: 'carrossel', slides: 3, hook: 'Nos EUA, clientes procuram serviços no Google.' },
   { id: '11', kind: 'carrossel', slides: 4, hook: 'Seu negócio pode ser excelente. E mesmo assim perder clientes todos os dias.' },
   { id: '12', kind: 'carrossel', slides: 4, hook: 'Mudar de país também significa mudar a forma de crescer.' },
   { id: '13', kind: 'carrossel', slides: 5, hook: 'Se você presta serviços nos Estados Unidos, fique nesse carrossel.' },
   { id: '14', kind: 'carrossel', slides: 5, hook: 'Seu concorrente não está ganhando mais clientes porque trabalha melhor.' },
-  { id: 'avulso-02', kind: 'avulso', slides: 1, hook: 'Local Service Ads: the secret tool for small businesses.' },
 ]
+// Rodada 02/11 (fundador: "deixe 12 posts"): saíram da grade, imagens continuam em
+// `tgf-feed/`. Para voltar, recolocar a linha acima.
+//   06         repete o gancho do 02 ("O selo do Google coloca seu negócio acima...").
+//   10         perdeu o slide 01 (anúncio de terceiro), sobrou carrossel de 3.
+//   avulso-02  rascunho de jan/2026, único post em inglês puro.
+//   { id: '06', kind: 'carrossel', slides: 6, hook: 'O selo do Google coloca seu negócio acima dos concorrentes.' },
+//   { id: '10', kind: 'carrossel', slides: 3, hook: 'Nos EUA, clientes procuram serviços no Google.' },
+//   { id: 'avulso-02', kind: 'avulso', slides: 1, hook: 'Local Service Ads: the secret tool for small businesses.' },
 
 /** Caminho do slide `i` (começa em 0) de um post. */
 export const tgfSlide = (post: TgfPost, i: number) =>
