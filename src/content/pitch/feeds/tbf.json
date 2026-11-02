@@ -1,1 +1,114 @@
-{ "handle": "thebrfactory", "captured": "", "posts": [] }
+{
+  "handle": "thebrfactory",
+  "captured": "2026-11-02",
+  "posts": [
+    {
+      "id": "01",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "BRASIL ECO FASHION WEEK",
+      "shortcode": "DbHJVVbP5X6"
+    },
+    {
+      "id": "02",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Runways disappear.",
+      "shortcode": "Da5fZDlOfoj"
+    },
+    {
+      "id": "03",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "MARLO AT CDC 55 | A DEBUT THAT DIDN’T ASK FOR ATTENTION.",
+      "shortcode": "DX-b6Pbium6"
+    },
+    {
+      "id": "04",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "BEFORE RIOFW SPLIT THE MAP: THE PARADISE AT SPFW N58 (2024)",
+      "shortcode": "DXaLo3CjgQm"
+    },
+    {
+      "id": "05",
+      "kind": "carrossel",
+      "slides": 6,
+      "w": 1080,
+      "h": 1440,
+      "hook": "BRAZILIAN HIGH SUMMER: INSIDE SÃO PAULO’S GRINGOLOCO EXPERIENCE.",
+      "shortcode": "DXKxoDVFdPs"
+    },
+    {
+      "id": "06",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Darling, it’s a lifestyle label.",
+      "shortcode": "DP-F299lK8V"
+    },
+    {
+      "id": "07",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Introducing .RUC.",
+      "shortcode": "DPpNWr7CXj0"
+    },
+    {
+      "id": "08",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Not a show.",
+      "shortcode": "DPbo2BBCaIB"
+    },
+    {
+      "id": "09",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "São Paulo-born.",
+      "shortcode": "DPbjzwgjbKM"
+    },
+    {
+      "id": "10",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": ".THE BEST GENETICS.",
+      "shortcode": "DPUzB6BD3-9"
+    },
+    {
+      "id": "11",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "No topo do Martinelli, a noite vira altar.",
+      "shortcode": "DPUs4WKlG6n"
+    },
+    {
+      "id": "12",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Authorial narratives.",
+      "shortcode": "DPKfbR6jmx_"
+    }
+  ]
+}

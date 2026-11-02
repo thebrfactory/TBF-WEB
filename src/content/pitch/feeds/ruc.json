@@ -1,1 +1,114 @@
-{ "handle": "runwayunited", "captured": "", "posts": [] }
+{
+  "handle": "runwayunited",
+  "captured": "2026-11-02",
+  "posts": [
+    {
+      "id": "01",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "THE BRAZILIAN SPECIES",
+      "shortcode": "DcPRI6mOn2k"
+    },
+    {
+      "id": "02",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "BRASIL ECO FASHION WEEK",
+      "shortcode": "DbHJVVbP5X6"
+    },
+    {
+      "id": "03",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Runways disappear.",
+      "shortcode": "Da5fZDlOfoj"
+    },
+    {
+      "id": "04",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ACT N.º 02 | DAZZLING",
+      "shortcode": "Da0lzPain3G"
+    },
+    {
+      "id": "05",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "MARLO AT CDC 55 | A DEBUT THAT DIDN’T ASK FOR ATTENTION.",
+      "shortcode": "DX-b6Pbium6"
+    },
+    {
+      "id": "06",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "BEFORE RIOFW SPLIT THE MAP: THE PARADISE AT SPFW N58 (2024)",
+      "shortcode": "DXaLo3CjgQm"
+    },
+    {
+      "id": "07",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Introducing .RUC.",
+      "shortcode": "DPpNWr7CXj0"
+    },
+    {
+      "id": "08",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Brazilian beauty >>>>>>>",
+      "shortcode": "DPeM0mBDEPa"
+    },
+    {
+      "id": "09",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Not a show.",
+      "shortcode": "DPbo2BBCaIB"
+    },
+    {
+      "id": "10",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Fashion as ritual.",
+      "shortcode": "DPXO1KyDjKL"
+    },
+    {
+      "id": "11",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": ".THE BEST GENETICS.",
+      "shortcode": "DPUzB6BD3-9"
+    },
+    {
+      "id": "12",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "Backstage is the fronr row.",
+      "shortcode": "DPUk0hvgn-6"
+    }
+  ]
+}

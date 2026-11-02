@@ -1,1 +1,114 @@
-{ "handle": "thefioredaily", "captured": "", "posts": [] }
+{
+  "handle": "thefioredaily",
+  "captured": "2026-11-02",
+  "posts": [
+    {
+      "id": "01",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "fiquei a noite inteira de cara fechada no canto do bar e três caras vieram falar comigo.",
+      "shortcode": "DfQOUSXAsb2"
+    },
+    {
+      "id": "02",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "pedi pro massagista caprichar no ombro esquerdo, que nem doía.",
+      "shortcode": "DfPkIpEmeBq"
+    },
+    {
+      "id": "03",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ele trocou até de padaria pra não passar na minha rua.",
+      "shortcode": "DfNuOaPCKj_"
+    },
+    {
+      "id": "04",
+      "kind": "carrossel",
+      "slides": 6,
+      "w": 1080,
+      "h": 1440,
+      "hook": "ele perguntou se eu tava bem e eu disse que era cansaço.",
+      "shortcode": "DfKSyqCkf7a"
+    },
+    {
+      "id": "05",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "perdi um anel numa festa em 2019.",
+      "shortcode": "DfH2taZlKoi"
+    },
+    {
+      "id": "06",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ele falou vinte minutos sobre o pai dele e eu esqueci que tinha outro encontro marcado na mesma noite.",
+      "shortcode": "DfF7IX_D6C7"
+    },
+    {
+      "id": "07",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ele apagou a conversa.",
+      "shortcode": "DfFR8GVCD6Q"
+    },
+    {
+      "id": "08",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "a gente se conheceu na fila do banheiro e saiu de lá combinando a mentira sobre onde se conheceu.",
+      "shortcode": "DfDWRjqkk27"
+    },
+    {
+      "id": "09",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ele passou a semana ensaiando a briga.",
+      "shortcode": "DfCrkCskmVB"
+    },
+    {
+      "id": "10",
+      "kind": "carrossel",
+      "slides": 6,
+      "w": 1080,
+      "h": 1440,
+      "hook": "ele perguntou qual era a minha favorita.",
+      "shortcode": "DfA-Ij6kSTW"
+    },
+    {
+      "id": "11",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "ele explicou o vinho pro garçom e a minha vida pra mim.",
+      "shortcode": "DfAqo5hES72"
+    },
+    {
+      "id": "12",
+      "kind": "reel",
+      "slides": 1,
+      "w": 1080,
+      "h": 1920,
+      "hook": "minha amiga perguntou como eu tenho tanta certeza.",
+      "shortcode": "De2eX93jS-0"
+    }
+  ]
+}
