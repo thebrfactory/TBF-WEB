@@ -18,39 +18,56 @@
 import { useState } from 'react'
 import { ACCENT, En, PAPER } from '@/components/DeckShell/DeckShell'
 import { TFD_METRICS } from '@/content/pitch/v4-scenes'
-import { TFD_FOLLOWERS, TFD_PROFILE, TFD_VIEWS, type TfdMonth, type TfdPoint } from '@/content/pitch/v4-fronts'
+import {
+  FEED_TFD,
+  feedSlideOf,
+  TFD_FOLLOWERS,
+  TFD_PROFILE,
+  TFD_VIEWS,
+  type TfdMonth,
+  type TfdPoint,
+} from '@/content/pitch/v4-fronts'
 import { TfdChart, type TfdMode } from './TfdChart'
+import { FeedGrid } from './FeedGrid'
+
+type Tab = TfdMode | 'posts'
+
+const tfdSlide = feedSlideOf('tfd')
+const HAS_POSTS = FEED_TFD.posts.length > 0
 
 const LAST: Record<TfdMode, string> = {
   followers: TFD_FOLLOWERS[TFD_FOLLOWERS.length - 1].id,
   views: TFD_VIEWS[TFD_VIEWS.length - 1].id,
 }
 
-const TABS: { mode: TfdMode; pt: string; en: string }[] = [
+const TABS: { mode: Tab; pt: string; en: string }[] = [
   { mode: 'followers', pt: 'Seguidores', en: 'Followers' },
   { mode: 'views', pt: 'Visualizações', en: 'Views' },
+  ...(HAS_POSTS ? [{ mode: 'posts' as const, pt: 'Posts', en: 'Posts' }] : []),
 ]
 
 const pct = (m: TfdMonth) => Math.round((m.nonFollowers ?? 0) * 100)
 
-export function TfdSheet() {
-  const [mode, setMode] = useState<TfdMode>('followers')
+export function TfdSheet({
+  host,
+  onViewer,
+}: {
+  /** Raiz do painel: o visor da aba Posts nasce dentro dela. */
+  host: HTMLElement | null
+  onViewer: (open: boolean) => void
+}) {
+  const [mode, setMode] = useState<Tab>('followers')
   const [sel, setSel] = useState<Record<TfdMode, string>>(LAST)
 
-  const pick = (id: string) => setSel((s) => ({ ...s, [mode]: id }))
+  const pick = (id: string) => {
+    if (mode !== 'posts') setSel((s) => ({ ...s, [mode]: id }))
+  }
 
   const fPoint: TfdPoint | undefined = TFD_FOLLOWERS.find((p) => p.id === sel.followers)
   const vMonth: TfdMonth | undefined = TFD_VIEWS.find((m) => m.id === sel.views)
 
   return (
     <div className="p4-tm">
-      <div className="p4-tm__head">
-        <p className="p4-tm__title">
-          {TFD_METRICS.title.pt} <span className="p4-tm__en">/ {TFD_METRICS.title.en}</span>
-        </p>
-        <p className="p4-tm__handle">@thefioredaily · Instagram</p>
-      </div>
-
       <div className="p4-tm__tabs" role="tablist" aria-label="Série do gráfico / Chart series">
         {TABS.map((t) => (
           <button
@@ -67,6 +84,12 @@ export function TfdSheet() {
         ))}
       </div>
 
+      {mode === 'posts' ? (
+        <div className="p4-tm__posts">
+          <FeedGrid posts={FEED_TFD.posts} slideSrc={tfdSlide} label="The Fiore Daily" host={host} onViewer={onViewer} />
+        </div>
+      ) : (
+        <>
       {/* O ponto escolhido, em numero grande. */}
       <div className="p4-tm__read" aria-live="polite">
         {mode === 'followers' && fPoint ? (
@@ -123,7 +146,7 @@ export function TfdSheet() {
         ) : null}
       </div>
 
-      <TfdChart mode={mode} selected={sel[mode]} onSelect={pick} />
+      <TfdChart mode={mode as TfdMode} selected={sel[mode as TfdMode]} onSelect={pick} />
 
       {mode === 'views' ? (
         <p className="p4-tm__legend">
@@ -225,33 +248,18 @@ export function TfdSheet() {
         </p>
         <p className="p4-tm__src">{TFD_METRICS.live.source.pt}</p>
       </div>
+        </>
+      )}
 
       <style>{`
         .p4-tm { width: 100%; }
-        .p4-tm__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.1rem 0.8rem; }
-        .p4-tm__title {
-          margin: 0;
-          font-family: var(--tbf-font-family-display);
-          font-weight: 800;
-          font-size: 1.4rem;
-          letter-spacing: -0.04em;
-          color: ${ACCENT};
-        }
         .p4-tm__en { font-family: var(--tbf-font-family-printed); font-style: italic; font-weight: 300; letter-spacing: 0; color: rgba(240, 237, 230, 0.55); }
-        .p4-tm__handle {
-          margin: 0;
-          font-family: var(--tbf-font-family-printed);
-          font-weight: 600;
-          font-size: 0.66rem;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(240, 237, 230, 0.6);
-        }
-        .p4-tm__tabs { display: flex; gap: 0.4rem; margin-top: 0.7rem; }
+        .p4-tm__tabs { display: flex; gap: 0.4rem; }
+        .p4-tm__posts { margin-top: 1rem; }
         .p4-tm__tab {
           flex: 1 1 0;
           min-height: 2.75rem;
-          padding: 0.3rem 0.8rem;
+          padding: 0.3rem 0.4rem;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -346,8 +354,6 @@ export function TfdSheet() {
         .p4-tm__pl { font-family: var(--tbf-font-family-body); font-weight: 350; font-size: 0.68rem; line-height: 1.2; color: rgba(240, 237, 230, 0.78); }
         .p4-tm__pl .p3-en { font-size: 0.58rem; line-height: 1.15; }
         @media (min-width: 768px) {
-          .p4-tm__title { font-size: 1.8rem; }
-          .p4-tm__handle { font-size: 0.72rem; }
           .p4-tm__tab { flex: 0 1 auto; min-width: 11rem; font-size: 0.84rem; }
           .p4-tm__read { min-height: 10.5rem; }
           .p4-tm__cap { font-size: 0.9rem; }

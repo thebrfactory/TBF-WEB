@@ -23,7 +23,8 @@
 //      DOM (a cena, descontada a faixa pinada do topo que o DeckNav ja le em
 //      `scroll-margin-top`) e remedido em resize e em scroll: nenhum numero fixo.
 //   4. TFD abre o grafico das metricas da MELFIORE (`TfdSheet.tsx`); TGF abre o
-//      feed (`TgfFeed.tsx`). RUC e TBF ficam como estavam.
+//      feed (`TgfFeed.tsx`). Desde 02/11/2026 .TBF. e RUC tambem abrem um feed
+//      (`FeedGrid.tsx`, manifestos em `feeds/*.json`) e a TFD ganhou a aba Posts.
 //
 // COMO O POPUP SE COMPORTA
 //   Cresce a partir da propria linha (clip-path) e termina no retangulo do canvas.
@@ -45,6 +46,14 @@ import { BUSINESS } from '@/content/pitch/v3-scenes'
 import { MODEL, VERTICAL_STORIES } from '@/content/pitch/v4-scenes'
 import { TfdSheet } from './TfdSheet'
 import { TgfFeed } from './TgfFeed'
+import { FeedGrid } from './FeedGrid'
+import { FEED_RUC, FEED_TBF, feedSlideOf, type FeedManifest } from '@/content/pitch/v4-fronts'
+
+// Feeds por manifesto (.TBF. e RUC). Sem posts no manifesto, o popup fica como era.
+const MANIFEST_FEEDS: Record<string, { feed: FeedManifest; key: 'tbf' | 'ruc'; label: string }> = {
+  '.THE BRAZILIAN FACTORY.': { feed: FEED_TBF, key: 'tbf', label: 'The Brazilian Factory' },
+  '.RUNWAY UNTD COLLECTIVE.': { feed: FEED_RUC, key: 'ruc', label: 'Runway United Collective' },
+}
 
 const MS = 620
 const MS_QUICK = 180
@@ -139,7 +148,9 @@ function FrontPanel({
   const { item, row, story } = front
   const isTfd = item.name === '.THE FIORE DAILY.'
   const isTgf = item.name === '.THE GROWTH FACTORY.'
-  const hasMedia = isTfd || isTgf
+  const mf = MANIFEST_FEEDS[item.name]
+  const hasMf = !!mf && mf.feed.posts.length > 0
+  const hasMedia = isTfd || isTgf || hasMf
 
   // Fechar de volta: encolhe ate a linha, medida AGORA (a janela pode ter mudado).
   const close = useCallback(() => {
@@ -312,12 +323,23 @@ function FrontPanel({
 
           {isTfd ? (
             <div className="p4-fp__media">
-              <TfdSheet />
+              <TfdSheet host={host} onViewer={onViewer} />
             </div>
           ) : null}
           {isTgf ? (
             <div className="p4-fp__media">
               <TgfFeed host={host} onViewer={onViewer} />
+            </div>
+          ) : null}
+          {hasMf ? (
+            <div className="p4-fp__media">
+              <FeedGrid
+                posts={mf.feed.posts}
+                slideSrc={feedSlideOf(mf.key)}
+                label={mf.label}
+                host={host}
+                onViewer={onViewer}
+              />
             </div>
           ) : null}
 

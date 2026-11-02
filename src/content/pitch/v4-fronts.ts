@@ -14,6 +14,9 @@
 // =============================================================================
 
 import type { Bi } from './v3-scenes'
+import feedTbf from './feeds/tbf.json'
+import feedRuc from './feeds/ruc.json'
+import feedTfd from './feeds/tfd.json'
 
 // ─── TFD: pontos da série ────────────────────────────────────────────────────
 export interface TfdPoint {
@@ -266,13 +269,29 @@ export const TFD_PROFILE = {
 //   Os dois últimos (revisão de 31/10) estão em `public/_ARQUIVO/pitch-tgf-feed-pre-31-10/
 //   avulso-01` e `avulso-03`. Para voltar: mover a pasta de volta para `tgf-feed/` e
 //   recolocar a linha em `TGF_POSTS`.
-export interface TgfPost {
+/** Post de feed comum a todas as frentes. `avulso` e legado da TGF (post de um slide). */
+export interface FeedPost {
   id: string
-  kind: 'carrossel' | 'avulso'
+  kind: 'carrossel' | 'avulso' | 'foto' | 'reel'
   slides: number
-  /** O texto de abertura do primeiro slide, para o rótulo de quem não vê a imagem. */
+  /** O texto de abertura do primeiro slide, para o rotulo de quem nao ve a imagem. */
   hook: string
+  /** Dimensoes do arquivo (manifestos .TBF., RUC e TFD). */
+  w?: number
+  h?: number
+  /** Codigo do post no Instagram (manifestos). */
+  shortcode?: string
 }
+
+/** Manifesto de feed: `src/content/pitch/feeds/<tbf|ruc|tfd>.json`. */
+export interface FeedManifest {
+  handle: string
+  captured: string
+  posts: FeedPost[]
+}
+
+/** A TGF usa o tipo comum. */
+export type TgfPost = FeedPost
 
 export const TGF_FEED_BASE = '/images/pitch/verticais/tgf-feed'
 
@@ -302,3 +321,16 @@ export const TGF_POSTS: TgfPost[] = [
 /** Caminho do slide `i` (começa em 0) de um post. */
 export const tgfSlide = (post: TgfPost, i: number) =>
   `${TGF_FEED_BASE}/${post.id}/${String(i + 1).padStart(2, '0')}.webp`
+
+// ─── Feeds de .TBF., RUC e TFD (rodada 02/11/2026) ───────────────────────────
+// Manifestos em `feeds/*.json`; imagens em
+// `public/images/pitch/verticais/feed-<tbf|ruc|tfd>/<id>/<SS>.webp`. Manifesto com
+// `posts` vazio: o popup nao mostra grade (e a aba Posts da TFD some).
+export const FEED_TBF = feedTbf as FeedManifest
+export const FEED_RUC = feedRuc as FeedManifest
+export const FEED_TFD = feedTfd as FeedManifest
+
+export const feedSlideOf =
+  (key: 'tbf' | 'ruc' | 'tfd') =>
+  (post: FeedPost, i: number) =>
+    `/images/pitch/verticais/feed-${key}/${post.id}/${String(i + 1).padStart(2, '0')}.webp`
