@@ -7,6 +7,19 @@ import type { NextConfig } from 'next'
 const AURA_ZONE_ORIGIN = process.env.AURA_ZONE_ORIGIN
 
 const nextConfig: NextConfig = {
+  // public/ é servido pela CDN, nunca precisa estar dentro da function.
+  // Sem isso o file tracing puxava vídeos e imagens para cada rota (about: 313 MB, limite 250).
+  outputFileTracingExcludes: {
+    '*': [
+      'public/**/*',
+      '.git/**',
+      'node_modules/@swc/**',
+      'node_modules/esbuild*/**',
+      'node_modules/@img/sharp-libvips-darwin*/**',
+      'node_modules/@img/sharp-darwin*/**',
+    ],
+  },
+
   // ─── Experimental Features ─────────────────────────────────────────────────
   experimental: {
     // View Transitions API support
