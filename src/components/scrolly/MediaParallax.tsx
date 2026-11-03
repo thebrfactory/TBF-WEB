@@ -19,28 +19,16 @@
 // =============================================================================
 
 import type React from 'react'
-import path from 'node:path'
 import Image from 'next/image'
-import sharp from 'sharp'
 import { withTbf } from '@/lib/tbf-text'
+import { nativeSize } from '@/lib/imageDims'
 
 // PROPORCAO NATURAL (14/10/2026, pedido do fundador: "voce esta cortando MUITA
 // foto dos artigos"). Foto editorial no corpo aparece INTEIRA. O hero de abertura
 // e o unico lugar onde o corte e permitido. Como o conteudo nao carrega
 // width/height nas fotos `bleed`, a medida real sai do arquivo em /public, uma
-// vez por foto (cache em memoria), no servidor. Falhou a leitura: 3 / 2.
-const dimsCache = new Map<string, Promise<{ width: number; height: number }>>()
-function nativeSize(src: string) {
-  let hit = dimsCache.get(src)
-  if (!hit) {
-    hit = sharp(path.join(process.cwd(), 'public', src))
-      .metadata()
-      .then((m) => ({ width: m.width ?? 3, height: m.height ?? 2 }))
-      .catch(() => ({ width: 3, height: 2 }))
-    dimsCache.set(src, hit)
-  }
-  return hit
-}
+// vez por foto, no servidor. A medida vem do manifesto (src/lib/imageDims.ts),
+// sem ler public/ em runtime. Sem entrada e sem arquivo: 3 / 2.
 
 // LEGENDA (08/10/2026, CHANGES #01): a frase em light, o crédito em bold, e as
 // duas sempre dentro do `figcaption`, que mora no MESMO `figure` da imagem. A

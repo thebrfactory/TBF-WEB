@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/build-guard.mjs",
+    "prebuild": "node scripts/image-dims.mjs && node scripts/build-guard.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
